@@ -8,20 +8,24 @@ import net.kaikoga.arp.domain.core.ArpSid;
 abstract ArpSlot<T:IArpObject>(ArpUntypedSlot) from ArpUntypedSlot to ArpUntypedSlot {
 
 	public function new(value:ArpUntypedSlot) this = value;
-	public var arpObject(get, set):T;
-	inline public function get_arpObject():T return cast this.arpObject; // FIXME
-	inline public function set_arpObject(value:T):T return cast(this.arpObject = cast(value)); // FIXME
+
+	public var domain(get, never):ArpDomain;
+	inline public function get_domain():ArpDomain return this.domain;
+
+	public var value(get, set):T;
+	inline public function get_value():T return cast this.value; // FIXME
+	inline public function set_value(value:T):T return cast(this.value = cast(value)); // FIXME
 }
 
 class ArpUntypedSlot {
 
-	private var domain:ArpDomain;
+	public var domain(default, null):ArpDomain;
 	private var sid:ArpSid;
 	
-	private var _arpObject:IArpObject = null;
-	public var arpObject(get, set):IArpObject;
-	inline public function get_arpObject():IArpObject { return this._arpObject; }
-	inline public function set_arpObject(value:IArpObject):IArpObject { return this._arpObject = value; }
+	private var _value:IArpObject = null;
+	public var value(get, set):IArpObject;
+	inline public function get_value():IArpObject { return this._value; }
+	inline public function set_value(value:IArpObject):IArpObject { return this._value = value; }
 
 	public function new(domain:ArpDomain, sid:ArpSid) {
 		this.domain = domain;

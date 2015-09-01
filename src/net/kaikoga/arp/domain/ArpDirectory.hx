@@ -6,10 +6,11 @@ import net.kaikoga.arp.domain.core.ArpDid;
 
 class ArpDirectory {
 
-	private var domain:ArpDomain;
+	public var domain(default, null):ArpDomain;
 	private var did:ArpDid;
 	private var children:Map<String, ArpDirectory>;
 	private var slots:Map<String, ArpUntypedSlot>;
+	private var linkDir:ArpDirectory = null;
 
 	public function new(domain:ArpDomain, did:ArpDid) {
 		this.domain = domain;
@@ -18,35 +19,39 @@ class ArpDirectory {
 		this.slots = new Map();
 	}
 
-	public function getOrCreateSlot(arpType:ArpType):ArpUntypedSlot {
-		if (this.slots.exists(arpType)) return this.slots.get(arpType);
+	public function getOrCreateSlot(type:ArpType):ArpUntypedSlot {
+		if (this.slots.exists(type)) return this.slots.get(type);
 		var slot:ArpUntypedSlot = new ArpUntypedSlot(this.domain, this.domain.nextSid());
-		this.slots.set(arpType, slot);
+		this.slots.set(type, slot);
 		return slot;
 	}
 
-	public function setSlot(arpType:ArpType, slot:ArpUntypedSlot):ArpUntypedSlot {
-		this.slots.set(arpType, slot);
+	public function setSlot(type:ArpType, slot:ArpUntypedSlot):ArpUntypedSlot {
+		this.slots.set(type, slot);
 		return slot;
 	}
 
-	public function getArpObject(arpType:ArpType):IArpObject {
-		return this.getOrCreateSlot(arpType).arpObject;
+	public function getValue(type:ArpType):IArpObject {
+		return this.getOrCreateSlot(type).value;
 	}
 
-	public function addArpObject(arpObject:IArpObject):Void {
-		this.getOrCreateSlot(arpObject.arpType()).arpObject = arpObject;
+	public function addArpObject(value:IArpObject):Void {
+		this.getOrCreateSlot(value.arpType()).value = value;
 	}
 
-	public function getOrCreateChild(name:String):ArpDirectory {
+	public function linkTo(dir:ArpDirectory):Void {
+		this.linkDir = dir;
+	}
+	
+	public function child(name:String):ArpDirectory {
+		return if (this.linkDir != null) this.linkDir.child(name) else this.trueChild(name);
+	}
+
+	public function trueChild(name:String):ArpDirectory {
 		if (this.children.exists(name)) return this.children.get(name);
 		var child:ArpDirectory = new ArpDirectory(this.domain, this.domain.nextDid());
 		this.children.set(name, child);
 		return child;
 	}
 
-	public function setChild(name:String, child:ArpDirectory):ArpDirectory {
-		this.children.set(name, child);
-		return child;
-	}
 }
