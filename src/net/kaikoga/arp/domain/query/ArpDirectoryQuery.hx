@@ -1,11 +1,6 @@
 package net.kaikoga.arp.domain.query;
 
-import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
-import net.kaikoga.arp.domain.core.ArpType;
-
 class ArpDirectoryQuery {
-
-	inline public static var PATH_DELIMITER:String = "/";
 
 	private var root:ArpDirectory;
 	private var path:String;
@@ -13,15 +8,15 @@ class ArpDirectoryQuery {
 
 	inline public function new(root:ArpDirectory, path:String = null) {
 		if (path == null) path = "";
-		if (path.charAt(0) == PATH_DELIMITER) {
+		if (path.charAt(0) == ArpDirectory.PATH_DELIMITER) {
 			//absolute path
 			root = root.domain.root;
 			path = path.substr(1);
 		}
 		this.root = root;
 		this.path = path;
-		if (path.indexOf(PATH_DELIMITER) >= 0) {
-			this.pathArray = path.split(PATH_DELIMITER);
+		if (path.indexOf(ArpDirectory.PATH_DELIMITER) >= 0) {
+			this.pathArray = path.split(ArpDirectory.PATH_DELIMITER);
 		}
 	}
 

@@ -4,7 +4,10 @@ import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.core.ArpDid;
 
+@:access(net.kaikoga.arp.domain.ArpDomain)
 class ArpDirectory {
+
+	inline public static var PATH_DELIMITER:String = "/";
 
 	public var domain(default, null):ArpDomain;
 	private var did:ArpDid;
@@ -12,7 +15,8 @@ class ArpDirectory {
 	private var slots:Map<String, ArpUntypedSlot>;
 	private var linkDir:ArpDirectory = null;
 
-	public function new(domain:ArpDomain, did:ArpDid) {
+	@:allow(net.kaikoga.arp.domain.ArpDomain)
+	private function new(domain:ArpDomain, did:ArpDid) {
 		this.domain = domain;
 		this.did = did;
 		this.children = new Map();
@@ -21,7 +25,7 @@ class ArpDirectory {
 
 	public function getOrCreateSlot(type:ArpType):ArpUntypedSlot {
 		if (this.slots.exists(type)) return this.slots.get(type);
-		var slot:ArpUntypedSlot = new ArpUntypedSlot(this.domain, this.domain.nextSid());
+		var slot:ArpUntypedSlot = this.domain.allocSlot('${cast(this.did)}:${cast type}');
 		this.slots.set(type, slot);
 		return slot;
 	}
@@ -49,7 +53,7 @@ class ArpDirectory {
 
 	public function trueChild(name:String):ArpDirectory {
 		if (this.children.exists(name)) return this.children.get(name);
-		var child:ArpDirectory = new ArpDirectory(this.domain, this.domain.nextDid());
+		var child:ArpDirectory = this.domain.allocDir('${cast(this.did)}${PATH_DELIMITER}${name}');
 		this.children.set(name, child);
 		return child;
 	}
