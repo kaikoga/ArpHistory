@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain;
 
+import net.kaikoga.arp.domain.gen.ArpDynamicGenerator;
 import net.kaikoga.arp.domain.mocks.MockArpObject;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.domain.core.ArpType;
@@ -34,11 +35,28 @@ class ArpDomainCase {
 
 	public function testLoadSeed():Void {
 		var domain = new ArpDomain();
-		var slot:ArpSlot<MockArpObject> = domain.root.getOrCreateSlot(new ArpType("TestArpObject"));
+		domain.addGenerator(new ArpDynamicGenerator(new ArpType("TestArpObject"), MockArpObject));
+		var xml:Xml = Xml.parse('<data name="name1" value="42" refField="/name1" />').firstElement();
+		var seed:ArpSeed = ArpSeed.fromXml(xml);
+		var slot:ArpSlot<MockArpObject> = domain.loadSeed(seed, new ArpType("TestArpObject"));
+		var arpObj:MockArpObject = slot.value;
+
+		assertEquals(42, arpObj.intField);
+		assertEquals(arpObj, arpObj.refField);
+	}
+
+	public function testBuildObject():Void {
+		var domain = new ArpDomain();
+		var slot:ArpSlot<MockArpObject> = domain.dir("name1").getOrCreateSlot(new ArpType("TestArpObject"));
 		var arpObj:MockArpObject = new MockArpObject();
-		var xml:Xml = Xml.parse('<data name="name1" value="42" />').firstElement();
+		var xml:Xml = Xml.parse('<data name="name1" value="42" refField="/name1" />').firstElement();
 		var seed:ArpSeed = ArpSeed.fromXml(xml);
 		arpObj.init(slot, seed);
+
 		assertEquals(42, arpObj.intField);
+		assertEquals(null, arpObj.refField);
+
+		slot.value = arpObj;
+		assertEquals(arpObj, arpObj.refField);
 	}
 }

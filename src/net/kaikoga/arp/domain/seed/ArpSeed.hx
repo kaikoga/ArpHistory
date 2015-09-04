@@ -1,18 +1,19 @@
 package net.kaikoga.arp.domain.seed;
 
+import net.kaikoga.arp.domain.core.ArpType;
 import Xml.XmlType;
 
 class ArpSeed {
 
-	private var _type:String;
+	private var _typeName:String;
 	private var _name:String;
 	private var _ref:String;
 	private var _template:String;
 	private var _value:Dynamic;
 	private var _children:Array<ArpSeed>;
 
-	inline public function new(type:String, template:String, name:String, ref:String, value:Dynamic, children:Array<ArpSeed>) {
-		this._type = type;
+	inline public function new(typeName:String, template:String, name:String, ref:String, value:Dynamic, children:Array<ArpSeed>) {
+		this._typeName = typeName;
 		this._template = template;
 		this._name = name;
 		this._ref = ref;
@@ -20,7 +21,7 @@ class ArpSeed {
 		this._children = children;
 	}
 
-	inline public function type():String return this._type;
+	inline public function typeName():String return this._typeName;
 	inline public function template():String return this._template;
 	inline public function name():String return this._name;
 	inline public function ref():String return this._ref;
@@ -36,7 +37,7 @@ class ArpSeed {
 			case _: return new ArpSeed(xml.nodeName, null, null, null, xml.nodeValue, null);
 		}
 		
-		var type:String = xml.nodeName;
+		var typeName:String = xml.nodeName;
 		var template:String = null;
 		var name:String = null;
 		var ref:String = null;
@@ -46,7 +47,7 @@ class ArpSeed {
 		for (attrName in xml.attributes()) {
 			switch (attrName) {
 				case "type":
-					type = xml.get(attrName);
+					typeName = cast xml.get(attrName);
 				case "class", "template":
 					template = xml.get(attrName);
 				case "name":
@@ -64,6 +65,6 @@ class ArpSeed {
 				case _: // ignore
 			}
 		}
-		return new ArpSeed(type, template, name, ref, value, children);
+		return new ArpSeed(typeName, template, name, ref, value, children);
 	}
 }

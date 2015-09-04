@@ -7,6 +7,10 @@ import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 class MockArpObject implements IArpObject {
 
 	public var intField:Int = 0;
+	public var refFieldSlot:ArpSlot<MockArpObject>;
+	public var refField(get, set):MockArpObject;
+	inline private function get_refField():MockArpObject return refFieldSlot.value;
+	inline private function set_refField(value:MockArpObject):MockArpObject { refFieldSlot = value.arpSlot(); return value; }
 
 	public function new() {
 	}
@@ -24,8 +28,14 @@ class MockArpObject implements IArpObject {
 	}
 
 	public function init(slot:ArpUntypedSlot, seed:ArpSeed = null):IArpObject {
+		this.refFieldSlot = slot.domain.nullSlot;
 		if (seed != null) for (element in seed) {
-			intField = Std.parseInt(element.value());
+			switch (element.typeName()) {
+				case "value":
+					this.intField = Std.parseInt(element.value());
+				case "refField":
+					this.refFieldSlot = slot.domain.query(element.value(), this.arpType()).slot();
+			}
 		}
 		return this;
 	}

@@ -1,5 +1,7 @@
 package net.kaikoga.arp.domain;
 
+import net.kaikoga.arp.domain.query.ArpDirectoryQuery;
+import net.kaikoga.arp.domain.query.ArpObjectQuery;
 import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.core.ArpDid;
@@ -58,4 +60,11 @@ class ArpDirectory {
 		return child;
 	}
 
+	inline public function dir(path:String = null):ArpDirectory {
+		return new ArpDirectoryQuery(this, path).directory();
+	}
+
+	inline public function query<T:IArpObject>(path:String = null, type:ArpType = null):ArpObjectQuery<T> {
+		return new ArpObjectQuery(this, path, type);
+	}
 }
