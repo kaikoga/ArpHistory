@@ -31,7 +31,7 @@ class MockArpObject implements IArpObject {
 		this.refFieldSlot = slot.domain.nullSlot;
 		if (seed != null) for (element in seed) {
 			switch (element.typeName()) {
-				case "value":
+				case "intField":
 					this.intField = Std.parseInt(element.value());
 				case "refField":
 					this.refFieldSlot = slot.domain.query(element.value(), this.arpType()).slot();

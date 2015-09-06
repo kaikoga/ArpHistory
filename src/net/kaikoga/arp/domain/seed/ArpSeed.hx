@@ -1,6 +1,5 @@
 package net.kaikoga.arp.domain.seed;
 
-import net.kaikoga.arp.domain.core.ArpType;
 import Xml.XmlType;
 
 class ArpSeed {
@@ -28,7 +27,13 @@ class ArpSeed {
 	inline public function value():Dynamic return this._value;
 	inline public function children():Array<ArpSeed> return this._children;
 
-	inline public function iterator():Iterator<ArpSeed> return (this._children != null) ? this._children.iterator() : [].iterator();
+	inline public function hasChildren():Bool return this._children != null;
+	inline public function iterator():Iterator<ArpSeed> return this.hasChildren() ? this._children.iterator() : [].iterator();
+
+
+	inline public static function fromXmlString(xmlString:String):ArpSeed {
+		return fromXml(Xml.parse(xmlString));
+	}
 
 	public static function fromXml(xml:Xml):ArpSeed {
 		switch (xml.nodeType) {
@@ -36,14 +41,14 @@ class ArpSeed {
 			case XmlType.Element:
 			case _: return new ArpSeed(xml.nodeName, null, null, null, xml.nodeValue, null);
 		}
-		
+
 		var typeName:String = xml.nodeName;
 		var template:String = null;
 		var name:String = null;
 		var ref:String = null;
 		var value:String = null;
 		var children:Array<ArpSeed> = null;
-		
+
 		for (attrName in xml.attributes()) {
 			switch (attrName) {
 				case "type":
@@ -54,9 +59,11 @@ class ArpSeed {
 					name = xml.get(attrName);
 				case "ref":
 					ref = xml.get(attrName);
+				case "value":
+					value = xml.get(attrName);
 				case _:
 					if (children == null) children = []; children.push(new ArpSeed(attrName, null, null, null, xml.get(attrName), null));
-			} 
+			}
 		}
 		for (node in xml) {
 			switch (node.nodeType) {

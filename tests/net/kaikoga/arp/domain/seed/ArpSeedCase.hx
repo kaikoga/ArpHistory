@@ -19,10 +19,8 @@ class ArpSeedCase {
 	public function testSimpleXmlSeed():Void {
 		var xml:Xml = Xml.parse('<data name="name6" ref="ref8" template="template14" value="value42" />').firstElement();
 		var seed:ArpSeed = ArpSeed.fromXml(xml);
-		assertMatch({typeName: "data", template: "template14", name: "name6", ref: "ref8", value: null}, toHash(seed));
+		assertMatch({typeName: "data", template: "template14", name: "name6", ref: "ref8", value: "value42"}, toHash(seed));
 		var iterator = seed.iterator();
-		assertTrue(iterator.hasNext());
-		assertMatch({typeName: "value", template: null, name: null, ref: null, value: "value42"}, toHash(iterator.next()));
 		assertFalse(iterator.hasNext());
 	}
 
@@ -31,6 +29,16 @@ class ArpSeedCase {
 		var seed:ArpSeed = ArpSeed.fromXml(xml);
 		assertMatch({typeName: "data", template: null, name: null, ref: null, value: "value128"}, toHash(seed));
 		var iterator = seed.iterator();
+		assertFalse(iterator.hasNext());
+	}
+
+	public function testXmlSeedWithAttrValue():Void {
+		var xml:Xml = Xml.parse('<data name="name6" ref="ref8" template="template14" valueKey="value42" />').firstElement();
+		var seed:ArpSeed = ArpSeed.fromXml(xml);
+		assertMatch({typeName: "data", template: "template14", name: "name6", ref: "ref8", value: null}, toHash(seed));
+		var iterator = seed.iterator();
+		assertTrue(iterator.hasNext());
+		assertMatch({typeName: "valueKey", template: null, name: null, ref: null, value: "value42"}, toHash(iterator.next()));
 		assertFalse(iterator.hasNext());
 	}
 
