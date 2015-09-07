@@ -20,7 +20,7 @@ abstract ArpParams(ArpParamsImpl) from ArpParamsImpl to ArpParamsImpl {
 		for (node in definition.split(",")) {
 			var array:Array<String> = node.split(":");
 			if (array.length == 1) {
-				this.set("face", array[0]);
+				this["face"] = array[0];
 				continue;
 			}
 			var key:String = array[0];
@@ -51,12 +51,12 @@ abstract ArpParams(ArpParamsImpl) from ArpParamsImpl to ArpParamsImpl {
 
 	public function copyFrom(source:ArpParams = null):ArpParams {
 		var name:String;
-		for (name in Reflect.fields(this)) {
-			Reflect.deleteField(this, name);
+		for (name in this.keys()) {
+			this.remove(name);
 		}
 		if (source != null) {
-			for (name in Reflect.fields(source)) {
-				this[name] = Reflect.field(source, name);
+			for (name in source.impl().keys()) {
+				this[name] = source[name];
 			}
 		}
 		return this;
@@ -64,8 +64,8 @@ abstract ArpParams(ArpParamsImpl) from ArpParamsImpl to ArpParamsImpl {
 
 	public function merge(source:ArpParams = null):ArpParams {
 		if (source != null) {
-			for (name in Reflect.fields(source)) {
-				this[name] = Reflect.field(source, name);
+			for (name in source.impl().keys()) {
+				this[name] = source[name];
 			}
 		}
 		return this;
@@ -73,13 +73,12 @@ abstract ArpParams(ArpParamsImpl) from ArpParamsImpl to ArpParamsImpl {
 
 	public function filter(source:ArpParams = null):ArpParams {
 		if (source != null) {
-			for (name in Reflect.fields(source)) {
+			for (name in source.impl().keys()) {
 				var value:Dynamic = this[name];
 				if (Std.is(value, ArpParamRewire)) {
 					this[name] = this[value.rewireFrom];
-				}
-				else {
-					this[name] = Reflect.field(source, name);
+				} else {
+					this[name] = source[name];
 				}
 			}
 		}
@@ -93,13 +92,13 @@ abstract ArpParams(ArpParamsImpl) from ArpParamsImpl to ArpParamsImpl {
 
 	public function toString():String {
 		var result:Array<Dynamic> = [];
-		for (name in Reflect.fields(this)) {
+		for (name in impl().keys()) {
 			var value:Dynamic = this[name];
 			if (Std.is(value, ArpDirection)) {
-				value = cast((value), ArpDirection).value + ":dir";
+				value = cast(value, ArpDirection).value + ":dir";
 			}
 			else if (Std.is(value, ArpParamRewire)) {
-				value = cast((value), ArpParamRewire).rewireFrom + ":rewire";
+				value = cast(value, ArpParamRewire).rewireFrom + ":rewire";
 			}
 			result.push(name + ":" + Std.string(value));
 		}
@@ -115,6 +114,10 @@ abstract ArpParams(ArpParamsImpl) from ArpParamsImpl to ArpParamsImpl {
 		output.writeUTF("params", Std.string(this));
 	}
 	*/
+
+	@:arrayAccess inline private function arrayGet(k:String):Dynamic return this[k];
+	@:arrayAccess inline private function arraySet(k:String, v:Dynamic):Dynamic return this[k] = v;
+	inline private function impl():ArpParamsImpl return this;
 }
 
 class ArpParamRewire {

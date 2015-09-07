@@ -132,8 +132,8 @@ class ArpPosition implements IFrameMove {
 				case "y": this.y = Std.parseFloat(child.value());
 				case "z": this.z = Std.parseFloat(child.value());
 				case "gridX": this.x = Std.parseFloat(child.value()); this._explicitGridSize = 1;
-				case "gridY": this.y = Std.parseFloat(child.value());this._explicitGridSize = 1;
-				case "gridZ": this.z = Std.parseFloat(child.value());this._explicitGridSize = 1;
+				case "gridY": this.y = Std.parseFloat(child.value()); this._explicitGridSize = 1;
+				case "gridZ": this.z = Std.parseFloat(child.value()); this._explicitGridSize = 1;
 				case "dir": this.dir.initWithString(child.value());
 			}
 		}
@@ -150,11 +150,12 @@ class ArpPosition implements IFrameMove {
 		else {
 			this._explicitGridSize = 0;
 		}
-		var ereg:EReg = ~/[-+0-9.]*/g;
-		if (ereg.match(definition)) this.x = Std.parseFloat(ereg.matched(0));
-		if (ereg.match(definition)) this.y = Std.parseFloat(ereg.matched(1));
-		if (ereg.match(definition)) this.z = Std.parseFloat(ereg.matched(2));
-		if (ereg.match(definition)) this.dir.valueDegree = Std.parseFloat(ereg.matched(3));
+		var ereg:EReg = ~/[^-0-9.]+/g;
+		var array:Array<String> = ereg.split(definition);
+		this.x = ArpStructsUtil.parseFloatDefault(array[0], 0.0);
+		this.y = ArpStructsUtil.parseFloatDefault(array[1], 0.0);
+		this.z = ArpStructsUtil.parseFloatDefault(array[2], 0.0);
+		this.dir.valueDegree = ArpStructsUtil.parseFloatDefault(array[3], 0.0);
 		return this;
 	}
 

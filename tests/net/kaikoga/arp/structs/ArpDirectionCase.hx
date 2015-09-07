@@ -2,7 +2,7 @@
 
 import net.kaikoga.arp.domain.seed.ArpSeed;
 
-import org.hamcrest.number.IsCloseTo;
+import org.hamcrest.Matchers;
 import picotest.PicoAssert.*;
 
 class ArpDirectionCase {
@@ -14,9 +14,9 @@ class ArpDirectionCase {
 		var ERR:Float = 0.01;
 		var dir:ArpDirection = new ArpDirection();
 		dir.initWithSeed(ArpSeed.fromXmlString('<dir value="10" />'));
-		assertMatch(new IsCloseTo(10, ERR), dir.valueDegree);
+		assertMatch(Matchers.closeTo(10, ERR), dir.valueDegree);
 		dir.initWithSeed(ArpSeed.fromXmlString('<dir hoge="20" />').children()[0]);
-		assertMatch(new IsCloseTo(20, ERR), dir.valueDegree);
+		assertMatch(Matchers.closeTo(20, ERR), dir.valueDegree);
 	}
 
 	public function testClone():Void {

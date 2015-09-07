@@ -2,7 +2,7 @@
 
 import net.kaikoga.arp.domain.seed.ArpSeed;
 
-import org.hamcrest.number.IsCloseTo;
+import org.hamcrest.Matchers;
 import picotest.PicoAssert.*;
 
 class ArpPositionCase {
@@ -18,31 +18,31 @@ class ArpPositionCase {
 		assertMatch(2, pos.y);
 		assertMatch(3, pos.z);
 		assertMatch(0, pos.gridSize);
-		assertMatch(new IsCloseTo(4, ERR), pos.dir.valueDegree);
+		assertMatch(Matchers.closeTo(4, ERR), pos.dir.valueDegree);
 		pos.initWithSeed(ArpSeed.fromXmlString('<pos gridX="1" gridY="2" gridZ="3" dir="4" />'));
 		assertMatch(1, pos.x);
 		assertMatch(2, pos.y);
 		assertMatch(3, pos.z);
 		assertMatch(1, pos.gridSize);
-		assertMatch(new IsCloseTo(4, ERR), pos.dir.valueDegree);
+		assertMatch(Matchers.closeTo(4, ERR), pos.dir.valueDegree);
 		pos.initWithSeed(ArpSeed.fromXmlString('<pos hoge="5,6,7,8" />').children()[0]);
 		assertMatch(5, pos.x);
 		assertMatch(6, pos.y);
 		assertMatch(7, pos.z);
 		assertMatch(0, pos.gridSize);
-		assertMatch(new IsCloseTo(8, ERR), pos.dir.valueDegree);
+		assertMatch(Matchers.closeTo(8, ERR), pos.dir.valueDegree);
 		pos.initWithSeed(ArpSeed.fromXmlString('<pos hoge="g5,6,7,8" />').children()[0]);
 		assertMatch(5, pos.x);
 		assertMatch(6, pos.y);
 		assertMatch(7, pos.z);
 		assertMatch(1, pos.gridSize);
-		assertMatch(new IsCloseTo(8, ERR), pos.dir.valueDegree);
+		assertMatch(Matchers.closeTo(8, ERR), pos.dir.valueDegree);
 		pos.initWithSeed(ArpSeed.fromXmlString('<pos hoge="" />').children()[0]);
 		assertMatch(0, pos.x);
 		assertMatch(0, pos.y);
 		assertMatch(0, pos.z);
 		assertMatch(0, pos.gridSize);
-		assertMatch(new IsCloseTo(0, ERR), pos.dir.valueDegree);
+		assertMatch(Matchers.closeTo(0, ERR), pos.dir.valueDegree);
 	}
 
 	public function testGridSize():Void {

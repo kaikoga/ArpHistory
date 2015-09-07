@@ -17,4 +17,9 @@ class ArpStructsUtil {
 		}
 		return value;
 	}
+
+	inline public static function parseFloatDefault(string:String, defaultValue:Float):Float {
+		var value:Float = Std.parseFloat(string);
+		return Math.isNaN(value) ? defaultValue : value;
+	}
 }
