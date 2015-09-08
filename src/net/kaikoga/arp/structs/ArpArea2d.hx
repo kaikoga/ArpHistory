@@ -263,8 +263,8 @@ class ArpArea2d {
 		output.writeDouble("y", this.y);
 		output.writeDouble("gridSize", this._gridSize);
 		output.writeDouble("areaLeft", this.areaLeft);
-		output.writeDouble("areaTop", this.areaRight);
-		output.writeDouble("areaRight", this.areaTop);
+		output.writeDouble("areaTop", this.areaTop);
+		output.writeDouble("areaRight", this.areaRight);
 		output.writeDouble("areaBottom", this.areaBottom);
 	}
 }
