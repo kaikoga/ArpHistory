@@ -1,5 +1,7 @@
 ﻿package net.kaikoga.arp.structs;
 
+import net.kaikoga.arp.persistable.IPersistInput;
+import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 
 #if (!(flash || cpp)) DONTCOMPILE #end
@@ -153,13 +155,11 @@ class ArpDirection {
 		return "[ArpDirection " + this.valueDegree + " ]";
 	}
 
-	/*
 	public function readSelf(input:IPersistInput):Void {
-		this.value = uint(input.readUnsignedInt("dir"));
+		this.value = Std.int(input.readUInt32("dir"));
 	}
 
 	public function writeSelf(output:IPersistOutput):Void {
-		output.writeUnsignedInt("dir", this.value);
+		output.writeUInt32("dir", this.value);
 	}
-	*/
 }

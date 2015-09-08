@@ -1,5 +1,7 @@
 package net.kaikoga.arp.structs;
 
+import net.kaikoga.arp.persistable.IPersistOutput;
+import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 
 #if openfl
@@ -107,15 +109,13 @@ class ArpColor {
 
 	#end
 
-	/*
 	public function readSelf(input:IPersistInput):Void {
-		this.value32 = Int(input.readUnsignedInt("color"));
+		this.value32 = input.readUInt32("color");
 	}
 
 	public function writeSelf(output:IPersistOutput):Void {
-		output.writeUnsignedInt("color", this.value32);
+		output.writeUInt32("color", this.value32);
 	}
-	*/
 }
 
 

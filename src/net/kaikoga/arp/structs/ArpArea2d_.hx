@@ -1,14 +1,14 @@
 package net.kaikoga.arp.structs;
 
-
+import net.kaikoga.arp.persistable.IPersistInput;
+import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.domain.seed.ArpSeed;
-import net.kaikoga.arp.domain.seed.IArpSeed;
 
 /**
 	handled as mutable
 */
 
-class ArpArea2D {
+class ArpArea2d_ {
 
 	public var x:Float = 0;
 	public var y:Float = 0;
@@ -200,7 +200,7 @@ class ArpArea2D {
 		super();
 	}
 
-	public function initWithSeed(seed:ArpSeed):ArpArea2D {
+	public function initWithSeed(seed:ArpSeed):ArpArea2d_ {
 		if (seed == null) return this;
 		if (!seed.hasChildren()) return this.initWithString(seed.value());
 		// TODO
@@ -213,7 +213,7 @@ class ArpArea2D {
 		return this;
 	}
 
-	public function initWithString(definition:String):ArpArea2D {
+	public function initWithString(definition:String):ArpArea2d_ {
 		if (definition == null) return this;
 		var ereg:Ereg = ~/^\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*$/;
 		if (ereg.match(definition)) {
@@ -227,13 +227,13 @@ class ArpArea2D {
 		return this;
 	}
 
-	public function clone():ArpArea2D {
-		var result:ArpArea2D = new ArpArea2D();
+	public function clone():ArpArea2d_ {
+		var result:ArpArea2d_ = new ArpArea2d_();
 		result.copyFrom(this);
 		return result;
 	}
 
-	public function copyFrom(source:ArpArea2D):ArpArea2D {
+	public function copyFrom(source:ArpArea2d_):ArpArea2d_ {
 		this.x = source.width;
 		this.y = source.height;
 		this._gridSize = source._gridSize;
@@ -245,10 +245,9 @@ class ArpArea2D {
 	}
 
 	public function toString():String {
-		return "[ArpArea2D (" + this.x + ", " + this.y + ") {" + this.areaLeft + ", " + this.areaTop + ", " + this.width + ", " + this.height + "} ]";
+		return "[ArpArea2d (" + this.x + ", " + this.y + ") {" + this.areaLeft + ", " + this.areaTop + ", " + this.width + ", " + this.height + "} ]";
 	}
 
-	/*
 	public function readSelf(input:IPersistInput):Void {
 		this.x = input.readDouble("x");
 		this.y = input.readDouble("y");
@@ -268,7 +267,6 @@ class ArpArea2D {
 		output.writeDouble("areaRight", this.areaTop);
 		output.writeDouble("areaBottom", this.areaBottom);
 	}
-	*/
 }
 
 

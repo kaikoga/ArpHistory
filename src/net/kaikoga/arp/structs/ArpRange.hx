@@ -1,5 +1,7 @@
 package net.kaikoga.arp.structs;
 
+import net.kaikoga.arp.persistable.IPersistOutput;
+import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 
 class ArpRange {
@@ -133,7 +135,6 @@ class ArpRange {
 		return Std.int(this.minValue + Math.random() * (Math.ceil(this.maxValue) - Math.floor(this.minValue) + 1));
 	}
 
-	/*
 	public function readSelf(input:IPersistInput):Void {
 		this.minValue = input.readDouble("min");
 		this.maxValue = input.readDouble("max");
@@ -143,7 +144,6 @@ class ArpRange {
 		output.writeDouble("min", this.minValue);
 		output.writeDouble("max", this.maxValue);
 	}
-	*/
 }
 
 

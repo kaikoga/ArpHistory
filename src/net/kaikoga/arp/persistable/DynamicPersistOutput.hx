@@ -3,7 +3,7 @@ package net.kaikoga.arp.persistable;
 import haxe.io.BytesOutput;
 import haxe.io.Bytes;
 
-class ObjectPersistOutput implements IPersistOutput {
+class DynamicPersistOutput implements IPersistOutput {
 
 	private var _data:Dynamic;
 	public var data(get, never):Dynamic;
@@ -27,7 +27,7 @@ class ObjectPersistOutput implements IPersistOutput {
 		this._keys.push(value);
 	}
 	public function writePersistable(name:String, persistable:IPersistable):Void {
-		var output:ObjectPersistOutput = new ObjectPersistOutput(null, this._persistLevel);
+		var output:DynamicPersistOutput = new DynamicPersistOutput(null, this._persistLevel);
 		persistable.writeSelf(output);
 		Reflect.setField(this._data, name, output.data);
 	}

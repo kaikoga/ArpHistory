@@ -1,12 +1,15 @@
 ﻿package net.kaikoga.arp.structs;
 
+import net.kaikoga.arp.io.OutputWrapper;
+import haxe.io.BytesInput;
+import net.kaikoga.arp.io.InputWrapper;
+import net.kaikoga.arp.persistable.TaggedPersistInput;
+import net.kaikoga.arp.persistable.TaggedPersistOutput;
+import haxe.io.BytesOutput;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 import picotest.PicoAssert.*;
 
 class ArpRangeCase {
-
-	public function new() {
-	}
 
 	public function testGetRange():Void {
 		assertMatch(0, new ArpRange(20, 20).range);
@@ -94,17 +97,14 @@ class ArpRangeCase {
 		}
 	}
 
-	/*
 	public function testPersist():Void {
 		var range:ArpRange = new ArpRange(30, 50);
 		var range2:ArpRange = new ArpRange();
-		var bytes:ByteArray = new ByteArray();
-		range.writeSelf(new TaggedPersistOutput(bytes));
-		bytes.position = 0;
-		range2.readSelf(new TaggedPersistInput(bytes));
+		var bytesOutput:BytesOutput = new BytesOutput();
+		range.writeSelf(new TaggedPersistOutput(new OutputWrapper(bytesOutput)));
+		range2.readSelf(new TaggedPersistInput(new InputWrapper(new BytesInput(bytesOutput.getBytes()))));
 		assertEquals(range.minValue, range2.minValue);
 		assertEquals(range.maxValue, range2.maxValue);
 	}
-	*/
 
 }

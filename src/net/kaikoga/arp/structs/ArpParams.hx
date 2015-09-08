@@ -1,5 +1,7 @@
 package net.kaikoga.arp.structs;
 
+import net.kaikoga.arp.persistable.IPersistOutput;
+import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.structs.ArpStructsUtil;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.structs.ArpDirection;
@@ -37,7 +39,6 @@ abstract ArpParams(ArpParamsImpl) from ArpParamsImpl to ArpParamsImpl {
 					} else {
 						this[key] = value;
 					}
-					break;
 			}
 		}
 		return this;
@@ -105,15 +106,13 @@ abstract ArpParams(ArpParamsImpl) from ArpParamsImpl to ArpParamsImpl {
 		return result.join(",");
 	}
 
-	/*
 	public function readSelf(input:IPersistInput):Void {
-		this.initWithString(input.readUTF("params"));
+		initWithString(input.readUtf("params"));
 	}
 
 	public function writeSelf(output:IPersistOutput):Void {
-		output.writeUTF("params", Std.string(this));
+		output.writeUtf("params", toString());
 	}
-	*/
 
 	@:arrayAccess inline private function arrayGet(k:String):Dynamic return this[k];
 	@:arrayAccess inline private function arraySet(k:String, v:Dynamic):Dynamic return this[k] = v;

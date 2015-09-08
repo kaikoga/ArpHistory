@@ -1,9 +1,10 @@
 package net.kaikoga.arp.structs;
 
+import net.kaikoga.arp.persistable.IPersistInput;
+import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.structs.ArpDirection;
 import net.kaikoga.arp.structs.IFrameMove;
-
 
 /**
 	handled as mutable
@@ -290,12 +291,11 @@ class ArpPosition implements IFrameMove {
 		return ArpDirection.fromRadian(valueRadian);
 	}
 
-	/*
 	public function readSelf(input:IPersistInput):Void {
 		this.x = input.readDouble("x");
 		this.y = input.readDouble("y");
 		this.z = input.readDouble("z");
-		this.gridSize = input.readInt("gridSize");
+		this.gridSize = input.readDouble("gridSize");
 		this.dir.readSelf(input);
 		this.tx = input.readDouble("tx");
 		this.ty = input.readDouble("ty");
@@ -307,14 +307,13 @@ class ArpPosition implements IFrameMove {
 		output.writeDouble("x", this.x);
 		output.writeDouble("y", this.y);
 		output.writeDouble("z", this.z);
-		output.writeInt("gridSize", this.gridSize);
+		output.writeDouble("gridSize", this.gridSize);
 		this.dir.writeSelf(output);
 		output.writeDouble("tx", this.tx);
 		output.writeDouble("ty", this.ty);
 		output.writeDouble("tz", this.tz);
 		output.writeDouble("period", this.period);
 	}
-	*/
 }
 
 

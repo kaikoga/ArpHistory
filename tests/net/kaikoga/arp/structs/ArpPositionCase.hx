@@ -1,14 +1,17 @@
 ﻿package net.kaikoga.arp.structs;
 
+import haxe.io.BytesOutput;
+import net.kaikoga.arp.persistable.TaggedPersistOutput;
+import net.kaikoga.arp.io.OutputWrapper;
+import net.kaikoga.arp.persistable.TaggedPersistInput;
+import net.kaikoga.arp.io.InputWrapper;
+import haxe.io.BytesInput;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 
 import org.hamcrest.Matchers;
 import picotest.PicoAssert.*;
 
 class ArpPositionCase {
-
-	public function ArpPositionTest() {
-	}
 
 	public function testInitWithSeed():Void {
 		var ERR:Float = 0.01;
@@ -248,19 +251,16 @@ class ArpPositionCase {
 		assertMatch(pos.gridSize, pos2.gridSize);
 	}
 
-	/*
 	public function testPersist():Void {
 		var pos:ArpPosition = new ArpPosition(1, 2, 3, 4, 5);
 		var pos2:ArpPosition = new ArpPosition();
-		var bytes:ByteArray = new ByteArray();
-		pos.writeSelf(new TaggedPersistOutput(bytes));
-		bytes.position = 0;
-		pos2.readSelf(new TaggedPersistInput(bytes));
+		var bytesOutput:BytesOutput = new BytesOutput();
+		pos.writeSelf(new TaggedPersistOutput(new OutputWrapper(bytesOutput)));
+		pos2.readSelf(new TaggedPersistInput(new InputWrapper(new BytesInput(bytesOutput.getBytes()))));
 		assertMatch(pos.x, pos2.x);
 		assertMatch(pos.y, pos2.y);
 		assertMatch(pos.z, pos2.z);
 		assertMatch(pos.dir.value, pos2.dir.value);
 		assertMatch(pos.gridSize, pos2.gridSize);
 	}
-	*/
 }

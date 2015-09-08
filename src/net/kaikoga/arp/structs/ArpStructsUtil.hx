@@ -2,7 +2,7 @@
 
 class ArpStructsUtil {
 	inline public static function isNumeric(value:String):Bool {
-		return ~/[-+.0-9]*/.match(value);
+		return ~/^[-+.0-9]+$/.match(value);
 	}
 
 	public static function parseHex(str:String):Int {

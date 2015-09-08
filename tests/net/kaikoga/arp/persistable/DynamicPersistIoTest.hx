@@ -1,7 +1,7 @@
 package net.kaikoga.arp.persistable;
 
-import net.kaikoga.arp.persistable.ObjectPersistInput;
-import net.kaikoga.arp.persistable.ObjectPersistOutput;
+import net.kaikoga.arp.persistable.DynamicPersistInput;
+import net.kaikoga.arp.persistable.DynamicPersistOutput;
 import net.kaikoga.arp.persistable.MockPersistable;
 
 import picotest.PicoAssert.*;
@@ -9,16 +9,16 @@ import picotest.PicoAssert.*;
 class DynamicPersistIoTest {
 
 	private var data:Dynamic;
-	private var output:ObjectPersistOutput;
-	private var input:ObjectPersistInput;
+	private var output:DynamicPersistOutput;
+	private var input:DynamicPersistInput;
 
 	public function new() {
 	}
 
 	public function setup():Void {
 		this.data = { };
-		this.output = new ObjectPersistOutput(this.data);
-		this.input = new ObjectPersistInput(this.data);
+		this.output = new DynamicPersistOutput(this.data);
+		this.input = new DynamicPersistInput(this.data);
 	}
 
 	// TODO unit test

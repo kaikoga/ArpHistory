@@ -1,10 +1,9 @@
 package net.kaikoga.arp.structs;
 
+import net.kaikoga.arp.persistable.IPersistOutput;
+import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.structs.ArpPosition;
-
-
-import net.kaikoga.arp.domain.seed.IArpSeed;
 
 /**
 	* handled as immutable
@@ -136,7 +135,6 @@ class ArpHitArea {
 		return "[ArpHitArea {" + this.areaLeft + ".." + this.areaRight + "," + this.areaTop + ".." + this.areaBottom + "," + this.areaHind + ".." + this.areaFore + "} ]";
 	}
 
-	/*
 	public function readSelf(input:IPersistInput):Void {
 		this.areaLeft = input.readDouble("areaLeft");
 		this.areaRight = input.readDouble("areaRight");
@@ -154,7 +152,6 @@ class ArpHitArea {
 		output.writeDouble("areaHind", this.areaHind);
 		output.writeDouble("areaFore", this.areaFore);
 	}
-	*/
 }
 
 

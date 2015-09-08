@@ -2,7 +2,7 @@ package net.kaikoga.arp.persistable;
 
 import haxe.io.Bytes;
 
-class ObjectPersistInput implements IPersistInput {
+class DynamicPersistInput implements IPersistInput {
 
 	private var _data:Dynamic;
 	private var _keys:Array<Dynamic>;
@@ -20,9 +20,9 @@ class ObjectPersistInput implements IPersistInput {
 
 	public function readName():String return (this._keys != null) ? this._keys[keyIndex++] : null;
 	public function readPersistable(name:String, persistable:IPersistable):Void {
-		persistable.readSelf(new ObjectPersistInput(Reflect.field(this._data, name), this._persistLevel));
+		persistable.readSelf(new DynamicPersistInput(Reflect.field(this._data, name), this._persistLevel));
 	}
-	
+
 	public function readBool(name:String):Bool return Reflect.field(this._data, name);
 	public function readInt32(name:String):Int return Reflect.field(this._data, name);
 	public function readUInt32(name:String):UInt return Reflect.field(this._data, name);
