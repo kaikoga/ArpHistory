@@ -1,7 +1,6 @@
 package net.kaikoga.arp.persistable;
 
-
-import flash.utils.ByteArray;
+import haxe.io.Bytes;
 
 interface IPersistInput {
 
@@ -16,7 +15,6 @@ interface IPersistInput {
 	function readDouble(name:String):Float;
 
 	function readUtf(name:String):String;
-	function readBytes(name:String, bytes:ByteArray, offset:Int = 0, length:Int = 0):Void;
-	function readBlob(name:String, bytes:ByteArray, offset:Int = 0):Void;
+	function readBlob(name:String):Bytes;
 }
 

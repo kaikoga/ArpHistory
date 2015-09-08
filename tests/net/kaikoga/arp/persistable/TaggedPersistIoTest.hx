@@ -1,52 +1,40 @@
 package net.kaikoga.arp.persistable;
 
-import net.kaikoga.arp.persistable.IPersistInput;
+import haxe.io.BytesOutput;
+import net.kaikoga.arp.io.OutputWrapper;
+import net.kaikoga.arp.io.InputWrapper;
+import haxe.io.BytesInput;
 import net.kaikoga.arp.persistable.TaggedPersistInput;
 import net.kaikoga.arp.persistable.TaggedPersistOutput;
-import net.kaikoga.arp.persistable.TestPersistable;
+import net.kaikoga.arp.persistable.MockPersistable;
 
-
-import flash.utils.ByteArray;
-
-import org.flexunit.asserts.AssertEquals;
+import picotest.PicoAssert.*;
 
 class TaggedPersistIoTest {
-	private var input(get, never):IPersistInput;
 
-
-	private var bytes:ByteArray;
+	private var bytesOutput:BytesOutput;
 	private var output:TaggedPersistOutput;
+	private var input(get, never):IPersistInput;
 	private var _input:TaggedPersistInput;
-
-	private function get_Input():IPersistInput {
-		if (!this._input) {
-			this.bytes.position = 0;
-			this._input = new TaggedPersistInput(this.bytes);
-		}
-		return this._input;
+	private function get_input():IPersistInput {
+		if (this._input != null) return this._input;
+		return this._input = new TaggedPersistInput(new InputWrapper(new BytesInput(this.bytesOutput.getBytes())));
 	}
 
 	public function new() {
-		super();
 	}
-
-	@:meta(Before())
 
 	public function setup():Void {
-		this.bytes = new ByteArray();
-		this.output = new TaggedPersistOutput(this.bytes);
-		this._input = null;
+		this.bytesOutput = new BytesOutput();
+		this.output = new TaggedPersistOutput(new OutputWrapper(this.bytesOutput));
 	}
 
-	@:meta(Test())
-
-	public function persistableTest():Void {
-		var obj:TestPersistable = new TestPersistable(true);
+	// TODO unit test
+	public function testPersistable():Void {
+		var obj:MockPersistable = new MockPersistable(true);
 		this.output.writePersistable("obj", obj);
-		var obj2:TestPersistable = new TestPersistable(true);
+		var obj2:MockPersistable = new MockPersistable(true);
 		this.input.readPersistable("obj", obj2);
-		Assert.areEqual(Std.string(obj), Std.string(obj2));
+		assertEquals(Std.string(obj), Std.string(obj2));
 	}
 }
-
-

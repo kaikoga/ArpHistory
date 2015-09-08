@@ -1,5 +1,8 @@
 package net.kaikoga.arp;
 
+import net.kaikoga.arp.persistable.TaggedPersistIoTest;
+import net.kaikoga.arp.persistable.PackedPersistIoTest;
+import net.kaikoga.arp.persistable.DynamicPersistIoTest;
 import net.kaikoga.arp.structs.ArpColorCase;
 import net.kaikoga.arp.structs.ArpDirectionCase;
 import net.kaikoga.arp.structs.ArpPositionCase;
@@ -18,6 +21,10 @@ class ArpDomainTestSuite {
 		r.load(ArpDomainCase);
 		r.load(ArpDirectoryQueryCase);
 		r.load(ArpObjectQueryCase);
+
+		r.load(DynamicPersistIoTest);
+		r.load(PackedPersistIoTest);
+		r.load(TaggedPersistIoTest);
 
 		r.load(ArpColorCase);
 		r.load(ArpDirectionCase);

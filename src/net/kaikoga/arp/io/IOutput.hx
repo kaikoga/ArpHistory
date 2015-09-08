@@ -15,13 +15,13 @@ interface IOutput {
 	function writeUInt16(value:UInt):Void;
 	function writeUInt32(value:UInt):Void;
 
-	function writeSingle(value:Float):Void;
+	function writeFloat(value:Float):Void;
 	function writeDouble(value:Float):Void;
 
 	function writeBytes(bytes:Bytes, offset:UInt = 0, length:UInt = 0):Void;
 	function writeUtfBytes(value:String):Void;
 
-	function writeBlob(bytes:Bytes, offset:Int = 0, length:Int = 0):Void;
+	function writeBlob(value:Bytes):Void;
 	function writeUtfBlob(value:String):Void;
 }
 

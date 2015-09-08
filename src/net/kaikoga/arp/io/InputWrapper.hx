@@ -2,8 +2,6 @@ package net.kaikoga.arp.io;
 
 import haxe.io.Bytes;
 import haxe.io.Input;
-import net.kaikoga.net.IInput;
-import net.kaikoga.net.IOutput;
 
 class InputWrapper implements IInput {
 	
@@ -23,21 +21,23 @@ class InputWrapper implements IInput {
 
 	public function readUInt8():UInt return this.input.readByte();
 	public function readUInt16():UInt return this.input.readUInt16();
-	public function readUInt32():UInt return this.input.readUInt32();
+	public function readUInt32():UInt return cast this.input.readInt32();
 
-	public function readSingle():Float return this.input.readFloat();
+	public function readFloat():Float return this.input.readFloat();
 	public function readDouble():Float return this.input.readDouble();
 
 	public function readBytes(bytes:Bytes, offset:UInt = 0, length:UInt = 0):Void {
 		return this.input.readFullBytes(bytes, offset, length);
 	}
 	public function readUtfBytes(length:UInt):String {
-		return this.input.readFullBytes(bytes, offset, length).toString();
+		return this.input.readString(length);
 	}
 
-	public function readBlob(bytes:Bytes = null, offset:Int = 0):Void {
+	public function readBlob():Bytes {
 		var length:Int = this.input.readInt32();
-		return this.input.readFullBytes(bytes, offset, length);
+		var bytes:Bytes = Bytes.alloc(length);
+		this.input.readFullBytes(bytes, 0, length);
+		return bytes;
 	}
 	public function readUtfBlob():String {
 		var length:Int = this.input.readInt32();

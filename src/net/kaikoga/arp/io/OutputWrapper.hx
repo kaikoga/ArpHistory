@@ -2,8 +2,6 @@ package net.kaikoga.arp.io;
 
 import haxe.io.Bytes;
 import haxe.io.Output;
-import net.kaikoga.net.IInput;
-import net.kaikoga.net.IOutput;
 
 class OutputWrapper implements IOutput
 {
@@ -23,9 +21,9 @@ class OutputWrapper implements IOutput
 
 	public function writeUInt8(value:UInt):Void this.output.writeByte(value);
 	public function writeUInt16(value:UInt):Void this.output.writeUInt16(value);
-	public function writeUInt32(value:UInt):Void this.output.writeUInt32(value);
+	public function writeUInt32(value:UInt):Void this.output.writeInt32(cast value);
 
-	public function writeSingle(value:Float):Void this.output.writeFloat(value);
+	public function writeFloat(value:Float):Void this.output.writeFloat(value);
 	public function writeDouble(value:Float):Void this.output.writeDouble(value);
 
 	public function writeBytes(bytes:Bytes, offset:UInt = 0, length:UInt = 0):Void {
@@ -36,14 +34,12 @@ class OutputWrapper implements IOutput
 		this.writeBytes(bytes, 0, bytes.length);
 	}
 
-	public function writeBlob(bytes:Bytes, offset:Int = 0, length:Int = 0):Void {
-		this.output.writeInt32(length);
-		this.output.writeFullBytes(bytes, offset, length);
+	public function writeBlob(bytes:Bytes):Void {
+		this.output.writeInt32(bytes.length);
+		this.output.writeFullBytes(bytes, 0, bytes.length);
 	}
 	public function writeUtfBlob(value:String):Void {
-		var bytes:Bytes = Bytes.ofString(value);
-		this.output.writeInt32(bytes.length);
-		this.writeBlob(bytes, 0, bytes.length);
+		this.writeBlob(Bytes.ofString(value));
 	}
 }
 

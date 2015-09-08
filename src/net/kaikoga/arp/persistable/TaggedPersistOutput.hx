@@ -1,96 +1,63 @@
 package net.kaikoga.arp.persistable;
 
-
-import flash.utils.ByteArray;
-import flash.utils.IDataOutput;
+import net.kaikoga.arp.io.OutputWrapper;
+import haxe.io.BytesOutput;
+import net.kaikoga.arp.io.IOutput;
+import haxe.io.Bytes;
 
 class TaggedPersistOutput implements IPersistOutput {
-	public var persistLevel(get, set):Int;
 
+	private var _output:IOutput;
 
-	private var _output:IDataOutput;
-
+	public var persistLevel(get, never):Int;
 	private var _persistLevel:Int = 0;
+	private function get_persistLevel():Int return this._persistLevel;
 
-	private function get_PersistLevel():Int {
-		return this._persistLevel;
-	}
 
-	private function set_PersistLevel(value:Int):Int {
-		this._persistLevel = value;
-		return value;
-	}
-
-	public function new(output:IDataOutput, persistLevel:Int = 0) {
-		super();
+	public function new(output:IOutput, persistLevel:Int = 0) {
 		this._output = output;
 		this._persistLevel = persistLevel;
 	}
 
-	// TEST
-
 	public function writeName(value:String):Void {
-		this._output.writeUTF("");
-		this._output.writeUTF(value);
+		this._output.writeUtfBlob("");
+		this._output.writeUtfBlob(value);
 	}
-
-	// TEST
 
 	public function writePersistable(name:String, persistable:IPersistable):Void {
-		var bytes:ByteArray = new ByteArray();
-		persistable.writeSelf(new TaggedPersistOutput(bytes, this._persistLevel));
-		this.writeBlob(name, bytes);
+		var bytesOutput:BytesOutput = new BytesOutput();
+		persistable.writeSelf(new TaggedPersistOutput(new OutputWrapper(bytesOutput), this._persistLevel));
+		this.writeBlob(name, bytesOutput.getBytes());
 	}
 
-	// TEST
-
-	public function writeBoolean(name:String, value:Bool):Void {
-		this._output.writeUTF(name);
-		this._output.writeBoolean(value);
+	public function writeBool(name:String, value:Bool):Void {
+		this._output.writeUtfBlob(name);
+		this._output.writeBool(value);
 	}
 
-	// TEST
-
-	public function writeInt(name:String, value:Int):Void {
-		this._output.writeUTF(name);
-		this._output.writeInt(value);
+	public function writeInt32(name:String, value:Int):Void {
+		this._output.writeUtfBlob(name);
+		this._output.writeInt32(value);
 	}
 
-	// TEST
-
-	public function writeUnsignedInt(name:String, value:Int):Void {
-		this._output.writeUTF(name);
-		this._output.writeUnsignedInt(value);
+	public function writeUInt32(name:String, value:Int):Void {
+		this._output.writeUtfBlob(name);
+		this._output.writeUInt32(value);
 	}
-
-	// TEST
 
 	public function writeDouble(name:String, value:Float):Void {
-		this._output.writeUTF(name);
+		this._output.writeUtfBlob(name);
 		this._output.writeDouble(value);
 	}
 
-	// TEST
-
-	public function writeUTF(name:String, value:String):Void {
-		this._output.writeUTF(name);
-		this._output.writeUTF(value);
+	public function writeUtf(name:String, value:String):Void {
+		this._output.writeUtfBlob(name);
+		this._output.writeUtfBlob(value);
 	}
 
-	// TEST
-
-	public function writeBytes(name:String, bytes:ByteArray, offset:Int = 0, length:Int = 0):Void {
-		this._output.writeUTF(name);
-		this._output.writeBytes(bytes, offset, length);
-	}
-
-	// TEST
-
-	public function writeBlob(name:String, bytes:ByteArray, offset:Int = 0, length:Int = 0):Void {
-		length || = bytes.length - offset;
-		this._output.writeUTF(name);
-		this._output.writeInt(length);
-		this._output.writeBytes(bytes, offset, length);
+	public function writeBlob(name:String, bytes:Bytes):Void {
+		this._output.writeUtfBlob(name);
+		this._output.writeBlob(bytes);
 	}
 }
 
