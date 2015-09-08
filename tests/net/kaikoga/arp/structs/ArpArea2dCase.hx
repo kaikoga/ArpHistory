@@ -13,20 +13,20 @@ import picotest.PicoAssert.*;
 class ArpArea2dCase {
 
 	public function testClone():Void {
-		var area:ArpArea2d_ = new ArpArea2d_();
-		var area2:ArpArea2d_ = area.clone();
+		var area:ArpArea2d = new ArpArea2d();
+		var area2:ArpArea2d = area.clone();
 		assertMatch(area.x, area2.x);
 	}
 
 	public function testCopyFrom():Void {
-		var area:ArpArea2d_ = new ArpArea2d_();
-		var area2:ArpArea2d_ = new ArpArea2d_().copyFrom(area);
+		var area:ArpArea2d = new ArpArea2d();
+		var area2:ArpArea2d = new ArpArea2d().copyFrom(area);
 		assertMatch(area.x, area2.x);
 	}
 
 	public function testPersist():Void {
-		var area:ArpArea2d_ = new ArpArea2d_();
-		var area2:ArpArea2d_ = new ArpArea2d_();
+		var area:ArpArea2d = new ArpArea2d();
+		var area2:ArpArea2d = new ArpArea2d();
 		var bytesOutput:BytesOutput = new BytesOutput();
 		area.writeSelf(new TaggedPersistOutput(new OutputWrapper(bytesOutput)));
 		area2.readSelf(new TaggedPersistInput(new InputWrapper(new BytesInput(bytesOutput.getBytes()))));

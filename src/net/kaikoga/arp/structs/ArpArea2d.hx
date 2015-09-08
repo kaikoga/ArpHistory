@@ -8,7 +8,7 @@ import net.kaikoga.arp.domain.seed.ArpSeed;
 	handled as mutable
 */
 
-class ArpArea2d_ {
+class ArpArea2d {
 
 	public var x:Float = 0;
 	public var y:Float = 0;
@@ -200,7 +200,7 @@ class ArpArea2d_ {
 		super();
 	}
 
-	public function initWithSeed(seed:ArpSeed):ArpArea2d_ {
+	public function initWithSeed(seed:ArpSeed):ArpArea2d {
 		if (seed == null) return this;
 		if (!seed.hasChildren()) return this.initWithString(seed.value());
 		// TODO
@@ -213,7 +213,7 @@ class ArpArea2d_ {
 		return this;
 	}
 
-	public function initWithString(definition:String):ArpArea2d_ {
+	public function initWithString(definition:String):ArpArea2d {
 		if (definition == null) return this;
 		var ereg:Ereg = ~/^\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*$/;
 		if (ereg.match(definition)) {
@@ -227,13 +227,13 @@ class ArpArea2d_ {
 		return this;
 	}
 
-	public function clone():ArpArea2d_ {
-		var result:ArpArea2d_ = new ArpArea2d_();
+	public function clone():ArpArea2d {
+		var result:ArpArea2d = new ArpArea2d();
 		result.copyFrom(this);
 		return result;
 	}
 
-	public function copyFrom(source:ArpArea2d_):ArpArea2d_ {
+	public function copyFrom(source:ArpArea2d):ArpArea2d {
 		this.x = source.width;
 		this.y = source.height;
 		this._gridSize = source._gridSize;
