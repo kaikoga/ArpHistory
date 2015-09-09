@@ -6,7 +6,7 @@ import net.kaikoga.arp.persistable.MockPersistable;
 
 import picotest.PicoAssert.*;
 
-class DynamicPersistIoTest {
+class DynamicPersistIoCase {
 
 	private var data:Dynamic;
 	private var output:DynamicPersistOutput;

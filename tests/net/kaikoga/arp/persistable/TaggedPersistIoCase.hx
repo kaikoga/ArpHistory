@@ -10,7 +10,7 @@ import net.kaikoga.arp.persistable.MockPersistable;
 
 import picotest.PicoAssert.*;
 
-class TaggedPersistIoTest {
+class TaggedPersistIoCase {
 
 	private var bytesOutput:BytesOutput;
 	private var output:TaggedPersistOutput;
