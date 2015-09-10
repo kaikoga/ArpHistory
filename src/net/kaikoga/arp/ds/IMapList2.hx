@@ -1,4 +1,4 @@
-package net.kaikoga.arp.domain.ds;
+package net.kaikoga.arp.ds;
 
 interface IMapList2 extends IMapBase extends IListBase {
 }

@@ -1,4 +1,4 @@
-package net.kaikoga.arp.domain.ds;
+package net.kaikoga.arp.ds;
 
 interface IMapBase<K,V> extends ICollection<V> {
 	public function get(k:K):Null<V>;

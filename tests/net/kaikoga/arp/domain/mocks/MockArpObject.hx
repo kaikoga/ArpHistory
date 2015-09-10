@@ -1,5 +1,7 @@
 package net.kaikoga.arp.domain.mocks;
 
+import net.kaikoga.arp.persistable.IPersistInput;
+import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
@@ -39,4 +41,11 @@ class MockArpObject implements IArpObject {
 		}
 		return this;
 	}
+
+	public function readSelf(input:IPersistInput):Void {
+	}
+	
+	public function writeSelf(output:IPersistOutput):Void {
+	}
+
 }

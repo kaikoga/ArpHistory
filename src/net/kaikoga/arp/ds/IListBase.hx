@@ -1,11 +1,10 @@
-package net.kaikoga.arp.domain.ds;
+package net.kaikoga.arp.ds;
 
 interface IListBase<T> extends ICollection<T> {
 
 	var length(default,null):Int;
 	function first():Null<T>;
 	function last():Null<T>;
-	function remove( v : T ) : Bool;
 	function join(sep : String):String;
 
 	function concat( a : Array<T> ) : Array<T>;
