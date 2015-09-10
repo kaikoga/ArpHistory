@@ -215,7 +215,7 @@ class ArpArea2d {
 
 	public function initWithString(definition:String):ArpArea2d {
 		if (definition == null) return this;
-		var ereg:Ereg = ~/^\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*$/;
+		var ereg:EReg = ~/^\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*$/;
 		if (ereg.match(definition)) {
 			this.x = Std.parseFloat(ereg.matched(1));
 			this.y = Std.parseFloat(ereg.matched(2));
