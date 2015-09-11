@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain;
 
+import net.kaikoga.arp.domain.dump.ArpDomainDump;
 import net.kaikoga.arp.domain.gen.ArpGeneratorRegistry;
 import net.kaikoga.arp.domain.gen.IArpGenerator;
 import net.kaikoga.arp.domain.seed.ArpSeed;
@@ -82,5 +83,13 @@ class ArpDomain {
 
 	public function gc():Void {
 		throw "ArpDomain.gc()";
+	}
+
+	public function dumpEntries(typeFilter:ArpType->Bool = null):String {
+		return ArpObjectSlotStatus.printer.format(new ArpDomainDump(this, typeFilter).dumpSlotStatus());
+	}
+
+	public function dumpEntriesByName(typeFilter:ArpType->Bool = null):String {
+		return ArpObjectSlotStatus.printer.format(new ArpDomainDump(this, typeFilter).dumpSlotStatusByName());
 	}
 }
