@@ -12,6 +12,7 @@ class IndexedMap<K, V> implements IIndexedMap<K, V> {
 	private var _map:IMap<K, V>;
 
 	private var _keys:Array<K>;
+
 	public function keys():Iterator<K> {
 		return this._keys.copy().iterator();
 	}
@@ -19,6 +20,7 @@ class IndexedMap<K, V> implements IIndexedMap<K, V> {
 	private var _iterators:ConcurrentIntIterateContext;
 
 	public var length(get_length, never):Int;
+
 	public function get_length():Int {
 		return this._keys.length;
 	}
@@ -84,6 +86,7 @@ class IndexedMap<K, V> implements IIndexedMap<K, V> {
 	 * @param	value The entry value.
 	 * @return	the index of the entry inserted.
 	 */
+
 	public function insert(index:Int, key:K, value:V):Int {
 		if (this._map.exists(key)) {
 			this.remove(key);

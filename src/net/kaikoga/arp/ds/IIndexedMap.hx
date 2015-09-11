@@ -4,7 +4,7 @@
  * ...
  * @author kaikoga
  */
-interface IIndexedMap<K,V> extends IMap<K,V> {
+interface IIndexedMap<K, V> extends IMap<K, V> {
 
 	/**
 	 * Retrieves an entry with given index number from this map.

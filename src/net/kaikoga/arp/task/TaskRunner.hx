@@ -2,11 +2,10 @@ package net.kaikoga.arp.task;
 
 import flash.events.ErrorEvent;
 import flash.events.Event;
-import flash.events.EventDispatcher;
 import flash.events.ProgressEvent;
 import flash.utils.Dictionary;
 
-class TaskRunner extends EventDispatcher {
+class TaskRunner {
 
 	public var verbose:Bool = false;
 
@@ -15,24 +14,27 @@ class TaskRunner extends EventDispatcher {
 	private var _isEternal:Bool= false;
 	private var _isDeadlock:Bool = false;
 	private var _beacon:ITaskRunnerBeacon;
-	private var _liveTasks:Array;
-	private var _readyTasks:Array;
-	private var _waitingTasks:Dictionary;
+	private var _liveTasks:Array<ITask>;
+	private var _readyTasks:Array<ITask>;
+	private var _waitingTasks:Array<ITask>;
 	private var processedSomething:Bool = false;
 
 	public var tasksProcessed(default, null):Int = 0;
 	public var tasksTotal(default, null):Int = 0;
 	public var tasksWaiting(default, null):Int = 0;
 
-	public function get isRunning():Boolean {
+	public var tasksProcessed(default, never):Bool;
+	public function get_isRunning():Bool {
 		return this.isActive || this.isWaiting;
 	}
 
-	public function get isActive():Boolean {
+	public var isActive(default, never):Bool;
+	public function get_isActive():Bool {
 		return this._tasksTotal != this._tasksProcessed;
 	}
 
-	public function get isWaiting():Boolean {
+	public var isWaiting(default, never):Bool;
+	public function get_isWaiting():Bool {
 		return this._tasksWaiting > 0;
 	}
 
@@ -41,21 +43,16 @@ class TaskRunner extends EventDispatcher {
 		this._beacon = beacon;
 		this._liveTasks = [];
 		this._readyTasks = [];
-		this._waitingTasks = new Dictionary();
+		this._waitingTasks = [];
 	}
 
-	public function start(isEternal:Boolean = false):void {
-		this._beacon || = defaultBeacon;
+	public function start(isEternal:Bool = false):Void {
+		if (this._beacon == null) this._beacon = TaskRunnerBeacon.defaultBeacon;
 		this._beacon.add(this);
 		this._isEternal = isEternal;
 	}
 
-	/**
-		 * Add a task to this task queue.
-		 * @param task A task to execute.
-		 */
-
-	public function prepend(task:*):void {
+	public function prepend(task:ITask):Void {
 		if (this._isDeadlock) {
 			this._beacon.add(this);
 			this._isDeadlock = false;
@@ -126,55 +123,48 @@ class TaskRunner extends EventDispatcher {
 		return false;
 	}
 
-	private function triggerProgressEvent():void {
+	private function triggerProgressEvent():Void {
 		if (this.willTrigger(ProgressEvent.PROGRESS)) {
 			this.dispatchEvent(new ProgressEvent(ProgressEvent.PROGRESS, false, false, this._tasksProcessed, this._tasksTotal))
 		}
 	}
 
-	protected
-
-	function runOneTask(task:*):Boolean {
-		var itask:ITask = task as ITask;
-		if (itask) {
-			return itask.run();
-		} else {
-			return task();
-		}
+	private function runOneTask(task:ITask):Bool {
+		return itask.run();
 	}
 
-	public function tick():void {
-		var endTime:Number = new Date().getTime() + this.cpuTime;
+	public function tick():Void {
+		var endTime:Float = new Date().getTime() + this.cpuTime;
 		do {
-			var task:* = this._liveTasks.pop();
+			var task:ITask = this._liveTasks.pop();
 			if (!task) {
 				break;
-			} else if (task in this._waitingTasks) {
-			this._readyTasks.push(task);
-			continue;
+			} else if (this._waitingTasks.indexOf(task) >= 0) {
+				this._readyTasks.push(task);
+				continue;
 			}
-				// true: done false: call later
-				// For continuation, either:
-				// * return true and re-register as another task, or
-				// * use ITask and return false.
+			// true: done false: call later
+			// For continuation, either:
+			// * return true and re-register as another task, or
+			// * use ITask and return false.
 			var status:Boolean;
 			if (this.willTrigger(AsyncErrorEvent.ASYNC_ERROR)) {
-			try {
-			status = runOneTask(task);
-			} catch (e:Error) {
-			this.dispatchEvent(new AsyncErrorEvent(AsyncErrorEvent.ASYNC_ERROR, false, false, "TaskRunner.tick(): TaskRunner has encountered an error: " + e.message, e))
-			}
+				try {
+					status = runOneTask(task);
+				} catch (e:Error) {
+					this.dispatchEvent(new AsyncErrorEvent(AsyncErrorEvent.ASYNC_ERROR, false, false, "TaskRunner.tick(): TaskRunner has encountered an error: " + e.message, e))
+				}
 			} else {
-			status = runOneTask(task);
+				status = runOneTask(task);
 			}
 			if (status) {
-			this._tasksProcessed++;
-			this.processedSomething = true;
+				this._tasksProcessed++;
+				this.processedSomething = true;
 			} else {
-			this._readyTasks.push(task);
+				this._readyTasks.push(task);
 			}
 			if (this.verbose) {
-			this.triggerProgressEvent();
+				this.triggerProgressEvent();
 			}
 		} while (new Date().getTime() < endTime);
 		// Tasks seems to be over?
@@ -217,15 +207,6 @@ class TaskRunner extends EventDispatcher {
 				this.triggerProgressEvent();
 			}
 		}
-	}
-
-	private static var _defaultBeacon:ITaskRunnerBeacon;
-
-	public static function get defaultBeacon():ITaskRunnerBeacon {
-		if (!_defaultBeacon) {
-			_defaultBeacon = new TaskRunnerEnterFrameBeacon();
-		}
-		return _defaultBeacon;
 	}
 
 }

@@ -6,11 +6,13 @@ class TreeItem<T> {
 
 	public var children(get, never):Array<TreeItem<T>>;
 	private var _children:Array<Dynamic>;
+
 	private function get_children():Array<Dynamic> {
 		return (this._children != null) ? this._children : (this._children = []);
 	}
 
 	public var hasChildren(get, never):Bool;
+
 	private function get_hasChildren():Bool {
 		return (this._children != null) && (this._children.length > 0);
 	}

@@ -4,7 +4,6 @@
  * String->Object map.
  * @author kaikoga
  */
-import haxe.ds.StringMap;
 import Map.IMap;
 import net.kaikoga.collections.ConcurrentIntIterateContext.ConcurrentIntIterator;
 
@@ -13,6 +12,7 @@ class IndexedStringMap<V> implements IIndexedMap<String, V> {
 	private var _map:StringMap<V>;
 
 	private var _keys:Array<String>;
+
 	public function keys():Iterator<String> {
 		return this._keys.copy().iterator();
 	}
@@ -20,6 +20,7 @@ class IndexedStringMap<V> implements IIndexedMap<String, V> {
 	private var _iterators:ConcurrentIntIterateContext;
 
 	public var length(get_length, never):Int;
+
 	public function get_length():Int {
 		return this._keys.length;
 	}
@@ -85,6 +86,7 @@ class IndexedStringMap<V> implements IIndexedMap<String, V> {
 	 * @param	value The entry value.
 	 * @return	the index of the entry inserted.
 	 */
+
 	public function insert(index:Int, key:String, value:V):Int {
 		if (this._map.exists(key)) {
 			this.remove(key);

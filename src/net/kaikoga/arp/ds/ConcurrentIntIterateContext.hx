@@ -16,10 +16,7 @@ class ConcurrentIntIterateContext {
 	private var iterators:Array<ConcurrentIntIterator>;
 
 	private var active:Bool = false;
-	public var length(get_length, null):Int = 0;
-	inline public function get_length():Int {
-		return this.length;
-	}
+	public var length(default, null):Int = 0;
 
 	public function new() {
 		this.iterators = [];

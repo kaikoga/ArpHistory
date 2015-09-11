@@ -1,5 +1,5 @@
 package net.kaikoga.arp.ds;
-interface IMap2<K,V> extends IMapBase<K,V> {
+interface IMap<K, V> extends IMapBase<K, V> {
 	public function get(k:K):Null<V>;
 	public function set(k:K, v:V):Void;
 	public function exists(k:K):Bool;

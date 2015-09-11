@@ -1,7 +1,6 @@
 package net.kaikoga.arp.ds;
 
-interface IMapBase<K,V> extends ICollection<V> {
+interface IMapBase<K, V> extends ICollection<V> {
 	public function get(k:K):Null<V>;
-	public function remove(k:K):Bool;
 	public function keys():Iterator<K>;
 }
