@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain.dump;
 
+import net.kaikoga.arp.domain.dump.ArpSlotDump.ArpSlotTreeStringPrinter;
 import net.kaikoga.arp.domain.core.ArpType;
 
 @:access(net.kaikoga.arp.domain.ArpDomain)
@@ -16,17 +17,17 @@ class ArpDomainDump {
 		this.typeFilter = typeFilter;
 	}
 
-	public function dumpSlotStatus():ArpObjectSlotDump {
-		var result:ArpObjectSlotDump = new ArpObjectSlotDump(domain.root, "");
+	public function dumpSlotStatus():Array<ArpSlotDump> {
+		var result:ArpSlotDump = new ArpSlotDump("<root>", "");
 		for (slot in domain.slots) {
-			result.children.push(new ArpObjectSlotDump(slot));
+			result.children.push(new ArpDomainDump(slot));
 		}
 		return result;
 	}
 
-	private function dumpSlotStatusByName(slot:ArpSlot, hashKey:String = null, visitedSlotIds:Array<String> = null):ArpObjectSlotDump {
-		var result:ArpObjectSlotDump = new ArpObjectSlotDump(slot, hashKey);
-		visitedSlotIds || = { };
+	public function dumpSlotStatusByName(slot:ArpSlot, hashKey:String = null, visitedSlotIds:Array<String> = null):<ArpSlotDump> {
+		var result:ArpSlotDump = new ArpSlotDump(slot, hashKey);
+		if (visitedSlotIds == null) visitedSlotIds = [];
 
 		var childrenByName:IIndexedMap = slot.childrenByName;
 		var child:ArpObjectSlot;
@@ -65,4 +66,7 @@ class ArpDomainDump {
 		}
 		return result;
 	}
+
+	public static var printer(get, never):ArpSlotTreeStringPrinter;
+	inline private function get_printer():ArpSlotTreeStringPrinter return new ArpSlotTreeStringPrinter();
 }

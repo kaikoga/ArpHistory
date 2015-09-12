@@ -1,9 +1,10 @@
 package net.kaikoga.arp.domain.dump;
 
+import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 import net.kaikoga.arp.ds.TreeItem;
 import net.kaikoga.arp.ds.tree.ITreePrinter;
 
-class ArpSlotDump extends TreeItem<ArpSlot> {
+class ArpSlotDump extends TreeItem<ArpUntypedSlot> {
 
 	public var hashKey:String;
 	public var slotRefCount:Int = 1;
@@ -14,7 +15,7 @@ class ArpSlotDump extends TreeItem<ArpSlot> {
 	}
 }
 
-class ArpSlotTreeStringPrinter implements ITreePrinter<ArpSlotDump> {
+class ArpSlotTreeStringPrinter implements ITreePrinter<ArpUntypedSlot, ArpSlotDump> {
 
 	public function new() {
 	}

@@ -1,7 +1,7 @@
 package net.kaikoga.arp.domain.prepare;
 
 import net.kaikoga.arp.domain.ArpDomain;
-import net.kaikoga.task.TaskRunner;
+import net.kaikoga.arp.task.TaskRunner;
 
 class PrepareTaskRunner extends TaskRunner {
 

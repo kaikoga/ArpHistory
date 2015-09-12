@@ -11,7 +11,7 @@ import flash.utils.Dictionary;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.domain.ArpObjectSlot;
 import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.task.ITask;
+import net.kaikoga.arp.task.ITask;
 
 class PrepareTaskManager extends EventDispatcher {
 	public var isPending(get, never):Bool;
