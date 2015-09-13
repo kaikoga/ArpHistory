@@ -1,45 +1,39 @@
 ﻿package net.kaikoga.arp.ds;
 
+import Map.IMap;
+import net.kaikoga.arp.iter.ConcurrentIntIterateContext;
+
 /**
  * String->Object map.
  * @author kaikoga
  */
-import Map.IMap;
-import net.kaikoga.collections.ConcurrentIntIterateContext.ConcurrentIntIterator;
+class MapList<K, V> implements IMapList<K, V> {
 
-class IndexedStringMap<V> implements IIndexedMap<String, V> {
+	private var _map:IMap<K, V>;
 
-	private var _map:StringMap<V>;
-
-	private var _keys:Array<String>;
-
-	public function keys():Iterator<String> {
-		return this._keys.copy().iterator();
-	}
+	private var _keys:Array<K>;
+	private function keys():Iterator<K> return this._keys.copy().iterator();
 
 	private var _iterators:ConcurrentIntIterateContext;
 
-	public var length(get_length, never):Int;
-
-	public function get_length():Int {
-		return this._keys.length;
-	}
+	public var length(get, never):Int;
+	private function get_length():Int return this._keys.length;
 
 	public function new() {
 		this.clear();
 	}
 
 	public function clear():Void {
-		this._map = new Map<String, V>();
+		this._map = new Map<K, V>();
 		this._keys = [];
 		this._iterators = new ConcurrentIntIterateContext();
 	}
 
-	public function get(key:String):V {
+	public function get(key:K):V {
 		return this._map.get(key);
 	}
 
-	public function set(key:String, value:V):Void {
+	public function set(key:K, value:V):Void {
 		if (!this._map.exists(key)) {
 			this._iterators.onInsert(this._keys.length, 1);
 			this._keys.push(key);
@@ -47,11 +41,11 @@ class IndexedStringMap<V> implements IIndexedMap<String, V> {
 		this._map.set(key, value);
 	}
 
-	public function exists(key:String):Bool {
+	public function exists(key:K):Bool {
 		return this._map.exists(key);
 	}
 
-	public function remove(key:String):Bool {
+	public function remove(key:K):Bool {
 		if (!this._map.remove(key)) {
 			return false;
 		}
@@ -64,11 +58,11 @@ class IndexedStringMap<V> implements IIndexedMap<String, V> {
 	}
 
 	public function iterator():Iterator<V> {
-		return new IndexedMapIterator<String, V>(this, this._iterators);
+		return new IndexedMapIterator<K, V>(this, this._iterators);
 	}
 
 	public function toString():String {
-		return "[IndexedStringMap ${this._map.toString()}]";
+		return "[IndexedMap ${this._map.toString()}]";
 	}
 
 	public function getAt(index:Int):V {
@@ -87,7 +81,7 @@ class IndexedStringMap<V> implements IIndexedMap<String, V> {
 	 * @return	the index of the entry inserted.
 	 */
 
-	public function insert(index:Int, key:String, value:V):Int {
+	public function insert(index:Int, key:K, value:V):Int {
 		if (this._map.exists(key)) {
 			this.remove(key);
 		}
@@ -101,8 +95,27 @@ class IndexedStringMap<V> implements IIndexedMap<String, V> {
 		return index;
 	}
 
-	public function keyAt(index:Int):String {
+	public function keyAt(index:Int):K {
 		return this._keys[index];
 	}
 
+}
+
+class IndexedMapIterator<K, V> {
+
+	private var map:IIndexedMap<K, V>;
+	private var iterator:ConcurrentIntIterator;
+
+	public function new(map:IIndexedMap<K, V>, context:ConcurrentIntIterateContext) {
+		this.map = map;
+		this.iterator = context.newIterator();
+	}
+
+	public function hasNext():Bool {
+		return this.iterator.hasNext();
+	}
+
+	public function next():V {
+		return this.map.getAt(this.iterator.next());
+	}
 }

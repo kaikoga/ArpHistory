@@ -1,10 +1,8 @@
 package net.kaikoga.arp.ds;
-interface IMap<K, V> extends IMapBase<K, V> {
-	public function get(k:K):Null<V>;
-	public function set(k:K, v:V):Void;
-	public function exists(k:K):Bool;
-	public function remove(k:K):Bool;
-	public function keys():Iterator<K>;
-	public function iterator():Iterator<V>;
-	public function toString():String;
+
+import net.kaikoga.arp.ds.access.IMapRead;
+import net.kaikoga.arp.ds.access.IMapWrite;
+import net.kaikoga.arp.ds.access.IMapResolve;
+
+interface IMap<K, V> extends IMapRead<K, V> extends IMapWrite<K, V> extends IMapResolve<K, V>{
 }

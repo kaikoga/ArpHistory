@@ -1,6 +1,7 @@
 package net.kaikoga.arp.ds;
 
-interface ISet<T> extends ICollection<T> {
-	function add(value:T):Void;
-	function remove(v:T):Bool;
+import net.kaikoga.arp.ds.access.ISetRead;
+import net.kaikoga.arp.ds.access.ISetWrite;
+
+interface ISet<V> extends ISetRead<V> extends ISetWrite<V> {
 }
