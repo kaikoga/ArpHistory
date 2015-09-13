@@ -41,7 +41,7 @@ class ArpDomain {
 		return new ArpDirectory(this, did);
 	}
 
-	private function slot<T:IArpObject>(sid:ArpSid):ArpSlot<T> {
+	private function getOrCreateSlot<T:IArpObject>(sid:ArpSid):ArpSlot<T> {
 		return this.slots.get(cast sid);
 	}
 
