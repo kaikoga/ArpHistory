@@ -145,7 +145,7 @@ class ArpObjectBuilder {
 					initializers.push(macro @:pos(field.pos) { this.$fieldSlotName = slot.domain.nullSlot; });
 					cases.push({
 						values: [macro @:pos(field.pos) $v{fieldName}],
-						expr: macro @:pos(field.pos) { this.$fieldSlotName = slot.domain.query(element.value(), cast ${arpType}).slot(); }
+						expr: macro @:pos(field.pos) { this.$fieldSlotName = slot.domain.query(element.value(), new net.kaikoga.arp.domain.core.ArpType(${arpType})).slot(); }
 					});
 			}
 		}
