@@ -21,19 +21,17 @@ class MockArpObject implements IArpObject {
 	public function new() {
 	}
 
-	public function arpDomain():ArpDomain {
-		return null;
-	}
+	private var _arpDomain:ArpDomain;
+	public function arpDomain():ArpDomain return this._arpDomain;
 
-	public function arpType():ArpType {
-		return new ArpType("TestArpObject");
-	}
+	public function arpType():ArpType return new ArpType("TestArpObject");
 
-	public function arpSlot():ArpSlot<MockArpObject> {
-		return null;
-	}
+	private var _arpSlot:ArpSlot<MockArpObject>;
+	public function arpSlot():ArpSlot<MockArpObject> return this._arpSlot;
 
 	public function init(slot:ArpUntypedSlot, seed:ArpSeed = null):IArpObject {
+		this._arpDomain = slot.domain;
+		this._arpSlot = slot;
 		this.refFieldSlot = slot.domain.nullSlot;
 		if (seed != null) for (element in seed) {
 			switch (element.typeName()) {
@@ -54,7 +52,7 @@ class MockArpObject implements IArpObject {
 
 	public function readSelf(input:IPersistInput):Void {
 	}
-	
+
 	public function writeSelf(output:IPersistOutput):Void {
 	}
 
