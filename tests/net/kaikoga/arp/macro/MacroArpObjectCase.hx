@@ -32,12 +32,15 @@ class MacroArpObjectCase {
 	public function testLoadSeed():Void {
 		var domain = new ArpDomain();
 		domain.addGenerator(new ArpDynamicGenerator(new ArpType("MockMacroArpObject"), MockMacroArpObject));
-		var xml:Xml = Xml.parse('<data name="name1" intField="42" refField="/name1" />').firstElement();
+		var xml:Xml = Xml.parse('<data name="name1" intField="42" floatField="3.14" boolField="true" stringField="stringValue" refField="/name1" />').firstElement();
 		var seed:ArpSeed = ArpSeed.fromXml(xml);
 		var slot:ArpSlot<MockMacroArpObject> = domain.loadSeed(seed, new ArpType("MockMacroArpObject"));
 		var arpObj:MockMacroArpObject = slot.value;
 
 		assertEquals(42, arpObj.intField);
+		assertEquals(3.14, arpObj.floatField);
+		assertEquals(true, arpObj.boolField);
+		assertEquals("stringValue", arpObj.stringField);
 		assertEquals(arpObj, arpObj.refField);
 	}
 
@@ -45,11 +48,14 @@ class MacroArpObjectCase {
 		var domain = new ArpDomain();
 		var slot:ArpSlot<MockMacroArpObject> = domain.dir("name1").getOrCreateSlot(new ArpType("MockMacroArpObject"));
 		var arpObj:MockMacroArpObject = new MockMacroArpObject();
-		var xml:Xml = Xml.parse('<data name="name1" intField="42" refField="/name1" />').firstElement();
+		var xml:Xml = Xml.parse('<data name="name1" intField="42" floatField="3.14" boolField="true" stringField="stringValue" refField="/name1" />').firstElement();
 		var seed:ArpSeed = ArpSeed.fromXml(xml);
 		arpObj.init(slot, seed);
 
 		assertEquals(42, arpObj.intField);
+		assertEquals(3.14, arpObj.floatField);
+		assertEquals(true, arpObj.boolField);
+		assertEquals("stringValue", arpObj.stringField);
 		assertEquals(null, arpObj.refField);
 
 		slot.value = arpObj;

@@ -43,26 +43,21 @@ class ArpObjectBuilder {
 				case "writeSelf":
 					this.writeSelf = field;
 				default:
-					var fieldArpType:ExprOf<String> = fieldIsMetaArpSlot(field);
-					if (fieldArpType != null) {
-						switch (field.kind) {
-							case FieldType.FProp(_, _, t, _):
-								buildSlot(field, t, fieldArpType);
-								this.arpObjectFields.push(ArpObjectField.Reference(field, fieldArpType));
-							case FieldType.FVar(t, _):
-								buildSlot(field, t, fieldArpType);
-								this.arpObjectFields.push(ArpObjectField.Reference(field, fieldArpType));
-							case FieldType.FFun(_):
-								this.result.push(field);
-						}
-					} else {
+					var arpObjectField:ArpObjectField = createArpObjectField(field);
+					if (arpObjectField == null) {
 						this.result.push(field);
-						switch (field.kind) {
-							case FieldType.FProp(_, _, _, _):
-								this.arpObjectFields.push(ArpObjectField.Primitive(field));
-							case FieldType.FVar(_, _):
-								this.arpObjectFields.push(ArpObjectField.Primitive(field));
-							case FieldType.FFun(_):
+					} else {
+						this.arpObjectFields.push(arpObjectField);
+						switch (arpObjectField.type) {
+							case
+								ArpObjectFieldType.PrimInt,
+								ArpObjectFieldType.PrimFloat,
+								ArpObjectFieldType.PrimBool,
+								ArpObjectFieldType.PrimString:
+								this.result.push(field);
+							case
+								ArpObjectFieldType.Reference(fieldArpType):
+								buildSlot(field, arpObjectField.nativeType, fieldArpType);
 						}
 					}
 				}
@@ -75,12 +70,51 @@ class ArpObjectBuilder {
 		buildWriteSelf();
 		return this.result;
 	}
-
-	private function fieldIsMetaArpSlot(field:Field):Expr {
+	
+	private function createArpObjectField(field:Field):ArpObjectField {
+		var metaArpSlot:ExprOf<String> = null;
+		var metaArpField:Bool = false;
+		
 		for (meta in field.meta) {
-			if (meta.name == ":arpSlot") return meta.params[0];
+			switch (meta.name) {
+				case ":arpSlot": metaArpSlot = meta.params[0];
+				case ":arpField": metaArpField = true;
+			}
 		}
-		return null;
+
+		var nativeType:ComplexType = switch (field.kind) {
+			case FieldType.FProp(_, _, n, _): n;
+			case FieldType.FVar(n, _): n;
+			case FieldType.FFun(_): return null;
+		}
+
+		switch (nativeType) {
+			case ComplexType.TPath(p):
+				switch (p.name) {
+					case "Int":
+						if (!metaArpField) return null;
+						if (metaArpSlot != null) Context.error(p.name + " must be @:arpField", field.pos);
+						return { field: field, nativeType: nativeType, type: ArpObjectFieldType.PrimInt };
+					case "Float":
+						if (!metaArpField) return null;
+						if (metaArpSlot != null) Context.error(p.name + " must be @:arpField", field.pos);
+						return { field: field, nativeType: nativeType, type: ArpObjectFieldType.PrimFloat };
+					case "Bool":
+						if (!metaArpField) return null;
+						if (metaArpSlot != null) Context.error(p.name + " must be @:arpField", field.pos);
+						return { field: field, nativeType: nativeType, type: ArpObjectFieldType.PrimBool };
+					case "String":
+						if (!metaArpField) return null;
+						if (metaArpSlot != null) Context.error(p.name + " must be @:arpField", field.pos);
+						return { field: field, nativeType: nativeType, type: ArpObjectFieldType.PrimString };
+					default:
+						if (metaArpField) Context.error(p.name + " must be @:arpSlot", field.pos);
+						if (metaArpSlot == null) return null;
+						return { field: field, nativeType: nativeType, type: ArpObjectFieldType.Reference(metaArpSlot) };
+				}
+			default:
+				throw "could not create ArpObjectField: " + Std.string(nativeType);
+		}
 	}
 
 	inline private function fieldSkeleton(name:String, field:Null<Field>):Field {
@@ -118,11 +152,11 @@ class ArpObjectBuilder {
 	}
 
 	private function buildInit():Void {
-		var initializers:Array<Expr> = [];
+		var initBlock:Array<Expr> = [];
 		var cases:Array<Case> = [];
 
 		var e:Expr = macro {
-			${ { pos: Context.currentPos(), expr: ExprDef.EBlock(initializers)} };
+			${ { pos: Context.currentPos(), expr: ExprDef.EBlock(initBlock)} };
 			if (seed != null) for (element in seed) ${
 				{ pos: Context.currentPos(), expr: ExprDef.ESwitch(macro element.typeName(), cases, null) }
 			};
@@ -130,23 +164,26 @@ class ArpObjectBuilder {
 		}
 
 		for (aoField in this.arpObjectFields) {
-			switch (aoField) {
-				case Primitive(field):
-					var fieldName:String = field.name;
-					cases.push({
-						values: [macro @:pos(field.pos) $v{fieldName}],
-						expr: macro @:pos(field.pos) { this.$fieldName = Std.parseInt(element.value());}
-					});
-				case Complex(field):
-				//TODO
-				case Reference(field, arpType):
-					var fieldName:String = field.name;
+			var field:Field = aoField.field;
+			var fieldName:String = field.name;
+			var caseBlock:Array<Expr> = [];
+			cases.push({
+				values: [macro @:pos(field.pos) $v{fieldName}],
+				expr: { pos: field.pos, expr: ExprDef.EBlock(caseBlock)}
+			});
+			switch (aoField.type) {
+				case ArpObjectFieldType.PrimInt:
+					caseBlock.push(macro @:pos(field.pos) { this.$fieldName = Std.parseInt(element.value()); });
+				case ArpObjectFieldType.PrimFloat:
+					caseBlock.push(macro @:pos(field.pos) { this.$fieldName = Std.parseFloat(element.value()); });
+				case ArpObjectFieldType.PrimBool:
+					caseBlock.push(macro @:pos(field.pos) { this.$fieldName = element.value() == "true"; });
+				case ArpObjectFieldType.PrimString:
+					caseBlock.push(macro @:pos(field.pos) { this.$fieldName = element.value(); });
+				case ArpObjectFieldType.Reference(arpType):
 					var fieldSlotName:String = fieldName + "Slot";
-					initializers.push(macro @:pos(field.pos) { this.$fieldSlotName = slot.domain.nullSlot; });
-					cases.push({
-						values: [macro @:pos(field.pos) $v{fieldName}],
-						expr: macro @:pos(field.pos) { this.$fieldSlotName = slot.domain.query(element.value(), new net.kaikoga.arp.domain.core.ArpType(${arpType})).slot(); }
-					});
+					initBlock.push(macro @:pos(field.pos) { this.$fieldSlotName = slot.domain.nullSlot; });
+					caseBlock.push(macro @:pos(field.pos) { this.$fieldSlotName = slot.domain.query(element.value(), new net.kaikoga.arp.domain.core.ArpType(${arpType})).slot(); });
 			}
 		}
 
@@ -184,7 +221,7 @@ class ArpObjectBuilder {
 		this.result.push(this.writeSelf);
 	}
 
-	private function buildSlot(field:Null<Field>, fieldType:ComplexType, arpType:ExprOf<String>):Void {
+	private function buildSlot(field:Field, fieldType:ComplexType, arpType:ExprOf<String>):Void {
 		var ifieldSlot:String = field.name + "Slot";
 		var iget_field:String = "get_" + field.name;
 		var iset_field:String = "set_" + field.name;
@@ -202,10 +239,17 @@ class ArpObjectBuilder {
 	}
 }
 
-enum ArpObjectField {
-	Primitive(field:Field);
-	Complex(field:Field);
-	Reference(field:Field, arpType:ExprOf<String>);
+typedef ArpObjectField = {
+	field:Field,
+	nativeType:ComplexType,
+	type:ArpObjectFieldType
+}
+enum ArpObjectFieldType {
+	PrimInt;
+	PrimFloat;
+	PrimBool;
+	PrimString;
+	Reference(arpType:ExprOf<String>);
 }
 
 #end
