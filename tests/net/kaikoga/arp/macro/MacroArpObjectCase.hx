@@ -31,6 +31,19 @@ class MacroArpObjectCase {
 		seed = ArpSeed.fromXml(xml);
 	}
 
+	public function testCreateEmpty():Void {
+		arpObj = domain.allocObject(MockMacroArpObject);
+
+		assertEquals(domain, arpObj.arpDomain());
+		assertEquals(new ArpType("MockMacroArpObject"), arpObj.arpType());
+
+		assertEquals(arpObj.intField, 0);
+		assertEquals(arpObj.floatField, 0.0);
+		assertEquals(arpObj.boolField, false);
+		assertEquals(arpObj.stringField, null);
+		assertEquals(arpObj.refField, null);
+	}
+
 	public function testLoadSeed():Void {
 		slot = domain.loadSeed(seed, new ArpType("MockMacroArpObject"));
 		arpObj = slot.value;

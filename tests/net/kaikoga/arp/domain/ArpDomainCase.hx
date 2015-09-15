@@ -48,6 +48,19 @@ class ArpDomainCase {
 		assertEquals(arpObj, arpObj.refField);
 	}
 
+	public function testCreateEmpty():Void {
+		arpObj = domain.allocObject(MockArpObject);
+
+		assertEquals(domain, arpObj.arpDomain());
+		assertEquals(new ArpType("MockArpObject"), arpObj.arpType());
+
+		assertEquals(arpObj.intField, 0);
+		assertEquals(arpObj.floatField, 0.0);
+		assertEquals(arpObj.boolField, false);
+		assertEquals(arpObj.stringField, null);
+		assertEquals(arpObj.refField, null);
+	}
+
 	public function testLoadSeed():Void {
 		slot = domain.loadSeed(seed, new ArpType("TestArpObject"));
 		arpObj = slot.value;
