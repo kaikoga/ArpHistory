@@ -1,10 +1,10 @@
 package net.kaikoga.arp.domain.core;
 
 abstract ArpType(String) {
-	public function new(value:String) {
+	inline public function new(value:String) {
 		this = value;
 	}
-	@:to public function toString():String {
+	@:to inline public function toString():String {
 		return this;
 	}
 }

@@ -52,7 +52,7 @@ class ArpSeed {
 		for (attrName in xml.attributes()) {
 			switch (attrName) {
 				case "type":
-					typeName = cast xml.get(attrName);
+					typeName = xml.get(attrName);
 				case "class", "template":
 					template = xml.get(attrName);
 				case "name":

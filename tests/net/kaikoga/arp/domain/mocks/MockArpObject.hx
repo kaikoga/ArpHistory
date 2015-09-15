@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain.mocks;
 
+import net.kaikoga.arp.domain.core.ArpSid;
 import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.domain.core.ArpType;
@@ -44,16 +45,26 @@ class MockArpObject implements IArpObject {
 				case "stringField":
 					this.stringField = element.value();
 				case "refField":
-					this.refFieldSlot = slot.domain.query(element.value(), this.arpType()).slot();
+					this.refFieldSlot = this._arpDomain.query(element.value(), new ArpType("TestArpObject")).slot();
 			}
 		}
 		return this;
 	}
 
 	public function readSelf(input:IPersistInput):Void {
+		this.intField = input.readInt32("intField");
+		this.floatField = input.readDouble("floatField");
+		this.boolField = input.readBool("boolField");
+		this.stringField = input.readUtf("stringField");
+		this.refFieldSlot = this._arpDomain.getOrCreateSlot(new ArpSid(input.readUtf("refField")));
 	}
 
 	public function writeSelf(output:IPersistOutput):Void {
+		output.writeInt32("intField", this.intField);
+		output.writeDouble("floatField", this.floatField);
+		output.writeBool("boolField", this.boolField);
+		output.writeUtf("stringField", this.stringField);
+		output.writeUtf("refField", this.refFieldSlot.sid.toString());
 	}
 
 }

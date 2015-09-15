@@ -248,7 +248,7 @@ class ArpObjectBuilder {
 					fieldBlock.push(macro @:pos(field.pos) { this.$fieldName = input.readUtf($v{fieldName}); });
 				case ArpObjectFieldType.Reference(arpType):
 					var fieldSlotName:String = fieldName + "Slot";
-					fieldBlock.push(macro @:pos(field.pos) { this.$fieldSlotName = this.arpSlot().domain.query(input.readUtf($v{fieldName}), new net.kaikoga.arp.domain.core.ArpType(${arpType})).slot(); });
+					fieldBlock.push(macro @:pos(field.pos) { this.$fieldSlotName = this._arpDomain.getOrCreateSlot(new net.kaikoga.arp.domain.core.ArpSid(input.readUtf($v{fieldName}))); });
 			}
 		}
 

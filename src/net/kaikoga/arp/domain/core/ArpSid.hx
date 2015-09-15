@@ -1,10 +1,13 @@
 package net.kaikoga.arp.domain.core;
 
 abstract ArpSid(String) {
-	public function new(value:String) {
+	inline public function new(value:String) {
 		this = value;
 	}
-	public function toString():String {
+	inline public static function build(did:ArpDid, type:ArpType):ArpSid {
+		return new ArpSid('${did.toString()}:${type.toString()}');
+	}
+	inline public function toString():String {
 		return this;
 	}
 }

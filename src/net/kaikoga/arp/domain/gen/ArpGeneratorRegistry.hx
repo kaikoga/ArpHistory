@@ -12,7 +12,7 @@ class ArpGeneratorRegistry {
 	}
 
 	private function genList(type:ArpType):Array<IArpGenerator<Dynamic>> {
-		var t:String = cast type;
+		var t:String = type.toString();
 		if (this.genMap.exists(t)) return this.genMap.get(t);
 		var a:Array<IArpGenerator<Dynamic>> = [];
 		this.genMap.set(t, a);

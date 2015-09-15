@@ -21,28 +21,28 @@ class ArpDomain {
 	private var _did:Int = 0;
 
 	public function new() {
-		this.root = this.allocDir("");
+		this.root = this.allocDir(new ArpDid(""));
 		this.slots = new Map();
-		this.nullSlot = this.allocSlot("");
+		this.nullSlot = this.allocSlot(new ArpSid(""));
 		this.reg = new ArpGeneratorRegistry();
 	}
 
-	private function allocSlot(name:String = null):ArpUntypedSlot {
-		if (name == null) name = '@s${Std.string(_sid++)}';
-		var sid:ArpSid = new ArpSid(name);
+	private function allocSlot(sid:ArpSid = null):ArpUntypedSlot {
+		if (sid == null) sid = new ArpSid('@s${Std.string(_sid++)}');
 		var slot:ArpUntypedSlot = new ArpUntypedSlot(this, sid);
-		this.slots.set(cast sid, slot);
+		this.slots.set(sid.toString(), slot);
 		return slot;
 	}
 
-	private function allocDir(name:String = null):ArpDirectory {
-		if (name == null) name = '@${Std.string(_did++)}';
-		var did:ArpDid = new ArpDid(name);
+	private function allocDir(did:ArpDid = null):ArpDirectory {
+		if (did == null) did = new ArpDid('@${Std.string(_did++)}');
 		return new ArpDirectory(this, did);
 	}
 
-	private function getOrCreateSlot<T:IArpObject>(sid:ArpSid):ArpSlot<T> {
-		return this.slots.get(cast sid);
+	public function getOrCreateSlot<T:IArpObject>(sid:ArpSid):ArpSlot<T> {
+		var slot:ArpSlot<T> = this.slots.get(sid.toString());
+		if (slot != null) return slot;
+		return allocSlot(sid);
 	}
 
 	inline public function dir(path:String = null):ArpDirectory {
@@ -59,7 +59,7 @@ class ArpDomain {
 
 	public function loadSeed<T:IArpObject>(seed:ArpSeed, path:ArpDirectory = null, lexicalType:ArpType = null):ArpSlot<T> {
 		if (path == null) path = this.root;
-		var type:ArpType = (lexicalType != null) ? lexicalType : cast seed.typeName();
+		var type:ArpType = (lexicalType != null) ? lexicalType : new ArpType(seed.typeName());
 		var slot:ArpSlot<T>;
 		if (seed.ref() != null) {
 			slot = path.query(seed.ref(), type).slot();
@@ -74,6 +74,17 @@ class ArpDomain {
 			arpObj.init(slot, seed);
 		}
 		return slot;
+	}
+
+	public function allocObject<T:IArpObject>(klass:Class<T>, args:Array<Dynamic> = null, sid:ArpSid = null):T {
+		if (args == null) args = [];
+		return this.addObject(Type.createInstance(klass, args), sid);
+	}
+
+	public function addObject<T:IArpObject>(object:T, sid:ArpSid = null):T {
+		var slot:ArpSlot<T> = (sid != null) ? this.getOrCreateSlot(sid) : this.allocSlot(sid);
+		object.init(slot);
+		return object;
 	}
 
 	public function flush():Void {
