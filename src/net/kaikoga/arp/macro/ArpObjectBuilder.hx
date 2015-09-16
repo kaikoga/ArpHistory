@@ -135,19 +135,18 @@ class ArpObjectBuilder {
 		});
 	}
 
-	inline private function fieldSkeleton(name:String, field:Null<Field>):Field {
-		return (field != null) ? field : { name: name, access: [Access.APublic], kind: null, pos: Context.currentPos() }
+	inline private function fieldSkeleton(name:String, field:Null<Field>, isPublic:Bool):Field {
+		return (field != null) ? field : { name: name, access: [isPublic ? Access.APublic : Access.APrivate], kind: null, pos: Context.currentPos() }
 	}
 
 	private function build_arpDomain():Void {
-		this._arpDomain = fieldSkeleton("_arpDomain", this._arpDomain);
+		this._arpDomain = fieldSkeleton("_arpDomain", this._arpDomain, false);
 		this._arpDomain.kind = FieldType.FVar(macro :net.kaikoga.arp.domain.ArpDomain);
-		this._arpDomain.access = [Access.APrivate];
 		this.result.push(this._arpDomain);
 	}
 
 	private function buildArpDomain():Void {
-		this.arpDomain = fieldSkeleton("arpDomain", this.arpDomain);
+		this.arpDomain = fieldSkeleton("arpDomain", this.arpDomain, true);
 		this.arpDomain.kind = FieldType.FFun({
 			args: [],
 			ret: macro :net.kaikoga.arp.domain.ArpDomain,
@@ -157,7 +156,7 @@ class ArpObjectBuilder {
 	}
 
 	private function buildArpType():Void {
-		this.arpType = fieldSkeleton("arpType", this.arpType);
+		this.arpType = fieldSkeleton("arpType", this.arpType, true);
 		this.arpType.kind = FieldType.FFun({
 			args: [],
 			ret: macro :net.kaikoga.arp.domain.core.ArpType,
@@ -167,15 +166,14 @@ class ArpObjectBuilder {
 	}
 
 	private function build_arpSlot():Void {
-		this._arpSlot = fieldSkeleton("_arpSlot", this._arpSlot);
+		this._arpSlot = fieldSkeleton("_arpSlot", this._arpSlot, false);
 		//this._arpSlot.kind = FieldType.FVar(createArpSlotTypeOf(macro :net.kaikoga.arp.domain.ArpDomain));
 		this._arpSlot.kind = FieldType.FVar(macro :net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot);
-		this._arpSlot.access = [Access.APrivate];
 		this.result.push(this._arpSlot);
 	}
 
 	private function buildArpSlot():Void {
-		this.arpSlot = fieldSkeleton("arpSlot", this.arpSlot);
+		this.arpSlot = fieldSkeleton("arpSlot", this.arpSlot, true);
 		this.arpSlot.kind = FieldType.FFun({
 			args: [],
 			ret: macro :net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot,
@@ -210,7 +208,7 @@ class ArpObjectBuilder {
 			}
 		}
 
-		this.init = fieldSkeleton("init", this.init);
+		this.init = fieldSkeleton("init", this.init, true);
 		this.init.kind = FieldType.FFun({
 			args: [
 				{ name: "slot", type: macro :net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot },
@@ -250,8 +248,7 @@ class ArpObjectBuilder {
 			}
 		}
 
-		this.consumeSeedElement = fieldSkeleton("consumeSeedElement", this.consumeSeedElement);
-		this.consumeSeedElement.access = [Access.APrivate];
+		this.consumeSeedElement = fieldSkeleton("consumeSeedElement", this.consumeSeedElement, false);
 		this.consumeSeedElement.kind = FieldType.FFun({
 			args: [
 				{ name: "element", type: macro :net.kaikoga.arp.domain.seed.ArpSeed }
@@ -284,7 +281,7 @@ class ArpObjectBuilder {
 			}
 		}
 
-		this.readSelf = fieldSkeleton("readSelf", this.readSelf);
+		this.readSelf = fieldSkeleton("readSelf", this.readSelf, true);
 		this.readSelf.kind = FieldType.FFun({
 			args: [
 				{ name: "input", type: macro :net.kaikoga.arp.persistable.IPersistInput }
@@ -317,7 +314,7 @@ class ArpObjectBuilder {
 			}
 		}
 
-		this.writeSelf = fieldSkeleton("writeSelf", this.writeSelf);
+		this.writeSelf = fieldSkeleton("writeSelf", this.writeSelf, true);
 		this.writeSelf.kind = FieldType.FFun({
 			args: [{name: "output", type: macro :net.kaikoga.arp.persistable.IPersistOutput}],
 			ret: null,
