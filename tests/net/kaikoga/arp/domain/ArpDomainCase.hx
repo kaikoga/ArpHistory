@@ -52,7 +52,7 @@ class ArpDomainCase {
 		arpObj = domain.allocObject(MockArpObject);
 
 		assertEquals(domain, arpObj.arpDomain());
-		assertEquals(new ArpType("MockArpObject"), arpObj.arpType());
+		assertEquals(new ArpType("TestArpObject"), arpObj.arpType());
 
 		assertEquals(arpObj.intField, 0);
 		assertEquals(arpObj.floatField, 0.0);

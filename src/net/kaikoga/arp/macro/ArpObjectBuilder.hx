@@ -21,6 +21,7 @@ class ArpObjectBuilder {
 	private var arpSlot:Field = null;
 	private var _arpSlot:Field = null;
 	private var init:Field = null;
+	private var consumeSeedElement:Field = null;
 	private var readSelf:Field = null;
 	private var writeSelf:Field = null;
 
@@ -44,6 +45,8 @@ class ArpObjectBuilder {
 					this._arpSlot = field;
 				case "init":
 					this.init = field;
+				case "consumeSeedElement":
+					this.consumeSeedElement = field;
 				case "readSelf":
 					this.readSelf = field;
 				case "writeSelf":
@@ -74,6 +77,7 @@ class ArpObjectBuilder {
 		buildArpSlot();
 		build_arpSlot();
 		buildInit();
+		buildConsumeSeedElement();
 		buildReadSelf();
 		buildWriteSelf();
 		return this.result;
@@ -188,11 +192,40 @@ class ArpObjectBuilder {
 			this._arpDomain = slot.domain;
 			this._arpSlot = slot;
 			${ { pos: Context.currentPos(), expr: ExprDef.EBlock(initBlock)} };
-			if (seed != null) for (element in seed) ${
-				{ pos: Context.currentPos(), expr: ExprDef.ESwitch(macro element.typeName(), cases, null) }
-			};
+			if (seed != null) for (element in seed) this.consumeSeedElement(element);
 			return this;
 		}
+
+		for (aoField in this.arpObjectFields) {
+			var field:Field = aoField.field;
+			var fieldName:String = field.name;
+			switch (aoField.type) {
+				case ArpObjectFieldType.PrimInt:
+				case ArpObjectFieldType.PrimFloat:
+				case ArpObjectFieldType.PrimBool:
+				case ArpObjectFieldType.PrimString:
+				case ArpObjectFieldType.Reference(arpType):
+					var fieldSlotName:String = fieldName + "Slot";
+					initBlock.push(macro @:pos(field.pos) { this.$fieldSlotName = this._arpDomain.nullSlot; });
+			}
+		}
+
+		this.init = fieldSkeleton("init", this.init);
+		this.init.kind = FieldType.FFun({
+			args: [
+				{ name: "slot", type: macro :net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot },
+				{ name: "seed", type: macro :net.kaikoga.arp.domain.seed.ArpSeed, value: macro null }
+			],
+			ret: macro :net.kaikoga.arp.domain.IArpObject,
+			expr: e
+		});
+		this.result.push(this.init);
+	}
+
+	private function buildConsumeSeedElement():Void {
+		var cases:Array<Case> = [];
+
+		var e:Expr = { pos: Context.currentPos(), expr: ExprDef.ESwitch(macro element.typeName(), cases, null) }
 
 		for (aoField in this.arpObjectFields) {
 			var field:Field = aoField.field;
@@ -213,21 +246,20 @@ class ArpObjectBuilder {
 					caseBlock.push(macro @:pos(field.pos) { this.$fieldName = element.value(); });
 				case ArpObjectFieldType.Reference(arpType):
 					var fieldSlotName:String = fieldName + "Slot";
-					initBlock.push(macro @:pos(field.pos) { this.$fieldSlotName = slot.domain.nullSlot; });
-					caseBlock.push(macro @:pos(field.pos) { this.$fieldSlotName = slot.domain.query(element.value(), new net.kaikoga.arp.domain.core.ArpType(${arpType})).slot(); });
+					caseBlock.push(macro @:pos(field.pos) { this.$fieldSlotName = this._arpDomain.query(element.value(), new net.kaikoga.arp.domain.core.ArpType(${arpType})).slot(); });
 			}
 		}
 
-		this.init = fieldSkeleton("init", this.init);
-		this.init.kind = FieldType.FFun({
+		this.consumeSeedElement = fieldSkeleton("consumeSeedElement", this.consumeSeedElement);
+		this.consumeSeedElement.access = [Access.APrivate];
+		this.consumeSeedElement.kind = FieldType.FFun({
 			args: [
-				{ name: "slot", type: macro :net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot },
-				{ name: "seed", type: macro :net.kaikoga.arp.domain.seed.ArpSeed, value: macro null }
+				{ name: "element", type: macro :net.kaikoga.arp.domain.seed.ArpSeed }
 			],
-			ret: macro :net.kaikoga.arp.domain.IArpObject,
+			ret: null,
 			expr: e
 		});
-		this.result.push(this.init);
+		this.result.push(this.consumeSeedElement);
 	}
 
 	private function buildReadSelf():Void {

@@ -34,21 +34,23 @@ class MockArpObject implements IArpObject {
 		this._arpDomain = slot.domain;
 		this._arpSlot = slot;
 		this.refFieldSlot = slot.domain.nullSlot;
-		if (seed != null) for (element in seed) {
-			switch (element.typeName()) {
-				case "intField":
-					this.intField = Std.parseInt(element.value());
-				case "floatField":
-					this.floatField = Std.parseFloat(element.value());
-				case "boolField":
-					this.boolField = element.value() == "true";
-				case "stringField":
-					this.stringField = element.value();
-				case "refField":
-					this.refFieldSlot = this._arpDomain.query(element.value(), new ArpType("TestArpObject")).slot();
-			}
-		}
+		if (seed != null) for (element in seed) this.consumeSeedElement(element);
 		return this;
+	}
+	
+	private function consumeSeedElement(element:ArpSeed):Void {
+		switch (element.typeName()) {
+			case "intField":
+				this.intField = Std.parseInt(element.value());
+			case "floatField":
+				this.floatField = Std.parseFloat(element.value());
+			case "boolField":
+				this.boolField = element.value() == "true";
+			case "stringField":
+				this.stringField = element.value();
+			case "refField":
+				this.refFieldSlot = this._arpDomain.query(element.value(), new ArpType("TestArpObject")).slot();
+		}
 	}
 
 	public function readSelf(input:IPersistInput):Void {
