@@ -38,7 +38,7 @@ class ArpSeedCase {
 		assertMatch({typeName: "data", template: "template14", name: "name6", ref: "ref8", value: null}, toHash(seed));
 		var iterator = seed.iterator();
 		assertTrue(iterator.hasNext());
-		assertMatch({typeName: "valueKey", template: null, name: null, ref: null, value: "value42"}, toHash(iterator.next()));
+		assertMatch({typeName: "valueKey", template: null, name: null, ref: "value42", value: "value42"}, toHash(iterator.next()));
 		assertFalse(iterator.hasNext());
 	}
 

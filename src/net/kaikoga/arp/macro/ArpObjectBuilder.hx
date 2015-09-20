@@ -244,7 +244,7 @@ class ArpObjectBuilder {
 					caseBlock.push(macro @:pos(field.pos) { this.$fieldName = element.value(); });
 				case ArpObjectFieldType.Reference(arpType):
 					var fieldSlotName:String = fieldName + "Slot";
-					caseBlock.push(macro @:pos(field.pos) { this.$fieldSlotName = this._arpDomain.query(element.value(), new net.kaikoga.arp.domain.core.ArpType(${arpType})).slot(); });
+					caseBlock.push(macro @:pos(field.pos) { this.$fieldSlotName = this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${arpType})); });
 			}
 		}
 

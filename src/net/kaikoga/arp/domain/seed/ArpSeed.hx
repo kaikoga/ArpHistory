@@ -39,7 +39,7 @@ class ArpSeed {
 		switch (xml.nodeType) {
 			case XmlType.Document: xml = xml.firstElement();
 			case XmlType.Element:
-			case _: return new ArpSeed(xml.nodeName, null, null, null, xml.nodeValue, null);
+			case _: return new ArpSeed(xml.nodeName, null, null, xml.nodeValue, xml.nodeValue, null);
 		}
 
 		var typeName:String = xml.nodeName;
@@ -50,19 +50,21 @@ class ArpSeed {
 		var children:Array<ArpSeed> = null;
 
 		for (attrName in xml.attributes()) {
+			var attr:String = xml.get(attrName);
 			switch (attrName) {
 				case "type":
-					typeName = xml.get(attrName);
+					typeName = attr;
 				case "class", "template":
-					template = xml.get(attrName);
+					template = attr;
 				case "name":
-					name = xml.get(attrName);
+					name = attr;
 				case "ref":
-					ref = xml.get(attrName);
+					ref = attr;
 				case "value":
-					value = xml.get(attrName);
+					value = attr;
 				case _:
-					if (children == null) children = []; children.push(new ArpSeed(attrName, null, null, null, xml.get(attrName), null));
+					// NOTE leef seeds by xml attr are also treated as ref; text nodes are not
+					if (children == null) children = []; children.push(new ArpSeed(attrName, null, null, attr, attr, null));
 			}
 		}
 		for (node in xml) {

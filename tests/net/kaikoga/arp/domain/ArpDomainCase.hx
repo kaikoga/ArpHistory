@@ -19,9 +19,9 @@ class ArpDomainCase {
 	private var domain:ArpDomain;
 	private var slot:ArpSlot<MockArpObject>;
 	private var arpObj:MockArpObject;
-	private var xml:Xml; 
+	private var xml:Xml;
 	private var seed:ArpSeed;
-	
+
 	public function setup():Void {
 		domain = new ArpDomain();
 		domain.addGenerator(new ArpDynamicGenerator(new ArpType("TestArpObject"), MockArpObject));
@@ -71,7 +71,7 @@ class ArpDomainCase {
 		assertEquals("stringValue", arpObj.stringField);
 		assertEquals(arpObj, arpObj.refField);
 	}
-	
+
 	private function roundTrip<T:IArpObject>(inObject:T, klass:Class<T>):T {
 		var bytesOutput:BytesOutput = new BytesOutput();
 		inObject.writeSelf(new TaggedPersistOutput(new OutputWrapper(bytesOutput)));
@@ -79,13 +79,13 @@ class ArpDomainCase {
 		outObject.readSelf(new TaggedPersistInput(new InputWrapper(new BytesInput(bytesOutput.getBytes()))));
 		return outObject;
 	}
-	
+
 	public function testPersistable():Void {
 		slot = domain.loadSeed(seed, new ArpType("TestArpObject"));
 		arpObj = slot.value;
 
 		var arpObj2:MockArpObject = roundTrip(arpObj, MockArpObject);
-		
+
 		assertEquals(arpObj.arpDomain(), arpObj2.arpDomain());
 		assertEquals(arpObj.arpType(), arpObj2.arpType());
 		assertNotEquals(arpObj.arpSlot(), arpObj2.arpSlot());
