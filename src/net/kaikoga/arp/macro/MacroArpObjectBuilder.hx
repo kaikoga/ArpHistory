@@ -4,16 +4,16 @@ import haxe.macro.Context;
 
 #if macro
 
-class ArpObjectBuilder {
+class MacroArpObjectBuilder {
 
 	public static function build(arpTypeName:String):Array<Field> {
-		return new ArpObjectBuilder(arpTypeName).run();
+		return new MacroArpObjectBuilder(arpTypeName).run();
 	}
 
 	private var arpTypeName:String;
 
 	private var result:Array<Field> = [];
-	private var arpObjectFields:Array<ArpObjectField> = [];
+	private var arpObjectFields:Array<MacroArpObjectField> = [];
 
 	private var _arpDomain:Field = null;
 	private var arpDomain:Field = null;
@@ -52,20 +52,20 @@ class ArpObjectBuilder {
 				case "writeSelf":
 					this.writeSelf = field;
 				default:
-					var arpObjectField:ArpObjectField = createArpObjectField(field);
+					var arpObjectField:MacroArpObjectField = createArpObjectField(field);
 					if (arpObjectField == null) {
 						this.result.push(field);
 					} else {
 						this.arpObjectFields.push(arpObjectField);
 						switch (arpObjectField.type) {
 							case
-								ArpObjectFieldType.PrimInt,
-								ArpObjectFieldType.PrimFloat,
-								ArpObjectFieldType.PrimBool,
-								ArpObjectFieldType.PrimString:
+								MacroArpObjectFieldType.PrimInt,
+								MacroArpObjectFieldType.PrimFloat,
+								MacroArpObjectFieldType.PrimBool,
+								MacroArpObjectFieldType.PrimString:
 								this.result.push(field);
 							case
-								ArpObjectFieldType.Reference(fieldArpType):
+								MacroArpObjectFieldType.Reference(fieldArpType):
 								buildSlot(field, arpObjectField.nativeType, fieldArpType);
 						}
 					}
@@ -83,7 +83,7 @@ class ArpObjectBuilder {
 		return this.result;
 	}
 
-	private function createArpObjectField(field:Field):ArpObjectField {
+	private function createArpObjectField(field:Field):MacroArpObjectField {
 		var metaArpSlot:ExprOf<String> = null;
 		var metaArpField:Bool = false;
 
@@ -106,23 +106,23 @@ class ArpObjectBuilder {
 					case "Int":
 						if (!metaArpField) return null;
 						if (metaArpSlot != null) Context.error(p.name + " must be @:arpField", field.pos);
-						return { field: field, nativeType: nativeType, type: ArpObjectFieldType.PrimInt };
+						return { field: field, nativeType: nativeType, type: MacroArpObjectFieldType.PrimInt };
 					case "Float":
 						if (!metaArpField) return null;
 						if (metaArpSlot != null) Context.error(p.name + " must be @:arpField", field.pos);
-						return { field: field, nativeType: nativeType, type: ArpObjectFieldType.PrimFloat };
+						return { field: field, nativeType: nativeType, type: MacroArpObjectFieldType.PrimFloat };
 					case "Bool":
 						if (!metaArpField) return null;
 						if (metaArpSlot != null) Context.error(p.name + " must be @:arpField", field.pos);
-						return { field: field, nativeType: nativeType, type: ArpObjectFieldType.PrimBool };
+						return { field: field, nativeType: nativeType, type: MacroArpObjectFieldType.PrimBool };
 					case "String":
 						if (!metaArpField) return null;
 						if (metaArpSlot != null) Context.error(p.name + " must be @:arpField", field.pos);
-						return { field: field, nativeType: nativeType, type: ArpObjectFieldType.PrimString };
+						return { field: field, nativeType: nativeType, type: MacroArpObjectFieldType.PrimString };
 					default:
 						if (metaArpField) Context.error(p.name + " must be @:arpSlot", field.pos);
 						if (metaArpSlot == null) return null;
-						return { field: field, nativeType: nativeType, type: ArpObjectFieldType.Reference(metaArpSlot) };
+						return { field: field, nativeType: nativeType, type: MacroArpObjectFieldType.Reference(metaArpSlot) };
 				}
 			default:
 				throw "could not create ArpObjectField: " + Std.string(nativeType);
@@ -198,11 +198,11 @@ class ArpObjectBuilder {
 			var field:Field = aoField.field;
 			var fieldName:String = field.name;
 			switch (aoField.type) {
-				case ArpObjectFieldType.PrimInt:
-				case ArpObjectFieldType.PrimFloat:
-				case ArpObjectFieldType.PrimBool:
-				case ArpObjectFieldType.PrimString:
-				case ArpObjectFieldType.Reference(arpType):
+				case MacroArpObjectFieldType.PrimInt:
+				case MacroArpObjectFieldType.PrimFloat:
+				case MacroArpObjectFieldType.PrimBool:
+				case MacroArpObjectFieldType.PrimString:
+				case MacroArpObjectFieldType.Reference(arpType):
 					var fieldSlotName:String = fieldName + "Slot";
 					initBlock.push(macro @:pos(field.pos) { this.$fieldSlotName = this._arpDomain.nullSlot; });
 			}
@@ -234,15 +234,15 @@ class ArpObjectBuilder {
 				expr: { pos: field.pos, expr: ExprDef.EBlock(caseBlock)}
 			});
 			switch (aoField.type) {
-				case ArpObjectFieldType.PrimInt:
+				case MacroArpObjectFieldType.PrimInt:
 					caseBlock.push(macro @:pos(field.pos) { this.$fieldName = Std.parseInt(element.value()); });
-				case ArpObjectFieldType.PrimFloat:
+				case MacroArpObjectFieldType.PrimFloat:
 					caseBlock.push(macro @:pos(field.pos) { this.$fieldName = Std.parseFloat(element.value()); });
-				case ArpObjectFieldType.PrimBool:
+				case MacroArpObjectFieldType.PrimBool:
 					caseBlock.push(macro @:pos(field.pos) { this.$fieldName = element.value() == "true"; });
-				case ArpObjectFieldType.PrimString:
+				case MacroArpObjectFieldType.PrimString:
 					caseBlock.push(macro @:pos(field.pos) { this.$fieldName = element.value(); });
-				case ArpObjectFieldType.Reference(arpType):
+				case MacroArpObjectFieldType.Reference(arpType):
 					var fieldSlotName:String = fieldName + "Slot";
 					caseBlock.push(macro @:pos(field.pos) { this.$fieldSlotName = this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${arpType})); });
 			}
@@ -267,15 +267,15 @@ class ArpObjectBuilder {
 			var field:Field = aoField.field;
 			var fieldName:String = field.name;
 			switch (aoField.type) {
-				case ArpObjectFieldType.PrimInt:
+				case MacroArpObjectFieldType.PrimInt:
 					fieldBlock.push(macro @:pos(field.pos) { this.$fieldName = input.readInt32($v{fieldName}); });
-				case ArpObjectFieldType.PrimFloat:
+				case MacroArpObjectFieldType.PrimFloat:
 					fieldBlock.push(macro @:pos(field.pos) { this.$fieldName = input.readDouble($v{fieldName}); });
-				case ArpObjectFieldType.PrimBool:
+				case MacroArpObjectFieldType.PrimBool:
 					fieldBlock.push(macro @:pos(field.pos) { this.$fieldName = input.readBool($v{fieldName}); });
-				case ArpObjectFieldType.PrimString:
+				case MacroArpObjectFieldType.PrimString:
 					fieldBlock.push(macro @:pos(field.pos) { this.$fieldName = input.readUtf($v{fieldName}); });
-				case ArpObjectFieldType.Reference(arpType):
+				case MacroArpObjectFieldType.Reference(arpType):
 					var fieldSlotName:String = fieldName + "Slot";
 					fieldBlock.push(macro @:pos(field.pos) { this.$fieldSlotName = this._arpDomain.getOrCreateSlot(new net.kaikoga.arp.domain.core.ArpSid(input.readUtf($v{fieldName}))); });
 			}
@@ -300,15 +300,15 @@ class ArpObjectBuilder {
 			var field:Field = aoField.field;
 			var fieldName:String = field.name;
 			switch (aoField.type) {
-				case ArpObjectFieldType.PrimInt:
+				case MacroArpObjectFieldType.PrimInt:
 					fieldBlock.push(macro @:pos(field.pos) { output.writeInt32($v{fieldName}, this.$fieldName); });
-				case ArpObjectFieldType.PrimFloat:
+				case MacroArpObjectFieldType.PrimFloat:
 					fieldBlock.push(macro @:pos(field.pos) { output.writeDouble($v{fieldName}, this.$fieldName); });
-				case ArpObjectFieldType.PrimBool:
+				case MacroArpObjectFieldType.PrimBool:
 					fieldBlock.push(macro @:pos(field.pos) { output.writeBool($v{fieldName}, this.$fieldName); });
-				case ArpObjectFieldType.PrimString:
+				case MacroArpObjectFieldType.PrimString:
 					fieldBlock.push(macro @:pos(field.pos) { output.writeUtf($v{fieldName}, this.$fieldName); });
-				case ArpObjectFieldType.Reference(arpType):
+				case MacroArpObjectFieldType.Reference(arpType):
 					var fieldSlotName:String = fieldName + "Slot";
 					fieldBlock.push(macro @:pos(field.pos) { output.writeUtf($v{fieldName}, this.$fieldSlotName.sid.toString()); });
 			}
@@ -339,12 +339,12 @@ class ArpObjectBuilder {
 	}
 }
 
-typedef ArpObjectField = {
+typedef MacroArpObjectField = {
 	field:Field,
 	nativeType:ComplexType,
-	type:ArpObjectFieldType
+	type:MacroArpObjectFieldType
 }
-enum ArpObjectFieldType {
+enum MacroArpObjectFieldType {
 	PrimInt;
 	PrimFloat;
 	PrimBool;
