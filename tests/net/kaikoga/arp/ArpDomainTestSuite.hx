@@ -1,5 +1,6 @@
 package net.kaikoga.arp;
 
+import net.kaikoga.arp.macro.StdDsMacroArpObjectCase;
 import net.kaikoga.arp.domain.ArpDirectoryCase;
 import net.kaikoga.arp.macro.MacroArpObjectCase;
 import net.kaikoga.arp.structs.ArpColorCase;
@@ -23,6 +24,7 @@ class ArpDomainTestSuite {
 		r.load(ArpObjectQueryCase);
 
 		r.load(MacroArpObjectCase);
+		r.load(StdDsMacroArpObjectCase);
 
 		r.load(ArpColorCase);
 		r.load(ArpDirectionCase);

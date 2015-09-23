@@ -1,6 +1,6 @@
 package net.kaikoga.arp.domain.ds;
 
-class ArpObjectList<T:IArpObject> extends List<T> {
+class ArpObjectArray<T:IArpObject> extends Array<T> {
 	private var domain:ArpDomain;
 
 	public function new(domain:ArpDomain) {

@@ -4,6 +4,7 @@ package net.kaikoga.arp.macro;
 
 import haxe.macro.Expr.ExprOf;
 
+//FIXME we prefer interfaces to public enums
 enum MacroArpObjectFieldType {
 	PrimInt;
 	PrimFloat;
