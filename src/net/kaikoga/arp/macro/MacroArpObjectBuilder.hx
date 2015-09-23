@@ -1,9 +1,10 @@
 package net.kaikoga.arp.macro;
+
+#if macro
+
 import net.kaikoga.arp.macro.MacroArpObjectField;
 import haxe.macro.Expr;
 import haxe.macro.Context;
-
-#if macro
 
 class MacroArpObjectBuilder {
 
@@ -11,9 +12,9 @@ class MacroArpObjectBuilder {
 		return new MacroArpObjectBuilder(arpTypeName).run();
 	}
 
-	private var arpTypeName:String;
+	private var outFields:Array<Field> = [];
 
-	private var result:Array<Field> = [];
+	private var arpTypeName:String;
 	private var arpObjectFields:Array<MacroArpObjectField> = [];
 
 	private var _arpDomain:Field = null;
@@ -28,7 +29,7 @@ class MacroArpObjectBuilder {
 
 	private function new(arpTypeName:String) {
 		this.arpTypeName = arpTypeName;
-		this.result = [];
+		this.outFields = [];
 	}
 
 	private function run():Array<Field> {
@@ -55,20 +56,10 @@ class MacroArpObjectBuilder {
 				default:
 					var arpObjectField:MacroArpObjectField = MacroArpObjectField.fromField(field);
 					if (arpObjectField == null) {
-						this.result.push(field);
+						this.outFields.push(field);
 					} else {
 						this.arpObjectFields.push(arpObjectField);
-						switch (arpObjectField.type) {
-							case
-								MacroArpObjectFieldType.PrimInt,
-								MacroArpObjectFieldType.PrimFloat,
-								MacroArpObjectFieldType.PrimBool,
-								MacroArpObjectFieldType.PrimString:
-								this.result.push(field);
-							case
-								MacroArpObjectFieldType.Reference(fieldArpType):
-								buildSlot(field, arpObjectField.nativeType, fieldArpType);
-						}
+						arpObjectField.buildField(this.outFields);
 					}
 				}
 		}
@@ -81,13 +72,7 @@ class MacroArpObjectBuilder {
 		buildConsumeSeedElement();
 		buildReadSelf();
 		buildWriteSelf();
-		return this.result;
-	}
-
-	inline private function createArpSlotTypeOf(type:ComplexType):ComplexType {
-		return ComplexType.TPath({
-			pack: "net.kaikoga.arp.domain".split("."), name: "ArpSlot", params: [TypeParam.TPType(type)]
-		});
+		return this.outFields;
 	}
 
 	inline private function fieldSkeleton(name:String, field:Null<Field>, isPublic:Bool):Field {
@@ -97,7 +82,7 @@ class MacroArpObjectBuilder {
 	private function build_arpDomain():Void {
 		this._arpDomain = fieldSkeleton("_arpDomain", this._arpDomain, false);
 		this._arpDomain.kind = FieldType.FVar(macro :net.kaikoga.arp.domain.ArpDomain);
-		this.result.push(this._arpDomain);
+		this.outFields.push(this._arpDomain);
 	}
 
 	private function buildArpDomain():Void {
@@ -107,7 +92,7 @@ class MacroArpObjectBuilder {
 			ret: macro :net.kaikoga.arp.domain.ArpDomain,
 			expr: macro @:pos(this.arpDomain.pos) { return this._arpDomain; }
 		});
-		this.result.push(this.arpDomain);
+		this.outFields.push(this.arpDomain);
 	}
 
 	private function buildArpType():Void {
@@ -117,14 +102,14 @@ class MacroArpObjectBuilder {
 			ret: macro :net.kaikoga.arp.domain.core.ArpType,
 			expr: macro @:pos(this.arpType.pos) {return new net.kaikoga.arp.domain.core.ArpType($v{arpTypeName});}
 		});
-		this.result.push(this.arpType);
+		this.outFields.push(this.arpType);
 	}
 
 	private function build_arpSlot():Void {
 		this._arpSlot = fieldSkeleton("_arpSlot", this._arpSlot, false);
 		//this._arpSlot.kind = FieldType.FVar(createArpSlotTypeOf(macro :net.kaikoga.arp.domain.ArpDomain));
 		this._arpSlot.kind = FieldType.FVar(macro :net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot);
-		this.result.push(this._arpSlot);
+		this.outFields.push(this._arpSlot);
 	}
 
 	private function buildArpSlot():Void {
@@ -134,12 +119,11 @@ class MacroArpObjectBuilder {
 			ret: macro :net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot,
 			expr: macro @:pos(this.arpSlot.pos) { return this._arpSlot; }
 		});
-		this.result.push(this.arpSlot);
+		this.outFields.push(this.arpSlot);
 	}
 
 	private function buildInit():Void {
 		var initBlock:Array<Expr> = [];
-		var cases:Array<Case> = [];
 
 		var e:Expr = macro {
 			this._arpDomain = slot.domain;
@@ -149,19 +133,7 @@ class MacroArpObjectBuilder {
 			return this;
 		}
 
-		for (aoField in this.arpObjectFields) {
-			var field:Field = aoField.field;
-			var fieldName:String = field.name;
-			switch (aoField.type) {
-				case MacroArpObjectFieldType.PrimInt:
-				case MacroArpObjectFieldType.PrimFloat:
-				case MacroArpObjectFieldType.PrimBool:
-				case MacroArpObjectFieldType.PrimString:
-				case MacroArpObjectFieldType.Reference(arpType):
-					var fieldSlotName:String = fieldName + "Slot";
-					initBlock.push(macro @:pos(field.pos) { this.$fieldSlotName = this._arpDomain.nullSlot; });
-			}
-		}
+		for (aoField in this.arpObjectFields) aoField.buildInitBlock(initBlock);
 
 		this.init = fieldSkeleton("init", this.init, true);
 		this.init.kind = FieldType.FFun({
@@ -172,7 +144,7 @@ class MacroArpObjectBuilder {
 			ret: macro :net.kaikoga.arp.domain.IArpObject,
 			expr: e
 		});
-		this.result.push(this.init);
+		this.outFields.push(this.init);
 	}
 
 	private function buildConsumeSeedElement():Void {
@@ -180,28 +152,7 @@ class MacroArpObjectBuilder {
 
 		var e:Expr = { pos: Context.currentPos(), expr: ExprDef.ESwitch(macro element.typeName(), cases, null) }
 
-		for (aoField in this.arpObjectFields) {
-			var field:Field = aoField.field;
-			var fieldName:String = field.name;
-			var caseBlock:Array<Expr> = [];
-			cases.push({
-				values: [macro @:pos(field.pos) $v{fieldName}],
-				expr: { pos: field.pos, expr: ExprDef.EBlock(caseBlock)}
-			});
-			switch (aoField.type) {
-				case MacroArpObjectFieldType.PrimInt:
-					caseBlock.push(macro @:pos(field.pos) { this.$fieldName = Std.parseInt(element.value()); });
-				case MacroArpObjectFieldType.PrimFloat:
-					caseBlock.push(macro @:pos(field.pos) { this.$fieldName = Std.parseFloat(element.value()); });
-				case MacroArpObjectFieldType.PrimBool:
-					caseBlock.push(macro @:pos(field.pos) { this.$fieldName = element.value() == "true"; });
-				case MacroArpObjectFieldType.PrimString:
-					caseBlock.push(macro @:pos(field.pos) { this.$fieldName = element.value(); });
-				case MacroArpObjectFieldType.Reference(arpType):
-					var fieldSlotName:String = fieldName + "Slot";
-					caseBlock.push(macro @:pos(field.pos) { this.$fieldSlotName = this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${arpType})); });
-			}
-		}
+		for (aoField in this.arpObjectFields) aoField.buildConsumeSeedElementBlock(cases);
 
 		this.consumeSeedElement = fieldSkeleton("consumeSeedElement", this.consumeSeedElement, false);
 		this.consumeSeedElement.kind = FieldType.FFun({
@@ -211,30 +162,14 @@ class MacroArpObjectBuilder {
 			ret: null,
 			expr: e
 		});
-		this.result.push(this.consumeSeedElement);
+		this.outFields.push(this.consumeSeedElement);
 	}
 
 	private function buildReadSelf():Void {
 		var fieldBlock:Array<Expr> = [];
 		var e:Expr = { pos: Context.currentPos(), expr: ExprDef.EBlock(fieldBlock)};
 
-		for (aoField in this.arpObjectFields) {
-			var field:Field = aoField.field;
-			var fieldName:String = field.name;
-			switch (aoField.type) {
-				case MacroArpObjectFieldType.PrimInt:
-					fieldBlock.push(macro @:pos(field.pos) { this.$fieldName = input.readInt32($v{fieldName}); });
-				case MacroArpObjectFieldType.PrimFloat:
-					fieldBlock.push(macro @:pos(field.pos) { this.$fieldName = input.readDouble($v{fieldName}); });
-				case MacroArpObjectFieldType.PrimBool:
-					fieldBlock.push(macro @:pos(field.pos) { this.$fieldName = input.readBool($v{fieldName}); });
-				case MacroArpObjectFieldType.PrimString:
-					fieldBlock.push(macro @:pos(field.pos) { this.$fieldName = input.readUtf($v{fieldName}); });
-				case MacroArpObjectFieldType.Reference(arpType):
-					var fieldSlotName:String = fieldName + "Slot";
-					fieldBlock.push(macro @:pos(field.pos) { this.$fieldSlotName = this._arpDomain.getOrCreateSlot(new net.kaikoga.arp.domain.core.ArpSid(input.readUtf($v{fieldName}))); });
-			}
-		}
+		for (aoField in this.arpObjectFields) aoField.buildReadSelfBlock(fieldBlock);
 
 		this.readSelf = fieldSkeleton("readSelf", this.readSelf, true);
 		this.readSelf.kind = FieldType.FFun({
@@ -244,30 +179,14 @@ class MacroArpObjectBuilder {
 			ret: null,
 			expr: e
 		});
-		this.result.push(this.readSelf);
+		this.outFields.push(this.readSelf);
 	}
 
 	private function buildWriteSelf():Void {
 		var fieldBlock:Array<Expr> = [];
 		var e:Expr = { pos: Context.currentPos(), expr: ExprDef.EBlock(fieldBlock)};
 
-		for (aoField in this.arpObjectFields) {
-			var field:Field = aoField.field;
-			var fieldName:String = field.name;
-			switch (aoField.type) {
-				case MacroArpObjectFieldType.PrimInt:
-					fieldBlock.push(macro @:pos(field.pos) { output.writeInt32($v{fieldName}, this.$fieldName); });
-				case MacroArpObjectFieldType.PrimFloat:
-					fieldBlock.push(macro @:pos(field.pos) { output.writeDouble($v{fieldName}, this.$fieldName); });
-				case MacroArpObjectFieldType.PrimBool:
-					fieldBlock.push(macro @:pos(field.pos) { output.writeBool($v{fieldName}, this.$fieldName); });
-				case MacroArpObjectFieldType.PrimString:
-					fieldBlock.push(macro @:pos(field.pos) { output.writeUtf($v{fieldName}, this.$fieldName); });
-				case MacroArpObjectFieldType.Reference(arpType):
-					var fieldSlotName:String = fieldName + "Slot";
-					fieldBlock.push(macro @:pos(field.pos) { output.writeUtf($v{fieldName}, this.$fieldSlotName.sid.toString()); });
-			}
-		}
+		for (aoField in this.arpObjectFields) aoField.buildWriteSelfBlock(fieldBlock);
 
 		this.writeSelf = fieldSkeleton("writeSelf", this.writeSelf, true);
 		this.writeSelf.kind = FieldType.FFun({
@@ -275,25 +194,8 @@ class MacroArpObjectBuilder {
 			ret: null,
 			expr: e
 		});
-		this.result.push(this.writeSelf);
-	}
-
-	private function buildSlot(field:Field, fieldType:ComplexType, arpType:ExprOf<String>):Void {
-		var ifieldSlot:String = field.name + "Slot";
-		var iget_field:String = "get_" + field.name;
-		var iset_field:String = "set_" + field.name;
-		var fieldSlotType:ComplexType = createArpSlotTypeOf(fieldType);
-		var generated:Array<Field> = (macro class Generated {
-			@:pos(field.pos) public var $ifieldSlot:$fieldSlotType;
-			@:pos(field.pos) inline private function $iget_field():$fieldType return this.$ifieldSlot.value;
-			@:pos(field.pos) inline private function $iset_field(value:$fieldType):$fieldType { this.$ifieldSlot = value.arpSlot(); return value; }
-		}).fields;
-		field.kind = FieldType.FProp("get", "set", fieldType, null);
-		this.result.push(field);
-		for (g in generated) this.result.push(g);
+		this.outFields.push(this.writeSelf);
 	}
 }
-
-
 
 #end

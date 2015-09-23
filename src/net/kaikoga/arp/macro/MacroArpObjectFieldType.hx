@@ -1,5 +1,7 @@
 package net.kaikoga.arp.macro;
 
+#if macro
+
 import haxe.macro.Expr.ExprOf;
 
 enum MacroArpObjectFieldType {
@@ -9,3 +11,5 @@ enum MacroArpObjectFieldType {
 	PrimString;
 	Reference(arpType:ExprOf<String>);
 }
+
+#end
