@@ -3,7 +3,17 @@ package net.kaikoga.arp.macro;
 import haxe.macro.Context;
 import haxe.macro.Expr;
 
-class MacroArpObjectFields {
+class MacroArpObjectField {
+
+	public var field(default, null):Field;
+	public var nativeType(default, null):ComplexType;
+	public var type(default, null):MacroArpObjectFieldType;
+
+	public function new(field:Field, nativeType:ComplexType, type:MacroArpObjectFieldType) {
+		this.field = field;
+		this.nativeType = nativeType;
+		this.type = type;
+	}
 
 	private static function typePathToTypeName(typePath:TypePath):String {
 		var fqn:Array<String> = typePath.pack.copy();
@@ -12,7 +22,7 @@ class MacroArpObjectFields {
 		return fqn.join(".");
 	}
 
-	public static function createFromField(field:Field):MacroArpObjectField {
+	public static function fromField(field:Field):MacroArpObjectField {
 		var metaArpSlot:ExprOf<String> = null;
 		var metaArpField:Bool = false;
 
@@ -29,39 +39,34 @@ class MacroArpObjectFields {
 			case FieldType.FFun(_): return null;
 		}
 
+		var type:MacroArpObjectFieldType;
 		switch (nativeType) {
 			case ComplexType.TPath(p):
 				switch (typePathToTypeName(p)) {
 					case "Int":
 						if (!metaArpField) return null;
 						if (metaArpSlot != null) Context.error(p.name + " must be @:arpField", field.pos);
-						return { field: field, nativeType: nativeType, type: MacroArpObjectFieldType.PrimInt };
+						type = MacroArpObjectFieldType.PrimInt;
 					case "Float":
 						if (!metaArpField) return null;
 						if (metaArpSlot != null) Context.error(p.name + " must be @:arpField", field.pos);
-						return { field: field, nativeType: nativeType, type: MacroArpObjectFieldType.PrimFloat };
+						type = MacroArpObjectFieldType.PrimFloat;
 					case "Bool":
 						if (!metaArpField) return null;
 						if (metaArpSlot != null) Context.error(p.name + " must be @:arpField", field.pos);
-						return { field: field, nativeType: nativeType, type: MacroArpObjectFieldType.PrimBool };
+						type = MacroArpObjectFieldType.PrimBool;
 					case "String":
 						if (!metaArpField) return null;
 						if (metaArpSlot != null) Context.error(p.name + " must be @:arpField", field.pos);
-						return { field: field, nativeType: nativeType, type: MacroArpObjectFieldType.PrimString };
+						type = MacroArpObjectFieldType.PrimString;
 					default:
 						if (metaArpField) Context.error(p.name + " must be @:arpSlot", field.pos);
 						if (metaArpSlot == null) return null;
-						return { field: field, nativeType: nativeType, type: MacroArpObjectFieldType.Reference(metaArpSlot) };
+						type = MacroArpObjectFieldType.Reference(metaArpSlot);
 				}
 			default:
 				throw "could not create ArpObjectField: " + Std.string(nativeType);
 		}
+		return new MacroArpObjectField(field, nativeType, type);
 	}
-
-}
-
-typedef MacroArpObjectField = {
-	field:Field,
-	nativeType:ComplexType,
-	type:MacroArpObjectFieldType
 }

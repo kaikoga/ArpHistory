@@ -1,5 +1,5 @@
 package net.kaikoga.arp.macro;
-import net.kaikoga.arp.macro.MacroArpObjectField.MacroArpObjectFields;
+import net.kaikoga.arp.macro.MacroArpObjectField;
 import haxe.macro.Expr;
 import haxe.macro.Context;
 
@@ -53,7 +53,7 @@ class MacroArpObjectBuilder {
 				case "writeSelf":
 					this.writeSelf = field;
 				default:
-					var arpObjectField:MacroArpObjectField = MacroArpObjectFields.createFromField(field);
+					var arpObjectField:MacroArpObjectField = MacroArpObjectField.fromField(field);
 					if (arpObjectField == null) {
 						this.result.push(field);
 					} else {
