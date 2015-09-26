@@ -2,6 +2,8 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
+import net.kaikoga.arp.macro.fields.std.MacroArpObjectStdListField;
+import net.kaikoga.arp.macro.fields.std.MacroArpObjectStdMapField;
 import net.kaikoga.arp.macro.fields.std.MacroArpObjectStdArrayField;
 import net.kaikoga.arp.macro.fields.MacroArpObjectValueField;
 import net.kaikoga.arp.macro.fields.MacroArpObjectReferenceField;
@@ -30,10 +32,10 @@ class MacroArpObjectField {
 		this.nativeType = nativeType;
 	}
 
-	private static function firstTypeParam(typePath:TypePath):ComplexType {
+	private static function typeParam(typePath:TypePath, index:Int = 0):ComplexType {
 		if (typePath.params == null) throw "invalid type parameter";
-		if (typePath.params.length == 0) throw "invalid type parameter";
-		switch (typePath.params[0]) {
+		if (typePath.params.length <= index) throw "invalid type parameter";
+		switch (typePath.params[index]) {
 			case TypeParam.TPType(t): return t;
 			case TypeParam.TPExpr(e): throw "invalid type parameter";
 		}
@@ -54,8 +56,11 @@ class MacroArpObjectField {
 					case "String":
 						return MacroArpObjectNativeFieldType.ValueType(MacroArpObjectValueType.PrimString);
 					case "Array":
-						var param:ComplexType = firstTypeParam(p);
-						return MacroArpObjectNativeFieldType.StdArray(complexTypeToNativeFieldType(param));
+						return MacroArpObjectNativeFieldType.StdArray(complexTypeToNativeFieldType(typeParam(p)));
+					case "List":
+						return MacroArpObjectNativeFieldType.StdList(complexTypeToNativeFieldType(typeParam(p)));
+					case "Map":
+						return MacroArpObjectNativeFieldType.StdMap(complexTypeToNativeFieldType(typeParam(p, 1)));
 					default:
 						return MacroArpObjectNativeFieldType.MaybeReference;
 				}
@@ -97,16 +102,28 @@ class MacroArpObjectField {
 						if (!metaArpField) return null;
 						if (metaArpSlot != null) Context.error(nativeType.toString() + " must be @:arpField", nativeField.pos);
 						return new MacroArpObjectStdArrayField(nativeField, nativeType, p);
-					case MacroArpObjectNativeFieldType.MaybeReference:
-						throw "cannot create std Array: " + nativeType.toString();
-					case MacroArpObjectNativeFieldType.StdArray:
+					case _:
 						throw "field type too complex: " + nativeType.toString();
-					case MacroArpObjectNativeFieldType.Invalid:
-						throw "could not create ArpObjectField: " + nativeType.toString();
+				}
+			case MacroArpObjectNativeFieldType.StdList(t):
+				switch (t) {
+					case MacroArpObjectNativeFieldType.ValueType(p):
+						if (!metaArpField) return null;
+						if (metaArpSlot != null) Context.error(nativeType.toString() + " must be @:arpField", nativeField.pos);
+						return new MacroArpObjectStdListField(nativeField, nativeType, p);
+					case _:
+				}
+			case MacroArpObjectNativeFieldType.StdMap(t):
+				switch (t) {
+					case MacroArpObjectNativeFieldType.ValueType(p):
+						if (!metaArpField) return null;
+						if (metaArpSlot != null) Context.error(nativeType.toString() + " must be @:arpField", nativeField.pos);
+						return new MacroArpObjectStdMapField(nativeField, nativeType, p);
+					case _:
 				}
 			case MacroArpObjectNativeFieldType.Invalid:
-				throw "could not create ArpObjectField: " + nativeType.toString();
 		}
+		throw "could not create ArpObjectField: " + nativeType.toString();
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
@@ -138,6 +155,8 @@ enum MacroArpObjectNativeFieldType {
 	Invalid;
 	ValueType(type:MacroArpObjectValueType);
 	StdArray(param:MacroArpObjectNativeFieldType);
+	StdList(param:MacroArpObjectNativeFieldType);
+	StdMap(param:MacroArpObjectNativeFieldType);
 	MaybeReference;
 }
 

@@ -8,14 +8,16 @@ class ArpSeed {
 	private var _name:String;
 	private var _ref:String;
 	private var _template:String;
+	private var _key:String;
 	private var _value:Dynamic;
 	private var _children:Array<ArpSeed>;
 
-	inline public function new(typeName:String, template:String, name:String, ref:String, value:Dynamic, children:Array<ArpSeed>) {
+	inline public function new(typeName:String, template:String, name:String, ref:String, key:String, value:Dynamic, children:Array<ArpSeed>) {
 		this._typeName = typeName;
 		this._template = template;
 		this._name = name;
 		this._ref = ref;
+		this._key = key;
 		this._value = value;
 		this._children = children;
 	}
@@ -24,6 +26,7 @@ class ArpSeed {
 	inline public function template():String return this._template;
 	inline public function name():String return this._name;
 	inline public function ref():String return this._ref;
+	inline public function key():String return this._key;
 	inline public function value():Dynamic return this._value;
 	inline public function children():Array<ArpSeed> return this._children;
 
@@ -39,13 +42,14 @@ class ArpSeed {
 		switch (xml.nodeType) {
 			case XmlType.Document: xml = xml.firstElement();
 			case XmlType.Element:
-			case _: return new ArpSeed(xml.nodeName, null, null, xml.nodeValue, xml.nodeValue, null);
+			case _: return new ArpSeed(xml.nodeName, null, null, xml.nodeValue, null, xml.nodeValue, null);
 		}
 
 		var typeName:String = xml.nodeName;
 		var template:String = null;
 		var name:String = null;
 		var ref:String = null;
+		var key:String = null;
 		var value:String = null;
 		var children:Array<ArpSeed> = null;
 
@@ -60,11 +64,13 @@ class ArpSeed {
 					name = attr;
 				case "ref":
 					ref = attr;
+				case "key":
+					key = attr;
 				case "value":
 					value = attr;
 				case _:
 					// NOTE leef seeds by xml attr are also treated as ref; text nodes are not
-					if (children == null) children = []; children.push(new ArpSeed(attrName, null, null, attr, attr, null));
+					if (children == null) children = []; children.push(new ArpSeed(attrName, null, null, attr, null, attr, null));
 			}
 		}
 		for (node in xml) {
@@ -74,6 +80,6 @@ class ArpSeed {
 				case _: // ignore
 			}
 		}
-		return new ArpSeed(typeName, template, name, ref, value, children);
+		return new ArpSeed(typeName, template, name, ref, key, value, children);
 	}
 }
