@@ -4,13 +4,13 @@ package net.kaikoga.arp.macro.fields.std;
 
 import haxe.macro.Expr.Field;
 
-class MacroArpObjectStdArrayField extends MacroArpObjectField {
+class MacroArpObjectReferenceStdArrayField extends MacroArpObjectField {
 
-	public var type(default, null):MacroArpObjectValueType;
+	private var arpType:ExprOf<String>;
 
-	public function new(nativeField:Field, nativeType:ComplexType, type:MacroArpObjectValueType) {
+	public function new(nativeField:Field, nativeType:ComplexType, arpType:ExprOf<String>) {
 		super(nativeField, nativeType);
-		this.type = type;
+		this.arpType = arpType;
 	}
 
 	override public function buildField(outFields:Array<Field>):Void {
