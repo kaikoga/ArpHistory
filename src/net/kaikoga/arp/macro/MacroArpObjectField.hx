@@ -5,6 +5,8 @@ package net.kaikoga.arp.macro;
 import haxe.macro.Context;
 import haxe.macro.Expr;
 
+using haxe.macro.ComplexTypeTools;
+
 class MacroArpObjectField {
 
 	public var nativeField(default, null):Field;
@@ -29,17 +31,30 @@ class MacroArpObjectField {
 	private var iSet_field(get, never):String;
 	private function get_iSet_field():String return "set_" + this.iFieldName;
 
-	public function new(nativeField:Field, nativeType:ComplexType, type:MacroArpObjectFieldType) {
+	private function new(nativeField:Field, nativeType:ComplexType, type:MacroArpObjectFieldType) {
 		this.nativeField = nativeField;
 		this.nativeType = nativeType;
 		this.type = type;
 	}
 
-	private static function typePathToTypeName(typePath:TypePath):String {
-		var fqn:Array<String> = typePath.pack.copy();
-		fqn.push(typePath.name);
-		if (typePath.sub != null) fqn.push(typePath.sub);
-		return fqn.join(".");
+	private static function complexTypeToNativeFieldType(complexType:ComplexType):MacroArpObjectNativeFieldType {
+		switch (complexType) {
+			case ComplexType.TPath(p):
+				switch (complexType.toString()) {
+					case "Int":
+						return MacroArpObjectNativeFieldType.ValueType(MacroArpObjectFieldType.PrimInt);
+					case "Float":
+						return MacroArpObjectNativeFieldType.ValueType(MacroArpObjectFieldType.PrimFloat);
+					case "Bool":
+						return MacroArpObjectNativeFieldType.ValueType(MacroArpObjectFieldType.PrimBool);
+					case "String":
+						return MacroArpObjectNativeFieldType.ValueType(MacroArpObjectFieldType.PrimString);
+					default:
+						return MacroArpObjectNativeFieldType.MaybeReference;
+				}
+			default:
+				return MacroArpObjectNativeFieldType.Invalid;
+		}
 	}
 
 	public static function fromField(nativeField:Field):MacroArpObjectField {
@@ -60,32 +75,17 @@ class MacroArpObjectField {
 		}
 
 		var type:MacroArpObjectFieldType;
-		switch (nativeType) {
-			case ComplexType.TPath(p):
-				switch (typePathToTypeName(p)) {
-					case "Int":
-						if (!metaArpField) return null;
-						if (metaArpSlot != null) Context.error(p.name + " must be @:arpField", nativeField.pos);
-						type = MacroArpObjectFieldType.PrimInt;
-					case "Float":
-						if (!metaArpField) return null;
-						if (metaArpSlot != null) Context.error(p.name + " must be @:arpField", nativeField.pos);
-						type = MacroArpObjectFieldType.PrimFloat;
-					case "Bool":
-						if (!metaArpField) return null;
-						if (metaArpSlot != null) Context.error(p.name + " must be @:arpField", nativeField.pos);
-						type = MacroArpObjectFieldType.PrimBool;
-					case "String":
-						if (!metaArpField) return null;
-						if (metaArpSlot != null) Context.error(p.name + " must be @:arpField", nativeField.pos);
-						type = MacroArpObjectFieldType.PrimString;
-					default:
-						if (metaArpField) Context.error(p.name + " must be @:arpSlot", nativeField.pos);
-						if (metaArpSlot == null) return null;
-						type = MacroArpObjectFieldType.Reference(metaArpSlot);
-				}
-			default:
-				throw "could not create ArpObjectField: " + Std.string(nativeType);
+		switch (complexTypeToNativeFieldType(nativeType)) {
+			case MacroArpObjectNativeFieldType.ValueType(p):
+				if (!metaArpField) return null;
+				if (metaArpSlot != null) Context.error(nativeType.toString() + " must be @:arpField", nativeField.pos);
+				type = p;
+			case MacroArpObjectNativeFieldType.MaybeReference:
+				if (metaArpField) Context.error(nativeType.toString() + " must be @:arpSlot", nativeField.pos);
+				if (metaArpSlot == null) return null;
+				type = MacroArpObjectFieldType.Reference(metaArpSlot);
+			case MacroArpObjectNativeFieldType.Invalid:
+				throw "could not create ArpObjectField: " + nativeType.toString();
 		}
 		return new MacroArpObjectField(nativeField, nativeType, type);
 	}
@@ -190,6 +190,12 @@ class MacroArpObjectField {
 				fieldBlock.push(macro @:pos(this.nativePos) { output.writeUtf($v{iFieldName}, this.$iFieldSlot.sid.toString()); });
 		}
 	}
+}
+
+enum MacroArpObjectNativeFieldType {
+	Invalid;
+	ValueType(type:MacroArpObjectFieldType);
+	MaybeReference;
 }
 
 #end

@@ -6,10 +6,9 @@ import haxe.macro.Expr.Field;
 
 class MacroArpObjectStdArrayField extends MacroArpObjectField {
 
-	public function new() {
-		super();
+	public function new(nativeField:Field, nativeType:ComplexType, type:MacroArpObjectFieldType) {
+		super(nativeField, nativeType, type);
 	}
-
 	override public function buildField(outFields:Array<Field>):Void {
 		var nativeType:ComplexType = this.nativeType;
 		switch (this.type) {

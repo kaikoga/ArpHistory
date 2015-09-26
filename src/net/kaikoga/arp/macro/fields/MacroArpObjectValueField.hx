@@ -4,10 +4,10 @@ package net.kaikoga.arp.macro.fields;
 
 import haxe.macro.Expr.Field;
 
-class MacroArpObjectAtomField extends MacroArpObjectField {
+class MacroArpObjectValueField extends MacroArpObjectField {
 
-	public function new() {
-		super();
+	public function new(nativeField:Field, nativeType:ComplexType, type:MacroArpObjectFieldType) {
+		super(nativeField, nativeType, type);
 	}
 
 	override private function buildSlot(outFields:Array<Field>, fieldArpType:ExprOf<String>):Void {
