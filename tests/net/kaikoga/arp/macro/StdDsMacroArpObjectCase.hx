@@ -20,8 +20,8 @@ import picotest.PicoAssert.*;
 class StdDsMacroArpObjectCase {
 
 	private var domain:ArpDomain;
-	private var slot:ArpSlot<MockMacroArpObject>;
-	private var arpObj:MockMacroArpObject;
+	private var slot:ArpSlot<MockStdDsMacroArpObject>;
+	private var arpObj:MockStdDsMacroArpObject;
 	private var xml:Xml;
 	private var seed:ArpSeed;
 
@@ -29,7 +29,18 @@ class StdDsMacroArpObjectCase {
 		domain = new ArpDomain();
 		domain.addGenerator(new ArpDynamicGenerator(new ArpType("MockMacroArpObject"), MockMacroArpObject));
 		domain.addGenerator(new ArpDynamicGenerator(new ArpType("MockStdDsMacroArpObject"), MockStdDsMacroArpObject));
-		xml = Xml.parse('<data name="name1" />').firstElement();
+		xml = Xml.parse('
+<data name="name1">
+	<intStdArray value="112" />
+	<intStdArray value="134" />
+	<floatStdArray value="2.23" />
+	<floatStdArray value="2.45" />
+	<boolStdArray value="true" />
+	<boolStdArray value="true" />
+	<stringStdArray value="stdFoo" />
+	<stringStdArray value="stdBar" />
+</data>
+		').firstElement();
 		seed = ArpSeed.fromXml(xml);
 	}
 
@@ -47,6 +58,11 @@ class StdDsMacroArpObjectCase {
 		assertEquals(domain, arpObj.arpDomain());
 		assertEquals(new ArpType("MockStdDsMacroArpObject"), arpObj.arpType());
 		assertEquals(slot, arpObj.arpSlot());
+
+		assertMatch([112, 134], arpObj.intStdArray);
+		assertMatch([2.23, 2.45], arpObj.floatStdArray);
+		assertMatch([true, true], arpObj.boolStdArray);
+		assertMatch(["stdFoo", "stdBar"], arpObj.stringStdArray);
 	}
 
 	private function roundTrip<T:IArpObject>(inObject:T, klass:Class<T>):T {
@@ -66,5 +82,10 @@ class StdDsMacroArpObjectCase {
 		assertEquals(arpObj.arpDomain(), arpObj2.arpDomain());
 		assertEquals(arpObj.arpType(), arpObj2.arpType());
 		assertNotEquals(arpObj.arpSlot(), arpObj2.arpSlot());
+
+		assertMatch(arpObj.intStdArray, arpObj2.intStdArray);
+		assertMatch(arpObj.floatStdArray, arpObj2.floatStdArray);
+		assertMatch(arpObj.boolStdArray, arpObj2.boolStdArray);
+		assertMatch(arpObj.stringStdArray, arpObj2.stringStdArray);
 	}
 }

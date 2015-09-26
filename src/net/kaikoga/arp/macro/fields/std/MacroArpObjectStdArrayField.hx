@@ -2,7 +2,8 @@ package net.kaikoga.arp.macro.fields.std;
 
 #if macro
 
-import haxe.macro.Expr.Field;
+import haxe.Serializer;
+import haxe.macro.Expr;
 
 class MacroArpObjectStdArrayField extends MacroArpObjectField {
 
@@ -15,35 +16,14 @@ class MacroArpObjectStdArrayField extends MacroArpObjectField {
 
 	override public function buildField(outFields:Array<Field>):Void {
 		var nativeType:ComplexType = this.nativeType;
-		switch (this.type) {
-			case
-			MacroArpObjectValueType.PrimInt,
-			MacroArpObjectValueType.PrimFloat,
-			MacroArpObjectValueType.PrimBool,
-			MacroArpObjectValueType.PrimString:
-				// TODO coerce type
-				this.nativeField.kind = FieldType.FProp("default", "null", nativeType, null);
-			case
-				MacroArpObjectValueType.Reference(arpType):
-				// TODO coerce type
-				this.nativeField.kind = FieldType.FProp("default", "null", macro :net.kaikoga.arp.domain.ds.ArpObjectArray, null);
-		}
+		// TODO coerce type
+		this.nativeField.kind = FieldType.FProp("default", "null", nativeType, null);
 		outFields.push(nativeField);
 	}
 
 	override public function buildInitBlock(initBlock:Array<Expr>):Void {
 		var iFieldName:String = this.iFieldName;
-		switch (this.type) {
-			case
-			MacroArpObjectValueType.PrimInt,
-			MacroArpObjectValueType.PrimFloat,
-			MacroArpObjectValueType.PrimBool,
-			MacroArpObjectValueType.PrimString:
-				initBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = []; });
-			case
-			MacroArpObjectValueType.Reference(arpType):
-				initBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = new net.kaikoga.arp.domain.ds.ArpObjectArray(domain)); });
-		}
+		initBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = []; });
 	}
 
 	override public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
@@ -64,41 +44,17 @@ class MacroArpObjectStdArrayField extends MacroArpObjectField {
 				caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.push(element.value() == "true"); });
 			case MacroArpObjectValueType.PrimString:
 				caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.push(element.value()); });
-			case MacroArpObjectValueType.Reference(arpType):
-				caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.push(this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${arpType})).value); });
 		}
 	}
 
 	override public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
-		var iFieldName:String = this.iFieldName;
-		switch (this.type) {
-			case MacroArpObjectValueType.PrimInt:
-				throw "not implemented";
-			case MacroArpObjectValueType.PrimFloat:
-				throw "not implemented";
-			case MacroArpObjectValueType.PrimBool:
-				throw "not implemented";
-			case MacroArpObjectValueType.PrimString:
-				throw "not implemented";
-			case MacroArpObjectValueType.Reference(arpType):
-				throw "not implemented";
-		}
+		// FIXME persist over serialize
+		fieldBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = haxe.Unserializer.run(input.readUtf($v{iFieldName})); });
 	}
 
 	override public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
-		var iFieldName:String = this.iFieldName;
-		switch (this.type) {
-			case MacroArpObjectValueType.PrimInt:
-				throw "not implemented";
-			case MacroArpObjectValueType.PrimFloat:
-				throw "not implemented";
-			case MacroArpObjectValueType.PrimBool:
-				throw "not implemented";
-			case MacroArpObjectValueType.PrimString:
-				throw "not implemented";
-			case MacroArpObjectValueType.Reference(arpType):
-				throw "not implemented";
-		}
+		// FIXME persist over serialize
+		fieldBlock.push(macro @:pos(this.nativePos) { output.writeUtf($v{iFieldName}, haxe.Serializer.run(this.$iFieldName)); });
 	}
 }
 
