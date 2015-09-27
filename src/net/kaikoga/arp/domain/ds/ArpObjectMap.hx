@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain.ds;
 
+import net.kaikoga.arp.domain.core.ArpSid;
 import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.persistable.IPersistable;
@@ -37,7 +38,7 @@ class ArpObjectMap<V:IArpObject> implements IMap<String, V> implements IPersista
 		return this.slots.keys();
 	}
 
-	public function iterator():Iterator<T> {
+	public function iterator():Iterator<V> {
 		return new ArpObjectMapIterator(this.slots);
 	}
 
@@ -47,15 +48,20 @@ class ArpObjectMap<V:IArpObject> implements IMap<String, V> implements IPersista
 
 	public function readSelf(input:IPersistInput):Void {
 		this.slots = new Map();
-		while ((var key:String = input.readName()) != "") {
-			this.slots.set(key, this.domain.getOrCreateSlot(input.readName()));
+		var key:String;
+		// TODO better format
+		while ((key = input.readName()) != "") {
+			this.slots.set(key, this.domain.getOrCreateSlot(new ArpSid(input.readName())));
 		}
 	}
+
 	public function writeSelf(output:IPersistOutput):Void {
+		// TODO better format
 		for (key in this.slots.keys()) {
-			output.writeUtf(key);
-			output.writeUtf(this.slots.get(key).sid.toString());
+			output.writeName(key);
+			output.writeName(this.slots.get(key).sid.toString());
 		}
+		output.writeName("");
 	}
 }
 
@@ -74,6 +80,6 @@ class ArpObjectMapIterator<V:IArpObject> {
 	}
 
 	public function next():V {
-		return this.slots.get(this.keyIter.next());
+		return this.slots.get(this.keyIter.next()).value;
 	}
 }

@@ -55,6 +55,8 @@ class StdDsMacroArpObjectCase {
 	<boolStdMap key="key6" value="false" />
 	<stringStdMap key="key7" value="stdMapFoo" />
 	<stringStdMap key="key8" value="stdMapBar" />
+	<refStdMap key="key9" ref="name1" />
+	<refStdMap key="key0" ref="name1" />
 </data>
 		').firstElement();
 		seed = ArpSeed.fromXml(xml);
@@ -91,6 +93,8 @@ class StdDsMacroArpObjectCase {
 		assertEquals(false, arpObj.boolStdMap.get("key6"));
 		assertEquals("stdMapFoo", arpObj.stringStdMap.get("key7"));
 		assertEquals("stdMapBar", arpObj.stringStdMap.get("key8"));
+		assertEquals(arpObj, arpObj.refStdMap.get("key9"));
+		assertEquals(arpObj, arpObj.refStdMap.get("key0"));
 	}
 
 	private function roundTrip<T:IArpObject>(inObject:T, klass:Class<T>):T {
@@ -127,5 +131,7 @@ class StdDsMacroArpObjectCase {
 		assertEquals(arpObj.boolStdMap.get("key6"), arpObj2.boolStdMap.get("key6"));
 		assertEquals(arpObj.stringStdMap.get("key7"), arpObj2.stringStdMap.get("key7"));
 		assertEquals(arpObj.stringStdMap.get("key8"), arpObj2.stringStdMap.get("key8"));
+		assertEquals(arpObj.refStdMap.get("key9"), arpObj2.refStdMap.get("key9"));
+		assertEquals(arpObj.refStdMap.get("key0"), arpObj2.refStdMap.get("key0"));
 	}
 }

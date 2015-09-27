@@ -2,6 +2,7 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
+import net.kaikoga.arp.macro.fields.std.MacroArpObjectStdReferenceMapField;
 import net.kaikoga.arp.macro.fields.std.MacroArpObjectStdListField;
 import net.kaikoga.arp.macro.fields.std.MacroArpObjectStdMapField;
 import net.kaikoga.arp.macro.fields.std.MacroArpObjectStdArrayField;
@@ -119,6 +120,10 @@ class MacroArpObjectField {
 						if (!metaArpField) return null;
 						if (metaArpSlot != null) Context.error(nativeType.toString() + " must be @:arpField", nativeField.pos);
 						return new MacroArpObjectStdMapField(nativeField, nativeType, p);
+					case MacroArpObjectNativeFieldType.MaybeReference:
+						if (metaArpField) Context.error(nativeType.toString() + " must be @:arpSlot", nativeField.pos);
+						if (metaArpSlot == null) return null;
+						return new MacroArpObjectStdReferenceMapField(nativeField, nativeType, metaArpSlot);
 					case _:
 				}
 			case MacroArpObjectNativeFieldType.Invalid:
