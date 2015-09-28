@@ -1,6 +1,6 @@
 package net.kaikoga.arp.ds.access;
 
-interface IListResolve<T> extends IListRead<T> {
-	function indexOf(x:T, ?fromIndex:Int):Int;
-	function lastIndexOf(x:T, ?fromIndex:Int):Int;
+interface IListResolve<V> extends IListRead<V> {
+	function indexOf(v:V, ?fromIndex:Int):Int;
+	function lastIndexOf(v:V, ?fromIndex:Int):Int;
 }

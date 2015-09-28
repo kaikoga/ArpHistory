@@ -1,8 +1,9 @@
 package net.kaikoga.arp.ds.access;
 
-interface IListRead<T> extends ICollectionRead<T> {
-	var length(default, null):Int;
-	function first():Null<T>;
-	function last():Null<T>;
-	function getAt(x:Int):Null<T>;
+interface IListRead<V> extends ICollectionRead<V> {
+	var length(get, null):Int;
+	function get_length():Int;
+	function first():Null<V>;
+	function last():Null<V>;
+	function getAt(index:Int):Null<V>;
 }

@@ -1,10 +1,10 @@
 package net.kaikoga.arp.ds.access;
 
-interface IListWrite<T> extends ICollectionWrite<T> {
-	function pop():Null<T>;
-	function push(x:T):Int;
-	function shift():Null<T>;
-	function unshift(x:T):Void;
-	function insert(pos:Int, x:T):Void;
-	function remove(pos:Int):Void;
+interface IListWrite<V> extends ICollectionWrite<V> {
+	function pop():Null<V>;
+	function push(v:V):Int;
+	function shift():Null<V>;
+	function unshift(v:V):Void;
+	function insert(index:Int, v:V):Void;
+	function remove(index:Int):Void;
 }
