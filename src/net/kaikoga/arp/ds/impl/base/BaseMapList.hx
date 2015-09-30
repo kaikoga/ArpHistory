@@ -1,17 +1,18 @@
-package net.kaikoga.arp.ds.impl;
+package net.kaikoga.arp.ds.impl.base;
 
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.iter.EmptyIterator;
 import net.kaikoga.arp.ds.IMapList;
 
-class VoidMapList<K, V> implements IMapList<K, V> {
+class BaseMapList<K, V> implements IMapList<K, V> {
 
 	public function new() return;
 
 	//read
-	public function isEmpty():Bool return false;
-	public function hasValue(v:V):Bool return false;
-	public function iterator():Iterator<V> return new EmptyIterator();
-	public function toString():String return "";
+	public function isEmpty():Bool return CollectionTools.isEmptyImpl(this);
+	public function hasValue(v:V):Bool return CollectionTools.hasValueImpl(this, v);
+	public function iterator():Iterator<V> return CollectionTools.iteratorImpl(this);
+	public function toString():String return CollectionTools.toStringImpl(this);
 	public function get(k:K):Null<V> return null;
 	public function hasKey(key:K):Bool return false;
 	public function keys():Iterator<K> return new EmptyIterator();
@@ -36,5 +37,5 @@ class VoidMapList<K, V> implements IMapList<K, V> {
 	public function unshift(v:V):Void return;
 	public function insertAt(index:Int, v:V):Void return;
 	public function removeAt(index:Int):Void return;
-	public function clear():Void return;
+	public function clear():Void CollectionTools.clearImpl(this);
 }

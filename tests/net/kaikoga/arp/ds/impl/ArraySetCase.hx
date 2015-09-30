@@ -2,10 +2,10 @@ package net.kaikoga.arp.ds.impl;
 
 class ArraySetCase {
 
-	private var set:ArraySet<Int>;
+	private var me:ArraySet<Int>;
 
 	public function setup():Void {
-		set = new ArraySet();
+		me = new ArraySet();
 	}
 
 }

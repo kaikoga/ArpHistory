@@ -9,7 +9,7 @@ class VoidList<V> implements IList<V> {
 
 	//read
 	public function isEmpty():Bool return false;
-	public function hasValue(value:V):Bool return false;
+	public function hasValue(v:V):Bool return false;
 	public function iterator():Iterator<V> return new EmptyIterator();
 	public function toString():String return "";
 	public var length(get, null):Int;
@@ -27,7 +27,7 @@ class VoidList<V> implements IList<V> {
 	public function push(v:V):Int return 0;
 	public function shift():Null<V> return null;
 	public function unshift(v:V):Void return;
-	public function insert(index:Int, v:V):Void return;
-	public function remove(index:Int):Void return;
+	public function insertAt(index:Int, v:V):Void return;
+	public function removeAt(index:Int):Void return;
 	public function clear():Void return;
 }
