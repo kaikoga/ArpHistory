@@ -1,7 +1,6 @@
 package net.kaikoga.arp.ds.impl.base;
 
 import net.kaikoga.arp.ds.lambda.CollectionTools;
-import net.kaikoga.arp.iter.EmptyIterator;
 import net.kaikoga.arp.ds.IMap;
 
 class BaseMap<K, V> implements IMap<K, V> {
@@ -13,15 +12,15 @@ class BaseMap<K, V> implements IMap<K, V> {
 	public function hasValue(v:V):Bool return CollectionTools.hasValueImpl(this, v);
 	public function iterator():Iterator<V> return CollectionTools.iteratorImpl(this);
 	public function toString():String return CollectionTools.toStringImpl(this);
-	public function get(k:K):Null<V> return null;
-	public function hasKey(key:K):Bool return false;
-	public function keys():Iterator<K> return new EmptyIterator();
+	public function get(k:K):Null<V> return CollectionTools.getImpl(this, k);
+	public function hasKey(k:K):Bool return CollectionTools.hasKeyImpl(this, k);
+	public function keys():Iterator<K> return CollectionTools.keysImpl(this);
 
 	//resolve
-	public function resolveName(v:V):Null<K> return null;
+	public function resolveName(v:V):Null<K> return CollectionTools.resolveNameImpl(this, v);
 
 	//write
-	public function set(k:K, v:V):Void return;
-	public function remove(k:K):Bool return false;
+	public function set(k:K, v:V):Void CollectionTools.setImpl(this, k, v);
+	public function remove(k:K):Bool return CollectionTools.removeKeyImpl(this, k);
 	public function clear():Void CollectionTools.clearImpl(this);
 }

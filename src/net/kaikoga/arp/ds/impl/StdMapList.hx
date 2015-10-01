@@ -1,9 +1,9 @@
 package net.kaikoga.arp.ds.impl;
 
-import net.kaikoga.arp.ds.IMap;
+import net.kaikoga.arp.ds.IMapList;
 
 @:generic @:remove
-class StdMapList<K, V> implements IMap<K, V> {
+class StdMapList<K, V> implements IMapList<K, V> {
 
 	private var value:Map<K, V>;
 
@@ -33,14 +33,11 @@ class StdMapList<K, V> implements IMap<K, V> {
 	public function lastIndexOf(v:V, ?fromIndex:Int):Int return -1;
 
 	//write
-	public function set(k:K, v:V):Void this.value.set(k, v);
-	public function remove(k:K):Bool return this.value.remove(k);
-	public function pop():Null<V> return null;
-	public function push(v:V):Int return 0;
-	public function shift():Null<V> return null;
-	public function unshift(v:V):Void return;
-	public function insertAt(index:Int, v:V):Void return;
-	public function removeAt(index:Int):Void return;
-	public function clear():Void this.value = new Map<K, V>();
+	public function addPair(k:K, v:V):Void this.value.set(k, v);
+	public function insertPairAt(index:Int, k:K, v:V):Void this.value.set(k, v);
+	public function remove(v:V):Bool this.value.remove(this.resolveName(v));
+	public function removeKey(k:K):Bool this.value.remove(k);
+	public function removeAt(index:Int):Bool throw "implementing";
+	public function clear():Void this.value = new Map();
 
 }

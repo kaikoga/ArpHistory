@@ -1,5 +1,7 @@
 package net.kaikoga.arp.ds.lambda;
 
+import net.kaikoga.arp.ds.access.IMapListWrite;
+import net.kaikoga.arp.ds.access.IMapWrite;
 import net.kaikoga.arp.ds.access.ICollectionWrite;
 import net.kaikoga.arp.ds.access.IListWrite;
 import net.kaikoga.arp.ds.access.ICollectionRead;
@@ -27,6 +29,7 @@ class CollectionTools {
 	}
 
 	// IListRead
+
 	inline public static function get_lengthImpl<V>(base:ICollectionRead<V>):Int {
 		var i:Int = 0; for (x in base) i++; return i;
 	}
@@ -43,9 +46,23 @@ class CollectionTools {
 		var i:Int = 0; for (x in base) if (i++ == index) return x; return null;
 	}
 
+	// IMapRead
+
+	inline public static function getImpl<K, V>(base:IMapRead<K, V>, k:K):Null<V> {
+		throw "get() is mandatory";
+	}
+
+	public static function hasKeyImpl<K, V>(base:IMapRead<K, V>, k:K):Bool {
+		throw "hasKey() is mandatory";
+	}
+
+	inline public static function keysImpl<K, V>(base:IMapRead<K, V>):Iterator<K> {
+		throw "keys() is mandatory";
+	}
+
 	// IMapResolve
 
-	inline public static function resolveNameImpl<K, V>(base:IMapRead<K, V>, v:V):Null<K> {
+	public static function resolveNameImpl<K, V>(base:IMapRead<K, V>, v:V):Null<K> {
 		for (k in base.keys()) if (base.get(k) == v) return k; return null;
 	}
 
@@ -99,6 +116,26 @@ class CollectionTools {
 
 	inline public static function removeAtImpl<V>(base:IListWrite<V>, index:Int):Void {
 		throw "removeAt() is mandatory";
+	}
+
+	// IMapWrite
+
+	inline public static function setImpl<K, V>(base:IMapWrite<K, V>, k:K, v:V):Void {
+		throw "set() is mandatory";
+	}
+
+	inline public static function removeKeyImpl<K, V>(base:IMapWrite<K, V>, k:K):Bool {
+		throw "remove() is mandatory";
+	}
+
+	// IMapListWrite
+
+	inline public static function addPairImpl<K, V>(base:IMapListWrite<K, V>, k:K, v:V):Void {
+		throw "addPair() is mandatory";
+	}
+
+	inline public static function insertPairAtImpl<K, V>(base:IMapListWrite<K, V>, index:Int, k:K, v:V):Void {
+		throw "insertPairAt() is mandatory";
 	}
 
 }
