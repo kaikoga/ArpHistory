@@ -29,9 +29,13 @@ class VoidMapList<K, V> implements IMapList<K, V> {
 
 	//write
 	public function addPair(k:K, v:V):Void return;
-	public function insertPairAt(index:Int, k:K, v:V):Void return false;
+	public function insertPairAt(index:Int, k:K, v:V):Void return;
+
+	// remove
 	public function remove(v:V):Bool return false;
 	public function removeKey(k:K):Bool return false;
 	public function removeAt(index:Int):Bool return false;
+	public function pop():Null<V> return null;
+	public function shift():Null<V> return null;
 	public function clear():Void return;
 }

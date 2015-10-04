@@ -21,7 +21,10 @@ class VoidMap<K, V> implements IMap<K, V> {
 
 	//write
 	public function set(k:K, v:V):Void return;
-	public function remove(k:K):Bool return false;
+
+	//remove
+	public function remove(v:V):Bool return false;
+	public function removeKey(k:K):Bool return false;
 	public function clear():Void return;
 
 }

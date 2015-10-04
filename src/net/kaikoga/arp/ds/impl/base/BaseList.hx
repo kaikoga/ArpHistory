@@ -23,11 +23,14 @@ class BaseList<V> implements IList<V> {
 	public function lastIndexOf(v:V, ?fromIndex:Int):Int return CollectionTools.lastIndexOfImpl(this, v, fromIndex);
 
 	//write
-	public function pop():Null<V> return CollectionTools.popImpl(this);
 	public function push(v:V):Int return CollectionTools.pushImpl(this, v);
-	public function shift():Null<V> return CollectionTools.shiftImpl(this);
 	public function unshift(v:V):Void CollectionTools.unshiftImpl(this, v);
 	public function insertAt(index:Int, v:V):Void CollectionTools.insertImpl(this, index, v);
-	public function removeAt(index:Int):Void CollectionTools.removeAtImpl(this, index);
+
+	//remove
+	public function pop():Null<V> return CollectionTools.popImpl(this);
+	public function shift():Null<V> return CollectionTools.shiftImpl(this);
+	public function remove(v:V):Bool return CollectionTools.removeImpl(this, v);
+	public function removeAt(index:Int):Bool return CollectionTools.removeAtImpl(this, index);
 	public function clear():Void CollectionTools.clearImpl(this);
 }

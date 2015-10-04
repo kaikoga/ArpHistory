@@ -1,5 +1,7 @@
 ﻿package net.kaikoga.arp.ds;
 
+import net.kaikoga.arp.ds.impl.base.BaseMapList;
+import Map in StdMap;
 import Map.IMap;
 import net.kaikoga.arp.iter.ConcurrentIntIterateContext;
 
@@ -7,29 +9,30 @@ import net.kaikoga.arp.iter.ConcurrentIntIterateContext;
  * String->Object map.
  * @author kaikoga
  */
-class MapList<K, V> implements IMapList<K, V> {
+@:generic @:remove
+class MapList<K, V> extends BaseMapList<K, V> implements IMapList<K, V> {
 
-	private var _map:IMap<K, V>;
+	private var _map:StdMap<K, V>;
 
 	private var _keys:Array<K>;
-	private function keys():Iterator<K> return this._keys.copy().iterator();
+	override public function keys():Iterator<K> return this._keys.copy().iterator();
 
 	private var _iterators:ConcurrentIntIterateContext;
 
-	public var length(get, never):Int;
-	private function get_length():Int return this._keys.length;
+	override public function get_length():Int return this._keys.length;
 
 	public function new() {
+		super();
 		this.clear();
 	}
 
-	public function clear():Void {
-		this._map = new Map<K, V>();
+	override public function clear():Void {
+		this._map = new StdMap<K, V>();
 		this._keys = [];
 		this._iterators = new ConcurrentIntIterateContext();
 	}
 
-	public function get(key:K):V {
+	override public function get(key:K):Null<V> {
 		return this._map.get(key);
 	}
 
@@ -45,7 +48,7 @@ class MapList<K, V> implements IMapList<K, V> {
 		return this._map.exists(key);
 	}
 
-	public function remove(key:K):Bool {
+	override public function removeKey(key:K):Bool {
 		if (!this._map.remove(key)) {
 			return false;
 		}
@@ -57,15 +60,15 @@ class MapList<K, V> implements IMapList<K, V> {
 		return true;
 	}
 
-	public function iterator():Iterator<V> {
+	override public function iterator():Iterator<V> {
 		return new IndexedMapIterator<K, V>(this, this._iterators);
 	}
 
-	public function toString():String {
+	override public function toString():String {
 		return "[IndexedMap ${this._map.toString()}]";
 	}
 
-	public function getAt(index:Int):V {
+	override public function getAt(index:Int):Null<V> {
 		return this._map.get(this.keyAt(index));
 	}
 
@@ -83,7 +86,7 @@ class MapList<K, V> implements IMapList<K, V> {
 
 	public function insert(index:Int, key:K, value:V):Int {
 		if (this._map.exists(key)) {
-			this.remove(key);
+			this.removeKey(key);
 		}
 		if (index >= this._keys.length) {
 			this._keys.push(key);
@@ -103,10 +106,10 @@ class MapList<K, V> implements IMapList<K, V> {
 
 class IndexedMapIterator<K, V> {
 
-	private var map:IIndexedMap<K, V>;
+	private var map:IMapList<K, V>;
 	private var iterator:ConcurrentIntIterator;
 
-	public function new(map:IIndexedMap<K, V>, context:ConcurrentIntIterateContext) {
+	public function new(map:IMapList<K, V>, context:ConcurrentIntIterateContext) {
 		this.map = map;
 		this.iterator = context.newIterator();
 	}

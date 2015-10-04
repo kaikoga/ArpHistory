@@ -15,6 +15,8 @@ class VoidSet<V> implements ISet<V> {
 
 	// write
 	public function add(v:V):Void return;
+
+	// remove
 	public function remove(v:V):Bool return false;
 	public function clear():Void return;
 }

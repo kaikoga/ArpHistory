@@ -1,8 +1,10 @@
 package net.kaikoga.arp.ds.lambda;
 
+import net.kaikoga.arp.ds.access.IMapRemove;
+import net.kaikoga.arp.ds.access.IListRemove;
+import net.kaikoga.arp.ds.access.ICollectionRemove;
 import net.kaikoga.arp.ds.access.IMapListWrite;
 import net.kaikoga.arp.ds.access.IMapWrite;
-import net.kaikoga.arp.ds.access.ICollectionWrite;
 import net.kaikoga.arp.ds.access.IListWrite;
 import net.kaikoga.arp.ds.access.ICollectionRead;
 import net.kaikoga.arp.ds.access.IMapRead;
@@ -76,34 +78,16 @@ class CollectionTools {
 		var i:Int = 0; var index:Int = -1; for (x in base) if (x == v) index = i++; return index;
 	}
 
-	// ICollectionWrite
-
-	inline public static function clearImpl<V>(base:ICollectionWrite<V>):Void {
-		throw "clear() is mandatory";
-	}
-
 	// ISetWrite
 
 	inline public static function addImpl<V>(base:ICollectionRead<V>, value:V):Void {
 		throw "add() is mandatory";
 	}
 
-	inline public static function removeImpl<V>(base:ICollectionRead<V>, v:V):Bool {
-		throw "remove() is mandatory";
-	}
-
 	//IListWrite
-
-	inline public static function popImpl<V>(base:IList<V>):Null<V> {
-		var i = base.length - 1; var v = base.getAt(i); base.removeAt(i); return v;
-	}
 
 	inline public static function pushImpl<V>(base:IList<V>, v:V):Int {
 		base.insertAt(base.length, v); return base.length;
-	}
-
-	inline public static function shiftImpl<V>(base:IList<V>):Null<V> {
-		var v = base.getAt(0); base.removeAt(0); return v;
 	}
 
 	inline public static function unshiftImpl<V>(base:IListWrite<V>, v:V):Void {
@@ -114,18 +98,10 @@ class CollectionTools {
 		throw "insert() is mandatory";
 	}
 
-	inline public static function removeAtImpl<V>(base:IListWrite<V>, index:Int):Void {
-		throw "removeAt() is mandatory";
-	}
-
 	// IMapWrite
 
 	inline public static function setImpl<K, V>(base:IMapWrite<K, V>, k:K, v:V):Void {
 		throw "set() is mandatory";
-	}
-
-	inline public static function removeKeyImpl<K, V>(base:IMapWrite<K, V>, k:K):Bool {
-		throw "remove() is mandatory";
 	}
 
 	// IMapListWrite
@@ -136,6 +112,36 @@ class CollectionTools {
 
 	inline public static function insertPairAtImpl<K, V>(base:IMapListWrite<K, V>, index:Int, k:K, v:V):Void {
 		throw "insertPairAt() is mandatory";
+	}
+
+	// ICollectionRemove
+
+	inline public static function clearImpl<V>(base:ICollectionRemove<V>):Void {
+		throw "clear() is mandatory";
+	}
+
+	inline public static function removeImpl<V>(base:ICollectionRemove<V>, v:V):Bool {
+		throw "remove() is mandatory";
+	}
+
+	//IListRemove
+
+	inline public static function popImpl<V>(base:IListRemove<V>):Null<V> {
+		var i = base.length - 1; var v = base.getAt(i); base.removeAt(i); return v;
+	}
+
+	inline public static function shiftImpl<V>(base:IListRemove<V>):Null<V> {
+		var v = base.getAt(0); base.removeAt(0); return v;
+	}
+
+	inline public static function removeAtImpl<V>(base:IListRemove<V>, index:Int):Bool {
+		throw "removeAt() is mandatory";
+	}
+
+	// IMapRemove
+
+	inline public static function removeKeyImpl<K, V>(base:IMapRemove<K, V>, k:K):Bool {
+		throw "removeKey() is mandatory";
 	}
 
 }

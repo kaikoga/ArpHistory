@@ -23,10 +23,13 @@ class StdMap<K, V> implements IMap<K, V> {
 		for (k in this.value.keys()) if (this.value.get(k) == v) return k;
 		return null;
 	}
-	
+
 	//write
 	public function set(k:K, v:V):Void this.value.set(k, v);
-	public function remove(k:K):Bool return this.value.remove(k);
+
+	//remove
+	public function remove(v:V):Bool return this.value.remove(this.resolveName(v));
+	public function removeKey(k:K):Bool return this.value.remove(k);
 	public function clear():Void this.value = new Map<K, V>();
 
 }

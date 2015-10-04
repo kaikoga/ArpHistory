@@ -21,6 +21,9 @@ class BaseMap<K, V> implements IMap<K, V> {
 
 	//write
 	public function set(k:K, v:V):Void CollectionTools.setImpl(this, k, v);
-	public function remove(k:K):Bool return CollectionTools.removeKeyImpl(this, k);
+
+	//remove
+	public function remove(v:V):Bool return CollectionTools.removeImpl(this, v);
+	public function removeKey(k:K):Bool return CollectionTools.removeKeyImpl(this, k);
 	public function clear():Void CollectionTools.clearImpl(this);
 }

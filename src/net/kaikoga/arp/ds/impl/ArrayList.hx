@@ -26,11 +26,14 @@ class ArrayList<V> implements IList<V> {
 	public function lastIndexOf(v:V, ?fromIndex:Int):Int return this.value.lastIndexOf(v, fromIndex);
 
 	//write
-	public function pop():Null<V> return this.value.pop();
 	public function push(v:V):Int return this.value.push(v);
-	public function shift():Null<V> return this.value.shift();
 	public function unshift(v:V):Void this.value.unshift(v);
 	public function insertAt(index:Int, v:V):Void this.value.insert(index, v);
-	public function removeAt(index:Int):Void this.value.splice(index, 1);
+
+	//remove
+	public function pop():Null<V> return this.value.pop();
+	public function shift():Null<V> return this.value.shift();
+	public function remove(v:V):Bool return this.value.remove(v);
+	public function removeAt(index:Int):Bool return this.value.splice(index, 1).length > 0;
 	public function clear():Void this.value = [];
 }

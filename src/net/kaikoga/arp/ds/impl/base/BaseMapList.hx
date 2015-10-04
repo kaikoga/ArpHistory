@@ -30,9 +30,13 @@ class BaseMapList<K, V> implements IMapList<K, V> {
 	//write
 	public function addPair(k:K, v:V):Void CollectionTools.addPairImpl(this, k, v);
 	public function insertPairAt(index:Int, k:K, v:V):Void CollectionTools.insertPairAtImpl(this, index, k, v);
+
+	//remove
 	public function remove(v:V):Bool return CollectionTools.removeImpl(this, v);
 	public function removeKey(k:K):Bool return CollectionTools.removeKeyImpl(this, k);
 	public function removeAt(index:Int):Bool return CollectionTools.removeAtImpl(this, index);
+	public function pop():Null<V> return CollectionTools.popImpl(this);
+	public function shift():Null<V> return CollectionTools.shiftImpl(this);
 	public function clear():Void CollectionTools.clearImpl(this);
 
 }

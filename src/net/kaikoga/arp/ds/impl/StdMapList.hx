@@ -35,9 +35,13 @@ class StdMapList<K, V> implements IMapList<K, V> {
 	//write
 	public function addPair(k:K, v:V):Void this.value.set(k, v);
 	public function insertPairAt(index:Int, k:K, v:V):Void this.value.set(k, v);
-	public function remove(v:V):Bool this.value.remove(this.resolveName(v));
-	public function removeKey(k:K):Bool this.value.remove(k);
+
+	//remove
+	public function remove(v:V):Bool return this.value.remove(this.resolveName(v));
+	public function removeKey(k:K):Bool return this.value.remove(k);
 	public function removeAt(index:Int):Bool throw "implementing";
+	public function pop():Null<V> throw "implementing";
+	public function shift():Null<V> throw "implementing";
 	public function clear():Void this.value = new Map();
 
 }
