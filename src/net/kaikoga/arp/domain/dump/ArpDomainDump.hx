@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain.dump;
 
+import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 import net.kaikoga.arp.domain.dump.ArpSlotDump.ArpSlotTreeStringPrinter;
 import net.kaikoga.arp.domain.core.ArpType;
 
@@ -25,7 +26,7 @@ class ArpDomainDump {
 		return result;
 	}
 
-	public function dumpSlotStatusByName(slot:ArpSlot, hashKey:String = null, visitedSlotIds:Array<String> = null):<ArpSlotDump> {
+	public function dumpSlotStatusByName(slot:ArpUntypedSlot, hashKey:String = null, visitedSlotIds:Array<String> = null):ArpSlotDump {
 		var result:ArpSlotDump = new ArpSlotDump(slot, hashKey);
 		if (visitedSlotIds == null) visitedSlotIds = [];
 

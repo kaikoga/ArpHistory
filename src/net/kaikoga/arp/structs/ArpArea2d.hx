@@ -197,19 +197,34 @@ class ArpArea2d {
 	}
 
 	public function new() {
-		super();
 	}
 
 	public function initWithSeed(seed:ArpSeed):ArpArea2d {
 		if (seed == null) return this;
 		if (!seed.hasChildren()) return this.initWithString(seed.value());
 		// TODO
-		this.x = Std.parseFloat(definition.att.x);
-		this.y = Std.parseFloat(definition.att.y);
-		this.areaLeft = Std.parseFloat(definition.att.left);
-		this.areaTop = Std.parseFloat(definition.att.top);
-		this.areaRight = Std.parseFloat(definition.att.right);
-		this.areaBottom = Std.parseFloat(definition.att.bottom);
+		this.areaLeft = 0;
+		this.areaRight = 0;
+		this.areaTop = 0;
+		this.areaBottom = 0;
+		this.x = 0;
+		this.y = 0;
+		for (element in seed) {
+			switch (element.typeName()) {
+				case "x":
+					this.x = Std.parseFloat(element.value());
+				case "y":
+					this.y = Std.parseFloat(element.value());
+				case "left":
+					this.areaLeft = Std.parseFloat(element.value());
+				case "right":
+					this.areaRight = Std.parseFloat(element.value());
+				case "top":
+					this.areaTop = Std.parseFloat(element.value());
+				case "bottom":
+					this.areaBottom = Std.parseFloat(element.value());
+			}
+		}
 		return this;
 	}
 

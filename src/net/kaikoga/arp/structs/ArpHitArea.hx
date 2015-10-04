@@ -64,19 +64,43 @@ class ArpHitArea {
 	//}
 
 	public function new() {
-		super();
 	}
 
 	public function initWithSeed(seed:ArpSeed):ArpHitArea {
 		if (seed == null) return this;
 		if (!seed.hasChildren()) return this.initWithString(seed.value());
-		//TODO
-		this.areaLeft = Std.parseFloat(Lambda.has((definition != null) ? definition.att.left[0] : 0, "@left"));
-		this.areaRight = Lambda.has((definition != null) ? (Std.parseFloat(definition.att.width[0]) - this.areaLeft) : Lambda.has((definition != null) ? Std.parseFloat(definition.att.right[0]) : 1, "@right"), "@width");
-		this.areaTop = Std.parseFloat(Lambda.has((definition != null) ? definition.att.top[0] : 0, "@top"));
-		this.areaBottom = Lambda.has((definition != null) ? (Std.parseFloat(definition.att.height[0]) - this.areaTop) : Lambda.has((definition != null) ? Std.parseFloat(definition.att.bottom[0]) : 1, "@bottom"), "@height");
-		this.areaHind = Std.parseFloat(Lambda.has((definition != null) ? definition.att.hind[0] : 0, "@hind"));
-		this.areaFore = Lambda.has((definition != null) ? (Std.parseFloat(definition.att.depth[0]) - this.areaHind) : Lambda.has((definition != null) ? Std.parseFloat(definition.att.fore[0]) : 1, "@fore"), "@depth");
+		this.areaLeft = 0;
+		this.areaRight = 1;
+		this.areaTop = 0;
+		this.areaBottom = 1;
+		this.areaHind = 0;
+		this.areaFore = 1;
+		for (element in seed) {
+			switch (element.typeName()) {
+				case "left":
+					this.areaLeft = Std.parseFloat(element.value());
+				case "right":
+					this.areaRight = Std.parseFloat(element.value());
+				case "top":
+					this.areaTop = Std.parseFloat(element.value());
+				case "bottom":
+					this.areaBottom = Std.parseFloat(element.value());
+				case "hind":
+					this.areaHind = Std.parseFloat(element.value());
+				case "fore":
+					this.areaFore = Std.parseFloat(element.value());
+			}
+		}
+		for (element in seed) {
+			switch (element.typeName()) {
+				case "width":
+					this.areaRight = Std.parseFloat(element.value()) - this.areaLeft;
+				case "height":
+					this.areaBottom = Std.parseFloat(element.value()) - this.areaTop;
+				case "depth":
+					this.areaFore = Std.parseFloat(element.value()) - this.areaHind;
+			}
+		}
 		return this;
 	}
 
