@@ -2,7 +2,7 @@ package net.kaikoga.arp.ds.tree;
 
 import net.kaikoga.arp.ds.TreeItem;
 
-class TreePrinter<T> implements ITreePrinter<T> {
+class TreePrinter<V,T:TreeItem<V>> implements ITreePrinter<V,T> {
 
 	public function new() {
 	}

@@ -1,4 +1,4 @@
-package net.kaikoga.task;
+package net.kaikoga.arp.task;
 
 class TaskRunnerBeacon implements ITaskRunnerBeacon {
 

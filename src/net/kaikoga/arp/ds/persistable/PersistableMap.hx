@@ -8,11 +8,11 @@ import net.kaikoga.arp.persistable.IPersistable;
  * ...
  * @author kaikoga
  */
-class PersistableMap<V:IPersistable> extends IndexedStringMap<V> implements IPersistable {
+class PersistableMap<V:IMappedPersistable> extends MapList<String, V> implements IPersistable {
 
-	private var proto:IMappedPersistable;
+	private var proto:V;
 
-	public function new(proto:IMappedPersistable) {
+	public function new(proto:V) {
 		super();
 		this.proto = proto;
 	}
@@ -20,10 +20,10 @@ class PersistableMap<V:IPersistable> extends IndexedStringMap<V> implements IPer
 	public function readSelf(input:IPersistInput):Void {
 		var name:String = input.readName();
 		while (name != "") {
-			var element:IMappedPersistable = this.get(name);
-			if (!element) {
-				element = proto.clonePersistable(name);
-				this.set(name, element);
+			var element:V = this.get(name);
+			if (element == null) {
+				element = cast proto.clonePersistable(name);
+				this.addPair(name, element);
 			}
 			input.readPersistable(name, element);
 			name = input.readName();

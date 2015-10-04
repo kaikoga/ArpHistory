@@ -1,9 +1,8 @@
-package net.kaikoga.task;
+package net.kaikoga.arp.task;
 
 import flash.events.ErrorEvent;
 import flash.events.Event;
 import flash.events.ProgressEvent;
-import flash.utils.Dictionary;
 
 class TaskRunner {
 
@@ -23,7 +22,7 @@ class TaskRunner {
 	public var tasksTotal(default, null):Int = 0;
 	public var tasksWaiting(default, null):Int = 0;
 
-	public var tasksProcessed(default, never):Bool;
+	public var isRunning(default, never):Bool;
 	public function get_isRunning():Bool {
 		return this.isActive || this.isWaiting;
 	}
@@ -67,7 +66,7 @@ class TaskRunner {
 		 * @param task A task to execute.
 		 */
 
-	public function append(task:*):void {
+	public function append(task:ITask):Void {
 		if (this._isDeadlock) {
 			this._beacon.add(this);
 			this._isDeadlock = false;
@@ -82,9 +81,9 @@ class TaskRunner {
 		 * @param task A task, which may be either queued or not queued.
 		 */
 
-	public function wait(task:*):void {
-		if (!(task in this._waitingTasks)) {
-		this._waitingTasks[task] = task;
+	public function wait(task:ITask):Void {
+		if (this._waitingTasks.indexOf(task) < 0) {
+		this._waitingTasks.push(task);
 		this._tasksWaiting++;
 		}
 	}
@@ -94,9 +93,9 @@ class TaskRunner {
 		 * @param task A task, which is wait()ing.
 		 */
 
-	public function notify(task:*):void {
-		if (task in this._waitingTasks) {
-		delete this._waitingTasks[task];
+	public function notify(task:ITask):Void {
+		if (this._waitingTasks.indexOf(task) >= 0) {
+		this._waitingTasks.remove(task);
 		this._tasksWaiting--;
 		this.processedSomething = true;
 		}
@@ -108,8 +107,8 @@ class TaskRunner {
 		 * @return true if call succeeds.
 		 */
 
-	public function halt(task:*):Boolean {
-		var i:int;
+	public function halt(task:ITask):Bool {
+		var i:Int;
 		i = this._liveTasks.indexOf(task);
 		if (i >= 0) {
 			this._liveTasks.splice(i, 1);
@@ -125,7 +124,7 @@ class TaskRunner {
 
 	private function triggerProgressEvent():Void {
 		if (this.willTrigger(ProgressEvent.PROGRESS)) {
-			this.dispatchEvent(new ProgressEvent(ProgressEvent.PROGRESS, false, false, this._tasksProcessed, this._tasksTotal))
+			this.dispatchEvent(new ProgressEvent(ProgressEvent.PROGRESS, false, false, this._tasksProcessed, this._tasksTotal));
 		}
 	}
 
@@ -147,12 +146,12 @@ class TaskRunner {
 			// For continuation, either:
 			// * return true and re-register as another task, or
 			// * use ITask and return false.
-			var status:Boolean;
+			var status:Bool;
 			if (this.willTrigger(AsyncErrorEvent.ASYNC_ERROR)) {
 				try {
 					status = runOneTask(task);
 				} catch (e:Error) {
-					this.dispatchEvent(new AsyncErrorEvent(AsyncErrorEvent.ASYNC_ERROR, false, false, "TaskRunner.tick(): TaskRunner has encountered an error: " + e.message, e))
+					this.dispatchEvent(new AsyncErrorEvent(AsyncErrorEvent.ASYNC_ERROR, false, false, "TaskRunner.tick(): TaskRunner has encountered an error: " + e.message, e));
 				}
 			} else {
 				status = runOneTask(task);

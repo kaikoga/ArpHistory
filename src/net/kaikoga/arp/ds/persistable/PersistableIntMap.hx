@@ -8,7 +8,7 @@ import net.kaikoga.arp.persistable.IPersistable;
  * ...
  * @author kaikoga
  */
-class PersistableIntMap extends IndexedStringMap<Int> implements IPersistable {
+class PersistableIntMap extends MapList<String, Int> implements IPersistable {
 
 	public function new() {
 		super();
@@ -18,7 +18,7 @@ class PersistableIntMap extends IndexedStringMap<Int> implements IPersistable {
 		this.clear();
 		var name:String = input.readName();
 		while (name != "") {
-			this.set(name, input.readInt(name));
+			this.addPair(name, input.readInt32(name));
 			name = input.readName();
 		}
 	}
@@ -26,7 +26,7 @@ class PersistableIntMap extends IndexedStringMap<Int> implements IPersistable {
 	public function writeSelf(output:IPersistOutput):Void {
 		for (name in this._keys) {
 			output.writeName(name);
-			output.writeInt(name, this.get(name));
+			output.writeInt32(name, this.get(name));
 		}
 		output.writeName("");
 	}
