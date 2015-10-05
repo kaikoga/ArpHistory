@@ -1,44 +1,63 @@
 package net.kaikoga.arp.domain.dump;
 
+import net.kaikoga.arp.ds.Tree;
 import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
-import net.kaikoga.arp.ds.TreeItem;
 import net.kaikoga.arp.ds.tree.ITreePrinter;
 
-class ArpSlotDump extends TreeItem<ArpUntypedSlot> {
+class ArpSlotDump {
 
+	public var slot:ArpUntypedSlot;
+	public var dir:ArpDirectory;
+	public var id:String;
 	public var hashKey:String;
-	public var slotRefCount:Int = 1;
-	public var slotStatus:String = "?";
+	public var refCount:Int = 1;
+	public var status:String = "?";
 
-	public function new(slot:ArpUntypedSlot, hashKey:String = null) {
-		super(slot.sid.toString(), Std.string(slot));
+	private function new(dir:ArpDirectory = null, slot:ArpUntypedSlot = null, hashKey:String = null) {
 		this.hashKey = hashKey;
+		this.id = "<root>";
+		if (slot != null) {
+			this.slot = slot;
+			this.id = slot.sid.toString();
+		}
+		if (dir != null) {
+			this.dir = dir;
+			this.id = dir.did.toString();
+		}
+	}
+
+	public static function ofDir(dir:ArpDirectory = null, hashKey:String = null):Tree<ArpSlotDump> {
+		return new Tree(new ArpSlotDump(dir, hashKey));
+	}
+
+	public static function ofSlot(slot:ArpUntypedSlot = null, hashKey:String = null):Tree<ArpSlotDump> {
+		return new Tree(new ArpSlotDump(slot, hashKey));
 	}
 }
 
-class ArpSlotTreeStringPrinter implements ITreePrinter<ArpUntypedSlot, ArpSlotDump> {
+class ArpSlotTreeStringPrinter implements ITreePrinter<ArpSlotDump, String> {
 
 	public function new() {
 	}
 
-	public function format(tree:Array<ArpSlotDump>, depth:Int = -1, level:Int = 0):Dynamic {
-		var result:String = "";
+	public function format(tree:Tree<ArpSlotDump>, depth:Int = -1, level:Int = 0):String {
+		var item:ArpSlotDump = tree.value;
 		var indent:String = StringTools.lpad("", " ", level * 2);
-		for (item in tree) {
-			var entry:String = item.slotStatus + " " + indent;
-			if (item.hashKey != null) {
-				entry += item.hashKey + ": ";
+		var result = "";
+		var entry:String = item.status + " " + indent;
+		if (item.hashKey != null) {
+			entry += item.hashKey + ": ";
+		}
+		entry += item.id + " [" + item.refCount + "]";
+		if (depth != 0 && tree.hasChildren) {
+			result += entry + " {\n";
+			for (item in tree.children) {
+				result += format(item, depth - 1, level + 1);
 			}
-			entry += item.value + " [" + item.slotRefCount + "]";
-			if (depth != 0 && item.hasChildren) {
-				result += entry + " {\n";
-				result += format(item.children, depth - 1, level + 1);
-				result += indent + "   }\n";
-			} else {
-				result += entry + "\n";
-			}
+			result += indent + "   }\n";
+		} else {
+			result += entry + "\n";
 		}
 		return result;
-
 	}
 }

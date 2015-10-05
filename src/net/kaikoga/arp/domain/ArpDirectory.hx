@@ -13,7 +13,7 @@ class ArpDirectory {
 	inline public static var PATH_DELIMITER:String = "/";
 
 	public var domain(default, null):ArpDomain;
-	private var did:ArpDid;
+	public var did(default, null):ArpDid;
 	private var children:Map<String, ArpDirectory>;
 	private var slots:Map<String, ArpUntypedSlot>;
 	private var linkDir:ArpDirectory = null;

@@ -10,8 +10,6 @@ import openfl.geom.ColorTransform;
 import flash.geom.ColorTransform;
 #end
 
-#if (!(flash || cpp)) DONTCOMPILE #end
-
 /**
 	handled as mutable
 */

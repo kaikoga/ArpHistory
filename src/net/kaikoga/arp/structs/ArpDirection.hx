@@ -4,7 +4,6 @@ import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 
-#if (!(flash || cpp)) DONTCOMPILE #end
 /**
 	handled as mutable
 */
