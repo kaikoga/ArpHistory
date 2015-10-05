@@ -1,9 +1,5 @@
 package net.kaikoga.arp.task;
 
-import flash.events.ErrorEvent;
-import flash.events.Event;
-import flash.events.ProgressEvent;
-
 class TaskRunner {
 
 	public var verbose:Bool = false;
@@ -29,16 +25,20 @@ class TaskRunner {
 
 	public var isActive(default, never):Bool;
 	public function get_isActive():Bool {
-		return this._tasksTotal != this._tasksProcessed;
+		return this.tasksTotal != this.tasksProcessed;
 	}
 
 	public var isWaiting(default, never):Bool;
 	public function get_isWaiting():Bool {
-		return this._tasksWaiting > 0;
+		return this.tasksWaiting > 0;
 	}
 
-	public function TaskRunner(beacon:ITaskRunnerBeacon = null) {
-		super();
+	public var onProgress:Float->Float->Void;
+	public var onError:Dynamic->Void;
+	public var onDeadlock:Void->Void;
+	public var onComplete:Void->Void;
+
+	public function new(beacon:ITaskRunnerBeacon = null) {
 		this._beacon = beacon;
 		this._liveTasks = [];
 		this._readyTasks = [];
@@ -58,7 +58,7 @@ class TaskRunner {
 		}
 		this.notify(task);
 		this._liveTasks.push(task);
-		this._tasksTotal++;
+		this.tasksTotal++;
 	}
 
 	/**
@@ -73,7 +73,7 @@ class TaskRunner {
 		}
 		this.notify(task);
 		this._liveTasks.unshift(task);
-		this._tasksTotal++;
+		this.tasksTotal++;
 	}
 
 	/**
@@ -84,7 +84,7 @@ class TaskRunner {
 	public function wait(task:ITask):Void {
 		if (this._waitingTasks.indexOf(task) < 0) {
 		this._waitingTasks.push(task);
-		this._tasksWaiting++;
+		this.tasksWaiting++;
 		}
 	}
 
@@ -96,7 +96,7 @@ class TaskRunner {
 	public function notify(task:ITask):Void {
 		if (this._waitingTasks.indexOf(task) >= 0) {
 		this._waitingTasks.remove(task);
-		this._tasksWaiting--;
+		this.tasksWaiting--;
 		this.processedSomething = true;
 		}
 	}
@@ -123,20 +123,20 @@ class TaskRunner {
 	}
 
 	private function triggerProgressEvent():Void {
-		if (this.willTrigger(ProgressEvent.PROGRESS)) {
-			this.dispatchEvent(new ProgressEvent(ProgressEvent.PROGRESS, false, false, this._tasksProcessed, this._tasksTotal));
+		if (this.onProgress != null) {
+			this.onProgress(this.tasksProcessed, this.tasksTotal);
 		}
 	}
 
 	private function runOneTask(task:ITask):Bool {
-		return itask.run();
+		return task.run();
 	}
 
 	public function tick():Void {
-		var endTime:Float = new Date().getTime() + this.cpuTime;
+		var endTime:Float = Date.now().getTime() + this.cpuTime;
 		do {
 			var task:ITask = this._liveTasks.pop();
-			if (!task) {
+			if (task == null) {
 				break;
 			} else if (this._waitingTasks.indexOf(task) >= 0) {
 				this._readyTasks.push(task);
@@ -146,18 +146,18 @@ class TaskRunner {
 			// For continuation, either:
 			// * return true and re-register as another task, or
 			// * use ITask and return false.
-			var status:Bool;
-			if (this.willTrigger(AsyncErrorEvent.ASYNC_ERROR)) {
+			var status:Bool = false;
+			if (this.onError == null) {
+				status = runOneTask(task);
+			} else {
 				try {
 					status = runOneTask(task);
-				} catch (e:Error) {
-					this.dispatchEvent(new AsyncErrorEvent(AsyncErrorEvent.ASYNC_ERROR, false, false, "TaskRunner.tick(): TaskRunner has encountered an error: " + e.message, e));
+				} catch (e:Dynamic) {
+					this.onError(e);
 				}
-			} else {
-				status = runOneTask(task);
 			}
 			if (status) {
-				this._tasksProcessed++;
+				this.tasksProcessed++;
 				this.processedSomething = true;
 			} else {
 				this._readyTasks.push(task);
@@ -165,7 +165,7 @@ class TaskRunner {
 			if (this.verbose) {
 				this.triggerProgressEvent();
 			}
-		} while (new Date().getTime() < endTime);
+		} while (Date.now().getTime() < endTime);
 		// Tasks seems to be over?
 		if (this._liveTasks.length == 0) {
 			if (this._readyTasks.length > 0) {
@@ -175,27 +175,26 @@ class TaskRunner {
 					this._liveTasks = this._readyTasks;
 					this._readyTasks = [];
 					this.processedSomething = false;
-				} else if (this._tasksWaiting > 0) {
+				} else if (this.tasksWaiting > 0) {
 					if (!this.verbose) {
 						this.triggerProgressEvent();
 					}
 				} else {
 					// No work done, tasks depends each other, we can only halt
 					this._isDeadlock = true;
-					if (this.willTrigger(ErrorEvent.ERROR)) {
-						this.dispatchEvent(new ErrorEvent(ErrorEvent.ERROR, false, false, "TaskRunner.tick(): TaskRunner has encountered a deadlock"));
-					}
+					if (this.onDeadlock == null) throw "TaskRunner.tick(): TaskRunner has encountered a deadlock";
+					this.onDeadlock();
 					//deadlock is fatal, so we must stop
 					this._beacon.remove(this);
 				}
 			} else {
-				if (this._tasksWaiting > 0) {
+				if (this.tasksWaiting > 0) {
 					if (!this.verbose) {
 						this.triggerProgressEvent();
 					}
 				} else {
 					// No tasks, no ready tasks, done!
-					this.dispatchEvent(new Event(Event.COMPLETE));
+					this.onComplete();
 					if (!this._isEternal) {
 						this._beacon.remove(this);
 					}

@@ -2,11 +2,12 @@ package net.kaikoga.arp.ds;
 
 import net.kaikoga.arp.ds.tree.TreePrinter;
 
-class TreeItem<T> {
+@:final
+class Tree<T> {
 
-	public var children(get, never):Array<TreeItem<T>>;
-	private var _children:Array<TreeItem<T>>;
-	private function get_children():Array<TreeItem<T>> {
+	public var children(get, never):Array<Tree<T>>;
+	private var _children:Array<Tree<T>>;
+	private function get_children():Array<Tree<T>> {
 		return (this._children != null) ? this._children : (this._children = []);
 	}
 
@@ -15,16 +16,14 @@ class TreeItem<T> {
 		return (this._children != null) && (this._children.length > 0);
 	}
 
-	public var label:String;
 	public var value:T;
 
-	public function new(value:Dynamic, label:Dynamic = null) {
+	public function new(value:T) {
 		this.value = value;
-		this.label = label;
 	}
 
 	public function toString():String {
-		return new TreePrinter().format([this]);
+		return new TreePrinter().format(this);
 	}
 }
 

@@ -4,8 +4,7 @@ class TaskRunnerBeacon implements ITaskRunnerBeacon {
 
 	private var runners:Array<TaskRunner>;
 
-	public function TaskRunnerBeacon() {
-		super();
+	public function new() {
 		this.runners = [];
 	}
 
@@ -26,9 +25,7 @@ class TaskRunnerBeacon implements ITaskRunnerBeacon {
 	public static var defaultBeacon(get, never):TaskRunnerBeacon;
 	private static var _defaultBeacon:TaskRunnerBeacon;
 	private static function get_defaultBeacon():TaskRunnerBeacon {
-		if (!_defaultBeacon) {
-			_defaultBeacon = new TaskRunnerBeacon();
-		}
+		if (_defaultBeacon == null) _defaultBeacon = new TaskRunnerBeacon();
 		return _defaultBeacon;
 	}
 
