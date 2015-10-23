@@ -5,13 +5,18 @@ import net.kaikoga.arp.ds.IMap;
 @:generic @:remove
 class StdMap<K, V> implements IMap<K, V> {
 
+	public var isUniqueKey(get, never):Bool;
+	public function get_isUniqueKey():Bool return true;
+	public var isUniqueValue(get, never):Bool;
+	public function get_isUniqueValue():Bool return false;
+
 	private var value:Map<K, V>;
 
 	public function new() this.value = new Map<K, V>();
 
 	//read
-	public function isEmpty():Bool return Lambda.empty({iterator:function() return this.value.iterator()});
-	public function hasValue(v:V):Bool return Lambda.has({iterator:function() return this.value.iterator()}, v);
+	public function isEmpty():Bool return !this.value.iterator().hasNext();
+	public function hasValue(v:V):Bool { for (x in this.value) if (x == v) return true; return false; }
 	public function iterator():Iterator<V> return this.value.iterator();
 	public function toString():String return this.value.toString();
 	public function get(k:K):Null<V> return this.value.get(k);

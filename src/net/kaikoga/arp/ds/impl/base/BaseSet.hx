@@ -5,6 +5,9 @@ import net.kaikoga.arp.ds.ISet;
 
 class BaseSet<V> implements ISet<V> {
 
+	public var isUniqueValue(get, never):Bool;
+	public function get_isUniqueValue():Bool return true;
+
 	public function new() return;
 
 	//read

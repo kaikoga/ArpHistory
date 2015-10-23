@@ -4,6 +4,9 @@ import net.kaikoga.arp.ds.IList;
 
 class ArrayList<V> implements IList<V> {
 
+	public var isUniqueValue(get, never):Bool;
+	public function get_isUniqueValue():Bool return false;
+
 	private var value:Array<V>;
 
 	public function new() {

@@ -75,7 +75,7 @@ class CollectionTools {
 	}
 
 	inline public static function lastIndexOfImpl<V>(base:ICollectionRead<V>, v:V, ?fromIndex:Int):Int {
-		var i:Int = 0; var index:Int = -1; for (x in base) if (x == v) index = i++; return index;
+		var i:Int = 0; var index:Int = -1; for (x in base) if (x == v) index = i++; else i++; return index;
 	}
 
 	// ISetWrite

@@ -5,6 +5,11 @@ import net.kaikoga.arp.ds.IMap;
 
 class BaseMap<K, V> implements IMap<K, V> {
 
+	public var isUniqueKey(get, never):Bool;
+	public function get_isUniqueKey():Bool return true;
+	public var isUniqueValue(get, never):Bool;
+	public function get_isUniqueValue():Bool return false;
+
 	public function new() return;
 
 	//read

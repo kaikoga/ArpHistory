@@ -22,4 +22,23 @@ class ListOp {
 		return out;
 	}
 
+	public static function bulkPush<V>(target:IList<V>, source:IList<V>):IList<V> {
+		for (v in source) target.push(v);
+		return target;
+	}
+
+	public static function bulkPushArray<V>(target:IList<V>, source:Array<V>):IList<V> {
+		for (v in source) target.push(v);
+		return target;
+	}
+
+	public static function toArray<V>(source:IList<V>):Array<V> {
+		return [for (v in source) v];
+	}
+
+	public static function toAnon(source:IList<String>):Dynamic {
+		var anon:Dynamic = {};
+		for (v in source) Reflect.setField(anon, v, v);
+		return anon;
+	}
 }

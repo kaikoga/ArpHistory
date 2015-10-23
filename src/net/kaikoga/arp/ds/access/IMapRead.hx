@@ -1,7 +1,10 @@
 package net.kaikoga.arp.ds.access;
 
 interface IMapRead<K, V> extends ICollectionRead<V> {
-	public function get(k:K):Null<V>;
-	public function hasKey(k:K):Bool;
-	public function keys():Iterator<K>;
+	var isUniqueKey(get, never):Bool;
+	function get_isUniqueKey():Bool;
+
+	function get(k:K):Null<V>;
+	function hasKey(k:K):Bool;
+	function keys():Iterator<K>;
 }

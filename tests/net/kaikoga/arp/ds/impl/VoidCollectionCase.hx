@@ -15,5 +15,6 @@ class VoidCollectionCase {
 	}
 
 	public function test():Void {
+		
 	}
 }

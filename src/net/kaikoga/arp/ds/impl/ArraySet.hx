@@ -4,6 +4,9 @@ import net.kaikoga.arp.ds.ISet;
 
 class ArraySet<V> implements ISet<V> {
 
+	public var isUniqueValue(get, never):Bool;
+	public function get_isUniqueValue():Bool return true;
+
 	private var value:Array<V>;
 
 	public function new() {
@@ -17,7 +20,7 @@ class ArraySet<V> implements ISet<V> {
 	public function toString():String return this.value.toString();
 
 	//write
-	public function add(v:V):Void this.value.push(v);
+	public function add(v:V):Void if (this.value.indexOf(v) < 0) this.value.push(v);
 
 	//remove
 	public function remove(v:V):Bool return this.value.remove(v);

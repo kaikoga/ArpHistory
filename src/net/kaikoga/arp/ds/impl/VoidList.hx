@@ -5,6 +5,9 @@ import net.kaikoga.arp.ds.IList;
 
 class VoidList<V> implements IList<V> {
 
+	public var isUniqueValue(get, never):Bool;
+	public function get_isUniqueValue():Bool return false;
+
 	public function new() return;
 
 	//read

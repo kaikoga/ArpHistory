@@ -1,6 +1,6 @@
 package net.kaikoga.arp.ds.access;
 
 interface IMapListWrite<K, V> extends ICollectionWrite<V> {
-	public function addPair(k:K, v:V):Void;
-	public function insertPairAt(index:Int, k:K, v:V):Void;
+	function addPair(k:K, v:V):Void;
+	function insertPairAt(index:Int, k:K, v:V):Void;
 }
