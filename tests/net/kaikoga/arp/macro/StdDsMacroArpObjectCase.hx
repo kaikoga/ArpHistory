@@ -30,7 +30,7 @@ class StdDsMacroArpObjectCase {
 		domain.addGenerator(new ArpDynamicGenerator(new ArpType("MockMacroArpObject"), MockMacroArpObject));
 		domain.addGenerator(new ArpDynamicGenerator(new ArpType("MockStdDsMacroArpObject"), MockStdDsMacroArpObject));
 		xml = Xml.parse('
-<data name="name1">
+<mock name="name1">
 	<intStdArray value="112" />
 	<intStdArray value="134" />
 	<floatStdArray value="2.23" />
@@ -57,7 +57,7 @@ class StdDsMacroArpObjectCase {
 	<stringStdMap key="key8" value="stdMapBar" />
 	<refStdMap key="key9" ref="name1" />
 	<refStdMap key="key0" ref="name1" />
-</data>
+</mock>
 		').firstElement();
 		seed = ArpSeed.fromXml(xml);
 	}

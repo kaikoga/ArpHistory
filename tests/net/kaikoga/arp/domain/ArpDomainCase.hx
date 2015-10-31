@@ -16,8 +16,11 @@ class ArpDomainCase {
 	public function setup():Void {
 		domain = new ArpDomain();
 		domain.addGenerator(new ArpDynamicGenerator(new ArpType("TestArpObject"), MockArpObject));
-		xml = Xml.parse('
-		<data name="name1" intField="42" floatField="3.14" boolField="true" stringField="stringValue" refField="/name1" />
+		xml = Xml.parse('<data>
+		<TestArpObject name="name1" intField="42" floatField="3.14" boolField="true" stringField="stringValue" refField="/name1" />
+		<TestArpObject name="name2" refField="/name1" />
+		<TestArpObject name="name3" />
+		</data>
 		').firstElement();
 		seed = ArpSeed.fromXml(xml);
 		domain.loadSeed(seed, new ArpType("TestArpObject"));
@@ -27,11 +30,19 @@ class ArpDomainCase {
 		var DUMP:String = "? <slots> [1] {
 ?    [1]
 ?   /name1:TestArpObject [1]
+?   /name2:TestArpObject [1]
+?   /name3:TestArpObject [1]
    }
 ";
 		var DUMP_BY_NAME:String = "?  [1] {
 ?   name1: /name1 [1] {
 ?     <TestArpObject>: /name1:TestArpObject [1]
+     }
+?   name2: /name2 [1] {
+?     <TestArpObject>: /name2:TestArpObject [1]
+     }
+?   name3: /name3 [1] {
+?     <TestArpObject>: /name3:TestArpObject [1]
      }
    }
 ";

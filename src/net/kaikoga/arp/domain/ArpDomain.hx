@@ -58,11 +58,14 @@ class ArpDomain {
 		this.reg.addGenerator(gen);
 	}
 
-	public function loadSeed<T:IArpObject>(seed:ArpSeed, path:ArpDirectory = null, lexicalType:ArpType = null):ArpSlot<T> {
+	public function loadSeed<T:IArpObject>(seed:ArpSeed, path:ArpDirectory = null, lexicalType:ArpType = null):Null<ArpSlot<T>> {
 		if (path == null) path = this.root;
 		var type:ArpType = (lexicalType != null) ? lexicalType : new ArpType(seed.typeName());
 		var slot:ArpSlot<T>;
-		if (seed.ref() != null) {
+		if (seed.typeName() == "data") {
+			for (child in seed) loadSeed(child, path, null);
+			slot = null;
+		} else if (seed.ref() != null) {
 			slot = path.query(seed.ref(), type).slot();
 			if (seed.name() != null) {
 				path.query(seed.name(), type).setSlot(slot);
