@@ -15,7 +15,7 @@ class ArpSlotDump {
 
 	private function new(dir:ArpDirectory = null, slot:ArpUntypedSlot = null, hashKey:String = null) {
 		this.hashKey = hashKey;
-		this.id = "<root>";
+		this.id = "<slots>";
 		if (slot != null) {
 			this.slot = slot;
 			this.id = slot.sid.toString();
@@ -27,11 +27,19 @@ class ArpSlotDump {
 	}
 
 	public static function ofDir(dir:ArpDirectory = null, hashKey:String = null):Tree<ArpSlotDump> {
-		return new Tree(new ArpSlotDump(dir, hashKey));
+		return new Tree(new ArpSlotDump(dir, null, hashKey));
 	}
 
 	public static function ofSlot(slot:ArpUntypedSlot = null, hashKey:String = null):Tree<ArpSlotDump> {
-		return new Tree(new ArpSlotDump(slot, hashKey));
+		return new Tree(new ArpSlotDump(null, slot, hashKey));
+	}
+
+	public static function compareTreeId(a:Tree<ArpSlotDump>, b:Tree<ArpSlotDump>):Int {
+		var ai:String = a.value.id;
+		var bi:String = b.value.id;
+		if (ai > bi) return 1;
+		if (ai < bi) return -1;
+		return 0;
 	}
 }
 

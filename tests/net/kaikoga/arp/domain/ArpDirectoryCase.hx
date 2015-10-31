@@ -21,8 +21,6 @@ class ArpDirectoryCase {
 
 		var slot:ArpSlot<MockArpObject> = child2.getOrCreateSlot(new ArpType("TestArpObject"));
 		assertEquals(arpObj1, slot.value);
-
-		assertEquals(1, 2);
 	}
 
 }
