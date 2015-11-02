@@ -6,9 +6,9 @@ import haxe.macro.Expr;
 
 class MacroArpObjectValueField extends MacroArpObjectField {
 
-	public var type(default, null):MacroArpObjectValueType;
+	public var type(default, null):IMacroArpObjectValueType;
 
-	public function new(nativeField:Field, nativeType:ComplexType, type:MacroArpObjectValueType) {
+	public function new(nativeField:Field, nativeType:ComplexType, type:IMacroArpObjectValueType) {
 		super(nativeField, nativeType);
 		this.type = type;
 	}
@@ -30,44 +30,15 @@ class MacroArpObjectValueField extends MacroArpObjectField {
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		switch (this.type) {
-			case MacroArpObjectValueType.PrimInt:
-				caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = Std.parseInt(element.value()); });
-			case MacroArpObjectValueType.PrimFloat:
-				caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = Std.parseFloat(element.value()); });
-			case MacroArpObjectValueType.PrimBool:
-				caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = element.value() == "true"; });
-			case MacroArpObjectValueType.PrimString:
-				caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = element.value(); });
-		}
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = ${this.type.getSeedElement(this.nativePos)}; });
 	}
 
 	override public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
-		var iFieldName:String = this.iFieldName;
-		switch (this.type) {
-			case MacroArpObjectValueType.PrimInt:
-				fieldBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = input.readInt32($v{iFieldName}); });
-			case MacroArpObjectValueType.PrimFloat:
-				fieldBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = input.readDouble($v{iFieldName}); });
-			case MacroArpObjectValueType.PrimBool:
-				fieldBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = input.readBool($v{iFieldName}); });
-			case MacroArpObjectValueType.PrimString:
-				fieldBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = input.readUtf($v{iFieldName}); });
-		}
+		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.readSelf(this.nativePos, this.iFieldName)}; });
 	}
 
 	override public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
-		var iFieldName:String = this.iFieldName;
-		switch (this.type) {
-			case MacroArpObjectValueType.PrimInt:
-				fieldBlock.push(macro @:pos(this.nativePos) { output.writeInt32($v{iFieldName}, this.$iFieldName); });
-			case MacroArpObjectValueType.PrimFloat:
-				fieldBlock.push(macro @:pos(this.nativePos) { output.writeDouble($v{iFieldName}, this.$iFieldName); });
-			case MacroArpObjectValueType.PrimBool:
-				fieldBlock.push(macro @:pos(this.nativePos) { output.writeBool($v{iFieldName}, this.$iFieldName); });
-			case MacroArpObjectValueType.PrimString:
-				fieldBlock.push(macro @:pos(this.nativePos) { output.writeUtf($v{iFieldName}, this.$iFieldName); });
-		}
+		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.writeSelf(this.nativePos, this.iFieldName)}; });
 	}
 }
 

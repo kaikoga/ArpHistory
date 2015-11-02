@@ -6,9 +6,9 @@ import haxe.macro.Expr;
 
 class MacroArpObjectStdMapField extends MacroArpObjectField {
 
-	public var type(default, null):MacroArpObjectValueType;
+	public var type(default, null):IMacroArpObjectValueType;
 
-	public function new(nativeField:Field, nativeType:ComplexType, type:MacroArpObjectValueType) {
+	public function new(nativeField:Field, nativeType:ComplexType, type:IMacroArpObjectValueType) {
 		super(nativeField, nativeType);
 		this.type = type;
 	}
@@ -34,16 +34,7 @@ class MacroArpObjectStdMapField extends MacroArpObjectField {
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		switch (this.type) {
-			case MacroArpObjectValueType.PrimInt:
-				caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.set(element.key(), Std.parseInt(element.value())); });
-			case MacroArpObjectValueType.PrimFloat:
-				caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.set(element.key(), Std.parseFloat(element.value())); });
-			case MacroArpObjectValueType.PrimBool:
-				caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.set(element.key(), element.value() == "true"); });
-			case MacroArpObjectValueType.PrimString:
-				caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.set(element.key(), element.value()); });
-		}
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.set(element.key(), ${this.type.getSeedElement(this.nativePos)}); });
 	}
 
 	override public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {

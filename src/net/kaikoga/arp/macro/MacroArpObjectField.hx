@@ -2,6 +2,10 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
+import net.kaikoga.arp.macro.valueTypes.MacroArpObjectPrimInt;
+import net.kaikoga.arp.macro.valueTypes.MacroArpObjectPrimFloat;
+import net.kaikoga.arp.macro.valueTypes.MacroArpObjectPrimBool;
+import net.kaikoga.arp.macro.valueTypes.MacroArpObjectPrimString;
 import net.kaikoga.arp.macro.fields.std.MacroArpObjectStdReferenceMapField;
 import net.kaikoga.arp.macro.fields.std.MacroArpObjectStdListField;
 import net.kaikoga.arp.macro.fields.std.MacroArpObjectStdMapField;
@@ -49,13 +53,13 @@ class MacroArpObjectField {
 				fqn.push(p.name);
 				switch (fqn.join(".")) {
 					case "Int":
-						return MacroArpObjectNativeFieldType.ValueType(MacroArpObjectValueType.PrimInt);
+						return MacroArpObjectNativeFieldType.ValueType(new MacroArpObjectPrimInt());
 					case "Float":
-						return MacroArpObjectNativeFieldType.ValueType(MacroArpObjectValueType.PrimFloat);
+						return MacroArpObjectNativeFieldType.ValueType(new MacroArpObjectPrimFloat());
 					case "Bool":
-						return MacroArpObjectNativeFieldType.ValueType(MacroArpObjectValueType.PrimBool);
+						return MacroArpObjectNativeFieldType.ValueType(new MacroArpObjectPrimBool());
 					case "String":
-						return MacroArpObjectNativeFieldType.ValueType(MacroArpObjectValueType.PrimString);
+						return MacroArpObjectNativeFieldType.ValueType(new MacroArpObjectPrimString());
 					case "Array":
 						return MacroArpObjectNativeFieldType.StdArray(complexTypeToNativeFieldType(typeParam(p)));
 					case "List":
@@ -87,7 +91,7 @@ class MacroArpObjectField {
 			case FieldType.FFun(_): return null;
 		}
 
-		var type:MacroArpObjectValueType;
+		var type:IMacroArpObjectValueType;
 		switch (complexTypeToNativeFieldType(nativeType)) {
 			case MacroArpObjectNativeFieldType.ValueType(p):
 				if (!metaArpField) return null;
@@ -158,7 +162,7 @@ class MacroArpObjectField {
 
 enum MacroArpObjectNativeFieldType {
 	Invalid;
-	ValueType(type:MacroArpObjectValueType);
+	ValueType(type:IMacroArpObjectValueType);
 	StdArray(param:MacroArpObjectNativeFieldType);
 	StdList(param:MacroArpObjectNativeFieldType);
 	StdMap(param:MacroArpObjectNativeFieldType);
