@@ -109,8 +109,8 @@ class ArpHitArea implements IPersistable {
 		var ereg:EReg = ~/^\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*$/;
 		if (ereg.match(definition)) {
 			this.areaLeft = Std.parseFloat(ereg.matched(1));
-			this.areaTop = Std.parseFloat(ereg.matched(2));
-			this.areaRight = Std.parseFloat(ereg.matched(3));
+			this.areaRight = Std.parseFloat(ereg.matched(2));
+			this.areaTop = Std.parseFloat(ereg.matched(3));
 			this.areaBottom = Std.parseFloat(ereg.matched(4));
 			this.areaHind = Std.parseFloat(ereg.matched(5));
 			this.areaFore = Std.parseFloat(ereg.matched(6));
