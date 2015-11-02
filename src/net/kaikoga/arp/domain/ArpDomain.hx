@@ -71,7 +71,7 @@ class ArpDomain {
 				path.query(seed.name(), type).setSlot(slot);
 			}
 		} else {
-			slot = path.query(seed.name(), type).slot();
+			slot = path.query(seed.name(), type).slot().addReference();
 			var gen:IArpGenerator<T> = this.reg.resolve(seed, type);
 			var arpObj:T = gen.alloc(seed);
 			slot.value = arpObj;

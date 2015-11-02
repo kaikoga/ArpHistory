@@ -25,6 +25,10 @@ class MacroArpObjectStdReferenceMapField extends MacroArpObjectFieldBase impleme
 		initBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = new net.kaikoga.arp.domain.ds.ArpObjectMap(slot.domain); });
 	}
 
+	public function buildDisposeBlock(initBlock:Array<Expr>):Void {
+		initBlock.push(macro @:pos(this.nativePos) { null; });
+	}
+
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
 		var iFieldName:String = this.iFieldName;
 

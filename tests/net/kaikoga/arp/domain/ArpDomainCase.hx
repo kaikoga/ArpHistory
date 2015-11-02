@@ -23,32 +23,58 @@ class ArpDomainCase {
 		</data>
 		').firstElement();
 		seed = ArpSeed.fromXml(xml);
-		domain.loadSeed(seed, new ArpType("TestArpObject"));
+ 		domain.loadSeed(seed, new ArpType("TestArpObject"));
 	}
 
 	public function testDumpEntries():Void {
-		var DUMP:String = "? <slots> [1] {
-?    [1]
+		var DUMP:String = "? <slots> [0] {
+?    [0]
 ?   /name1:TestArpObject [1]
 ?   /name2:TestArpObject [1]
 ?   /name3:TestArpObject [1]
-   }
+  }
 ";
-		var DUMP_BY_NAME:String = "?  [1] {
-?   name1: /name1 [1] {
+		var DUMP_BY_NAME:String = "?  [0] {
+?   name1: /name1 [0] {
 ?     <TestArpObject>: /name1:TestArpObject [1]
-     }
-?   name2: /name2 [1] {
+    }
+?   name2: /name2 [0] {
 ?     <TestArpObject>: /name2:TestArpObject [1]
-     }
-?   name3: /name3 [1] {
+    }
+?   name3: /name3 [0] {
 ?     <TestArpObject>: /name3:TestArpObject [1]
-     }
-   }
+    }
+  }
 ";
 		assertEquals(DUMP, domain.dumpEntries());
 		assertEquals(DUMP_BY_NAME, domain.dumpEntriesByName());
 		fail();
+	}
+
+	public function testGc():Void {
+		var DUMP:String = "? <slots> [0] {
+?    [0]
+?   /name1:TestArpObject [0]
+?   /name2:TestArpObject [1]
+?   /name3:TestArpObject [1]
+  }
+";
+		var DUMP_BY_NAME:String = "?  [0] {
+?   name1: /name1 [0] {
+?     <TestArpObject>: /name1:TestArpObject [0]
+    }
+?   name2: /name2 [0] {
+?     <TestArpObject>: /name2:TestArpObject [1]
+    }
+?   name3: /name3 [0] {
+?     <TestArpObject>: /name3:TestArpObject [1]
+    }
+  }
+";
+		domain.query("name1", new ArpType("TestArpObject")).slot().delReference();
+		//domain.gc();
+		assertEquals(DUMP, domain.dumpEntries());
+		assertEquals(DUMP_BY_NAME, domain.dumpEntriesByName());
 	}
 
 }

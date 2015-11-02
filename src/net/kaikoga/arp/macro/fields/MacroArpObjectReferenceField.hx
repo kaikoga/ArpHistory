@@ -30,9 +30,15 @@ class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IM
 		var nativeSlotType:ComplexType = this.nativeSlotType;
 
 		var generated:Array<Field> = (macro class Generated {
-			@:pos(this.nativePos) public var $iFieldSlot:$nativeSlotType;
-			@:pos(this.nativePos) inline private function $iGet_field():$nativeType return this.$iFieldSlot.value;
-			@:pos(this.nativePos) inline private function $iSet_field(value:$nativeType):$nativeType { this.$iFieldSlot = value.arpSlot(); return value; }
+			@:pos(this.nativePos)
+			public var $iFieldSlot:$nativeSlotType;
+			@:pos(this.nativePos)
+			inline private function $iGet_field():$nativeType return this.$iFieldSlot.value;
+			@:pos(this.nativePos)
+			inline private function $iSet_field(value:$nativeType):$nativeType {
+			value.arpSlot().takeReference(this.$iFieldSlot);
+			return value;
+			}
 		}).fields;
 		this.nativeField.kind = FieldType.FProp("get", "set", nativeType, null);
 		outFields.push(nativeField);
@@ -42,6 +48,11 @@ class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IM
 	public function buildInitBlock(initBlock:Array<Expr>):Void {
 		var iFieldSlot:String = this.iFieldSlot;
 		initBlock.push(macro @:pos(this.nativePos) { this.$iFieldSlot = this._arpDomain.nullSlot; });
+	}
+
+	public function buildDisposeBlock(disposeBlock:Array<Expr>):Void {
+		var iFieldSlot:String = this.iFieldSlot;
+		disposeBlock.push(macro @:pos(this.nativePos) { this.$iFieldSlot.delReference(); this.$iFieldSlot = null; });
 	}
 
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {

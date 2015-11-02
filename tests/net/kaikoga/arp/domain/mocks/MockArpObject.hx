@@ -38,6 +38,11 @@ class MockArpObject implements IArpObject {
 		return this;
 	}
 
+	public function dispose():Void {
+		this._arpSlot = null;
+		this._arpDomain = null;
+	}
+
 	private function consumeSeedElement(element:ArpSeed):Void {
 		switch (element.typeName()) {
 			case "intField":

@@ -21,6 +21,10 @@ class MacroArpObjectValueField extends MacroArpObjectFieldBase implements IMacro
 		initBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = ${this.type.createEmptyVo(this.nativePos)}; });
 	}
 
+	public function buildDisposeBlock(initBlock:Array<Expr>):Void {
+		initBlock.push(macro @:pos(this.nativePos) { null; });
+	}
+
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
 		var iFieldName:String = this.iFieldName;
 

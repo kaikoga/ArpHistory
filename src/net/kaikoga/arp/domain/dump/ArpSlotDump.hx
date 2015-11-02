@@ -10,14 +10,16 @@ class ArpSlotDump {
 	public var dir:ArpDirectory;
 	public var id:String;
 	public var hashKey:String;
-	public var refCount:Int = 1;
+	public var refCount:Int = 0;
 	public var status:String = "?";
 
+	@:access(net.kaikoga.arp.domain.ArpUntypedSlot._refCount)
 	private function new(dir:ArpDirectory = null, slot:ArpUntypedSlot = null, hashKey:String = null) {
 		this.hashKey = hashKey;
 		this.id = "<slots>";
 		if (slot != null) {
 			this.slot = slot;
+			this.refCount = slot._refCount;
 			this.id = slot.sid.toString();
 		}
 		if (dir != null) {
@@ -62,7 +64,7 @@ class ArpSlotTreeStringPrinter implements ITreePrinter<ArpSlotDump, String> {
 			for (item in tree.children) {
 				result += format(item, depth - 1, level + 1);
 			}
-			result += indent + "   }\n";
+			result += indent + "  }\n";
 		} else {
 			result += entry + "\n";
 		}

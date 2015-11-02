@@ -23,6 +23,7 @@ class MacroArpObjectBuilder {
 	private var arpSlot:Field = null;
 	private var _arpSlot:Field = null;
 	private var init:Field = null;
+	private var dispose:Field = null;
 	private var consumeSeedElement:Field = null;
 	private var readSelf:Field = null;
 	private var writeSelf:Field = null;
@@ -47,6 +48,8 @@ class MacroArpObjectBuilder {
 					this._arpSlot = field;
 				case "init":
 					this.init = field;
+				case "dispose":
+					this.dispose = field;
 				case "consumeSeedElement":
 					this.consumeSeedElement = field;
 				case "readSelf":
@@ -69,6 +72,7 @@ class MacroArpObjectBuilder {
 		buildArpSlot();
 		build_arpSlot();
 		buildInit();
+		buildDispose();
 		buildConsumeSeedElement();
 		buildReadSelf();
 		buildWriteSelf();
@@ -145,6 +149,26 @@ class MacroArpObjectBuilder {
 			expr: e
 		});
 		this.outFields.push(this.init);
+	}
+
+	private function buildDispose():Void {
+		var disposeBlock:Array<Expr> = [];
+
+		var e:Expr = macro {
+			${ { pos: Context.currentPos(), expr: ExprDef.EBlock(disposeBlock)} };
+			this._arpDomain = null;
+			this._arpSlot = null;
+		}
+
+		for (aoField in this.arpObjectFields) aoField.buildDisposeBlock(disposeBlock);
+
+		this.dispose = fieldSkeleton("dispose", this.dispose, true);
+		this.dispose.kind = FieldType.FFun({
+			args: [],
+			ret: null,
+			expr: e
+		});
+		this.outFields.push(this.dispose);
 	}
 
 	private function buildConsumeSeedElement():Void {
