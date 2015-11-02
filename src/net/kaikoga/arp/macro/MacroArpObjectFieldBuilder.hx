@@ -17,25 +17,7 @@ import haxe.macro.Expr;
 
 using haxe.macro.ComplexTypeTools;
 
-class MacroArpObjectField {
-
-	public var nativeField(default, null):Field;
-	public var nativeType(default, null):ComplexType;
-
-	private var nativePos(get, never):Position;
-	private function get_nativePos():Position return this.nativeField.pos;
-
-	private var iFieldName(get, never):String;
-	private function get_iFieldName():String return this.nativeField.name;
-	private var iGet_field(get, never):String;
-	private function get_iGet_field():String return "get_" + this.iFieldName;
-	private var iSet_field(get, never):String;
-	private function get_iSet_field():String return "set_" + this.iFieldName;
-
-	private function new(nativeField:Field, nativeType:ComplexType) {
-		this.nativeField = nativeField;
-		this.nativeType = nativeType;
-	}
+class MacroArpObjectFieldBuilder {
 
 	private static function typeParam(typePath:TypePath, index:Int = 0):ComplexType {
 		if (typePath.params == null) throw "invalid type parameter";
@@ -74,7 +56,7 @@ class MacroArpObjectField {
 		}
 	}
 
-	public static function fromField(nativeField:Field):MacroArpObjectField {
+	public static function fromField(nativeField:Field):IMacroArpObjectField {
 		var metaArpSlot:ExprOf<String> = null;
 		var metaArpField:Bool = false;
 
@@ -134,33 +116,9 @@ class MacroArpObjectField {
 		}
 		throw "could not create ArpObjectField: " + nativeType.toString();
 	}
-
-	public function buildField(outFields:Array<Field>):Void {
-		throw "invalid field type";
-	}
-
-	private function buildSlot(outFields:Array<Field>, fieldArpType:ExprOf<String>):Void {
-		throw "invalid field type";
-	}
-
-	public function buildInitBlock(initBlock:Array<Expr>):Void {
-		throw "invalid field type";
-	}
-
-	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
-		throw "invalid field type";
-	}
-
-	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
-		throw "invalid field type";
-	}
-
-	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
-		throw "invalid field type";
-	}
 }
 
-enum MacroArpObjectNativeFieldType {
+private enum MacroArpObjectNativeFieldType {
 	Invalid;
 	ValueType(type:IMacroArpObjectValueType);
 	StdArray(param:MacroArpObjectNativeFieldType);

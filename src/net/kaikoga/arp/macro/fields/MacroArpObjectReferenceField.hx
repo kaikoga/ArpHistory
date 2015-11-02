@@ -4,7 +4,7 @@ package net.kaikoga.arp.macro.fields;
 
 import haxe.macro.Expr;
 
-class MacroArpObjectReferenceField extends MacroArpObjectField {
+class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IMacroArpObjectField {
 
 	private var arpType:ExprOf<String>;
 
@@ -22,7 +22,7 @@ class MacroArpObjectReferenceField extends MacroArpObjectField {
 		this.arpType = arpType;
 	}
 
-	override public function buildField(outFields:Array<Field>):Void {
+	public function buildField(outFields:Array<Field>):Void {
 		var iFieldSlot:String = this.iFieldSlot;
 		var iGet_field:String = this.iGet_field;
 		var iSet_field:String = this.iSet_field;
@@ -39,12 +39,12 @@ class MacroArpObjectReferenceField extends MacroArpObjectField {
 		for (g in generated) outFields.push(g);
 	}
 
-	override public function buildInitBlock(initBlock:Array<Expr>):Void {
+	public function buildInitBlock(initBlock:Array<Expr>):Void {
 		var iFieldSlot:String = this.iFieldSlot;
 		initBlock.push(macro @:pos(this.nativePos) { this.$iFieldSlot = this._arpDomain.nullSlot; });
 	}
 
-	override public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
+	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
 		var iFieldName:String = this.iFieldName;
 
 		var caseBlock:Array<Expr> = [];
@@ -57,13 +57,13 @@ class MacroArpObjectReferenceField extends MacroArpObjectField {
 		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldSlot = this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${this.arpType})); });
 	}
 
-	override public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
+	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
 		var iFieldName:String = this.iFieldName;
 		var iFieldSlot:String = this.iFieldSlot;
 		fieldBlock.push(macro @:pos(this.nativePos) { this.$iFieldSlot = this._arpDomain.getOrCreateSlot(new net.kaikoga.arp.domain.core.ArpSid(input.readUtf($v{iFieldName}))); });
 	}
 
-	override public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
+	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
 		var iFieldName:String = this.iFieldName;
 		var iFieldSlot:String = iFieldName + "Slot";
 		fieldBlock.push(macro @:pos(this.nativePos) { output.writeUtf($v{iFieldName}, this.$iFieldSlot.sid.toString()); });

@@ -2,10 +2,9 @@ package net.kaikoga.arp.macro.fields.std;
 
 #if macro
 
-import haxe.Serializer;
 import haxe.macro.Expr;
 
-class MacroArpObjectStdArrayField extends MacroArpObjectField {
+class MacroArpObjectStdArrayField extends MacroArpObjectFieldBase implements IMacroArpObjectField {
 
 	public var type(default, null):IMacroArpObjectValueType;
 
@@ -14,19 +13,19 @@ class MacroArpObjectStdArrayField extends MacroArpObjectField {
 		this.type = type;
 	}
 
-	override public function buildField(outFields:Array<Field>):Void {
+	public function buildField(outFields:Array<Field>):Void {
 		var nativeType:ComplexType = this.nativeType;
 		// TODO coerce type
 		this.nativeField.kind = FieldType.FProp("default", "null", nativeType, null);
 		outFields.push(nativeField);
 	}
 
-	override public function buildInitBlock(initBlock:Array<Expr>):Void {
+	public function buildInitBlock(initBlock:Array<Expr>):Void {
 		var iFieldName:String = this.iFieldName;
 		initBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = []; });
 	}
 
-	override public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
+	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
 		var iFieldName:String = this.iFieldName;
 
 		var caseBlock:Array<Expr> = [];
@@ -38,12 +37,12 @@ class MacroArpObjectStdArrayField extends MacroArpObjectField {
 		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.push(${this.type.getSeedElement(this.nativePos)}); });
 	}
 
-	override public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
+	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
 		// FIXME persist over serialize
 		fieldBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = haxe.Unserializer.run(input.readUtf($v{iFieldName})); });
 	}
 
-	override public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
+	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
 		// FIXME persist over serialize
 		fieldBlock.push(macro @:pos(this.nativePos) { output.writeUtf($v{iFieldName}, haxe.Serializer.run(this.$iFieldName)); });
 	}
