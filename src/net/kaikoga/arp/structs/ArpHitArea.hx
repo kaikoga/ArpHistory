@@ -1,5 +1,6 @@
 package net.kaikoga.arp.structs;
 
+import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.domain.seed.ArpSeed;
@@ -9,8 +10,7 @@ import net.kaikoga.arp.structs.ArpPosition;
 	* handled as immutable
 	* @author kaikoga
 */
-class ArpHitArea {
-
+class ArpHitArea implements IPersistable {
 
 	public var areaLeft:Float = 0;
 	public var areaRight:Float = 1;

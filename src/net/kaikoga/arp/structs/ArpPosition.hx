@@ -1,5 +1,6 @@
 package net.kaikoga.arp.structs;
 
+import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.domain.seed.ArpSeed;
@@ -9,7 +10,7 @@ import net.kaikoga.arp.structs.IFrameMove;
 /**
 	handled as mutable
 */
-class ArpPosition implements IFrameMove {
+class ArpPosition implements IFrameMove implements IPersistable {
 
 	public var x:Float = 0;
 	public var y:Float = 0;

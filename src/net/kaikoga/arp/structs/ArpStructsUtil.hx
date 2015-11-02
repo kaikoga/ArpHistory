@@ -10,8 +10,8 @@ class ArpStructsUtil {
 		for (i in 0...str.length) {
 			switch (str.charCodeAt(i)) {
 				case n if (n >= 48 && n < 58): value = (value << 4) + n - 48;
-				case a if (a >= 65 && a < 70): value = (value << 4) + a - 55;
-				case a if (a >= 97 && a < 102): value = (value << 4) + a - 87;
+				case a if (a >= 65 && a < 71): value = (value << 4) + a - 55;
+				case a if (a >= 97 && a < 103): value = (value << 4) + a - 87;
 				case c: throw 'invalid character $c';
 			}
 		}

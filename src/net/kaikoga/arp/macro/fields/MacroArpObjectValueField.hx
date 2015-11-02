@@ -18,7 +18,7 @@ class MacroArpObjectValueField extends MacroArpObjectFieldBase implements IMacro
 	}
 
 	public function buildInitBlock(initBlock:Array<Expr>):Void {
-		// do nothing
+		initBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = ${this.type.createEmptyVo(this.nativePos)}; });
 	}
 
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
@@ -30,7 +30,7 @@ class MacroArpObjectValueField extends MacroArpObjectFieldBase implements IMacro
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = ${this.type.getSeedElement(this.nativePos)}; });
+		caseBlock.push(macro @:pos(this.nativePos) { ${this.type.readSeedElement(this.nativePos, this.iFieldName)}; });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {

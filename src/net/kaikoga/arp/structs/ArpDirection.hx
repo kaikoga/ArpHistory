@@ -1,5 +1,6 @@
 ﻿package net.kaikoga.arp.structs;
 
+import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.domain.seed.ArpSeed;
@@ -7,7 +8,7 @@ import net.kaikoga.arp.domain.seed.ArpSeed;
 /**
 	handled as mutable
 */
-class ArpDirection {
+class ArpDirection implements IPersistable {
 
 	public static var RIGHT(get, never):ArpDirection;
 	public static var RIGHT_DOWN(get, never):ArpDirection;

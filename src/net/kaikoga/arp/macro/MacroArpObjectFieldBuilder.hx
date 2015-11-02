@@ -2,6 +2,7 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
+import net.kaikoga.arp.macro.valueTypes.MacroArpObjectArpStruct;
 import net.kaikoga.arp.macro.valueTypes.MacroArpObjectPrimInt;
 import net.kaikoga.arp.macro.valueTypes.MacroArpObjectPrimFloat;
 import net.kaikoga.arp.macro.valueTypes.MacroArpObjectPrimBool;
@@ -31,6 +32,7 @@ class MacroArpObjectFieldBuilder {
 	private static function complexTypeToNativeFieldType(complexType:ComplexType):MacroArpObjectNativeFieldType {
 		switch (complexType) {
 			case ComplexType.TPath(p):
+				// ISSUE fqn not recognized
 				var fqn:Array<String> = p.pack.copy();
 				fqn.push(p.name);
 				switch (fqn.join(".")) {
@@ -48,6 +50,18 @@ class MacroArpObjectFieldBuilder {
 						return MacroArpObjectNativeFieldType.StdList(complexTypeToNativeFieldType(typeParam(p)));
 					case "Map":
 						return MacroArpObjectNativeFieldType.StdMap(complexTypeToNativeFieldType(typeParam(p, 1)));
+					case "ArpArea2d":
+						return MacroArpObjectNativeFieldType.ValueType(new MacroArpObjectArpStruct(macro :net.kaikoga.arp.structs.ArpArea2d));
+					case "ArpColor":
+						return MacroArpObjectNativeFieldType.ValueType(new MacroArpObjectArpStruct(macro :net.kaikoga.arp.structs.ArpColor));
+					case "ArpDirection":
+						return MacroArpObjectNativeFieldType.ValueType(new MacroArpObjectArpStruct(macro :net.kaikoga.arp.structs.ArpDirection));
+					case "ArpHitArea":
+						return MacroArpObjectNativeFieldType.ValueType(new MacroArpObjectArpStruct(macro :net.kaikoga.arp.structs.ArpHitArea));
+					case "ArpPosition":
+						return MacroArpObjectNativeFieldType.ValueType(new MacroArpObjectArpStruct(macro :net.kaikoga.arp.structs.ArpPosition));
+					case "ArpRange":
+						return MacroArpObjectNativeFieldType.ValueType(new MacroArpObjectArpStruct(macro :net.kaikoga.arp.structs.ArpRange));
 					default:
 						return MacroArpObjectNativeFieldType.MaybeReference;
 				}

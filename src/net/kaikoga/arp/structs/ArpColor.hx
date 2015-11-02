@@ -1,5 +1,6 @@
 package net.kaikoga.arp.structs;
 
+import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.domain.seed.ArpSeed;
@@ -13,7 +14,7 @@ import flash.geom.ColorTransform;
 /**
 	handled as mutable
 */
-class ArpColor {
+class ArpColor implements IPersistable {
 
 	public var value32:Int;
 

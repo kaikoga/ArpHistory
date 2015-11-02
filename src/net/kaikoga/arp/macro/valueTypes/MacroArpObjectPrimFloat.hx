@@ -8,8 +8,16 @@ class MacroArpObjectPrimFloat implements IMacroArpObjectValueType {
 	public function new() {
 	}
 
-	public function getSeedElement(pos:Position):Expr {
+	public function createEmptyVo(pos:Position):Expr {
+		return macro @:pos(pos) { 0.0; };
+	}
+
+	public function createSeedElement(pos:Position):Expr {
 		return macro @:pos(pos) { Std.parseFloat(element.value()); };
+	}
+
+	public function readSeedElement(pos:Position, iFieldName:String):Expr {
+		return macro @:pos(pos) { this.$iFieldName = Std.parseFloat(element.value()); };
 	}
 
 	public function readSelf(pos:Position, iFieldName:String):Expr {
