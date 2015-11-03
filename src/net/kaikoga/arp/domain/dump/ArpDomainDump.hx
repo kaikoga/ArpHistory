@@ -51,19 +51,22 @@ class ArpDomainDump {
 				namesToVisit.push(name);
 			}
 		}
-		if (namesToVisit.length + namesToIndex.length == 0) return result;
-		namesToVisit.sort(compareString);
-		namesToIndex.sort(compareString);
-		for (name in namesToVisit) {
-			result.children.push(ArpSlotDump.ofSlot(slots.get(name), '<$name>'));
+		if (namesToVisit.length > 0) {
+			namesToVisit.sort(compareString);
+			for (name in namesToVisit) {
+				result.children.push(ArpSlotDump.ofSlot(slots.get(name), '<$name>'));
+			}
 		}
-		for (name in namesToIndex) {
-			result.children.push(ArpSlotDump.ofSlot(slots.get(name), '<$name>'));
+		if (namesToIndex.length > 0) {
+			namesToIndex.sort(compareString);
+			for (name in namesToIndex) {
+				result.children.push(ArpSlotDump.ofSlot(slots.get(name), '<$name>'));
+			}
 		}
 		if (dir == this.domain.root) {
 			for (child in this.domain.slots) {
 				if (!visitedSlotIds.exists(child.sid.toString())) {
-					result.children.push(ArpSlotDump.ofSlot(child));
+					result.children.push(ArpSlotDump.ofSlot(child, '</>'));
 				}
 			}
 		}

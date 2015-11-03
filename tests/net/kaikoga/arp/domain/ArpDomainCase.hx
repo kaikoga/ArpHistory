@@ -44,6 +44,7 @@ class ArpDomainCase {
 ?   name3: /name3 [0] {
 ?     <TestArpObject>: /name3:TestArpObject [1]
     }
+?   </>:  [0]
   }
 ";
 		assertEquals(DUMP, domain.dumpEntries());
@@ -69,6 +70,7 @@ class ArpDomainCase {
 ?   name3: /name3 [0] {
 ?     <TestArpObject>: /name3:TestArpObject [1]
     }
+?   </>:  [0]
   }
 ";
 		domain.query("name1", new ArpType("TestArpObject")).slot().delReference();
