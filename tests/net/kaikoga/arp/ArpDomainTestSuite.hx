@@ -1,5 +1,6 @@
 package net.kaikoga.arp;
 
+import net.kaikoga.arp.macro.HookMacroArpObjectCase;
 import net.kaikoga.arp.structs.ArpStructsUtilCase;
 import net.kaikoga.arp.macro.ArpStructsMacroArpObjectCase;
 import net.kaikoga.arp.domain.MockArpObjectCase;
@@ -29,6 +30,7 @@ class ArpDomainTestSuite {
 		r.load(MacroArpObjectCase);
 		r.load(ArpStructsMacroArpObjectCase);
 		r.load(StdDsMacroArpObjectCase);
+		r.load(HookMacroArpObjectCase);
 
 		r.load(ArpDomainCase);
 

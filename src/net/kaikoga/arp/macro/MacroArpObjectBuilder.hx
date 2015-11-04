@@ -28,12 +28,17 @@ class MacroArpObjectBuilder {
 	private var readSelf:Field = null;
 	private var writeSelf:Field = null;
 
+	private var initBody:Expr;
+	private var disposeBody:Expr;
+
 	private function new(arpTypeName:String) {
 		this.arpTypeName = arpTypeName;
 		this.outFields = [];
 	}
 
 	private function run():Array<Field> {
+		this.initBody = macro { null; };
+		this.disposeBody = macro { null; };
 		for (field in Context.getBuildFields()) {
 			switch (field.name) {
 				case "_arpDomain":
@@ -48,8 +53,10 @@ class MacroArpObjectBuilder {
 					this._arpSlot = field;
 				case "init":
 					this.init = field;
+					this.initBody = funBodyOf(field);
 				case "dispose":
 					this.dispose = field;
+					this.disposeBody = funBodyOf(field);
 				case "consumeSeedElement":
 					this.consumeSeedElement = field;
 				case "readSelf":
@@ -77,6 +84,13 @@ class MacroArpObjectBuilder {
 		buildReadSelf();
 		buildWriteSelf();
 		return this.outFields;
+	}
+
+	private function funBodyOf(field:Field):Expr {
+		switch (field.kind) {
+			case FieldType.FFun(f): return f.expr;
+			case _: return macro { null; };
+		}
 	}
 
 	inline private function fieldSkeleton(name:String, field:Null<Field>, isPublic:Bool):Field {
@@ -134,6 +148,7 @@ class MacroArpObjectBuilder {
 			this._arpSlot = slot;
 			${ { pos: Context.currentPos(), expr: ExprDef.EBlock(initBlock)} };
 			if (seed != null) for (element in seed) this.consumeSeedElement(element);
+			${ this.initBody };
 			return this;
 		}
 
@@ -155,6 +170,7 @@ class MacroArpObjectBuilder {
 		var disposeBlock:Array<Expr> = [];
 
 		var e:Expr = macro {
+			${ this.disposeBody };
 			${ { pos: Context.currentPos(), expr: ExprDef.EBlock(disposeBlock)} };
 			this._arpDomain = null;
 			this._arpSlot = null;
