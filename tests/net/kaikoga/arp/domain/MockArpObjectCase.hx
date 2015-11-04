@@ -32,7 +32,7 @@ class MockArpObjectCase {
 	public function testBuildObject():Void {
 		slot = domain.dir("name1").getOrCreateSlot(new ArpType("TestArpObject"));
 		arpObj = new MockArpObject();
-		arpObj.init(slot, seed);
+		arpObj.arpInit(slot, seed);
 
 		assertEquals(domain, arpObj.arpDomain());
 		assertEquals(new ArpType("TestArpObject"), arpObj.arpType());

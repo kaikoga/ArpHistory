@@ -75,7 +75,7 @@ class ArpDomain {
 			var gen:IArpGenerator<T> = this.reg.resolve(seed, type);
 			var arpObj:T = gen.alloc(seed);
 			slot.value = arpObj;
-			arpObj.init(slot, seed);
+			arpObj.arpInit(slot, seed);
 		}
 		return slot;
 	}
@@ -87,7 +87,7 @@ class ArpDomain {
 
 	public function addObject<T:IArpObject>(object:T, sid:ArpSid = null):T {
 		var slot:ArpSlot<T> = (sid != null) ? this.getOrCreateSlot(sid) : this.allocSlot(sid);
-		object.init(slot);
+		object.arpInit(slot);
 		return object;
 	}
 

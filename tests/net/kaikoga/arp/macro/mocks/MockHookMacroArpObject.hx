@@ -14,7 +14,7 @@ class MockHookMacroArpObject implements IArpObject {
 	public function new() {
 	}
 
-	public function init(slot:ArpUntypedSlot, seed:ArpSeed = null):IArpObject {
+	public function init():Void {
 		this.volatileInt = 1;
 	}
 

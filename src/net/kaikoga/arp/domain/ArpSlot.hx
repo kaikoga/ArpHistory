@@ -40,7 +40,7 @@ class ArpUntypedSlot {
 	inline public function delReference():Bool {
 		if (--this._refCount <= 0) {
 			if (this._value != null) {
-				this._value.dispose();
+				this._value.arpDispose();
 				this._value = null;
 			}
 			return false;

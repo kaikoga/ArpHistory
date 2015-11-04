@@ -22,14 +22,14 @@ class MacroArpObjectBuilder {
 	private var arpType:Field = null;
 	private var arpSlot:Field = null;
 	private var _arpSlot:Field = null;
-	private var init:Field = null;
-	private var dispose:Field = null;
-	private var consumeSeedElement:Field = null;
+	private var arpInit:Field = null;
+	private var arpDispose:Field = null;
+	private var arpConsumeSeedElement:Field = null;
 	private var readSelf:Field = null;
 	private var writeSelf:Field = null;
 
-	private var initBody:Expr;
-	private var disposeBody:Expr;
+	private var dummyInit:Bool = true;
+	private var dummyDispose:Bool = true;
 
 	private function new(arpTypeName:String) {
 		this.arpTypeName = arpTypeName;
@@ -37,8 +37,6 @@ class MacroArpObjectBuilder {
 	}
 
 	private function run():Array<Field> {
-		this.initBody = macro { null; };
-		this.disposeBody = macro { null; };
 		for (field in Context.getBuildFields()) {
 			switch (field.name) {
 				case "_arpDomain":
@@ -51,18 +49,22 @@ class MacroArpObjectBuilder {
 					this.arpSlot = field;
 				case "_arpSlot":
 					this._arpSlot = field;
-				case "init":
-					this.init = field;
-					this.initBody = funBodyOf(field);
-				case "dispose":
-					this.dispose = field;
-					this.disposeBody = funBodyOf(field);
-				case "consumeSeedElement":
-					this.consumeSeedElement = field;
+				case "arpInit":
+					this.arpInit = field;
+				case "arpDispose":
+					this.arpDispose = field;
+				case "arpConsumeSeedElement":
+					this.arpConsumeSeedElement = field;
 				case "readSelf":
 					this.readSelf = field;
 				case "writeSelf":
 					this.writeSelf = field;
+				case "init":
+					this.dummyInit = false;
+					this.outFields.push(field);
+				case "dispose":
+					this.dummyDispose = false;
+					this.outFields.push(field);
 				default:
 					var arpObjectField:IMacroArpObjectField = MacroArpObjectFieldBuilder.fromField(field);
 					if (arpObjectField == null) {
@@ -78,9 +80,9 @@ class MacroArpObjectBuilder {
 		buildArpType();
 		buildArpSlot();
 		build_arpSlot();
-		buildInit();
-		buildDispose();
-		buildConsumeSeedElement();
+		buildArpInit();
+		buildArpDispose();
+		buildArpConsumeSeedElement();
 		buildReadSelf();
 		buildWriteSelf();
 		return this.outFields;
@@ -140,22 +142,22 @@ class MacroArpObjectBuilder {
 		this.outFields.push(this.arpSlot);
 	}
 
-	private function buildInit():Void {
+	private function buildArpInit():Void {
 		var initBlock:Array<Expr> = [];
 
 		var e:Expr = macro {
 			this._arpDomain = slot.domain;
 			this._arpSlot = slot;
 			${ { pos: Context.currentPos(), expr: ExprDef.EBlock(initBlock)} };
-			if (seed != null) for (element in seed) this.consumeSeedElement(element);
-			${ this.initBody };
+			if (seed != null) for (element in seed) this.arpConsumeSeedElement(element);
+			this.init();
 			return this;
 		}
 
 		for (aoField in this.arpObjectFields) aoField.buildInitBlock(initBlock);
 
-		this.init = fieldSkeleton("init", this.init, true);
-		this.init.kind = FieldType.FFun({
+		this.arpInit = fieldSkeleton("arpInit", this.arpInit, true);
+		this.arpInit.kind = FieldType.FFun({
 			args: [
 				{ name: "slot", type: macro :net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot },
 				{ name: "seed", type: macro :net.kaikoga.arp.domain.seed.ArpSeed, value: macro null }
@@ -163,14 +165,20 @@ class MacroArpObjectBuilder {
 			ret: macro :net.kaikoga.arp.domain.IArpObject,
 			expr: e
 		});
-		this.outFields.push(this.init);
+		this.outFields.push(this.arpInit);
+
+		if (this.dummyInit) {
+			var init:Field = fieldSkeleton("init", null, true);
+			init.kind = FieldType.FFun({ args: [], ret: null, expr: macro { null; } });
+			this.outFields.push(init);
+		}
 	}
 
-	private function buildDispose():Void {
+	private function buildArpDispose():Void {
 		var disposeBlock:Array<Expr> = [];
 
 		var e:Expr = macro {
-			${ this.disposeBody };
+			this.dispose();
 			${ { pos: Context.currentPos(), expr: ExprDef.EBlock(disposeBlock)} };
 			this._arpDomain = null;
 			this._arpSlot = null;
@@ -178,31 +186,37 @@ class MacroArpObjectBuilder {
 
 		for (aoField in this.arpObjectFields) aoField.buildDisposeBlock(disposeBlock);
 
-		this.dispose = fieldSkeleton("dispose", this.dispose, true);
-		this.dispose.kind = FieldType.FFun({
+		this.arpDispose = fieldSkeleton("arpDispose", this.arpDispose, true);
+		this.arpDispose.kind = FieldType.FFun({
 			args: [],
 			ret: null,
 			expr: e
 		});
-		this.outFields.push(this.dispose);
+		this.outFields.push(this.arpDispose);
+
+		if (this.dummyDispose) {
+			var dispose:Field = fieldSkeleton("dispose", null, true);
+			dispose.kind = FieldType.FFun({ args: [], ret: null, expr: macro { null; } });
+			this.outFields.push(dispose);
+		}
 	}
 
-	private function buildConsumeSeedElement():Void {
+	private function buildArpConsumeSeedElement():Void {
 		var cases:Array<Case> = [];
 
 		var e:Expr = { pos: Context.currentPos(), expr: ExprDef.ESwitch(macro element.typeName(), cases, null) }
 
 		for (aoField in this.arpObjectFields) aoField.buildConsumeSeedElementBlock(cases);
 
-		this.consumeSeedElement = fieldSkeleton("consumeSeedElement", this.consumeSeedElement, false);
-		this.consumeSeedElement.kind = FieldType.FFun({
+		this.arpConsumeSeedElement = fieldSkeleton("arpConsumeSeedElement", this.arpConsumeSeedElement, false);
+		this.arpConsumeSeedElement.kind = FieldType.FFun({
 			args: [
 				{ name: "element", type: macro :net.kaikoga.arp.domain.seed.ArpSeed }
 			],
 			ret: null,
 			expr: e
 		});
-		this.outFields.push(this.consumeSeedElement);
+		this.outFields.push(this.arpConsumeSeedElement);
 	}
 
 	private function buildReadSelf():Void {
