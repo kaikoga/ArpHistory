@@ -14,7 +14,7 @@ class MacroArpObjectStdReferenceMapField extends MacroArpObjectFieldBase impleme
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
-		var nativeType:ComplexType = macro :net.kaikoga.arp.domain.ds.ArpObjectMap<net.kaikoga.arp.macro.mocks.MockStdDsMacroArpObject>;
+		var nativeType:ComplexType = macro :net.kaikoga.arp.domain.ds.std.ArpObjectStdMap<net.kaikoga.arp.macro.mocks.MockStdDsMacroArpObject>;
 		// TODO coerce type
 		this.nativeField.kind = FieldType.FProp("default", "null", nativeType, null);
 		outFields.push(nativeField);
@@ -22,7 +22,7 @@ class MacroArpObjectStdReferenceMapField extends MacroArpObjectFieldBase impleme
 
 	public function buildInitBlock(initBlock:Array<Expr>):Void {
 		var iFieldName:String = this.iFieldName;
-		initBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = new net.kaikoga.arp.domain.ds.ArpObjectMap(slot.domain); });
+		initBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = new net.kaikoga.arp.domain.ds.std.ArpObjectStdMap(slot.domain); });
 	}
 
 	public function buildDisposeBlock(initBlock:Array<Expr>):Void {

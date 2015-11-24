@@ -1,4 +1,4 @@
-package net.kaikoga.arp.domain.ds;
+package net.kaikoga.arp.domain.ds.std;
 
 import net.kaikoga.arp.domain.core.ArpSid;
 import net.kaikoga.arp.persistable.IPersistInput;
@@ -7,7 +7,7 @@ import net.kaikoga.arp.persistable.IPersistable;
 import Map.IMap;
 
 @:access(net.kaikoga.arp.domain.ArpDomain)
-class ArpObjectMap<V:IArpObject> implements IMap<String, V> implements IPersistable {
+class ArpObjectStdMap<V:IArpObject> implements IMap<String, V> implements IPersistable {
 
 	private var domain:ArpDomain;
 	private var slots:Map<String, ArpSlot<V>>;
@@ -23,6 +23,7 @@ class ArpObjectMap<V:IArpObject> implements IMap<String, V> implements IPersista
 	}
 
 	public function set(k:String, v:V):Void {
+		v.arpSlot().addReference();
 		this.slots.set(k, v.arpSlot());
 	}
 
@@ -31,6 +32,7 @@ class ArpObjectMap<V:IArpObject> implements IMap<String, V> implements IPersista
 	}
 
 	public function remove(k:String):Bool {
+		if (this.slots.exists(k)) this.slots.get(k).delReference();
 		return this.slots.remove(k);
 	}
 
@@ -39,7 +41,7 @@ class ArpObjectMap<V:IArpObject> implements IMap<String, V> implements IPersista
 	}
 
 	public function iterator():Iterator<V> {
-		return new ArpObjectMapIterator(this.slots);
+		return new ArpObjectStdMapIterator(this.slots);
 	}
 
 	public function toString():String {
@@ -47,12 +49,14 @@ class ArpObjectMap<V:IArpObject> implements IMap<String, V> implements IPersista
 	}
 
 	public function readSelf(input:IPersistInput):Void {
+		var oldSlots:Map<String, ArpSlot<V>> = this.slots;
 		this.slots = new Map();
 		var key:String;
 		// TODO better format
 		while ((key = input.readName()) != "") {
-			this.slots.set(key, this.domain.getOrCreateSlot(new ArpSid(input.readName())));
+			this.slots.set(key, this.domain.getOrCreateSlot(new ArpSid(input.readName())).addReference());
 		}
+		for (item in oldSlots) item.delReference();
 	}
 
 	public function writeSelf(output:IPersistOutput):Void {
@@ -65,7 +69,7 @@ class ArpObjectMap<V:IArpObject> implements IMap<String, V> implements IPersista
 	}
 }
 
-class ArpObjectMapIterator<V:IArpObject> {
+class ArpObjectStdMapIterator<V:IArpObject> {
 
 	private var slots:Map<String, ArpSlot<V>>;
 	private var keyIter:Iterator<String>;
