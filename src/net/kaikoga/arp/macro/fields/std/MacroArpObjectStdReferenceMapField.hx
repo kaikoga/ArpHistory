@@ -8,15 +8,26 @@ class MacroArpObjectStdReferenceMapField extends MacroArpObjectFieldBase impleme
 
 	private var arpType:ExprOf<String>;
 
+	private function coerce(nativeType:ComplexType):ComplexType {
+		switch (nativeType) {
+			case ComplexType.TPath(t):
+				return ComplexType.TPath({
+					pack: "net.kaikoga.arp.domain.ds.std".split("."),
+					name: "ArpObjectStdMap",
+					params: [t.params[1]]
+				});
+			case _:
+		}
+		return nativeType;
+	}
+
 	public function new(nativeField:Field, nativeType:ComplexType, arpType:ExprOf<String>) {
-		super(nativeField, nativeType);
+		super(nativeField, coerce(nativeType));
 		this.arpType = arpType;
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
-		var nativeType:ComplexType = macro :net.kaikoga.arp.domain.ds.std.ArpObjectStdMap<net.kaikoga.arp.macro.mocks.MockStdDsMacroArpObject>;
-		// TODO coerce type
-		this.nativeField.kind = FieldType.FProp("default", "null", nativeType, null);
+		this.nativeField.kind = FieldType.FProp("default", "null", this.nativeType, null);
 		outFields.push(nativeField);
 	}
 

@@ -15,7 +15,6 @@ class MacroArpObjectStdListField extends MacroArpObjectFieldBase implements IMac
 
 	public function buildField(outFields:Array<Field>):Void {
 		var nativeType:ComplexType = this.nativeType;
-		// TODO coerce type
 		this.nativeField.kind = FieldType.FProp("default", "null", nativeType, null);
 		outFields.push(nativeField);
 	}
