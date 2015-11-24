@@ -49,7 +49,6 @@ class ArpDomainCase {
 ";
 		assertEquals(DUMP, domain.dumpEntries());
 		assertEquals(DUMP_BY_NAME, domain.dumpEntriesByName());
-		fail();
 	}
 
 	public function testGc():Void {
