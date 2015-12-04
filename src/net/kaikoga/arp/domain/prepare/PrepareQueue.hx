@@ -33,13 +33,13 @@ class PrepareQueue {
 	public function new(domain:ArpDomain) {
 		this.domain = domain;
 		this.tasksBySlots = new Map();
-		this.taskRunner = new TaskRunner();
+		this.taskRunner = new TaskRunner(domain.tick, true);
 		this.taskRunner.onComplete.push(this.onTaskRunnerComplete);
 		this.taskRunner.onError.push(this.onTaskRunnerError);
 		this.taskRunner.onDeadlock.push(this.onTaskRunnerDeadlock);
 		this.taskRunner.onProgress.push(this.onTaskRunnerProgress);
 		this.taskRunner.onCompleteTask.push(this.onCompleteTask);
-		this.taskRunner.start(true);
+		this.taskRunner.start();
 	}
 
 	private function onTaskRunnerComplete(i:Int):Void {

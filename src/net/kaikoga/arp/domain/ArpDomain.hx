@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain;
 
+import net.kaikoga.arp.events.ArpSignal;
 import net.kaikoga.arp.domain.prepare.PrepareQueue;
 import net.kaikoga.arp.domain.dump.ArpDomainDump;
 import net.kaikoga.arp.domain.gen.ArpGeneratorRegistry;
@@ -23,8 +24,11 @@ class ArpDomain {
 
 	private var _sid:Int = 0;
 	private var _did:Int = 0;
+	
+	public var tick(default, null):ArpSignal<Float>;
 
 	public function new() {
+		this.tick = new ArpSignal();
 		this.root = this.allocDir(new ArpDid(""));
 		this.slots = new Map();
 		this.nullSlot = this.allocSlot(new ArpSid(""));
@@ -105,6 +109,10 @@ class ArpDomain {
 
 	public function log(category:String, message:String):Void {
 		throw "ArpDomain.log()";
+	}
+
+	public function heatLater(slot:ArpUntypedSlot):Void {
+		this.prepareQueue.prepareLater(slot);
 	}
 
 	public function dumpEntries(typeFilter:ArpType->Bool = null):String {
