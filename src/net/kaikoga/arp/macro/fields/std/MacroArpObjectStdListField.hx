@@ -24,6 +24,18 @@ class MacroArpObjectStdListField extends MacroArpObjectFieldBase implements IMac
 		initBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = new List(); });
 	}
 
+	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {
+		heatLaterBlock.push(macro @:pos(this.nativePos) { null; });
+	}
+
+	public function buildHeatUpBlock(heatUpBlock:Array<Expr>):Void {
+		heatUpBlock.push(macro @:pos(this.nativePos) { null; });
+	}
+
+	public function buildHeatDownBlock(heatDownBlock:Array<Expr>):Void {
+		heatDownBlock.push(macro @:pos(this.nativePos) { null; });
+	}
+
 	public function buildDisposeBlock(initBlock:Array<Expr>):Void {
 		initBlock.push(macro @:pos(this.nativePos) { null; });
 	}

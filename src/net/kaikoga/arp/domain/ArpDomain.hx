@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain;
 
+import net.kaikoga.arp.domain.prepare.PrepareQueue;
 import net.kaikoga.arp.domain.dump.ArpDomainDump;
 import net.kaikoga.arp.domain.gen.ArpGeneratorRegistry;
 import net.kaikoga.arp.domain.gen.IArpGenerator;
@@ -16,6 +17,8 @@ class ArpDomain {
 	private var slots:Map<String, ArpUntypedSlot>;
 	public var nullSlot(default, null):ArpUntypedSlot;
 
+	private var prepareQueue:PrepareQueue;
+	
 	private var reg:ArpGeneratorRegistry;
 
 	private var _sid:Int = 0;
@@ -26,6 +29,7 @@ class ArpDomain {
 		this.slots = new Map();
 		this.nullSlot = this.allocSlot(new ArpSid(""));
 		this.reg = new ArpGeneratorRegistry();
+		this.prepareQueue = new PrepareQueue(this);
 	}
 
 	private function allocSlot(sid:ArpSid = null):ArpUntypedSlot {
@@ -97,6 +101,10 @@ class ArpDomain {
 
 	public function gc():Void {
 		throw "ArpDomain.gc()";
+	}
+
+	public function log(category:String, message:String):Void {
+		throw "ArpDomain.log()";
 	}
 
 	public function dumpEntries(typeFilter:ArpType->Bool = null):String {

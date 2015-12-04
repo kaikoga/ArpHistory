@@ -36,6 +36,18 @@ class MacroArpObjectStdReferenceMapField extends MacroArpObjectFieldBase impleme
 		initBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = new net.kaikoga.arp.domain.ds.std.ArpObjectStdMap(slot.domain); });
 	}
 
+	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {
+		heatLaterBlock.push(macro @:pos(this.nativePos) { null; });
+	}
+
+	public function buildHeatUpBlock(heatUpBlock:Array<Expr>):Void {
+		heatUpBlock.push(macro @:pos(this.nativePos) { null; });
+	}
+
+	public function buildHeatDownBlock(heatDownBlock:Array<Expr>):Void {
+		heatDownBlock.push(macro @:pos(this.nativePos) { null; });
+	}
+
 	public function buildDisposeBlock(initBlock:Array<Expr>):Void {
 		initBlock.push(macro @:pos(this.nativePos) { null; });
 	}

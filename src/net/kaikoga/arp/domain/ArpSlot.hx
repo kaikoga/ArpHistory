@@ -15,13 +15,21 @@ abstract ArpSlot<T:IArpObject>(ArpUntypedSlot) from ArpUntypedSlot to ArpUntyped
 	public var sid(get, never):ArpSid;
 	inline private function get_sid():ArpSid return this.sid;
 
+	public var value(get, set):T;
+	inline private function get_value():T return cast this.value; // FIXME
+	inline private function set_value(value:T):T return cast(this.value = cast(value)); // FIXME
+
+	public var refCount(get, never):Int;
+	inline private function get_refCount():Int return this.refCount;
+
 	inline public function addReference():ArpSlot<T> return new ArpSlot(this.addReference());
 	inline public function delReference():Bool return this.delReference();
 	inline public function takeReference(from:ArpSlot<T>):ArpSlot<T> return this.takeReference(from);
 
-	public var value(get, set):T;
-	inline private function get_value():T return cast this.value; // FIXME
-	inline private function set_value(value:T):T return cast(this.value = cast(value)); // FIXME
+	public var heat(get, set):ArpHeat;
+	inline private function get_heat():ArpHeat return this.heat;
+	inline private function set_heat(value:ArpHeat):ArpHeat return this.heat = value;
+
 }
 
 class ArpUntypedSlot {
@@ -35,6 +43,9 @@ class ArpUntypedSlot {
 	inline private function set_value(value:IArpObject):IArpObject { return this._value = value; }
 
 	private var _refCount:Int = 0;
+	public var refCount(get, never):Int;
+	inline private function get_refCount():Int { return this._refCount; }
+
 	inline public function addReference():ArpUntypedSlot { this._refCount++; return this; }
 	// true if object still exists
 	inline public function delReference():Bool {
@@ -52,6 +63,11 @@ class ArpUntypedSlot {
 		from.delReference();
 		return this;
 	}
+
+	private var _heat:ArpHeat = ArpHeat.Cold;
+	public var heat(get, set):ArpHeat;
+	inline private function get_heat():ArpHeat { return this._heat; }
+	inline private function set_heat(value:ArpHeat):ArpHeat { return this._heat = value; }
 
 	@:allow(net.kaikoga.arp.domain.ArpDomain)
 	private function new(domain:ArpDomain, sid:ArpSid) {

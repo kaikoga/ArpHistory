@@ -23,6 +23,9 @@ class MacroArpObjectBuilder {
 	private var arpSlot:Field = null;
 	private var _arpSlot:Field = null;
 	private var arpInit:Field = null;
+	private var arpHeatLater:Field = null;
+	private var arpHeatUp:Field = null;
+	private var arpHeatDown:Field = null;
 	private var arpDispose:Field = null;
 	private var arpConsumeSeedElement:Field = null;
 	private var readSelf:Field = null;
@@ -30,6 +33,8 @@ class MacroArpObjectBuilder {
 
 	private var dummyInit:Bool = true;
 	private var dummyDispose:Bool = true;
+	private var dummyHeatUp:Bool = true;
+	private var dummyHeatDown:Bool = true;
 
 	private function new(arpTypeName:String) {
 		this.arpTypeName = arpTypeName;
@@ -51,6 +56,12 @@ class MacroArpObjectBuilder {
 					this._arpSlot = field;
 				case "arpInit":
 					this.arpInit = field;
+				case "arpHeatLater":
+					this.arpHeatLater = field;
+				case "arpHeatUp":
+					this.arpHeatUp = field;
+				case "arpHeatDown":
+					this.arpHeatDown = field;
 				case "arpDispose":
 					this.arpDispose = field;
 				case "arpConsumeSeedElement":
@@ -64,6 +75,12 @@ class MacroArpObjectBuilder {
 					this.outFields.push(field);
 				case "dispose":
 					this.dummyDispose = false;
+					this.outFields.push(field);
+				case "heatUp":
+					this.dummyHeatUp = false;
+					this.outFields.push(field);
+				case "heatDown":
+					this.dummyHeatDown = false;
 					this.outFields.push(field);
 				default:
 					var arpObjectField:IMacroArpObjectField = MacroArpObjectFieldBuilder.fromField(field);
@@ -81,6 +98,9 @@ class MacroArpObjectBuilder {
 		buildArpSlot();
 		build_arpSlot();
 		buildArpInit();
+		buildArpHeatLater();
+		buildArpHeatUp();
+		buildArpHeatDown();
 		buildArpDispose();
 		buildArpConsumeSeedElement();
 		buildReadSelf();
@@ -174,14 +194,83 @@ class MacroArpObjectBuilder {
 		}
 	}
 
+	private function buildArpHeatLater():Void {
+		var heatLaterBlock:Array<Expr> = [];
+
+		var e:Expr = macro {
+		${ { pos: Context.currentPos(), expr: ExprDef.EBlock(heatLaterBlock)} };
+		}
+
+		// TODO
+		//for (aoField in this.arpObjectFields) aoField.buildDisposeBlock(disposeBlock);
+
+		this.arpHeatLater = fieldSkeleton("arpHeatLater", this.arpHeatLater, true);
+		this.arpHeatLater.kind = FieldType.FFun({
+			args: [],
+			ret: null,
+			expr: e
+		});
+		this.outFields.push(this.arpHeatLater);
+	}
+
+	private function buildArpHeatUp():Void {
+		var disposeBlock:Array<Expr> = [];
+
+		var e:Expr = macro {
+			return this.arpHeatUp();
+		}
+
+		// TODO
+		// for (aoField in this.arpObjectFields) aoField.buildDisposeBlock(disposeBlock);
+
+		this.arpHeatUp = fieldSkeleton("arpHeatUp", this.arpHeatUp, true);
+		this.arpHeatUp.kind = FieldType.FFun({
+			args: [],
+			ret: macro :Bool,
+			expr: e
+		});
+		this.outFields.push(this.arpHeatUp);
+
+		if (this.dummyHeatUp) {
+			var heatUp:Field = fieldSkeleton("heatUp", null, true);
+			heatUp.kind = FieldType.FFun({ args: [], ret: macro :Bool, expr: macro { return true; } });
+			this.outFields.push(heatUp);
+		}
+	}
+
+	private function buildArpHeatDown():Void {
+		var disposeBlock:Array<Expr> = [];
+
+		var e:Expr = macro {
+			return this.arpHeatDown();
+		}
+
+		// TODO
+		// for (aoField in this.arpObjectFields) aoField.buildDisposeBlock(disposeBlock);
+
+		this.arpHeatDown = fieldSkeleton("arpHeatDown", this.arpHeatDown, true);
+		this.arpHeatDown.kind = FieldType.FFun({
+			args: [],
+			ret: macro :Bool,
+			expr: e
+		});
+		this.outFields.push(this.arpHeatDown);
+
+		if (this.dummyHeatDown) {
+			var heatDown:Field = fieldSkeleton("heatDown", null, true);
+			heatDown.kind = FieldType.FFun({ args: [], ret: macro :Bool, expr: macro { return true; } });
+			this.outFields.push(heatDown);
+		}
+	}
+
 	private function buildArpDispose():Void {
 		var disposeBlock:Array<Expr> = [];
 
 		var e:Expr = macro {
-			this.dispose();
-			${ { pos: Context.currentPos(), expr: ExprDef.EBlock(disposeBlock)} };
-			this._arpDomain = null;
-			this._arpSlot = null;
+		this.dispose();
+		${ { pos: Context.currentPos(), expr: ExprDef.EBlock(disposeBlock)} };
+		this._arpDomain = null;
+		this._arpSlot = null;
 		}
 
 		for (aoField in this.arpObjectFields) aoField.buildDisposeBlock(disposeBlock);

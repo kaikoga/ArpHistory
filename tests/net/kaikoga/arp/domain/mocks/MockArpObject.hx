@@ -43,6 +43,25 @@ class MockArpObject implements IArpObject {
 
 	}
 
+	public function arpHeatLater():Void {
+	}
+
+	public function arpHeatUp():Bool {
+		return this.heatUp();
+	}
+
+	public function heatUp():Bool {
+		return true;
+	}
+
+	public function arpHeatDown():Bool {
+		return this.heatDown();
+	}
+
+	public function heatDown():Bool {
+		return true;
+	}
+
 	public function arpDispose():Void {
 		this.dispose();
 		this._arpSlot = null;
