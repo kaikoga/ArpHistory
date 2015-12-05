@@ -1,5 +1,5 @@
 package net.kaikoga.arp.task;
 
 interface ITask {
-	function run():Bool;
+	function run():TaskStatus;
 }

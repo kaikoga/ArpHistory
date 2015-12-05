@@ -1,0 +1,31 @@
+package net.kaikoga.arp.events;
+
+class ArpSignal<T> {
+
+	private var handlers:Array<T->Void>;
+	public function new() {
+		this.handlers = [];
+	}
+
+	public function push(handler:T->Void):Int {
+		return this.handlers.push(handler);
+	}
+
+	public function remove(handler:T->Void):Bool {
+		return this.handlers.remove(handler);
+	}
+
+	public function flush():Void {
+		this.handlers = [];
+	}
+
+	public function willTrigger():Bool {
+		return this.handlers.length > 0;
+	}
+
+	public function dispatch(event:T):Void {
+		for (handler in this.handlers) {
+			handler(event);
+		}
+	}
+}

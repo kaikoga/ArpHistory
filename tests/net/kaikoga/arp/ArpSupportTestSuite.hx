@@ -1,5 +1,7 @@
 package net.kaikoga.arp;
 
+import net.kaikoga.arp.events.ArpSignalCase;
+import net.kaikoga.arp.task.TaskRunnerCase;
 import net.kaikoga.arp.ds.lambda.MapListOpCase;
 import net.kaikoga.arp.ds.lambda.MapOpCase;
 import net.kaikoga.arp.ds.lambda.SetOpCase;
@@ -29,6 +31,10 @@ class ArpSupportTestSuite {
 		r.load(ListOpCase);
 		r.load(MapOpCase);
 		r.load(MapListOpCase);
+
+		r.load(ArpSignalCase);
+
+		r.load(TaskRunnerCase);
 
 		r.load(DynamicPersistIoCase);
 		r.load(PackedPersistIoCase);
