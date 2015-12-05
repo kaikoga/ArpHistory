@@ -44,6 +44,7 @@ class MockArpObject implements IArpObject {
 	}
 
 	public function arpHeatLater():Void {
+		this._arpDomain.heatLater(this.refFieldSlot);
 	}
 
 	public function arpHeatUp():Bool {

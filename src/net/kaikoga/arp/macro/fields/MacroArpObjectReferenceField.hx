@@ -7,6 +7,7 @@ import haxe.macro.Expr;
 class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IMacroArpObjectField {
 
 	private var arpType:ExprOf<String>;
+	private var arpBarrier:Bool;
 
 	private var nativeSlotType(get, never):ComplexType;
 	inline private function get_nativeSlotType():ComplexType {
@@ -17,9 +18,10 @@ class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IM
 	private var iFieldSlot(get, never):String;
 	private function get_iFieldSlot():String return this.iFieldName + "Slot";
 
-	public function new(nativeField:Field, nativeType:ComplexType, arpType:ExprOf<String>) {
+	public function new(nativeField:Field, nativeType:ComplexType, arpType:ExprOf<String>, arpBarrier:Bool) {
 		super(nativeField, nativeType);
 		this.arpType = arpType;
+		this.arpBarrier = arpBarrier;
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
@@ -51,7 +53,7 @@ class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IM
 	}
 
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {
-		heatLaterBlock.push(macro @:pos(this.nativePos) { null; });
+		if (arpBarrier) heatLaterBlock.push(macro @:pos(this.nativePos) { this._arpDomain.heatLater(this.$iFieldSlot); });
 	}
 
 	public function buildHeatUpBlock(heatUpBlock:Array<Expr>):Void {

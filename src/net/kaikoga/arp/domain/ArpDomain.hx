@@ -115,6 +115,18 @@ class ArpDomain {
 		this.prepareQueue.prepareLater(slot);
 	}
 
+	public var isPending(get, never):Bool;
+	inline public function get_isPending():Bool return this.prepareQueue.isPending;
+
+	public var tasksProcessed(get, never):Int;
+	inline private function get_tasksProcessed():Int return this.prepareQueue.tasksProcessed;
+
+	public var tasksTotal(get, never):Int;
+	inline private function get_tasksTotal():Int return this.prepareQueue.tasksTotal;
+
+	public var tasksWaiting(get, never):Int;
+	inline private function get_tasksWaiting():Int return this.prepareQueue.tasksWaiting;
+
 	public function dumpEntries(typeFilter:ArpType->Bool = null):String {
 		return ArpDomainDump.printer.format(new ArpDomainDump(this, typeFilter).dumpSlotStatus());
 	}

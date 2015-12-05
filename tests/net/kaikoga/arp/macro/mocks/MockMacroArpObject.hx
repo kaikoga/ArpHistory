@@ -10,7 +10,7 @@ class MockMacroArpObject implements IArpObject {
 	@:arpField public var boolField:Bool = false;
 	@:arpField public var stringField:String = null;
 
-	@:arpSlot("MockMacroArpObject") public var refField:MockMacroArpObject;
+	@:arpBarrier @:arpSlot("MockMacroArpObject") public var refField:MockMacroArpObject;
 
 	public function new() {
 	}

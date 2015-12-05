@@ -198,11 +198,10 @@ class MacroArpObjectBuilder {
 		var heatLaterBlock:Array<Expr> = [];
 
 		var e:Expr = macro {
-		${ { pos: Context.currentPos(), expr: ExprDef.EBlock(heatLaterBlock)} };
+			${ { pos: Context.currentPos(), expr: ExprDef.EBlock(heatLaterBlock)} };
 		}
 
-		// TODO
-		//for (aoField in this.arpObjectFields) aoField.buildDisposeBlock(disposeBlock);
+		for (aoField in this.arpObjectFields) aoField.buildHeatLaterBlock(heatLaterBlock);
 
 		this.arpHeatLater = fieldSkeleton("arpHeatLater", this.arpHeatLater, true);
 		this.arpHeatLater.kind = FieldType.FFun({
@@ -214,14 +213,13 @@ class MacroArpObjectBuilder {
 	}
 
 	private function buildArpHeatUp():Void {
-		var disposeBlock:Array<Expr> = [];
+		var heatUpBlock:Array<Expr> = [];
 
 		var e:Expr = macro {
-			return this.arpHeatUp();
+			return this.heatUp();
 		}
 
-		// TODO
-		// for (aoField in this.arpObjectFields) aoField.buildDisposeBlock(disposeBlock);
+		for (aoField in this.arpObjectFields) aoField.buildHeatUpBlock(heatUpBlock);
 
 		this.arpHeatUp = fieldSkeleton("arpHeatUp", this.arpHeatUp, true);
 		this.arpHeatUp.kind = FieldType.FFun({
@@ -239,14 +237,13 @@ class MacroArpObjectBuilder {
 	}
 
 	private function buildArpHeatDown():Void {
-		var disposeBlock:Array<Expr> = [];
+		var heatDownBlock:Array<Expr> = [];
 
 		var e:Expr = macro {
-			return this.arpHeatDown();
+			return this.heatDown();
 		}
 
-		// TODO
-		// for (aoField in this.arpObjectFields) aoField.buildDisposeBlock(disposeBlock);
+		for (aoField in this.arpObjectFields) aoField.buildHeatDownBlock(heatDownBlock);
 
 		this.arpHeatDown = fieldSkeleton("arpHeatDown", this.arpHeatDown, true);
 		this.arpHeatDown.kind = FieldType.FFun({

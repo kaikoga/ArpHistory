@@ -10,7 +10,7 @@ import Map.IMap;
 class ArpObjectStdMap<V:IArpObject> implements IMap<String, V> implements IPersistable {
 
 	private var domain:ArpDomain;
-	private var slots:Map<String, ArpSlot<V>>;
+	public var slots(default, null):Map<String, ArpSlot<V>>;
 
 	public function new(domain:ArpDomain) {
 		this.domain = domain;
