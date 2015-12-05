@@ -21,7 +21,7 @@ class ArpDirectoryQuery {
 	}
 
 	inline public function directory():ArpDirectory {
-		if (this.path == null) return this.root; 
+		if (this.path == null) return this.root;
 		if (this.pathArray == null) return this.root.child(this.path);
 		var slot:ArpDirectory = this.root;
 		for (element in this.pathArray) slot = slot.child(element);

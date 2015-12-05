@@ -19,12 +19,12 @@ class ArpDomain {
 	public var nullSlot(default, null):ArpUntypedSlot;
 
 	private var prepareQueue:PrepareQueue;
-	
+
 	private var reg:ArpGeneratorRegistry;
 
 	private var _sid:Int = 0;
 	private var _did:Int = 0;
-	
+
 	public var tick(default, null):ArpSignal<Float>;
 
 	public function new() {
@@ -108,7 +108,7 @@ class ArpDomain {
 	}
 
 	public function log(category:String, message:String):Void {
-		throw "ArpDomain.log()";
+		if (category != "arp_debug_prepare") throw 'ArpDomain.log(): [${category}] ${message}';
 	}
 
 	public function heatLater(slot:ArpUntypedSlot):Void {

@@ -26,4 +26,7 @@ class ArpObjectQuery<T:IArpObject> extends ArpDirectoryQuery {
 		return this.slot().value;
 	}
 
+	inline public function heatLater():Void {
+		this.root.domain.heatLater(this.slot());
+	}
 }

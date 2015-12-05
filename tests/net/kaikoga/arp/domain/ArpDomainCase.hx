@@ -23,7 +23,7 @@ class ArpDomainCase {
 		</data>
 		').firstElement();
 		seed = ArpSeed.fromXml(xml);
- 		domain.loadSeed(seed, new ArpType("TestArpObject"));
+		domain.loadSeed(seed, new ArpType("TestArpObject"));
 	}
 
 	public function testDumpEntries():Void {
@@ -49,6 +49,28 @@ class ArpDomainCase {
 ";
 		assertEquals(DUMP, domain.dumpEntries());
 		assertEquals(DUMP_BY_NAME, domain.dumpEntriesByName());
+	}
+
+	public function testHeatUp():Void {
+		var query = domain.query("name1", new ArpType("TestArpObject"));
+		assertEquals(ArpHeat.Cold, query.slot().heat);
+		query.heatLater();
+		assertEquals(ArpHeat.Warming, query.slot().heat);
+		domain.tick.dispatch(1.0);
+		assertEquals(ArpHeat.Warm, query.slot().heat);
+	}
+
+	public function testHeatUpDependent():Void {
+		var query1 = domain.query("name1", new ArpType("TestArpObject"));
+		var query2 = domain.query("name2", new ArpType("TestArpObject"));
+		assertEquals(ArpHeat.Cold, query1.slot().heat);
+		assertEquals(ArpHeat.Cold, query2.slot().heat);
+		query2.heatLater();
+		assertEquals(ArpHeat.Cold, query1.slot().heat);
+		assertEquals(ArpHeat.Warming, query2.slot().heat);
+		domain.tick.dispatch(1.0);
+		assertEquals(ArpHeat.Warm, query1.slot().heat);
+		assertEquals(ArpHeat.Warm, query2.slot().heat);
 	}
 
 	public function testGc():Void {

@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain.prepare;
 
+import net.kaikoga.arp.task.TaskStatus;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 
@@ -18,24 +19,26 @@ class PrepareTask implements IPrepareTask {
 		this._slot = slot;
 	}
 
-	public function run():Bool {
-		//check if this ref is ultimately unused
+	public function run():TaskStatus {
 		if (this._slot.value == null) {
-			if (this._slot.refCount <= 0) return true;
+			if (this._slot.refCount <= 0) {
+				this.domain.log("arp_debug_prepare", 'PrepareTask.run(): ultimate unused and prepare canceled: ${this._slot}');
+				return TaskStatus.Complete;
+			}
 		}
 
 		if (!this._preparePropagated) {
 			this._slot.value.arpHeatLater();
 			this._preparePropagated = true;
-			return false;
+			return TaskStatus.Progress;
 		}
 
 		if (this._slot.value.arpHeatUp()) {
 			this.domain.log("arp_debug_prepare", 'PrepareTask.run(): prepared: ${this._slot}');
-			return true;
+			return TaskStatus.Complete;
 		}
 
 		this.domain.log("arp_debug_prepare", 'PrepareTask.run(): waiting depending prepares: ${this._slot}');
-		return false;
+		return TaskStatus.Stalled;
 	}
 }

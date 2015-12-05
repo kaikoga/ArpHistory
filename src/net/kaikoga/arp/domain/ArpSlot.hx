@@ -26,6 +26,7 @@ abstract ArpSlot<T:IArpObject>(ArpUntypedSlot) from ArpUntypedSlot to ArpUntyped
 	inline public function delReference():Bool return this.delReference();
 	inline public function takeReference(from:ArpSlot<T>):ArpSlot<T> return this.takeReference(from);
 
+	// FIXME make setter friend access
 	public var heat(get, set):ArpHeat;
 	inline private function get_heat():ArpHeat return this.heat;
 	inline private function set_heat(value:ArpHeat):ArpHeat return this.heat = value;

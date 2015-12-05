@@ -66,6 +66,7 @@ class PrepareQueue {
 	}
 
 	private function onCompleteTask(task:IPrepareTask):Void {
+		task.slot.heat = ArpHeat.Warm;
 		this.tasksBySlots.remove(task.slot);
 	}
 
@@ -78,6 +79,7 @@ class PrepareQueue {
 		var task:PrepareTask = new PrepareTask(this.domain, slot);
 		this.tasksBySlots.set(slot, task);
 		this.taskRunner.append(task);
+		task.slot.heat = ArpHeat.Warming;
 	}
 
 	public function prepareChildLater(slot:ArpUntypedSlot, name:String, childSlot:ArpUntypedSlot):Void {
@@ -86,6 +88,7 @@ class PrepareQueue {
 		// var task:IPrepareTask = new PrepareChildTask(this.domain, slot, name, childSlot);
 		// this.tasksBySlots.set(slot, task);
 		// this.taskRunner.append(task);
+		// task.slot.heat = ArpHeat.Warming;
 	}
 
 	public function waitBySlot(slot:ArpUntypedSlot):Void {
