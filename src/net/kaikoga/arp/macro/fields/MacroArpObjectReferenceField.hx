@@ -49,7 +49,7 @@ class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IM
 
 	public function buildInitBlock(initBlock:Array<Expr>):Void {
 		var iFieldSlot:String = this.iFieldSlot;
-		initBlock.push(macro @:pos(this.nativePos) { this.$iFieldSlot = this._arpDomain.nullSlot; });
+		initBlock.push(macro @:pos(this.nativePos) { this.$iFieldSlot = slot.domain.nullSlot; });
 	}
 
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {

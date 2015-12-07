@@ -2,6 +2,7 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
+import haxe.macro.Printer;
 import net.kaikoga.arp.macro.MacroArpObjectFieldBuilder;
 import haxe.macro.Expr;
 import haxe.macro.Context;
@@ -12,9 +13,14 @@ class MacroArpObjectBuilder {
 		return new MacroArpObjectBuilder(arpTypeName).run();
 	}
 
+	public static function buildDerived(arpTypeName:String):Array<Field> {
+		return new MacroArpObjectBuilder(arpTypeName, true).run();
+	}
+
 	private var outFields:Array<Field> = [];
 
 	private var arpTypeName:String;
+	private var isDerived:Bool;
 	private var arpObjectFields:Array<IMacroArpObjectField> = [];
 
 	private var _arpDomain:Field = null;
@@ -31,14 +37,20 @@ class MacroArpObjectBuilder {
 	private var readSelf:Field = null;
 	private var writeSelf:Field = null;
 
-	private var dummyInit:Bool = true;
-	private var dummyDispose:Bool = true;
-	private var dummyHeatUp:Bool = true;
-	private var dummyHeatDown:Bool = true;
+	private var dummyInit:Bool;
+	private var dummyDispose:Bool;
+	private var dummyHeatUp:Bool;
+	private var dummyHeatDown:Bool;
 
-	private function new(arpTypeName:String) {
+	private function new(arpTypeName:String, isDerived:Bool = false) {
 		this.arpTypeName = arpTypeName;
+		this.isDerived = isDerived;
 		this.outFields = [];
+
+		this.dummyInit = !isDerived;
+		this.dummyDispose = !isDerived;
+		this.dummyHeatUp = !isDerived;
+		this.dummyHeatDown = !isDerived;
 	}
 
 	private function run():Array<Field> {
@@ -92,11 +104,11 @@ class MacroArpObjectBuilder {
 					}
 				}
 		}
-		build_arpDomain();
-		buildArpDomain();
+		if (!isDerived) build_arpDomain();
+		if (!isDerived) buildArpDomain();
 		buildArpType();
-		buildArpSlot();
-		build_arpSlot();
+		if (!isDerived) buildArpSlot();
+		if (!isDerived) build_arpSlot();
 		buildArpInit();
 		buildArpHeatLater();
 		buildArpHeatUp();
@@ -111,12 +123,14 @@ class MacroArpObjectBuilder {
 	private function funBodyOf(field:Field):Expr {
 		switch (field.kind) {
 			case FieldType.FFun(f): return f.expr;
-			case _: return macro { null; };
+			case _: return macro null;
 		}
 	}
 
-	inline private function fieldSkeleton(name:String, field:Null<Field>, isPublic:Bool):Field {
-		return (field != null) ? field : { name: name, access: [isPublic ? Access.APublic : Access.APrivate], kind: null, pos: Context.currentPos() }
+	private function fieldSkeleton(name:String, field:Null<Field>, isPublic:Bool):Field {
+		var access:Array<Access> = [isPublic ? Access.APublic : Access.APrivate];
+		if (isDerived) access.push(Access.AOverride);
+		return (field != null) ? field : { name: name, access: access, kind: null, pos: Context.currentPos() }
 	}
 
 	private function build_arpDomain():Void {
@@ -165,14 +179,22 @@ class MacroArpObjectBuilder {
 	private function buildArpInit():Void {
 		var initBlock:Array<Expr> = [];
 
-		var e:Expr = macro {
-			this._arpDomain = slot.domain;
-			this._arpSlot = slot;
-			${ { pos: Context.currentPos(), expr: ExprDef.EBlock(initBlock)} };
-			if (seed != null) for (element in seed) this.arpConsumeSeedElement(element);
-			this.init();
-			return this;
-		}
+		var e:Expr =
+		if (isDerived) {
+			macro @:pos(Context.currentPos()) {
+				${ { pos: Context.currentPos(), expr: ExprDef.EBlock(initBlock)} };
+				return super.arpInit(slot, seed);
+			}
+		} else {
+			macro @:pos(Context.currentPos()) {
+				this._arpDomain = slot.domain;
+				this._arpSlot = slot;
+				${ { pos: Context.currentPos(), expr: ExprDef.EBlock(initBlock)} };
+				if (seed != null) for (element in seed) this.arpConsumeSeedElement(element);
+				this.init();
+				return this;
+			}
+		};
 
 		for (aoField in this.arpObjectFields) aoField.buildInitBlock(initBlock);
 
@@ -189,7 +211,7 @@ class MacroArpObjectBuilder {
 
 		if (this.dummyInit) {
 			var init:Field = fieldSkeleton("init", null, true);
-			init.kind = FieldType.FFun({ args: [], ret: null, expr: macro { null; } });
+			init.kind = FieldType.FFun({ args: [], ret: null, expr: macro null });
 			this.outFields.push(init);
 		}
 	}
@@ -197,9 +219,17 @@ class MacroArpObjectBuilder {
 	private function buildArpHeatLater():Void {
 		var heatLaterBlock:Array<Expr> = [];
 
-		var e:Expr = macro {
-			${ { pos: Context.currentPos(), expr: ExprDef.EBlock(heatLaterBlock)} };
-		}
+		var e:Expr =
+		if (isDerived) {
+			macro {
+				super.arpHeatLater();
+				${ { pos: Context.currentPos(), expr: ExprDef.EBlock(heatLaterBlock)} };
+			}
+		} else {
+			macro {
+				${ { pos: Context.currentPos(), expr: ExprDef.EBlock(heatLaterBlock)} };
+			}
+		};
 
 		for (aoField in this.arpObjectFields) aoField.buildHeatLaterBlock(heatLaterBlock);
 
@@ -282,7 +312,7 @@ class MacroArpObjectBuilder {
 
 		if (this.dummyDispose) {
 			var dispose:Field = fieldSkeleton("dispose", null, true);
-			dispose.kind = FieldType.FFun({ args: [], ret: null, expr: macro { null; } });
+			dispose.kind = FieldType.FFun({ args: [], ret: null, expr: macro null });
 			this.outFields.push(dispose);
 		}
 	}
@@ -290,7 +320,8 @@ class MacroArpObjectBuilder {
 	private function buildArpConsumeSeedElement():Void {
 		var cases:Array<Case> = [];
 
-		var e:Expr = { pos: Context.currentPos(), expr: ExprDef.ESwitch(macro element.typeName(), cases, null) }
+		var eDefault:Expr = if (isDerived) macro { super.arpConsumeSeedElement(element); } else macro null; 
+		var e:Expr = { pos: Context.currentPos(), expr: ExprDef.ESwitch(macro element.typeName(), cases, eDefault) }
 
 		for (aoField in this.arpObjectFields) aoField.buildConsumeSeedElementBlock(cases);
 
@@ -307,7 +338,18 @@ class MacroArpObjectBuilder {
 
 	private function buildReadSelf():Void {
 		var fieldBlock:Array<Expr> = [];
-		var e:Expr = { pos: Context.currentPos(), expr: ExprDef.EBlock(fieldBlock)};
+
+		var e:Expr =
+		if (isDerived) {
+			macro {
+				super.readSelf(input);
+				${ { pos: Context.currentPos(), expr: ExprDef.EBlock(fieldBlock)} };
+			}
+		} else {
+			macro {
+				${ { pos: Context.currentPos(), expr: ExprDef.EBlock(fieldBlock)} };
+			}
+		};
 
 		for (aoField in this.arpObjectFields) aoField.buildReadSelfBlock(fieldBlock);
 
@@ -324,7 +366,18 @@ class MacroArpObjectBuilder {
 
 	private function buildWriteSelf():Void {
 		var fieldBlock:Array<Expr> = [];
-		var e:Expr = { pos: Context.currentPos(), expr: ExprDef.EBlock(fieldBlock)};
+
+		var e:Expr =
+		if (isDerived) {
+			macro {
+				super.writeSelf(output);
+				${ { pos: Context.currentPos(), expr: ExprDef.EBlock(fieldBlock)} };
+			}
+		} else {
+			macro {
+				${ { pos: Context.currentPos(), expr: ExprDef.EBlock(fieldBlock)} };
+			}
+		};
 
 		for (aoField in this.arpObjectFields) aoField.buildWriteSelfBlock(fieldBlock);
 

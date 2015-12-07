@@ -34,7 +34,7 @@ class MockArpObject implements IArpObject {
 		this._arpDomain = slot.domain;
 		this._arpSlot = slot;
 		this.refFieldSlot = slot.domain.nullSlot;
-		if (seed != null) for (element in seed) this.consumeSeedElement(element);
+		if (seed != null) for (element in seed) this.arpConsumeSeedElement(element);
 		this.init();
 		return this;
 	}
@@ -73,7 +73,7 @@ class MockArpObject implements IArpObject {
 
 	}
 
-	private function consumeSeedElement(element:ArpSeed):Void {
+	private function arpConsumeSeedElement(element:ArpSeed):Void {
 		switch (element.typeName()) {
 			case "intField":
 				this.intField = Std.parseInt(element.value());
