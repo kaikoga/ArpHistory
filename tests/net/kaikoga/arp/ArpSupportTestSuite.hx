@@ -1,5 +1,6 @@
 package net.kaikoga.arp;
 
+import net.kaikoga.arp.ds.impl.StdMapSet;
 import net.kaikoga.arp.ds.impl.StdMap;
 import net.kaikoga.arp.ds.impl.ArrayList;
 import net.kaikoga.arp.ds.impl.ArraySet;
@@ -48,7 +49,8 @@ class ArpSupportTestSuite {
 
 	private static function setImpl():Iterable<Array<Dynamic>> {
 		return [
-			[function() return new ArraySet<Int>()]
+			[function() return new ArraySet<Int>()],
+			[function() return new StdMapSet<Int>()]
 		];
 	}
 	private static function listImpl():Iterable<Array<Dynamic>> {

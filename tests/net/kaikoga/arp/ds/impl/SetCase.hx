@@ -84,10 +84,12 @@ class SetCase {
 		assertMatch([1, 2, 4, 5], a);
 	}
 
+	@Ignore
 	public function testEmptyToString():Void {
 		assertEquals("", me.toString());
 	}
 
+	@Ignore
 	public function testToString():Void {
 		me.add(1);
 		me.add(2);
