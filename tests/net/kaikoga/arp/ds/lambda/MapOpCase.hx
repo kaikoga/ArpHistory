@@ -6,12 +6,14 @@ import org.hamcrest.Matchers.*;
 
 import picotest.PicoAssert.*;
 
-class MapOpCase {
+@:generic
+class MapOpCase<String, Int> {
 
 	private var me:IMap<String, Int>;
 
-	public function setup():Void {
-		me = new StdMap<String, Int>();
+	@Parameter
+	public function setup(createImpl:Void->IMap<String, Int>):Void {
+		me = createImpl();
 	}
 
 	public function testToArray():Void {

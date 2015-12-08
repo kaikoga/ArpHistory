@@ -4,14 +4,15 @@ import org.hamcrest.Matchers.*;
 
 import picotest.PicoAssert.*;
 
-class ArrayListCase {
+class ListCase {
 
-	private var me:ArrayList<Int>;
+	private var me:IList<Int>;
 
 	private function values():Array<Int> return [for (v in me) v];
 
-	public function setup():Void {
-		me = new ArrayList<Int>();
+	@Parameter
+	public function setup(createImpl:Void->IList<Int>):Void {
+		me = createImpl();
 	}
 
 	public function testEmpty():Void {

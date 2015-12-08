@@ -4,14 +4,15 @@ import org.hamcrest.Matchers.*;
 
 import picotest.PicoAssert.*;
 
-class StdMapCase {
+class MapCase {
 
-	private var me:StdMap<String, Int>;
+	private var me:IMap<String, Int>;
 
 	private function values():Array<Int> return [for (v in me) v];
 
-	public function setup():Void {
-		me = new StdMap<String, Int>();
+	@Parameter
+	public function setup(createImpl:Void->IMap<String, Int>):Void {
+		me = createImpl();
 	}
 
 	public function testEmpty():Void {

@@ -6,12 +6,13 @@ import org.hamcrest.Matchers.*;
 
 import picotest.PicoAssert.*;
 
-class ListOpCase {
+class ListOpCase<Int> {
 
 	private var me:IList<Int>;
 
-	public function setup():Void {
-		me = new ArrayList<Int>();
+	@Parameter
+	public function setup(createImpl:Void->IList<Int>):Void {
+		me = createImpl();
 	}
 
 	public function testToArray():Void {

@@ -4,13 +4,14 @@ import org.hamcrest.Matchers.*;
 
 import picotest.PicoAssert.*;
 
-class ArraySetCase {
+class SetCase {
 
-	private var me:ArraySet<Int>;
+	private var me:ISet<Int>;
 
-	public function setup():Void {
-		me = new ArraySet<Int>();
- 	}
+	@Parameter
+	public function setup(createImpl:Void->ISet<Int>):Void {
+		me = createImpl();
+	}
 
 	public function testEmpty():Void {
 		assertTrue(me.isEmpty());

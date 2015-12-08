@@ -5,12 +5,13 @@ import org.hamcrest.Matchers.*;
 
 import picotest.PicoAssert.*;
 
-class OmapOpCase {
+class OmapOpCase<String, Int> {
 
 	private var me:IOmap<String, Int>;
 
-	public function setup():Void {
-		me = new StdOmap<String, Int>();
+	@Parameter
+	public function setup(createImpl:Void->IOmap<String, Int>):Void {
+		me = createImpl();
 	}
 
 	public function testToArray():Void {
