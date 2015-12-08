@@ -1,5 +1,6 @@
 package net.kaikoga.arp;
 
+import net.kaikoga.arp.tests.ArpDomainTestUtilCase;
 import net.kaikoga.arp.macro.MacroDerivedArpObjectCase;
 import net.kaikoga.arp.domain.MockDerivedArpObjectCase;
 import net.kaikoga.arp.macro.HeatUpMacroArpObjectCase;
@@ -24,6 +25,8 @@ import picotest.PicoTestRunner;
 
 class ArpDomainTestSuite {
 	public static function addTo(r:PicoTestRunner) {
+		r.load(ArpDomainTestUtilCase);
+
 		r.load(ArpSeedCase);
 		r.load(ArpDirectoryCase);
 		r.load(ArpDirectoryQueryCase);
