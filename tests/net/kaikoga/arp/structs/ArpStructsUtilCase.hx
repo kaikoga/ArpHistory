@@ -4,8 +4,8 @@ import picotest.PicoAssert.*;
 
 class ArpStructsUtilCase {
 
-	inline public static function testIsNumeric():Void {
-		assertTrue(ArpStructsUtil.isNumeric(""));
+	public function testIsNumeric():Void {
+		assertFalse(ArpStructsUtil.isNumeric(""));
 		assertTrue(ArpStructsUtil.isNumeric("0"));
 		assertTrue(ArpStructsUtil.isNumeric("123456789"));
 		assertTrue(ArpStructsUtil.isNumeric("00001234"));
@@ -25,7 +25,7 @@ class ArpStructsUtilCase {
 		assertFalse(ArpStructsUtil.isNumeric(null));
 	}
 
-	public static function testParseHex():Void {
+	public function testParseHex():Void {
 		assertEquals(0x0, ArpStructsUtil.parseHex(""));
 		assertEquals(0x0, ArpStructsUtil.parseHex("0"));
 		assertEquals(0x1, ArpStructsUtil.parseHex("1"));
@@ -38,7 +38,7 @@ class ArpStructsUtilCase {
 		assertEquals(0x7af7af, ArpStructsUtil.parseHex("7aF7Af"));
 	}
 
-	inline public static function testParseFloatDefault():Void {
+	public function testParseFloatDefault():Void {
 		assertEquals(0.0, ArpStructsUtil.parseFloatDefault("0.0", 0.0));
 		assertEquals(1.0, ArpStructsUtil.parseFloatDefault("1.0", 2.0));
 		assertEquals(2.0, ArpStructsUtil.parseFloatDefault("nan", 2.0));
