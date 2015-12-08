@@ -1,17 +1,15 @@
-package net.kaikoga.arp.ds.impl;
+package net.kaikoga.arp.ds;
 
 import org.hamcrest.Matchers.*;
 
 import picotest.PicoAssert.*;
 
-class ListCase {
+class SetCase {
 
-	private var me:IList<Int>;
-
-	private function values():Array<Int> return [for (v in me) v];
+	private var me:ISet<Int>;
 
 	@Parameter
-	public function setup(createImpl:Void->IList<Int>):Void {
+	public function setup(createImpl:Void->ISet<Int>):Void {
 		me = createImpl();
 	}
 
@@ -30,11 +28,11 @@ class ListCase {
 	}
 
 	public function testAddUniqueValue():Void {
-		me.push(1);
+		me.add(1);
 		assertFalse(me.isEmpty());
 		assertTrue(me.hasValue(1));
 		assertFalse(me.hasValue(2));
-		me.push(2);
+		me.add(2);
 		assertFalse(me.isEmpty());
 		assertTrue(me.hasValue(1));
 		assertTrue(me.hasValue(2));
@@ -48,14 +46,14 @@ class ListCase {
 		assertFalse(me.hasValue(2));
 	}
 
-	public function testAddDuplicateValue():Void {
-		me.push(1);
-		me.push(1);
+	public function testAddNoDuplicateValue():Void {
+		me.add(1);
+		me.add(1);
 		assertFalse(me.isEmpty());
 		assertTrue(me.hasValue(1));
 		me.remove(1);
-		assertFalse(me.isEmpty());
-		assertTrue(me.hasValue(1));
+		assertTrue(me.isEmpty());
+		assertFalse(me.hasValue(1));
 	}
 
 	public function testEmptyIterator():Void {
@@ -64,38 +62,26 @@ class ListCase {
 		assertFalse(it.hasNext());
 	}
 
-	public function testOrderedIterator():Void {
-		me.push(1);
-		me.push(2);
-		me.push(3);
-		me.push(4);
-		me.shift();
-		me.unshift(5);
+	public function testUnorderedIterator():Void {
+		me.add(1);
+		me.add(2);
+		me.add(3);
+		me.add(4);
+		me.add(5);
 		me.remove(3);
 		var it:Iterator<Int> = me.iterator();
 		var a:Array<Int> = [];
 		assertNotEquals(null, it);
 		assertTrue(it.hasNext());
-		assertEquals(5, it.next());
+		a.push(it.next());
 		assertTrue(it.hasNext());
-		assertEquals(2, it.next());
+		a.push(it.next());
 		assertTrue(it.hasNext());
-		assertEquals(4, it.next());
+		a.push(it.next());
+		assertTrue(it.hasNext());
+		a.push(it.next());
 		assertFalse(it.hasNext());
+		assertMatch([1, 2, 4, 5], a);
 	}
 
-	public function testEmptyToString():Void {
-		assertEquals("", me.toString());
-	}
-
-	public function testToString():Void {
-		me.push(1);
-		me.push(2);
-		me.push(3);
-		me.push(4);
-		me.shift();
-		me.unshift(5);
-		me.remove(3);
-		assertEquals("5,2,4", me.toString());
-	}
 }

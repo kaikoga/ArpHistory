@@ -1,4 +1,4 @@
-package net.kaikoga.arp.ds.impl;
+package net.kaikoga.arp.ds;
 
 import org.hamcrest.Matchers.*;
 
@@ -7,8 +7,6 @@ import picotest.PicoAssert.*;
 class OmapCase {
 
 	private var me:IOmap<String, Int>;
-
-	private function values():Array<Int> return [for (v in me) v];
 
 	@Parameter
 	public function setup(createImpl:Void->IOmap<String, Int>):Void {
@@ -224,19 +222,4 @@ class OmapCase {
 		assertMatch(null, me.resolveName(3));
 	}
 
-	public function testEmptyToString():Void {
-		assertEquals("{}", me.toString());
-	}
-
-	public function testToString():Void {
-		me.addPair("1", 1);
-		me.addPair("2", 2);
-		me.addPair("3", 3);
-		me.addPair("4", 4);
-		me.insertPairAt(0, "5", 5);
-		me.removeKey("2");
-		me.remove(4);
-		me.removeAt(1);
-		assertEquals("{3 => 3, 5 => 5}", me.toString());
-	}
 }

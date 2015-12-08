@@ -1,15 +1,15 @@
-package net.kaikoga.arp.ds.impl;
+package net.kaikoga.arp.ds;
 
 import org.hamcrest.Matchers.*;
 
 import picotest.PicoAssert.*;
 
-class SetCase {
+class ListCase {
 
-	private var me:ISet<Int>;
+	private var me:IList<Int>;
 
 	@Parameter
-	public function setup(createImpl:Void->ISet<Int>):Void {
+	public function setup(createImpl:Void->IList<Int>):Void {
 		me = createImpl();
 	}
 
@@ -28,11 +28,11 @@ class SetCase {
 	}
 
 	public function testAddUniqueValue():Void {
-		me.add(1);
+		me.push(1);
 		assertFalse(me.isEmpty());
 		assertTrue(me.hasValue(1));
 		assertFalse(me.hasValue(2));
-		me.add(2);
+		me.push(2);
 		assertFalse(me.isEmpty());
 		assertTrue(me.hasValue(1));
 		assertTrue(me.hasValue(2));
@@ -46,14 +46,14 @@ class SetCase {
 		assertFalse(me.hasValue(2));
 	}
 
-	public function testAddNoDuplicateValue():Void {
-		me.add(1);
-		me.add(1);
+	public function testAddDuplicateValue():Void {
+		me.push(1);
+		me.push(1);
 		assertFalse(me.isEmpty());
 		assertTrue(me.hasValue(1));
 		me.remove(1);
-		assertTrue(me.isEmpty());
-		assertFalse(me.hasValue(1));
+		assertFalse(me.isEmpty());
+		assertTrue(me.hasValue(1));
 	}
 
 	public function testEmptyIterator():Void {
@@ -62,42 +62,24 @@ class SetCase {
 		assertFalse(it.hasNext());
 	}
 
-	public function testUnorderedIterator():Void {
-		me.add(1);
-		me.add(2);
-		me.add(3);
-		me.add(4);
-		me.add(5);
+	public function testOrderedIterator():Void {
+		me.push(1);
+		me.push(2);
+		me.push(3);
+		me.push(4);
+		me.shift();
+		me.unshift(5);
 		me.remove(3);
 		var it:Iterator<Int> = me.iterator();
 		var a:Array<Int> = [];
 		assertNotEquals(null, it);
 		assertTrue(it.hasNext());
-		a.push(it.next());
+		assertEquals(5, it.next());
 		assertTrue(it.hasNext());
-		a.push(it.next());
+		assertEquals(2, it.next());
 		assertTrue(it.hasNext());
-		a.push(it.next());
-		assertTrue(it.hasNext());
-		a.push(it.next());
+		assertEquals(4, it.next());
 		assertFalse(it.hasNext());
-		assertMatch([1, 2, 4, 5], a);
-	}
-
-	@Ignore
-	public function testEmptyToString():Void {
-		assertEquals("", me.toString());
-	}
-
-	@Ignore
-	public function testToString():Void {
-		me.add(1);
-		me.add(2);
-		me.add(3);
-		me.add(4);
-		me.add(5);
-		me.remove(3);
-		assertEquals("1,2,4,5", me.toString());
 	}
 
 }
