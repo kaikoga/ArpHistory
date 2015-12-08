@@ -3,7 +3,7 @@ package net.kaikoga.arp.ds.lambda;
 import net.kaikoga.arp.ds.access.IMapRemove;
 import net.kaikoga.arp.ds.access.IListRemove;
 import net.kaikoga.arp.ds.access.ICollectionRemove;
-import net.kaikoga.arp.ds.access.IMapListWrite;
+import net.kaikoga.arp.ds.access.IOmapWrite;
 import net.kaikoga.arp.ds.access.IMapWrite;
 import net.kaikoga.arp.ds.access.IListWrite;
 import net.kaikoga.arp.ds.access.ICollectionRead;
@@ -106,11 +106,11 @@ class CollectionTools {
 
 	// IMapListWrite
 
-	inline public static function addPairImpl<K, V>(base:IMapListWrite<K, V>, k:K, v:V):Void {
+	inline public static function addPairImpl<K, V>(base:IOmapWrite<K, V>, k:K, v:V):Void {
 		throw "addPair() is mandatory";
 	}
 
-	inline public static function insertPairAtImpl<K, V>(base:IMapListWrite<K, V>, index:Int, k:K, v:V):Void {
+	inline public static function insertPairAtImpl<K, V>(base:IOmapWrite<K, V>, index:Int, k:K, v:V):Void {
 		throw "insertPairAt() is mandatory";
 	}
 

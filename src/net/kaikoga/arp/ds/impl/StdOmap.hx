@@ -1,9 +1,9 @@
 package net.kaikoga.arp.ds.impl;
 
-import net.kaikoga.arp.ds.IMapList;
+import net.kaikoga.arp.ds.IOmap;
 
 @:generic @:remove
-class StdMapList<K, V> implements IMapList<K, V> {
+class StdOmap<K, V> implements IOmap<K, V> {
 
 	public var isUniqueKey(get, never):Bool;
 	public function get_isUniqueKey():Bool return true;
@@ -21,7 +21,7 @@ class StdMapList<K, V> implements IMapList<K, V> {
 	//read
 	public function isEmpty():Bool return !this.value.iterator().hasNext();
 	public function hasValue(v:V):Bool { for (x in this.value) if (x == v) return true; return false; }
-	public function iterator():Iterator<V> return new StdMapListValueIterator(this._keys, this.value);
+	public function iterator():Iterator<V> return new StdOmapValueIterator(this._keys, this.value);
 	public function toString():String return this.value.toString();
 	public function get(k:K):Null<V> return this.value.get(k);
 	public function hasKey(k:K):Bool return this.value.exists(k);
@@ -84,7 +84,7 @@ class StdMapList<K, V> implements IMapList<K, V> {
 }
 
 @:generic @:remove
-private class StdMapListValueIterator<K, V> {
+private class StdOmapValueIterator<K, V> {
 
 	private var iterator:Iterator<K>;
 	private var value:Map<K, V>;

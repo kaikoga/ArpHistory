@@ -2,12 +2,12 @@ package net.kaikoga.arp;
 
 import net.kaikoga.arp.events.ArpSignalCase;
 import net.kaikoga.arp.task.TaskRunnerCase;
-import net.kaikoga.arp.ds.lambda.MapListOpCase;
+import net.kaikoga.arp.ds.lambda.OmapOpCase;
 import net.kaikoga.arp.ds.lambda.MapOpCase;
 import net.kaikoga.arp.ds.lambda.SetOpCase;
 import net.kaikoga.arp.ds.lambda.ListOpCase;
 import net.kaikoga.arp.ds.impl.base.BaseCollectionCase;
-import net.kaikoga.arp.ds.impl.StdMapListCase;
+import net.kaikoga.arp.ds.impl.StdOmapCase;
 import net.kaikoga.arp.ds.impl.StdMapCase;
 import net.kaikoga.arp.ds.impl.ArrayListCase;
 import net.kaikoga.arp.ds.impl.VoidCollectionCase;
@@ -25,12 +25,12 @@ class ArpSupportTestSuite {
 		r.load(ArraySetCase);
 		r.load(ArrayListCase);
 		r.load(StdMapCase);
-		r.load(StdMapListCase);
+		r.load(StdOmapCase);
 
 		r.load(SetOpCase);
 		r.load(ListOpCase);
 		r.load(MapOpCase);
-		r.load(MapListOpCase);
+		r.load(OmapOpCase);
 
 		r.load(ArpSignalCase);
 

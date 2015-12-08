@@ -1,6 +1,6 @@
 ﻿package net.kaikoga.arp.ds;
 
-import net.kaikoga.arp.ds.impl.base.BaseMapList;
+import net.kaikoga.arp.ds.impl.base.BaseOmap;
 import Map in StdMap;
 import Map.IMap;
 import net.kaikoga.arp.iter.ConcurrentIntIterateContext;
@@ -10,7 +10,7 @@ import net.kaikoga.arp.iter.ConcurrentIntIterateContext;
  * @author kaikoga
  */
 @:generic @:remove
-class MapList<K, V> extends BaseMapList<K, V> implements IMapList<K, V> {
+class Omap<K, V> extends BaseOmap<K, V> implements IOmap<K, V> {
 
 	private var _map:StdMap<K, V>;
 
@@ -106,10 +106,10 @@ class MapList<K, V> extends BaseMapList<K, V> implements IMapList<K, V> {
 
 class IndexedMapIterator<K, V> {
 
-	private var map:IMapList<K, V>;
+	private var map:IOmap<K, V>;
 	private var iterator:ConcurrentIntIterator;
 
-	public function new(map:IMapList<K, V>, context:ConcurrentIntIterateContext) {
+	public function new(map:IOmap<K, V>, context:ConcurrentIntIterateContext) {
 		this.map = map;
 		this.iterator = context.newIterator();
 	}

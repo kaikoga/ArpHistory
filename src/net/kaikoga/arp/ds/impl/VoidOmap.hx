@@ -1,9 +1,9 @@
 package net.kaikoga.arp.ds.impl;
 
 import net.kaikoga.arp.iter.EmptyIterator;
-import net.kaikoga.arp.ds.IMapList;
+import net.kaikoga.arp.ds.IOmap;
 
-class VoidMapList<K, V> implements IMapList<K, V> {
+class VoidOmap<K, V> implements IOmap<K, V> {
 
 	public var isUniqueKey(get, never):Bool;
 	public function get_isUniqueKey():Bool return true;

@@ -1,9 +1,9 @@
 package net.kaikoga.arp.ds.impl.base;
 
 import net.kaikoga.arp.ds.lambda.CollectionTools;
-import net.kaikoga.arp.ds.IMapList;
+import net.kaikoga.arp.ds.IOmap;
 
-class BaseMapList<K, V> implements IMapList<K, V> {
+class BaseOmap<K, V> implements IOmap<K, V> {
 
 	public var isUniqueKey(get, never):Bool;
 	public function get_isUniqueKey():Bool return true;
