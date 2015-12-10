@@ -1,5 +1,6 @@
 package net.kaikoga.arp;
 
+import net.kaikoga.arp.iter.ERegIteratorCase;
 import net.kaikoga.arp.ds.impl.StdMapSet;
 import net.kaikoga.arp.ds.impl.StdMap;
 import net.kaikoga.arp.ds.impl.ArrayList;
@@ -31,6 +32,8 @@ import picotest.PicoTestRunner;
 class ArpSupportTestSuite {
 
 	public static function addTo(r:PicoTestRunner) {
+		r.load(ERegIteratorCase);
+		
 		r.load(SetCase, setImpl());
 		r.load(ListCase, listImpl());
 		r.load(MapCase, mapImpl());
