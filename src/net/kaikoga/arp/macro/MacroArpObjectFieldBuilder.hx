@@ -108,7 +108,6 @@ class MacroArpObjectFieldBuilder {
 						if (metaArpBarrier) Context.error('@:arpBarrier not available for ${nativeType.toString()}', nativeField.pos);
 						return new MacroArpObjectStdArrayField(nativeField, nativeType, p);
 					case _:
-						throw "field type too complex: " + nativeType.toString();
 				}
 			case MacroArpObjectNativeFieldType.StdList(t):
 				switch (t) {
@@ -134,7 +133,9 @@ class MacroArpObjectFieldBuilder {
 				}
 			case MacroArpObjectNativeFieldType.Invalid:
 		}
-		throw "could not create ArpObjectField: " + nativeType.toString();
+		if (metaArpField) throw "field type too complex: " + nativeType.toString();
+		if (metaArpSlot != null) throw "field type too complex: " + nativeType.toString();
+		return null;
 	}
 }
 
