@@ -1,18 +1,18 @@
 package net.kaikoga.arp.ds.lambda;
 
-import net.kaikoga.arp.ds.impl.ArrayList;
+import net.kaikoga.arp.testParams.DsImplProviders.IDsImplProvider;
 
 import org.hamcrest.Matchers.*;
 
 import picotest.PicoAssert.*;
 
-class ListOpCase<Int> {
+class ListOpCase {
 
 	private var me:IList<Int>;
 
 	@Parameter
-	public function setup(createImpl:Void->IList<Int>):Void {
-		me = createImpl();
+	public function setup(provider:IDsImplProvider<IList<Int>>):Void {
+		me = provider.create();
 	}
 
 	public function testToArray():Void {

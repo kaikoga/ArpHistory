@@ -1,6 +1,6 @@
 package net.kaikoga.arp.ds.lambda;
 
-import net.kaikoga.arp.ds.impl.ArraySet;
+import net.kaikoga.arp.testParams.DsImplProviders.IDsImplProvider;
 
 import org.hamcrest.Matchers.*;
 
@@ -11,8 +11,8 @@ class SetOpCase {
 	private var me:ISet<Int>;
 
 	@Parameter
-	public function setup(createImpl:Void->ISet<Int>):Void {
-		me = createImpl();
+	public function setup(provider:IDsImplProvider<ISet<Int>>):Void {
+		me = provider.create();
 	}
 
 	public function testToArray():Void {

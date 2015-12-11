@@ -1,5 +1,7 @@
 package net.kaikoga.arp.ds;
 
+import net.kaikoga.arp.testParams.DsImplProviders.IDsImplProvider;
+
 import org.hamcrest.Matchers.*;
 
 import picotest.PicoAssert.*;
@@ -9,8 +11,8 @@ class SetCase {
 	private var me:ISet<Int>;
 
 	@Parameter
-	public function setup(createImpl:Void->ISet<Int>):Void {
-		me = createImpl();
+	public function setup(provider:IDsImplProvider<ISet<Int>>):Void {
+		me = provider.create();
 	}
 
 	public function testEmpty():Void {

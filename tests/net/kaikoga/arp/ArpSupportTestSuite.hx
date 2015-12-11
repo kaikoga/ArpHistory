@@ -1,11 +1,6 @@
 package net.kaikoga.arp;
 
 import net.kaikoga.arp.iter.ERegIteratorCase;
-import net.kaikoga.arp.ds.impl.StdMapSet;
-import net.kaikoga.arp.ds.impl.StdMap;
-import net.kaikoga.arp.ds.impl.ArrayList;
-import net.kaikoga.arp.ds.impl.ArraySet;
-import net.kaikoga.arp.ds.impl.StdOmap;
 import net.kaikoga.arp.events.ArpSignalCase;
 import net.kaikoga.arp.task.TaskRunnerCase;
 import net.kaikoga.arp.ds.lambda.OmapOpCase;
@@ -23,21 +18,22 @@ import net.kaikoga.arp.ds.OmapCase;
 import net.kaikoga.arp.ds.MapCase;
 import net.kaikoga.arp.ds.ListCase;
 import net.kaikoga.arp.ds.SetCase;
-import net.kaikoga.arp.persistable.TaggedPersistIoCase;
-import net.kaikoga.arp.persistable.PackedPersistIoCase;
-import net.kaikoga.arp.persistable.DynamicPersistIoCase;
+import net.kaikoga.arp.persistable.PersistIoCase;
 
 import picotest.PicoTestRunner;
+
+import net.kaikoga.arp.testParams.DsImplProviders.*;
+import net.kaikoga.arp.testParams.PersistIoProviders.*;
 
 class ArpSupportTestSuite {
 
 	public static function addTo(r:PicoTestRunner) {
 		r.load(ERegIteratorCase);
 		
-		r.load(SetCase, setImpl());
-		r.load(ListCase, listImpl());
-		r.load(MapCase, mapImpl());
-		r.load(OmapCase, omapImpl());
+		r.load(SetCase, setProvider());
+		r.load(ListCase, listProvider());
+		r.load(MapCase, mapProvider());
+		r.load(OmapCase, omapProvider());
 
 		r.load(VoidCollectionCase);
 		r.load(BaseCollectionCase);
@@ -47,39 +43,17 @@ class ArpSupportTestSuite {
 		r.load(StdMapCase);
 		r.load(StdOmapCase);
 
-		r.load(SetOpCase, setImpl());
-		r.load(ListOpCase, listImpl());
-		r.load(MapOpCase, mapImpl());
-		r.load(OmapOpCase, omapImpl());
+		r.load(SetOpCase, setProvider());
+		r.load(ListOpCase, listProvider());
+		r.load(MapOpCase, mapProvider());
+		r.load(OmapOpCase, omapProvider());
 
 		r.load(ArpSignalCase);
 
 		r.load(TaskRunnerCase);
 
-		r.load(DynamicPersistIoCase);
-		r.load(PackedPersistIoCase);
-		r.load(TaggedPersistIoCase);
+		r.load(PersistIoCase, persistIoProvider());
 	}
 
-	private static function setImpl():Iterable<Array<Dynamic>> {
-		return [
-			[function() return new ArraySet<Int>()],
-			[function() return new StdMapSet<Int>()]
-		];
-	}
-	private static function listImpl():Iterable<Array<Dynamic>> {
-		return [
-			[function() return new ArrayList<Int>()]
-		];
-	}
-	private static function mapImpl():Iterable<Array<Dynamic>> {
-		return [
-			[function() return new StdMap<String, Int>()]
-		];
-	}
-	private static function omapImpl():Iterable<Array<Dynamic>> {
-		return [
-			[function() return new StdOmap<String, Int>()]
-		];
-	}
+
 }
