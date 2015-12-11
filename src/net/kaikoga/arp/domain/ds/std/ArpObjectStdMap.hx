@@ -53,19 +53,22 @@ class ArpObjectStdMap<V:IArpObject> implements IMap<String, V> implements IPersi
 		this.slots = new Map();
 		var key:String;
 		// TODO better format
-		while ((key = input.readName()) != "") {
-			this.slots.set(key, this.domain.getOrCreateSlot(new ArpSid(input.readName())).addReference());
+		for (key in input.readNameList("")) {
+			this.slots.set(key, this.domain.getOrCreateSlot(new ArpSid(input.readUtf(key))).addReference());
 		}
 		for (item in oldSlots) item.delReference();
 	}
 
 	public function writeSelf(output:IPersistOutput):Void {
 		// TODO better format
+		var nl:Array<String> = [];
 		for (key in this.slots.keys()) {
-			output.writeName(key);
-			output.writeName(this.slots.get(key).sid.toString());
+			nl.push(key);
 		}
-		output.writeName("");
+		output.writeNameList("", nl);
+		for (key in nl) {
+			output.writeUtf(key, this.slots.get(key).sid.toString());
+		}
 	}
 }
 
