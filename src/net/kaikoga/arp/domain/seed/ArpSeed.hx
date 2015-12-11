@@ -33,16 +33,23 @@ class ArpSeed {
 	inline public function hasChildren():Bool return this._children != null;
 	inline public function iterator():Iterator<ArpSeed> return this.hasChildren() ? this._children.iterator() : [].iterator();
 
-
 	inline public static function fromXmlString(xmlString:String):ArpSeed {
 		return fromXml(Xml.parse(xmlString));
+	}
+
+	inline public static function simpleRefValue(typeName:String, value:String):ArpSeed {
+		return new ArpSeed(typeName, null, null, value, null, value, null);
+	}
+
+	inline public static function simpleValue(typeName:String, value:String):ArpSeed {
+		return new ArpSeed(typeName, null, null, null, null, value, null);
 	}
 
 	public static function fromXml(xml:Xml):ArpSeed {
 		switch (xml.nodeType) {
 			case XmlType.Document: xml = xml.firstElement();
 			case XmlType.Element:
-			case _: return new ArpSeed(xml.nodeName, null, null, xml.nodeValue, null, xml.nodeValue, null);
+			case _: return simpleRefValue(xml.nodeName, xml.nodeValue);
 		}
 
 		var typeName:String = xml.nodeName;
@@ -70,7 +77,7 @@ class ArpSeed {
 					value = attr;
 				case _:
 					// NOTE leef seeds by xml attr are also treated as ref; text nodes are not
-					if (children == null) children = []; children.push(new ArpSeed(attrName, null, null, attr, null, attr, null));
+					if (children == null) children = []; children.push(simpleRefValue(attrName, attr));
 			}
 		}
 		for (node in xml) {
@@ -80,6 +87,7 @@ class ArpSeed {
 				case _: // ignore
 			}
 		}
+		if (value != null && children != null) children.push(simpleValue("value", value));
 		return new ArpSeed(typeName, template, name, ref, key, value, children);
 	}
 }

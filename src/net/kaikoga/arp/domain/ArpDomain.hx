@@ -71,7 +71,8 @@ class ArpDomain {
 		var type:ArpType = (lexicalType != null) ? lexicalType : new ArpType(seed.typeName());
 		var slot:ArpSlot<T>;
 		if (seed.typeName() == "data") {
-			for (child in seed) loadSeed(child, path, null);
+			// NOTE seed iterates through value, which we must ignore for data groups
+			for (child in seed) if (child.typeName() != "value") loadSeed(child, path, null);
 			slot = null;
 		} else if (seed.ref() != null) {
 			slot = path.query(seed.ref(), type).slot();
