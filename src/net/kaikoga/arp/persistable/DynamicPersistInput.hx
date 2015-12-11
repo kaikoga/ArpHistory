@@ -19,6 +19,7 @@ class DynamicPersistInput implements IPersistInput {
 	}
 
 	public function readName():String return (this._keys != null) ? this._keys[keyIndex++] : null;
+	public function readNameList(name:String):Array<String> return Reflect.field(this._data, name);
 	public function readPersistable(name:String, persistable:IPersistable):Void {
 		persistable.readSelf(new DynamicPersistInput(Reflect.field(this._data, name), this._persistLevel));
 	}

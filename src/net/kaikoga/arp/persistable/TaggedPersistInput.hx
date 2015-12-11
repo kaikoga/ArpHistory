@@ -23,6 +23,13 @@ class TaggedPersistInput implements IPersistInput {
 		return this._input.readUtfBlob();
 	}
 
+	public function readNameList(name:String):Array<String> {
+		this._input.readUtfBlob();
+		var nameList:Array<String> = [];
+		for (i in 0...this._input.readUInt32()) nameList.push(this._input.readUtfBlob());
+		return nameList;
+	}
+
 	public function readPersistable(name:String, persistable:IPersistable):Void {
 		var bytes:Bytes = this.readBlob(name);
 		persistable.readSelf(new TaggedPersistInput(new InputWrapper(new BytesInput(bytes)), this._persistLevel));

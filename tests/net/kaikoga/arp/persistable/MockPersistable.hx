@@ -10,6 +10,7 @@ class MockPersistable implements IPersistable {
 
 	private var nameField1:String;
 	private var nameField2:String;
+	private var nameListField:Array<String>;
 	private var boolField:Bool;
 	private var intField:Int;
 	private var doubleField:Float;
@@ -20,6 +21,7 @@ class MockPersistable implements IPersistable {
 	public function new(hasChild:Bool = false) {
 		this.nameField1 = "name1";
 		this.nameField2 = "name2";
+		this.nameListField = ["a", "b", "c"];
 		this.boolField = hasChild;
 		this.intField = hasChild ? 2 : 1;
 		this.doubleField = 0.5;
@@ -33,6 +35,7 @@ class MockPersistable implements IPersistable {
 	public function readSelf(input:IPersistInput):Void {
 		this.nameField1 = input.readName();
 		this.nameField2 = input.readName();
+		this.nameListField = input.readNameList("nameListValue");
 		this.boolField = input.readBool("booleanValue");
 		this.intField = input.readInt32("intValue");
 		this.doubleField = input.readDouble("doubleValue");
@@ -46,6 +49,7 @@ class MockPersistable implements IPersistable {
 	public function writeSelf(output:IPersistOutput):Void {
 		output.writeName(this.nameField1);
 		output.writeName(this.nameField2);
+		output.writeNameList("nameListValue", this.nameListField);
 		output.writeBool("booleanValue", this.boolField);
 		output.writeInt32("intValue", this.intField);
 		output.writeDouble("doubleValue", this.doubleField);
@@ -61,6 +65,7 @@ class MockPersistable implements IPersistable {
 			"[TestPersistable",
 			this.nameField1,
 			this.nameField2,
+			this.nameListField,
 			this.boolField,
 			this.intField,
 			this.doubleField,

@@ -19,6 +19,9 @@ class DynamicPersistOutput implements IPersistOutput {
 		this._persistLevel = persistLevel;
 	}
 
+	private var _uniqId:Int = 0;
+	public function genName():String return '$${_uniqId++}';
+
 	public function writeName(value:String):Void {
 		if (this._keys == null) {
 			this._keys = [];
@@ -26,6 +29,7 @@ class DynamicPersistOutput implements IPersistOutput {
 		}
 		this._keys.push(value);
 	}
+	public function writeNameList(name:String, value:Array<String>):Void Reflect.setField(this._data, name, value);
 	public function writePersistable(name:String, persistable:IPersistable):Void {
 		var output:DynamicPersistOutput = new DynamicPersistOutput(null, this._persistLevel);
 		persistable.writeSelf(output);
