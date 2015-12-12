@@ -8,8 +8,8 @@ class MacroArpObjectStdArrayField extends MacroArpObjectFieldBase implements IMa
 
 	public var type(default, null):IMacroArpObjectValueType;
 
-	public function new(nativeField:Field, nativeType:ComplexType, type:IMacroArpObjectValueType) {
-		super(nativeField, nativeType);
+	public function new(definition:MacroArpObjectFieldDefinition, type:IMacroArpObjectValueType) {
+		super(definition);
 		this.type = type;
 	}
 

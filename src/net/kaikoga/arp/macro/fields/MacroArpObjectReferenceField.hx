@@ -6,9 +6,6 @@ import haxe.macro.Expr;
 
 class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IMacroArpObjectField {
 
-	private var arpType:ExprOf<String>;
-	private var arpBarrier:Bool;
-
 	private var nativeSlotType(get, never):ComplexType;
 	inline private function get_nativeSlotType():ComplexType {
 		return ComplexType.TPath({
@@ -18,10 +15,8 @@ class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IM
 	private var iFieldSlot(get, never):String;
 	private function get_iFieldSlot():String return this.iFieldName + "Slot";
 
-	public function new(nativeField:Field, nativeType:ComplexType, arpType:ExprOf<String>, arpBarrier:Bool) {
-		super(nativeField, nativeType);
-		this.arpType = arpType;
-		this.arpBarrier = arpBarrier;
+	public function new(definition:MacroArpObjectFieldDefinition) {
+		super(definition);
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
@@ -53,7 +48,9 @@ class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IM
 	}
 
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {
-		if (arpBarrier) heatLaterBlock.push(macro @:pos(this.nativePos) { this._arpDomain.heatLater(this.$iFieldSlot); });
+		if (this.metaArpBarrier) {
+			heatLaterBlock.push(macro @:pos(this.nativePos) { this._arpDomain.heatLater(this.$iFieldSlot); });
+		}
 	}
 
 	public function buildHeatUpBlock(heatUpBlock:Array<Expr>):Void {
@@ -79,7 +76,7 @@ class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IM
 		});
 
 		var iFieldSlot:String = this.iFieldSlot;
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldSlot = this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${this.arpType})); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldSlot = this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${this.metaArpSlot})); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {

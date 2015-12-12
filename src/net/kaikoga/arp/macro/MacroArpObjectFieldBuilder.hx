@@ -13,10 +13,7 @@ import net.kaikoga.arp.macro.fields.std.MacroArpObjectStdMapField;
 import net.kaikoga.arp.macro.fields.std.MacroArpObjectStdArrayField;
 import net.kaikoga.arp.macro.fields.MacroArpObjectValueField;
 import net.kaikoga.arp.macro.fields.MacroArpObjectReferenceField;
-import haxe.macro.Context;
 import haxe.macro.Expr;
-
-using haxe.macro.ComplexTypeTools;
 
 class MacroArpObjectFieldBuilder {
 
@@ -71,70 +68,48 @@ class MacroArpObjectFieldBuilder {
 	}
 
 	public static function fromField(nativeField:Field):IMacroArpObjectField {
-		var metaArpSlot:ExprOf<String> = null;
-		var metaArpField:Bool = false;
-		var metaArpBarrier:Bool = false;
-
-		for (meta in nativeField.meta) {
-			switch (meta.name) {
-				case ":arpSlot": metaArpSlot = meta.params[0];
-				case ":arpField": metaArpField = true;
-				case ":arpBarrier": metaArpBarrier = true;
-			}
-		}
-
-		var nativeType:ComplexType = switch (nativeField.kind) {
-			case FieldType.FProp(_, _, n, _): n;
-			case FieldType.FVar(n, _): n;
-			case FieldType.FFun(_): return null;
-		}
-
-		var type:IMacroArpObjectValueType;
-		switch (complexTypeToNativeFieldType(nativeType)) {
+		var definition:MacroArpObjectFieldDefinition = new MacroArpObjectFieldDefinition(nativeField);
+		if (!definition.isValidNativeType()) return null;
+		switch (complexTypeToNativeFieldType(definition.nativeType)) {
 			case MacroArpObjectNativeFieldType.ValueType(p):
-				if (!metaArpField) return null;
-				if (metaArpSlot != null) Context.error('${nativeType.toString()} must be @:arpField', nativeField.pos);
-				if (metaArpBarrier) Context.error('@:arpBarrier not available for ${nativeType.toString()}', nativeField.pos);
-				return new MacroArpObjectValueField(nativeField, nativeType, p);
+				if (definition.expectValueField()) {
+					return new MacroArpObjectValueField(definition, p);
+				}
 			case MacroArpObjectNativeFieldType.MaybeReference:
-				if (metaArpField) Context.error('${nativeType.toString()} must be @:arpSlot', nativeField.pos);
-				if (metaArpSlot == null) return null;
-				return new MacroArpObjectReferenceField(nativeField, nativeType, metaArpSlot, metaArpBarrier);
+				if (definition.expectReferenceField()) {
+					return new MacroArpObjectReferenceField(definition);
+				}
 			case MacroArpObjectNativeFieldType.StdArray(t):
 				switch (t) {
 					case MacroArpObjectNativeFieldType.ValueType(p):
-						if (!metaArpField) return null;
-						if (metaArpSlot != null) Context.error('${nativeType.toString()} must be @:arpField', nativeField.pos);
-						if (metaArpBarrier) Context.error('@:arpBarrier not available for ${nativeType.toString()}', nativeField.pos);
-						return new MacroArpObjectStdArrayField(nativeField, nativeType, p);
+						if (definition.expectValueField()) {
+							return new MacroArpObjectStdArrayField(definition, p);
+						}
 					case _:
 				}
 			case MacroArpObjectNativeFieldType.StdList(t):
 				switch (t) {
 					case MacroArpObjectNativeFieldType.ValueType(p):
-						if (!metaArpField) return null;
-						if (metaArpSlot != null) Context.error('${nativeType.toString()} must be @:arpField', nativeField.pos);
-						if (metaArpBarrier) Context.error('@:arpBarrier not available for ${nativeType.toString()}', nativeField.pos);
-						return new MacroArpObjectStdListField(nativeField, nativeType, p);
+						if (definition.expectValueField()) {
+							return new MacroArpObjectStdListField(definition, p);
+						}
 					case _:
 				}
 			case MacroArpObjectNativeFieldType.StdMap(t):
 				switch (t) {
 					case MacroArpObjectNativeFieldType.ValueType(p):
-						if (!metaArpField) return null;
-						if (metaArpSlot != null) Context.error('${nativeType.toString()} must be @:arpField', nativeField.pos);
-						if (metaArpBarrier) Context.error('@:arpBarrier not available for ${nativeType.toString()}', nativeField.pos);
-						return new MacroArpObjectStdMapField(nativeField, nativeType, p);
+						if (definition.expectValueField()) {
+							return new MacroArpObjectStdMapField(definition, p);
+						}
 					case MacroArpObjectNativeFieldType.MaybeReference:
-						if (metaArpField) Context.error('${nativeType.toString()} must be @:arpSlot', nativeField.pos);
-						if (metaArpSlot == null) return null;
-						return new MacroArpObjectStdReferenceMapField(nativeField, nativeType, metaArpSlot, metaArpBarrier);
+						if (definition.expectReferenceField()) {
+							return new MacroArpObjectStdReferenceMapField(definition);
+						}
 					case _:
 				}
 			case MacroArpObjectNativeFieldType.Invalid:
 		}
-		if (metaArpField) throw "field type too complex: " + nativeType.toString();
-		if (metaArpSlot != null) throw "field type too complex: " + nativeType.toString();
+		definition.expectPlainField();
 		return null;
 	}
 }

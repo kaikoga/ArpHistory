@@ -6,8 +6,8 @@ import haxe.macro.Expr;
 
 class MacroArpObjectStdReferenceMapField extends MacroArpObjectFieldBase implements IMacroArpObjectField {
 
-	private var arpType:ExprOf<String>;
-	private var arpBarrier:Bool;
+	private var _nativeType:ComplexType;
+	override private function get_nativeType():ComplexType return _nativeType;
 
 	private function coerce(nativeType:ComplexType):ComplexType {
 		switch (nativeType) {
@@ -22,10 +22,9 @@ class MacroArpObjectStdReferenceMapField extends MacroArpObjectFieldBase impleme
 		return nativeType;
 	}
 
-	public function new(nativeField:Field, nativeType:ComplexType, arpType:ExprOf<String>, arpBarrier:Bool) {
-		super(nativeField, coerce(nativeType));
-		this.arpType = arpType;
-		this.arpBarrier = arpBarrier;
+	public function new(definition:MacroArpObjectFieldDefinition) {
+		super(definition);
+		_nativeType = coerce(super.nativeType);
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
@@ -39,7 +38,9 @@ class MacroArpObjectStdReferenceMapField extends MacroArpObjectFieldBase impleme
 	}
 
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {
-		if (arpBarrier) heatLaterBlock.push(macro @:pos(this.nativePos) { for (slot in this.$iFieldName.slots) this._arpDomain.heatLater(slot); });
+		if (this.metaArpBarrier) {
+			heatLaterBlock.push(macro @:pos(this.nativePos) { for (slot in this.$iFieldName.slots) this._arpDomain.heatLater(slot); });
+		}
 	}
 
 	public function buildHeatUpBlock(heatUpBlock:Array<Expr>):Void {
@@ -63,7 +64,7 @@ class MacroArpObjectStdReferenceMapField extends MacroArpObjectFieldBase impleme
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.set(element.key(), this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${this.arpType})).value); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.set(element.key(), this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${this.metaArpSlot})).value); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
