@@ -31,12 +31,12 @@ class MacroArpObjectArpStruct implements IMacroArpObjectValueType {
 		return macro @:pos(pos) { this.$iFieldName.initWithSeed(element); };
 	}
 
-	public function readSelf(pos:Position, iFieldName:String):Expr {
-		return macro @:pos(pos) { input.readPersistable($v{iFieldName}, this.$iFieldName); };
+	public function readSelf(pos:Position, iFieldName:String, eColumnName:ExprOf<String>):Expr {
+		return macro @:pos(pos) { input.readPersistable(${eColumnName}, this.$iFieldName); };
 	}
 
-	public function writeSelf(pos:Position, iFieldName:String):Expr {
-		return macro @:pos(pos) { output.writePersistable($v{iFieldName}, this.$iFieldName); };
+	public function writeSelf(pos:Position, iFieldName:String, eColumnName:ExprOf<String>):Expr {
+		return macro @:pos(pos) { output.writePersistable(${eColumnName}, this.$iFieldName); };
 	}
 }
 

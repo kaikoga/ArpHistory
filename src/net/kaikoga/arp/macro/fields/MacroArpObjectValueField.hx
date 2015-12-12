@@ -39,10 +39,11 @@ class MacroArpObjectValueField extends MacroArpObjectFieldBase implements IMacro
 
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
 		var iFieldName:String = this.iFieldName;
+		var eColumnName:ExprOf<String> = this.eColumnName;
 
 		var caseBlock:Array<Expr> = [];
 		cases.push({
-			values: [macro @:pos(this.nativePos) $v{iFieldName}],
+			values: [macro @:pos(this.nativePos) ${eColumnName}],
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
@@ -50,11 +51,11 @@ class MacroArpObjectValueField extends MacroArpObjectFieldBase implements IMacro
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
-		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.readSelf(this.nativePos, this.iFieldName)}; });
+		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.readSelf(this.nativePos, this.iFieldName, this.eColumnName)}; });
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
-		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.writeSelf(this.nativePos, this.iFieldName)}; });
+		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.writeSelf(this.nativePos, this.iFieldName, this.eColumnName)}; });
 	}
 }
 

@@ -68,10 +68,11 @@ class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IM
 
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
 		var iFieldName:String = this.iFieldName;
+		var eColumnName:ExprOf<String> = this.eColumnName;
 
 		var caseBlock:Array<Expr> = [];
 		cases.push({
-			values: [macro @:pos(this.nativePos) $v{iFieldName}],
+			values: [macro @:pos(this.nativePos) ${eColumnName}],
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
@@ -82,13 +83,13 @@ class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IM
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
 		var iFieldName:String = this.iFieldName;
 		var iFieldSlot:String = this.iFieldSlot;
-		fieldBlock.push(macro @:pos(this.nativePos) { this.$iFieldSlot = this._arpDomain.getOrCreateSlot(new net.kaikoga.arp.domain.core.ArpSid(input.readUtf($v{iFieldName}))); });
+		fieldBlock.push(macro @:pos(this.nativePos) { this.$iFieldSlot = this._arpDomain.getOrCreateSlot(new net.kaikoga.arp.domain.core.ArpSid(input.readUtf(${this.eColumnName}))); });
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
 		var iFieldName:String = this.iFieldName;
 		var iFieldSlot:String = iFieldName + "Slot";
-		fieldBlock.push(macro @:pos(this.nativePos) { output.writeUtf($v{iFieldName}, this.$iFieldSlot.sid.toString()); });
+		fieldBlock.push(macro @:pos(this.nativePos) { output.writeUtf(${this.eColumnName}, this.$iFieldSlot.sid.toString()); });
 	}
 }
 

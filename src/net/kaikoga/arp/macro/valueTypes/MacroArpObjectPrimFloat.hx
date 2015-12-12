@@ -20,11 +20,11 @@ class MacroArpObjectPrimFloat implements IMacroArpObjectValueType {
 		return macro @:pos(pos) { this.$iFieldName = Std.parseFloat(element.value()); };
 	}
 
-	public function readSelf(pos:Position, iFieldName:String):Expr {
+	public function readSelf(pos:Position, iFieldName:String, eColumnName:ExprOf<String>):Expr {
 		return macro @:pos(pos) { this.$iFieldName = input.readDouble($v{iFieldName}); };
 	}
 
-	public function writeSelf(pos:Position, iFieldName:String):Expr {
+	public function writeSelf(pos:Position, iFieldName:String, eColumnName:ExprOf<String>):Expr {
 		return macro @:pos(pos) { output.writeDouble($v{iFieldName}, this.$iFieldName); };
 	}
 }

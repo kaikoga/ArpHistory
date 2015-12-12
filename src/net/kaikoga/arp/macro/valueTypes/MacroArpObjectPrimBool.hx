@@ -20,11 +20,11 @@ class MacroArpObjectPrimBool implements IMacroArpObjectValueType {
 		return macro @:pos(pos) { this.$iFieldName = element.value() == "true"; };
 	}
 
-	public function readSelf(pos:Position, iFieldName:String):Expr {
+	public function readSelf(pos:Position, iFieldName:String, eColumnName:ExprOf<String>):Expr {
 		return macro @:pos(pos) { this.$iFieldName = input.readBool($v{iFieldName}); };
 	}
 
-	public function writeSelf(pos:Position, iFieldName:String):Expr {
+	public function writeSelf(pos:Position, iFieldName:String, eColumnName:ExprOf<String>):Expr {
 		return macro @:pos(pos) { output.writeBool($v{iFieldName}, this.$iFieldName); };
 	}
 }

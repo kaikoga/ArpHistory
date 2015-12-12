@@ -32,6 +32,16 @@ class MacroArpObjectFieldBase {
 	private var iSet_field(get, never):String;
 	private function get_iSet_field():String return "set_" + this.iFieldName;
 
+	private var eColumnName(get, never):ExprOf<String>;
+	private function get_eColumnName():ExprOf<String> {
+		if (metaColumn != null) {
+			return metaColumn;
+		} else {
+			var iFieldName = this.iFieldName;
+			return macro @:pos(this.nativePos) $v{iFieldName};
+		}
+	}
+
 	private function new(definition:MacroArpObjectFieldDefinition) {
 		this.definition = definition;
 	}
