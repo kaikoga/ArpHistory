@@ -10,7 +10,7 @@ class MockColumnMacroArpObject implements IArpObject {
 	@:arpValue @:arpColumn("bf") public var boolField:Bool = false;
 	@:arpValue @:arpColumn("sf") public var stringField:String = null;
 
-	@:arpBarrier @:arpSlot("MockMacroArpObject") @:arpColumn("rf") public var refField:MockColumnMacroArpObject;
+	@:arpBarrier @:arpType("MockMacroArpObject") @:arpColumn("rf") public var refField:MockColumnMacroArpObject;
 
 	public function new() {
 	}

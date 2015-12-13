@@ -15,7 +15,7 @@ class MacroArpObjectFieldDefinition {
 	public var nativeType(default, null):ComplexType;
 
 	public var metaArpValue:Bool = false;
-	public var metaArpSlot:ExprOf<String> = null;
+	public var metaArpType:ExprOf<String> = null;
 	public var metaArpBarrier:Bool = false;
 	public var metaColumn:ExprOf<String> = null;
 
@@ -30,7 +30,7 @@ class MacroArpObjectFieldDefinition {
 
 		for (meta in nativeField.meta) {
 			switch (meta.name) {
-				case ":arpSlot": metaArpSlot = meta.params[0];
+				case ":arpType": metaArpType = meta.params[0];
 				case ":arpValue": metaArpValue = true;
 				case ":arpBarrier": metaArpBarrier = true;
 				case ":arpColumn": metaColumn = meta.params[0];
@@ -39,21 +39,21 @@ class MacroArpObjectFieldDefinition {
 	}
 
 	public function expectPlainField():Bool {
-		if (this.metaArpValue || this.metaArpSlot != null || this.metaArpBarrier || this.metaColumn != null) {
+		if (this.metaArpValue || this.metaArpType != null || this.metaArpBarrier || this.metaColumn != null) {
 			Context.error("field type too complex: " + this.nativeType.toString(), this.nativeField.pos);
 		}
 		return true;
 	}
 
 	public function expectValueField():Bool {
-		if (metaArpSlot != null) Context.error('${this.nativeType.toString()} must be @:arpValue', this.nativeField.pos);
+		if (metaArpType != null) Context.error('${this.nativeType.toString()} must be @:arpValue', this.nativeField.pos);
 		if (metaArpBarrier) Context.error('@:arpBarrier not available for ${this.nativeType.toString()}', this.nativeField.pos);
 		return metaArpValue;
 	}
 
 	public function expectReferenceField():Bool {
-		if (this.metaArpValue) Context.error('${this.nativeType.toString()} must be @:arpSlot', this.nativeField.pos);
-		return this.metaArpSlot != null;
+		if (this.metaArpValue) Context.error('${this.nativeType.toString()} must be @:arpType', this.nativeField.pos);
+		return this.metaArpType != null;
 	}
 }
 

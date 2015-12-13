@@ -9,7 +9,7 @@ class MockHookMacroArpObject implements IArpObject {
 
 	public var volatileInt:Int = 0;
 
-	@:arpSlot("MockMacroArpObject") public var refField:MockHookMacroArpObject;
+	@:arpType("MockMacroArpObject") public var refField:MockHookMacroArpObject;
 
 	public function new() {
 	}

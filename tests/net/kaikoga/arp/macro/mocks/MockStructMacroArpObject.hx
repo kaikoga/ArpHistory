@@ -19,7 +19,7 @@ class MockStructMacroArpObject implements IArpObject {
 	@:arpValue public var arpPositionField:ArpPosition;
 	@:arpValue public var arpRangeField:ArpRange;
 
-	@:arpSlot("MockMacroArpObject") public var refField:MockStructMacroArpObject;
+	@:arpType("MockMacroArpObject") public var refField:MockStructMacroArpObject;
 
 	public function new() {
 	}

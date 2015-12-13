@@ -77,7 +77,7 @@ class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IM
 		});
 
 		var iFieldSlot:String = this.iFieldSlot;
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldSlot = this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${this.metaArpSlot})); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldSlot = this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${this.metaArpType})); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {

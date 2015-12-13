@@ -18,9 +18,9 @@ class MockStdDsMacroArpObject implements IArpObject {
 	@:arpValue public var stringStdList:List<String>;
 	@:arpValue public var stringStdMap:Map<String, String>;
 
-	//@:arpSlot("MockMacroArpObject") public var refStdArray:Array<MockMacroArpObject>;
-	//@:arpSlot("MockMacroArpObject") public var refStdList:List<MockMacroArpObject>;
-	@:arpSlot("MockStdDsMacroArpObject") public var refStdMap:Map<String, MockStdDsMacroArpObject>;
+	//@:arpType("MockMacroArpObject") public var refStdArray:Array<MockMacroArpObject>;
+	//@:arpType("MockMacroArpObject") public var refStdList:List<MockMacroArpObject>;
+	@:arpType("MockStdDsMacroArpObject") public var refStdMap:Map<String, MockStdDsMacroArpObject>;
 
 	public function new() {
 	}

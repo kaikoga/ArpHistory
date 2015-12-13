@@ -15,8 +15,8 @@ class MacroArpObjectFieldBase {
 
 	private var metaArpValue(get, never):Bool;
 	private function get_metaArpValue():Bool return definition.metaArpValue;
-	private var metaArpSlot(get, never):ExprOf<String>;
-	private function get_metaArpSlot():ExprOf<String> return definition.metaArpSlot;
+	private var metaArpType(get, never):ExprOf<String>;
+	private function get_metaArpType():ExprOf<String> return definition.metaArpType;
 	private var metaArpBarrier(get, never):Bool;
 	private function get_metaArpBarrier():Bool return definition.metaArpBarrier;
 	private var metaColumn(get, never):ExprOf<String>;
