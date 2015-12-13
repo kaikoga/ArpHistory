@@ -13,8 +13,8 @@ class MacroArpObjectFieldBase {
 	private var nativeType(get, never):ComplexType;
 	private function get_nativeType():ComplexType return definition.nativeType;
 
-	private var metaArpField(get, never):Bool;
-	private function get_metaArpField():Bool return definition.metaArpField;
+	private var metaArpValue(get, never):Bool;
+	private function get_metaArpValue():Bool return definition.metaArpValue;
 	private var metaArpSlot(get, never):ExprOf<String>;
 	private function get_metaArpSlot():ExprOf<String> return definition.metaArpSlot;
 	private var metaArpBarrier(get, never):Bool;
