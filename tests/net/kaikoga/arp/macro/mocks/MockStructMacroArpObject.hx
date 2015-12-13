@@ -9,7 +9,7 @@ import net.kaikoga.arp.structs.ArpRange;
 import net.kaikoga.arp.structs.ArpArea2d;
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("MockMacroArpObject"))
+@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("mock"))
 class MockStructMacroArpObject implements IArpObject {
 
 	@:arpValue public var arpArea2dField:ArpArea2d;
@@ -18,8 +18,6 @@ class MockStructMacroArpObject implements IArpObject {
 	@:arpValue public var arpHitAreaField:ArpHitArea;
 	@:arpValue public var arpPositionField:ArpPosition;
 	@:arpValue public var arpRangeField:ArpRange;
-
-	@:arpType("MockMacroArpObject") public var refField:MockStructMacroArpObject;
 
 	public function new() {
 	}

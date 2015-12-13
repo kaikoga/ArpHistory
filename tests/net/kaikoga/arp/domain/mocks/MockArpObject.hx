@@ -25,7 +25,7 @@ class MockArpObject implements IArpObject {
 	private var _arpDomain:ArpDomain;
 	public function arpDomain():ArpDomain return this._arpDomain;
 
-	public function arpType():ArpType return new ArpType("TestArpObject");
+	public function arpType():ArpType return new ArpType("mock");
 
 	private var _arpSlot:ArpSlot<MockArpObject>;
 	public function arpSlot():ArpSlot<MockArpObject> return this._arpSlot;
@@ -84,7 +84,7 @@ class MockArpObject implements IArpObject {
 			case "stringField":
 				this.stringField = element.value();
 			case "refField":
-				this.refFieldSlot = this._arpDomain.loadSeed(element, new ArpType("TestArpObject"));
+				this.refFieldSlot = this._arpDomain.loadSeed(element, new ArpType("mock"));
 		}
 	}
 

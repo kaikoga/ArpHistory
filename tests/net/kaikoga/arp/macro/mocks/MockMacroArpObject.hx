@@ -2,7 +2,7 @@ package net.kaikoga.arp.macro.mocks;
 
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("MockMacroArpObject"))
+@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("mock"))
 class MockMacroArpObject implements IArpObject {
 
 	@:arpValue public var intField:Int = 0;
@@ -10,7 +10,7 @@ class MockMacroArpObject implements IArpObject {
 	@:arpValue public var boolField:Bool = false;
 	@:arpValue public var stringField:String = null;
 
-	@:arpBarrier @:arpType("MockMacroArpObject") public var refField:MockMacroArpObject;
+	@:arpBarrier @:arpType("mock") public var refField:MockMacroArpObject;
 
 	public function new() {
 	}

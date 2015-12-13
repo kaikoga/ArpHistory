@@ -27,8 +27,7 @@ class StdDsMacroArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpDynamicGenerator(new ArpType("MockMacroArpObject"), MockMacroArpObject));
-		domain.addGenerator(new ArpDynamicGenerator(new ArpType("MockStdDsMacroArpObject"), MockStdDsMacroArpObject));
+		domain.addGenerator(new ArpDynamicGenerator(new ArpType("mock"), MockStdDsMacroArpObject));
 		xml = Xml.parse('
 <mock name="name1">
 	<intStdArray value="112" />
@@ -66,15 +65,15 @@ class StdDsMacroArpObjectCase {
 		arpObj = domain.allocObject(MockStdDsMacroArpObject);
 
 		assertEquals(domain, arpObj.arpDomain());
-		assertEquals(new ArpType("MockStdDsMacroArpObject"), arpObj.arpType());
+		assertEquals(new ArpType("mock"), arpObj.arpType());
 	}
 
 	public function testLoadSeed():Void {
-		slot = domain.loadSeed(seed, new ArpType("MockStdDsMacroArpObject"));
+		slot = domain.loadSeed(seed, new ArpType("mock"));
 		arpObj = slot.value;
 
 		assertEquals(domain, arpObj.arpDomain());
-		assertEquals(new ArpType("MockStdDsMacroArpObject"), arpObj.arpType());
+		assertEquals(new ArpType("mock"), arpObj.arpType());
 		assertEquals(slot, arpObj.arpSlot());
 
 		assertMatch([112, 134], arpObj.intStdArray);
@@ -106,7 +105,7 @@ class StdDsMacroArpObjectCase {
 	}
 
 	public function testPersistable():Void {
-		slot = domain.loadSeed(seed, new ArpType("MockStdDsMacroArpObject"));
+		slot = domain.loadSeed(seed, new ArpType("mock"));
 		arpObj = slot.value;
 
 		var arpObj2:MockStdDsMacroArpObject = roundTrip(arpObj, MockStdDsMacroArpObject);

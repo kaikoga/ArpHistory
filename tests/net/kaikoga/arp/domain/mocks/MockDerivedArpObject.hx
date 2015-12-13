@@ -20,8 +20,8 @@ class MockDerivedArpObject extends MockArpObject {
 		super();
 	}
 
-	override public function arpType():ArpType return new ArpType("TestArpObject");
-	
+	override public function arpType():ArpType return new ArpType("mock");
+
 	override public function arpInit(slot:ArpUntypedSlot, seed:ArpSeed = null):IArpObject {
 		this.refField2Slot = slot.domain.nullSlot;
 		return super.arpInit(slot, seed);
@@ -41,7 +41,7 @@ class MockDerivedArpObject extends MockArpObject {
 			case "intField2":
 				this.intField2 = Std.parseInt(element.value());
 			case "refField2":
-				this.refField2Slot = this._arpDomain.loadSeed(element, new ArpType("TestArpObject"));
+				this.refField2Slot = this._arpDomain.loadSeed(element, new ArpType("mock"));
 			default:
 				super.arpConsumeSeedElement(element);
 		}

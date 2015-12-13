@@ -1,15 +1,13 @@
 package net.kaikoga.arp.macro.mocks;
 
-import net.kaikoga.arp.domain.seed.ArpSeed;
-import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("MockMacroArpObject"))
+@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("mock"))
 class MockHookMacroArpObject implements IArpObject {
 
 	public var volatileInt:Int = 0;
 
-	@:arpType("MockMacroArpObject") public var refField:MockHookMacroArpObject;
+	@:arpType("mock") public var refField:MockHookMacroArpObject;
 
 	public function new() {
 	}

@@ -15,11 +15,11 @@ class ArpDirectoryCase {
 		child1.addArpObject(arpObj1);
 
 		var child2 = domain.root.trueChild("test");
-		var arpObj2:IArpObject = child2.getValue(new ArpType("TestArpObject"));
+		var arpObj2:IArpObject = child2.getValue(new ArpType("mock"));
 		assertEquals(arpObj1, arpObj2);
 		assertEquals(child1, child2);
 
-		var slot:ArpSlot<MockArpObject> = child2.getOrCreateSlot(new ArpType("TestArpObject"));
+		var slot:ArpSlot<MockArpObject> = child2.getOrCreateSlot(new ArpType("mock"));
 		assertEquals(arpObj1, slot.value);
 	}
 

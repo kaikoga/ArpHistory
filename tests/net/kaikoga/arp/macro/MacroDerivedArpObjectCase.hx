@@ -27,18 +27,18 @@ class MacroDerivedArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpDynamicGenerator(new ArpType("MockMacroArpObject"), MockMacroDerivedArpObject));
+		domain.addGenerator(new ArpDynamicGenerator(new ArpType("mock"), MockMacroDerivedArpObject));
 		xml = Xml.parse('<mock name="name1" intField="42" intField2="168" floatField="3.14" boolField="true" stringField="stringValue" refField="/name1" refField2="/name1" />').firstElement();
 		seed = ArpSeed.fromXml(xml);
 	}
 
 	public function testBuildObject():Void {
-		slot = domain.dir("name1").getOrCreateSlot(new ArpType("MockMacroArpObject"));
+		slot = domain.dir("name1").getOrCreateSlot(new ArpType("mock"));
 		arpObj = new MockMacroDerivedArpObject();
 		arpObj.arpInit(slot, seed);
 
 		assertEquals(domain, arpObj.arpDomain());
-		assertEquals(new ArpType("MockMacroArpObject"), arpObj.arpType());
+		assertEquals(new ArpType("mock"), arpObj.arpType());
 		assertEquals(slot, arpObj.arpSlot());
 
 		assertEquals(42, arpObj.intField);
@@ -57,7 +57,7 @@ class MacroDerivedArpObjectCase {
 		arpObj = domain.allocObject(MockMacroDerivedArpObject);
 
 		assertEquals(domain, arpObj.arpDomain());
-		assertEquals(new ArpType("MockMacroArpObject"), arpObj.arpType());
+		assertEquals(new ArpType("mock"), arpObj.arpType());
 
 		assertEquals(arpObj.intField, 0);
 		assertEquals(arpObj.intField2, 0);
@@ -69,7 +69,7 @@ class MacroDerivedArpObjectCase {
 	}
 
 	public function testLoadSeed():Void {
-		slot = domain.loadSeed(seed, new ArpType("MockMacroArpObject"));
+		slot = domain.loadSeed(seed, new ArpType("mock"));
 		arpObj = cast slot.value;
 
 		assertEquals(42, arpObj.intField);
@@ -90,7 +90,7 @@ class MacroDerivedArpObjectCase {
 	}
 
 	public function testPersistable():Void {
-		slot = domain.loadSeed(seed, new ArpType("MockMacroArpObject"));
+		slot = domain.loadSeed(seed, new ArpType("mock"));
 		arpObj = cast slot.value;
 
 		var arpObj2:MockMacroDerivedArpObject = roundTrip(arpObj, MockMacroDerivedArpObject);

@@ -2,7 +2,7 @@ package net.kaikoga.arp.macro.mocks;
 
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("MockStdDsMacroArpObject"))
+@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("mock"))
 class MockStdDsMacroArpObject implements IArpObject {
 
 	@:arpValue public var intStdArray:Array<Int>;
@@ -18,9 +18,9 @@ class MockStdDsMacroArpObject implements IArpObject {
 	@:arpValue public var stringStdList:List<String>;
 	@:arpValue public var stringStdMap:Map<String, String>;
 
-	//@:arpType("MockMacroArpObject") public var refStdArray:Array<MockMacroArpObject>;
-	//@:arpType("MockMacroArpObject") public var refStdList:List<MockMacroArpObject>;
-	@:arpType("MockStdDsMacroArpObject") public var refStdMap:Map<String, MockStdDsMacroArpObject>;
+	//@:arpType("mock") public var refStdArray:Array<MockStdDsMacroArpObject>;
+	//@:arpType("mock") public var refStdList:List<MockStdDsMacroArpObject>;
+	@:arpType("mock") public var refStdMap:Map<String, MockStdDsMacroArpObject>;
 
 	public function new() {
 	}

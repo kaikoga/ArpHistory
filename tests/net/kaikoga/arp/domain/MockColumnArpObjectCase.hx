@@ -24,18 +24,18 @@ class MockColumnArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpDynamicGenerator(new ArpType("TestArpObject"), MockColumnArpObject));
+		domain.addGenerator(new ArpDynamicGenerator(new ArpType("mock"), MockColumnArpObject));
 		xml = Xml.parse('<mock name="name1" if="42" ff="3.14" bf="true" sf="stringValue" rf="/name1" />').firstElement();
 		seed = ArpSeed.fromXml(xml);
 	}
 
 	public function testBuildObject():Void {
-		slot = domain.dir("name1").getOrCreateSlot(new ArpType("TestArpObject"));
+		slot = domain.dir("name1").getOrCreateSlot(new ArpType("mock"));
 		arpObj = new MockColumnArpObject();
 		arpObj.arpInit(slot, seed);
 
 		assertEquals(domain, arpObj.arpDomain());
-		assertEquals(new ArpType("TestArpObject"), arpObj.arpType());
+		assertEquals(new ArpType("mock"), arpObj.arpType());
 		assertEquals(slot, arpObj.arpSlot());
 
 		assertEquals(42, arpObj.intField);
@@ -52,7 +52,7 @@ class MockColumnArpObjectCase {
 		arpObj = domain.allocObject(MockColumnArpObject);
 
 		assertEquals(domain, arpObj.arpDomain());
-		assertEquals(new ArpType("TestArpObject"), arpObj.arpType());
+		assertEquals(new ArpType("mock"), arpObj.arpType());
 
 		assertEquals(arpObj.intField, 0);
 		assertEquals(arpObj.floatField, 0.0);
@@ -62,7 +62,7 @@ class MockColumnArpObjectCase {
 	}
 
 	public function testLoadSeed():Void {
-		slot = domain.loadSeed(seed, new ArpType("TestArpObject"));
+		slot = domain.loadSeed(seed, new ArpType("mock"));
 		arpObj = slot.value;
 
 		assertEquals(42, arpObj.intField);
@@ -81,7 +81,7 @@ class MockColumnArpObjectCase {
 	}
 
 	public function testPersistable():Void {
-		slot = domain.loadSeed(seed, new ArpType("TestArpObject"));
+		slot = domain.loadSeed(seed, new ArpType("mock"));
 		arpObj = slot.value;
 
 		var arpObj2:MockColumnArpObject = roundTrip(arpObj, MockColumnArpObject);

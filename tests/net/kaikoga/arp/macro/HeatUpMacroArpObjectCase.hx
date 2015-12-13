@@ -21,19 +21,19 @@ class HeatUpMacroArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpDynamicGenerator(new ArpType("MockMacroArpObject"), MockMacroArpObject));
+		domain.addGenerator(new ArpDynamicGenerator(new ArpType("mock"), MockMacroArpObject));
 		xml = Xml.parse('<data>
-		<MockMacroArpObject name="name1" intField="42" floatField="3.14" boolField="true" stringField="stringValue" refField="/name1" />
-		<MockMacroArpObject name="name2" refField="/name1" />
-		<MockMacroArpObject name="name3" />
+		<mock name="name1" intField="42" floatField="3.14" boolField="true" stringField="stringValue" refField="/name1" />
+		<mock name="name2" refField="/name1" />
+		<mock name="name3" />
 		</data>
 		').firstElement();
 		seed = ArpSeed.fromXml(xml);
-		domain.loadSeed(seed, new ArpType("MockMacroArpObject"));
+		domain.loadSeed(seed, new ArpType("mock"));
 	}
 
 	public function testHeatUp():Void {
-		var query = domain.query("name1", new ArpType("MockMacroArpObject"));
+		var query = domain.query("name1", new ArpType("mock"));
 		assertEquals(ArpHeat.Cold, query.slot().heat);
 		query.heatLater();
 		assertEquals(ArpHeat.Warming, query.slot().heat);
@@ -42,8 +42,8 @@ class HeatUpMacroArpObjectCase {
 	}
 
 	public function testHeatUpDependent():Void {
-		var query1 = domain.query("name1", new ArpType("MockMacroArpObject"));
-		var query2 = domain.query("name2", new ArpType("MockMacroArpObject"));
+		var query1 = domain.query("name1", new ArpType("mock"));
+		var query2 = domain.query("name2", new ArpType("mock"));
 		assertEquals(ArpHeat.Cold, query1.slot().heat);
 		assertEquals(ArpHeat.Cold, query2.slot().heat);
 		query2.heatLater();

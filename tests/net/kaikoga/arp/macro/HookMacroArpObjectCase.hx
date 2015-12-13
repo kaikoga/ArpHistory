@@ -20,10 +20,10 @@ class HookMacroArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpDynamicGenerator(new ArpType("MockMacroArpObject"), MockHookMacroArpObject));
+		domain.addGenerator(new ArpDynamicGenerator(new ArpType("mock"), MockHookMacroArpObject));
 		xml = Xml.parse('<mock name="name1" />').firstElement();
 		seed = ArpSeed.fromXml(xml);
-		slot = domain.loadSeed(seed, new ArpType("MockMacroArpObject"));
+		slot = domain.loadSeed(seed, new ArpType("mock"));
 		arpObj = slot.value;
 	}
 
