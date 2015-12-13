@@ -17,7 +17,7 @@ class MacroArpObjectFieldDefinition {
 	public var metaArpValue:Bool = false;
 	public var metaArpType:ExprOf<String> = null;
 	public var metaArpBarrier:Bool = false;
-	public var metaColumn:ExprOf<String> = null;
+	public var metaArpField:ExprOf<String> = null;
 
 	public function new(nativeField:Field) {
 		this.nativeField = nativeField;
@@ -33,13 +33,13 @@ class MacroArpObjectFieldDefinition {
 				case ":arpType": metaArpType = meta.params[0];
 				case ":arpValue": metaArpValue = true;
 				case ":arpBarrier": metaArpBarrier = true;
-				case ":arpColumn": metaColumn = meta.params[0];
+				case ":arpField": metaArpField = meta.params[0];
 			}
 		}
 	}
 
 	public function expectPlainField():Bool {
-		if (this.metaArpValue || this.metaArpType != null || this.metaArpBarrier || this.metaColumn != null) {
+		if (this.metaArpValue || this.metaArpType != null || this.metaArpBarrier || this.metaArpField != null) {
 			Context.error("field type too complex: " + this.nativeType.toString(), this.nativeField.pos);
 		}
 		return true;

@@ -19,8 +19,8 @@ class MacroArpObjectFieldBase {
 	private function get_metaArpType():ExprOf<String> return definition.metaArpType;
 	private var metaArpBarrier(get, never):Bool;
 	private function get_metaArpBarrier():Bool return definition.metaArpBarrier;
-	private var metaColumn(get, never):ExprOf<String>;
-	private function get_metaColumn():ExprOf<String> return definition.metaColumn;
+	private var metaArpField(get, never):ExprOf<String>;
+	private function get_metaArpField():ExprOf<String> return definition.metaArpField;
 
 	private var nativePos(get, never):Position;
 	private function get_nativePos():Position return this.nativeField.pos;
@@ -34,8 +34,8 @@ class MacroArpObjectFieldBase {
 
 	private var eColumnName(get, never):ExprOf<String>;
 	private function get_eColumnName():ExprOf<String> {
-		if (metaColumn != null) {
-			return metaColumn;
+		if (metaArpField != null) {
+			return metaArpField;
 		} else {
 			var iFieldName = this.iFieldName;
 			return macro @:pos(this.nativePos) $v{iFieldName};
