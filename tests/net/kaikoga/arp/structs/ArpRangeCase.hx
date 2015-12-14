@@ -30,7 +30,7 @@ class ArpRangeCase {
 		range.initWithSeed(ArpSeed.fromXmlString('<range min="10" max="20" />'));
 		assertMatch(10, range.minValue);
 		assertMatch(20, range.maxValue);
-		range.initWithSeed(ArpSeed.fromXmlString('<range hoge="30..40" />').children()[0]);
+		range.initWithSeed(ArpSeed.fromXmlString('<range hoge="30..40" />').iterator().next());
 		assertMatch(30, range.minValue);
 		assertMatch(40, range.maxValue);
 	}

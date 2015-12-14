@@ -124,11 +124,11 @@ class ArpPosition implements IFrameMove implements IPersistable {
 
 	public function initWithSeed(seed:ArpSeed):ArpPosition {
 		if (seed == null) return this;
-		if (!seed.hasChildren()) return this.initWithString(seed.value());
+		if (seed.isSimple()) return this.initWithString(seed.value());
 
 		this._gridSize = 1;
 		this._explicitGridSize = 0;
-		for (child in seed.children()) {
+		for (child in seed) {
 			switch (child.typeName()) {
 				case "x": this.x = Std.parseFloat(child.value());
 				case "y": this.y = Std.parseFloat(child.value());

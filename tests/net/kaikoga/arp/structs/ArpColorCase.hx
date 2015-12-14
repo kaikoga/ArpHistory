@@ -22,7 +22,7 @@ class ArpColorCase {
 		var color:ArpColor = new ArpColor();
 		color.initWithSeed(ArpSeed.fromXmlString('<color value="#112233@44" />'));
 		assertEquals(0x44112233, color.value32);
-		color.initWithSeed(ArpSeed.fromXmlString('<color hoge="#556677@88" />').children()[0]);
+		color.initWithSeed(ArpSeed.fromXmlString('<color hoge="#556677@88" />').iterator().next());
 		assertEquals(0x88556677, color.value32);
 	}
 

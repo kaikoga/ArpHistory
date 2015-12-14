@@ -18,7 +18,7 @@ class ArpDirectionCase {
 		var dir:ArpDirection = new ArpDirection();
 		dir.initWithSeed(ArpSeed.fromXmlString('<dir value="10" />'));
 		assertMatch(Matchers.closeTo(10, ERR), dir.valueDegree);
-		dir.initWithSeed(ArpSeed.fromXmlString('<dir hoge="20" />').children()[0]);
+		dir.initWithSeed(ArpSeed.fromXmlString('<dir hoge="20" />').iterator().next());
 		assertMatch(Matchers.closeTo(20, ERR), dir.valueDegree);
 	}
 

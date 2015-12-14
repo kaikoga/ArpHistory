@@ -68,7 +68,7 @@ class ArpHitArea implements IPersistable {
 
 	public function initWithSeed(seed:ArpSeed):ArpHitArea {
 		if (seed == null) return this;
-		if (!seed.hasChildren()) return this.initWithString(seed.value());
+		if (seed.isSimple()) return this.initWithString(seed.value());
 		this.areaLeft = 0;
 		this.areaRight = 1;
 		this.areaTop = 0;

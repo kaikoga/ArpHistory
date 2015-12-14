@@ -202,7 +202,7 @@ class ArpArea2d implements IPersistable {
 
 	public function initWithSeed(seed:ArpSeed):ArpArea2d {
 		if (seed == null) return this;
-		if (!seed.hasChildren()) return this.initWithString(seed.value());
+		if (seed.isSimple()) return this.initWithString(seed.value());
 		// TODO
 		this.areaLeft = 0;
 		this.areaRight = 0;

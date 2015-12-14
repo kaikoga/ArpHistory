@@ -11,27 +11,36 @@ class ArpSeed {
 	private var _key:String;
 	private var _value:Dynamic;
 	private var _children:Array<ArpSeed>;
+	private var _isSimple:Bool;
 
-	inline public function new(typeName:String, template:String, name:String, ref:String, key:String, value:Dynamic, children:Array<ArpSeed>) {
+	inline public function new(typeName:String, template:String, name:String, ref:String, key:String, value:Dynamic, explicitChildren:Array<ArpSeed>) {
 		this._typeName = typeName;
 		this._template = template;
 		this._name = name;
 		this._ref = ref;
 		this._key = key;
 		this._value = value;
-		this._children = children;
+		if (explicitChildren != null) this.createChildren(explicitChildren);
+		this._isSimple = explicitChildren == null;
 	}
 
+	private function createChildren(explicitChildren:Array<ArpSeed>):Void {
+		this._children = explicitChildren;
+		if (this._value != null) this._children.push(simpleValue("value", this._value));
+	}
+	
 	inline public function typeName():String return this._typeName;
 	inline public function template():String return this._template;
 	inline public function name():String return this._name;
 	inline public function ref():String return this._ref;
 	inline public function key():String return this._key;
 	inline public function value():Dynamic return this._value;
-	inline public function children():Array<ArpSeed> return this._children;
+	inline public function isSimple():Bool return this._isSimple;
 
-	inline public function hasChildren():Bool return this._children != null;
-	inline public function iterator():Iterator<ArpSeed> return this.hasChildren() ? this._children.iterator() : [].iterator();
+	public function iterator():Iterator<ArpSeed> {
+		if (this._children == null) this.createChildren([]);
+		return this._children.iterator();
+	}
 
 	inline public static function fromXmlString(xmlString:String):ArpSeed {
 		return fromXml(Xml.parse(xmlString));
@@ -76,7 +85,7 @@ class ArpSeed {
 				case "value":
 					value = attr;
 				case _:
-					// NOTE leef seeds by xml attr are also treated as ref; text nodes are not
+					// NOTE leaf seeds by xml attr are also treated as ref; text nodes are not
 					if (children == null) children = []; children.push(simpleRefValue(attrName, attr));
 			}
 		}
@@ -87,7 +96,6 @@ class ArpSeed {
 				case _: // ignore
 			}
 		}
-		if (value != null && children != null) children.push(simpleValue("value", value));
 		return new ArpSeed(typeName, template, name, ref, key, value, children);
 	}
 }
