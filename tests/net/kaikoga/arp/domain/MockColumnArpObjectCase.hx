@@ -24,7 +24,7 @@ class MockColumnArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpDynamicGenerator(new ArpType("mock"), MockColumnArpObject));
+		domain.addDefaultGenerator(new ArpDynamicGenerator(new ArpType("mock"), MockColumnArpObject, "column"));
 		xml = Xml.parse('<mock name="name1" if="42" ff="3.14" bf="true" sf="stringValue" rf="/name1" />').firstElement();
 		seed = ArpSeed.fromXml(xml);
 	}

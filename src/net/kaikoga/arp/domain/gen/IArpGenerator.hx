@@ -4,8 +4,9 @@ import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 
 interface IArpGenerator<T:IArpObject> {
-	function arpType():ArpType;
+	var arpType(get, never):ArpType;
+	var template(get, never):Null<String>;
 
-	function matchSeed(seed:ArpSeed, type:ArpType):Bool;
+	function matchSeed(seed:ArpSeed, type:ArpType, template:String):Bool;
 	function alloc(seed:ArpSeed):T;
 }

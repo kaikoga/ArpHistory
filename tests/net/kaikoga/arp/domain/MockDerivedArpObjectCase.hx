@@ -25,7 +25,7 @@ class MockDerivedArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpDynamicGenerator(new ArpType("mock"), MockDerivedArpObject));
+		domain.addDefaultGenerator(new ArpDynamicGenerator(new ArpType("mock"), MockDerivedArpObject, "derived"));
 		xml = Xml.parse('<mock name="name1" intField="42" intField2="168" floatField="3.14" boolField="true" stringField="stringValue" refField="/name1" refField2="/name1" />').firstElement();
 		seed = ArpSeed.fromXml(xml);
 	}

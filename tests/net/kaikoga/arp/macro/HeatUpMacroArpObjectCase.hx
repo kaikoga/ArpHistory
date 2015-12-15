@@ -21,7 +21,7 @@ class HeatUpMacroArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpDynamicGenerator(new ArpType("mock"), MockMacroArpObject));
+		domain.addDefaultGenerator(new ArpDynamicGenerator(new ArpType("mock"), MockMacroArpObject, "macro"));
 		xml = Xml.parse('<data>
 		<mock name="name1" intField="42" floatField="3.14" boolField="true" stringField="stringValue" refField="/name1" />
 		<mock name="name2" refField="/name1" />

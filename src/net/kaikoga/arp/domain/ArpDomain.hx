@@ -66,6 +66,10 @@ class ArpDomain {
 		this.reg.addGenerator(gen);
 	}
 
+	public function addDefaultGenerator<T:IArpObject>(gen:IArpGenerator<T>) {
+		this.reg.addDefaultGenerator(gen);
+	}
+
 	public function loadSeed<T:IArpObject>(seed:ArpSeed, path:ArpDirectory = null, lexicalType:ArpType = null):Null<ArpSlot<T>> {
 		if (path == null) path = this.root;
 		var type:ArpType = (lexicalType != null) ? lexicalType : new ArpType(seed.typeName());
@@ -82,6 +86,7 @@ class ArpDomain {
 		} else {
 			slot = path.query(seed.name(), type).slot().addReference();
 			var gen:IArpGenerator<T> = this.reg.resolve(seed, type);
+			if (gen == null) throw 'generator not found for <$type>: template=${seed.template()}';
 			var arpObj:T = gen.alloc(seed);
 			slot.value = arpObj;
 			arpObj.arpInit(slot, seed);

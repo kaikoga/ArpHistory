@@ -4,21 +4,24 @@ import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.domain.core.ArpType;
 
 class ArpDynamicGenerator<T:IArpObject> implements IArpGenerator<T> {
-	
-	private var source:ArpType;
+
+	private var _arpType:ArpType;
 	private var dest:Class<T>;
-	
-	public function new(source:ArpType, dest:Class<T>) {
-		this.source = source;
+	private var _template:String;
+
+	public var arpType(get, never):ArpType;
+	private function get_arpType():ArpType return this._arpType;
+	public var template(get, never):String;
+	private function get_template():String return this._template;
+
+	public function new(source:ArpType, dest:Class<T>, template:String) {
+		this._arpType = source;
 		this.dest = dest;
+		this._template = template;
 	}
 
-	public function arpType():ArpType {
-		return this.source;
-	}
-
-	public function matchSeed(seed:ArpSeed, type:ArpType):Bool {
-		return type == this.source;
+	public function matchSeed(seed:ArpSeed, type:ArpType, template:String):Bool {
+		return type == this._arpType && template == this._template;
 	}
 
 	public function alloc(seed:ArpSeed):T {
