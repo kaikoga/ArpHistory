@@ -2,6 +2,7 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
+import net.kaikoga.arp.domain.ArpTypeInfo;
 import haxe.macro.Printer;
 import net.kaikoga.arp.macro.MacroArpObjectFieldBuilder;
 import haxe.macro.Expr;
@@ -25,9 +26,11 @@ class MacroArpObjectBuilder {
 
 	private var _arpDomain:Field = null;
 	private var arpDomain:Field = null;
+	private var _arpTypeInfo:Field = null;
+	private var arpTypeInfo:Field = null;
 	private var arpType:Field = null;
-	private var arpSlot:Field = null;
 	private var _arpSlot:Field = null;
+	private var arpSlot:Field = null;
 	private var arpInit:Field = null;
 	private var arpHeatLater:Field = null;
 	private var arpHeatUp:Field = null;
@@ -60,12 +63,16 @@ class MacroArpObjectBuilder {
 					this._arpDomain = field;
 				case "arpDomain":
 					this.arpDomain = field;
+				case "_arpTypeInfo":
+					this._arpTypeInfo = field;
+				case "arpTypeInfo":
+					this.arpTypeInfo = field;
 				case "arpType":
 					this.arpType = field;
-				case "arpSlot":
-					this.arpSlot = field;
 				case "_arpSlot":
 					this._arpSlot = field;
+				case "arpSlot":
+					this.arpSlot = field;
 				case "arpInit":
 					this.arpInit = field;
 				case "arpHeatLater":
@@ -104,11 +111,10 @@ class MacroArpObjectBuilder {
 					}
 				}
 		}
-		if (!isDerived) build_arpDomain();
 		if (!isDerived) buildArpDomain();
+		buildArpTypeInfo();
 		buildArpType();
 		if (!isDerived) buildArpSlot();
-		if (!isDerived) build_arpSlot();
 		buildArpInit();
 		buildArpHeatLater();
 		buildArpHeatUp();
@@ -127,19 +133,18 @@ class MacroArpObjectBuilder {
 		}
 	}
 
-	private function fieldSkeleton(name:String, field:Null<Field>, isPublic:Bool):Field {
+	private function fieldSkeleton(name:String, field:Null<Field>, isPublic:Bool, isStatic:Bool = false):Field {
 		var access:Array<Access> = [isPublic ? Access.APublic : Access.APrivate];
-		if (isDerived) access.push(Access.AOverride);
+		if (isDerived && !isStatic) access.push(Access.AOverride);
+		if (isStatic) access.push(Access.AStatic);
 		return (field != null) ? field : { name: name, access: access, kind: null, pos: Context.currentPos() }
 	}
 
-	private function build_arpDomain():Void {
+	private function buildArpDomain():Void {
 		this._arpDomain = fieldSkeleton("_arpDomain", this._arpDomain, false);
 		this._arpDomain.kind = FieldType.FVar(macro :net.kaikoga.arp.domain.ArpDomain);
 		this.outFields.push(this._arpDomain);
-	}
 
-	private function buildArpDomain():Void {
 		this.arpDomain = fieldSkeleton("arpDomain", this.arpDomain, true);
 		this.arpDomain.kind = FieldType.FFun({
 			args: [],
@@ -149,24 +154,41 @@ class MacroArpObjectBuilder {
 		this.outFields.push(this.arpDomain);
 	}
 
+	private function buildArpTypeInfo():Void {
+		this._arpTypeInfo = fieldSkeleton("_arpTypeInfo", this._arpTypeInfo, true, true);
+		var value:ExprOf<ArpTypeInfo> = macro @:pos(this._arpTypeInfo.pos) {
+			new net.kaikoga.arp.domain.ArpTypeInfo(
+				"mock",
+				new net.kaikoga.arp.domain.core.ArpType($v{arpTypeName})
+			);
+		};
+		this._arpTypeInfo.kind = FieldType.FVar(macro :net.kaikoga.arp.domain.ArpTypeInfo, value);
+		this.outFields.push(this._arpTypeInfo);
+
+		this.arpTypeInfo = fieldSkeleton("arpTypeInfo", this.arpTypeInfo, true);
+		this.arpTypeInfo.kind = FieldType.FFun({
+			args: [],
+			ret: macro :net.kaikoga.arp.domain.ArpTypeInfo,
+			expr: macro @:pos(this.arpTypeInfo.pos) {return _arpTypeInfo;}
+		});
+		this.outFields.push(this.arpTypeInfo);
+	}
+
 	private function buildArpType():Void {
 		this.arpType = fieldSkeleton("arpType", this.arpType, true);
 		this.arpType.kind = FieldType.FFun({
 			args: [],
 			ret: macro :net.kaikoga.arp.domain.core.ArpType,
-			expr: macro @:pos(this.arpType.pos) {return new net.kaikoga.arp.domain.core.ArpType($v{arpTypeName});}
+			expr: macro @:pos(this.arpType.pos) {return _arpTypeInfo.arpType;}
 		});
 		this.outFields.push(this.arpType);
 	}
 
-	private function build_arpSlot():Void {
+	private function buildArpSlot():Void {
 		this._arpSlot = fieldSkeleton("_arpSlot", this._arpSlot, false);
-		//this._arpSlot.kind = FieldType.FVar(createArpSlotTypeOf(macro :net.kaikoga.arp.domain.ArpDomain));
 		this._arpSlot.kind = FieldType.FVar(macro :net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot);
 		this.outFields.push(this._arpSlot);
-	}
 
-	private function buildArpSlot():Void {
 		this.arpSlot = fieldSkeleton("arpSlot", this.arpSlot, true);
 		this.arpSlot.kind = FieldType.FFun({
 			args: [],
@@ -320,7 +342,7 @@ class MacroArpObjectBuilder {
 	private function buildArpConsumeSeedElement():Void {
 		var cases:Array<Case> = [];
 
-		var eDefault:Expr = if (isDerived) macro { super.arpConsumeSeedElement(element); } else macro null; 
+		var eDefault:Expr = if (isDerived) macro { super.arpConsumeSeedElement(element); } else macro null;
 		var e:Expr = { pos: Context.currentPos(), expr: ExprDef.ESwitch(macro element.typeName(), cases, eDefault) }
 
 		for (aoField in this.arpObjectFields) aoField.buildConsumeSeedElementBlock(cases);
