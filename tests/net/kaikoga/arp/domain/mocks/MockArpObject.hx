@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain.mocks;
 
+import net.kaikoga.arp.domain.ArpTypeInfo;
 import net.kaikoga.arp.domain.core.ArpSid;
 import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.persistable.IPersistOutput;
@@ -25,7 +26,9 @@ class MockArpObject implements IArpObject {
 	private var _arpDomain:ArpDomain;
 	public function arpDomain():ArpDomain return this._arpDomain;
 
-	public function arpType():ArpType return new ArpType("mock");
+	public static var _arpTypeInfo(default, never):ArpTypeInfo = new ArpTypeInfo("mock", new ArpType("mock"));
+	public function arpTypeInfo():ArpTypeInfo return _arpTypeInfo;
+	public function arpType():ArpType return _arpTypeInfo.arpType;
 
 	private var _arpSlot:ArpSlot<MockArpObject>;
 	public function arpSlot():ArpSlot<MockArpObject> return this._arpSlot;
