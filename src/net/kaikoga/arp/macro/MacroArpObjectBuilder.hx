@@ -10,17 +10,18 @@ import haxe.macro.Context;
 
 class MacroArpObjectBuilder {
 
-	public static function build(arpTypeName:String):Array<Field> {
-		return new MacroArpObjectBuilder(arpTypeName).run();
+	public static function build(arpTypeName:String, arpTemplateName:String):Array<Field> {
+		return new MacroArpObjectBuilder(arpTypeName, arpTemplateName).run();
 	}
 
-	public static function buildDerived(arpTypeName:String):Array<Field> {
-		return new MacroArpObjectBuilder(arpTypeName, true).run();
+	public static function buildDerived(arpTypeName:String, arpTemplateName:String):Array<Field> {
+		return new MacroArpObjectBuilder(arpTypeName, arpTemplateName, true).run();
 	}
 
 	private var outFields:Array<Field> = [];
 
 	private var arpTypeName:String;
+	private var arpTemplateName:String;
 	private var isDerived:Bool;
 	private var arpObjectFields:Array<IMacroArpObjectField> = [];
 
@@ -45,8 +46,9 @@ class MacroArpObjectBuilder {
 	private var dummyHeatUp:Bool;
 	private var dummyHeatDown:Bool;
 
-	private function new(arpTypeName:String, isDerived:Bool = false) {
+	private function new(arpTypeName:String, arpTemplateName:String, isDerived:Bool = false) {
 		this.arpTypeName = arpTypeName;
+		this.arpTemplateName = arpTemplateName;
 		this.isDerived = isDerived;
 		this.outFields = [];
 
@@ -158,7 +160,7 @@ class MacroArpObjectBuilder {
 		this._arpTypeInfo = fieldSkeleton("_arpTypeInfo", this._arpTypeInfo, true, true);
 		var value:ExprOf<ArpTypeInfo> = macro @:pos(this._arpTypeInfo.pos) {
 			new net.kaikoga.arp.domain.ArpTypeInfo(
-				"mock",
+				$v{arpTemplateName},
 				new net.kaikoga.arp.domain.core.ArpType($v{arpTypeName})
 			);
 		};
