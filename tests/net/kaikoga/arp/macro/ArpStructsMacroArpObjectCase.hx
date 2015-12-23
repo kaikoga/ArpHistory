@@ -36,7 +36,7 @@ class ArpStructsMacroArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addDefaultGenerator(new ArpObjectGenerator(MockStructMacroArpObject));
+		domain.addGenerator(new ArpObjectGenerator(MockStructMacroArpObject, true));
 		xml = Xml.parse('
 <mock name="name1">
 <arpArea2dField>1,2,3,4,5,6</arpArea2dField>

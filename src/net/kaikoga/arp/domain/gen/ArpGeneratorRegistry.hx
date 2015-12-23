@@ -14,13 +14,8 @@ class ArpGeneratorRegistry {
 	}
 
 	public function addGenerator<T:IArpObject>(gen:IArpGenerator<T>) {
-		this.genMap.listFor(gen.arpType).push(gen);
-	}
-
-	public function addDefaultGenerator<T:IArpObject>(gen:IArpGenerator<T>) {
-		// also add as normal generator
 		if (gen.template != null) this.genMap.listFor(gen.arpType).push(gen);
-		this.defaultGenMap.listFor(gen.arpType).push(gen);
+		if (gen.isDefault) this.defaultGenMap.listFor(gen.arpType).push(gen);
 	}
 
 	public function resolve<T:IArpObject>(seed:ArpSeed, type:ArpType):IArpGenerator<T> {

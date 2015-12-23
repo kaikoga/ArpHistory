@@ -26,7 +26,7 @@ class MacroArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addDefaultGenerator(new ArpObjectGenerator(MockMacroArpObject));
+		domain.addGenerator(new ArpObjectGenerator(MockMacroArpObject, true));
 		xml = Xml.parse('<mock name="name1" intField="42" floatField="3.14" boolField="true" stringField="stringValue" refField="/name1" />').firstElement();
 		seed = ArpSeed.fromXml(xml);
 	}

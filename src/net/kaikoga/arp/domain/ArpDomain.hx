@@ -66,10 +66,6 @@ class ArpDomain {
 		this.reg.addGenerator(gen);
 	}
 
-	public function addDefaultGenerator<T:IArpObject>(gen:IArpGenerator<T>) {
-		this.reg.addDefaultGenerator(gen);
-	}
-
 	public function loadSeed<T:IArpObject>(seed:ArpSeed, path:ArpDirectory = null, lexicalType:ArpType = null):Null<ArpSlot<T>> {
 		if (path == null) path = this.root;
 		var type:ArpType = (lexicalType != null) ? lexicalType : new ArpType(seed.typeName());

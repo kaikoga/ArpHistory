@@ -26,7 +26,7 @@ class StdDsMacroArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addDefaultGenerator(new ArpObjectGenerator(MockStdDsMacroArpObject));
+		domain.addGenerator(new ArpObjectGenerator(MockStdDsMacroArpObject, true));
 		xml = Xml.parse('
 <mock name="name1">
 	<intStdArray value="112" />

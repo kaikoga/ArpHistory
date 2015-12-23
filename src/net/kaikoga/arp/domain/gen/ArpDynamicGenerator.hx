@@ -8,16 +8,20 @@ class ArpDynamicGenerator<T:IArpObject> implements IArpGenerator<T> {
 	private var _arpType:ArpType;
 	private var dest:Class<T>;
 	private var _template:String;
+	private var _isDefault:Bool;
 
 	public var arpType(get, never):ArpType;
 	private function get_arpType():ArpType return this._arpType;
 	public var template(get, never):String;
 	private function get_template():String return this._template;
+	public var isDefault(get, never):Bool;
+	private function get_isDefault():Bool return this._isDefault;
 
-	public function new(source:ArpType, dest:Class<T>, template:String) {
+	public function new(source:ArpType, dest:Class<T>, template:String, isDefault:Bool) {
 		this._arpType = source;
 		this.dest = dest;
 		this._template = template;
+		this._isDefault = isDefault;
 	}
 
 	public function matchSeed(seed:ArpSeed, type:ArpType, template:String):Bool {
