@@ -1,5 +1,6 @@
 package net.kaikoga.arp.macro;
 
+import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.macro.mocks.MockMacroDerivedArpObject;
 import net.kaikoga.arp.macro.mocks.MockMacroArpObject;
@@ -10,7 +11,6 @@ import net.kaikoga.arp.persistable.TaggedPersistOutput;
 import net.kaikoga.arp.io.InputWrapper;
 import net.kaikoga.arp.persistable.TaggedPersistInput;
 import haxe.io.BytesOutput;
-import net.kaikoga.arp.domain.gen.ArpDynamicGenerator;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.ArpSlot;
@@ -27,7 +27,7 @@ class MacroDerivedArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addDefaultGenerator(new ArpDynamicGenerator(new ArpType("mock"), MockMacroDerivedArpObject, "macroDerived"));
+		domain.addDefaultGenerator(new ArpObjectGenerator(MockMacroDerivedArpObject));
 		xml = Xml.parse('<mock name="name1" intField="42" intField2="168" floatField="3.14" boolField="true" stringField="stringValue" refField="/name1" refField2="/name1" />').firstElement();
 		seed = ArpSeed.fromXml(xml);
 	}

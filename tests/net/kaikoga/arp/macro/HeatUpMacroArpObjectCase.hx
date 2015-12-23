@@ -1,9 +1,8 @@
 package net.kaikoga.arp.macro;
 
+import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.macro.mocks.MockMacroArpObject;
 import net.kaikoga.arp.domain.ArpHeat;
-import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arp.domain.gen.ArpDynamicGenerator;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.domain.core.ArpType;
@@ -21,7 +20,7 @@ class HeatUpMacroArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addDefaultGenerator(new ArpDynamicGenerator(new ArpType("mock"), MockMacroArpObject, "macro"));
+		domain.addDefaultGenerator(new ArpObjectGenerator(MockMacroArpObject));
 		xml = Xml.parse('<data>
 		<mock name="name1" intField="42" floatField="3.14" boolField="true" stringField="stringValue" refField="/name1" />
 		<mock name="name2" refField="/name1" />

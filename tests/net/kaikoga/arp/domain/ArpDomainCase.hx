@@ -1,6 +1,6 @@
 package net.kaikoga.arp.domain;
 
-import net.kaikoga.arp.domain.gen.ArpDynamicGenerator;
+import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.domain.mocks.MockArpObject;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.domain.core.ArpType;
@@ -15,7 +15,7 @@ class ArpDomainCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addDefaultGenerator(new ArpDynamicGenerator(new ArpType("mock"), MockArpObject, null));
+		domain.addDefaultGenerator(new ArpObjectGenerator(MockArpObject));
 		xml = Xml.parse('<data>
 		<mock name="name1" intField="42" floatField="3.14" boolField="true" stringField="stringValue" refField="/name1" />
 		<mock name="name2" refField="/name1" />

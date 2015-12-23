@@ -1,8 +1,8 @@
 package net.kaikoga.arp.macro;
 
+import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.macro.mocks.MockHookMacroArpObject;
 import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arp.domain.gen.ArpDynamicGenerator;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.domain.core.ArpType;
@@ -20,7 +20,7 @@ class HookMacroArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addDefaultGenerator(new ArpDynamicGenerator(new ArpType("mock"), MockHookMacroArpObject, "hookMacro"));
+		domain.addDefaultGenerator(new ArpObjectGenerator(MockHookMacroArpObject));
 		xml = Xml.parse('<mock name="name1" />').firstElement();
 		seed = ArpSeed.fromXml(xml);
 		slot = domain.loadSeed(seed, new ArpType("mock"));
