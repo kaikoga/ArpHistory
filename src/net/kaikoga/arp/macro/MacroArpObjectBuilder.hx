@@ -10,11 +10,13 @@ import haxe.macro.Context;
 
 class MacroArpObjectBuilder {
 
-	public static function build(arpTypeName:String, arpTemplateName:String):Array<Field> {
+	public static function build(arpTypeName:String, arpTemplateName:String = null):Array<Field> {
+		if (arpTemplateName == null) arpTemplateName = arpTypeName;
 		return new MacroArpObjectBuilder(arpTypeName, arpTemplateName).run();
 	}
 
-	public static function buildDerived(arpTypeName:String, arpTemplateName:String):Array<Field> {
+	public static function buildDerived(arpTypeName:String, arpTemplateName:String = null):Array<Field> {
+		if (arpTemplateName == null) arpTemplateName = arpTypeName;
 		return new MacroArpObjectBuilder(arpTypeName, arpTemplateName, true).run();
 	}
 
