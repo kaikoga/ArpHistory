@@ -11,6 +11,7 @@ interface IMacroArpObjectValueType {
 	function readSeedElement(pos:Position, iFieldName:String):Expr;
 	function readSelf(pos:Position, iFieldName:String, eColumnName:ExprOf<String>):Expr;
 	function writeSelf(pos:Position, iFieldName:String, eColumnName:ExprOf<String>):Expr;
+	function copyFrom(pos:Position, iFieldName:String):Expr;
 
 }
 

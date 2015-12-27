@@ -57,6 +57,10 @@ class MacroArpObjectValueField extends MacroArpObjectFieldBase implements IMacro
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
 		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.writeSelf(this.nativePos, this.iFieldName, this.eColumnName)}; });
 	}
+
+	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
+		copyFromBlock.push(macro @:pos(this.nativePos) { ${this.type.copyFrom(this.nativePos, this.iFieldName)}; });
+	}
 }
 
 #end

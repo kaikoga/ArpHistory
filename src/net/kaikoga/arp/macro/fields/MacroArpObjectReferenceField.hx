@@ -91,6 +91,10 @@ class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IM
 		var iFieldSlot:String = iFieldName + "Slot";
 		fieldBlock.push(macro @:pos(this.nativePos) { output.writeUtf(${this.eColumnName}, this.$iFieldSlot.sid.toString()); });
 	}
+
+	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
+		copyFromBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = src.$iFieldName; });
+	}
 }
 
 #end

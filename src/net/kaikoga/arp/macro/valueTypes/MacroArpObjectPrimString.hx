@@ -31,6 +31,10 @@ class MacroArpObjectPrimString implements IMacroArpObjectValueType {
 		// return macro @:pos(pos) { output.writeUtf($v{iFieldName}, this.$iFieldName); };
 		return macro @:pos(pos) { net.kaikoga.arp.persistable.PersistableTool.writeNullableUtf(output, ${eColumnName}, this.$iFieldName); };
 	}
+
+	public function copyFrom(pos:Position, iFieldName:String):Expr {
+		return macro @:pos(pos) { this.$iFieldName = src.$iFieldName; };
+	}
 }
 
 #end

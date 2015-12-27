@@ -27,6 +27,10 @@ class MacroArpObjectPrimBool implements IMacroArpObjectValueType {
 	public function writeSelf(pos:Position, iFieldName:String, eColumnName:ExprOf<String>):Expr {
 		return macro @:pos(pos) { output.writeBool($v{iFieldName}, this.$iFieldName); };
 	}
+
+	public function copyFrom(pos:Position, iFieldName:String):Expr {
+		return macro @:pos(pos) { this.$iFieldName = src.$iFieldName; };
+	}
 }
 
 #end

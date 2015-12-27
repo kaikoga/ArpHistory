@@ -62,6 +62,10 @@ class MacroArpObjectStdMapField extends MacroArpObjectFieldBase implements IMacr
 		// FIXME persist over serialize
 		fieldBlock.push(macro @:pos(this.nativePos) { output.writeUtf($v{iFieldName}, haxe.Serializer.run(this.$iFieldName)); });
 	}
+
+	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
+		copyFromBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = src.$iFieldName.copy(); });
+	}
 }
 
 #end

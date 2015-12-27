@@ -2,8 +2,11 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
+import net.kaikoga.arp.domain.IArpObject;
+
 import haxe.macro.Context;
 import haxe.macro.Expr;
+import haxe.macro.Type;
 
 class MacroArpObjectStub {
 
@@ -28,6 +31,22 @@ class MacroArpObjectStub {
 	private function buildDisposeBlock():Array<Expr> return buildBlock("buildDisposeBlock");
 	private function buildReadSelfBlock():Array<Expr> return buildBlock("buildReadSelfBlock");
 	private function buildWriteSelfBlock():Array<Expr> return buildBlock("buildWriteSelfBlock");
+	private function buildCopyFromBlock():Array<Expr> return buildBlock("buildCopyFromBlock");
+
+	private function genSelfTypePath():TypePath {
+		var localClassRef:Null<Ref<ClassType>> = Context.getLocalClass();
+		var localClass:ClassType = localClassRef.get();
+		return {
+			pack: localClass.pack,
+			name: localClass.name
+		}
+	}
+
+	private function genSelfComplexType():ComplexType {
+		// FIXME
+		return ComplexType.TPath({pack:[], name:"Dynamic"});
+		//return ComplexType.TPath(this.genSelfTypePath());
+	}
 
 	private function buildArpConsumeSeedElement():Array<Expr> {
 		var cases:Array<Case> = [];
@@ -41,6 +60,8 @@ class MacroArpObjectStub {
 	}
 
 	private function genTypeFields():Array<Field> {
+		var selfTypePath = this.genSelfTypePath();
+		var selfComplexType = this.genSelfComplexType();
 		return (macro class Generated {
 			private var _arpDomain:net.kaikoga.arp.domain.ArpDomain;
 			public function arpDomain():net.kaikoga.arp.domain.ArpDomain return this._arpDomain;
@@ -93,10 +114,26 @@ class MacroArpObjectStub {
 			public function writeSelf(output:net.kaikoga.arp.persistable.IPersistOutput):Void {
 				$b{ this.buildWriteSelfBlock() }
 			}
+
+			@:access(net.kaikoga.arp.domain.ArpDomain)
+			public function arpClone():net.kaikoga.arp.domain.IArpObject {
+				var clone:$selfComplexType = new $selfTypePath();
+				clone.arpInit(this._arpDomain.allocSlot());
+				clone.arpCopyFrom(this);
+				return clone;
+			}
+
+			public function arpCopyFrom(source:net.kaikoga.arp.domain.IArpObject):net.kaikoga.arp.domain.IArpObject {
+				var src:$selfComplexType = cast source;
+				$b{ this.buildCopyFromBlock() }
+				return this;
+			}
 		}).fields;
 	}
 
 	private function genDerivedTypeFields():Array<Field> {
+		var selfTypePath = this.genSelfTypePath();
+		var selfComplexType = this.genSelfComplexType();
 		return (macro class Generated {
 			public static var _arpTypeInfo(default, never):net.kaikoga.arp.domain.ArpTypeInfo = new net.kaikoga.arp.domain.ArpTypeInfo($v{arpTemplateName}, new net.kaikoga.arp.domain.core.ArpType($v{arpTypeName}));
 			override public function arpTypeInfo():net.kaikoga.arp.domain.ArpTypeInfo return _arpTypeInfo;
@@ -139,6 +176,20 @@ class MacroArpObjectStub {
 			override public function writeSelf(output:net.kaikoga.arp.persistable.IPersistOutput):Void {
 				super.writeSelf(output);
 				$b{ this.buildWriteSelfBlock() }
+			}
+
+			@:access(net.kaikoga.arp.domain.ArpDomain)
+			override public function arpClone():net.kaikoga.arp.domain.IArpObject {
+				var clone:$selfComplexType = new $selfTypePath();
+				clone.arpInit(this._arpDomain.allocSlot());
+				clone.arpCopyFrom(this);
+				return clone;
+			}
+
+			override public function arpCopyFrom(source:net.kaikoga.arp.domain.IArpObject):net.kaikoga.arp.domain.IArpObject {
+				var src:$selfComplexType = cast source;
+				$b{ this.buildCopyFromBlock() }
+				return super.arpCopyFrom(source);
 			}
 		}).fields;
 	}

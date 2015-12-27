@@ -14,6 +14,7 @@ interface IMacroArpObjectField {
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void;
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void;
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void;
+	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void;
 }
 
 #end

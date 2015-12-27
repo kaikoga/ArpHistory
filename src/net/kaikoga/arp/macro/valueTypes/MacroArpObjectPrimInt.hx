@@ -27,6 +27,10 @@ class MacroArpObjectPrimInt implements IMacroArpObjectValueType {
 	public function writeSelf(pos:Position, iFieldName:String, eColumnName:ExprOf<String>):Expr {
 		return macro @:pos(pos) { output.writeInt32(${eColumnName}, this.$iFieldName); };
 	}
+
+	public function copyFrom(pos:Position, iFieldName:String):Expr {
+		return macro @:pos(pos) { this.$iFieldName = src.$iFieldName; };
+	}
 }
 
 #end

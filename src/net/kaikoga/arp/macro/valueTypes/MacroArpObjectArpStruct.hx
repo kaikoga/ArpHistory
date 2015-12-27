@@ -38,6 +38,10 @@ class MacroArpObjectArpStruct implements IMacroArpObjectValueType {
 	public function writeSelf(pos:Position, iFieldName:String, eColumnName:ExprOf<String>):Expr {
 		return macro @:pos(pos) { output.writePersistable(${eColumnName}, this.$iFieldName); };
 	}
+
+	public function copyFrom(pos:Position, iFieldName:String):Expr {
+		return macro @:pos(pos) { this.$iFieldName.copyFrom(src.$iFieldName); };
+	}
 }
 
 #end
