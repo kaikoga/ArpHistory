@@ -1,5 +1,7 @@
 package net.kaikoga.arp.tests;
 
+import net.kaikoga.arp.persistable.DynamicPersistOutput;
+import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.io.OutputWrapper;
 import haxe.io.BytesInput;
@@ -39,6 +41,7 @@ class ArpDomainTestUtil {
 	}
 	#end
 
+	@:noUsing
 	macro public static function string(file:String, section:String):ExprOf<String> {
 		switch (readFile(file)) {
 			case Option.Some(text):
@@ -53,6 +56,7 @@ class ArpDomainTestUtil {
 		}
 	}
 
+	@:noUsing
 	public static function roundTrip<T:IArpObject>(domain:ArpDomain, inObject:T, klass:Class<T>):T {
 		var bytesOutput:BytesOutput = new BytesOutput();
 		inObject.writeSelf(new TaggedPersistOutput(new OutputWrapper(bytesOutput)));
@@ -61,4 +65,9 @@ class ArpDomainTestUtil {
 		return outObject;
 	}
 
+	inline public static function toHash(persistable:IPersistable):Dynamic {
+		var result:Dynamic = {};
+		persistable.writeSelf(new DynamicPersistOutput(result));
+		return result;
+	}
 }

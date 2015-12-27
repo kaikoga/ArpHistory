@@ -2,16 +2,8 @@ package net.kaikoga.arp.macro;
 
 import net.kaikoga.arp.tests.ArpDomainTestUtil;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
-import net.kaikoga.arp.persistable.DynamicPersistOutput;
-import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.macro.mocks.MockStructMacroArpObject;
 import net.kaikoga.arp.domain.IArpObject;
-import haxe.io.BytesInput;
-import net.kaikoga.arp.io.OutputWrapper;
-import net.kaikoga.arp.io.InputWrapper;
-import net.kaikoga.arp.persistable.TaggedPersistInput;
-import net.kaikoga.arp.persistable.TaggedPersistOutput;
-import haxe.io.BytesOutput;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.domain.core.ArpType;
@@ -19,15 +11,9 @@ import net.kaikoga.arp.domain.ArpSlot;
 
 import picotest.PicoAssert.*;
 
-using net.kaikoga.arp.macro.ArpStructsMacroArpObjectCase;
+using net.kaikoga.arp.tests.ArpDomainTestUtil;
 
 class ArpStructsMacroArpObjectCase {
-
-	inline public static function toHash(persistable:IPersistable):Dynamic {
-		var result:Dynamic = {};
-		persistable.writeSelf(new DynamicPersistOutput(result));
-		return result;
-	}
 
 	private var domain:ArpDomain;
 	private var slot:ArpSlot<MockStructMacroArpObject>;

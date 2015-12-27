@@ -250,13 +250,13 @@ class ArpArea2d implements IPersistable {
 	}
 
 	public function copyFrom(source:ArpArea2d):ArpArea2d {
-		this.x = source.width;
-		this.y = source.height;
+		this.x = source.x;
+		this.y = source.y;
 		this._gridSize = source._gridSize;
 		this.areaLeft = source.areaLeft;
+		this.areaTop = source.areaTop;
 		this.areaRight = source.areaRight;
-		this.width = source.width;
-		this.height = source.height;
+		this.areaBottom = source.areaBottom;
 		return this;
 	}
 
