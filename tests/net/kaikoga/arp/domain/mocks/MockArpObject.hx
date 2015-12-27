@@ -107,12 +107,21 @@ class MockArpObject implements IArpObject {
 		output.writeUtf("refField", this.refFieldSlot.sid.toString());
 	}
 
+	@:access(net.kaikoga.arp.domain.ArpDomain)
 	public function arpClone():IArpObject {
-		return this;
+		var clone:MockArpObject = new MockArpObject();
+		clone.arpInit(this._arpDomain.allocSlot());
+		clone.arpCopyFrom(this);
+		return clone;
 	}
 
 	public function arpCopyFrom(source:IArpObject):IArpObject {
+		var src:MockArpObject = cast source;
+		this.intField = src.intField;
+		this.floatField = src.floatField;
+		this.boolField = src.boolField;
+		this.stringField = src.stringField;
+		this.refField = src.refField;
 		return this;
 	}
-
 }

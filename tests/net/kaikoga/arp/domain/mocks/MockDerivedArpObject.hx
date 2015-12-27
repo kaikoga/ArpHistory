@@ -61,12 +61,19 @@ class MockDerivedArpObject extends MockArpObject {
 		output.writeUtf("refField2", this.refField2Slot.sid.toString());
 	}
 
+	@:access(net.kaikoga.arp.domain.ArpDomain)
 	override public function arpClone():IArpObject {
-		return this;
+		var clone:MockDerivedArpObject = new MockDerivedArpObject();
+		clone.arpInit(this._arpDomain.allocSlot());
+		clone.arpCopyFrom(this);
+		return clone;
 	}
 
 	override public function arpCopyFrom(source:IArpObject):IArpObject {
-		return this;
+		var src:MockDerivedArpObject = cast source;
+		this.intField2 = src.intField2;
+		this.refField2 = src.refField2;
+		return super.arpCopyFrom(source);
 	}
 
 }
