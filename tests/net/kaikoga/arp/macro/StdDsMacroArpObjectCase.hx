@@ -105,7 +105,7 @@ class StdDsMacroArpObjectCase {
 		assertMatch(original.floatStdArray, clone.floatStdArray);
 		assertMatch(original.boolStdArray, clone.boolStdArray);
 		assertMatch(original.stringStdArray, clone.stringStdArray);
-		assertMatch(original.intStdList.array(), clone.intStdList.array());
+
 		assertMatch(original.floatStdList.array(), clone.floatStdList.array());
 		assertMatch(original.boolStdList.array(), clone.boolStdList.array());
 		assertMatch(original.stringStdList.array(), clone.stringStdList.array());

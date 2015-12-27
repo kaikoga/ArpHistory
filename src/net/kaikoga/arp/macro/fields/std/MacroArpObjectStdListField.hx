@@ -66,7 +66,7 @@ class MacroArpObjectStdListField extends MacroArpObjectFieldBase implements IMac
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
 		copyFromBlock.push(macro @:pos(this.nativePos) {
 			this.$iFieldName = new List();
-			for (v in src.$iFieldName) this.$iFieldName.push(v);
+			for (v in src.$iFieldName) this.$iFieldName.add(v);
 		});
 	}
 }
