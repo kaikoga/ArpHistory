@@ -76,4 +76,5 @@ class ArpUntypedSlot {
 		this.sid = sid;
 	}
 
+	public function toString():String return '[ArpUntypedSlot $sid]';
 }
