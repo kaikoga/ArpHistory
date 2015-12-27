@@ -64,7 +64,10 @@ class MacroArpObjectStdMapField extends MacroArpObjectFieldBase implements IMacr
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
-		copyFromBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = src.$iFieldName.copy(); });
+		copyFromBlock.push(macro @:pos(this.nativePos) {
+			this.$iFieldName = new Map();
+			for (k in src.$iFieldName.keys()) this.$iFieldName.set(k, src.$iFieldName.get(k));
+		});
 	}
 }
 

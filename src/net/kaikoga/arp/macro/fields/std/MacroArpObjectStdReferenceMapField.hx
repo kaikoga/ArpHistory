@@ -79,7 +79,10 @@ class MacroArpObjectStdReferenceMapField extends MacroArpObjectFieldBase impleme
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
-		copyFromBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = src.$iFieldName.copy(); });
+		copyFromBlock.push(macro @:pos(this.nativePos) {
+			for (k in this.$iFieldName.keys()) this.$iFieldName.remove(k);
+			for (k in src.$iFieldName.keys()) this.$iFieldName.set(k, src.$iFieldName.get(k));
+		});
 	}
 }
 

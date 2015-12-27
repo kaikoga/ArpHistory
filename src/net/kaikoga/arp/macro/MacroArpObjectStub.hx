@@ -43,9 +43,7 @@ class MacroArpObjectStub {
 	}
 
 	private function genSelfComplexType():ComplexType {
-		// FIXME
-		return ComplexType.TPath({pack:[], name:"Dynamic"});
-		//return ComplexType.TPath(this.genSelfTypePath());
+		return ComplexType.TPath(this.genSelfTypePath());
 	}
 
 	private function buildArpConsumeSeedElement():Array<Expr> {
