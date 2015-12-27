@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain;
 
+import net.kaikoga.arp.tests.ArpDomainTestUtil;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.domain.mocks.MockArpObject;
 import haxe.io.BytesInput;
@@ -79,30 +80,33 @@ class MockDerivedArpObjectCase {
 		assertMatch(arpObj, arpObj.refField2);
 	}
 
-	private function roundTrip<T:IArpObject>(inObject:T, klass:Class<T>):T {
-		var bytesOutput:BytesOutput = new BytesOutput();
-		inObject.writeSelf(new TaggedPersistOutput(new OutputWrapper(bytesOutput)));
-		var outObject:T = domain.allocObject(klass);
-		outObject.readSelf(new TaggedPersistInput(new InputWrapper(new BytesInput(bytesOutput.getBytes()))));
-		return outObject;
+	private function checkIsClone(original:MockDerivedArpObject, clone:MockDerivedArpObject):Void {
+		assertEquals(original.arpDomain(), clone.arpDomain());
+		assertEquals(original.arpType(), clone.arpType());
+		assertNotEquals(original.arpSlot(), clone.arpSlot());
+
+		assertEquals(original.intField, clone.intField);
+		assertEquals(original.intField2, clone.intField2);
+		assertEquals(original.floatField, clone.floatField);
+		assertEquals(original.boolField, clone.boolField);
+		assertEquals(original.stringField, clone.stringField);
+		assertMatch(original.refField, clone.refField);
+		assertMatch(original.refField2, clone.refField2);
 	}
 
 	public function testPersistable():Void {
 		slot = domain.loadSeed(seed, new ArpType("mock"));
 		arpObj = cast slot.value;
 
-		var arpObj2:MockDerivedArpObject = roundTrip(arpObj, MockDerivedArpObject);
+		var clone:MockDerivedArpObject = ArpDomainTestUtil.roundTrip(domain, arpObj, MockDerivedArpObject);
+		checkIsClone(arpObj, clone);
+	}
 
-		assertEquals(arpObj.arpDomain(), arpObj2.arpDomain());
-		assertEquals(arpObj.arpType(), arpObj2.arpType());
-		assertNotEquals(arpObj.arpSlot(), arpObj2.arpSlot());
+	public function testArpClone():Void {
+		slot = domain.loadSeed(seed, new ArpType("mock"));
+		arpObj = cast slot.value;
 
-		assertEquals(arpObj.intField, arpObj2.intField);
-		assertEquals(arpObj.intField2, arpObj2.intField2);
-		assertEquals(arpObj.floatField, arpObj2.floatField);
-		assertEquals(arpObj.boolField, arpObj2.boolField);
-		assertEquals(arpObj.stringField, arpObj2.stringField);
-		assertMatch(arpObj.refField, arpObj2.refField);
-		assertMatch(arpObj.refField2, arpObj2.refField2);
+		var clone:MockDerivedArpObject = cast arpObj.arpClone();
+		checkIsClone(arpObj, clone);
 	}
 }

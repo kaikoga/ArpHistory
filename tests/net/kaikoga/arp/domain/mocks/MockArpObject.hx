@@ -107,4 +107,12 @@ class MockArpObject implements IArpObject {
 		output.writeUtf("refField", this.refFieldSlot.sid.toString());
 	}
 
+	public function arpClone():IArpObject {
+		return this;
+	}
+
+	public function arpCopyFrom(source:IArpObject):IArpObject {
+		return this;
+	}
+
 }

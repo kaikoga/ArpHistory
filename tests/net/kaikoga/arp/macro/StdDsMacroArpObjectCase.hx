@@ -1,5 +1,6 @@
 package net.kaikoga.arp.macro;
 
+import net.kaikoga.arp.tests.ArpDomainTestUtil;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.macro.mocks.MockStdDsMacroArpObject;
 import net.kaikoga.arp.domain.IArpObject;
@@ -95,41 +96,44 @@ class StdDsMacroArpObjectCase {
 		assertEquals(arpObj, arpObj.refStdMap.get("key0"));
 	}
 
-	private function roundTrip<T:IArpObject>(inObject:T, klass:Class<T>):T {
-		var bytesOutput:BytesOutput = new BytesOutput();
-		inObject.writeSelf(new TaggedPersistOutput(new OutputWrapper(bytesOutput)));
-		var outObject:T = domain.allocObject(klass);
-		outObject.readSelf(new TaggedPersistInput(new InputWrapper(new BytesInput(bytesOutput.getBytes()))));
-		return outObject;
+	private function checkIsClone(original:MockStdDsMacroArpObject, clone:MockStdDsMacroArpObject):Void {
+		assertEquals(original.arpDomain(), clone.arpDomain());
+		assertEquals(original.arpType(), clone.arpType());
+		assertNotEquals(original.arpSlot(), clone.arpSlot());
+
+		assertMatch(original.intStdArray, clone.intStdArray);
+		assertMatch(original.floatStdArray, clone.floatStdArray);
+		assertMatch(original.boolStdArray, clone.boolStdArray);
+		assertMatch(original.stringStdArray, clone.stringStdArray);
+		assertMatch(original.intStdList.array(), clone.intStdList.array());
+		assertMatch(original.floatStdList.array(), clone.floatStdList.array());
+		assertMatch(original.boolStdList.array(), clone.boolStdList.array());
+		assertMatch(original.stringStdList.array(), clone.stringStdList.array());
+		assertEquals(original.intStdMap.get("key1"), clone.intStdMap.get("key1"));
+		assertEquals(original.intStdMap.get("key2"), clone.intStdMap.get("key2"));
+		assertEquals(original.floatStdMap.get("key3"), clone.floatStdMap.get("key3"));
+		assertEquals(original.floatStdMap.get("key4"), clone.floatStdMap.get("key4"));
+		assertEquals(original.boolStdMap.get("key5"), clone.boolStdMap.get("key5"));
+		assertEquals(original.boolStdMap.get("key6"), clone.boolStdMap.get("key6"));
+		assertEquals(original.stringStdMap.get("key7"), clone.stringStdMap.get("key7"));
+		assertEquals(original.stringStdMap.get("key8"), clone.stringStdMap.get("key8"));
+		assertEquals(original.refStdMap.get("key9"), clone.refStdMap.get("key9"));
+		assertEquals(original.refStdMap.get("key0"), clone.refStdMap.get("key0"));
 	}
 
 	public function testPersistable():Void {
 		slot = domain.loadSeed(seed, new ArpType("mock"));
 		arpObj = slot.value;
 
-		var arpObj2:MockStdDsMacroArpObject = roundTrip(arpObj, MockStdDsMacroArpObject);
+		var clone:MockStdDsMacroArpObject = ArpDomainTestUtil.roundTrip(domain, arpObj, MockStdDsMacroArpObject);
+		checkIsClone(arpObj, clone);
+	}
 
-		assertEquals(arpObj.arpDomain(), arpObj2.arpDomain());
-		assertEquals(arpObj.arpType(), arpObj2.arpType());
-		assertNotEquals(arpObj.arpSlot(), arpObj2.arpSlot());
+	public function testArpClone():Void {
+		slot = domain.loadSeed(seed, new ArpType("mock"));
+		arpObj = slot.value;
 
-		assertMatch(arpObj.intStdArray, arpObj2.intStdArray);
-		assertMatch(arpObj.floatStdArray, arpObj2.floatStdArray);
-		assertMatch(arpObj.boolStdArray, arpObj2.boolStdArray);
-		assertMatch(arpObj.stringStdArray, arpObj2.stringStdArray);
-		assertMatch(arpObj.intStdList.array(), arpObj2.intStdList.array());
-		assertMatch(arpObj.floatStdList.array(), arpObj2.floatStdList.array());
-		assertMatch(arpObj.boolStdList.array(), arpObj2.boolStdList.array());
-		assertMatch(arpObj.stringStdList.array(), arpObj2.stringStdList.array());
-		assertEquals(arpObj.intStdMap.get("key1"), arpObj2.intStdMap.get("key1"));
-		assertEquals(arpObj.intStdMap.get("key2"), arpObj2.intStdMap.get("key2"));
-		assertEquals(arpObj.floatStdMap.get("key3"), arpObj2.floatStdMap.get("key3"));
-		assertEquals(arpObj.floatStdMap.get("key4"), arpObj2.floatStdMap.get("key4"));
-		assertEquals(arpObj.boolStdMap.get("key5"), arpObj2.boolStdMap.get("key5"));
-		assertEquals(arpObj.boolStdMap.get("key6"), arpObj2.boolStdMap.get("key6"));
-		assertEquals(arpObj.stringStdMap.get("key7"), arpObj2.stringStdMap.get("key7"));
-		assertEquals(arpObj.stringStdMap.get("key8"), arpObj2.stringStdMap.get("key8"));
-		assertEquals(arpObj.refStdMap.get("key9"), arpObj2.refStdMap.get("key9"));
-		assertEquals(arpObj.refStdMap.get("key0"), arpObj2.refStdMap.get("key0"));
+		var clone:MockStdDsMacroArpObject = cast arpObj.arpClone();
+		checkIsClone(arpObj, clone);
 	}
 }

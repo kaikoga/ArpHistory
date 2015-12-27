@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain;
 
+import net.kaikoga.arp.tests.ArpDomainTestUtil;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import haxe.io.BytesInput;
 import net.kaikoga.arp.io.OutputWrapper;
@@ -72,28 +73,31 @@ class MockColumnArpObjectCase {
 		assertEquals(arpObj, arpObj.refField);
 	}
 
-	private function roundTrip<T:IArpObject>(inObject:T, klass:Class<T>):T {
-		var bytesOutput:BytesOutput = new BytesOutput();
-		inObject.writeSelf(new TaggedPersistOutput(new OutputWrapper(bytesOutput)));
-		var outObject:T = domain.allocObject(klass);
-		outObject.readSelf(new TaggedPersistInput(new InputWrapper(new BytesInput(bytesOutput.getBytes()))));
-		return outObject;
+	private function checkIsClone(original:MockColumnArpObject, clone:MockColumnArpObject):Void {
+		assertEquals(original.arpDomain(), clone.arpDomain());
+		assertEquals(original.arpType(), clone.arpType());
+		assertNotEquals(original.arpSlot(), clone.arpSlot());
+
+		assertEquals(original.intField, clone.intField);
+		assertEquals(original.floatField, clone.floatField);
+		assertEquals(original.boolField, clone.boolField);
+		assertEquals(original.stringField, clone.stringField);
+		assertEquals(original.refField, clone.refField);
 	}
 
 	public function testPersistable():Void {
 		slot = domain.loadSeed(seed, new ArpType("mock"));
 		arpObj = slot.value;
 
-		var arpObj2:MockColumnArpObject = roundTrip(arpObj, MockColumnArpObject);
+		var clone:MockColumnArpObject = ArpDomainTestUtil.roundTrip(domain, arpObj, MockColumnArpObject);
+		checkIsClone(arpObj, clone);
+	}
 
-		assertEquals(arpObj.arpDomain(), arpObj2.arpDomain());
-		assertEquals(arpObj.arpType(), arpObj2.arpType());
-		assertNotEquals(arpObj.arpSlot(), arpObj2.arpSlot());
+	public function testArpClone():Void {
+		slot = domain.loadSeed(seed, new ArpType("mock"));
+		arpObj = slot.value;
 
-		assertEquals(arpObj.intField, arpObj2.intField);
-		assertEquals(arpObj.floatField, arpObj2.floatField);
-		assertEquals(arpObj.boolField, arpObj2.boolField);
-		assertEquals(arpObj.stringField, arpObj2.stringField);
-		assertEquals(arpObj.refField, arpObj2.refField);
+		var clone:MockColumnArpObject = cast arpObj.arpClone();
+		checkIsClone(arpObj, clone);
 	}
 }

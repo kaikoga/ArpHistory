@@ -1,5 +1,14 @@
 package net.kaikoga.arp.tests;
 
+import net.kaikoga.arp.domain.ArpDomain;
+import net.kaikoga.arp.io.OutputWrapper;
+import haxe.io.BytesInput;
+import net.kaikoga.arp.io.InputWrapper;
+import net.kaikoga.arp.persistable.TaggedPersistInput;
+import net.kaikoga.arp.persistable.TaggedPersistOutput;
+import haxe.io.BytesOutput;
+import net.kaikoga.arp.domain.IArpObject;
+
 #if macro
 import haxe.ds.Option;
 import haxe.macro.Context;
@@ -43,4 +52,13 @@ class ArpDomainTestUtil {
 				return macro $v{'!!! file not found $file $section !!!'};
 		}
 	}
+
+	public static function roundTrip<T:IArpObject>(domain:ArpDomain, inObject:T, klass:Class<T>):T {
+		var bytesOutput:BytesOutput = new BytesOutput();
+		inObject.writeSelf(new TaggedPersistOutput(new OutputWrapper(bytesOutput)));
+		var outObject:T = domain.allocObject(klass);
+		outObject.readSelf(new TaggedPersistInput(new InputWrapper(new BytesInput(bytesOutput.getBytes()))));
+		return outObject;
+	}
+
 }

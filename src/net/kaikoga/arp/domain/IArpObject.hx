@@ -13,6 +13,8 @@ interface IArpObject extends IPersistable {
 	function arpSlot():ArpUntypedSlot;
 	function arpInit(slot:ArpUntypedSlot, seed:ArpSeed = null):IArpObject;
 	function arpDispose():Void;
+	function arpClone():IArpObject;
+	function arpCopyFrom(source:IArpObject):IArpObject;
 
 	function arpHeatLater():Void;
 	function arpHeatUp():Bool;

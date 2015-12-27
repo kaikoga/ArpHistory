@@ -1,5 +1,6 @@
 package net.kaikoga.arp.macro;
 
+import net.kaikoga.arp.tests.ArpDomainTestUtil;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.persistable.DynamicPersistOutput;
 import net.kaikoga.arp.persistable.IPersistable;
@@ -73,29 +74,32 @@ class ArpStructsMacroArpObjectCase {
 		assertMatch({min:7, max:9}, arpObj.arpRangeField.toHash());
 	}
 
-	private function roundTrip<T:IArpObject>(inObject:T, klass:Class<T>):T {
-		var bytesOutput:BytesOutput = new BytesOutput();
-		inObject.writeSelf(new TaggedPersistOutput(new OutputWrapper(bytesOutput)));
-		var outObject:T = domain.allocObject(klass);
-		outObject.readSelf(new TaggedPersistInput(new InputWrapper(new BytesInput(bytesOutput.getBytes()))));
-		return outObject;
+	private function checkIsClone(original:MockStructMacroArpObject, clone:MockStructMacroArpObject):Void {
+		assertEquals(original.arpDomain(), clone.arpDomain());
+		assertEquals(original.arpType(), clone.arpType());
+		assertNotEquals(original.arpSlot(), clone.arpSlot());
+
+		assertMatch(original.arpArea2dField.toHash(), clone.arpArea2dField.toHash());
+		assertMatch(original.arpColorField.toHash(), clone.arpColorField.toHash());
+		assertMatch(original.arpDirectionField.toHash(), clone.arpDirectionField.toHash());
+		assertMatch(original.arpHitAreaField.toHash(), clone.arpHitAreaField.toHash());
+		assertMatch(original.arpPositionField.toHash(), clone.arpPositionField.toHash());
+		assertMatch(original.arpRangeField.toHash(), clone.arpRangeField.toHash());
 	}
 
 	public function testPersistable():Void {
 		slot = domain.loadSeed(seed, new ArpType("mock"));
 		arpObj = slot.value;
 
-		var arpObj2:MockStructMacroArpObject = roundTrip(arpObj, MockStructMacroArpObject);
+		var clone:MockStructMacroArpObject = ArpDomainTestUtil.roundTrip(domain, arpObj, MockStructMacroArpObject);
+		checkIsClone(arpObj, clone);
+	}
 
-		assertEquals(arpObj.arpDomain(), arpObj2.arpDomain());
-		assertEquals(arpObj.arpType(), arpObj2.arpType());
-		assertNotEquals(arpObj.arpSlot(), arpObj2.arpSlot());
+	public function testArpClone():Void {
+		slot = domain.loadSeed(seed, new ArpType("mock"));
+		arpObj = slot.value;
 
-		assertMatch(arpObj.arpArea2dField.toHash(), arpObj.arpArea2dField.toHash());
-		assertMatch(arpObj.arpColorField.toHash(), arpObj.arpColorField.toHash());
-		assertMatch(arpObj.arpDirectionField.toHash(), arpObj.arpDirectionField.toHash());
-		assertMatch(arpObj.arpHitAreaField.toHash(), arpObj.arpHitAreaField.toHash());
-		assertMatch(arpObj.arpPositionField.toHash(), arpObj.arpPositionField.toHash());
-		assertMatch(arpObj.arpRangeField.toHash(), arpObj.arpRangeField.toHash());
+		var clone:MockStructMacroArpObject = cast arpObj.arpClone();
+		checkIsClone(arpObj, clone);
 	}
 }
