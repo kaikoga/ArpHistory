@@ -1,6 +1,6 @@
 package net.kaikoga.arp.events;
 
-class ArpSignal<T> {
+class ArpSignal<T> implements IArpSignalOut<T> implements IArpSignalIn<T> {
 
 	private var handlers:Array<T->Void>;
 	public function new() {
