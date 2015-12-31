@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain;
 
+import net.kaikoga.arp.domain.events.ArpLogEvent;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.domain.mocks.MockArpObject;
 import net.kaikoga.arp.domain.seed.ArpSeed;
@@ -71,6 +72,16 @@ class ArpDomainCase {
 		domain.tick.dispatch(1.0);
 		assertEquals(ArpHeat.Warm, query1.slot().heat);
 		assertEquals(ArpHeat.Warm, query2.slot().heat);
+	}
+
+	public function testLog():Void {
+		var event:ArpLogEvent;
+		domain.onLog.push(function(e:ArpLogEvent):Void {
+			event = e;
+		});
+		domain.log("category1", "message2");
+		assertEquals("category1", event.category);
+		assertEquals("message2", event.message);
 	}
 
 	public function testGc():Void {

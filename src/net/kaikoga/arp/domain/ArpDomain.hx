@@ -1,5 +1,7 @@
 package net.kaikoga.arp.domain;
 
+import net.kaikoga.arp.events.IArpSignalOut;
+import net.kaikoga.arp.domain.events.ArpLogEvent;
 import net.kaikoga.arp.events.ArpSignal;
 import net.kaikoga.arp.domain.prepare.PrepareQueue;
 import net.kaikoga.arp.domain.dump.ArpDomainDump;
@@ -27,8 +29,13 @@ class ArpDomain {
 
 	public var tick(default, null):ArpSignal<Float>;
 
+	private var _onLog:ArpSignal<ArpLogEvent>;
+	public var onLog(get, never):IArpSignalOut<ArpLogEvent>;
+	private function get_onLog():IArpSignalOut<ArpLogEvent> return this._onLog;
+
 	public function new() {
 		this.tick = new ArpSignal();
+		this._onLog = new ArpSignal();
 		this.root = this.allocDir(new ArpDid(""));
 		this.slots = new Map();
 		this.nullSlot = this.allocSlot(new ArpSid(""));
@@ -110,7 +117,7 @@ class ArpDomain {
 	}
 
 	public function log(category:String, message:String):Void {
-		if (category != "arp_debug_prepare") throw 'ArpDomain.log(): [${category}] ${message}';
+		this._onLog.dispatch(new ArpLogEvent(category, message));
 	}
 
 	public function heatLater(slot:ArpUntypedSlot):Void {
