@@ -86,14 +86,22 @@ class ListOpCase {
 		me = ListOp.bulkPush(me, b);
 		assertNotEquals(a, me);
 		assertNotEquals(b, me);
-		assertMatch([1, 3, 5, 7, 2, 3, 4, 5], values());
+		if (me.isUniqueValue) {
+			assertMatch([1, 3, 5, 7, 2, 4], values());
+		} else {
+			assertMatch([1, 3, 5, 7, 2, 3, 4, 5], values());
+		}
 	}
 
 	public function testBulkPushArray():Void {
 		var a:IList<Int> = argA();
 		me = ListOp.bulkPushArray(me, [12, 24, 36]);
 		me = ListOp.bulkPushArray(me, [8, 16, 24, 32, 40]);
-		assertMatch([12, 24, 36, 8, 16, 24, 32, 40], values());
+		if (me.isUniqueValue) {
+			assertMatch([12, 24, 36, 8, 16, 32, 40], values());
+		} else {
+			assertMatch([12, 24, 36, 8, 16, 24, 32, 40], values());
+		}
 	}
 
 	public function testToArray():Void {

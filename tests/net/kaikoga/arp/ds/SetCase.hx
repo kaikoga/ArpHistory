@@ -48,14 +48,19 @@ class SetCase {
 		assertFalse(me.hasValue(2));
 	}
 
-	public function testAddNoDuplicateValue():Void {
+	public function testAddDuplicateValue():Void {
 		me.add(1);
 		me.add(1);
 		assertFalse(me.isEmpty());
 		assertTrue(me.hasValue(1));
 		me.remove(1);
-		assertTrue(me.isEmpty());
-		assertFalse(me.hasValue(1));
+		if (me.isUniqueValue) {
+			assertTrue(me.isEmpty());
+			assertFalse(me.hasValue(1));
+		} else {
+			assertFalse(me.isEmpty());
+			assertTrue(me.hasValue(1));
+		}
 	}
 
 	public function testEmptyIterator():Void {

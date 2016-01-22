@@ -29,11 +29,16 @@ class ArpSupportTestSuite {
 
 	public static function addTo(r:PicoTestRunner) {
 		r.load(ERegIteratorCase);
-		
+
 		r.load(SetCase, setProvider());
 		r.load(ListCase, listProvider());
 		r.load(MapCase, mapProvider());
 		r.load(OmapCase, omapProvider());
+
+		r.load(SetCase, adapterSetProvider());
+		r.load(ListCase, adapterListProvider());
+		r.load(MapCase, adapterMapProvider());
+		r.load(OmapCase, adapterOmapProvider());
 
 		r.load(VoidCollectionCase);
 		r.load(BaseCollectionCase);
@@ -47,6 +52,11 @@ class ArpSupportTestSuite {
 		r.load(ListOpCase, listProvider());
 		r.load(MapOpCase, mapProvider());
 		r.load(OmapOpCase, omapProvider());
+
+		r.load(SetOpCase, adapterSetProvider());
+		r.load(ListOpCase, adapterListProvider());
+		r.load(MapOpCase, adapterMapProvider());
+		r.load(OmapOpCase, adapterOmapProvider());
 
 		r.load(ArpSignalCase);
 
