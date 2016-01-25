@@ -121,11 +121,11 @@ class MapOpCase {
 	}
 
 	public function testToKeyArray():Void {
-		assertMatch(["1", "3", "5", "7"], MapOp.toKeyArray(argA()));
+		assertMatch(containsInAnyOrder("1", "3", "5", "7"), MapOp.toKeyArray(argA()));
 	}
 
 	public function testToArray():Void {
-		assertMatch([1, 2, 3, 4], MapOp.toArray(argA()));
+		assertMatch(containsInAnyOrder(1, 2, 3, 4), MapOp.toArray(argA()));
 	}
 
 	public function testToAnon():Void {
@@ -135,6 +135,5 @@ class MapOpCase {
 		me.set("c", 3);
 		assertMatch({ a: 1, b: 2, c: 3 }, MapOp.toAnon(me));
 	}
-
 
 }

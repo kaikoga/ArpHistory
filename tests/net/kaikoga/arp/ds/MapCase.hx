@@ -157,7 +157,7 @@ class MapCase {
 		assertTrue(it.hasNext());
 		a.push(it.next());
 		assertFalse(it.hasNext());
-		assertMatch(["1", "3", "5"], a);
+		assertMatch(containsInAnyOrder("1", "3", "5"), a);
 	}
 
 	public function testUnorderedIterator():Void {
@@ -178,7 +178,7 @@ class MapCase {
 		assertTrue(it.hasNext());
 		a.push(it.next());
 		assertFalse(it.hasNext());
-		assertMatch([1, 3, 5], a);
+		assertMatch(containsInAnyOrder(1, 3, 5), a);
 	}
 
 }
