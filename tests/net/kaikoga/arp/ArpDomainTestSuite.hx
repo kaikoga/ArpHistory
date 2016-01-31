@@ -1,5 +1,6 @@
 package net.kaikoga.arp;
 
+import net.kaikoga.arp.structs.ArpColorFlashCase;
 import net.kaikoga.arp.macro.MacroColumnArpObjectCase;
 import net.kaikoga.arp.domain.MockColumnArpObjectCase;
 import net.kaikoga.arp.tests.ArpDomainTestUtilCase;
@@ -55,5 +56,10 @@ class ArpDomainTestSuite {
 		r.load(ArpParamsCase);
 		r.load(ArpPositionCase);
 		r.load(ArpRangeCase);
+
+		#if (flash || openfl)
+		r.load(ArpColorFlashCase);
+		#end
+
 	}
 }
