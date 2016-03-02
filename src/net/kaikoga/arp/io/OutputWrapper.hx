@@ -13,7 +13,7 @@ class OutputWrapper implements IOutput
 
 	public function new(output:Output) this.output = output;
 
-	public function writeBool(value:Bool):Void this.output.writeByte(value ? -1 : 0);
+	public function writeBool(value:Bool):Void this.output.writeByte(value ? 255 : 0);
 
 	public function writeInt8(value:Int):Void this.output.writeInt8(value);
 	public function writeInt16(value:Int):Void this.output.writeInt16(value);
