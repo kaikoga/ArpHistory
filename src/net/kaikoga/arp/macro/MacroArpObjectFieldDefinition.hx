@@ -34,6 +34,8 @@ class MacroArpObjectFieldDefinition {
 				case ":arpValue": metaArpValue = true;
 				case ":arpBarrier": metaArpBarrier = true;
 				case ":arpField": metaArpField = meta.params[0];
+				case m if (m.indexOf("arp") == 0) :
+					Context.error('Use compile time metadata for arp metadatas; "@:arp", not "@arp".', this.nativeField.pos);
 			}
 		}
 	}
