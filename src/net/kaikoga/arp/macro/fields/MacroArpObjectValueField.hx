@@ -14,7 +14,21 @@ class MacroArpObjectValueField extends MacroArpObjectFieldBase implements IMacro
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
+		var iField:String = this.iFieldName;
+		var iGet_field:String = this.iGet_field;
+		var iSet_field:String = this.iSet_field;
+		var nativeType:ComplexType = this.nativeType;
+
+		var generated:Array<Field> = (macro class Generated {
+			@:pos(this.nativePos)
+			inline private function $iGet_field():$nativeType return this.$iField;
+			@:pos(this.nativePos)
+			inline private function $iSet_field(value:$nativeType):$nativeType return this.$iField = value;
+		}).fields;
+		this.nativeField.kind = FieldType.FProp("get", "set", nativeType, null);
+		this.nativeField.meta.push({ name: ":isVar", pos : this.nativeField.pos });
 		outFields.push(this.nativeField);
+		for (g in generated) outFields.push(g);
 	}
 
 	public function buildInitBlock(initBlock:Array<Expr>):Void {
