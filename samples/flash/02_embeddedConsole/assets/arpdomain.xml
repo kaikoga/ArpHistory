@@ -1,0 +1,14 @@
+<data>
+	<chip name="rectChip" class="rect" border="#ff0000@ff" color="#0000ff@ff" chipWidth="32" chipHeight="32" baseX="16" baseY="16" />
+	<chip name="rectChip2" class="rect" border="#ffff00@ff" color="#00ffff@ff" chipWidth="32" chipHeight="32" baseX="16" baseY="16" />
+	<shadow name="chipShadow" class="chip" visible="true" chip="rectChip" position="128,32" />
+	<shadow name="compositeShadow" class="composite" visible="true" position="0,128">
+		<shadow name="1" key="1" class="chip" visible="true" chip="rectChip" position="32,0" />
+		<shadow name="2" key="2" class="chip" visible="true" chip="rectChip2" position="64,0" />
+		<shadow name="3" key="3" class="chip" visible="true" chip="rectChip" position="96,0" />
+		<shadow name="4" key="4" class="chip" visible="true" chip="rectChip2" position="128,0" />
+	</shadow>
+	<console name="console">
+		<camera name="11" key="1" shadow="/compositeShadow" position="0,0" />
+	</console>
+</data>

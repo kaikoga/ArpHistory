@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension>
+
+	<set name="arp_backend_flash" value="1" />
+
+</extension>
