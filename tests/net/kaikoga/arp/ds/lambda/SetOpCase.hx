@@ -98,7 +98,7 @@ class SetOpCase {
 	}
 
 	public function testToArray():Void {
-		assertMatch([1, 3, 5, 7], SetOp.toArray(argA()));
+		assertMatch(containsInAnyOrder(1, 3, 5, 7), SetOp.toArray(argA()));
 	}
 
 	@Ignore

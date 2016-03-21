@@ -88,7 +88,7 @@ class SetCase {
 		assertTrue(it.hasNext());
 		a.push(it.next());
 		assertFalse(it.hasNext());
-		assertMatch([1, 2, 4, 5], a);
+		assertMatch(containsInAnyOrder(1, 2, 4, 5), a);
 	}
 
 }

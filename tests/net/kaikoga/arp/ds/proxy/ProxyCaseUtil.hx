@@ -3,36 +3,28 @@ package net.kaikoga.arp.ds.proxy;
 class ProxyCaseUtil {
 
 	public static function proxyInt(v:Null<Int>):Null<String> {
-		function decode(v:Int):String {
-			return String.fromCharCode(v);
-		}
+		function decode(x:Int):String return String.fromCharCode(x);
 
 		if (v == null) return null;
 		return decode(Math.floor(v / 100));
 	}
 
 	public static function unproxyInt(v:Null<String>):Null<Int> {
-		function encode(v:String):Int {
-			return v.charCodeAt(0);
-		}
+		function encode(x:String):Int return x.charCodeAt(0);
 
 		if (v == null) return null;
 		return encode(v) * 100;
 	}
 
 	public static function proxyString(v:Null<String>):Null<Int> {
-		function encode(v:String):Int {
-			return Std.parseInt(v);
-		}
+		function encode(x:String):Int return Std.parseInt(x);
 
 		if (v == null) return null;
-		return encode(v.substr(1, -2));
+		return encode(v.substr(1, v.length - 2));
 	}
 
 	public static function unproxyString(v:Null<Int>):Null<String> {
-		function decode(v:Int):String {
-			return Std.string(v);
-		}
+		function decode(x:Int):String return Std.string(x);
 
 		if (v == null) return null;
 		return '[${decode(v)}]';
@@ -50,7 +42,7 @@ class ProxyCaseUtil {
 
 	public static function selfProxyString(v:Null<String>):Null<String> {
 		if (v == null) return null;
-		return v.substr(1, -2);
+		return v.substr(1, v.length - 2);
 	}
 
 	public static function selfUnproxyString(v:Null<String>):Null<String> {
