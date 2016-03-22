@@ -42,9 +42,9 @@ class ListOp {
 		return [for (v in source) v];
 	}
 
-	public static function toAnon(source:IList<String>):Dynamic {
+	public static function toAnon<V>(source:IList<V>):Dynamic {
 		var anon:Dynamic = {};
-		for (v in source) Reflect.setField(anon, v, v);
+		for (v in source) Reflect.setField(anon, Std.string(v), v);
 		return anon;
 	}
 }

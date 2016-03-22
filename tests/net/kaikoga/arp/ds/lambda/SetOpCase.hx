@@ -101,16 +101,15 @@ class SetOpCase {
 		assertMatch(containsInAnyOrder(1, 3, 5, 7), SetOp.toArray(argA()));
 	}
 
-	@Ignore
 	public function testToAnon():Void {
-		fail();
-		/*
-		var a:ISet<String> = provider.create();
-		me.add("a");
-		me.add("b");
-		me.add("c");
-		assertMatch({ a: "a", b: "b", c: "c" }, SetOp.toAnon(me));
-		*/
+		me.add(1);
+		me.add(2);
+		me.add(3);
+		var anon:Dynamic = {};
+		Reflect.setField(anon, "1", 1);
+		Reflect.setField(anon, "2", 2);
+		Reflect.setField(anon, "3", 3);
+		assertMatch(anon, SetOp.toAnon(me));
 	}
 
 }

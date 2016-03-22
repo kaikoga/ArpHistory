@@ -108,16 +108,15 @@ class ListOpCase {
 		assertMatch([1, 3, 5, 7], ListOp.toArray(argA()));
 	}
 
-	@Ignore
 	public function testToAnon():Void {
-		fail();
-		/*
-		var a:IList<String> = provider.create();
-		me.add("a");
-		me.add("b");
-		me.add("c");
-		assertMatch({ a: "a", b: "b", c: "c" }, ListOp.toAnon(me));
-		*/
+		me.push(1);
+		me.push(2);
+		me.push(3);
+		var anon:Dynamic = {};
+		Reflect.setField(anon, "1", 1);
+		Reflect.setField(anon, "2", 2);
+		Reflect.setField(anon, "3", 3);
+		assertMatch(anon, ListOp.toAnon(me));
 	}
 
 }

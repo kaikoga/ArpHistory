@@ -42,9 +42,9 @@ class SetOp {
 		return [for (v in source) v];
 	}
 
-	public static function toAnon(source:ISet<String>):Dynamic {
+	public static function toAnon<V>(source:ISet<V>):Dynamic {
 		var anon:Dynamic = {};
-		for (v in source) Reflect.setField(anon, v, v);
+		for (v in source) Reflect.setField(anon, Std.string(v), v);
 		return anon;
 	}
 
