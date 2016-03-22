@@ -54,8 +54,13 @@ class ListCase {
 		assertFalse(me.isEmpty());
 		assertTrue(me.hasValue(1));
 		me.remove(1);
-		assertFalse(me.isEmpty());
-		assertTrue(me.hasValue(1));
+		if (me.isUniqueValue) {
+			assertTrue(me.isEmpty());
+			assertFalse(me.hasValue(1));
+		} else {
+			assertFalse(me.isEmpty());
+			assertTrue(me.hasValue(1));
+		}
 	}
 
 	public function testEmptyIterator():Void {

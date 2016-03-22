@@ -2,23 +2,37 @@ package net.kaikoga.arp.ds.lambda;
 
 class OmapOp {
 
-	public static function copy<K, V>(a:IOmap<K, V>, out:IOmap<K, V>):IOmap<K, V> {
+	public static function copy<K, V>(source:IOmap<K, V>, out:IOmap<K, V>):IOmap<K, V> {
+		for (k in source.keys()) out.addPair(k, source.get(k));
 		return out;
 	}
 
 	public static function and<K, V>(a:IOmap<K, V>, b:IOmap<K, V>, out:IOmap<K, V>):IOmap<K, V> {
+		for (k in a.keys()) if (b.hasKey(k)) out.addPair(k, a.get(k));
 		return out;
 	}
 
 	public static function or<K, V>(a:IOmap<K, V>, b:IOmap<K, V>, out:IOmap<K, V>):IOmap<K, V> {
+		for (k in a.keys()) out.addPair(k, a.get(k));
+		for (k in b.keys()) if (!a.hasKey(k)) out.addPair(k, b.get(k));
 		return out;
 	}
 
+	// ISSUE handle keys?
 	public static function filter<K, V>(source:IOmap<K, V>, func:V->Bool, out:IOmap<K, V>):IOmap<K, V> {
+		for (k in source.keys()) {
+			var v:V = source.get(k);
+			if (func(v)) out.addPair(k, v);
+		}
 		return out;
 	}
 
+	// ISSUE handle keys?
+	// ISSUE map keys?
 	public static function map<K, V, W>(source:IOmap<K, V>, func:V->W, out:IOmap<K, W>):IOmap<K, W> {
+		for (k in source.keys()) {
+			out.addPair(k, func(source.get(k)));
+		}
 		return out;
 	}
 

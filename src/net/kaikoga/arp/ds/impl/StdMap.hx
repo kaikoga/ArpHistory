@@ -33,7 +33,10 @@ class StdMap<K, V> implements IMap<K, V> {
 	public function set(k:K, v:V):Void this.value.set(k, v);
 
 	//remove
-	public function remove(v:V):Bool return this.value.remove(this.resolveName(v));
+	public function remove(v:V):Bool {
+		var k:Null<K> = this.resolveName(v);
+		return if (k != null) this.value.remove(k) else false;
+	}
 	public function removeKey(k:K):Bool return this.value.remove(k);
 	public function clear():Void this.value = new Map<K, V>();
 
