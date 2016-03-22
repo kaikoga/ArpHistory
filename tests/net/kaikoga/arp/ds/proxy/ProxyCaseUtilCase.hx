@@ -14,44 +14,40 @@ class ProxyCaseUtilCase {
 		return [["1"], ["2"], ["3"], ["4"], ["a"]];
 	}
 
-	@Ignore
-	@Parameter("intProvider")
-	public function testProxyInt(i:Int):Void {
-		assertEquals(i, ProxyCaseUtil.unproxyInt(ProxyCaseUtil.proxyInt(i)));
-	}
+	// @Parameter("intProvider")
+	// public function testProxyInt(i:Int):Void {
+	// 	assertEquals(i, ProxyCaseUtil.unproxyInt(ProxyCaseUtil.proxyInt(i)));
+	// }
 
 	@Parameter("intProvider")
 	public function testReverseProxyInt(i:Int):Void {
 		assertEquals(i, ProxyCaseUtil.proxyString(ProxyCaseUtil.unproxyString(i)));
 	}
 
-	@Ignore
-	@Parameter("intProvider")
-	public function testSelfProxyInt(i:Int):Void {
-		assertEquals(i, ProxyCaseUtil.selfUnproxyInt(ProxyCaseUtil.selfProxyInt(i)));
-	}
+	// @Parameter("intProvider")
+	// public function testSelfProxyInt(i:Int):Void {
+	// 	assertEquals(i, ProxyCaseUtil.selfUnproxyInt(ProxyCaseUtil.selfProxyInt(i)));
+	// }
 
 	@Parameter("intProvider")
 	public function testReverseSelfProxyInt(i:Int):Void {
 		assertEquals(i, ProxyCaseUtil.selfProxyInt(ProxyCaseUtil.selfUnproxyInt(i)));
 	}
 
-	@Ignore
-	@Parameter("stringProvider")
-	public function testProxyString(s:String):Void {
-		assertEquals(s, ProxyCaseUtil.unproxyString(ProxyCaseUtil.proxyString(s)));
-	}
+	// @Parameter("stringProvider")
+	// public function testProxyString(s:String):Void {
+	// 	assertEquals(s, ProxyCaseUtil.unproxyString(ProxyCaseUtil.proxyString(s)));
+	// }
 
 	@Parameter("stringProvider")
 	public function testReverseProxyString(s:String):Void {
 		assertEquals(s, ProxyCaseUtil.proxyInt(ProxyCaseUtil.unproxyInt(s)));
 	}
 
-	@Ignore
-	@Parameter("stringProvider")
-	public function testSelfProxyString(s:String):Void {
-		assertEquals(s, ProxyCaseUtil.selfUnproxyString(ProxyCaseUtil.selfProxyString(s)));
-	}
+	// @Parameter("stringProvider")
+	// public function testSelfProxyString(s:String):Void {
+	// 	assertEquals(s, ProxyCaseUtil.selfUnproxyString(ProxyCaseUtil.selfProxyString(s)));
+	// }
 
 	@Parameter("stringProvider")
 	public function testReverseSelfProxyString(s:String):Void {
