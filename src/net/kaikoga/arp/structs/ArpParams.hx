@@ -1,16 +1,51 @@
 package net.kaikoga.arp.structs;
 
+import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.structs.ArpStructsUtil;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.structs.ArpDirection;
 
-typedef ArpParamsImpl = Map<String, Dynamic>;
+@:forward(
+	keys,
+	get,
+	set,
+	remove,
+	initWithSeed,
+	initWithString,
+	clone,
+	copyFrom,
+	merge,
+	filter,
+	toString,
+	readSelf,
+	writeSelf
+)
+abstract ArpParamsProxy(ArpParams) from ArpParams to ArpParams {
 
-abstract ArpParams(ArpParamsImpl) from ArpParamsImpl to ArpParamsImpl {
+	inline public function new(value:ArpParams) this = value;
 
-	public function new(value:ArpParamsImpl = null) this = (value == null) ? new ArpParamsImpl() : value;
+	@:arrayAccess inline private function arrayGet(k:String):Dynamic return this.get(k);
+	@:arrayAccess inline private function arraySet(k:String, v:Dynamic):Dynamic return this.set(k, v);
+}
+
+class ArpParams implements IPersistable {
+
+	private var map:Map<String, Dynamic>;
+
+	inline private function keys():Iterator<String> return this.map.keys();
+	inline public function get(key:String):Dynamic return this.map.get(key);
+	inline public function set(key:String, value:Dynamic):Dynamic {
+		this.map.set(key, value);
+		return value;
+	}
+	inline public function remove(key:String):Void this.map.remove(key);
+
+	public function new() {
+		this.map = new Map<String, Dynamic>();
+	}
+
 
 	public function initWithSeed(seed:ArpSeed):ArpParams {
 		if (seed == null) return this;
@@ -22,7 +57,7 @@ abstract ArpParams(ArpParamsImpl) from ArpParamsImpl to ArpParamsImpl {
 		for (node in definition.split(",")) {
 			var array:Array<String> = node.split(":");
 			if (array.length == 1) {
-				this["face"] = array[0];
+				this.set("face", array[0]);
 				continue;
 			}
 			var key:String = array[0];
@@ -30,14 +65,14 @@ abstract ArpParams(ArpParamsImpl) from ArpParamsImpl to ArpParamsImpl {
 			var type:String = array[2];
 			switch (type) {
 				case "dir":
-					this[key] = new ArpDirection(Std.parseInt(value));
+					this.set(key, new ArpDirection(Std.parseInt(value)));
 				case "rewire":
-					this[key] = new ArpParamRewire(value);
+					this.set(key, new ArpParamRewire(value));
 				default:
 					if (ArpStructsUtil.isNumeric(value)) {
-						this[key] = Std.parseFloat(value);
+						this.set(key, Std.parseFloat(value));
 					} else {
-						this[key] = value;
+						this.set(key, value);
 					}
 			}
 		}
@@ -45,19 +80,18 @@ abstract ArpParams(ArpParamsImpl) from ArpParamsImpl to ArpParamsImpl {
 	}
 
 	public function clone():ArpParams {
-		var result:ArpParams = new ArpParamsImpl();
+		var result:ArpParams = new ArpParams();
 		result.copyFrom(this);
 		return result;
 	}
 
 	public function copyFrom(source:ArpParams = null):ArpParams {
-		var name:String;
 		for (name in this.keys()) {
 			this.remove(name);
 		}
 		if (source != null) {
-			for (name in source.impl().keys()) {
-				this[name] = source[name];
+			for (name in source.keys()) {
+				this.set(name, source.get(name));
 			}
 		}
 		return this;
@@ -65,8 +99,8 @@ abstract ArpParams(ArpParamsImpl) from ArpParamsImpl to ArpParamsImpl {
 
 	public function merge(source:ArpParams = null):ArpParams {
 		if (source != null) {
-			for (name in source.impl().keys()) {
-				this[name] = source[name];
+			for (name in source.keys()) {
+				this.set(name, source.get(name));
 			}
 		}
 		return this;
@@ -74,27 +108,22 @@ abstract ArpParams(ArpParamsImpl) from ArpParamsImpl to ArpParamsImpl {
 
 	public function filter(source:ArpParams = null):ArpParams {
 		if (source != null) {
-			for (name in source.impl().keys()) {
-				var value:Dynamic = this[name];
+			for (name in source.keys()) {
+				var value:Dynamic = this.get(name);
 				if (Std.is(value, ArpParamRewire)) {
-					this[name] = this[value.rewireFrom];
+					this.set(name, this.get(value.rewireFrom));
 				} else {
-					this[name] = source[name];
+					this.set(name, source.get(name));
 				}
 			}
 		}
 		return this;
 	}
 
-	public function addParam(name:String, value:String):ArpParams {
-		this[name] = value;
-		return this;
-	}
-
 	public function toString():String {
 		var result:Array<Dynamic> = [];
-		for (name in impl().keys()) {
-			var value:Dynamic = this[name];
+		for (name in this.keys()) {
+			var value:Dynamic = this.get(name);
 			if (Std.is(value, ArpDirection)) {
 				value = cast(value, ArpDirection).value + ":dir";
 			}
@@ -113,10 +142,6 @@ abstract ArpParams(ArpParamsImpl) from ArpParamsImpl to ArpParamsImpl {
 	public function writeSelf(output:IPersistOutput):Void {
 		output.writeUtf("params", toString());
 	}
-
-	@:arrayAccess inline private function arrayGet(k:String):Dynamic return this[k];
-	@:arrayAccess inline private function arraySet(k:String, v:Dynamic):Dynamic return this[k] = v;
-	inline private function impl():ArpParamsImpl return this;
 }
 
 class ArpParamRewire {

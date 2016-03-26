@@ -55,6 +55,8 @@ class MacroArpObjectFieldBuilder {
 						return MacroArpObjectNativeFieldType.ValueType(new MacroArpObjectArpStruct(macro :net.kaikoga.arp.structs.ArpDirection));
 					case "ArpHitArea":
 						return MacroArpObjectNativeFieldType.ValueType(new MacroArpObjectArpStruct(macro :net.kaikoga.arp.structs.ArpHitArea));
+					case "ArpParams":
+						return MacroArpObjectNativeFieldType.ValueType(new MacroArpObjectArpStruct(macro :net.kaikoga.arp.structs.ArpParams));
 					case "ArpPosition":
 						return MacroArpObjectNativeFieldType.ValueType(new MacroArpObjectArpStruct(macro :net.kaikoga.arp.structs.ArpPosition));
 					case "ArpRange":

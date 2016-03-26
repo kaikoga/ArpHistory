@@ -15,11 +15,11 @@ import picotest.PicoAssert.*;
 class ArpParamsCase {
 
 	public function testAddParam():Void {
-		var params:ArpParams = new ArpParams();
+		var params:ArpParamsProxy = new ArpParams();
 		params["a"] = "b";
 		params["c"] = 10;
 		params["d"] = ArpDirection.LEFT;
-		params.addParam("e", "f");
+		params.set("e", "f");
 		params["g"] = new ArpParamRewire("h");
 		assertEquals("b", params["a"]);
 		assertEquals(10, params["c"]);
@@ -29,7 +29,7 @@ class ArpParamsCase {
 	}
 
 	public function testToString():Void {
-		var params:ArpParams = new ArpParams();
+		var params:ArpParamsProxy = new ArpParams();
 		assertEquals("", Std.string(params));
 		params["a"] = "b";
 		assertMatch(["a:b"], Std.string(params).split(","));
@@ -42,7 +42,7 @@ class ArpParamsCase {
 	}
 
 	public function initWithSeedTest():Void {
-		var params:ArpParams = new ArpParams();
+		var params:ArpParamsProxy = new ArpParams();
 		params.initWithSeed(ArpSeed.fromXmlString("<params>a:b,c:10,d:2147483648:dir,g:h:rewire,faceValue</params>"));
 		assertEquals("b", params["a"]);
 		assertEquals(10, params["c"]);
@@ -52,12 +52,12 @@ class ArpParamsCase {
 	}
 
 	public function testClone():Void {
-		var params:ArpParams = new ArpParams();
+		var params:ArpParamsProxy = new ArpParams();
 		params["a"] = "b";
 		params["c"] = 10;
 		params["d"] = ArpDirection.LEFT;
 		params["g"] = new ArpParamRewire("h");
-		var params2:ArpParams = params.clone();
+		var params2:ArpParamsProxy = params.clone();
 		assertEquals(params["a"], params2["a"]);
 		assertEquals(params["c"], params2["c"]);
 		assertEquals(params["d"].value, params2["d"].value);
@@ -65,12 +65,12 @@ class ArpParamsCase {
 	}
 
 	public function testCopyFrom():Void {
-		var params:ArpParams = new ArpParams();
+		var params:ArpParamsProxy = new ArpParams();
 		params["a"] = "b";
 		params["c"] = 10;
 		params["d"] = ArpDirection.LEFT;
 		params["g"] = new ArpParamRewire("h");
-		var params2:ArpParams = new ArpParams().addParam("e", "f").copyFrom(params);
+		var params2:ArpParamsProxy = new ArpParams().copyFrom(params);
 		assertEquals(params["a"], params2["a"]);
 		assertEquals(params["c"], params2["c"]);
 		assertEquals(params["d"].value, params2["d"].value);
@@ -78,12 +78,12 @@ class ArpParamsCase {
 	}
 
 	public function testPersist():Void {
-		var params:ArpParams = new ArpParams();
+		var params:ArpParamsProxy = new ArpParams();
 		params["a"] = "b";
 		params["c"] = 10;
 		params["d"] = ArpDirection.LEFT;
 		params["g"] = new ArpParamRewire("h");
-		var params2:ArpParams = new ArpParams();
+		var params2:ArpParamsProxy = new ArpParams();
 		var bytesOutput:BytesOutput = new BytesOutput();
 		params.writeSelf(new TaggedPersistOutput(new OutputWrapper(bytesOutput)));
 		params2.readSelf(new TaggedPersistInput(new InputWrapper(new BytesInput(bytesOutput.getBytes()))));

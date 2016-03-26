@@ -16,6 +16,7 @@ class MockStructMacroArpObject implements IArpObject {
 	@:arpValue public var arpColorField:ArpColor;
 	@:arpValue public var arpDirectionField:ArpDirection;
 	@:arpValue public var arpHitAreaField:ArpHitArea;
+	@:arpValue public var arpParamsField:ArpParams;
 	@:arpValue public var arpPositionField:ArpPosition;
 	@:arpValue public var arpRangeField:ArpRange;
 

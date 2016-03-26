@@ -9,6 +9,7 @@ import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.ArpSlot;
 
+import org.hamcrest.Matchers;
 import picotest.PicoAssert.*;
 
 using net.kaikoga.arp.tests.ArpDomainTestUtil;
@@ -32,6 +33,7 @@ class ArpStructsMacroArpObjectCase {
 <arpHitAreaField>1,2,3,4,5,6</arpHitAreaField>
 <arpPositionField>2,4,6,0</arpPositionField>
 <arpRangeField>7..9</arpRangeField>
+<arpParamsField>a:b,c:10,d:2147483648:dir,g:h:rewire,faceValue</arpParamsField>
 </mock>
 		').firstElement();
 		seed = ArpSeed.fromXml(xml);
@@ -56,6 +58,7 @@ class ArpStructsMacroArpObjectCase {
 		assertMatch({color:0x7fff00ff}, arpObj.arpColorField.toHash());
 		assertMatch({dir:0x20000000}, arpObj.arpDirectionField.toHash());
 		assertMatch({areaLeft:1, areaRight:2, areaTop:3, areaBottom:4, areaHind:5, areaFore:6}, arpObj.arpHitAreaField.toHash());
+		assertMatch(Matchers.containsInAnyOrder("a:b", "c:10", "d:2147483648:dir", "g:h:rewire", "face:faceValue"), arpObj.arpParamsField.toHash().params.split(","));
 		assertMatch({dir:0, x:2, y:4, z:6, gridSize:0, period:0, tx:0, ty:0, tz:0}, arpObj.arpPositionField.toHash());
 		assertMatch({min:7, max:9}, arpObj.arpRangeField.toHash());
 	}
