@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.adapters;
 
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.ISet;
 import net.kaikoga.arp.ds.IMap;
 
@@ -19,7 +20,7 @@ class SetOfMapValue<K, V> implements ISet<V> {
 	public function isEmpty():Bool return this.map.isEmpty();
 	public function hasValue(v:V):Bool return this.map.hasValue(v);
 	public function iterator():Iterator<V> return this.map.iterator();
-	public function toString():String return this.map.toString();
+	public function toString():String return CollectionTools.setToStringImpl(this);
 
 	public function add(v:V):Void if (!this.map.hasValue(v)) this.map.set(this.autoKey(v), v);
 

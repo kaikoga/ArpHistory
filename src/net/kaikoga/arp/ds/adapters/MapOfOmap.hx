@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.adapters;
 
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arp.ds.IOmap;
 
@@ -20,7 +21,7 @@ class MapOfOmap<K, V> implements IMap<K, V> {
 	public function isEmpty():Bool return this.omap.isEmpty();
 	public function hasValue(v:V):Bool return this.omap.hasValue(v);
 	public function iterator():Iterator<V> return this.omap.iterator();
-	public function toString():String return this.omap.toString();
+	public function toString():String return CollectionTools.mapToStringImpl(this);
 	public function get(k:K):Null<V> return this.omap.get(k);
 	public function hasKey(k:K):Bool return this.omap.hasKey(k);
 	public function keys():Iterator<K> return this.omap.keys();

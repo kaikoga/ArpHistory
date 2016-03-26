@@ -1,6 +1,6 @@
 package net.kaikoga.arp.ds.adapters;
 
-import net.kaikoga.arp.iter.EmptyIterator;
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.ISet;
 import net.kaikoga.arp.ds.IOmap;
 
@@ -21,7 +21,7 @@ class SetOfOmapValue<K, V> implements ISet<V> {
 	public function isEmpty():Bool return this.omap.isEmpty();
 	public function hasValue(v:V):Bool return this.omap.hasValue(v);
 	public function iterator():Iterator<V> return this.omap.iterator();
-	public function toString():String return this.omap.toString();
+	public function toString():String return CollectionTools.setToStringImpl(this);
 
 	// write
 	public function add(v:V):Void this.omap.addPair(autoKey(v), v);

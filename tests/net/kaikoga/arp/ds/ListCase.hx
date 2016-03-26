@@ -89,4 +89,18 @@ class ListCase {
 		assertFalse(it.hasNext());
 	}
 
+	public function testEmptyToString():Void {
+		assertEquals("[]", me.toString());
+	}
+
+	public function testToString():Void {
+		me.push(1);
+		me.push(2);
+		me.push(3);
+		me.push(4);
+		me.shift();
+		me.unshift(5);
+		me.remove(3);
+		assertEquals("[5; 2; 4]", me.toString());
+	}
 }

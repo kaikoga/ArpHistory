@@ -181,4 +181,20 @@ class MapCase {
 		assertMatch(containsInAnyOrder(1, 3, 5), a);
 	}
 
+	public function testEmptyToString():Void {
+		assertEquals("{}", me.toString());
+	}
+
+	public function testToString():Void {
+		me.set("1", 1);
+		me.set("2", 2);
+		me.set("3", 3);
+		me.set("4", 4);
+		me.set("5", 5);
+		me.removeKey("2");
+		me.remove(4);
+		var string:String = me.toString();
+		string = string.substr(1, string.length - 2);
+		assertMatch(containsInAnyOrder("1 => 1", "3 => 3", "5 => 5"), string.split(", "));
+	}
 }

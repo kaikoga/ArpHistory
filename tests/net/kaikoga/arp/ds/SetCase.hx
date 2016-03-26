@@ -91,4 +91,21 @@ class SetCase {
 		assertMatch(containsInAnyOrder(1, 2, 4, 5), a);
 	}
 
+
+	public function testEmptyToString():Void {
+		assertEquals("[]", me.toString());
+	}
+
+	public function testToString():Void {
+		me.add(1);
+		me.add(2);
+		me.add(3);
+		me.add(4);
+		me.add(5);
+		me.remove(3);
+		var string:String = me.toString();
+		string = string.substr(1, string.length - 2);
+		assertMatch(containsInAnyOrder("1", "2", "4", "5"), string.split(", "));
+	}
+
 }
