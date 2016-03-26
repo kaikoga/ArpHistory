@@ -4,6 +4,8 @@ import Xml.XmlType;
 
 class ArpSeed {
 
+	inline private static var AUTO_HEADER:String = "$";
+
 	private var _typeName:String;
 	private var _name:String;
 	private var _ref:String;
@@ -28,12 +30,14 @@ class ArpSeed {
 		this._children = explicitChildren;
 		if (this._value != null) this._children.push(simpleValue("value", this._value));
 	}
-	
+
 	inline public function typeName():String return this._typeName;
 	inline public function template():String return this._template;
 	inline public function name():String return this._name;
 	inline public function ref():String return this._ref;
-	inline public function key():String return this._key;
+	inline public function key(uniqId:Int):String {
+		return if (this._key != null) this._key else Std.string(AUTO_HEADER + uniqId);
+	}
 	inline public function value():Dynamic return this._value;
 	inline public function isSimple():Bool return this._isSimple;
 

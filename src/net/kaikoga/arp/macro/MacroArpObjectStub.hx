@@ -49,7 +49,7 @@ class MacroArpObjectStub {
 	private function buildArpConsumeSeedElement():Array<Expr> {
 		var cases:Array<Case> = [];
 
-		var eDefault:Expr = if (isDerived) macro { super.arpConsumeSeedElement(element); } else macro null;
+		var eDefault:Expr = if (isDerived) macro { super.arpConsumeSeedElement(element, uniqId); } else macro null;
 		var expr:Expr = { pos: Context.currentPos(), expr: ExprDef.ESwitch(macro element.typeName(), cases, eDefault) }
 
 		for (aoField in this.arpObjectFields) aoField.buildConsumeSeedElementBlock(cases);
@@ -74,8 +74,9 @@ class MacroArpObjectStub {
 			public function arpInit(slot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot, seed:net.kaikoga.arp.domain.seed.ArpSeed = null):net.kaikoga.arp.domain.IArpObject {
 				this._arpDomain = slot.domain;
 				this._arpSlot = slot;
+				var uniqId:Int = 0;
 				$b{ this.buildInitBlock() }
-				if (seed != null) for (element in seed) this.arpConsumeSeedElement(element);
+				if (seed != null) for (element in seed) this.arpConsumeSeedElement(element, uniqId++);
 				this.init();
 				return this;
 			}
@@ -101,7 +102,7 @@ class MacroArpObjectStub {
 				this._arpDomain = null;
 			}
 
-			private function arpConsumeSeedElement(element:net.kaikoga.arp.domain.seed.ArpSeed):Void {
+			private function arpConsumeSeedElement(element:net.kaikoga.arp.domain.seed.ArpSeed, uniqId:Int):Void {
 				$b{ this.buildArpConsumeSeedElement() }
 			}
 
@@ -162,7 +163,7 @@ class MacroArpObjectStub {
 				super.arpDispose();
 			}
 
-			override private function arpConsumeSeedElement(element:net.kaikoga.arp.domain.seed.ArpSeed):Void {
+			override private function arpConsumeSeedElement(element:net.kaikoga.arp.domain.seed.ArpSeed, uniqId:Int):Void {
 				$b{ this.buildArpConsumeSeedElement() }
 			}
 
