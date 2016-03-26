@@ -1,15 +1,21 @@
 package net.kaikoga.arpx.chip;
 
 import net.kaikoga.arp.structs.ArpColor;
-import net.kaikoga.arpx.backends.flash.chip.NativeTextChipFlashImpl;
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
-import flash.display.BitmapData;
 import net.kaikoga.arpx.shadow.ChipShadow;
 import net.kaikoga.arpx.shadow.IShadow;
 import net.kaikoga.arp.structs.ArpParams;
 
+#if flash
+import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
+import net.kaikoga.arpx.backends.flash.chip.NativeTextChipFlashImpl;
+import net.kaikoga.arpx.backends.flash.geom.ITransform;
+import flash.display.BitmapData;
+#end
+
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("chip", "nativeText"))
-class NativeTextChip implements IChip {
+class NativeTextChip implements IChip
+#if arp_backend_flash implements IChipFlashImpl #end
+{
 
 	@:arpValue public var baseX:Int;
 	@:arpValue public var baseY:Int;
@@ -44,6 +50,11 @@ class NativeTextChip implements IChip {
 
 	inline public function copyChip(bitmapData:BitmapData, transform:ITransform, params:ArpParams = null):Void {
 		flashImpl.copyChip(bitmapData, transform, params);
+	}
+
+	#else
+
+	public function new () {
 	}
 
 	#end

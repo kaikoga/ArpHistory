@@ -1,13 +1,19 @@
 package net.kaikoga.arpx.shadow;
 
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
-import flash.display.BitmapData;
-import net.kaikoga.arpx.backends.flash.shadow.CompositeShadowFlashImpl;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arp.structs.ArpPosition;
 
+#if flash
+import net.kaikoga.arpx.backends.flash.geom.ITransform;
+import net.kaikoga.arpx.backends.flash.shadow.IShadowFlashImpl;
+import net.kaikoga.arpx.backends.flash.shadow.CompositeShadowFlashImpl;
+import flash.display.BitmapData;
+#end
+
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("shadow", "composite"))
-class CompositeShadow implements IShadow {
+class CompositeShadow implements IShadow
+#if arp_backend_flash implements IShadowFlashImpl #end
+{
 
 	@:arpValue public var visible:Bool;
 	public var params:ArpParams;
@@ -25,6 +31,11 @@ class CompositeShadow implements IShadow {
 
 	inline public function copySelf(bitmapData:BitmapData, transform:ITransform):Void {
 		flashImpl.copySelf(bitmapData, transform);
+	}
+
+	#else
+
+	public function new () {
 	}
 
 	#end

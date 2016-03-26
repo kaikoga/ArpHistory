@@ -1,12 +1,12 @@
 package net.kaikoga.arpx.console;
 
-#if flash
-import flash.display.BitmapData;
-#end
-
 import net.kaikoga.arpx.camera.ICamera;
+
+#if flash
 import net.kaikoga.arpx.backends.flash.console.IConsoleFlashImpl;
 import net.kaikoga.arpx.backends.flash.console.ConsoleFlashImpl;
+import flash.display.BitmapData;
+#end
 
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("console", "console"))
 class Console implements IConsole
@@ -26,6 +26,11 @@ class Console implements IConsole
 
 	inline public function display(bitmapData:BitmapData):Void {
 		flashImpl.display(bitmapData);
+	}
+
+	#else
+
+	public function new () {
 	}
 
 	#end

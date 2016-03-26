@@ -1,9 +1,12 @@
 package net.kaikoga.arpx.chip;
 
 import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.shadow.IShadow;
+
+#if arp_backend_flash
+import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
+#end
 
 interface IChip extends IArpObject
 #if arp_backend_flash extends IChipFlashImpl #end

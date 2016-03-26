@@ -1,15 +1,20 @@
 package net.kaikoga.arpx.chip;
 
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
-import flash.display.BitmapData;
-import net.kaikoga.arpx.backends.flash.chip.StringChipFlashImpl;
 import net.kaikoga.arpx.shadow.ChipShadow;
 import net.kaikoga.arpx.shadow.IShadow;
 import net.kaikoga.arpx.chip.stringChip.StringChipStringIterator;
 import net.kaikoga.arp.structs.ArpParams;
 
+#if flash
+import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
+import net.kaikoga.arpx.backends.flash.chip.StringChipFlashImpl;
+import net.kaikoga.arpx.backends.flash.geom.ITransform;
+import flash.display.BitmapData;
+#end
+
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("chip", "string"))
 class StringChip implements IChip
+#if arp_backend_flash implements IChipFlashImpl #end
 {
 
 	private static var _workParams:ArpParams = new ArpParams();
@@ -87,6 +92,11 @@ class StringChip implements IChip
 
 	inline public function copyChip(bitmapData:BitmapData, transform:ITransform, params:ArpParams = null):Void {
 		flashImpl.copyChip(bitmapData, transform, params);
+	}
+
+	#else
+
+	public function new () {
 	}
 
 	#end

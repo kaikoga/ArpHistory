@@ -1,15 +1,21 @@
 package net.kaikoga.arpx.chip;
 
-import flash.display.BitmapData;
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
-import net.kaikoga.arpx.backends.flash.chip.RectChipFlashImpl;
 import net.kaikoga.arp.structs.ArpColor;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.shadow.IShadow;
 import net.kaikoga.arpx.shadow.ChipShadow;
 
+#if flash
+import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
+import net.kaikoga.arpx.backends.flash.chip.RectChipFlashImpl;
+import net.kaikoga.arpx.backends.flash.geom.ITransform;
+import flash.display.BitmapData;
+#end
+
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("chip", "rect"))
-class RectChip implements IChip {
+class RectChip implements IChip
+#if arp_backend_flash implements IChipFlashImpl #end
+{
 
 	@:arpValue public var baseX(get, set):Int;
 	@:arpValue public var baseY(get, set):Int;
@@ -47,6 +53,11 @@ class RectChip implements IChip {
 
 	inline public function copyChip(bitmapData:BitmapData, transform:ITransform, params:ArpParams = null):Void {
 		flashImpl.copyChip(bitmapData, transform, params);
+	}
+
+	#else
+
+	public function new () {
 	}
 
 	#end
