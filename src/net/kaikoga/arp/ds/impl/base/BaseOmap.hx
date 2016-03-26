@@ -16,7 +16,7 @@ class BaseOmap<K, V> implements IOmap<K, V> {
 	public function isEmpty():Bool return CollectionTools.isEmptyImpl(this);
 	public function hasValue(v:V):Bool return CollectionTools.hasValueImpl(this, v);
 	public function iterator():Iterator<V> return CollectionTools.iteratorImpl(this);
-	public function toString():String return CollectionTools.toStringImpl(this);
+	public function toString():String return CollectionTools.omapToStringImpl(this);
 	public function get(k:K):Null<V> return CollectionTools.getImpl(this, k);
 	public function hasKey(k:K):Bool return CollectionTools.hasKeyImpl(this, k);
 	public function keys():Iterator<K> return CollectionTools.keysImpl(this);

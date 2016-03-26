@@ -14,7 +14,7 @@ class BaseList<V> implements IList<V> {
 	public function isEmpty():Bool return CollectionTools.isEmptyImpl(this);
 	public function hasValue(v:V):Bool return CollectionTools.hasValueImpl(this, v);
 	public function iterator():Iterator<V> return CollectionTools.iteratorImpl(this);
-	public function toString():String return CollectionTools.toStringImpl(this);
+	public function toString():String return CollectionTools.listToStringImpl(this);
 	public var length(get, null):Int;
 	public function get_length():Int return CollectionTools.get_lengthImpl(this);
 	public function first():Null<V> return CollectionTools.firstImpl(this);

@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.proxy;
 
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.ISet;
 
 class SetProxy<V, W> implements ISet<V> {
@@ -25,7 +26,7 @@ class SetProxy<V, W> implements ISet<V> {
 	public function isEmpty():Bool return this.set.isEmpty();
 	public function hasValue(v:V):Bool return this.set.hasValue(this.unproxyValue(v));
 	public function iterator():Iterator<V> return new ProxyIterator(this.set.iterator(), this.proxyValue);
-	public function toString():String return this.set.toString();
+	public function toString():String return CollectionTools.setToStringImpl(this);
 
 	// write
 	public function add(v:V):Void return this.set.add(this.unproxyValue(v));

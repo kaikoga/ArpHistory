@@ -13,7 +13,7 @@ class ArraySetCase {
 	}
 
 	public function testEmptyToString():Void {
-		assertEquals("", me.toString());
+		assertEquals("[]", me.toString());
 	}
 
 	public function testToString():Void {
@@ -23,7 +23,7 @@ class ArraySetCase {
 		me.add(4);
 		me.add(5);
 		me.remove(3);
-		assertEquals("1,2,4,5", me.toString());
+		assertEquals("[1, 2, 4, 5]", me.toString());
 	}
 
 }

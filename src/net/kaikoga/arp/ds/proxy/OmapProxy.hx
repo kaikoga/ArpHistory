@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.proxy;
 
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.IOmap;
 
 class OmapProxy<K, V, X, W> implements IOmap<K, V> {
@@ -33,7 +34,7 @@ class OmapProxy<K, V, X, W> implements IOmap<K, V> {
 	public function isEmpty():Bool return this.omap.isEmpty();
 	public function hasValue(v:V):Bool return this.omap.hasValue(this.unproxyValue(v));
 	public function iterator():Iterator<V> return new ProxyIterator(this.omap.iterator(), this.proxyValue);
-	public function toString():String return this.omap.toString();
+	public function toString():String return CollectionTools.omapToStringImpl(this);
 	public function get(k:K):Null<V> return this.proxyValue(this.omap.get(this.unproxyKey(k)));
 	public function hasKey(k:K):Bool return this.omap.hasKey(this.unproxyKey(k));
 	public function keys():Iterator<K> return new ProxyIterator(this.omap.keys(), this.proxyKey);

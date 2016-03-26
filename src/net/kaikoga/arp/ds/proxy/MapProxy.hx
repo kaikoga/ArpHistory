@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.proxy;
 
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.IMap;
 
 class MapProxy<K, V, X, W> implements IMap<K, V> {
@@ -33,7 +34,7 @@ class MapProxy<K, V, X, W> implements IMap<K, V> {
 	public function isEmpty():Bool return this.map.isEmpty();
 	public function hasValue(v:V):Bool return this.map.hasValue(this.unproxyValue(v));
 	public function iterator():Iterator<V> return new ProxyIterator(this.map.iterator(), this.proxyValue);
-	public function toString():String return this.map.toString();
+	public function toString():String return CollectionTools.mapToStringImpl(this);
 	public function get(k:K):Null<V> return this.proxyValue(this.map.get(this.unproxyKey(k)));
 	public function hasKey(k:K):Bool return this.map.hasKey(this.unproxyKey(k));
 	public function keys():Iterator<K> return new ProxyIterator(this.map.keys(), this.proxyKey);

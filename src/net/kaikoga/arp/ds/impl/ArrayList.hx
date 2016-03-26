@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.impl;
 
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.IList;
 
 class ArrayList<V> implements IList<V> {
@@ -17,7 +18,7 @@ class ArrayList<V> implements IList<V> {
 	public function isEmpty():Bool return this.value.length == 0;
 	public function hasValue(v:V):Bool return this.value.indexOf(v) >= 0;
 	public function iterator():Iterator<V> return this.value.iterator();
-	public function toString():String return this.value.toString();
+	public function toString():String return CollectionTools.listToStringImpl(this);
 	public var length(get, null):Int;
 	public function get_length():Int return this.value.length;
 	public function first():Null<V> return this.value[0];

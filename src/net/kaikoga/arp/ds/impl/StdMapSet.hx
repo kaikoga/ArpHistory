@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.impl;
 
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.ISet;
 
 @:generic @:remove
@@ -18,7 +19,7 @@ class StdMapSet<V> implements ISet<V> {
 	public function isEmpty():Bool return !this.value.iterator().hasNext();
 	public function hasValue(v:V):Bool return this.value.exists(v);
 	public function iterator():Iterator<V> return this.value.keys();
-	public function toString():String return this.value.toString();
+	public function toString():String return CollectionTools.setToStringImpl(this);
 
 	//write
 	public function add(v:V):Void this.value.set(v, true);

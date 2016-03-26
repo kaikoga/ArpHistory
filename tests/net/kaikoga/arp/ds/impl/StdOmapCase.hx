@@ -25,6 +25,6 @@ class StdOmapCase {
 		me.removeKey("2");
 		me.remove(4);
 		me.removeAt(1);
-		assertEquals("{3 => 3, 5 => 5}", me.toString());
+		assertEquals("{5 => 5; 3 => 3}", me.toString());
 	}
 }

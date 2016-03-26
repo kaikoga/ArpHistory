@@ -1,5 +1,8 @@
 package net.kaikoga.arp.ds.lambda;
 
+import net.kaikoga.arp.ds.access.IOmapRead;
+import net.kaikoga.arp.ds.access.IListRead;
+import net.kaikoga.arp.ds.access.ISetRead;
 import net.kaikoga.arp.ds.access.IMapRemove;
 import net.kaikoga.arp.ds.access.IListRemove;
 import net.kaikoga.arp.ds.access.ICollectionRemove;
@@ -26,25 +29,21 @@ class CollectionTools {
 		throw "iterator() is mandatory";
 	}
 
-	inline public static function toStringImpl<V>(base:ICollectionRead<V>):String {
-		var s:Array<String> = []; for (v in base) s.push(Std.string(v)); return s.join(",");
-	}
-
 	// IListRead
 
-	inline public static function get_lengthImpl<V>(base:ICollectionRead<V>):Int {
+	inline public static function get_lengthImpl<V>(base:IListRead<V>):Int {
 		var i:Int = 0; for (x in base) i++; return i;
 	}
 
-	public static function firstImpl<V>(base:ICollectionRead<V>):Null<V> {
+	public static function firstImpl<V>(base:IListRead<V>):Null<V> {
 		for (x in base) return x; return null;
 	}
 
-	inline public static function lastImpl<V>(base:ICollectionRead<V>):Null<V> {
+	inline public static function lastImpl<V>(base:IListRead<V>):Null<V> {
 		var v:V = null; for (x in base) v = x; return v;
 	}
 
-	public static function getAtImpl<V>(base:ICollectionRead<V>, index:Int):Null<V> {
+	public static function getAtImpl<V>(base:IListRead<V>, index:Int):Null<V> {
 		var i:Int = 0; for (x in base) if (i++ == index) return x; return null;
 	}
 
@@ -143,6 +142,33 @@ class CollectionTools {
 	inline public static function removeKeyImpl<K, V>(base:IMapRemove<K, V>, k:K):Bool {
 		throw "removeKey() is mandatory";
 	}
+
+	// toString
+
+	public static function setToStringImpl<V>(base:ISetRead<V>):String {
+		var s:Array<String> = [];
+		for (v in base) s.push(Std.string(v));
+		return '[${s.join(", ")}]';
+	}
+
+	public static function listToStringImpl<V>(base:IListRead<V>):String {
+		var s:Array<String> = [];
+		for (v in base) s.push(Std.string(v));
+		return '[${s.join("; ")}]';
+	}
+
+	public static function mapToStringImpl<K, V>(base:IMapRead<K, V>):String {
+		var s:Array<String> = [];
+		for (k in base.keys()) s.push('${Std.string(k)} => ${Std.string(base.get(k))}');
+		return '{${s.join(", ")}}';
+	}
+
+	public static function omapToStringImpl<K, V>(base:IOmapRead<K, V>):String {
+		var s:Array<String> = [];
+		for (k in base.keys()) s.push('${Std.string(k)} => ${Std.string(base.get(k))}');
+		return '{${s.join("; ")}}';
+	}
+
 
 }
 

@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.proxy;
 
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.IList;
 
 class ListProxy<V, W> implements IList<V> {
@@ -25,7 +26,7 @@ class ListProxy<V, W> implements IList<V> {
 	public function isEmpty():Bool return this.list.isEmpty();
 	public function hasValue(v:V):Bool return this.list.hasValue(this.unproxyValue(v));
 	public function iterator():Iterator<V> return new ProxyIterator(this.list.iterator(), this.proxyValue);
-	public function toString():String return this.list.toString();
+	public function toString():String return CollectionTools.listToStringImpl(this);
 	public var length(get, null):Int;
 	public function get_length():Int return this.list.length;
 	public function first():Null<V> return this.proxyValue(this.list.first());

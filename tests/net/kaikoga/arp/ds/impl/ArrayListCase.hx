@@ -13,7 +13,7 @@ class ArrayListCase {
 	}
 
 	public function testEmptyToString():Void {
-		assertEquals("", me.toString());
+		assertEquals("[]", me.toString());
 	}
 
 	public function testToString():Void {
@@ -24,6 +24,6 @@ class ArrayListCase {
 		me.shift();
 		me.unshift(5);
 		me.remove(3);
-		assertEquals("5,2,4", me.toString());
+		assertEquals("[5; 2; 4]", me.toString());
 	}
 }

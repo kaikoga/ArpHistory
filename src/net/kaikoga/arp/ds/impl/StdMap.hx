@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.impl;
 
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.IMap;
 
 @:generic @:remove
@@ -18,7 +19,7 @@ class StdMap<K, V> implements IMap<K, V> {
 	public function isEmpty():Bool return !this.value.iterator().hasNext();
 	public function hasValue(v:V):Bool { for (x in this.value) if (x == v) return true; return false; }
 	public function iterator():Iterator<V> return this.value.iterator();
-	public function toString():String return this.value.toString();
+	public function toString():String return CollectionTools.mapToStringImpl(this);
 	public function get(k:K):Null<V> return this.value.get(k);
 	public function hasKey(k:K):Bool return this.value.exists(k);
 	public function keys():Iterator<K> return this.value.keys();
