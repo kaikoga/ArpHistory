@@ -14,6 +14,14 @@ class TaskRunnerCase {
 		this.taskRunner = new TaskRunner(this.tick, false);
 	}
 
+	public function testApi():Void {
+		assertNotNull(taskRunner.onComplete);
+		assertNotNull(taskRunner.onError);
+		assertNotNull(taskRunner.onDeadlock);
+		assertNotNull(taskRunner.onProgress);
+		assertNotNull(taskRunner.onCompleteTask);
+	}
+
 	public function testSimpleTask():Void {
 		taskRunner.append(new DummySimpleTask());
 		assertEquals(0, taskRunner.tasksProcessed);

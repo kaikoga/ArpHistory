@@ -2,6 +2,7 @@ package net.kaikoga.arp.task;
 
 import net.kaikoga.arp.events.ArpProgressEvent;
 import net.kaikoga.arp.events.ArpSignal;
+import net.kaikoga.arp.events.IArpSignalOut;
 
 class TaskRunner<T:ITask> {
 
@@ -9,7 +10,7 @@ class TaskRunner<T:ITask> {
 
 	public var cpuTime:Float = 50;
 
-	private var _beacon:ArpSignal<Float>;
+	private var _beacon:IArpSignalOut<Float>;
 	private var _liveTasks:Array<T>;
 	private var _readyTasks:Array<T>;
 	private var _waitingTasks:Array<T>;
@@ -37,13 +38,27 @@ class TaskRunner<T:ITask> {
 		return !(this.isActive || this.isWaiting);
 	}
 
-	public var onProgress(default, null):ArpSignal<ArpProgressEvent>;
-	public var onError(default, null):ArpSignal<Dynamic>;
-	public var onDeadlock(default, null):ArpSignal<Int>;
-	public var onComplete(default, null):ArpSignal<Int>;
-	public var onCompleteTask(default, null):ArpSignal<T>;
+	private var _onProgress:ArpSignal<ArpProgressEvent>;
+	public var onProgress(get, never):IArpSignalOut<ArpProgressEvent>;
+	inline private function get_onProgress():IArpSignalOut<ArpProgressEvent> return _onProgress;
 
-	public function new(beacon:ArpSignal<Float> = null, isAutoStart:Bool = false) {
+	private var _onError:ArpSignal<Dynamic>;
+	public var onError(get, never):IArpSignalOut<Dynamic>;
+	inline private function get_onError():IArpSignalOut<Dynamic> return _onError;
+
+	private var _onDeadlock:ArpSignal<Int>;
+	public var onDeadlock(get, never):IArpSignalOut<Int>;
+	inline private function get_onDeadlock():IArpSignalOut<Int> return _onDeadlock;
+
+	private var _onComplete:ArpSignal<Int>;
+	public var onComplete(get, never):IArpSignalOut<Int>;
+	inline private function get_onComplete():IArpSignalOut<Int> return _onComplete;
+
+	private var _onCompleteTask:ArpSignal<T>;
+	public var onCompleteTask(get, never):IArpSignalOut<T>;
+	inline private function get_onCompleteTask():IArpSignalOut<T> return _onCompleteTask;
+
+	public function new(beacon:IArpSignalOut<Float> = null, isAutoStart:Bool = false) {
 		this._beacon = beacon;
 		this.isAutoStart = isAutoStart;
 
@@ -51,11 +66,11 @@ class TaskRunner<T:ITask> {
 		this._readyTasks = [];
 		this._waitingTasks = [];
 
-		this.onProgress = new ArpSignal();
-		this.onError = new ArpSignal();
-		this.onDeadlock = new ArpSignal();
-		this.onComplete = new ArpSignal();
-		this.onCompleteTask = new ArpSignal();
+		this._onProgress = new ArpSignal();
+		this._onError = new ArpSignal();
+		this._onDeadlock = new ArpSignal();
+		this._onComplete = new ArpSignal();
+		this._onCompleteTask = new ArpSignal();
 	}
 
 	public function start():Void {
@@ -142,8 +157,8 @@ class TaskRunner<T:ITask> {
 	}
 
 	private function triggerProgressEvent():Void {
-		if (this.onProgress.willTrigger()) {
-			this.onProgress.dispatch(new ArpProgressEvent(this.tasksProcessed, this.tasksTotal));
+		if (this._onProgress.willTrigger()) {
+			this._onProgress.dispatch(new ArpProgressEvent(this.tasksProcessed, this.tasksTotal));
 		}
 	}
 
@@ -159,7 +174,7 @@ class TaskRunner<T:ITask> {
 				continue;
 			}
 			var status:TaskStatus;
-			if (this.onError.willTrigger()) {
+			if (this._onError.willTrigger()) {
 				status = task.run();
 			} else {
 				try {
@@ -172,14 +187,14 @@ class TaskRunner<T:ITask> {
 				case TaskStatus.Complete:
 					this.tasksProcessed++;
 					this.processedSomething = true;
-					if (this.onCompleteTask.willTrigger()) this.onCompleteTask.dispatch(task);
+					if (this._onCompleteTask.willTrigger()) this._onCompleteTask.dispatch(task);
 				case TaskStatus.Progress:
 					this.processedSomething = true;
 					this._readyTasks.push(task);
 				case TaskStatus.Stalled:
 					this._readyTasks.push(task);
 				case TaskStatus.Error(e):
-					this.onError.dispatch(e);
+					this._onError.dispatch(e);
 			}
 			// step 2: check turnover
 			if (this._liveTasks.length == 0) {
@@ -195,8 +210,8 @@ class TaskRunner<T:ITask> {
 					} else {
 						// No work done, tasks depends each other, we can only halt
 						this.isDeadlock = true;
-						if (!this.onDeadlock.willTrigger()) throw "TaskRunner.tick(): TaskRunner has encountered a deadlock";
-						this.onDeadlock.dispatch(this.tasksTotal - this.tasksProcessed);
+						if (!this._onDeadlock.willTrigger()) throw "TaskRunner.tick(): TaskRunner has encountered a deadlock";
+						this._onDeadlock.dispatch(this.tasksTotal - this.tasksProcessed);
 						//deadlock is fatal, so we must stop
 						this.stop();
 					}
@@ -205,7 +220,7 @@ class TaskRunner<T:ITask> {
 						if (!this.verbose) this.triggerProgressEvent();
 					} else {
 						// No tasks, no ready tasks, done!
-						this.onComplete.dispatch(0);
+						this._onComplete.dispatch(0);
 						this.stop();
 					}
 				}
