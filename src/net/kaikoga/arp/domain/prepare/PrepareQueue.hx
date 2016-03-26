@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain.prepare;
 
+import net.kaikoga.arp.events.IArpSignalOut;
 import net.kaikoga.arp.events.ArpProgressEvent;
 import net.kaikoga.arp.task.TaskRunner;
 
@@ -30,10 +31,10 @@ class PrepareQueue {
 	private var tasksBySlots:Map<ArpUntypedSlot, IPrepareTask>;
 	private var taskRunner:TaskRunner<IPrepareTask>;
 
-	public function new(domain:ArpDomain) {
+	public function new(domain:ArpDomain, rawTick:IArpSignalOut<Float>) {
 		this.domain = domain;
 		this.tasksBySlots = new Map();
-		this.taskRunner = new TaskRunner(domain.tick, true);
+		this.taskRunner = new TaskRunner(rawTick, true);
 		this.taskRunner.onComplete.push(this.onTaskRunnerComplete);
 		this.taskRunner.onError.push(this.onTaskRunnerError);
 		this.taskRunner.onDeadlock.push(this.onTaskRunnerDeadlock);

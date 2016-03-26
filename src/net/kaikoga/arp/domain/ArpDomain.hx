@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain;
 
+import net.kaikoga.arp.events.IArpSignalIn;
 import net.kaikoga.arp.events.IArpSignalOut;
 import net.kaikoga.arp.domain.events.ArpLogEvent;
 import net.kaikoga.arp.events.ArpSignal;
@@ -29,20 +30,28 @@ class ArpDomain {
 	private var _sid:Int = 0;
 	private var _did:Int = 0;
 
-	public var tick(default, null):ArpSignal<Float>;
+	private var _rawTick:ArpSignal<Float>;
+	public var rawTick(get, never):IArpSignalIn<Float>;
+	inline private function get_rawTick():IArpSignalIn<Float> return this._rawTick;
+
+	private var _tick:ArpSignal<Float>;
+	public var tick(get, never):IArpSignalOut<Float>;
+	inline private function get_tick():IArpSignalOut<Float> return this._tick;
 
 	private var _onLog:ArpSignal<ArpLogEvent>;
 	public var onLog(get, never):IArpSignalOut<ArpLogEvent>;
-	private function get_onLog():IArpSignalOut<ArpLogEvent> return this._onLog;
+	inline private function get_onLog():IArpSignalOut<ArpLogEvent> return this._onLog;
 
 	public function new() {
-		this.tick = new ArpSignal();
-		this._onLog = new ArpSignal();
+		this._rawTick = new ArpSignal<Float>();
+		this._tick = new ArpSignal<Float>();
+		this._onLog = new ArpSignal<ArpLogEvent>();
+
 		this.root = this.allocDir(new ArpDid(""));
 		this.slots = new Map();
 		this.nullSlot = this.allocSlot(new ArpSid(""));
 		this.reg = new ArpGeneratorRegistry();
-		this.prepareQueue = new PrepareQueue(this);
+		this.prepareQueue = new PrepareQueue(this, this._rawTick);
 	}
 
 	private function allocSlot(sid:ArpSid = null):ArpUntypedSlot {

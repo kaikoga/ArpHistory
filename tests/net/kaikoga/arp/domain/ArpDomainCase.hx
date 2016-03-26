@@ -57,7 +57,7 @@ class ArpDomainCase {
 		assertEquals(ArpHeat.Cold, query.slot().heat);
 		query.heatLater();
 		assertEquals(ArpHeat.Warming, query.slot().heat);
-		domain.tick.dispatch(1.0);
+		domain.rawTick.dispatch(1.0);
 		assertEquals(ArpHeat.Warm, query.slot().heat);
 	}
 
@@ -69,7 +69,7 @@ class ArpDomainCase {
 		query2.heatLater();
 		assertEquals(ArpHeat.Cold, query1.slot().heat);
 		assertEquals(ArpHeat.Warming, query2.slot().heat);
-		domain.tick.dispatch(1.0);
+		domain.rawTick.dispatch(1.0);
 		assertEquals(ArpHeat.Warm, query1.slot().heat);
 		assertEquals(ArpHeat.Warm, query2.slot().heat);
 	}
