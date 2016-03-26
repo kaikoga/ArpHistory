@@ -16,6 +16,8 @@ import net.kaikoga.arp.domain.core.ArpDid;
 
 class ArpDomain {
 
+	inline private static var AUTO_HEADER:String = "$";
+
 	public var root(default, null):ArpDirectory;
 	private var slots:Map<String, ArpUntypedSlot>;
 	public var nullSlot(default, null):ArpUntypedSlot;
@@ -44,14 +46,14 @@ class ArpDomain {
 	}
 
 	private function allocSlot(sid:ArpSid = null):ArpUntypedSlot {
-		if (sid == null) sid = new ArpSid('@s${Std.string(_sid++)}');
+		if (sid == null) sid = new ArpSid('$AUTO_HEADER${Std.string(_sid++)}');
 		var slot:ArpUntypedSlot = new ArpUntypedSlot(this, sid);
 		this.slots.set(sid.toString(), slot);
 		return slot;
 	}
 
 	private function allocDir(did:ArpDid = null):ArpDirectory {
-		if (did == null) did = new ArpDid('@${Std.string(_did++)}');
+		if (did == null) did = new ArpDid('$AUTO_HEADER${Std.string(_did++)}');
 		return new ArpDirectory(this, did);
 	}
 
@@ -77,17 +79,19 @@ class ArpDomain {
 		if (path == null) path = this.root;
 		var type:ArpType = (lexicalType != null) ? lexicalType : new ArpType(seed.typeName());
 		var slot:ArpSlot<T>;
+		var name:String;
 		if (seed.typeName() == "data") {
 			// NOTE seed iterates through value, which we must ignore for data groups
 			for (child in seed) if (child.typeName() != "value") loadSeed(child, path, null);
 			slot = null;
 		} else if (seed.ref() != null) {
 			slot = path.query(seed.ref(), type).slot();
-			if (seed.name() != null) {
-				path.query(seed.name(), type).setSlot(slot);
-			}
+			name = seed.name();
+			if (name != null) path.query(name, type).setSlot(slot);
 		} else {
-			slot = path.query(seed.name(), type).slot().addReference();
+			name = seed.name();
+			slot = if (name == null) allocSlot() else path.query(name, type).slot();
+			slot.addReference();
 			var gen:IArpGenerator<T> = this.reg.resolve(seed, type);
 			if (gen == null) throw 'generator not found for <$type>: template=${seed.template()}';
 			var arpObj:T = gen.alloc(seed);
