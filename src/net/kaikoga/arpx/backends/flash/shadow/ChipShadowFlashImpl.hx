@@ -15,7 +15,7 @@ class ChipShadowFlashImpl implements IShadowFlashImpl {
 	}
 
 	public function copySelf(bitmapData:BitmapData, transform:ITransform):Void {
-		if (shadow.visible) {
+		if (shadow.visible && shadow.chip != null) {
 			var pos:ArpPosition = shadow.position;
 			transform = transform.concatXY(pos.x, pos.y);
 			// TODO shadow.params.dir = pos.dir;

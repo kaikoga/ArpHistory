@@ -11,7 +11,7 @@ import net.kaikoga.arpx.chip.IChip;
 class ChipShadow implements IShadow {
 
 	@:arpValue public var visible:Bool;
-	public var params:ArpParams = new ArpParams();
+	@:arpValue public var params:ArpParams;
 	@:arpValue public var position:ArpPosition;
 	@:arpValue public var mass:Float;
 
