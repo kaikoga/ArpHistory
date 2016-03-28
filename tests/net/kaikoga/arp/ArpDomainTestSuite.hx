@@ -1,5 +1,6 @@
 package net.kaikoga.arp;
 
+import net.kaikoga.arp.macro.LatePrepareMacroArpObjectCase;
 import net.kaikoga.arp.structs.ArpColorFlashCase;
 import net.kaikoga.arp.macro.MacroColumnArpObjectCase;
 import net.kaikoga.arp.domain.MockColumnArpObjectCase;
@@ -46,6 +47,7 @@ class ArpDomainTestSuite {
 		r.load(StdDsMacroArpObjectCase);
 		r.load(HookMacroArpObjectCase);
 		r.load(HeatUpMacroArpObjectCase);
+		r.load(LatePrepareMacroArpObjectCase);
 
 		r.load(ArpDomainCase);
 
