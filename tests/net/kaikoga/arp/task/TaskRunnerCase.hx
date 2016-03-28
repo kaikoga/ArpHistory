@@ -1,6 +1,5 @@
 package net.kaikoga.arp.task;
 
-import haxe.Timer;
 import net.kaikoga.arp.events.ArpSignal;
 
 import picotest.PicoAssert.*;
@@ -184,18 +183,19 @@ private class DummyRealTimeTask implements ITask {
 
 	public var delayMs:Int;
 	private var taskStatus:TaskStatus = TaskStatus.Progress;
-	private var timer:Timer;
 
 	public function new(delayMs:Int) {
 		this.delayMs = delayMs;
 	}
 
 	public function run():TaskStatus {
-		if (timer == null) {
-			this.timer = Timer.delay(function():Void {
-				trace(Std.string(this));
-				this.taskStatus = TaskStatus.Complete;
-			}, this.delayMs);
+		if (delayMs >= 0) {
+			createCallback(
+				function():Void return,
+				delayMs,
+				function():Void this.taskStatus = TaskStatus.Complete
+			);
+			this.delayMs = -1;
 		}
 		return this.taskStatus;
 	}
