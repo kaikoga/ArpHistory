@@ -1,8 +1,10 @@
 package net.kaikoga.arp.task;
 
+import haxe.Timer;
 import net.kaikoga.arp.events.ArpSignal;
 
 import picotest.PicoAssert.*;
+import picotest.PicoTestAsync.*;
 
 class TaskRunnerCase {
 
@@ -74,6 +76,57 @@ class TaskRunnerCase {
 		assertEquals(0, task.count);
 	}
 
+	public function testWaitNotify():Void {
+		trace(Std.string(this));
+		var task:DummyRealTimeTask = new DummyRealTimeTask(100);
+		taskRunner.append(task);
+		assertEquals(0, taskRunner.tasksProcessed);
+		assertEquals(1, taskRunner.tasksTotal);
+		assertEquals(0, taskRunner.tasksWaiting);
+		assertFalse(taskRunner.isRunning);
+		assertTrue(taskRunner.isActive);
+		assertFalse(taskRunner.isWaiting);
+		taskRunner.start();
+		assertEquals(0, taskRunner.tasksProcessed);
+		assertEquals(1, taskRunner.tasksTotal);
+		assertEquals(0, taskRunner.tasksWaiting);
+		assertTrue(taskRunner.isRunning);
+		assertTrue(taskRunner.isActive);
+		assertFalse(taskRunner.isWaiting);
+		this.tick.dispatch(10.0);
+		taskRunner.wait(task);
+		assertEquals(0, taskRunner.tasksProcessed);
+		assertEquals(1, taskRunner.tasksTotal);
+		assertEquals(1, taskRunner.tasksWaiting);
+		assertTrue(taskRunner.isRunning);
+		assertTrue(taskRunner.isActive);
+		assertTrue(taskRunner.isWaiting);
+
+		assertLater(function():Void {
+			assertEquals(0, taskRunner.tasksProcessed);
+			assertEquals(1, taskRunner.tasksTotal);
+			assertEquals(1, taskRunner.tasksWaiting);
+			assertTrue(taskRunner.isRunning);
+			assertTrue(taskRunner.isActive);
+			assertTrue(taskRunner.isWaiting);
+			taskRunner.notify(task);
+			assertEquals(0, taskRunner.tasksProcessed);
+			assertEquals(1, taskRunner.tasksTotal);
+			assertEquals(0, taskRunner.tasksWaiting);
+			assertTrue(taskRunner.isRunning);
+			assertTrue(taskRunner.isActive);
+			assertFalse(taskRunner.isWaiting);
+			this.tick.dispatch(1.0);
+			this.tick.dispatch(1.0);
+			assertEquals(1, taskRunner.tasksProcessed);
+			assertEquals(1, taskRunner.tasksTotal);
+			assertEquals(0, taskRunner.tasksWaiting);
+			assertFalse(taskRunner.isRunning);
+			assertFalse(taskRunner.isActive);
+			assertFalse(taskRunner.isWaiting);
+		}, 200);
+	}
+
 	public function testImmortalTask():Void {
 		assertThrows(
 			function() {
@@ -125,6 +178,27 @@ private class DummyProgressTask implements ITask {
 
 	public function run():TaskStatus return --this.count <= 0 ? TaskStatus.Complete : TaskStatus.Progress;
 
+}
+
+private class DummyRealTimeTask implements ITask {
+
+	public var delayMs:Int;
+	private var taskStatus:TaskStatus = TaskStatus.Progress;
+	private var timer:Timer;
+
+	public function new(delayMs:Int) {
+		this.delayMs = delayMs;
+	}
+
+	public function run():TaskStatus {
+		if (timer == null) {
+			this.timer = Timer.delay(function():Void {
+				trace(Std.string(this));
+				this.taskStatus = TaskStatus.Complete;
+			}, this.delayMs);
+		}
+		return this.taskStatus;
+	}
 }
 
 private class DummyStalledTask implements ITask {

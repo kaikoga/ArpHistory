@@ -167,34 +167,34 @@ class TaskRunner<T:ITask> {
 		do {
 			// step 1: consume live tasks
 			var task:T = this._liveTasks.pop();
-			if (task == null) {
-				break;
-			} else if (this._waitingTasks.indexOf(task) >= 0) {
-				this._readyTasks.push(task);
-				continue;
-			}
-			var status:TaskStatus;
-			if (this._onError.willTrigger()) {
-				status = task.run();
-			} else {
-				try {
-					status = task.run();
-				} catch (e:Dynamic) {
-					status = TaskStatus.Error(e);
+			if (task != null) {
+				if (this._waitingTasks.indexOf(task) >= 0) {
+					this._readyTasks.push(task);
+					continue;
 				}
-			}
-			switch (status) {
-				case TaskStatus.Complete:
-					this.tasksProcessed++;
-					this.processedSomething = true;
-					if (this._onCompleteTask.willTrigger()) this._onCompleteTask.dispatch(task);
-				case TaskStatus.Progress:
-					this.processedSomething = true;
-					this._readyTasks.push(task);
-				case TaskStatus.Stalled:
-					this._readyTasks.push(task);
-				case TaskStatus.Error(e):
-					this._onError.dispatch(e);
+				var status:TaskStatus;
+				if (this._onError.willTrigger()) {
+					status = task.run();
+				} else {
+					try {
+						status = task.run();
+					} catch (e:Dynamic) {
+						status = TaskStatus.Error(e);
+					}
+				}
+				switch (status) {
+					case TaskStatus.Complete:
+						this.tasksProcessed++;
+						this.processedSomething = true;
+						if (this._onCompleteTask.willTrigger()) this._onCompleteTask.dispatch(task);
+					case TaskStatus.Progress:
+						this.processedSomething = true;
+						this._readyTasks.push(task);
+					case TaskStatus.Stalled:
+						this._readyTasks.push(task);
+					case TaskStatus.Error(e):
+						this._onError.dispatch(e);
+				}
 			}
 			// step 2: check turnover
 			if (this._liveTasks.length == 0) {
