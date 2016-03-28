@@ -50,7 +50,7 @@ class LatePrepareMacroArpObjectCase {
 			domain.rawTick.dispatch(10.0);
 			assertEquals(1, arpObj.volatileInt);
 			arpObj.arpDispose();
-			assertEquals(1, arpObj.volatileInt); // ISSUE want this 0?
+			assertEquals(0, arpObj.volatileInt);
 		}, 1200);
 	}
 

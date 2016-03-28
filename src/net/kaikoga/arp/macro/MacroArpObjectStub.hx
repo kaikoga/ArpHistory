@@ -96,6 +96,7 @@ class MacroArpObjectStub {
 			}
 
 			public function arpDispose():Void {
+				this.arpHeatDown();
 				$b{ this.buildDisposeBlock() }
 				this.dispose();
 				this._arpSlot = null;
