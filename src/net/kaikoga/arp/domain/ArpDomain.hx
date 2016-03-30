@@ -52,6 +52,9 @@ class ArpDomain {
 		this.nullSlot = this.allocSlot(new ArpSid(""));
 		this.reg = new ArpGeneratorRegistry();
 		this.prepareQueue = new PrepareQueue(this, this._rawTick);
+
+		// TODO deal with pending
+		this._rawTick.push(function(v) this._tick.dispatch(v));
 	}
 
 	private function allocSlot(sid:ArpSid = null):ArpUntypedSlot {
