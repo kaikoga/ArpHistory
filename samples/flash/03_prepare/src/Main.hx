@@ -1,5 +1,6 @@
 package;
 
+import flash.events.Event;
 import net.kaikoga.arpx.chip.StringChip;
 import net.kaikoga.arpx.chip.NativeTextChip;
 import net.kaikoga.arpx.camera.Camera;
@@ -19,24 +20,43 @@ import flash.display.Sprite;
 
 class Main extends Sprite {
 
+	private var domain:ArpDomain;
+
+	private var bitmapData:BitmapData;
+	private var console:Console;
+
 	public function new() {
 		super();
-		var bitmapData:BitmapData = new BitmapData(256, 256, true, 0xffffffff);
-		var bitmap:Bitmap = new Bitmap(bitmapData, PixelSnapping.NEVER, false);
-		addChild(bitmap);
+		this.domain = new ArpDomain();
+		this.domain.addGenerator(new ArpObjectGenerator(RectChip));
+		this.domain.addGenerator(new ArpObjectGenerator(NativeTextChip));
+		this.domain.addGenerator(new ArpObjectGenerator(StringChip));
+		this.domain.addGenerator(new ArpObjectGenerator(ChipShadow));
+		this.domain.addGenerator(new ArpObjectGenerator(CompositeShadow));
+		this.domain.addGenerator(new ArpObjectGenerator(Console));
+		this.domain.addGenerator(new ArpObjectGenerator(Camera));
+		this.domain.addGenerator(new ArpObjectGenerator(DelayLoad));
 
-		var domain:ArpDomain = new ArpDomain();
-		domain.addGenerator(new ArpObjectGenerator(RectChip));
-		domain.addGenerator(new ArpObjectGenerator(NativeTextChip));
-		domain.addGenerator(new ArpObjectGenerator(StringChip));
-		domain.addGenerator(new ArpObjectGenerator(ChipShadow));
-		domain.addGenerator(new ArpObjectGenerator(CompositeShadow));
-		domain.addGenerator(new ArpObjectGenerator(Console));
-		domain.addGenerator(new ArpObjectGenerator(Camera));
+		this.domain.loadSeed(ArpSeed.fromXmlString(Resource.getString("arpdata")));
+		this.domain.tick.push(this.onTick);
 
-		domain.loadSeed(ArpSeed.fromXmlString(Resource.getString("arpdata")));
-		var console:Console = domain.query("console", new Console().arpType()).value();
-		console.display(bitmapData);
+		this.bitmapData = new BitmapData(256, 256, true, 0xffffffff);
+		addChild(new Bitmap(this.bitmapData, PixelSnapping.NEVER, false));
+
+		this.console = this.domain.query("console", Console).value();
+		Lib.current.stage.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
+		this.domain.heatLater(this.domain.query("delay", DelayLoad).slot());
+	}
+
+	private function onEnterFrame(event:Event):Void {
+		this.domain.rawTick.dispatch(1.0);
+		this.bitmapData.fillRect(this.bitmapData.rect, 0xffffffff);
+		this.console.display(this.bitmapData);
+	}
+
+	private function onTick(value:Float):Void {
+		var shadow:ChipShadow = this.domain.query("/4", ChipShadow).value();
+		if (!this.domain.isPending) shadow.params.set("face", "ok");
 	}
 
 	public static function main():Void {

@@ -7,9 +7,10 @@
 		<shadow class="chip" visible="true" chip="rectChip" position="32,0" />
 		<shadow class="chip" visible="true" chip="text" position="64,0" params="face:hello" />
 		<shadow name="3" key="3" class="chip" visible="true" chip="rectChip" position="96,0" />
-		<shadow name="4" key="4" class="chip" visible="true" chip="string" position="128,0" params="world"/>
+		<shadow name="4" key="4" class="chip" visible="true" chip="string" position="128,0" params="world" />
 	</shadow>
 	<console name="console">
 		<camera shadow="/compositeShadow" position="0,0" />
 	</console>
+	<delay name="delay" delayMs="3000" />
 </data>

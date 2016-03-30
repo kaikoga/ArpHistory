@@ -31,7 +31,7 @@ class Main extends Sprite {
 		domain.addGenerator(new ArpObjectGenerator(Camera));
 
 		domain.loadSeed(ArpSeed.fromXmlString(Resource.getString("arpdata")));
-		var console:Console = domain.query("console", new Console().arpType()).value();
+		var console:Console = domain.query("console", Console._arpTypeInfo).value();
 		console.display(bitmapData);
 	}
 
