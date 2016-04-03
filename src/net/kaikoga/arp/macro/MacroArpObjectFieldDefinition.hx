@@ -38,6 +38,9 @@ class MacroArpObjectFieldDefinition {
 				case ":arpValue": metaArpValue = true;
 				case ":arpBarrier": metaArpBarrier = true;
 				case ":arpField": metaArpField = meta.params[0];
+				case ":arpWithoutBackend": Context.warning('Not supported in this backend', nativeField.pos);
+				case m if (m.indexOf(":arp") == 0) :
+					Context.error('Unsupported arp metadata', this.nativeField.pos);
 				case m if (m.indexOf("arp") == 0) :
 					Context.error('Use compile time metadata for arp metadatas; "@:arp", not "@arp".', this.nativeField.pos);
 			}
