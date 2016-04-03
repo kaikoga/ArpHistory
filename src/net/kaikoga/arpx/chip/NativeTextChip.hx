@@ -17,14 +17,14 @@ class NativeTextChip implements IChip
 #if arp_backend_flash implements IChipFlashImpl #end
 {
 
-	@:arpValue public var baseX:Int;
-	@:arpValue public var baseY:Int;
-	@:arpValue public var chipWidth:Int;
-	@:arpValue public var chipHeight:Int;
+	@:arpValue public var baseX:Int = 0;
+	@:arpValue public var baseY:Int = 0;
+	@:arpValue public var chipWidth:Int = 100;
+	@:arpValue public var chipHeight:Int = 100;
 
-	@:arpValue public var font:String;
+	@:arpValue public var font:String = "_sans";
 	@:arpValue public var fontSize:Int = 12;
-	@:arpValue public var color:ArpColor;
+	@:arpValue public var color:ArpColor = new ArpColor(0xff000000);
 
 	public function chipWidthOf(params:ArpParams):Int return this.chipWidth;
 	public function chipHeightOf(params:ArpParams):Int return this.chipHeight;

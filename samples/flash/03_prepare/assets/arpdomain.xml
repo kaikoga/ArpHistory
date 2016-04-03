@@ -1,13 +1,13 @@
 <data>
 	<chip name="rectChip" class="rect" border="#ff0000@ff" color="#0000ff@ff" chipWidth="32" chipHeight="32" baseX="16" baseY="16" />
-	<chip name="text" class="nativeText" font="_sans" fontSize="12" color="#ff0000@ff" chipWidth="100" chipHeight="32" baseX="16" baseY="16" />
+	<chip name="text" class="nativeText" color="#ff0000@ff" chipWidth="100" chipHeight="32" baseX="16" baseY="16" />
 	<chip name="string" class="string" chip="text" chipWidth="16" chipHeight="16" baseX="16" baseY="16" orientation="270" />
-	<shadow name="chipShadow" class="chip" visible="true" chip="rectChip" position="128,32" />
-	<shadow name="compositeShadow" class="composite" visible="true" position="0,128">
-		<shadow class="chip" visible="true" chip="rectChip" position="32,0" />
-		<shadow class="chip" visible="true" chip="text" position="64,0" params="face:hello" />
-		<shadow name="3" key="3" class="chip" visible="true" chip="rectChip" position="96,0" />
-		<shadow name="4" key="4" class="chip" visible="true" chip="string" position="128,0" params="world" />
+	<shadow name="chipShadow" class="chip" chip="rectChip" position="128,32" />
+	<shadow name="compositeShadow" class="composite" position="0,128">
+		<shadow class="chip" chip="rectChip" position="32,0" />
+		<shadow class="chip" chip="text" position="64,0" params="face:hello" />
+		<shadow class="chip" chip="rectChip" position="96,0" />
+		<shadow name="loader" class="chip" chip="string" position="128,0" params="world" />
 	</shadow>
 	<console name="console">
 		<camera shadow="/compositeShadow" position="0,0" />

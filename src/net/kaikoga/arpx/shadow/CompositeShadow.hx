@@ -15,10 +15,10 @@ class CompositeShadow implements IShadow
 #if arp_backend_flash implements IShadowFlashImpl #end
 {
 
-	@:arpValue public var visible:Bool;
+	@:arpValue public var visible:Bool = true;
 	public var params:ArpParams;
 	@:arpValue public var position:ArpPosition;
-	@:arpValue public var mass:Float;
+	@:arpValue public var mass:Float = 1.0;
 	@:arpType("shadow") @:arpField("shadow") public var shadows:Map<String, IShadow>;
 
 	#if arp_backend_flash

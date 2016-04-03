@@ -16,10 +16,10 @@ class ChipShadow implements IShadow
 #if arp_backend_flash implements IShadowFlashImpl #end
 {
 
-	@:arpValue public var visible:Bool;
+	@:arpValue public var visible:Bool = true;
 	@:arpValue public var params:ArpParams;
 	@:arpValue public var position:ArpPosition;
-	@:arpValue public var mass:Float;
+	@:arpValue public var mass:Float = 1.0;
 
 	@:arpType("chip") public var chip:IChip;
 

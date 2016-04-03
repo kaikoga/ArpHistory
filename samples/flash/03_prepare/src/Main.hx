@@ -55,7 +55,7 @@ class Main extends Sprite {
 	}
 
 	private function onTick(value:Float):Void {
-		var shadow:ChipShadow = this.domain.query("/4", ChipShadow).value();
+		var shadow:ChipShadow = this.domain.query("/loader", ChipShadow).value();
 		if (!this.domain.isPending) shadow.params.set("face", "ok");
 	}
 
