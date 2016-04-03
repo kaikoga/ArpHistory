@@ -60,13 +60,13 @@ class MacroDerivedArpObjectCase {
 		assertEquals(domain, arpObj.arpDomain());
 		assertEquals(new ArpType("mock"), arpObj.arpType());
 
-		assertEquals(arpObj.intField, 0);
-		assertEquals(arpObj.intField2, 0);
-		assertEquals(arpObj.floatField, 0.0);
-		assertEquals(arpObj.boolField, false);
-		assertEquals(arpObj.stringField, null);
-		assertEquals(arpObj.refField, null);
-		assertEquals(arpObj.refField2, null);
+		assertEquals(1000000, arpObj.intField);
+		assertEquals(0, arpObj.intField2);
+		assertEquals(1000000.0, arpObj.floatField);
+		assertEquals(false, arpObj.boolField);
+		assertEquals(null, arpObj.stringField);
+		assertEquals(null, arpObj.refField);
+		assertEquals(null, arpObj.refField2);
 	}
 
 	public function testLoadSeed():Void {

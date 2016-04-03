@@ -44,6 +44,13 @@ class ArpStructsMacroArpObjectCase {
 
 		assertEquals(domain, arpObj.arpDomain());
 		assertEquals(new ArpType("mock"), arpObj.arpType());
+		assertNotNull(arpObj.arpArea2dField);
+		assertNotNull(arpObj.arpColorField);
+		assertNotNull(arpObj.arpDirectionField);
+		assertNotNull(arpObj.arpHitAreaField);
+		assertNotNull(arpObj.arpParamsField);
+		assertNotNull(arpObj.arpPositionField);
+		assertNotNull(arpObj.arpRangeField);
 	}
 
 	public function testLoadSeed():Void {
