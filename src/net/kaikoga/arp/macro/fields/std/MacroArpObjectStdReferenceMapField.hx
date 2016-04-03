@@ -24,6 +24,7 @@ class MacroArpObjectStdReferenceMapField extends MacroArpObjectFieldBase impleme
 
 	public function new(definition:MacroArpObjectFieldDefinition) {
 		super(definition);
+		if (definition.nativeDefault != null) throw "can't inline initialize arp reference field";
 		_nativeType = coerce(super.nativeType);
 	}
 

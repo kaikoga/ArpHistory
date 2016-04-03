@@ -15,13 +15,15 @@ class MacroArpObjectStdArrayField extends MacroArpObjectFieldBase implements IMa
 
 	public function buildField(outFields:Array<Field>):Void {
 		var nativeType:ComplexType = this.nativeType;
-		this.nativeField.kind = FieldType.FProp("default", "null", nativeType, null);
+		this.nativeField.kind = FieldType.FProp("default", "null", nativeType, this.definition.nativeDefault);
 		outFields.push(nativeField);
 	}
 
 	public function buildInitBlock(initBlock:Array<Expr>):Void {
-		var iFieldName:String = this.iFieldName;
-		initBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = []; });
+		if (this.definition.nativeDefault == null) {
+			var iFieldName:String = this.iFieldName;
+			initBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = []; });
+		}
 	}
 
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {

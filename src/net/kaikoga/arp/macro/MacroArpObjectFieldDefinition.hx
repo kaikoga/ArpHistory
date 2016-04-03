@@ -13,6 +13,7 @@ class MacroArpObjectFieldDefinition {
 
 	public var nativeField(default, null):Field;
 	public var nativeType(default, null):ComplexType;
+	public var nativeDefault(default, null):Expr;
 
 	public var metaArpValue:Bool = false;
 	public var metaArpType:ExprOf<String> = null;
@@ -22,10 +23,13 @@ class MacroArpObjectFieldDefinition {
 	public function new(nativeField:Field) {
 		this.nativeField = nativeField;
 
-		this.nativeType = switch (nativeField.kind) {
-			case FieldType.FProp(_, _, n, _): n;
-			case FieldType.FVar(n, _): n;
-			case FieldType.FFun(_): null;
+		switch (nativeField.kind) {
+			case FieldType.FProp(_, _, n, d), FieldType.FVar(n, d):
+				this.nativeType = n;
+				this.nativeDefault = d;
+			case FieldType.FFun(_):
+				this.nativeType = null;
+				this.nativeDefault = null;
 		}
 
 		for (meta in nativeField.meta) {
