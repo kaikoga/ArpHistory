@@ -35,6 +35,7 @@ class CompositeShadow implements IShadow
 
 	#else
 
+	@:arpWithoutBackend
 	public function new () {
 	}
 

@@ -96,6 +96,7 @@ class StringChip implements IChip
 
 	#else
 
+	@:arpWithoutBackend
 	public function new () {
 	}
 

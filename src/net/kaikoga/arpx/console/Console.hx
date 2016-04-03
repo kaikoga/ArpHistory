@@ -30,6 +30,7 @@ class Console implements IConsole
 
 	#else
 
+	@:arpWithoutBackend
 	public function new () {
 	}
 

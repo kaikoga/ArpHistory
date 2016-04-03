@@ -57,6 +57,7 @@ class RectChip implements IChip
 
 	#else
 
+	@:arpWithoutBackend
 	public function new () {
 	}
 

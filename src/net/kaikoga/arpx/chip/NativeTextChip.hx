@@ -54,6 +54,7 @@ class NativeTextChip implements IChip
 
 	#else
 
+	@:arpWithoutBackend
 	public function new () {
 	}
 
