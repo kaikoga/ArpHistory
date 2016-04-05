@@ -4,6 +4,7 @@ package net.kaikoga.arp.macro.mocks;
 class MockMacroDerivedArpObject extends MockMacroArpObject {
 
 	@:arpValue public var intField2:Int = 0;
+	@:arpValue public var stringField2:String = null;
 	@:arpBarrier @:arpType("mock") public var refField2:MockMacroDerivedArpObject;
 
 	public function new() {

@@ -27,6 +27,8 @@ class MacroArpObjectFieldBase {
 
 	private var iFieldName(get, never):String;
 	private function get_iFieldName():String return this.nativeField.name;
+	private var i_field(get, never):String;
+	private function get_i_field():String return "_" + this.iFieldName;
 	private var iGet_field(get, never):String;
 	private function get_iGet_field():String return "get_" + this.iFieldName;
 	private var iSet_field(get, never):String;
