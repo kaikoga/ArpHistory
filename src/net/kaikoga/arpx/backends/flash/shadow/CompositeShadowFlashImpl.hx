@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.backends.flash.shadow;
 
-import net.kaikoga.arpx.shadow.IShadow;
+import net.kaikoga.arpx.shadow.Shadow;
 import flash.display.BitmapData;
 
 import net.kaikoga.arpx.backends.flash.geom.ITransform;

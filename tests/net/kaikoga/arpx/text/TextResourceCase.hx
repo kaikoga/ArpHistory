@@ -10,7 +10,7 @@ import picotest.PicoAssert.*;
 class TextResourceCase {
 
 	private var domain:ArpDomain;
-	private var me:TextResource;
+	private var me:FixedTextResource;
 
 	public function setup() {
 		var xml:Xml = Xml.parse('<data>
@@ -19,7 +19,7 @@ class TextResourceCase {
 		').firstElement();
 		var seed:ArpSeed = ArpSeed.fromXml(xml);
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpObjectGenerator(TextResource));
+		domain.addGenerator(new ArpObjectGenerator(FixedTextResource));
 		domain.addGenerator(new ArpObjectGenerator(ParametrizedTextResource));
 		domain.loadSeed(seed);
 		me = domain.query("name1", new ArpType("text")).value();

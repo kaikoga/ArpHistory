@@ -1,16 +1,16 @@
 package net.kaikoga.arpx.text;
 
 import net.kaikoga.arp.iter.ERegIterator;
-import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("text", "ptext"))
-class ParametrizedTextResource implements ITextResource implements IArpObject {
+@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.buildDerived("text", "ptext"))
+class ParametrizedTextResource extends TextResource {
 
 	@:arpValue public var value:String = null;
 
 	private var _nodes:Array<INode>;
 
 	public function new() {
+		super();
 	}
 
 	public function init():Void {
@@ -27,7 +27,7 @@ class ParametrizedTextResource implements ITextResource implements IArpObject {
 		}
 	}
 
-	public function publish(params:Map<String, Dynamic> = null):String {
+	override public function publish(params:Map<String, Dynamic> = null):String {
 		var result:String = "";
 		for (node in this._nodes) {
 			result += node.publishSelf(params);
@@ -99,8 +99,8 @@ private class ParametrizedNode implements INode {
 
 		var param:Dynamic = params[this._name];
 		var str:String;
-		if (Std.is(param, ITextResource)) {
-			str = cast (param, ITextResource).publish();
+		if (Std.is(param, TextResource)) {
+			str = cast (param, TextResource).publish();
 		} else if (Std.is(param, Float)) {
 			switch (this._flagFormat) {
 				case "z":

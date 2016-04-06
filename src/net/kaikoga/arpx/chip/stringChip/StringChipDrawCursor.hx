@@ -22,7 +22,7 @@ class StringChipDrawCursor {
 		this.params = params.clone();
 	}
 
-	public function move(char:String, chip:StringChip, childChip:IChip):ArpParams {
+	public function move(char:String, chip:StringChip, childChip:Chip):ArpParams {
 		switch (chip.orientation) {
 			case 90:
 				switch (char) {

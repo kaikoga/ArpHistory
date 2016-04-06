@@ -19,7 +19,7 @@ class ParametrizedTextResourceCase {
 		').firstElement();
 		var seed:ArpSeed = ArpSeed.fromXml(xml);
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpObjectGenerator(TextResource));
+		domain.addGenerator(new ArpObjectGenerator(FixedTextResource));
 		domain.addGenerator(new ArpObjectGenerator(ParametrizedTextResource));
 		domain.loadSeed(seed);
 		me = domain.query("name1", new ArpType("text")).value();

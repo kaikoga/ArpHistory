@@ -1,6 +1,7 @@
 package net.kaikoga.arpx.console;
 
-import net.kaikoga.arpx.camera.ICamera;
+import net.kaikoga.arp.domain.IArpObject;
+import net.kaikoga.arpx.camera.Camera;
 
 #if flash
 import net.kaikoga.arpx.backends.flash.console.IConsoleFlashImpl;
@@ -9,10 +10,10 @@ import flash.display.BitmapData;
 #end
 
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("console", "console"))
-class Console implements IConsole
+class Console implements IArpObject
 #if arp_backend_flash implements IConsoleFlashImpl #end
 {
-	@:arpType("camera") @:arpField("camera") public var cameras:Map<String, ICamera>;
+	@:arpType("camera") @:arpField("camera") public var cameras:Map<String, Camera>;
 	@:arpValue public var width:Int;
 	@:arpValue public var height:Int;
 

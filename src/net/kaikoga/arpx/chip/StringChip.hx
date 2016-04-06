@@ -1,44 +1,33 @@
 package net.kaikoga.arpx.chip;
 
-import net.kaikoga.arpx.shadow.ChipShadow;
-import net.kaikoga.arpx.shadow.IShadow;
 import net.kaikoga.arpx.chip.stringChip.StringChipStringIterator;
 import net.kaikoga.arp.structs.ArpParams;
 
 #if flash
 import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
 import net.kaikoga.arpx.backends.flash.chip.StringChipFlashImpl;
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
-import flash.display.BitmapData;
 #end
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("chip", "string"))
-class StringChip implements IChip
-#if arp_backend_flash implements IChipFlashImpl #end
-{
+@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.buildDerived("chip", "string"))
+class StringChip extends Chip {
 
 	private static var _workParams:ArpParams = new ArpParams();
 
 	@:arpValue public var baseX:Int;
 	@:arpValue public var baseY:Int;
-
-	@:isVar public var chipWidth(get, set):Int;
-	private function get_chipWidth():Int return this.chipWidth;
-	private function set_chipWidth(value:Int) return this.chipWidth = value;
-	@:isVar public var chipHeight(get, set):Int;
-	private function get_chipHeight():Int return this.chipHeight;
-	private function set_chipHeight(value:Int) return this.chipHeight = value;
+	@:arpValue public var chipWidth:Int;
+	@:arpValue public var chipHeight:Int;
 
 	@:arpValue public var isProportional:Bool;
 	@:arpValue public var orientation:Int;
 
-	@:arpType("chip") public var chip:IChip;
+	@:arpType("chip") public var chip:Chip;
 
-	public function chipWidthOf(params:ArpParams):Int {
+	override public function chipWidthOf(params:ArpParams):Int {
 		if (params == null) {
 			return 0;
 		}
-		var chip:IChip = this.chip;
+		var chip:Chip = this.chip;
 		params = _workParams.copyFrom(params);
 		var width:Int = 0;
 		var result:Int = 0;
@@ -58,11 +47,11 @@ class StringChip implements IChip
 		return ((result > width)) ? result : width;
 	}
 
-	public function chipHeightOf(params:ArpParams):Int {
+	override public function chipHeightOf(params:ArpParams):Int {
 		if (params == null) {
 			return 0;
 		}
-		var chip:IChip = this.chip;
+		var chip:Chip = this.chip;
 		params = _workParams.copyFrom(params);
 		var result:Int = this.chip.chipHeight;
 		for (char in new StringChipStringIterator(params.get("face"))) {
@@ -71,33 +60,23 @@ class StringChip implements IChip
 		return result;
 	}
 
-	public function hasFace(face:String):Bool {
+	override public function hasFace(face:String):Bool {
 		return true;
-	}
-
-	public function toShadow(params:ArpParams = null):IShadow {
-		var shadow:ChipShadow = this.arpDomain().allocObject(ChipShadow);
-		shadow.chip = this;
-		shadow.params = params;
-		return shadow;
 	}
 
 	#if arp_backend_flash
 
+	override private function createImpl():IChipFlashImpl return new StringChipFlashImpl(this);
+
 	public function new() {
-		flashImpl = new StringChipFlashImpl(this);
-	}
-
-	private var flashImpl:StringChipFlashImpl;
-
-	inline public function copyChip(bitmapData:BitmapData, transform:ITransform, params:ArpParams = null):Void {
-		flashImpl.copyChip(bitmapData, transform, params);
+		super();
 	}
 
 	#else
 
 	@:arpWithoutBackend
 	public function new () {
+		super();
 	}
 
 	#end
