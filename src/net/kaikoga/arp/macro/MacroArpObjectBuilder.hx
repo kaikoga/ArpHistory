@@ -14,18 +14,12 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 		return new MacroArpObjectBuilder(arpTypeName, arpTemplateName).run();
 	}
 
-	public static function buildDerived(arpTypeName:String, arpTemplateName:String = null):Array<Field> {
-		if (arpTemplateName == null) arpTemplateName = arpTypeName;
-		return new MacroArpObjectBuilder(arpTypeName, arpTemplateName, true).run();
-	}
-
-	private function new(arpTypeName:String, arpTemplateName:String, isDerived:Bool = false) {
+	private function new(arpTypeName:String, arpTemplateName:String) {
 		this.arpTypeName = arpTypeName;
 		this.arpTemplateName = arpTemplateName;
-		this.isDerived = isDerived;
 	}
 
-	private function mergeBaseFields():Map<String, ClassField> {
+	private function analyzeBaseClasses():Void {
 		var map:Map<String, ClassField> = new Map<String, ClassField>();
 
 		var classType:ClassType = Context.getLocalClass().get();
@@ -33,16 +27,21 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 			var superClass = classType.superClass;
 			if (superClass == null) break;
 			classType = superClass.t.get();
+			for (intfRef in classType.interfaces) {
+				var intf:ClassType = intfRef.t.get();
+				if (intf.pack.join(".") + "." + intf.name == "net.kaikoga.arp.domain.IArpObject") {
+					this.isDerived = true;
+				}
+			}
 			for (field in classType.fields.get()) {
 				if (!map.exists(field.name)) map.set(field.name, field);
 			}
 		} while (classType != null);
-		return map;
+
+		this.mergedBaseFields = map;
 	}
 
-	private var _mergedBaseFields:Map<String, ClassField>;
-	public var mergedBaseFields(get, never):Map<String, ClassField>;
-	private function get_mergedBaseFields():Map<String, ClassField> return (_mergedBaseFields != null) ? _mergedBaseFields : _mergedBaseFields = mergeBaseFields();
+	private var mergedBaseFields:Map<String, ClassField>;
 
 	private function merge(target:Array<Field>, source:Array<Field>):Array<Field> {
 		for (field in source) {
@@ -56,6 +55,7 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 	}
 
 	public function run() {
+		analyzeBaseClasses();
 		var outFields:Array<Field> = [];
 
 		for (field in Context.getBuildFields()) {
