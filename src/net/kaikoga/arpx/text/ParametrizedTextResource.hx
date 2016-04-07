@@ -2,7 +2,7 @@ package net.kaikoga.arpx.text;
 
 import net.kaikoga.arp.iter.ERegIterator;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.buildDerived("text", "ptext"))
+@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("text", "ptext"))
 class ParametrizedTextResource extends TextResource {
 
 	@:arpValue public var value:String = null;

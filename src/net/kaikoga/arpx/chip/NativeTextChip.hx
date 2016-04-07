@@ -8,7 +8,7 @@ import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
 import net.kaikoga.arpx.backends.flash.chip.NativeTextChipFlashImpl;
 #end
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.buildDerived("chip", "nativeText"))
+@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("chip", "nativeText"))
 class NativeTextChip extends Chip {
 
 	@:arpValue public var baseX:Int = 0;

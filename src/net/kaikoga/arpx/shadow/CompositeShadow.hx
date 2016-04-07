@@ -8,7 +8,7 @@ import net.kaikoga.arpx.backends.flash.shadow.CompositeShadowFlashImpl;
 import net.kaikoga.arpx.backends.flash.shadow.IShadowFlashImpl;
 #end
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.buildDerived("shadow", "composite"))
+@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("shadow", "composite"))
 class CompositeShadow extends Shadow {
 
 	@:arpValue public var visible:Bool = true;
