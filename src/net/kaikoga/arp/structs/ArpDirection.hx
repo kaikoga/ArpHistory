@@ -103,7 +103,7 @@ class ArpDirection implements IPersistable {
 		return value;
 	}
 
-	private function toIndex(dirs:Int):Int {
+	public function toIndex(dirs:Int):Int {
 		return Math.round(this.value * VAL_TO_REV * dirs) % dirs;
 	}
 
