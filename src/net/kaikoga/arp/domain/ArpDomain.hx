@@ -140,6 +140,11 @@ class ArpDomain {
 		this.prepareQueue.prepareLater(slot);
 	}
 
+	public function heatDown(slot:ArpUntypedSlot):Void {
+		slot.value.arpHeatDown();
+		slot.heat = ArpHeat.Cold;
+	}
+
 	public var isPending(get, never):Bool;
 	inline public function get_isPending():Bool return this.prepareQueue.isPending;
 

@@ -10,8 +10,6 @@ class MockLatePrepareMacroArpObject implements IArpObject {
 	public var volatileInt:Int = 0;
 	private var heat:Bool;
 
-	@:arpType("mock") public var refField:MockLatePrepareMacroArpObject;
-
 	public function new() {
 	}
 

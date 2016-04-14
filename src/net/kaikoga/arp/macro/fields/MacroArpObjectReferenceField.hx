@@ -55,7 +55,7 @@ class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IM
 	}
 
 	public function buildHeatUpBlock(heatUpBlock:Array<Expr>):Void {
-		heatUpBlock.push(macro @:pos(this.nativePos) { null; });
+		heatUpBlock.push(macro @:pos(this.nativePos) { if (this.$iFieldSlot.heat != net.kaikoga.arp.domain.ArpHeat.Warm) return false; });
 	}
 
 	public function buildHeatDownBlock(heatDownBlock:Array<Expr>):Void {

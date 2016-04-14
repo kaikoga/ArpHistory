@@ -86,7 +86,7 @@ class MacroArpObjectStub {
 			}
 
 			public function arpHeatUp():Bool {
-				// $b{ this.buildHeatUpBlock() }
+				$b{ this.buildHeatUpBlock() }
 				return this.heatUp();
 			}
 
@@ -150,13 +150,13 @@ class MacroArpObjectStub {
 			}
 
 			override public function arpHeatUp():Bool {
-				// $b{ this.buildHeatUpBlock() }
-				return this.heatUp();
+				$b{ this.buildHeatUpBlock() }
+				return super.arpHeatUp();
 			}
 
 			override public function arpHeatDown():Bool {
 				// $b{ this.buildHeatDownBlock() }
-				return this.heatDown();
+				return super.arpHeatDown();
 			}
 
 			override public function arpDispose():Void {

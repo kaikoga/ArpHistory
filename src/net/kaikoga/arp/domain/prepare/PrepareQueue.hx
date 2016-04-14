@@ -11,7 +11,7 @@ import net.kaikoga.arp.domain.IArpObject;
 class PrepareQueue {
 
 	public var isPending(get, never):Bool;
-	private function get_isPending():Bool return this.taskRunner.isRunning;
+	private function get_isPending():Bool return !this.taskRunner.isCompleted;
 
 	public var tasksProcessed(get, never):Int;
 	private function get_tasksProcessed():Int return this.taskRunner.tasksProcessed;
@@ -40,7 +40,7 @@ class PrepareQueue {
 		this.taskRunner.onDeadlock.push(this.onTaskRunnerDeadlock);
 		this.taskRunner.onProgress.push(this.onTaskRunnerProgress);
 		this.taskRunner.onCompleteTask.push(this.onCompleteTask);
-		this.taskRunner.start();
+		//this.taskRunner.start();
 	}
 
 	private function onTaskRunnerComplete(i:Int):Void {
@@ -52,7 +52,7 @@ class PrepareQueue {
 	}
 
 	private function onTaskRunnerProgress(progress:ArpProgressEvent):Void {
-		this.domain.log("arp_debug_prepare", "PrepareTaskManager.onTaskRunnerProgress(): [prepare task cycle]");
+		this.domain.log("arp_debug_prepare", 'PrepareTaskManager.onTaskRunnerProgress(): [prepare task cycle ${progress.progress}/${progress.total}]');
 	}
 
 	private function onTaskRunnerError(error:Dynamic):Void {
@@ -93,10 +93,18 @@ class PrepareQueue {
 	}
 
 	public function waitBySlot(slot:ArpUntypedSlot):Void {
-		if (this.tasksBySlots.exists(slot)) this.taskRunner.wait(this.tasksBySlots.get(slot));
+		if (this.tasksBySlots.exists(slot)) {
+			var task:IPrepareTask = this.tasksBySlots.get(slot);
+			task.waiting = true;
+			this.taskRunner.wait(task);
+		}
 	}
 
 	public function notifyBySlot(slot:ArpUntypedSlot):Void {
-		if (this.tasksBySlots.exists(slot)) this.taskRunner.notify(this.tasksBySlots.get(slot));
+		if (this.tasksBySlots.exists(slot)) {
+			var task:IPrepareTask = this.tasksBySlots.get(slot);
+			task.waiting = false;
+			this.taskRunner.notify(task);
+		}
 	}
 }

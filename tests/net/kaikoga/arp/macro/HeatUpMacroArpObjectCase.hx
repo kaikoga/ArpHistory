@@ -22,7 +22,7 @@ class HeatUpMacroArpObjectCase {
 		domain = new ArpDomain();
 		domain.addGenerator(new ArpObjectGenerator(MockMacroArpObject, true));
 		xml = Xml.parse('<data>
-		<mock name="name1" intField="42" floatField="3.14" boolField="true" stringField="stringValue" refField="/name1" />
+		<mock name="name1" intField="42" floatField="3.14" boolField="true" stringField="stringValue" refField="" />
 		<mock name="name2" refField="/name1" />
 		<mock name="name3" />
 		</data>
