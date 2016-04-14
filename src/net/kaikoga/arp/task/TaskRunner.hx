@@ -128,11 +128,12 @@ class TaskRunner<T:ITask> {
 	 * @param task A task, which is wait()ing.
 	 */
 	public function notify(task:T):Void {
-		this.isDeadlock = false;
 		if (this._waitingTasks.indexOf(task) >= 0) {
+			this.isDeadlock = false;
 			this._waitingTasks.remove(task);
 			this.tasksWaiting--;
 			this.processedSomething = true;
+			if (this.isAutoStart) this.start();
 		}
 	}
 
@@ -163,6 +164,11 @@ class TaskRunner<T:ITask> {
 	}
 
 	public function tick(cpuLoad:Float):Void {
+		// rotate anyway
+		if (this._liveTasks.length == 0) {
+			this._liveTasks = this._readyTasks;
+			this._readyTasks = [];
+		}
 		var endTime:Float = Date.now().getTime() + this.cpuTime * cpuLoad;
 		do {
 			// step 1: consume live tasks
@@ -207,6 +213,8 @@ class TaskRunner<T:ITask> {
 						this.processedSomething = false;
 					} else if (this.tasksWaiting > 0) {
 						if (!this.verbose) this.triggerProgressEvent();
+						this.stop();
+						break;
 					} else {
 						// No work done, tasks depends each other, we can only halt
 						this.isDeadlock = true;
@@ -214,6 +222,7 @@ class TaskRunner<T:ITask> {
 						this._onDeadlock.dispatch(this.tasksTotal - this.tasksProcessed);
 						//deadlock is fatal, so we must stop
 						this.stop();
+						break;
 					}
 				} else {
 					if (this.tasksWaiting > 0) {
@@ -222,6 +231,7 @@ class TaskRunner<T:ITask> {
 						// No tasks, no ready tasks, done!
 						this._onComplete.dispatch(0);
 						this.stop();
+						break;
 					}
 				}
 			}
