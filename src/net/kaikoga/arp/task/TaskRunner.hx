@@ -34,6 +34,7 @@ class TaskRunner<T:ITask> {
 		return this.tasksWaiting > 0;
 	}
 
+	public var isCompleted(get, never):Bool;
 	public function get_isCompleted():Bool {
 		return !(this.isActive || this.isWaiting);
 	}
@@ -113,8 +114,8 @@ class TaskRunner<T:ITask> {
 	}
 
 	/**
-	 * Skip task execution until next notify() call.
-	 * @param task A task, which may be either queued or not queued.
+	 * Mark a task to hold this TaskRunner's completion, with its execution skipped until next notify() call.
+	 * @param task A task to wait for notify(). This task may be either queued or not queued.
 	 */
 	public function wait(task:T):Void {
 		if (this._waitingTasks.indexOf(task) < 0) {
@@ -124,7 +125,7 @@ class TaskRunner<T:ITask> {
 	}
 
 	/**
-	 * Resume task execution which is skipped by wait().
+	 * Unmarks a task marked by wait(), and resumes task execution if scheduled.
 	 * @param task A task, which is wait()ing.
 	 */
 	public function notify(task:T):Void {
