@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.text;
 
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("text"))
-class FixedTextResource extends TextResource {
+class FixedTextData extends TextData {
 
 	@:arpValue public var value:String = null;
 

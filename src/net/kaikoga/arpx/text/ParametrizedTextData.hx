@@ -3,7 +3,7 @@ package net.kaikoga.arpx.text;
 import net.kaikoga.arp.iter.ERegIterator;
 
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("text", "ptext"))
-class ParametrizedTextResource extends TextResource {
+class ParametrizedTextData extends TextData {
 
 	@:arpValue public var value:String = null;
 
@@ -99,8 +99,8 @@ private class ParametrizedNode implements INode {
 
 		var param:Dynamic = params[this._name];
 		var str:String;
-		if (Std.is(param, TextResource)) {
-			str = cast (param, TextResource).publish();
+		if (Std.is(param, TextData)) {
+			str = cast (param, TextData).publish();
 		} else if (Std.is(param, Float)) {
 			switch (this._flagFormat) {
 				case "z":

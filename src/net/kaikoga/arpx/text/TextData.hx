@@ -3,7 +3,7 @@ package net.kaikoga.arpx.text;
 import net.kaikoga.arp.domain.IArpObject;
 
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("text", "null"))
-class TextResource implements IArpObject {
+class TextData implements IArpObject {
 	public function new() {
 	}
 
