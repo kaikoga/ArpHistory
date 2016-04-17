@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.chip;
 
+import net.kaikoga.arpx.faceList.FaceList;
 import net.kaikoga.arpx.texture.Texture;
 import net.kaikoga.arp.structs.ArpParams;
 
@@ -19,8 +20,8 @@ class GridChip extends Chip {
 	@:arpValue public var chipHeight:Int;
 
 	@:arpValue public var dirs:Int = 1;
+	@:arpBarrier @:arpType("faceList") public var faceList:FaceList;
 	@:arpBarrier @:arpType("texture") public var texture:Texture;
-	//@:arpType("chipFaceList") public var chipFaceList:ChipFaceList;
 
 	override public function chipWidthOf(params:ArpParams):Int {
 		return (params != null) ? this.hasFace(params.get("face")) ? this.chipWidth : 0 : this.chipWidth;

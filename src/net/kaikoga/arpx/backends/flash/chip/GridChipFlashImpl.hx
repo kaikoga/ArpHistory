@@ -39,13 +39,13 @@ class GridChipFlashImpl implements IChipFlashImpl {
 
 		var faces:Array<String>;
 		var isVertical:Bool;
-		//if (this.chipFaceList) {
-		//	faces = this.chipFaceList.toArray();
-		//	isVertical = this.chipFaceList.isVertical;
-		//} else {
-		faces = [];
-		isVertical = false;
-		//}
+		if (this.chip.faceList != null) {
+			faces = this.chip.faceList.toArray();
+			isVertical = this.chip.faceList.isVertical;
+		} else {
+			faces = [];
+			isVertical = false;
+		}
 		var index:Int = 0;
 		var c:Int = faces.length;
 		var x:Int = 0;
