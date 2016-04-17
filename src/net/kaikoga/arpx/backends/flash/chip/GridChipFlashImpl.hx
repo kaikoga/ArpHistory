@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.backends.flash.chip;
 
+import net.kaikoga.arp.domain.ArpHeat;
 import flash.geom.Point;
 import net.kaikoga.arp.structs.ArpDirection;
 import net.kaikoga.arpx.chip.GridChip;
@@ -106,7 +107,7 @@ class GridChipFlashImpl implements IChipFlashImpl {
 					result.copyPixels(this.sourceBitmap, bound, nullPoint);
 					this.trimmedBitmaps.set(index, result);
 				} else {
-					// this.chip.arpDomain().log("gridchip", "GridChip.getTrimmedBitmap(): Chip index out of range", this, ":", index);
+					this.chip.arpDomain().log("gridchip", 'GridChip.getTrimmedBitmap(): Chip index out of range: ${this}:$index');
 				}
 			}
 			return result;
@@ -118,12 +119,11 @@ class GridChipFlashImpl implements IChipFlashImpl {
 	private var _workMatrix:Matrix = new Matrix();
 
 	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:ArpParams = null):Void {
-		/*
-		if (this._arpTemperature < ArpTemperatures.HOT) {
-			this.domain.log("gridchip", "GridChip.copyChip(): Chip not hot, ", this, ":", face);
+		if (cast (this.chip.arpSlot().heat, Int) < 3) {
+			this.chip.arpDomain().log("gridchip", 'GridChip.copyChip(): Chip not warm: ${this}:$params');
+			this.chip.arpDomain().heatLater(this.chip.arpSlot());
 			return;
 		}
-		*/
 
 		var face:String = (params != null) ? params.get("face") : null;
 		var dir:ArpDirection = (params != null) ? cast (params.get("dir"), ArpDirection) : null;
@@ -135,7 +135,7 @@ class GridChipFlashImpl implements IChipFlashImpl {
 				index = this.indexesByFaces[face];
 			} else {
 				index = 0;
-				//this.domain.log("gridchip", "GridChip.copyChip(): Chip name not found in", this, ":", params);
+				this.chip.arpDomain().log("gridchip", 'GridChip.copyChip(): Chip name not found in: ${this}:$params');
 			}
 			index += ((dir != null) ? dir.toIndex(this.chip.dirs) : 0);
 		} else {
