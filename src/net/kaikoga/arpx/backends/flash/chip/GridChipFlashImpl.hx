@@ -119,7 +119,7 @@ class GridChipFlashImpl implements IChipFlashImpl {
 	private var _workMatrix:Matrix = new Matrix();
 
 	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:ArpParams = null):Void {
-		if (cast (this.chip.arpSlot().heat, Int) < 3) {
+		if (this.chip.arpSlot().heat < ArpHeat.Warm) {
 			this.chip.arpDomain().log("gridchip", 'GridChip.copyChip(): Chip not warm: ${this}:$params');
 			this.chip.arpDomain().heatLater(this.chip.arpSlot());
 			return;
