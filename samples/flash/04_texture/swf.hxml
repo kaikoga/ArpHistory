@@ -1,0 +1,15 @@
+-lib picotest
+-lib hamcrest
+-cp src
+-cp ../../../../ArpDomain/src
+-cp ../../../../ArpEngine/src
+-cp ../../../../ArpSupport/src
+-resource assets/arpdomain.xml@arpdata
+-resource assets/a.png@a
+-debug
+-main Main
+-swf bin/main.swf
+-swf-version 11
+-D fdb
+-D arp_backend_flash
+-D no_inline
