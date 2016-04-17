@@ -76,8 +76,8 @@ class ArpRange implements IPersistable {
 		return ((value < this.minValue)) ? this.minValue : ((value > this.maxValue)) ? this.maxValue : value;
 	}
 
-	public function toArray(step:Float = 1, byRatio:Bool = false):Array<Dynamic> {
-		var result:Array<Dynamic> = [];
+	public function toArray(step:Float = 1, byRatio:Bool = false):Array<Float> {
+		var result:Array<Float> = [];
 		var i:Float;
 		if (byRatio) {
 			step = this.range * step;
@@ -102,8 +102,8 @@ class ArpRange implements IPersistable {
 		return result;
 	}
 
-	public function split(step:Float = 1, relative:Bool = false):Array<Dynamic> {
-		var result:Array<Dynamic> = [];
+	public function split(step:Float = 1, relative:Bool = false):Array<String> {
+		var result:Array<String> = [];
 		var i:Float;
 		if (relative) {
 			step = this.range * step;
