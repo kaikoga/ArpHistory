@@ -19,6 +19,10 @@ class MacroArpObjectFieldDefinition {
 	public var metaArpType:ExprOf<String> = null;
 	public var metaArpBarrier:Bool = false;
 	public var metaArpField:ExprOf<String> = null;
+	public var metaArpInit:String = null;
+	public var metaArpHeatUp:String = null;
+	public var metaArpHeatDown:String = null;
+	public var metaArpDispose:String = null;
 
 	public function new(nativeField:Field) {
 		this.nativeField = nativeField;
@@ -38,6 +42,10 @@ class MacroArpObjectFieldDefinition {
 				case ":arpValue": metaArpValue = true;
 				case ":arpBarrier": metaArpBarrier = true;
 				case ":arpField": metaArpField = meta.params[0];
+				case ":arpInit": metaArpInit = nativeField.name;
+				case ":arpHeatUp": metaArpHeatUp = nativeField.name;
+				case ":arpHeatDown": metaArpHeatDown = nativeField.name;
+				case ":arpDispose": metaArpDispose = nativeField.name;
 				case ":arpWithoutBackend": Context.warning('Not supported in this backend', nativeField.pos);
 				case m if (m.indexOf(":arp") == 0) :
 					Context.error('Unsupported arp metadata', this.nativeField.pos);

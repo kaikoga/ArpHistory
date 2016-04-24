@@ -10,11 +10,13 @@ class MockEarlyPrepareMacroArpObject implements IArpObject {
 	public function new() {
 	}
 
+	@:arpHeatUp
 	public function heatUp():Bool {
 		this.volatileInt = 1;
 		return true;
 	}
 
+	@:arpHeatDown
 	public function heatDown():Bool {
 		this.volatileInt = 0;
 		return true;

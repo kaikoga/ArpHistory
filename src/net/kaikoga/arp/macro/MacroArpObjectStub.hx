@@ -61,14 +61,14 @@ class MacroArpObjectStub {
 		var selfTypePath = this.genSelfTypePath();
 		var selfComplexType = this.genSelfComplexType();
 		return (macro class Generated {
-			private var _arpDomain:net.kaikoga.arp.domain.ArpDomain;
+			@:noDoc @:noCompletion private var _arpDomain:net.kaikoga.arp.domain.ArpDomain;
 			public function arpDomain():net.kaikoga.arp.domain.ArpDomain return this._arpDomain;
 
 			public static var _arpTypeInfo(default, never):net.kaikoga.arp.domain.ArpTypeInfo = new net.kaikoga.arp.domain.ArpTypeInfo($v{arpTemplateName}, new net.kaikoga.arp.domain.core.ArpType($v{arpTypeName}));
 			public function arpTypeInfo():net.kaikoga.arp.domain.ArpTypeInfo return _arpTypeInfo;
 			public function arpType():net.kaikoga.arp.domain.core.ArpType return _arpTypeInfo.arpType;
 
-			private var _arpSlot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
+			@:noDoc @:noCompletion private var _arpSlot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 			public function arpSlot():net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot return this._arpSlot;
 
 			public function arpInit(slot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot, seed:net.kaikoga.arp.domain.seed.ArpSeed = null):net.kaikoga.arp.domain.IArpObject {
@@ -77,7 +77,7 @@ class MacroArpObjectStub {
 				var uniqId:Int = 0;
 				$b{ this.buildInitBlock() }
 				if (seed != null) for (element in seed) this.arpConsumeSeedElement(element, uniqId++);
-				this.init();
+				this.arpSelfInit();
 				return this;
 			}
 
@@ -87,7 +87,7 @@ class MacroArpObjectStub {
 
 			public function arpHeatUp():Bool {
 				$b{ this.buildHeatUpBlock() }
-				if (this.heatUp()) {
+				if (this.arpSelfHeatUp()) {
 					this.arpSlot().heat = net.kaikoga.arp.domain.ArpHeat.Warm;
 					return true;
 				} else {
@@ -98,17 +98,18 @@ class MacroArpObjectStub {
 
 			public function arpHeatDown():Bool {
 				// $b{ this.buildHeatDownBlock() }
-				return this.heatDown();
+				return this.arpSelfHeatDown();
 			}
 
 			public function arpDispose():Void {
 				this.arpHeatDown();
 				$b{ this.buildDisposeBlock() }
-				this.dispose();
+				this.arpSelfDispose();
 				this._arpSlot = null;
 				this._arpDomain = null;
 			}
 
+			@:noDoc @:noCompletion
 			private function arpConsumeSeedElement(element:net.kaikoga.arp.domain.seed.ArpSeed, uniqId:Int):Void {
 				$b{ this.buildArpConsumeSeedElement() }
 			}
@@ -170,6 +171,7 @@ class MacroArpObjectStub {
 				super.arpDispose();
 			}
 
+			@:noDoc @:noCompletion
 			override private function arpConsumeSeedElement(element:net.kaikoga.arp.domain.seed.ArpSeed, uniqId:Int):Void {
 				$b{ this.buildArpConsumeSeedElement() }
 			}
@@ -202,21 +204,29 @@ class MacroArpObjectStub {
 
 	private function genDefaultTypeFields():Array<Field> {
 		return (macro class Generated {
-			public function init():Void {
-			}
+			@:noDoc @:noCompletion private function arpSelfInit():Void return;
+			@:noDoc @:noCompletion private function arpSelfHeatUp():Bool return true;
+			@:noDoc @:noCompletion private function arpSelfHeatDown():Bool return true;
+			@:noDoc @:noCompletion private function arpSelfDispose():Void return;
+		}).fields;
+	}
 
-			public function heatUp():Bool {
-				return true;
-			}
-
-			public function heatDown():Bool {
-				return true;
-			}
-
-			public function dispose():Void {
+	private function genVoidCallbackField(fun:String, callback:String):Array<Field> {
+		return (macro class Generated {
+			@:noDoc @:noCompletion
+			private function $fun():Void {
+				this.$callback();
 			}
 		}).fields;
 	}
-}
+
+	private function genBoolCallbackField(fun:String, callback:String):Array<Field> {
+		return (macro class Generated {
+			@:noDoc @:noCompletion
+			private function $fun():Bool {
+				return this.$callback();
+			}
+		}).fields;
+	}}
 
 #end

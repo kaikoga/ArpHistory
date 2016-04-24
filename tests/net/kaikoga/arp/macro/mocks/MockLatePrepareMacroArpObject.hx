@@ -13,6 +13,7 @@ class MockLatePrepareMacroArpObject implements IArpObject {
 	public function new() {
 	}
 
+	@:arpHeatUp
 	public function heatUp():Bool {
 		if (this.volatileInt == 1) return true;
 		if (!this.warming) {
@@ -31,6 +32,7 @@ class MockLatePrepareMacroArpObject implements IArpObject {
 		return !this.warming;
 	}
 
+	@:arpHeatDown
 	public function heatDown():Bool {
 		this.volatileInt = 0;
 		this.warming = false;

@@ -12,10 +12,12 @@ class MockHookMacroArpObject implements IArpObject {
 	public function new() {
 	}
 
+	@:arpInit
 	public function init():Void {
 		this.volatileInt = 1;
 	}
 
+	@:arpDispose
 	public function dispose():Void {
 		this.volatileInt = 0;
 	}

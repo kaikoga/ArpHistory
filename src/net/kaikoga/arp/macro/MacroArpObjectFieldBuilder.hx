@@ -69,8 +69,7 @@ class MacroArpObjectFieldBuilder {
 		}
 	}
 
-	public static function fromField(nativeField:Field):IMacroArpObjectField {
-		var definition:MacroArpObjectFieldDefinition = new MacroArpObjectFieldDefinition(nativeField);
+	public static function fromDefinition(definition:MacroArpObjectFieldDefinition):IMacroArpObjectField {
 		if (!definition.isValidNativeType()) return null;
 		switch (complexTypeToNativeFieldType(definition.nativeType)) {
 			case MacroArpObjectNativeFieldType.ValueType(p):
