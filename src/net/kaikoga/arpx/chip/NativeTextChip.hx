@@ -32,8 +32,8 @@ class NativeTextChip extends Chip {
 		super();
 	}
 
-	public function heatUp():Bool return cast(this.flashImpl, NativeTextChipFlashImpl).heatUp();
-	public function heatDown():Bool return cast(this.flashImpl, NativeTextChipFlashImpl).heatDown();
+	@:arpHeatUp private function heatUp():Bool return cast(this.flashImpl, NativeTextChipFlashImpl).heatUp();
+	@:arpHeatDown private function heatDown():Bool return cast(this.flashImpl, NativeTextChipFlashImpl).heatDown();
 
 	#else
 

@@ -17,8 +17,8 @@ class FileTexture extends Texture
 		super();
 	}
 
-	public function heatUp():Bool return cast(this.flashImpl, FileTextureFlashImpl).heatUp();
-	public function heatDown():Bool return cast(this.flashImpl, FileTextureFlashImpl).heatDown();
+	@:arpHeatUp private function heatUp():Bool return cast(this.flashImpl, FileTextureFlashImpl).heatUp();
+	@:arpHeatDown private function heatDown():Bool return cast(this.flashImpl, FileTextureFlashImpl).heatDown();
 
 	#else
 

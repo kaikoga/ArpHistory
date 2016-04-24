@@ -16,8 +16,8 @@ class ResourceTexture extends Texture
 		super();
 	}
 
-	public function heatUp():Bool return cast(this.flashImpl, ResourceTextureFlashImpl).heatUp();
-	public function heatDown():Bool return cast(this.flashImpl, ResourceTextureFlashImpl).heatDown();
+	@:arpHeatUp private function heatUp():Bool return cast(this.flashImpl, ResourceTextureFlashImpl).heatUp();
+	@:arpHeatDown private function heatDown():Bool return cast(this.flashImpl, ResourceTextureFlashImpl).heatDown();
 
 	#else
 

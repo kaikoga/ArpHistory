@@ -43,8 +43,8 @@ class GridChip extends Chip {
 		super();
 	}
 
-	public function heatUp():Bool return cast(this.flashImpl, GridChipFlashImpl).heatUp();
-	public function heatDown():Bool return cast(this.flashImpl, GridChipFlashImpl).heatDown();
+	@:arpHeatUp private function heatUp():Bool return cast(this.flashImpl, GridChipFlashImpl).heatUp();
+	@:arpHeatDown private function heatDown():Bool return cast(this.flashImpl, GridChipFlashImpl).heatDown();
 
 	#else
 

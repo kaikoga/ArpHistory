@@ -13,7 +13,8 @@ class DelayLoad implements IArpObject {
 	public function new() {
 	}
 
-	public function heatUp():Bool {
+	@:arpHeatUp
+	private function heatUp():Bool {
 		#if flash
 		if (this.heat == 0) {
 			this.arpDomain().waitFor(this);
@@ -29,7 +30,8 @@ class DelayLoad implements IArpObject {
 		#end
 	}
 
-	public function heatDown():Bool {
+	@:arpHeatDown
+	private function heatDown():Bool {
 		return true;
 	}
 

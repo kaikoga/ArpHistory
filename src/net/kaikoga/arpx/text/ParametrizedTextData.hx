@@ -13,7 +13,7 @@ class ParametrizedTextData extends TextData {
 		super();
 	}
 
-	public function heatUp():Bool {
+	@:arpHeatUp private function heatUp():Bool {
 		this._nodes = [];
 		if (this.value == null) return true;
 
