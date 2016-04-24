@@ -8,30 +8,32 @@ import picotest.PicoTestAsync.*;
 class MockLatePrepareMacroArpObject implements IArpObject {
 
 	public var volatileInt:Int = 0;
-	private var heat:Bool;
+	private var warming:Bool;
 
 	public function new() {
 	}
 
 	public function heatUp():Bool {
-		if (!this.heat) {
+		if (this.volatileInt == 1) return true;
+		if (!this.warming) {
 			this.arpDomain().waitFor(this);
-			this.heat = true;
+			this.warming = true;
 			createCallback(
 				function():Void return,
 				1000,
 				function():Void {
+					this.warming = false;
 					this.volatileInt = 1;
 					this.arpDomain().notifyFor(this);
 				}
 			);
 		}
-		return true;
+		return !this.warming;
 	}
 
 	public function heatDown():Bool {
 		this.volatileInt = 0;
-		this.heat = false;
+		this.warming = false;
 		return true;
 	}
 

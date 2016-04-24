@@ -87,7 +87,13 @@ class MacroArpObjectStub {
 
 			public function arpHeatUp():Bool {
 				$b{ this.buildHeatUpBlock() }
-				return this.heatUp();
+				if (this.heatUp()) {
+					this.arpSlot().heat = net.kaikoga.arp.domain.ArpHeat.Warm;
+					return true;
+				} else {
+					this.arpSlot().heat = net.kaikoga.arp.domain.ArpHeat.Warming;
+					return false;
+				}
 			}
 
 			public function arpHeatDown():Bool {

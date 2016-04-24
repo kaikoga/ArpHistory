@@ -17,7 +17,7 @@ class PrepareTask implements IPrepareTask {
 
 	private var domain:ArpDomain;
 
-	private var state:PrepareTaskState = PrepareTaskState.WarmLater;
+	private var preparePropagated:Bool = false;
 
 	public function new(domain:ArpDomain, slot:ArpUntypedSlot) {
 		this.domain = domain;
@@ -32,38 +32,22 @@ class PrepareTask implements IPrepareTask {
 			}
 		}
 
-		if (this.state == PrepareTaskState.WarmLater) {
+		if (!this.preparePropagated) {
 			// trigger dependency prepare
 			this._slot.value.arpHeatLater();
-			this.state = PrepareTaskState.WarmNext;
+			this.preparePropagated = true;
 		}
 
-		if (this.state == PrepareTaskState.WarmNext) {
-			// try to heat up myself
-			if (!this._slot.value.arpHeatUp()) {
-				this.domain.log("arp_debug_prepare", 'PrepareTask.run(): waiting depending prepares: ${this._slot}');
-				return TaskStatus.Stalled;
-			}
-			if (this._waiting) {
-				this.domain.log("arp_debug_prepare", 'PrepareTask.run(): late prepare triggered: ${this._slot}');
-				this.state = PrepareTaskState.WarmWaiting;
-				return TaskStatus.Stalled;
-			} else {
-				this.domain.log("arp_debug_prepare", 'PrepareTask.run(): early prepare triggered: ${this._slot}');
-				this.state = PrepareTaskState.WarmComplete;
-				return TaskStatus.Complete;
-			}
+		// try to heat up myself
+		if (!this._slot.value.arpHeatUp()) {
+			this.domain.log("arp_debug_prepare", 'PrepareTask.run(): waiting depending prepares: ${this._slot}');
+			return TaskStatus.Stalled;
 		}
-
-		if (this.state == PrepareTaskState.WarmWaiting) {
-			if (this._waiting) {
-				// waiting late prepare
-				return TaskStatus.Stalled;
-			}
-			this.domain.log("arp_debug_prepare", 'PrepareTask.run(): late prepare completed: ${this._slot}');
-			this.state = PrepareTaskState.WarmComplete;
+		if (this._waiting) {
+			this.domain.log("arp_debug_prepare", 'PrepareTask.run(): waiting late prepare: ${this._slot}');
+			return TaskStatus.Stalled;
 		}
-
+		this.domain.log("arp_debug_prepare", 'PrepareTask.run(): prepare complete: ${this._slot}');
 		return TaskStatus.Complete;
 	}
 }
