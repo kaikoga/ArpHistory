@@ -13,9 +13,9 @@ class ParametrizedTextData extends TextData {
 		super();
 	}
 
-	public function init():Void {
+	public function heatUp():Bool {
 		this._nodes = [];
-		if (this.value == null) return;
+		if (this.value == null) return true;
 
 		for (str in new ERegIterator(~/[^{]+|\{[^}]*\}/, this.value)) {
 			switch (str.charAt(0)) {
@@ -25,9 +25,12 @@ class ParametrizedTextData extends TextData {
 					this._nodes.push(new FixedNode(str));
 			}
 		}
+		return true;
 	}
 
 	override public function publish(params:Map<String, Dynamic> = null):String {
+		if (this._nodes == null) this.heatUp();
+
 		var result:String = "";
 		for (node in this._nodes) {
 			result += node.publishSelf(params);
