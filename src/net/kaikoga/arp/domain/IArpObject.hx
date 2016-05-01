@@ -19,9 +19,4 @@ interface IArpObject extends IPersistable {
 	function arpHeatLater():Void;
 	function arpHeatUp():Bool;
 	function arpHeatDown():Bool;
-
-	// function init():Void;
-	// function heatUp():Bool;
-	// function heatDown():Bool;
-	// function dispose():Void;
 }
