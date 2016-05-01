@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain.seed;
 
+import haxe.io.Bytes;
 import Xml.XmlType;
 
 class ArpSeed {
@@ -47,6 +48,10 @@ class ArpSeed {
 	public function iterator():Iterator<ArpSeed> {
 		if (this._children == null) this.createChildren([]);
 		return this._children.iterator();
+	}
+
+	inline public static function fromXmlBytes(bytes:Bytes):ArpSeed {
+		return fromXmlString(bytes.toString());
 	}
 
 	inline public static function fromXmlString(xmlString:String):ArpSeed {
