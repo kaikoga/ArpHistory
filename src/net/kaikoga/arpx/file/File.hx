@@ -14,17 +14,15 @@ class File implements IArpObject {
 
 	private function createImpl():IFileFlashImpl return null;
 
+	public var exists(get, never):Bool;
+	private function get_exists():Bool return flashImpl.get_exists();
+
 	public function new() {
 		flashImpl = createImpl();
 	}
 
-	public function bytes():Bytes {
-		return flashImpl.bytes();
-	}
-
-	public function read():IInput {
-		return flashImpl.read();
-	}
+	public function bytes():Bytes return flashImpl.bytes();
+	public function read():IInput return flashImpl.read();
 
 	#else
 

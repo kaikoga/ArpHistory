@@ -15,6 +15,12 @@ class ResourceFileFlashImpl implements IFileFlashImpl {
 		this.file = file;
 	}
 
+	public var exists(get, never):Bool;
+	private function get_exists():Bool {
+		// TODO optimize resource handling
+		return Resource.listNames().indexOf(file.src) >= 0;
+	}
+
 	public function bytes():Bytes {
 		return Resource.getBytes(file.src);
 	}
