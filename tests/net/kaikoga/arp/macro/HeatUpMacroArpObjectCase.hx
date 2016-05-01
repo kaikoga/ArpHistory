@@ -25,6 +25,7 @@ class HeatUpMacroArpObjectCase {
 		<mock name="name1" intField="42" floatField="3.14" boolField="true" stringField="stringValue" refField="" />
 		<mock name="name2" refField="/name1" />
 		<mock name="name3" />
+		<mock name="name4" heat="warm" />
 		</data>
 		').firstElement();
 		seed = ArpSeed.fromXml(xml);
@@ -51,6 +52,13 @@ class HeatUpMacroArpObjectCase {
 		domain.rawTick.dispatch(1.0);
 		assertEquals(ArpHeat.Warm, query1.slot().heat);
 		assertEquals(ArpHeat.Warm, query2.slot().heat);
+	}
+
+	public function testAutoHeatUp():Void {
+		var query = domain.query("name4", new ArpType("mock"));
+		assertEquals(ArpHeat.Warming, query.slot().heat);
+		domain.rawTick.dispatch(1.0);
+		assertEquals(ArpHeat.Warm, query.slot().heat);
 	}
 
 }

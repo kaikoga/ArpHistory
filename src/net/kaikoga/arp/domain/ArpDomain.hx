@@ -109,6 +109,10 @@ class ArpDomain {
 			var arpObj:T = gen.alloc(seed);
 			slot.value = arpObj;
 			arpObj.arpInit(slot, seed);
+			switch (seed.heat()) {
+				case ArpHeat.Cold:
+				case ArpHeat.Warming, ArpHeat.Warm: this.heatLater(slot);
+			}
 		}
 		return slot;
 	}
