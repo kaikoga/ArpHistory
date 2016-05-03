@@ -16,12 +16,12 @@ class StringIntOmapCase extends OmapCase<String, Int> {
 
 class OmapCase<K, V> {
 
-	private var me:IOmap<String, Int>;
-	private var k:IArpSupportFixture<String>;
-	private var v:IArpSupportFixture<Int>;
+	private var me:IOmap<K, V>;
+	private var k:IArpSupportFixture<K>;
+	private var v:IArpSupportFixture<V>;
 
 	@Parameter
-	public function setup(provider:IDsImplProvider<IOmap<String, Int>>, keyFixture:IArpSupportFixture<String>, valueFixture:IArpSupportFixture<Int>):Void {
+	public function setup(provider:IDsImplProvider<IOmap<K, V>>, keyFixture:IArpSupportFixture<K>, valueFixture:IArpSupportFixture<V>):Void {
 		me = provider.create();
 		k = keyFixture;
 		v = valueFixture;
@@ -142,13 +142,13 @@ class OmapCase<K, V> {
 	}
 
 	public function testEmptyKeys():Void {
-		var it:Iterator<String> = me.keys();
+		var it:Iterator<K> = me.keys();
 		assertNotEquals(null, it);
 		assertFalse(it.hasNext());
 	}
 
 	public function testEmptyIterator():Void {
-		var it:Iterator<Int> = me.iterator();
+		var it:Iterator<V> = me.iterator();
 		assertNotEquals(null, it);
 		assertFalse(it.hasNext());
 	}
@@ -171,8 +171,8 @@ class OmapCase<K, V> {
 		me.removeAt(1);
 		assertMatch([k.a5, k.a3], [for (v in me.keys()) v]);
 
-		var it:Iterator<String> = me.keys();
-		var a:Array<String> = [];
+		var it:Iterator<K> = me.keys();
+		var a:Array<K> = [];
 		assertNotEquals(null, it);
 		assertTrue(it.hasNext());
 		a.push(it.next());
@@ -200,8 +200,8 @@ class OmapCase<K, V> {
 		me.removeAt(1);
 		assertMatch([v.a5, v.a3], [for (v in me) v]);
 
-		var it:Iterator<Int> = me.iterator();
-		var a:Array<Int> = [];
+		var it:Iterator<V> = me.iterator();
+		var a:Array<V> = [];
 		assertNotEquals(null, it);
 		assertTrue(it.hasNext());
 		a.push(it.next());

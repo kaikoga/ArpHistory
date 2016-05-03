@@ -16,12 +16,12 @@ class StringIntMapCase extends MapCase<String, Int> {
 
 class MapCase<K, V> {
 
-	private var me:IMap<String, Int>;
-	private var k:IArpSupportFixture<String>;
-	private var v:IArpSupportFixture<Int>;
+	private var me:IMap<K, V>;
+	private var k:IArpSupportFixture<K>;
+	private var v:IArpSupportFixture<V>;
 
 	@Parameter
-	public function setup(provider:IDsImplProvider<IMap<String, Int>>, keyFixture:IArpSupportFixture<String>, valueFixture:IArpSupportFixture<Int>):Void {
+	public function setup(provider:IDsImplProvider<IMap<K, V>>, keyFixture:IArpSupportFixture<K>, valueFixture:IArpSupportFixture<V>):Void {
 		me = provider.create();
 		k = keyFixture;
 		v = valueFixture;
@@ -80,9 +80,9 @@ class MapCase<K, V> {
 		assertFalse(me.hasKey(k.a1));
 		assertTrue(me.hasKey(k.a2));
 		assertTrue(me.hasKey(k.a3));
-		assertFalse(me.hasValue(1));
-		assertTrue(me.hasValue(2));
-		assertTrue(me.hasValue(3));
+		assertFalse(me.hasValue(v.a1));
+		assertTrue(me.hasValue(v.a2));
+		assertTrue(me.hasValue(v.a3));
 		me.remove(v.a2);
 		assertFalse(me.isEmpty());
 		assertFalse(me.hasKey(k.a1));
@@ -140,13 +140,13 @@ class MapCase<K, V> {
 	}
 
 	public function testEmptyKeys():Void {
-		var it:Iterator<String> = me.keys();
+		var it:Iterator<K> = me.keys();
 		assertNotEquals(null, it);
 		assertFalse(it.hasNext());
 	}
 
 	public function testEmptyIterator():Void {
-		var it:Iterator<Int> = me.iterator();
+		var it:Iterator<V> = me.iterator();
 		assertNotEquals(null, it);
 		assertFalse(it.hasNext());
 	}
@@ -159,8 +159,8 @@ class MapCase<K, V> {
 		me.set(k.a5, v.a5);
 		me.removeKey(k.a2);
 		me.remove(v.a4);
-		var it:Iterator<String> = me.keys();
-		var a:Array<String> = [];
+		var it:Iterator<K> = me.keys();
+		var a:Array<K> = [];
 		assertNotEquals(null, it);
 		assertTrue(it.hasNext());
 		a.push(it.next());
@@ -180,8 +180,8 @@ class MapCase<K, V> {
 		me.set(k.a5, v.a5);
 		me.removeKey(k.a2);
 		me.remove(v.a4);
-		var it:Iterator<Int> = me.iterator();
-		var a:Array<Int> = [];
+		var it:Iterator<V> = me.iterator();
+		var a:Array<V> = [];
 		assertNotEquals(null, it);
 		assertTrue(it.hasNext());
 		a.push(it.next());

@@ -16,11 +16,11 @@ class IntSetCase extends SetCase<Int> {
 
 class SetCase<V> {
 
-	private var me:ISet<Int>;
-	private var v:IArpSupportFixture<Int>;
+	private var me:ISet<V>;
+	private var v:IArpSupportFixture<V>;
 
 	@Parameter
-	public function setup(provider:IDsImplProvider<ISet<Int>>, valueFixture:IArpSupportFixture<Int>):Void {
+	public function setup(provider:IDsImplProvider<ISet<V>>, valueFixture:IArpSupportFixture<V>):Void {
 		me = provider.create();
 		v = valueFixture;
 	}
@@ -74,7 +74,7 @@ class SetCase<V> {
 	}
 
 	public function testEmptyIterator():Void {
-		var it:Iterator<Int> = me.iterator();
+		var it:Iterator<V> = me.iterator();
 		assertNotEquals(null, it);
 		assertFalse(it.hasNext());
 	}
@@ -86,8 +86,8 @@ class SetCase<V> {
 		me.add(v.a4);
 		me.add(v.a5);
 		me.remove(v.a3);
-		var it:Iterator<Int> = me.iterator();
-		var a:Array<Int> = [];
+		var it:Iterator<V> = me.iterator();
+		var a:Array<V> = [];
 		assertNotEquals(null, it);
 		assertTrue(it.hasNext());
 		a.push(it.next());
