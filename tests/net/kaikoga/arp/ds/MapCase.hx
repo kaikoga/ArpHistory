@@ -7,7 +7,14 @@ import org.hamcrest.Matchers.*;
 
 import picotest.PicoAssert.*;
 
-class MapCase {
+class StringIntMapCase extends MapCase<String, Int> {
+	@Parameter
+	override public function setup(provider:IDsImplProvider<IMap<String, Int>>, keyFixture:IArpSupportFixture<String>, valueFixture:IArpSupportFixture<Int>):Void {
+		super.setup(provider, keyFixture, valueFixture);
+	}
+}
+
+class MapCase<K, V> {
 
 	private var me:IMap<String, Int>;
 	private var k:IArpSupportFixture<String>;

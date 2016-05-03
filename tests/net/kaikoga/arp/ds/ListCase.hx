@@ -7,7 +7,14 @@ import org.hamcrest.Matchers.*;
 
 import picotest.PicoAssert.*;
 
-class ListCase {
+class IntListCase extends ListCase<Int> {
+	@Parameter
+	override public function setup(provider:IDsImplProvider<IList<Int>>, valueFixture:IArpSupportFixture<Int>):Void {
+		super.setup(provider, valueFixture);
+	}
+}
+
+class ListCase<V> {
 
 	private var me:IList<Int>;
 	private var v:IArpSupportFixture<Int>;

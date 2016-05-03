@@ -7,7 +7,14 @@ import org.hamcrest.Matchers.*;
 
 import picotest.PicoAssert.*;
 
-class OmapCase {
+class StringIntOmapCase extends OmapCase<String, Int> {
+	@Parameter
+	override public function setup(provider:IDsImplProvider<IOmap<String, Int>>, keyFixture:IArpSupportFixture<String>, valueFixture:IArpSupportFixture<Int>):Void {
+		super.setup(provider, keyFixture, valueFixture);
+	}
+}
+
+class OmapCase<K, V> {
 
 	private var me:IOmap<String, Int>;
 	private var k:IArpSupportFixture<String>;

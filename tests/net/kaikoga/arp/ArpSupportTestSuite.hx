@@ -34,10 +34,10 @@ class ArpSupportTestSuite {
 	public static function addTo(r:PicoTestRunner) {
 		r.load(ERegIteratorCase);
 
-		r.load(SetCase, setProvider());
-		r.load(ListCase, listProvider());
-		r.load(MapCase, mapProvider());
-		r.load(OmapCase, omapProvider());
+		r.load(IntSetCase, setProvider());
+		r.load(IntListCase, listProvider());
+		r.load(StringIntMapCase, mapProvider());
+		r.load(StringIntOmapCase, omapProvider());
 
 		r.load(VoidCollectionCase);
 		r.load(BaseCollectionCase);
@@ -47,10 +47,10 @@ class ArpSupportTestSuite {
 		r.load(MapOpCase, mapProvider());
 		r.load(OmapOpCase, omapProvider());
 
-		r.load(SetCase, adapterSetProvider());
-		r.load(ListCase, adapterListProvider());
-		r.load(MapCase, adapterMapProvider());
-		r.load(OmapCase, adapterOmapProvider());
+		r.load(IntSetCase, adapterSetProvider());
+		r.load(IntListCase, adapterListProvider());
+		r.load(StringIntMapCase, adapterMapProvider());
+		r.load(StringIntOmapCase, adapterOmapProvider());
 
 		r.load(SetOpCase, adapterSetProvider());
 		r.load(ListOpCase, adapterListProvider());
@@ -69,10 +69,10 @@ class ArpSupportTestSuite {
 		r.load(MapSelfProxyCase, mapProvider());
 		r.load(OmapSelfProxyCase, omapProvider());
 
-		r.load(SetCase, proxySetProvider());
-		r.load(ListCase, proxyListProvider());
-		r.load(MapCase, proxyMapProvider());
-		r.load(OmapCase, proxyOmapProvider());
+		r.load(IntSetCase, proxySetProvider());
+		r.load(IntListCase, proxyListProvider());
+		r.load(StringIntMapCase, proxyMapProvider());
+		r.load(StringIntOmapCase, proxyOmapProvider());
 
 		r.load(SetOpCase, proxySetProvider());
 		r.load(ListOpCase, proxyListProvider());

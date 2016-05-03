@@ -7,7 +7,14 @@ import org.hamcrest.Matchers.*;
 
 import picotest.PicoAssert.*;
 
-class SetCase {
+class IntSetCase extends SetCase<Int> {
+	@Parameter
+	override public function setup(provider:IDsImplProvider<ISet<Int>>, valueFixture:IArpSupportFixture<Int>):Void {
+		super.setup(provider, valueFixture);
+	}
+}
+
+class SetCase<V> {
 
 	private var me:ISet<Int>;
 	private var v:IArpSupportFixture<Int>;
