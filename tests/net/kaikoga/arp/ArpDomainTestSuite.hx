@@ -61,6 +61,8 @@ class ArpDomainTestSuite {
 		r.load(ArpPositionCase);
 		r.load(ArpRangeCase);
 
+		ArpDomainDsCompatTestSuite.addTo(r);
+
 		#if (flash || openfl)
 		r.load(ArpColorFlashCase);
 		#end
