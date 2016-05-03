@@ -59,8 +59,7 @@ class MacroArpObjectFieldBuilder {
 			case "net.kaikoga.arp.structs.ArpRange":
 				return MacroArpObjectNativeFieldType.ValueType(new MacroArpObjectArpStruct(macro :net.kaikoga.arp.structs.ArpRange));
 			default:
-				// TODO follow parent class and interface
-				return MacroArpObjectNativeFieldType.MaybeReference;
+				return null;
 		}
 	}
 
@@ -88,8 +87,8 @@ class MacroArpObjectFieldBuilder {
 				fqn.push(classType.name);
 				result = fqnToNativeFieldType(fqn, typePath, pos);
 				if (result != null) return result;
-				// TODO follow super class
-				return MacroArpObjectNativeFieldType.Invalid;
+				// TODO follow super class and interface
+				return MacroArpObjectNativeFieldType.MaybeReference;
 			case haxe.macro.Type.TAbstract(abstractRef, params):
 				var abstractType:AbstractType = abstractRef.get();
 				fqn = abstractType.pack.copy();
@@ -97,8 +96,10 @@ class MacroArpObjectFieldBuilder {
 				result = fqnToNativeFieldType(fqn, typePath, pos);
 				if (result != null) return result;
 				// TODO follow abstract
+				return MacroArpObjectNativeFieldType.MaybeReference;
 			case haxe.macro.Type.TType(typeRef, params):
 				// TODO follow typedef
+				return MacroArpObjectNativeFieldType.MaybeReference;
 			default:
 		}
 		return MacroArpObjectNativeFieldType.Invalid;
