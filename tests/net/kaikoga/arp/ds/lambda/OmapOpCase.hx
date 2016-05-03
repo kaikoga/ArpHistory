@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.lambda;
 
+import net.kaikoga.arp.testFixtures.ArpSupportFixtures.IArpSupportFixture;
 import net.kaikoga.arp.testParams.DsImplProviders.IDsImplProvider;
 
 import org.hamcrest.Matchers.*;
@@ -32,7 +33,7 @@ class OmapOpCase {
 	}
 
 	@Parameter
-	public function setup(provider:IDsImplProvider<IOmap<String, Int>>):Void {
+	public function setup(provider:IDsImplProvider<IOmap<String, Int>>, keyFixture:IArpSupportFixture<String>, valueFixture:IArpSupportFixture<Int>):Void {
 		me = provider.create();
 		this.provider = provider;
 	}

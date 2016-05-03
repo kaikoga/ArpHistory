@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.proxy;
 
+import net.kaikoga.arp.testFixtures.ArpSupportFixtures.IArpSupportFixture;
 import net.kaikoga.arp.testParams.DsImplProviders.IDsImplProvider;
 
 import org.hamcrest.Matchers.*;
@@ -26,7 +27,7 @@ class ListSelfProxyCase {
 	}
 
 	@Parameter
-	public function setup(provider:IDsImplProvider<IList<Int>>):Void {
+	public function setup(provider:IDsImplProvider<IList<Int>>, valueFixture:IArpSupportFixture<Int>):Void {
 		this.provider = provider;
 		me = new ListProxy(source(), ProxyCaseUtil.selfProxyInt, ProxyCaseUtil.selfUnproxyInt);
 	}

@@ -22,54 +22,56 @@ import net.kaikoga.arp.ds.impl.StdMap;
 import net.kaikoga.arp.ds.impl.ArrayList;
 import net.kaikoga.arp.ds.impl.StdMapSet;
 import net.kaikoga.arp.ds.impl.ArraySet;
+import net.kaikoga.arp.testFixtures.ArpSupportFixtures.DsIntFixture;
+import net.kaikoga.arp.testFixtures.ArpSupportFixtures.DsStringFixture;
 
 class DsImplProviders {
 
 	public static function setProvider():Iterable<Array<Dynamic>> {
 		return [
-			[new ArraySetProvider<Int>()],
-			[new StdMapSetProvider<Int>()]
+			[new ArraySetProvider<Int>(), new DsIntFixture()],
+			[new StdMapSetProvider<Int>(), new DsIntFixture()]
 		];
 	}
 
 	public static function listProvider():Iterable<Array<Dynamic>> {
 		return [
-			[new ArrayListProvider<Int>()]
+			[new ArrayListProvider<Int>(), new DsIntFixture()]
 		];
 	}
 
 	public static function mapProvider():Iterable<Array<Dynamic>> {
 		return [
-			[new StdMapProvider<String, Int>()]
+			[new StdMapProvider<String, Int>(), new DsStringFixture(), new DsIntFixture()]
 		];
 	}
 
 	public static function omapProvider():Iterable<Array<Dynamic>> {
 		return [
-			[new StdOmapProvider<String, Int>()]
+			[new StdOmapProvider<String, Int>(), new DsStringFixture(), new DsIntFixture()]
 		];
 	}
 
 	public static function adapterSetProvider():Iterable<Array<Dynamic>> {
 		return [
-			[new SetOfListProvider<Int>()],
-			[new SetOfMapKeyProvider<Int, String>(intToString)],
-			[new SetOfMapValueProvider<String, Int>(intToString)],
-			[new SetOfOmapKeyProvider<Int, String>(intToString)],
-			[new SetOfOmapValueProvider<String, Int>(intToString)]
+			[new SetOfListProvider<Int>(), new DsIntFixture()],
+			[new SetOfMapKeyProvider<Int, String>(intToString), new DsIntFixture()],
+			[new SetOfMapValueProvider<String, Int>(intToString), new DsIntFixture()],
+			[new SetOfOmapKeyProvider<Int, String>(intToString), new DsIntFixture()],
+			[new SetOfOmapValueProvider<String, Int>(intToString), new DsIntFixture()]
 		];
 	}
 
 	public static function adapterListProvider():Iterable<Array<Dynamic>> {
 		return [
-			[new ListOfOmapKeyProvider<Int, String>(intToString)],
-			[new ListOfOmapValueProvider<String, Int>(intToString)]
+			[new ListOfOmapKeyProvider<Int, String>(intToString), new DsIntFixture()],
+			[new ListOfOmapValueProvider<String, Int>(intToString), new DsIntFixture()]
 		];
 	}
 
 	public static function adapterMapProvider():Iterable<Array<Dynamic>> {
 		return [
-			[new MapOfOmapProvider<String, Int>()]
+			[new MapOfOmapProvider<String, Int>(), new DsStringFixture(), new DsIntFixture()]
 		];
 	}
 
@@ -80,29 +82,29 @@ class DsImplProviders {
 
 	public static function proxySetProvider():Iterable<Array<Dynamic>> {
 		return [
-			[new ProxySetProvider()],
-			[new SelfProxySetProvider()]
+			[new ProxySetProvider(), new DsIntFixture()],
+			[new SelfProxySetProvider(), new DsIntFixture()]
 		];
 	}
 
 	public static function proxyListProvider():Iterable<Array<Dynamic>> {
 		return [
-			[new ProxyListProvider()],
-			[new SelfProxyListProvider()]
+			[new ProxyListProvider(), new DsIntFixture()],
+			[new SelfProxyListProvider(), new DsIntFixture()]
 		];
 	}
 
 	public static function proxyMapProvider():Iterable<Array<Dynamic>> {
 		return [
-			[new ProxyMapProvider()],
-			[new SelfProxyMapProvider()]
+			[new ProxyMapProvider(), new DsStringFixture(), new DsIntFixture()],
+			[new SelfProxyMapProvider(), new DsStringFixture(), new DsIntFixture()]
 		];
 	}
 
 	public static function proxyOmapProvider():Iterable<Array<Dynamic>> {
 		return [
-			[new ProxyOmapProvider()],
-			[new SelfProxyOmapProvider()]
+			[new ProxyOmapProvider(), new DsStringFixture(), new DsIntFixture()],
+			[new SelfProxyOmapProvider(), new DsStringFixture(), new DsIntFixture()]
 		];
 	}
 

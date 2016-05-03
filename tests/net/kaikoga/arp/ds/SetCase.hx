@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds;
 
+import net.kaikoga.arp.testFixtures.ArpSupportFixtures.IArpSupportFixture;
 import net.kaikoga.arp.testParams.DsImplProviders.IDsImplProvider;
 
 import org.hamcrest.Matchers.*;
@@ -11,7 +12,7 @@ class SetCase {
 	private var me:ISet<Int>;
 
 	@Parameter
-	public function setup(provider:IDsImplProvider<ISet<Int>>):Void {
+	public function setup(provider:IDsImplProvider<ISet<Int>>, valueFixture:IArpSupportFixture<Int>):Void {
 		me = provider.create();
 	}
 
