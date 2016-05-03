@@ -10,124 +10,128 @@ import picotest.PicoAssert.*;
 class OmapCase {
 
 	private var me:IOmap<String, Int>;
+	private var k:IArpSupportFixture<String>;
+	private var v:IArpSupportFixture<Int>;
 
 	@Parameter
 	public function setup(provider:IDsImplProvider<IOmap<String, Int>>, keyFixture:IArpSupportFixture<String>, valueFixture:IArpSupportFixture<Int>):Void {
 		me = provider.create();
+		k = keyFixture;
+		v = valueFixture;
 	}
 
 	public function testEmpty():Void {
 		assertTrue(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertFalse(me.hasKey("2"));
-		assertFalse(me.hasValue(1));
-		assertFalse(me.hasValue(2));
+		assertFalse(me.hasKey(k.a1));
+		assertFalse(me.hasKey(k.a2));
+		assertFalse(me.hasValue(v.a1));
+		assertFalse(me.hasValue(v.a2));
 	}
 
 	public function testEmptyRemove():Void {
-		me.removeKey("1");
+		me.removeKey(k.a1);
 		assertTrue(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertFalse(me.hasValue(1));
-		me.remove(1);
+		assertFalse(me.hasKey(k.a1));
+		assertFalse(me.hasValue(v.a1));
+		me.remove(v.a1);
 		assertTrue(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertFalse(me.hasValue(1));
+		assertFalse(me.hasKey(k.a1));
+		assertFalse(me.hasValue(v.a1));
 		me.clear();
 		assertTrue(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertFalse(me.hasValue(1));
+		assertFalse(me.hasKey(k.a1));
+		assertFalse(me.hasValue(v.a1));
 	}
 
 	public function testAddUniquePair():Void {
-		me.addPair("1", 1);
+		me.addPair(k.a1, v.a1);
 		assertFalse(me.isEmpty());
-		assertTrue(me.hasKey("1"));
-		assertFalse(me.hasKey("2"));
-		assertFalse(me.hasKey("3"));
-		assertTrue(me.hasValue(1));
-		assertFalse(me.hasValue(2));
-		assertFalse(me.hasValue(3));
-		me.addPair("2", 2);
+		assertTrue(me.hasKey(k.a1));
+		assertFalse(me.hasKey(k.a2));
+		assertFalse(me.hasKey(k.a3));
+		assertTrue(me.hasValue(v.a1));
+		assertFalse(me.hasValue(v.a2));
+		assertFalse(me.hasValue(v.a3));
+		me.addPair(k.a2, v.a2);
 		assertFalse(me.isEmpty());
-		assertTrue(me.hasKey("1"));
-		assertTrue(me.hasKey("2"));
-		assertFalse(me.hasKey("3"));
-		assertTrue(me.hasValue(1));
-		assertTrue(me.hasValue(2));
-		assertFalse(me.hasValue(3));
-		me.addPair("3", 3);
+		assertTrue(me.hasKey(k.a1));
+		assertTrue(me.hasKey(k.a2));
+		assertFalse(me.hasKey(k.a3));
+		assertTrue(me.hasValue(v.a1));
+		assertTrue(me.hasValue(v.a2));
+		assertFalse(me.hasValue(v.a3));
+		me.addPair(k.a3, v.a3);
 		assertFalse(me.isEmpty());
-		assertTrue(me.hasKey("1"));
-		assertTrue(me.hasKey("2"));
-		assertTrue(me.hasKey("3"));
-		assertTrue(me.hasValue(1));
-		assertTrue(me.hasValue(2));
-		assertTrue(me.hasValue(3));
-		me.removeKey("1");
+		assertTrue(me.hasKey(k.a1));
+		assertTrue(me.hasKey(k.a2));
+		assertTrue(me.hasKey(k.a3));
+		assertTrue(me.hasValue(v.a1));
+		assertTrue(me.hasValue(v.a2));
+		assertTrue(me.hasValue(v.a3));
+		me.removeKey(k.a1);
 		assertFalse(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertTrue(me.hasKey("2"));
-		assertTrue(me.hasKey("3"));
-		assertFalse(me.hasValue(1));
-		assertTrue(me.hasValue(2));
-		assertTrue(me.hasValue(3));
-		me.remove(2);
+		assertFalse(me.hasKey(k.a1));
+		assertTrue(me.hasKey(k.a2));
+		assertTrue(me.hasKey(k.a3));
+		assertFalse(me.hasValue(v.a1));
+		assertTrue(me.hasValue(v.a2));
+		assertTrue(me.hasValue(v.a3));
+		me.remove(v.a2);
 		assertFalse(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertFalse(me.hasKey("2"));
-		assertTrue(me.hasKey("3"));
-		assertFalse(me.hasValue(1));
-		assertFalse(me.hasValue(2));
-		assertTrue(me.hasValue(3));
+		assertFalse(me.hasKey(k.a1));
+		assertFalse(me.hasKey(k.a2));
+		assertTrue(me.hasKey(k.a3));
+		assertFalse(me.hasValue(v.a1));
+		assertFalse(me.hasValue(v.a2));
+		assertTrue(me.hasValue(v.a3));
 		me.clear();
 		assertTrue(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertFalse(me.hasKey("2"));
-		assertFalse(me.hasKey("3"));
-		assertFalse(me.hasValue(1));
-		assertFalse(me.hasValue(2));
-		assertFalse(me.hasValue(3));
+		assertFalse(me.hasKey(k.a1));
+		assertFalse(me.hasKey(k.a2));
+		assertFalse(me.hasKey(k.a3));
+		assertFalse(me.hasValue(v.a1));
+		assertFalse(me.hasValue(v.a2));
+		assertFalse(me.hasValue(v.a3));
 	}
 
 	public function testAddNoDuplicateKey():Void {
-		me.addPair("1", 1);
-		me.addPair("1", 2);
+		me.addPair(k.a1, v.a1);
+		me.addPair(k.a1, v.a2);
 		assertFalse(me.isEmpty());
-		assertTrue(me.hasKey("1"));
-		assertFalse(me.hasValue(1));
-		assertTrue(me.hasValue(2));
-		me.remove(1);
+		assertTrue(me.hasKey(k.a1));
+		assertFalse(me.hasValue(v.a1));
+		assertTrue(me.hasValue(v.a2));
+		me.remove(v.a1);
 		assertFalse(me.isEmpty());
-		assertTrue(me.hasKey("1"));
-		assertFalse(me.hasValue(1));
-		assertTrue(me.hasValue(2));
+		assertTrue(me.hasKey(k.a1));
+		assertFalse(me.hasValue(v.a1));
+		assertTrue(me.hasValue(v.a2));
 		assertEquals(1, me.length);
-		me.remove(2);
+		me.remove(v.a2);
 		assertTrue(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertFalse(me.hasValue(1));
-		assertFalse(me.hasValue(2));
+		assertFalse(me.hasKey(k.a1));
+		assertFalse(me.hasValue(v.a1));
+		assertFalse(me.hasValue(v.a2));
 		assertEquals(0, me.length);
 	}
 
 	public function testAddDuplicateValue():Void {
-		me.addPair("1", 1);
-		me.addPair("2", 1);
+		me.addPair(k.a1, v.a1);
+		me.addPair(k.a2, v.a1);
 		assertFalse(me.isEmpty());
-		assertTrue(me.hasKey("1"));
-		assertTrue(me.hasKey("2"));
-		assertTrue(me.hasValue(1));
-		me.removeKey("1");
+		assertTrue(me.hasKey(k.a1));
+		assertTrue(me.hasKey(k.a2));
+		assertTrue(me.hasValue(v.a1));
+		me.removeKey(k.a1);
 		assertFalse(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertTrue(me.hasKey("2"));
-		assertTrue(me.hasValue(1));
-		me.removeKey("2");
+		assertFalse(me.hasKey(k.a1));
+		assertTrue(me.hasKey(k.a2));
+		assertTrue(me.hasValue(v.a1));
+		me.removeKey(k.a2);
 		assertTrue(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertFalse(me.hasKey("2"));
-		assertFalse(me.hasValue(1));
+		assertFalse(me.hasKey(k.a1));
+		assertFalse(me.hasKey(k.a2));
+		assertFalse(me.hasValue(v.a1));
 	}
 
 	public function testEmptyKeys():Void {
@@ -143,22 +147,22 @@ class OmapCase {
 	}
 
 	public function testOrderedKeys():Void {
-		me.addPair("1", 1);
-		assertMatch(["1"], [for (v in me.keys()) v]);
-		me.addPair("2", 2);
-		assertMatch(["1", "2"], [for (v in me.keys()) v]);
-		me.addPair("3", 3);
-		assertMatch(["1", "2", "3"], [for (v in me.keys()) v]);
-		me.addPair("4", 4);
-		assertMatch(["1", "2", "3", "4"], [for (v in me.keys()) v]);
-		me.insertPairAt(0, "5", 5);
-		assertMatch(["5", "1", "2", "3", "4"], [for (v in me.keys()) v]);
-		me.removeKey("2");
-		assertMatch(["5", "1", "3", "4"], [for (v in me.keys()) v]);
-		me.remove(4);
-		assertMatch(["5", "1", "3"], [for (v in me.keys()) v]);
+		me.addPair(k.a1, v.a1);
+		assertMatch([k.a1], [for (v in me.keys()) v]);
+		me.addPair(k.a2, v.a2);
+		assertMatch([k.a1, k.a2], [for (v in me.keys()) v]);
+		me.addPair(k.a3, v.a3);
+		assertMatch([k.a1, k.a2, k.a3], [for (v in me.keys()) v]);
+		me.addPair(k.a4, v.a4);
+		assertMatch([k.a1, k.a2, k.a3, k.a4], [for (v in me.keys()) v]);
+		me.insertPairAt(0, k.a5, v.a5);
+		assertMatch([k.a5, k.a1, k.a2, k.a3, k.a4], [for (v in me.keys()) v]);
+		me.removeKey(k.a2);
+		assertMatch([k.a5, k.a1, k.a3, k.a4], [for (v in me.keys()) v]);
+		me.remove(v.a4);
+		assertMatch([k.a5, k.a1, k.a3], [for (v in me.keys()) v]);
 		me.removeAt(1);
-		assertMatch(["5", "3"], [for (v in me.keys()) v]);
+		assertMatch([k.a5, k.a3], [for (v in me.keys()) v]);
 
 		var it:Iterator<String> = me.keys();
 		var a:Array<String> = [];
@@ -168,26 +172,26 @@ class OmapCase {
 		assertTrue(it.hasNext());
 		a.push(it.next());
 		assertFalse(it.hasNext());
-		assertMatch(["5", "3"], a);
+		assertMatch([k.a5, k.a3], a);
 	}
 
 	public function testOrderedIterator():Void {
-		me.addPair("1", 1);
-		assertMatch([1], [for (v in me) v]);
-		me.addPair("2", 2);
-		assertMatch([1, 2], [for (v in me) v]);
-		me.addPair("3", 3);
-		assertMatch([1, 2, 3], [for (v in me) v]);
-		me.addPair("4", 4);
-		assertMatch([1, 2, 3, 4], [for (v in me) v]);
-		me.insertPairAt(0, "5", 5);
-		assertMatch([5, 1, 2, 3, 4], [for (v in me) v]);
-		me.removeKey("2");
-		assertMatch([5, 1, 3, 4], [for (v in me) v]);
-		me.remove(4);
-		assertMatch([5, 1, 3], [for (v in me) v]);
+		me.addPair(k.a1, v.a1);
+		assertMatch([v.a1], [for (v in me) v]);
+		me.addPair(k.a2, v.a2);
+		assertMatch([v.a1, v.a2], [for (v in me) v]);
+		me.addPair(k.a3, v.a3);
+		assertMatch([v.a1, v.a2, v.a3], [for (v in me) v]);
+		me.addPair(k.a4, v.a4);
+		assertMatch([v.a1, v.a2, v.a3, v.a4], [for (v in me) v]);
+		me.insertPairAt(0, k.a5, v.a5);
+		assertMatch([v.a5, v.a1, v.a2, v.a3, v.a4], [for (v in me) v]);
+		me.removeKey(k.a2);
+		assertMatch([v.a5, v.a1, v.a3, v.a4], [for (v in me) v]);
+		me.remove(v.a4);
+		assertMatch([v.a5, v.a1, v.a3], [for (v in me) v]);
 		me.removeAt(1);
-		assertMatch([5, 3], [for (v in me) v]);
+		assertMatch([v.a5, v.a3], [for (v in me) v]);
 
 		var it:Iterator<Int> = me.iterator();
 		var a:Array<Int> = [];
@@ -197,32 +201,32 @@ class OmapCase {
 		assertTrue(it.hasNext());
 		a.push(it.next());
 		assertFalse(it.hasNext());
-		assertMatch([5, 3], a);
+		assertMatch([v.a5, v.a3], a);
 	}
 
 	public function testIndexOf():Void {
-		me.addPair("1", 1);
-		me.addPair("2", 2);
-		assertMatch(0, me.indexOf(1));
-		assertMatch(1, me.indexOf(2));
-		assertMatch(-1, me.indexOf(3));
+		me.addPair(k.a1, v.a1);
+		me.addPair(k.a2, v.a2);
+		assertMatch(0, me.indexOf(v.a1));
+		assertMatch(1, me.indexOf(v.a2));
+		assertMatch(-1, me.indexOf(v.a3));
 	}
 
 	public function testResolveKeyIndex():Void {
-		me.addPair("1", 1);
-		me.addPair("2", 2);
-		assertMatch(0, me.resolveKeyIndex("1"));
-		assertMatch(1, me.resolveKeyIndex("2"));
-		assertMatch(-1, me.resolveKeyIndex("3"));
+		me.addPair(k.a1, v.a1);
+		me.addPair(k.a2, v.a2);
+		assertMatch(0, me.resolveKeyIndex(k.a1));
+		assertMatch(1, me.resolveKeyIndex(k.a2));
+		assertMatch(-1, me.resolveKeyIndex(k.a3));
 
 	}
 
 	public function testResolveName():Void {
-		me.addPair("1", 1);
-		me.addPair("2", 2);
-		assertMatch("1", me.resolveName(1));
-		assertMatch("2", me.resolveName(2));
-		assertMatch(null, me.resolveName(3));
+		me.addPair(k.a1, v.a1);
+		me.addPair(k.a2, v.a2);
+		assertMatch(k.a1, me.resolveName(v.a1));
+		assertMatch(k.a2, me.resolveName(v.a2));
+		assertMatch(null, me.resolveName(v.a3));
 	}
 
 	public function testEmptyToString():Void {
@@ -230,14 +234,14 @@ class OmapCase {
 	}
 
 	public function testToString():Void {
-		me.addPair("1", 1);
-		me.addPair("2", 2);
-		me.addPair("3", 3);
-		me.addPair("4", 4);
-		me.insertPairAt(0, "5", 5);
-		me.removeKey("2");
-		me.remove(4);
+		me.addPair(k.a1, v.a1);
+		me.addPair(k.a2, v.a2);
+		me.addPair(k.a3, v.a3);
+		me.addPair(k.a4, v.a4);
+		me.insertPairAt(0, k.a5, v.a5);
+		me.removeKey(k.a2);
+		me.remove(v.a4);
 		me.removeAt(1);
-		assertEquals("{5 => 5; 3 => 3}", me.toString());
+		assertEquals('{${k.a5} => ${v.a5}; ${k.a3} => ${v.a3}}', me.toString());
 	}
 }

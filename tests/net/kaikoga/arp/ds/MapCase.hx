@@ -10,122 +10,126 @@ import picotest.PicoAssert.*;
 class MapCase {
 
 	private var me:IMap<String, Int>;
+	private var k:IArpSupportFixture<String>;
+	private var v:IArpSupportFixture<Int>;
 
 	@Parameter
 	public function setup(provider:IDsImplProvider<IMap<String, Int>>, keyFixture:IArpSupportFixture<String>, valueFixture:IArpSupportFixture<Int>):Void {
 		me = provider.create();
+		k = keyFixture;
+		v = valueFixture;
 	}
 
 	public function testEmpty():Void {
 		assertTrue(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertFalse(me.hasKey("2"));
-		assertFalse(me.hasValue(1));
-		assertFalse(me.hasValue(2));
+		assertFalse(me.hasKey(k.a1));
+		assertFalse(me.hasKey(k.a2));
+		assertFalse(me.hasValue(v.a1));
+		assertFalse(me.hasValue(v.a2));
 	}
 
 	public function testEmptyRemove():Void {
-		me.removeKey("1");
+		me.removeKey(k.a1);
 		assertTrue(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertFalse(me.hasValue(1));
-		me.remove(1);
+		assertFalse(me.hasKey(k.a1));
+		assertFalse(me.hasValue(v.a1));
+		me.remove(v.a1);
 		assertTrue(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertFalse(me.hasValue(1));
+		assertFalse(me.hasKey(k.a1));
+		assertFalse(me.hasValue(v.a1));
 		me.clear();
 		assertTrue(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertFalse(me.hasValue(1));
+		assertFalse(me.hasKey(k.a1));
+		assertFalse(me.hasValue(v.a1));
 	}
 
 	public function testAddUniquePair():Void {
-		me.set("1", 1);
+		me.set(k.a1, v.a1);
 		assertFalse(me.isEmpty());
-		assertTrue(me.hasKey("1"));
-		assertFalse(me.hasKey("2"));
-		assertFalse(me.hasKey("3"));
-		assertTrue(me.hasValue(1));
-		assertFalse(me.hasValue(2));
-		assertFalse(me.hasValue(3));
-		me.set("2", 2);
+		assertTrue(me.hasKey(k.a1));
+		assertFalse(me.hasKey(k.a2));
+		assertFalse(me.hasKey(k.a3));
+		assertTrue(me.hasValue(v.a1));
+		assertFalse(me.hasValue(v.a2));
+		assertFalse(me.hasValue(v.a3));
+		me.set(k.a2, v.a2);
 		assertFalse(me.isEmpty());
-		assertTrue(me.hasKey("1"));
-		assertTrue(me.hasKey("2"));
-		assertFalse(me.hasKey("3"));
-		assertTrue(me.hasValue(1));
-		assertTrue(me.hasValue(2));
-		assertFalse(me.hasValue(3));
-		me.set("3", 3);
+		assertTrue(me.hasKey(k.a1));
+		assertTrue(me.hasKey(k.a2));
+		assertFalse(me.hasKey(k.a3));
+		assertTrue(me.hasValue(v.a1));
+		assertTrue(me.hasValue(v.a2));
+		assertFalse(me.hasValue(v.a3));
+		me.set(k.a3, v.a3);
 		assertFalse(me.isEmpty());
-		assertTrue(me.hasKey("1"));
-		assertTrue(me.hasKey("2"));
-		assertTrue(me.hasKey("3"));
-		assertTrue(me.hasValue(1));
-		assertTrue(me.hasValue(2));
-		assertTrue(me.hasValue(3));
-		me.removeKey("1");
+		assertTrue(me.hasKey(k.a1));
+		assertTrue(me.hasKey(k.a2));
+		assertTrue(me.hasKey(k.a3));
+		assertTrue(me.hasValue(v.a1));
+		assertTrue(me.hasValue(v.a2));
+		assertTrue(me.hasValue(v.a3));
+		me.removeKey(k.a1);
 		assertFalse(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertTrue(me.hasKey("2"));
-		assertTrue(me.hasKey("3"));
+		assertFalse(me.hasKey(k.a1));
+		assertTrue(me.hasKey(k.a2));
+		assertTrue(me.hasKey(k.a3));
 		assertFalse(me.hasValue(1));
 		assertTrue(me.hasValue(2));
 		assertTrue(me.hasValue(3));
-		me.remove(2);
+		me.remove(v.a2);
 		assertFalse(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertFalse(me.hasKey("2"));
-		assertTrue(me.hasKey("3"));
-		assertFalse(me.hasValue(1));
-		assertFalse(me.hasValue(2));
-		assertTrue(me.hasValue(3));
+		assertFalse(me.hasKey(k.a1));
+		assertFalse(me.hasKey(k.a2));
+		assertTrue(me.hasKey(k.a3));
+		assertFalse(me.hasValue(v.a1));
+		assertFalse(me.hasValue(v.a2));
+		assertTrue(me.hasValue(v.a3));
 		me.clear();
 		assertTrue(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertFalse(me.hasKey("2"));
-		assertFalse(me.hasKey("3"));
-		assertFalse(me.hasValue(1));
-		assertFalse(me.hasValue(2));
-		assertFalse(me.hasValue(3));
+		assertFalse(me.hasKey(k.a1));
+		assertFalse(me.hasKey(k.a2));
+		assertFalse(me.hasKey(k.a3));
+		assertFalse(me.hasValue(v.a1));
+		assertFalse(me.hasValue(v.a2));
+		assertFalse(me.hasValue(v.a3));
 	}
 
 	public function testAddNoDuplicateKey():Void {
-		me.set("1", 1);
-		me.set("1", 2);
+		me.set(k.a1, v.a1);
+		me.set(k.a1, v.a2);
 		assertFalse(me.isEmpty());
-		assertTrue(me.hasKey("1"));
-		assertFalse(me.hasValue(1));
-		assertTrue(me.hasValue(2));
-		me.remove(1);
+		assertTrue(me.hasKey(k.a1));
+		assertFalse(me.hasValue(v.a1));
+		assertTrue(me.hasValue(v.a2));
+		me.remove(v.a1);
 		assertFalse(me.isEmpty());
-		assertTrue(me.hasKey("1"));
-		assertFalse(me.hasValue(1));
-		assertTrue(me.hasValue(2));
-		me.remove(2);
+		assertTrue(me.hasKey(k.a1));
+		assertFalse(me.hasValue(v.a1));
+		assertTrue(me.hasValue(v.a2));
+		me.remove(v.a2);
 		assertTrue(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertFalse(me.hasValue(1));
-		assertFalse(me.hasValue(2));
+		assertFalse(me.hasKey(k.a1));
+		assertFalse(me.hasValue(v.a1));
+		assertFalse(me.hasValue(v.a2));
 	}
 
 	public function testAddDuplicateValue():Void {
-		me.set("1", 1);
-		me.set("2", 1);
+		me.set(k.a1, v.a1);
+		me.set(k.a2, v.a1);
 		assertFalse(me.isEmpty());
-		assertTrue(me.hasKey("1"));
-		assertTrue(me.hasKey("2"));
-		assertTrue(me.hasValue(1));
-		me.removeKey("1");
+		assertTrue(me.hasKey(k.a1));
+		assertTrue(me.hasKey(k.a2));
+		assertTrue(me.hasValue(v.a1));
+		me.removeKey(k.a1);
 		assertFalse(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertTrue(me.hasKey("2"));
-		assertTrue(me.hasValue(1));
-		me.removeKey("2");
+		assertFalse(me.hasKey(k.a1));
+		assertTrue(me.hasKey(k.a2));
+		assertTrue(me.hasValue(v.a1));
+		me.removeKey(k.a2);
 		assertTrue(me.isEmpty());
-		assertFalse(me.hasKey("1"));
-		assertFalse(me.hasKey("2"));
-		assertFalse(me.hasValue(1));
+		assertFalse(me.hasKey(k.a1));
+		assertFalse(me.hasKey(k.a2));
+		assertFalse(me.hasValue(v.a1));
 	}
 
 	public function testEmptyKeys():Void {
@@ -141,13 +145,13 @@ class MapCase {
 	}
 
 	public function testUnorderedKeys():Void {
-		me.set("1", 1);
-		me.set("2", 2);
-		me.set("3", 3);
-		me.set("4", 4);
-		me.set("5", 5);
-		me.removeKey("2");
-		me.remove(4);
+		me.set(k.a1, v.a1);
+		me.set(k.a2, v.a2);
+		me.set(k.a3, v.a3);
+		me.set(k.a4, v.a4);
+		me.set(k.a5, v.a5);
+		me.removeKey(k.a2);
+		me.remove(v.a4);
 		var it:Iterator<String> = me.keys();
 		var a:Array<String> = [];
 		assertNotEquals(null, it);
@@ -158,17 +162,17 @@ class MapCase {
 		assertTrue(it.hasNext());
 		a.push(it.next());
 		assertFalse(it.hasNext());
-		assertMatch(containsInAnyOrder("1", "3", "5"), a);
+		assertMatch(containsInAnyOrder(k.a1, k.a3, k.a5), a);
 	}
 
 	public function testUnorderedIterator():Void {
-		me.set("1", 1);
-		me.set("2", 2);
-		me.set("3", 3);
-		me.set("4", 4);
-		me.set("5", 5);
-		me.removeKey("2");
-		me.remove(4);
+		me.set(k.a1, v.a1);
+		me.set(k.a2, v.a2);
+		me.set(k.a3, v.a3);
+		me.set(k.a4, v.a4);
+		me.set(k.a5, v.a5);
+		me.removeKey(k.a2);
+		me.remove(v.a4);
 		var it:Iterator<Int> = me.iterator();
 		var a:Array<Int> = [];
 		assertNotEquals(null, it);
@@ -179,7 +183,7 @@ class MapCase {
 		assertTrue(it.hasNext());
 		a.push(it.next());
 		assertFalse(it.hasNext());
-		assertMatch(containsInAnyOrder(1, 3, 5), a);
+		assertMatch(containsInAnyOrder(v.a1, v.a3, v.a5), a);
 	}
 
 	public function testEmptyToString():Void {
@@ -187,15 +191,15 @@ class MapCase {
 	}
 
 	public function testToString():Void {
-		me.set("1", 1);
-		me.set("2", 2);
-		me.set("3", 3);
-		me.set("4", 4);
-		me.set("5", 5);
-		me.removeKey("2");
-		me.remove(4);
+		me.set(k.a1, v.a1);
+		me.set(k.a2, v.a2);
+		me.set(k.a3, v.a3);
+		me.set(k.a4, v.a4);
+		me.set(k.a5, v.a5);
+		me.removeKey(k.a2);
+		me.remove(v.a4);
 		var string:String = me.toString();
 		string = string.substr(1, string.length - 2);
-		assertMatch(containsInAnyOrder("1 => 1", "3 => 3", "5 => 5"), string.split(", "));
+		assertMatch(containsInAnyOrder('${k.a1} => ${v.a1}', '${k.a3} => ${v.a3}', '${k.a5} => ${v.a5}'), string.split(", "));
 	}
 }

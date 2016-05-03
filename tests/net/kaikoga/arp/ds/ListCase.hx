@@ -10,57 +10,59 @@ import picotest.PicoAssert.*;
 class ListCase {
 
 	private var me:IList<Int>;
+	private var v:IArpSupportFixture<Int>;
 
 	@Parameter
 	public function setup(provider:IDsImplProvider<IList<Int>>, valueFixture:IArpSupportFixture<Int>):Void {
 		me = provider.create();
+		v = valueFixture;
 	}
 
 	public function testEmpty():Void {
 		assertTrue(me.isEmpty());
-		assertFalse(me.hasValue(1));
+		assertFalse(me.hasValue(v.a1));
 	}
 
 	public function testEmptyRemove():Void {
-		me.remove(1);
+		me.remove(v.a1);
 		assertTrue(me.isEmpty());
-		assertFalse(me.hasValue(1));
+		assertFalse(me.hasValue(v.a1));
 		me.clear();
 		assertTrue(me.isEmpty());
-		assertFalse(me.hasValue(1));
+		assertFalse(me.hasValue(v.a1));
 	}
 
 	public function testAddUniqueValue():Void {
-		me.push(1);
+		me.push(v.a1);
 		assertFalse(me.isEmpty());
-		assertTrue(me.hasValue(1));
-		assertFalse(me.hasValue(2));
-		me.push(2);
+		assertTrue(me.hasValue(v.a1));
+		assertFalse(me.hasValue(v.a2));
+		me.push(v.a2);
 		assertFalse(me.isEmpty());
-		assertTrue(me.hasValue(1));
-		assertTrue(me.hasValue(2));
-		me.remove(1);
+		assertTrue(me.hasValue(v.a1));
+		assertTrue(me.hasValue(v.a2));
+		me.remove(v.a1);
 		assertFalse(me.isEmpty());
-		assertFalse(me.hasValue(1));
-		assertTrue(me.hasValue(2));
+		assertFalse(me.hasValue(v.a1));
+		assertTrue(me.hasValue(v.a2));
 		me.clear();
 		assertTrue(me.isEmpty());
-		assertFalse(me.hasValue(1));
-		assertFalse(me.hasValue(2));
+		assertFalse(me.hasValue(v.a1));
+		assertFalse(me.hasValue(v.a2));
 	}
 
 	public function testAddDuplicateValue():Void {
-		me.push(1);
-		me.push(1);
+		me.push(v.a1);
+		me.push(v.a1);
 		assertFalse(me.isEmpty());
-		assertTrue(me.hasValue(1));
-		me.remove(1);
+		assertTrue(me.hasValue(v.a1));
+		me.remove(v.a1);
 		if (me.isUniqueValue) {
 			assertTrue(me.isEmpty());
-			assertFalse(me.hasValue(1));
+			assertFalse(me.hasValue(v.a1));
 		} else {
 			assertFalse(me.isEmpty());
-			assertTrue(me.hasValue(1));
+			assertTrue(me.hasValue(v.a1));
 		}
 	}
 
@@ -71,22 +73,22 @@ class ListCase {
 	}
 
 	public function testOrderedIterator():Void {
-		me.push(1);
-		me.push(2);
-		me.push(3);
-		me.push(4);
+		me.push(v.a1);
+		me.push(v.a2);
+		me.push(v.a3);
+		me.push(v.a4);
 		me.shift();
-		me.unshift(5);
-		me.remove(3);
+		me.unshift(v.a5);
+		me.remove(v.a3);
 		var it:Iterator<Int> = me.iterator();
 		var a:Array<Int> = [];
 		assertNotEquals(null, it);
 		assertTrue(it.hasNext());
-		assertEquals(5, it.next());
+		assertEquals(v.a5, it.next());
 		assertTrue(it.hasNext());
-		assertEquals(2, it.next());
+		assertEquals(v.a2, it.next());
 		assertTrue(it.hasNext());
-		assertEquals(4, it.next());
+		assertEquals(v.a4, it.next());
 		assertFalse(it.hasNext());
 	}
 
@@ -95,13 +97,13 @@ class ListCase {
 	}
 
 	public function testToString():Void {
-		me.push(1);
-		me.push(2);
-		me.push(3);
-		me.push(4);
+		me.push(v.a1);
+		me.push(v.a2);
+		me.push(v.a3);
+		me.push(v.a4);
 		me.shift();
-		me.unshift(5);
-		me.remove(3);
-		assertEquals("[5; 2; 4]", me.toString());
+		me.unshift(v.a5);
+		me.remove(v.a3);
+		assertEquals('[${v.a5}; ${v.a2}; ${v.a4}]', me.toString());
 	}
 }
