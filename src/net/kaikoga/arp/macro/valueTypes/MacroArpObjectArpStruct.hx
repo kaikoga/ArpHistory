@@ -6,15 +6,19 @@ import haxe.macro.Expr;
 
 class MacroArpObjectArpStruct implements IMacroArpObjectValueType {
 
+	private var _nativeType:ComplexType;
 	private var nativeTypePath:TypePath;
 
 	public function new(nativeType:ComplexType) {
+		_nativeType = nativeType;
 		switch (nativeType) {
 			case ComplexType.TPath(typePath):
 				this.nativeTypePath = typePath;
 			case _: throw "invalid native type";
 		}
 	}
+
+	public function nativeType():ComplexType return _nativeType;
 
 	public function createEmptyVo(pos:Position):Expr {
 		return {

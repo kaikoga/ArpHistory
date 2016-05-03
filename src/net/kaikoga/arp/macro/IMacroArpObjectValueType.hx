@@ -6,6 +6,7 @@ import haxe.macro.Expr;
 
 interface IMacroArpObjectValueType {
 
+	function nativeType():ComplexType;
 	function createEmptyVo(pos:Position):Expr;
 	function createSeedElement(pos:Position):Expr;
 	function readSeedElement(pos:Position, iFieldName:String):Expr;

@@ -4,7 +4,6 @@ import net.kaikoga.arp.ds.impl.ArraySet;
 import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.ISet;
 
-@:generic @:remove
 class ArpObjectSet<V:IArpObject> implements ISet<V> {
 
 	private var slotSet:ISet<ArpSlot<V>>;

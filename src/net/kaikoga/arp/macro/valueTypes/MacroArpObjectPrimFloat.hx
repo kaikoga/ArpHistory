@@ -8,6 +8,10 @@ class MacroArpObjectPrimFloat implements IMacroArpObjectValueType {
 	public function new() {
 	}
 
+	public function nativeType():ComplexType {
+		return macro:Float;
+	}
+
 	public function createEmptyVo(pos:Position):Expr {
 		return macro @:pos(pos) { 0.0; };
 	}

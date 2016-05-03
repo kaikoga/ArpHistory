@@ -8,6 +8,10 @@ class MacroArpObjectPrimInt implements IMacroArpObjectValueType {
 	public function new() {
 	}
 
+	public function nativeType():ComplexType {
+		return macro:Int;
+	}
+
 	public function createEmptyVo(pos:Position):Expr {
 		return macro @:pos(pos) { 0; };
 	}

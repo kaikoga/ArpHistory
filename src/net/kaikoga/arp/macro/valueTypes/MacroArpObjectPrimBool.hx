@@ -8,6 +8,10 @@ class MacroArpObjectPrimBool implements IMacroArpObjectValueType {
 	public function new() {
 	}
 
+	public function nativeType():ComplexType {
+		return macro:Bool;
+	}
+
 	public function createEmptyVo(pos:Position):Expr {
 		return macro @:pos(pos) { false; };
 	}

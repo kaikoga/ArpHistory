@@ -4,7 +4,6 @@ import net.kaikoga.arp.ds.impl.ArrayList;
 import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.IList;
 
-@:generic @:remove
 class ArpObjectList<V:IArpObject> implements IList<V> {
 
 	public var isUniqueValue(get, never):Bool;

@@ -2,6 +2,15 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
+import haxe.macro.Printer;
+import net.kaikoga.arp.macro.fields.ds.MacroArpObjectReferenceSetField;
+import net.kaikoga.arp.macro.fields.ds.MacroArpObjectReferenceListField;
+import net.kaikoga.arp.macro.fields.ds.MacroArpObjectReferenceOmapField;
+import net.kaikoga.arp.macro.fields.ds.MacroArpObjectReferenceMapField;
+import net.kaikoga.arp.macro.fields.ds.MacroArpObjectOmapField;
+import net.kaikoga.arp.macro.fields.ds.MacroArpObjectMapField;
+import net.kaikoga.arp.macro.fields.ds.MacroArpObjectListField;
+import net.kaikoga.arp.macro.fields.ds.MacroArpObjectSetField;
 import net.kaikoga.arp.macro.valueTypes.MacroArpObjectArpStruct;
 import net.kaikoga.arp.macro.valueTypes.MacroArpObjectPrimInt;
 import net.kaikoga.arp.macro.valueTypes.MacroArpObjectPrimFloat;
@@ -20,11 +29,15 @@ import haxe.macro.Type;
 class MacroArpObjectFieldBuilder {
 
 	private static function typeParam(typePath:TypePath, index:Int = 0):ComplexType {
-		if (typePath.params == null) throw "invalid type parameter";
-		if (typePath.params.length <= index) throw "invalid type parameter";
-		switch (typePath.params[index]) {
-			case TypeParam.TPType(t): return t;
-			case TypeParam.TPExpr(e): throw "invalid type parameter";
+		try {
+			if (typePath.params == null) throw "invalid type parameter";
+			if (typePath.params.length <= index) throw "invalid type parameter";
+			switch (typePath.params[index]) {
+				case TypeParam.TPType(t): return t;
+				case TypeParam.TPExpr(e): throw "invalid type parameter";
+			}
+		} catch (e:String) {
+			throw "invalid type parameter " + new Printer().printTypePath(typePath);
 		}
 	}
 
@@ -44,6 +57,14 @@ class MacroArpObjectFieldBuilder {
 				return MacroArpObjectNativeFieldType.StdList(complexTypeToNativeFieldType(typeParam(typePath), pos));
 			case "Map", "Map.IMap", "haxe.Constraints.IMap":
 				return MacroArpObjectNativeFieldType.StdMap(complexTypeToNativeFieldType(typeParam(typePath, 1), pos));
+			case "net.kaikoga.arp.ds.ISet", "net.kaikoga.arp.ds.impl.ArraySet", "net.kaikoga.arp.domain.ds.ArpObjectSet":
+				return MacroArpObjectNativeFieldType.Set(complexTypeToNativeFieldType(typeParam(typePath), pos));
+			case "net.kaikoga.arp.ds.IList", "net.kaikoga.arp.ds.impl.ArrayList", "net.kaikoga.arp.domain.ds.ArpObjectList":
+				return MacroArpObjectNativeFieldType.List(complexTypeToNativeFieldType(typeParam(typePath), pos));
+			case "net.kaikoga.arp.ds.IMap", "net.kaikoga.arp.ds.impl.StdMap", "net.kaikoga.arp.domain.ds.ArpObjectMap":
+				return MacroArpObjectNativeFieldType.Map(complexTypeToNativeFieldType(typeParam(typePath, 1), pos));
+			case "net.kaikoga.arp.ds.IOmap", "net.kaikoga.arp.ds.impl.StdOmap", "net.kaikoga.arp.domain.ds.ArpObjectOmap":
+				return MacroArpObjectNativeFieldType.Omap(complexTypeToNativeFieldType(typeParam(typePath, 1), pos));
 			case "net.kaikoga.arp.structs.ArpArea2d":
 				return MacroArpObjectNativeFieldType.ValueType(new MacroArpObjectArpStruct(macro :net.kaikoga.arp.structs.ArpArea2d));
 			case "net.kaikoga.arp.structs.ArpColor":
@@ -88,7 +109,7 @@ class MacroArpObjectFieldBuilder {
 				result = fqnToNativeFieldType(fqn, typePath, pos);
 				if (result != null) return result;
 				// TODO follow super class and interface
-				return MacroArpObjectNativeFieldType.MaybeReference;
+				return MacroArpObjectNativeFieldType.MaybeReference(complexType);
 			case haxe.macro.Type.TAbstract(abstractRef, params):
 				var abstractType:AbstractType = abstractRef.get();
 				fqn = abstractType.pack.copy();
@@ -96,10 +117,10 @@ class MacroArpObjectFieldBuilder {
 				result = fqnToNativeFieldType(fqn, typePath, pos);
 				if (result != null) return result;
 				// TODO follow abstract
-				return MacroArpObjectNativeFieldType.MaybeReference;
+				return MacroArpObjectNativeFieldType.MaybeReference(complexType);
 			case haxe.macro.Type.TType(typeRef, params):
 				// TODO follow typedef
-				return MacroArpObjectNativeFieldType.MaybeReference;
+				return MacroArpObjectNativeFieldType.MaybeReference(complexType);
 			default:
 		}
 		return MacroArpObjectNativeFieldType.Invalid;
@@ -112,7 +133,7 @@ class MacroArpObjectFieldBuilder {
 				if (definition.expectValueField()) {
 					return new MacroArpObjectValueField(definition, p);
 				}
-			case MacroArpObjectNativeFieldType.MaybeReference:
+			case MacroArpObjectNativeFieldType.MaybeReference(p):
 				if (definition.expectReferenceField()) {
 					return new MacroArpObjectReferenceField(definition);
 				}
@@ -138,9 +159,57 @@ class MacroArpObjectFieldBuilder {
 						if (definition.expectValueField()) {
 							return new MacroArpObjectStdMapField(definition, p);
 						}
-					case MacroArpObjectNativeFieldType.MaybeReference:
+					case MacroArpObjectNativeFieldType.MaybeReference(p):
 						if (definition.expectReferenceField()) {
-							return new MacroArpObjectStdReferenceMapField(definition);
+							return new MacroArpObjectStdReferenceMapField(definition, p);
+						}
+					case _:
+				}
+			case MacroArpObjectNativeFieldType.Set(t):
+				switch (t) {
+					case MacroArpObjectNativeFieldType.ValueType(p):
+						if (definition.expectValueField()) {
+							return new MacroArpObjectSetField(definition, p);
+						}
+					case MacroArpObjectNativeFieldType.MaybeReference(p):
+						if (definition.expectReferenceField()) {
+							return new MacroArpObjectReferenceSetField(definition, p);
+						}
+					case _:
+				}
+			case MacroArpObjectNativeFieldType.List(t):
+				switch (t) {
+					case MacroArpObjectNativeFieldType.ValueType(p):
+						if (definition.expectValueField()) {
+							return new MacroArpObjectListField(definition, p);
+						}
+					case MacroArpObjectNativeFieldType.MaybeReference(p):
+						if (definition.expectReferenceField()) {
+							return new MacroArpObjectReferenceListField(definition, p);
+						}
+					case _:
+				}
+			case MacroArpObjectNativeFieldType.Map(t):
+				switch (t) {
+					case MacroArpObjectNativeFieldType.ValueType(p):
+						if (definition.expectValueField()) {
+							return new MacroArpObjectMapField(definition, p);
+						}
+					case MacroArpObjectNativeFieldType.MaybeReference(p):
+						if (definition.expectReferenceField()) {
+							return new MacroArpObjectReferenceMapField(definition, p);
+						}
+					case _:
+				}
+			case MacroArpObjectNativeFieldType.Omap(t):
+				switch (t) {
+					case MacroArpObjectNativeFieldType.ValueType(p):
+						if (definition.expectValueField()) {
+							return new MacroArpObjectOmapField(definition, p);
+						}
+					case MacroArpObjectNativeFieldType.MaybeReference(p):
+						if (definition.expectReferenceField()) {
+							return new MacroArpObjectReferenceOmapField(definition, p);
 						}
 					case _:
 				}
@@ -157,7 +226,11 @@ private enum MacroArpObjectNativeFieldType {
 	StdArray(param:MacroArpObjectNativeFieldType);
 	StdList(param:MacroArpObjectNativeFieldType);
 	StdMap(param:MacroArpObjectNativeFieldType);
-	MaybeReference;
+	Set(param:MacroArpObjectNativeFieldType);
+	List(param:MacroArpObjectNativeFieldType);
+	Map(param:MacroArpObjectNativeFieldType);
+	Omap(param:MacroArpObjectNativeFieldType);
+	MaybeReference(contentNativeType:ComplexType);
 }
 
 #end
