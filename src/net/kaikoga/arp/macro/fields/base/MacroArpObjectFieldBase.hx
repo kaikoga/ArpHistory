@@ -1,4 +1,4 @@
-package net.kaikoga.arp.macro.fields;
+package net.kaikoga.arp.macro.fields.base;
 
 #if macro
 

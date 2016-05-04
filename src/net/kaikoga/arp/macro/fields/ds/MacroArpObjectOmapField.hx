@@ -2,29 +2,24 @@ package net.kaikoga.arp.macro.fields.ds;
 
 #if macro
 
+import net.kaikoga.arp.macro.fields.base.MacroArpObjectValueTypeCollectionFieldBase;
 import haxe.macro.Expr;
 
-class MacroArpObjectOmapField extends MacroArpObjectFieldBase implements IMacroArpObjectField {
+class MacroArpObjectOmapField extends MacroArpObjectValueTypeCollectionFieldBase implements IMacroArpObjectField {
 
-	public var type(default, null):IMacroArpObjectValueType;
+	override private function guessConcreteNativeType():ComplexType {
+		var contentNativeType:ComplexType = this.type.nativeType();
+		return macro:net.kaikoga.arp.ds.impl.StdOmap<String, $contentNativeType>;
+	}
 
-	public function new(definition:MacroArpObjectFieldDefinition, type:IMacroArpObjectValueType) {
-		super(definition);
-		this.type = type;
+	public function new(definition:MacroArpObjectFieldDefinition, type:IMacroArpObjectValueType, concreteDs:Bool) {
+		super(definition, type, concreteDs);
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
 		var nativeType:ComplexType = this.nativeType;
 		this.nativeField.kind = FieldType.FProp("default", "null", nativeType, this.definition.nativeDefault);
 		outFields.push(nativeField);
-	}
-
-	public function buildInitBlock(initBlock:Array<Expr>):Void {
-		var contentNativeType:ComplexType = this.type.nativeType();
-		if (this.definition.nativeDefault == null) {
-			var iFieldName:String = this.iFieldName;
-			initBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = new net.kaikoga.arp.ds.impl.StdOmap<String, $contentNativeType>(); });
-		}
 	}
 
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {

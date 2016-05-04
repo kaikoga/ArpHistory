@@ -2,15 +2,15 @@ package net.kaikoga.arp.macro.fields.std;
 
 #if macro
 
+import net.kaikoga.arp.macro.fields.base.MacroArpObjectReferenceCollectionFieldBase;
 import haxe.macro.Expr;
 
-class MacroArpObjectStdReferenceMapField extends MacroArpObjectFieldBase implements IMacroArpObjectField {
+class MacroArpObjectStdReferenceMapField extends MacroArpObjectReferenceCollectionFieldBase implements IMacroArpObjectField {
 
 	private var _nativeType:ComplexType;
 	override private function get_nativeType():ComplexType return _nativeType;
 
-	private var contentNativeType:ComplexType;
-
+	// acts as if Map will resolve to ArpObjectStdMap with @:multiType()
 	private function coerce(nativeType:ComplexType):ComplexType {
 		switch (nativeType) {
 			case ComplexType.TPath(t):
@@ -24,21 +24,24 @@ class MacroArpObjectStdReferenceMapField extends MacroArpObjectFieldBase impleme
 		return nativeType;
 	}
 
-	public function new(definition:MacroArpObjectFieldDefinition, contentNativeType:ComplexType) {
-		super(definition);
+	override private function createEmptyDs(concreteNativeTypePath:TypePath):Expr {
+		return macro new $concreteNativeTypePath(slot.domain);
+	}
+
+	override private function guessConcreteNativeType():ComplexType {
+		var contentNativeType:ComplexType = this.contentNativeType;
+		return macro:net.kaikoga.arp.domain.ds.std.ArpObjectStdMap<$contentNativeType>;
+	}
+
+	public function new(definition:MacroArpObjectFieldDefinition, contentNativeType:ComplexType, concreteDs:Bool) {
+		super(definition, contentNativeType, concreteDs);
 		if (definition.nativeDefault != null) throw "can't inline initialize arp reference field";
-		this.contentNativeType = contentNativeType;
 		_nativeType = coerce(super.nativeType);
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
 		this.nativeField.kind = FieldType.FProp("default", "null", this.nativeType, null);
 		outFields.push(nativeField);
-	}
-
-	public function buildInitBlock(initBlock:Array<Expr>):Void {
-		var iFieldName:String = this.iFieldName;
-		initBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = new net.kaikoga.arp.domain.ds.std.ArpObjectStdMap(slot.domain); });
 	}
 
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {

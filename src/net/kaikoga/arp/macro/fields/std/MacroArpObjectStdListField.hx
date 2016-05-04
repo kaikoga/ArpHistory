@@ -2,28 +2,24 @@ package net.kaikoga.arp.macro.fields.std;
 
 #if macro
 
+import net.kaikoga.arp.macro.fields.base.MacroArpObjectValueTypeCollectionFieldBase;
 import haxe.macro.Expr;
 
-class MacroArpObjectStdListField extends MacroArpObjectFieldBase implements IMacroArpObjectField {
+class MacroArpObjectStdListField extends MacroArpObjectValueTypeCollectionFieldBase implements IMacroArpObjectField {
 
-	public var type(default, null):IMacroArpObjectValueType;
+	override private function guessConcreteNativeType():ComplexType {
+		var contentNativeType:ComplexType = this.type.nativeType();
+		return macro:List;
+	}
 
 	public function new(definition:MacroArpObjectFieldDefinition, type:IMacroArpObjectValueType) {
-		super(definition);
-		this.type = type;
+		super(definition, type, true);
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
 		var nativeType:ComplexType = this.nativeType;
 		this.nativeField.kind = FieldType.FProp("default", "null", nativeType, this.definition.nativeDefault);
 		outFields.push(nativeField);
-	}
-
-	public function buildInitBlock(initBlock:Array<Expr>):Void {
-		if (this.definition.nativeDefault == null) {
-			var iFieldName:String = this.iFieldName;
-			initBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = new List(); });
-		}
 	}
 
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {

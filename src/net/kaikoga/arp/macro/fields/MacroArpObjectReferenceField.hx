@@ -2,6 +2,7 @@ package net.kaikoga.arp.macro.fields;
 
 #if macro
 
+import net.kaikoga.arp.macro.fields.base.MacroArpObjectFieldBase;
 import haxe.macro.Expr;
 
 class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IMacroArpObjectField {
