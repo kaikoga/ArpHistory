@@ -6,6 +6,7 @@
 -cp ../../../../ArpHitTest/src
 -cp ../../../../ArpSupport/src
 -resource assets/arpdomain.xml@arpdata
+-resource assets/field.xml@field
 -resource assets/a.png@a
 -debug
 -main Main

@@ -1,5 +1,6 @@
 package;
 
+import net.kaikoga.arpx.external.FileExternal;
 import flash.ui.Keyboard;
 import net.kaikoga.arpx.input.KeyInput;
 import net.kaikoga.arpx.driver.MotionDriver;
@@ -43,6 +44,7 @@ class Main extends Sprite {
 	public function new() {
 		super();
 		this.domain = new ArpDomain();
+		this.domain.addGenerator(new ArpObjectGenerator(FileExternal));
 		this.domain.addGenerator(new ArpObjectGenerator(ResourceFile));
 		this.domain.addGenerator(new ArpObjectGenerator(FileTexture));
 		this.domain.addGenerator(new ArpObjectGenerator(GridChip));
@@ -65,11 +67,20 @@ class Main extends Sprite {
 		this.domain.addGenerator(new ArpObjectGenerator(KeyInput));
 
 		this.domain.loadSeed(ArpSeed.fromXmlString(Resource.getString("arpdata")));
-		this.domain.tick.push(this.onTick);
+		this.domain.tick.push(this.onFirstTick);
 
 		this.bitmapData = new BitmapData(256, 256, true, 0xffffffff);
 		addChild(new Bitmap(this.bitmapData, PixelSnapping.NEVER, false));
 
+		Lib.current.stage.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
+	}
+
+	private function onEnterFrame(event:Event):Void {
+		this.domain.rawTick.dispatch(1.0);
+	}
+
+	private function onFirstTick(value:Float):Void {
+		this.domain.tick.remove(this.onFirstTick);
 		this.console = this.domain.query("console", Console).value();
 		this.field = this.domain.query("root", Field).value();
 
@@ -80,12 +91,8 @@ class Main extends Sprite {
 		input.bindAxis(Keyboard.UP, "y", -1);
 		input.bindAxis(Keyboard.DOWN, "y", 1);
 
-		Lib.current.stage.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
 		this.domain.heatLater(this.domain.query("gridChip", GridChip).slot());
-	}
-
-	private function onEnterFrame(event:Event):Void {
-		this.domain.rawTick.dispatch(1.0);
+		this.domain.tick.push(this.onTick);
 	}
 
 	private function onTick(value:Float):Void {
