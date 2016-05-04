@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.console;
 
+import net.kaikoga.arp.ds.IOmap;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arpx.camera.Camera;
 
@@ -13,7 +14,7 @@ import flash.display.BitmapData;
 class Console implements IArpObject
 #if arp_backend_flash implements IConsoleFlashImpl #end
 {
-	@:arpType("camera") @:arpField("camera") public var cameras:Map<String, Camera>;
+	@:arpType("camera") @:arpField("camera") public var cameras:IOmap<String, Camera>;
 	@:arpValue public var width:Int;
 	@:arpValue public var height:Int;
 

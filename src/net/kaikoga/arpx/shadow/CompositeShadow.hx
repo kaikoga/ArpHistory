@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.shadow;
 
+import net.kaikoga.arp.ds.ISet;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arp.structs.ArpPosition;
 
@@ -15,7 +16,7 @@ class CompositeShadow extends Shadow {
 	public var params:ArpParams;
 	@:arpValue public var position:ArpPosition;
 	@:arpValue public var mass:Float = 1.0;
-	@:arpType("shadow") @:arpField("shadow") public var shadows:Map<String, Shadow>;
+	@:arpType("shadow") @:arpField("shadow") public var shadows:ISet<Shadow>;
 
 	#if arp_backend_flash
 
