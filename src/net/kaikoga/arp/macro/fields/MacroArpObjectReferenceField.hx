@@ -35,7 +35,7 @@ class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IM
 			inline private function $iGet_field():$nativeType return this.$iFieldSlot.value;
 			@:pos(this.nativePos)
 			inline private function $iSet_field(value:$nativeType):$nativeType {
-				this.$iFieldSlot = value.arpSlot().takeReference(this.$iFieldSlot);
+				this.$iFieldSlot = net.kaikoga.arp.domain.ArpSlot.of(value, this._arpDomain).takeReference(this.$iFieldSlot);
 				return value;
 			}
 		}).fields;
