@@ -35,8 +35,8 @@ class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IM
 			inline private function $iGet_field():$nativeType return this.$iFieldSlot.value;
 			@:pos(this.nativePos)
 			inline private function $iSet_field(value:$nativeType):$nativeType {
-			value.arpSlot().takeReference(this.$iFieldSlot);
-			return value;
+				this.$iFieldSlot = value.arpSlot().takeReference(this.$iFieldSlot);
+				return value;
 			}
 		}).fields;
 		this.nativeField.kind = FieldType.FProp("get", "set", nativeType, null);
