@@ -39,6 +39,7 @@ class MacroArpObjectFieldBuilder {
 	}
 
 	private function typeParam(type:Type, index:Int = 0):Type {
+		// TODO handle generic classes?
 		try {
 			switch (type) {
 				case

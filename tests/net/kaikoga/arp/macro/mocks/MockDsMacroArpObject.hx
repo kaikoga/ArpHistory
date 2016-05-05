@@ -1,8 +1,6 @@
 package net.kaikoga.arp.macro.mocks;
 
 import net.kaikoga.arp.domain.ds.ArpObjectSet;
-import net.kaikoga.arp.ds.impl.StdMapSet;
-import net.kaikoga.arp.domain.ds.ArpObjectList;
 import net.kaikoga.arp.ds.ISet;
 import net.kaikoga.arp.ds.impl.ArraySet;
 import net.kaikoga.arp.ds.IList;
@@ -26,7 +24,7 @@ class MockDsMacroArpObject implements IArpObject {
 	@:arpValue public var intISet:ISet<Int> = new ArraySet<Int>();
 	@:arpValue public var intArraySet:ArraySet<Int> = new ArraySet<Int>();
 	//@:arpValue public var intStdMapSet:StdMapSet<Int>;
-	@:arpType("mock") public var refISet:ISet<MockDsMacroArpObject> = new ArraySet<MockDsMacroArpObject>();
+	@:arpType("mock") public var refISet:ISet<MockDsMacroArpObject> = new ArpObjectSet<MockDsMacroArpObject>();
 	@:arpType("mock") public var refArpObjectSet:ArpObjectSet<MockDsMacroArpObject>;
 
 	public function new() {

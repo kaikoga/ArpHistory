@@ -6,7 +6,7 @@ import net.kaikoga.arp.ds.ISet;
 
 class ArpObjectSet<V:IArpObject> implements ISet<V> {
 
-	private var slotSet:ISet<ArpSlot<V>>;
+	public var slotSet(default, null):ISet<ArpSlot<V>>;
 
 	public var isUniqueValue(get, never):Bool;
 	public function get_isUniqueValue():Bool return true;

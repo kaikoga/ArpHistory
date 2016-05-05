@@ -7,6 +7,23 @@ import haxe.macro.Expr;
 
 class MacroArpObjectReferenceSetField extends MacroArpObjectReferenceCollectionFieldBase implements IMacroArpObjectField {
 
+	private var _nativeType:ComplexType;
+	override private function get_nativeType():ComplexType return _nativeType;
+
+	// use impl, because we have to directly get/set slots
+	private function coerce(nativeType:ComplexType):ComplexType {
+		switch (nativeType) {
+			case ComplexType.TPath(t):
+				return ComplexType.TPath({
+					pack: "net.kaikoga.arp.domain.ds".split("."),
+					name: "ArpObjectSet",
+					params: t.params
+				});
+			case _:
+		}
+		return nativeType;
+	}
+
 	override private function guessConcreteNativeType():ComplexType {
 		var contentNativeType:ComplexType = this.contentNativeType;
 		return macro:net.kaikoga.arp.domain.ds.ArpObjectSet<$contentNativeType>;
@@ -14,6 +31,7 @@ class MacroArpObjectReferenceSetField extends MacroArpObjectReferenceCollectionF
 
 	public function new(definition:MacroArpObjectFieldDefinition, contentNativeType:ComplexType, concreteDs:Bool) {
 		super(definition, contentNativeType, concreteDs);
+		if (!concreteDs) _nativeType = coerce(super.nativeType);
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
@@ -48,7 +66,7 @@ class MacroArpObjectReferenceSetField extends MacroArpObjectReferenceCollectionF
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.add(this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${this.metaArpType})).value); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.slotSet.add(this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${this.metaArpType}))); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {

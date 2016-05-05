@@ -72,7 +72,7 @@ class MacroArpObjectStdReferenceMapField extends MacroArpObjectReferenceCollecti
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.set(element.key(uniqId), this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${this.metaArpType})).value); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.slots.set(element.key(uniqId), this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${this.metaArpType}))); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {

@@ -7,7 +7,7 @@ import net.kaikoga.arp.ds.IOmap;
 @:generic @:remove
 class ArpObjectOmap<K, V:IArpObject> implements IOmap<K, V> {
 
-	private var slotOmap:IOmap<K, ArpSlot<V>>;
+	public var slotOmap(default, null):IOmap<K, ArpSlot<V>>;
 
 	public var isUniqueKey(get, never):Bool;
 	public function get_isUniqueKey():Bool return true;
