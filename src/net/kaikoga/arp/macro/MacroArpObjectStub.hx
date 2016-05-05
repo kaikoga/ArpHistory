@@ -124,8 +124,7 @@ class MacroArpObjectStub {
 
 			@:access(net.kaikoga.arp.domain.ArpDomain)
 			public function arpClone():net.kaikoga.arp.domain.IArpObject {
-				var clone:$selfComplexType = new $selfTypePath();
-				clone.arpInit(this._arpDomain.allocSlot());
+				var clone:$selfComplexType = this._arpDomain.addObject(new $selfTypePath());
 				clone.arpCopyFrom(this);
 				return clone;
 			}
@@ -188,8 +187,7 @@ class MacroArpObjectStub {
 
 			@:access(net.kaikoga.arp.domain.ArpDomain)
 			override public function arpClone():net.kaikoga.arp.domain.IArpObject {
-				var clone:$selfComplexType = new $selfTypePath();
-				clone.arpInit(this._arpDomain.allocSlot());
+				var clone:$selfComplexType = this._arpDomain.addObject(new $selfTypePath());
 				clone.arpCopyFrom(this);
 				return clone;
 			}

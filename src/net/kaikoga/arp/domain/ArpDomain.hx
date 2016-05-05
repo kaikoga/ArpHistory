@@ -122,10 +122,11 @@ class ArpDomain {
 		return this.addObject(Type.createInstance(klass, args), sid);
 	}
 
-	public function addObject<T:IArpObject>(object:T, sid:ArpSid = null):T {
+	public function addObject<T:IArpObject>(arpObj:T, sid:ArpSid = null):T {
 		var slot:ArpSlot<T> = (sid != null) ? this.getOrCreateSlot(sid) : this.allocSlot(sid);
-		object.arpInit(slot);
-		return object;
+		slot.value = arpObj;
+		arpObj.arpInit(slot);
+		return arpObj;
 	}
 
 	public function flush():Void {
