@@ -23,8 +23,7 @@ class ArpObjectStdMap<V:IArpObject> implements IMap<String, V> implements IPersi
 	}
 
 	public function set(k:String, v:V):Void {
-		v.arpSlot().addReference();
-		this.slots.set(k, v.arpSlot());
+		this.slots.set(k, ArpSlot.of(v, domain).addReference());
 	}
 
 	public function exists(k:String):Bool {

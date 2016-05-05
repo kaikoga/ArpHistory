@@ -17,30 +17,38 @@ import net.kaikoga.arp.ds.ISet;
 class ArpObjectDsImplProviders {
 
 	public static function arpObjectSetProvider():Iterable<Array<Dynamic>> {
-		var domain:ArpDomain = new ArpDsTestDomain();
+		var domain1:ArpDomain = new ArpDsTestDomain(false);
+		var domain2:ArpDomain = new ArpDsTestDomain(true);
 		return [
-			[new ArpObjectSetProvider<MockArpObject>(domain), domain]
+			[new ArpObjectSetProvider<MockArpObject>(domain1), domain1],
+			[new ArpObjectSetProvider<MockArpObject>(domain2), domain2]
 		];
 	}
 
 	public static function arpObjectListProvider():Iterable<Array<Dynamic>> {
-		var domain:ArpDomain = new ArpDsTestDomain();
+		var domain1:ArpDomain = new ArpDsTestDomain(false);
+		var domain2:ArpDomain = new ArpDsTestDomain(true);
 		return [
-			[new ArpObjectListProvider<MockArpObject>(domain), domain]
+			[new ArpObjectListProvider<MockArpObject>(domain1), domain1],
+			[new ArpObjectListProvider<MockArpObject>(domain2), domain2]
 		];
 	}
 
 	public static function arpObjectMapProvider():Iterable<Array<Dynamic>> {
-		var domain:ArpDomain = new ArpDsTestDomain();
+		var domain1:ArpDomain = new ArpDsTestDomain(false);
+		var domain2:ArpDomain = new ArpDsTestDomain(true);
 		return [
-			[new ArpObjectMapProvider<String, MockArpObject>(domain), new DsStringFixture(), domain]
+			[new ArpObjectMapProvider<String, MockArpObject>(domain1), new DsStringFixture(), domain1],
+			[new ArpObjectMapProvider<String, MockArpObject>(domain2), new DsStringFixture(), domain2]
 		];
 	}
 
 	public static function arpObjectOmapProvider():Iterable<Array<Dynamic>> {
-		var domain:ArpDomain = new ArpDsTestDomain();
+		var domain1:ArpDomain = new ArpDsTestDomain(false);
+		var domain2:ArpDomain = new ArpDsTestDomain(true);
 		return [
-			[new ArpObjectOmapProvider<String, MockArpObject>(domain), new DsStringFixture(), domain]
+			[new ArpObjectOmapProvider<String, MockArpObject>(domain1), new DsStringFixture(), domain2],
+			[new ArpObjectOmapProvider<String, MockArpObject>(domain2), new DsStringFixture(), domain2]
 		];
 	}
 }

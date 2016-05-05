@@ -9,6 +9,8 @@ import net.kaikoga.arp.ds.IMap;
 class ArpObjectMap<K, V:IArpObject> implements IMap<K, V> {
 
 	private var domain:ArpDomain;
+	inline private function slotOf(v:V):ArpSlot<V> return ArpSlot.of(v, domain);
+
 	public var slotMap(default, null):IMap<K, ArpSlot<V>>;
 
 	public var isUniqueKey(get, never):Bool;
@@ -23,7 +25,7 @@ class ArpObjectMap<K, V:IArpObject> implements IMap<K, V> {
 
 	//read
 	public function isEmpty():Bool return this.slotMap.isEmpty();
-	public function hasValue(v:V):Bool return this.slotMap.hasValue(v.arpSlot());
+	public function hasValue(v:V):Bool return this.slotMap.hasValue(slotOf(v));
 	public function iterator():Iterator<V> return new ArpObjectIterator(this.slotMap.iterator());
 	public function toString():String return CollectionTools.mapToStringImpl(this);
 	public function get(k:K):Null<V> return this.slotMap.hasKey(k) ? this.slotMap.get(k).value : null;
@@ -31,13 +33,22 @@ class ArpObjectMap<K, V:IArpObject> implements IMap<K, V> {
 	public function keys():Iterator<K> return this.slotMap.keys();
 
 	//resolve
-	public function resolveName(v:V):Null<K> return this.slotMap.resolveName(v.arpSlot());
+	public function resolveName(v:V):Null<K> return this.slotMap.resolveName(slotOf(v));
 
 	//write
-	public function set(k:K, v:V):Void this.slotMap.set(k, v.arpSlot());
+	public function set(k:K, v:V):Void {
+		this.slotMap.set(k, slotOf(v).addReference());
+	}
 
 	//remove
-	public function remove(v:V):Bool return this.slotMap.remove(v.arpSlot());
-	public function removeKey(k:K):Bool return this.slotMap.removeKey(k);
-	public function clear():Void this.slotMap.clear();
+	public function remove(v:V):Bool return this.slotMap.remove(slotOf(v).delReference());
+	public function removeKey(k:K):Bool {
+		if (!this.slotMap.hasKey(k)) return false;
+		this.slotMap.get(k).delReference();
+		return this.slotMap.removeKey(k);
+	}
+	public function clear():Void {
+		for (slot in this.slotMap) slot.delReference();
+		this.slotMap.clear();
+	}
 }

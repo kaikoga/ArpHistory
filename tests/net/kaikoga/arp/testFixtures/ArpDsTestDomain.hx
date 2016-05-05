@@ -37,8 +37,14 @@ class ArpDsTestDomain extends ArpDomain implements IArpSupportFixture<MockArpObj
 	public var value8:MockArpObject;
 	public var value9:MockArpObject;
 
-	public function new() {
+	private var withNull:Bool;
+
+	public function new(withNull:Bool) {
 		super();
+		this.withNull = withNull;
+	}
+
+	private function createFixtures():IArpSupportFixture<MockArpObject> {
 		this.addGenerator(new ArpObjectGenerator(MockArpObject, true));
 		var xml = Xml.parse('<data>
 		<mock name="name1"/>
@@ -53,7 +59,7 @@ class ArpDsTestDomain extends ArpDomain implements IArpSupportFixture<MockArpObj
 		</data>
 		').firstElement();
 		this.loadSeed(ArpSeed.fromXml(xml));
-		this.value1 = this.query("name1", MockArpObject._arpTypeInfo.arpType).value();
+		this.value1 = withNull ? null : this.query("name1", MockArpObject._arpTypeInfo.arpType).value();
 		this.value2 = this.query("name2", MockArpObject._arpTypeInfo.arpType).value();
 		this.value3 = this.query("name3", MockArpObject._arpTypeInfo.arpType).value();
 		this.value4 = this.query("name4", MockArpObject._arpTypeInfo.arpType).value();
@@ -62,5 +68,10 @@ class ArpDsTestDomain extends ArpDomain implements IArpSupportFixture<MockArpObj
 		this.value7 = this.query("name7", MockArpObject._arpTypeInfo.arpType).value();
 		this.value8 = this.query("name8", MockArpObject._arpTypeInfo.arpType).value();
 		this.value9 = this.query("name9", MockArpObject._arpTypeInfo.arpType).value();
+		return this;
 	}
+
+	public function toString():String return '[ArpDsTestDomain ${this.value1}]';
+
+	public function create():IArpSupportFixture<MockArpObject> return new ArpDsTestDomain(this.withNull).createFixtures();
 }

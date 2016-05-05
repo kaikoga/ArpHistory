@@ -22,8 +22,8 @@ abstract ArpSlot<T:IArpObject>(ArpUntypedSlot) from ArpUntypedSlot to ArpUntyped
 	public var refCount(get, never):Int;
 	inline private function get_refCount():Int return this.refCount;
 
-	inline public function addReference():ArpSlot<T> return new ArpSlot(this.addReference());
-	inline public function delReference():Bool return this.delReference();
+	inline public function addReference():ArpSlot<T> return this.addReference();
+	inline public function delReference():ArpSlot<T> return this.delReference();
 	inline public function takeReference(from:ArpSlot<T>):ArpSlot<T> return this.takeReference(from);
 
 	// FIXME make setter friend access
@@ -55,16 +55,14 @@ class ArpUntypedSlot {
 	inline private function get_refCount():Int { return this._refCount; }
 
 	inline public function addReference():ArpUntypedSlot { this._refCount++; return this; }
-	// true if object still exists
-	inline public function delReference():Bool {
+	inline public function delReference():ArpUntypedSlot {
 		if (--this._refCount <= 0) {
 			if (this._value != null) {
 				this._value.arpDispose();
 				this._value = null;
 			}
-			return false;
 		}
-		return true;
+		return this;
 	}
 	inline public function takeReference(from:ArpUntypedSlot):ArpUntypedSlot {
 		this.addReference();

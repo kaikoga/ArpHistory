@@ -8,6 +8,8 @@ import net.kaikoga.arp.ds.IOmap;
 class ArpObjectOmap<K, V:IArpObject> implements IOmap<K, V> {
 
 	private var domain:ArpDomain;
+	inline private function slotOf(v:V):ArpSlot<V> return ArpSlot.of(v, domain);
+
 	public var slotOmap(default, null):IOmap<K, ArpSlot<V>>;
 
 	public var isUniqueKey(get, never):Bool;
@@ -22,7 +24,7 @@ class ArpObjectOmap<K, V:IArpObject> implements IOmap<K, V> {
 
 	//read
 	public function isEmpty():Bool return this.slotOmap.isEmpty();
-	public function hasValue(v:V):Bool return this.slotOmap.hasValue(v.arpSlot());
+	public function hasValue(v:V):Bool return this.slotOmap.hasValue(slotOf(v));
 	public function iterator():Iterator<V> return new ArpObjectIterator(this.slotOmap.iterator());
 	public function toString():String return CollectionTools.omapToStringImpl(this);
 	public function get(k:K):Null<V> return this.slotOmap.hasKey(k) ? this.slotOmap.get(k).value : null;
@@ -39,20 +41,32 @@ class ArpObjectOmap<K, V:IArpObject> implements IOmap<K, V> {
 
 	//resolve
 	public function resolveKeyIndex(k:K):Int return this.slotOmap.resolveKeyIndex(k);
-	public function resolveName(v:V):Null<K> return this.slotOmap.resolveName(v.arpSlot());
-	public function indexOf(v:V, ?fromIndex:Int):Int return this.slotOmap.indexOf(v.arpSlot(), fromIndex);
-	public function lastIndexOf(v:V, ?fromIndex:Int):Int return this.slotOmap.lastIndexOf(v.arpSlot(), fromIndex);
+	public function resolveName(v:V):Null<K> return this.slotOmap.resolveName(slotOf(v));
+	public function indexOf(v:V, ?fromIndex:Int):Int return this.slotOmap.indexOf(slotOf(v), fromIndex);
+	public function lastIndexOf(v:V, ?fromIndex:Int):Int return this.slotOmap.lastIndexOf(slotOf(v), fromIndex);
 
 	//write
-	public function addPair(k:K, v:V):Void this.slotOmap.addPair(k, v.arpSlot());
-	public function insertPairAt(index:Int, k:K, v:V):Void this.slotOmap.insertPairAt(index, k, v.arpSlot());
+	public function addPair(k:K, v:V):Void this.slotOmap.addPair(k, slotOf(v).addReference());
+	public function insertPairAt(index:Int, k:K, v:V):Void this.slotOmap.insertPairAt(index, k, slotOf(v).addReference());
 
 	// remove
-	public function remove(v:V):Bool return this.slotOmap.remove(v.arpSlot());
-	public function removeKey(k:K):Bool return this.slotOmap.removeKey(k);
-	public function removeAt(index:Int):Bool return this.slotOmap.removeAt(index);
-	public function pop():Null<V> return this.slotOmap.isEmpty() ? null : this.slotOmap.pop().value;
-	public function shift():Null<V> return this.slotOmap.isEmpty() ? null : this.slotOmap.shift().value;
-	public function clear():Void this.slotOmap.clear();
+	public function remove(v:V):Bool return this.slotOmap.remove(slotOf(v).delReference());
+	public function removeKey(k:K):Bool {
+		if (!this.slotOmap.hasKey(k)) return false;
+		this.slotOmap.get(k).delReference();
+		return this.slotOmap.removeKey(k);
+	}
+	public function removeAt(index:Int):Bool {
+		var slot:ArpSlot<V> = this.slotOmap.getAt(index);
+		if (slot == null) return false;
+		slot.delReference();
+		return this.slotOmap.removeAt(index);
+	}
+	public function pop():Null<V> return this.slotOmap.isEmpty() ? null : this.slotOmap.pop().delReference().value;
+	public function shift():Null<V> return this.slotOmap.isEmpty() ? null : this.slotOmap.shift().delReference().value;
+	public function clear():Void {
+		for (slot in this.slotOmap) slot.delReference();
+		this.slotOmap.clear();
+	}
 
 }
