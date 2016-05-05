@@ -6,12 +6,16 @@ import net.kaikoga.arp.ds.IList;
 
 class ArpObjectList<V:IArpObject> implements IList<V> {
 
+	private var domain:ArpDomain;
 	public var slotList(default, null):IList<ArpSlot<V>>;
 
 	public var isUniqueValue(get, never):Bool;
 	public function get_isUniqueValue():Bool return false;
 
-	public function new() this.slotList = new ArrayList();
+	public function new(domain:ArpDomain) {
+		this.domain = domain;
+		this.slotList = new ArrayList();
+	}
 
 	//read
 	public function isEmpty():Bool return this.slotList.isEmpty();

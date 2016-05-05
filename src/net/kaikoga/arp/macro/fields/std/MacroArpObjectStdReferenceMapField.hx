@@ -24,10 +24,6 @@ class MacroArpObjectStdReferenceMapField extends MacroArpObjectReferenceCollecti
 		return nativeType;
 	}
 
-	override private function createEmptyDs(concreteNativeTypePath:TypePath):Expr {
-		return macro new $concreteNativeTypePath(slot.domain);
-	}
-
 	override private function guessConcreteNativeType():ComplexType {
 		var contentNativeType:ComplexType = this.contentNativeType;
 		return macro:net.kaikoga.arp.domain.ds.std.ArpObjectStdMap<$contentNativeType>;

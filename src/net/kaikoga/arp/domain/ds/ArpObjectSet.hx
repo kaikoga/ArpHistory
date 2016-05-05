@@ -6,12 +6,16 @@ import net.kaikoga.arp.ds.ISet;
 
 class ArpObjectSet<V:IArpObject> implements ISet<V> {
 
+	private var domain:ArpDomain;
 	public var slotSet(default, null):ISet<ArpSlot<V>>;
 
 	public var isUniqueValue(get, never):Bool;
 	public function get_isUniqueValue():Bool return true;
 
-	public function new() this.slotSet = new ArraySet();
+	public function new(domain:ArpDomain) {
+		this.domain = domain;
+		this.slotSet = new ArraySet();
+	}
 
 	// read
 	public function isEmpty():Bool return this.slotSet.isEmpty();

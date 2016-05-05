@@ -8,6 +8,7 @@ import net.kaikoga.arp.ds.IMap;
 @:generic @:remove
 class ArpObjectMap<K, V:IArpObject> implements IMap<K, V> {
 
+	private var domain:ArpDomain;
 	public var slotMap(default, null):IMap<K, ArpSlot<V>>;
 
 	public var isUniqueKey(get, never):Bool;
@@ -15,7 +16,10 @@ class ArpObjectMap<K, V:IArpObject> implements IMap<K, V> {
 	public var isUniqueValue(get, never):Bool;
 	public function get_isUniqueValue():Bool return false;
 
-	public function new() this.slotMap = new StdMap<K, ArpSlot<V>>();
+	public function new(domain:ArpDomain) {
+		this.domain = domain;
+		this.slotMap = new StdMap<K, ArpSlot<V>>();
+	}
 
 	//read
 	public function isEmpty():Bool return this.slotMap.isEmpty();
