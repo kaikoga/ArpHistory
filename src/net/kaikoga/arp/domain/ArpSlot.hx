@@ -31,6 +31,8 @@ abstract ArpSlot<T:IArpObject>(ArpUntypedSlot) from ArpUntypedSlot to ArpUntyped
 	inline private function get_heat():ArpHeat return this.heat;
 	inline private function set_heat(value:ArpHeat):ArpHeat return this.heat = value;
 
+	inline public function toString():String return this.toString();
+	inline public function describe():String return this.describe();
 }
 
 class ArpUntypedSlot {
@@ -76,5 +78,6 @@ class ArpUntypedSlot {
 		this.sid = sid;
 	}
 
-	public function toString():String return '[ArpUntypedSlot $sid]';
+	public function toString():String return '<$sid>';
+	public function describe():String return '[ArpUntypedSlot <$sid> = $value[$refCount]]';
 }
