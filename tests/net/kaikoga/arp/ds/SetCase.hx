@@ -1,6 +1,6 @@
 package net.kaikoga.arp.ds;
 
-import net.kaikoga.arp.testFixtures.ArpSupportFixtures.IArpSupportFixture;
+import net.kaikoga.arp.testFixtures.ArpSupportFixtures;
 import net.kaikoga.arp.testParams.DsImplProviders.IDsImplProvider;
 
 import org.hamcrest.Matchers.*;
@@ -98,7 +98,8 @@ class SetCase<V> {
 		assertTrue(it.hasNext());
 		a.push(it.next());
 		assertFalse(it.hasNext());
-		assertMatch(containsInAnyOrder(v.a1, v.a2, v.a4, v.a5), a);
+		var vm:ArpSupportFixtureMatchers<V> = v;
+		assertMatch(containsInAnyOrder(vm.a1, vm.a2, vm.a4, vm.a5), a);
 	}
 
 
@@ -115,7 +116,7 @@ class SetCase<V> {
 		me.remove(v.a3);
 		var string:String = me.toString();
 		string = string.substr(1, string.length - 2);
-		assertMatch(containsInAnyOrder(v.a1, v.a2, v.a4, v.a5), string.split(", "));
+		assertMatch(containsInAnyOrder('${v.a1}', '${v.a2}', '${v.a4}', '${v.a5}'), string.split(", "));
 	}
 
 }

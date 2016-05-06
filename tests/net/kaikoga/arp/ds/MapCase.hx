@@ -1,6 +1,6 @@
 package net.kaikoga.arp.ds;
 
-import net.kaikoga.arp.testFixtures.ArpSupportFixtures.IArpSupportFixture;
+import net.kaikoga.arp.testFixtures.ArpSupportFixtures;
 import net.kaikoga.arp.testParams.DsImplProviders.IDsImplProvider;
 
 import org.hamcrest.Matchers.*;
@@ -169,7 +169,8 @@ class MapCase<K, V> {
 		assertTrue(it.hasNext());
 		a.push(it.next());
 		assertFalse(it.hasNext());
-		assertMatch(containsInAnyOrder(k.a1, k.a3, k.a5), a);
+		var km:ArpSupportFixtureMatchers<K> = k;
+		assertMatch(containsInAnyOrder(km.a1, km.a3, km.a5), a);
 	}
 
 	public function testUnorderedIterator():Void {
@@ -190,7 +191,8 @@ class MapCase<K, V> {
 		assertTrue(it.hasNext());
 		a.push(it.next());
 		assertFalse(it.hasNext());
-		assertMatch(containsInAnyOrder(v.a1, v.a3, v.a5), a);
+		var vm:ArpSupportFixtureMatchers<V> = v;
+		assertMatch(containsInAnyOrder(vm.a1, vm.a3, vm.a5), a);
 	}
 
 	public function testEmptyToString():Void {

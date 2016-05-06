@@ -1,5 +1,8 @@
 package net.kaikoga.arp.testFixtures;
 
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers.*;
+
 class ArpSupportFixtures {
 
 	public static function intFixture():Iterable<Array<Dynamic>> {
@@ -25,6 +28,33 @@ interface IArpSupportFixture<T> {
 	var a7(get, never):T;
 	var a8(get, never):T;
 	var a9(get, never):T;
+}
+
+abstract ArpSupportFixtureMatchers<T>(IArpSupportFixture<T>) {
+
+	public var a1(get, never):Matcher<T>;
+	private function get_a1():Matcher<T> return equalTo(this.a1);
+	public var a2(get, never):Matcher<T>;
+	private function get_a2():Matcher<T> return equalTo(this.a2);
+	public var a3(get, never):Matcher<T>;
+	private function get_a3():Matcher<T> return equalTo(this.a3);
+	public var a4(get, never):Matcher<T>;
+	private function get_a4():Matcher<T> return equalTo(this.a4);
+	public var a5(get, never):Matcher<T>;
+	private function get_a5():Matcher<T> return equalTo(this.a5);
+	public var a6(get, never):Matcher<T>;
+	private function get_a6():Matcher<T> return equalTo(this.a6);
+	public var a7(get, never):Matcher<T>;
+	private function get_a7():Matcher<T> return equalTo(this.a7);
+	public var a8(get, never):Matcher<T>;
+	private function get_a8():Matcher<T> return equalTo(this.a8);
+	public var a9(get, never):Matcher<T>;
+	private function get_a9():Matcher<T> return equalTo(this.a9);
+
+	private function new(fixture:IArpSupportFixture<T>) this = fixture;
+
+	@:from
+	public static function fromFixture<T>(fixture:IArpSupportFixture<T>):ArpSupportFixtureMatchers<T> return new ArpSupportFixtureMatchers(fixture);
 }
 
 class DsIntFixture implements IArpSupportFixture<Int> {
