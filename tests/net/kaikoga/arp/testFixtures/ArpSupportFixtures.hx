@@ -19,6 +19,7 @@ class ArpSupportFixtures {
 }
 
 interface IArpSupportFixture<T> {
+	function create():IArpSupportFixture<T>;
 	var a1(get, never):T;
 	var a2(get, never):T;
 	var a3(get, never):T;
@@ -80,6 +81,8 @@ class DsIntFixture implements IArpSupportFixture<Int> {
 
 	public function new() {
 	}
+
+	public function create() return this;
 }
 
 class DsStringFixture implements IArpSupportFixture<String> {
@@ -105,4 +108,6 @@ class DsStringFixture implements IArpSupportFixture<String> {
 
 	public function new() {
 	}
+
+	public function create() return this;
 }

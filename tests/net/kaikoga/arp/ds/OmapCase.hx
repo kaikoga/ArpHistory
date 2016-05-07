@@ -23,8 +23,8 @@ class OmapCase<K, V> {
 	@Parameter
 	public function setup(provider:IDsImplProvider<IOmap<K, V>>, keyFixture:IArpSupportFixture<K>, valueFixture:IArpSupportFixture<V>):Void {
 		me = provider.create();
-		k = keyFixture;
-		v = valueFixture;
+		k = keyFixture.create();
+		v = valueFixture.create();
 	}
 
 	public function testEmpty():Void {

@@ -22,7 +22,7 @@ class ListCase<V> {
 	@Parameter
 	public function setup(provider:IDsImplProvider<IList<V>>, valueFixture:IArpSupportFixture<V>):Void {
 		me = provider.create();
-		v = valueFixture;
+		v = valueFixture.create();
 	}
 
 	public function testEmpty():Void {
