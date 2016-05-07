@@ -95,7 +95,7 @@ class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IM
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
-		copyFromBlock.push(macro @:pos(this.nativePos) { this.$iFieldSlot = src.$iFieldSlot.takeReference(this.$iFieldSlot); });
+		copyFromBlock.push(macro @:pos(this.nativePos) { this.$iFieldSlot = src.$iFieldSlot.addReference(); });
 	}
 }
 
