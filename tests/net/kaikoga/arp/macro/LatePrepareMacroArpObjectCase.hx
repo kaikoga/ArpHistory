@@ -57,6 +57,7 @@ class LatePrepareMacroArpObjectCase {
 		}, 1200);
 	}
 
+	@:access(net.kaikoga.arp.macro.mocks.MockLatePrepareMacroArpObject)
 	public function testHeatUpDispose():Void {
 		assertFalse(domain.isPending);
 		assertEquals(0, arpObj.volatileInt);
@@ -81,7 +82,8 @@ class LatePrepareMacroArpObjectCase {
 			arpObj.arpDispose();
 			assertFalse(domain.isPending);
 			assertEquals(0, arpObj.volatileInt);
-			assertNull(arpObj.arpSlot());
+			assertNull(arpObj._arpSlot);
+			assertNull(arpObj._arpDomain);
 		}, 1200);
 	}
 

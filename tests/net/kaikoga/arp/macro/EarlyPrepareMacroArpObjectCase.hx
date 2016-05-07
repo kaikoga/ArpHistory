@@ -45,6 +45,7 @@ class EarlyPrepareMacroArpObjectCase {
 		assertEquals(ArpHeat.Cold, arpObj.arpSlot().heat);
 	}
 
+	@:access(net.kaikoga.arp.macro.mocks.MockEarlyPrepareMacroArpObject)
 	public function testEarlyPrepareDispose():Void {
 		assertFalse(domain.isPending);
 		assertEquals(0, arpObj.volatileInt);
@@ -58,7 +59,8 @@ class EarlyPrepareMacroArpObjectCase {
 		arpObj.arpDispose();
 		assertFalse(domain.isPending);
 		assertEquals(0, arpObj.volatileInt);
-		assertNull(arpObj.arpSlot());
+		assertNull(arpObj._arpSlot);
+		assertNull(arpObj._arpDomain);
 	}
 
 }

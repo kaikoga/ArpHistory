@@ -42,13 +42,21 @@ abstract ArpSlot<T:IArpObject>(ArpUntypedSlot) from ArpUntypedSlot to ArpUntyped
 
 class ArpUntypedSlot {
 
-	public var domain(default, null):ArpDomain;
+	private var _domain:ArpDomain = null;
+	public var domain(get, set):ArpDomain;
+	inline private function get_domain():ArpDomain return this._domain;
+	inline private function set_domain(value:ArpDomain):ArpDomain {
+		return this._domain = value;
+	}
+
 	public var sid(default, null):ArpSid;
 
 	private var _value:IArpObject = null;
 	public var value(get, set):IArpObject;
-	inline private function get_value():IArpObject { return this._value; }
-	inline private function set_value(value:IArpObject):IArpObject { return this._value = value; }
+	inline private function get_value():IArpObject return this._value;
+	inline private function set_value(value:IArpObject):IArpObject {
+		return this._value = value;
+	}
 
 	private var _refCount:Int = 0;
 	public var refCount(get, never):Int;

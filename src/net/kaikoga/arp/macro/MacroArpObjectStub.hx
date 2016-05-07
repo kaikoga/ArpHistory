@@ -62,14 +62,24 @@ class MacroArpObjectStub {
 		var selfComplexType = this.genSelfComplexType();
 		return (macro class Generated {
 			@:noDoc @:noCompletion private var _arpDomain:net.kaikoga.arp.domain.ArpDomain;
-			public function arpDomain():net.kaikoga.arp.domain.ArpDomain return this._arpDomain;
+			public function arpDomain():net.kaikoga.arp.domain.ArpDomain {
+				#if arp_debug
+				if (_arpDomain == null) throw("Warning: access to inactive or disposed ArpObject detected");
+				#end
+				return this._arpDomain;
+			}
 
 			public static var _arpTypeInfo(default, never):net.kaikoga.arp.domain.ArpTypeInfo = new net.kaikoga.arp.domain.ArpTypeInfo($v{arpTemplateName}, new net.kaikoga.arp.domain.core.ArpType($v{arpTypeName}));
 			public function arpTypeInfo():net.kaikoga.arp.domain.ArpTypeInfo return _arpTypeInfo;
 			public function arpType():net.kaikoga.arp.domain.core.ArpType return _arpTypeInfo.arpType;
 
 			@:noDoc @:noCompletion private var _arpSlot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
-			public function arpSlot():net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot return this._arpSlot;
+			public function arpSlot():net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot {
+				#if arp_debug
+				if (_arpSlot == null) throw("Warning: access to inactive or disposed ArpObject detected");
+				#end
+				return this._arpSlot;
+			}
 
 			public function arpInit(slot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot, seed:net.kaikoga.arp.domain.seed.ArpSeed = null):net.kaikoga.arp.domain.IArpObject {
 				this._arpDomain = slot.domain;
