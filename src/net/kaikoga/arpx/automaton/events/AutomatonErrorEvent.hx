@@ -1,6 +1,5 @@
 package net.kaikoga.arpx.automaton.events;
 
-import net.kaikoga.arp.domain.ArpSlot;
 import net.kaikoga.arpx.state.AutomatonState;
 
 class AutomatonErrorEvent extends AutomatonEvent<AutomatonErrorEventKind> {
@@ -21,7 +20,7 @@ class AutomatonErrorEvent extends AutomatonEvent<AutomatonErrorEventKind> {
 			case AutomatonErrorEventKind.Inactive:
 				return 'Error: Automaton is not active';
 			case AutomatonErrorEventKind.TransitionNotFound:
-				return 'Error: ${state != null ? state.originalState.arpSlot() : null} -> ${key} -> No transition found';
+				return 'Error: ${state != null ? state.label : null} -> ${key} -> No transition found';
 		}
 	}
 }

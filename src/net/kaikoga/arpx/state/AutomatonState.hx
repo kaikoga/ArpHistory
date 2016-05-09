@@ -9,6 +9,7 @@ import net.kaikoga.arpx.console.Console;
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("state", "state"))
 class AutomatonState implements IArpObject {
 
+	@:arpValue public var label:String;
 	@:arpType("state") public var originalState:AutomatonState;
 	@:arpType("state") @:arpField("state") public var childState:AutomatonState;
 	@:arpType("state") @:arpField("transition") public var transitions:IMap<String, AutomatonState>;
@@ -28,8 +29,7 @@ class AutomatonState implements IArpObject {
 	}
 
 	public function toAutomaton():Automaton {
-		var automaton:Automaton = new Automaton();
-		this.arpDomain().addObject(automaton);
+		var automaton:Automaton = this.arpDomain().addObject(new Automaton());
 		automaton.enterState(this);
 		return automaton;
 	}

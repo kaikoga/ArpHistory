@@ -30,33 +30,27 @@ class AutomatonCase {
 	}
 
 	private static var DEFINITION:Xml = Xml.parse('<data>
-			<state name="init">
-				<tag value="init" />
+			<state name="init" label="init">
 				<transition key="command" ref="state1" />
 			</state>
-			<state name="state1">
-				<tag value="state1" />
+			<state name="state1" label="state1">
 				<transition key="command" ref="state2" />
 				<transition key="command3" ref="state3" />
 			</state>
-			<state name="state2">
-				<tag value="init" />
+			<state name="state2" label="state2">
 				<transition key="command" ref="state1" />
 				<state ref="state2.a" />
 			</state>
-			<state name="state2.a">
-				<tag value="state2.a" />
+			<state name="state2.a" label="state2.a">
 				<transition key="sub" ref="state2.b" />
 			</state>
-			<state name="state2.b">
-				<tag value="state2.b" />
+			<state name="state2.b" label="state2.b">
 				<transition key="sub" ref="state2.a" />
 			</state>
-			<state name="state3">
-				<tag value="state3" />
+			<state name="state3" label="state3">
 				<transition key="command" ref="state1" />
 			</state>
-		</data>');
+		data>');
 
 	public function testAddEntry():Void {
 		assertNotNull(domain.query("init", AutomatonState).value());
@@ -78,65 +72,65 @@ class AutomatonCase {
 		assertNotNull(me.state);
 		assertNotNull(me);
 		assertEquals(0, me.stateStack.length);
-		assertEquals("</init:state>", me.state.originalState.arpSlot().toString());
+		assertEquals("init", me.state.originalState.label);
 
 		me.transition("command", "params1");
 		assertEquals(0, me.stateStack.length);
-		assertEquals("</state1:state>", me.state.originalState.arpSlot().toString());
-		assertEquals("Transition: </init:state> -> command -> </state1:state>", events.shift());
-		assertEquals("Leave: </init:state>", events.shift());
-		assertEquals("Enter: </state1:state>", events.shift());
+		assertEquals("state1", me.state.originalState.label);
+		assertEquals("Transition: init -> command -> state1", events.shift());
+		assertEquals("Leave: init", events.shift());
+		assertEquals("Enter: state1", events.shift());
 		assertEquals(null, events.shift());
 
 		me.transition("command", "params2");
 		assertEquals(1, me.stateStack.length);
-		assertEquals("</state2:state>", me.stateStack.getAt(0).originalState.arpSlot().toString());
-		assertEquals("</state2.a:state>", me.state.originalState.arpSlot().toString());
-		assertEquals("Transition: </state1:state> -> command -> </state2:state>", events.shift());
-		assertEquals("Leave: </state1:state>", events.shift());
-		assertEquals("Enter: </state2:state>", events.shift());
-		assertEquals("Enter: </state2.a:state>,</state2:state>", events.shift());
+		assertEquals("state2", me.stateStack.getAt(0).originalState.label);
+		assertEquals("state2.a", me.state.originalState.label);
+		assertEquals("Transition: state1 -> command -> state2", events.shift());
+		assertEquals("Leave: state1", events.shift());
+		assertEquals("Enter: state2", events.shift());
+		assertEquals("Enter: state2.a, state2", events.shift());
 		assertEquals(null, events.shift());
 
 		me.transition("sub", "params3");
 		assertEquals(1, me.stateStack.length);
-		assertEquals("</state2:state>", me.stateStack.getAt(0).originalState.arpSlot().toString());
-		assertEquals("</state2.b:state>", me.state.originalState.arpSlot().toString());
-		assertEquals("Transition: </state2.a:state> -> sub -> </state2.b:state>", events.shift());
-		assertEquals("Leave: </state2.a:state>,</state2:state>", events.shift());
-		assertEquals("Enter: </state2.b:state>,</state2:state>", events.shift());
+		assertEquals("state2", me.stateStack.getAt(0).originalState.label);
+		assertEquals("state2.b", me.state.originalState.label);
+		assertEquals("Transition: state2.a -> sub -> state2.b", events.shift());
+		assertEquals("Leave: state2.a, state2", events.shift());
+		assertEquals("Enter: state2.b, state2", events.shift());
 		assertEquals(null, events.shift());
 
 		me.transition("sub", "params4");
 		assertEquals(1, me.stateStack.length);
-		assertEquals("</state2:state>", me.stateStack.getAt(0).originalState.arpSlot().toString());
-		assertEquals("</state2.a:state>", me.state.originalState.arpSlot().toString());
-		assertEquals("Transition: </state2.b:state> -> sub -> </state2.a:state>", events.shift());
-		assertEquals("Leave: </state2.b:state>,</state2:state>", events.shift());
-		assertEquals("Enter: </state2.a:state>,</state2:state>", events.shift());
+		assertEquals("state2", me.stateStack.getAt(0).originalState.label);
+		assertEquals("state2.a", me.state.originalState.label);
+		assertEquals("Transition: state2.b -> sub -> state2.a", events.shift());
+		assertEquals("Leave: state2.b, state2", events.shift());
+		assertEquals("Enter: state2.a, state2", events.shift());
 		assertEquals(null, events.shift());
 
 		me.transition("command", "params5");
 		assertEquals(0, me.stateStack.length);
-		assertEquals("</state1:state>", me.state.originalState.arpSlot().toString());
-		assertEquals("Transition: </state2:state> -> command -> </state1:state>", events.shift());
-		assertEquals("Leave: </state2.a:state>,</state2:state>", events.shift());
-		assertEquals("Leave: </state2:state>", events.shift());
-		assertEquals("Enter: </state1:state>", events.shift());
+		assertEquals("state1", me.state.originalState.label);
+		assertEquals("Transition: state2 -> command -> state1", events.shift());
+		assertEquals("Leave: state2.a, state2", events.shift());
+		assertEquals("Leave: state2", events.shift());
+		assertEquals("Enter: state1", events.shift());
 		assertEquals(null, events.shift());
 
 		me.transition("command3", "params6");
 		assertEquals(0, me.stateStack.length);
-		assertEquals("</state3:state>", me.state.originalState.arpSlot().toString());
-		assertEquals("Transition: </state1:state> -> command3 -> </state3:state>", events.shift());
-		assertEquals("Leave: </state1:state>", events.shift());
-		assertEquals("Enter: </state3:state>", events.shift());
+		assertEquals("state3", me.state.originalState.label);
+		assertEquals("Transition: state1 -> command3 -> state3", events.shift());
+		assertEquals("Leave: state1", events.shift());
+		assertEquals("Enter: state3", events.shift());
 		assertEquals(null, events.shift());
 
 		me.transition("command3", "params7");
 		assertEquals(0, me.stateStack.length);
-		assertEquals("</state3:state>", me.state.originalState.arpSlot().toString());
-		assertEquals("Error: </state3:state> -> command3 -> No transition found", events.shift());
+		assertEquals("state3", me.state.originalState.label);
+		assertEquals("Error: state3 -> command3 -> No transition found", events.shift());
 		assertEquals(null, events.shift());
 	}
 }

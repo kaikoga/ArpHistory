@@ -1,6 +1,5 @@
 package net.kaikoga.arpx.automaton.events;
 
-import net.kaikoga.arp.domain.ArpSlot;
 import net.kaikoga.arp.ds.lambda.ListOp;
 import net.kaikoga.arp.ds.IList;
 import net.kaikoga.arpx.state.AutomatonState;
@@ -19,16 +18,16 @@ class AutomatonStateEvent extends AutomatonEvent<AutomatonStateEventKind> {
 	}
 
 	override public function describe():String {
-		var fullStateStackCapture:List<ArpSlot<AutomatonState>> = Lambda.map(
+		var fullStateStackCapture:List<String> = Lambda.map(
 			ListOp.toArray(this.stateStack),
-			function(state:AutomatonState):ArpSlot<AutomatonState> return state.originalState.arpSlot()
+			function(state:AutomatonState):String return state.label
 		);
-		fullStateStackCapture.push(this.state.originalState.arpSlot());
+		fullStateStackCapture.push(this.state.label);
 		switch (this.kind) {
 			case AutomatonStateEventKind.Enter:
-				return 'Enter: ${Std.string(Lambda.array(fullStateStackCapture).toString())}';
+				return 'Enter: ${Lambda.array(fullStateStackCapture).join(", ")}';
 			case AutomatonStateEventKind.Leave:
-				return  'Leave: ${Std.string(Lambda.array(fullStateStackCapture).toString())}';
+				return  'Leave: ${Lambda.array(fullStateStackCapture).join(", ")}';
 		}
 	}
 }
