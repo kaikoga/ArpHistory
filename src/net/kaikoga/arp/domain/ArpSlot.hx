@@ -34,9 +34,16 @@ abstract ArpSlot<T:IArpObject>(ArpUntypedSlot) from ArpUntypedSlot to ArpUntyped
 	inline public function toString():String return this.toString();
 	inline public function describe():String return this.describe();
 
+	@:noUsing
 	public static function of<T:IArpObject>(arpObj:T, domain:ArpDomain):ArpSlot<T> {
 		if (arpObj != null) return arpObj.arpSlot();
 		return domain.nullSlot;
+	}
+
+	@:noUsing
+	public static function get<T:IArpObject>(arpObj:T):ArpSlot<T> {
+		if (arpObj != null) return arpObj.arpSlot();
+		return null;
 	}
 }
 
