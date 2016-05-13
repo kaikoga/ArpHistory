@@ -40,11 +40,10 @@ class MacroArpValueListField extends MacroArpValueCollectionFieldBase implements
 
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
 		var iFieldName:String = this.iFieldName;
-		var eColumnName:ExprOf<String> = this.eColumnName;
 
 		var caseBlock:Array<Expr> = [];
 		cases.push({
-			values: [macro @:pos(this.nativePos) ${eColumnName}],
+			values: [macro @:pos(this.nativePos) $v{this.eColumnName}],
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 

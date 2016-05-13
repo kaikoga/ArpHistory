@@ -2,6 +2,8 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
+import net.kaikoga.arp.domain.core.ArpType;
+import net.kaikoga.arp.domain.reflect.ArpFieldInfo;
 import haxe.macro.Context;
 import haxe.macro.Expr;
 
@@ -16,9 +18,9 @@ class MacroArpFieldDefinition {
 	public var nativeDefault(default, null):Expr;
 
 	public var metaArpValue:Bool = false;
-	public var metaArpType:ExprOf<String> = null;
+	public var metaArpType:String = null;
 	public var metaArpBarrier:Bool = false;
-	public var metaArpField:ExprOf<String> = null;
+	public var metaArpField:String = null;
 	public var metaArpInit:String = null;
 	public var metaArpHeatUp:String = null;
 	public var metaArpHeatDown:String = null;
@@ -38,10 +40,10 @@ class MacroArpFieldDefinition {
 
 		for (meta in nativeField.meta) {
 			switch (meta.name) {
-				case ":arpType": metaArpType = meta.params[0];
+				case ":arpType": metaArpType = valueOf(meta.params[0]);
 				case ":arpValue": metaArpValue = true;
 				case ":arpBarrier": metaArpBarrier = true;
-				case ":arpField": metaArpField = meta.params[0];
+				case ":arpField": metaArpField = valueOf(meta.params[0]);
 				case ":arpInit": metaArpInit = nativeField.name;
 				case ":arpHeatUp": metaArpHeatUp = nativeField.name;
 				case ":arpHeatDown": metaArpHeatDown = nativeField.name;
@@ -71,6 +73,17 @@ class MacroArpFieldDefinition {
 	public function expectReferenceField():Bool {
 		if (this.metaArpValue) Context.error('${this.nativeType.toString()} must be @:arpType', this.nativeField.pos);
 		return this.metaArpType != null;
+	}
+
+	public function toFieldInfo():ArpFieldInfo {
+		return new ArpFieldInfo(this.metaArpField, new ArpType(this.metaArpType), this.nativeField.name, this.metaArpBarrier);
+	}
+
+	private static function valueOf(expr:ExprOf<String>):String {
+		return switch (expr.expr) {
+			case ExprDef.EConst(Constant.CString(v)): return v;
+			case _: Context.error("invalid expr", Context.currentPos());
+		}
 	}
 }
 

@@ -2,6 +2,8 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
+import net.kaikoga.arp.domain.core.ArpType;
+import net.kaikoga.arp.domain.reflect.ArpTemplateInfo;
 import net.kaikoga.arp.macro.MacroArpFieldBuilder;
 import haxe.macro.Context;
 import haxe.macro.Expr;
@@ -55,6 +57,8 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 	}
 
 	public function run() {
+		var templateInfo:ArpTemplateInfo = new ArpTemplateInfo(new ArpType(this.arpTypeName), this.arpTemplateName, []);
+
 		analyzeBaseClasses();
 		var outFields:Array<Field> = [];
 
@@ -77,9 +81,11 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 				}
 			} else {
 				this.arpObjectFields.push(arpObjectField);
+				templateInfo.fields.push(definition.toFieldInfo());
 				arpObjectField.buildField(outFields);
 			}
 		}
+		MacroArpObjectRegistry.registerTemplateInfo(templateInfo);
 
 		if (this.isDerived) {
 			outFields = merge(this.genDerivedTypeFields(), outFields);
