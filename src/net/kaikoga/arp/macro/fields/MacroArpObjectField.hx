@@ -5,7 +5,7 @@ package net.kaikoga.arp.macro.fields;
 import net.kaikoga.arp.macro.fields.base.MacroArpFieldBase;
 import haxe.macro.Expr;
 
-class MacroArpReferenceField extends MacroArpFieldBase implements IMacroArpField {
+class MacroArpObjectField extends MacroArpFieldBase implements IMacroArpField {
 
 	private var nativeSlotType(get, never):ComplexType;
 	inline private function get_nativeSlotType():ComplexType {

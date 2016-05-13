@@ -2,10 +2,10 @@ package net.kaikoga.arp.macro.fields.ds;
 
 #if macro
 
-import net.kaikoga.arp.macro.fields.base.MacroArpReferenceCollectionFieldBase;
+import net.kaikoga.arp.macro.fields.base.MacroArpObjectCollectionFieldBase;
 import haxe.macro.Expr;
 
-class MacroArpReferenceOmapField extends MacroArpReferenceCollectionFieldBase implements IMacroArpField {
+class MacroArpObjectOmapField extends MacroArpObjectCollectionFieldBase implements IMacroArpField {
 
 	private var _nativeType:ComplexType;
 	override private function get_nativeType():ComplexType return _nativeType;

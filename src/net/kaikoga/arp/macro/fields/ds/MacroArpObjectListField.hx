@@ -2,10 +2,10 @@ package net.kaikoga.arp.macro.fields.ds;
 
 #if macro
 
-import net.kaikoga.arp.macro.fields.base.MacroArpReferenceCollectionFieldBase;
+import net.kaikoga.arp.macro.fields.base.MacroArpObjectCollectionFieldBase;
 import haxe.macro.Expr;
 
-class MacroArpReferenceSetField extends MacroArpReferenceCollectionFieldBase implements IMacroArpField {
+class MacroArpObjectListField extends MacroArpObjectCollectionFieldBase implements IMacroArpField {
 
 	private var _nativeType:ComplexType;
 	override private function get_nativeType():ComplexType return _nativeType;
@@ -16,7 +16,7 @@ class MacroArpReferenceSetField extends MacroArpReferenceCollectionFieldBase imp
 			case ComplexType.TPath(t):
 				return ComplexType.TPath({
 					pack: "net.kaikoga.arp.domain.ds".split("."),
-					name: "ArpObjectSet",
+					name: "ArpObjectList",
 					params: t.params
 				});
 			case _:
@@ -26,7 +26,7 @@ class MacroArpReferenceSetField extends MacroArpReferenceCollectionFieldBase imp
 
 	override private function guessConcreteNativeType():ComplexType {
 		var contentNativeType:ComplexType = this.contentNativeType;
-		return macro:net.kaikoga.arp.domain.ds.ArpObjectSet<$contentNativeType>;
+		return macro:net.kaikoga.arp.domain.ds.ArpObjectList<$contentNativeType>;
 	}
 
 	public function new(definition:MacroArpFieldDefinition, contentNativeType:ComplexType, concreteDs:Bool) {
@@ -66,7 +66,7 @@ class MacroArpReferenceSetField extends MacroArpReferenceCollectionFieldBase imp
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.slotSet.add(this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${this.metaArpType}))); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.slotList.push(this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${this.metaArpType}))); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
@@ -82,7 +82,7 @@ class MacroArpReferenceSetField extends MacroArpReferenceCollectionFieldBase imp
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
 		copyFromBlock.push(macro @:pos(this.nativePos) {
 			this.$iFieldName.clear();
-			for (v in src.$iFieldName) this.$iFieldName.add(v);
+			for (v in src.$iFieldName) this.$iFieldName.push(v);
 		});
 	}
 }

@@ -4,7 +4,7 @@ package net.kaikoga.arp.macro.fields.base;
 
 import haxe.macro.Expr;
 
-class MacroArpReferenceCollectionFieldBase extends MacroArpCollectionFieldBase {
+class MacroArpObjectCollectionFieldBase extends MacroArpCollectionFieldBase {
 
 	private var contentNativeType:ComplexType;
 

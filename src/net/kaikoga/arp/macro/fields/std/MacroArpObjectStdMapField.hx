@@ -1,23 +1,23 @@
-package net.kaikoga.arp.macro.fields.ds;
+package net.kaikoga.arp.macro.fields.std;
 
 #if macro
 
-import net.kaikoga.arp.macro.fields.base.MacroArpReferenceCollectionFieldBase;
+import net.kaikoga.arp.macro.fields.base.MacroArpObjectCollectionFieldBase;
 import haxe.macro.Expr;
 
-class MacroArpReferenceListField extends MacroArpReferenceCollectionFieldBase implements IMacroArpField {
+class MacroArpObjectStdMapField extends MacroArpObjectCollectionFieldBase implements IMacroArpField {
 
 	private var _nativeType:ComplexType;
 	override private function get_nativeType():ComplexType return _nativeType;
 
-	// use impl, because we have to directly get/set slots
+	// acts as if Map will resolve to ArpObjectStdMap with @:multiType()
 	private function coerce(nativeType:ComplexType):ComplexType {
 		switch (nativeType) {
 			case ComplexType.TPath(t):
 				return ComplexType.TPath({
-					pack: "net.kaikoga.arp.domain.ds".split("."),
-					name: "ArpObjectList",
-					params: t.params
+					pack: "net.kaikoga.arp.domain.ds.std".split("."),
+					name: "ArpObjectStdMap",
+					params: [t.params[1]]
 				});
 			case _:
 		}
@@ -26,22 +26,24 @@ class MacroArpReferenceListField extends MacroArpReferenceCollectionFieldBase im
 
 	override private function guessConcreteNativeType():ComplexType {
 		var contentNativeType:ComplexType = this.contentNativeType;
-		return macro:net.kaikoga.arp.domain.ds.ArpObjectList<$contentNativeType>;
+		return macro:net.kaikoga.arp.domain.ds.std.ArpObjectStdMap<$contentNativeType>;
 	}
 
 	public function new(definition:MacroArpFieldDefinition, contentNativeType:ComplexType, concreteDs:Bool) {
 		super(definition, contentNativeType, concreteDs);
-		if (!concreteDs) _nativeType = coerce(super.nativeType);
+		if (definition.nativeDefault != null) throw "can't inline initialize arp reference field";
+		_nativeType = coerce(super.nativeType);
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
-		var nativeType:ComplexType = this.nativeType;
-		this.nativeField.kind = FieldType.FProp("default", "null", nativeType, this.definition.nativeDefault);
+		this.nativeField.kind = FieldType.FProp("default", "null", this.nativeType, null);
 		outFields.push(nativeField);
 	}
 
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {
-		heatLaterBlock.push(macro @:pos(this.nativePos) { null; });
+		if (this.metaArpBarrier) {
+			heatLaterBlock.push(macro @:pos(this.nativePos) { for (slot in this.$iFieldName.slots) this._arpDomain.heatLater(slot); });
+		}
 	}
 
 	public function buildHeatUpBlock(heatUpBlock:Array<Expr>):Void {
@@ -66,23 +68,23 @@ class MacroArpReferenceListField extends MacroArpReferenceCollectionFieldBase im
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.slotList.push(this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${this.metaArpType}))); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.slots.set(element.key(uniqId), this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${this.metaArpType}))); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
 		// FIXME persist over serialize
-		fieldBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = haxe.Unserializer.run(input.readUtf($v{iFieldName})); });
+		fieldBlock.push(macro @:pos(this.nativePos) { input.readPersistable(${this.eColumnName}, this.$iFieldName); });
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
 		// FIXME persist over serialize
-		fieldBlock.push(macro @:pos(this.nativePos) { output.writeUtf($v{iFieldName}, haxe.Serializer.run(this.$iFieldName)); });
+		fieldBlock.push(macro @:pos(this.nativePos) { output.writePersistable(${this.eColumnName}, this.$iFieldName); });
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
 		copyFromBlock.push(macro @:pos(this.nativePos) {
-			this.$iFieldName.clear();
-			for (v in src.$iFieldName) this.$iFieldName.push(v);
+			for (k in this.$iFieldName.keys()) this.$iFieldName.remove(k);
+			for (k in src.$iFieldName.keys()) this.$iFieldName.set(k, src.$iFieldName.get(k));
 		});
 	}
 }
