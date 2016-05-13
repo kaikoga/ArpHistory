@@ -1,19 +1,19 @@
-package net.kaikoga.arp.macro.fields.std;
+package net.kaikoga.arp.macro.fields.ds;
 
 #if macro
 
-import net.kaikoga.arp.macro.fields.base.MacroArpObjectValueTypeCollectionFieldBase;
+import net.kaikoga.arp.macro.fields.base.MacroArpValueCollectionFieldBase;
 import haxe.macro.Expr;
 
-class MacroArpObjectStdListField extends MacroArpObjectValueTypeCollectionFieldBase implements IMacroArpObjectField {
+class MacroArpValueListField extends MacroArpValueCollectionFieldBase implements IMacroArpField {
 
 	override private function guessConcreteNativeType():ComplexType {
 		var contentNativeType:ComplexType = this.type.nativeType();
-		return macro:List;
+		return macro:net.kaikoga.arp.ds.impl.ArrayList<$contentNativeType>;
 	}
 
-	public function new(definition:MacroArpObjectFieldDefinition, type:IMacroArpObjectValueType) {
-		super(definition, type, true);
+	public function new(definition:MacroArpFieldDefinition, type:IMacroArpValueType, concreteDs:Bool) {
+		super(definition, type, concreteDs);
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
@@ -48,7 +48,7 @@ class MacroArpObjectStdListField extends MacroArpObjectValueTypeCollectionFieldB
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.add(${this.type.createSeedElement(this.nativePos)}); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.push(${this.type.createSeedElement(this.nativePos)}); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
@@ -63,8 +63,8 @@ class MacroArpObjectStdListField extends MacroArpObjectValueTypeCollectionFieldB
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
 		copyFromBlock.push(macro @:pos(this.nativePos) {
-			this.$iFieldName = new List();
-			for (v in src.$iFieldName) this.$iFieldName.add(v);
+			this.$iFieldName.clear();
+			for (v in src.$iFieldName) this.$iFieldName.push(v);
 		});
 	}
 }

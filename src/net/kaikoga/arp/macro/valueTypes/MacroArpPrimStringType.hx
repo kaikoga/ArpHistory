@@ -3,7 +3,7 @@ package net.kaikoga.arp.macro.valueTypes;
 #if macro
 
 import haxe.macro.Expr;
-class MacroArpObjectPrimString implements IMacroArpObjectValueType {
+class MacroArpPrimStringType implements IMacroArpValueType {
 
 	public function new() {
 	}

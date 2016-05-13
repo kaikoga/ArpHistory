@@ -4,9 +4,9 @@ package net.kaikoga.arp.macro.fields.base;
 
 import haxe.macro.Expr;
 
-class MacroArpObjectFieldBase {
+class MacroArpFieldBase {
 
-	private var definition:MacroArpObjectFieldDefinition;
+	private var definition:MacroArpFieldDefinition;
 
 	private var nativeField(get, never):Field;
 	private function get_nativeField():Field return definition.nativeField;
@@ -44,7 +44,7 @@ class MacroArpObjectFieldBase {
 		}
 	}
 
-	private function new(definition:MacroArpObjectFieldDefinition) {
+	private function new(definition:MacroArpFieldDefinition) {
 		this.definition = definition;
 	}
 

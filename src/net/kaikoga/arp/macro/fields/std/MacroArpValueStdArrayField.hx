@@ -2,17 +2,17 @@ package net.kaikoga.arp.macro.fields.std;
 
 #if macro
 
-import net.kaikoga.arp.macro.fields.base.MacroArpObjectValueTypeCollectionFieldBase;
+import net.kaikoga.arp.macro.fields.base.MacroArpValueCollectionFieldBase;
 import haxe.macro.Expr;
 
-class MacroArpObjectStdMapField extends MacroArpObjectValueTypeCollectionFieldBase implements IMacroArpObjectField {
+class MacroArpValueStdArrayField extends MacroArpValueCollectionFieldBase implements IMacroArpField {
 
-	override private function guessConcreteNativeType():ComplexType {
-		return macro:Map;
+	override private function createEmptyDs(concreteNativeTypePath:TypePath):Expr {
+		return macro [];
 	}
 
-	public function new(definition:MacroArpObjectFieldDefinition, type:IMacroArpObjectValueType, concreteDs:Bool) {
-		super(definition, type, concreteDs);
+	public function new(definition:MacroArpFieldDefinition, type:IMacroArpValueType) {
+		super(definition, type, true);
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
@@ -34,7 +34,7 @@ class MacroArpObjectStdMapField extends MacroArpObjectValueTypeCollectionFieldBa
 	}
 
 	public function buildDisposeBlock(initBlock:Array<Expr>):Void {
-		initBlock.push(macro @:pos(this.nativePos) { null; } );
+		initBlock.push(macro @:pos(this.nativePos) { null; });
 	}
 
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
@@ -47,7 +47,7 @@ class MacroArpObjectStdMapField extends MacroArpObjectValueTypeCollectionFieldBa
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.set(element.key(uniqId), ${this.type.createSeedElement(this.nativePos)}); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.push(${this.type.createSeedElement(this.nativePos)}); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
@@ -61,10 +61,7 @@ class MacroArpObjectStdMapField extends MacroArpObjectValueTypeCollectionFieldBa
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
-		copyFromBlock.push(macro @:pos(this.nativePos) {
-			this.$iFieldName = new Map();
-			for (k in src.$iFieldName.keys()) this.$iFieldName.set(k, src.$iFieldName.get(k));
-		});
+		copyFromBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = src.$iFieldName.copy(); });
 	}
 }
 

@@ -7,7 +7,7 @@ import haxe.macro.Expr;
 
 using haxe.macro.ComplexTypeTools;
 
-class MacroArpObjectFieldDefinition {
+class MacroArpFieldDefinition {
 
 	public function isValidNativeType():Bool return this.nativeType != null;
 

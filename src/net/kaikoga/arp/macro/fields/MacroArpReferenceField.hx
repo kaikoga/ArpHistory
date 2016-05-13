@@ -2,10 +2,10 @@ package net.kaikoga.arp.macro.fields;
 
 #if macro
 
-import net.kaikoga.arp.macro.fields.base.MacroArpObjectFieldBase;
+import net.kaikoga.arp.macro.fields.base.MacroArpFieldBase;
 import haxe.macro.Expr;
 
-class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IMacroArpObjectField {
+class MacroArpReferenceField extends MacroArpFieldBase implements IMacroArpField {
 
 	private var nativeSlotType(get, never):ComplexType;
 	inline private function get_nativeSlotType():ComplexType {
@@ -16,7 +16,7 @@ class MacroArpObjectReferenceField extends MacroArpObjectFieldBase implements IM
 	private var iFieldSlot(get, never):String;
 	private function get_iFieldSlot():String return this.iFieldName + "Slot";
 
-	public function new(definition:MacroArpObjectFieldDefinition) {
+	public function new(definition:MacroArpFieldDefinition) {
 		super(definition);
 		if (definition.nativeDefault != null) throw "can't inline initialize arp reference field";
 	}

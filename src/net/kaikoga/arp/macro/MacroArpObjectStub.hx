@@ -14,7 +14,7 @@ class MacroArpObjectStub {
 	private var arpTemplateName:String;
 	private var isDerived:Bool;
 
-	private var arpObjectFields:Array<IMacroArpObjectField> = [];
+	private var arpObjectFields:Array<IMacroArpField> = [];
 
 	macro private function buildBlock(iFieldName:String):Expr {
 		return macro {

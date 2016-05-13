@@ -4,7 +4,7 @@ package net.kaikoga.arp.macro;
 
 import haxe.macro.Expr;
 
-interface IMacroArpObjectValueType {
+interface IMacroArpValueType {
 
 	function nativeType():ComplexType;
 	function createEmptyVo(pos:Position):Expr;

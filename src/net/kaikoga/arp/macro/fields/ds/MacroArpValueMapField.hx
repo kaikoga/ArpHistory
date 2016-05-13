@@ -2,17 +2,17 @@ package net.kaikoga.arp.macro.fields.ds;
 
 #if macro
 
-import net.kaikoga.arp.macro.fields.base.MacroArpObjectValueTypeCollectionFieldBase;
+import net.kaikoga.arp.macro.fields.base.MacroArpValueCollectionFieldBase;
 import haxe.macro.Expr;
 
-class MacroArpObjectListField extends MacroArpObjectValueTypeCollectionFieldBase implements IMacroArpObjectField {
+class MacroArpValueMapField extends MacroArpValueCollectionFieldBase implements IMacroArpField {
 
 	override private function guessConcreteNativeType():ComplexType {
 		var contentNativeType:ComplexType = this.type.nativeType();
-		return macro:net.kaikoga.arp.ds.impl.ArrayList<$contentNativeType>;
+		return macro:net.kaikoga.arp.ds.impl.StdMap<String, $contentNativeType>;
 	}
 
-	public function new(definition:MacroArpObjectFieldDefinition, type:IMacroArpObjectValueType, concreteDs:Bool) {
+	public function new(definition:MacroArpFieldDefinition, type:IMacroArpValueType, concreteDs:Bool) {
 		super(definition, type, concreteDs);
 	}
 
@@ -35,7 +35,7 @@ class MacroArpObjectListField extends MacroArpObjectValueTypeCollectionFieldBase
 	}
 
 	public function buildDisposeBlock(initBlock:Array<Expr>):Void {
-		initBlock.push(macro @:pos(this.nativePos) { null; });
+		initBlock.push(macro @:pos(this.nativePos) { null; } );
 	}
 
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
@@ -48,7 +48,7 @@ class MacroArpObjectListField extends MacroArpObjectValueTypeCollectionFieldBase
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.push(${this.type.createSeedElement(this.nativePos)}); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.set(element.key(uniqId), ${this.type.createSeedElement(this.nativePos)}); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
@@ -64,7 +64,7 @@ class MacroArpObjectListField extends MacroArpObjectValueTypeCollectionFieldBase
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
 		copyFromBlock.push(macro @:pos(this.nativePos) {
 			this.$iFieldName.clear();
-			for (v in src.$iFieldName) this.$iFieldName.push(v);
+			for (k in src.$iFieldName.keys()) this.$iFieldName.set(k, src.$iFieldName.get(k));
 		});
 	}
 }

@@ -2,10 +2,10 @@ package net.kaikoga.arp.macro.fields.ds;
 
 #if macro
 
-import net.kaikoga.arp.macro.fields.base.MacroArpObjectReferenceCollectionFieldBase;
+import net.kaikoga.arp.macro.fields.base.MacroArpReferenceCollectionFieldBase;
 import haxe.macro.Expr;
 
-class MacroArpObjectReferenceMapField extends MacroArpObjectReferenceCollectionFieldBase implements IMacroArpObjectField {
+class MacroArpReferenceSetField extends MacroArpReferenceCollectionFieldBase implements IMacroArpField {
 
 	private var _nativeType:ComplexType;
 	override private function get_nativeType():ComplexType return _nativeType;
@@ -16,7 +16,7 @@ class MacroArpObjectReferenceMapField extends MacroArpObjectReferenceCollectionF
 			case ComplexType.TPath(t):
 				return ComplexType.TPath({
 					pack: "net.kaikoga.arp.domain.ds".split("."),
-					name: "ArpObjectMap",
+					name: "ArpObjectSet",
 					params: t.params
 				});
 			case _:
@@ -26,10 +26,10 @@ class MacroArpObjectReferenceMapField extends MacroArpObjectReferenceCollectionF
 
 	override private function guessConcreteNativeType():ComplexType {
 		var contentNativeType:ComplexType = this.contentNativeType;
-		return macro:net.kaikoga.arp.domain.ds.ArpObjectMap<String, $contentNativeType>;
+		return macro:net.kaikoga.arp.domain.ds.ArpObjectSet<$contentNativeType>;
 	}
 
-	public function new(definition:MacroArpObjectFieldDefinition, contentNativeType:ComplexType, concreteDs:Bool) {
+	public function new(definition:MacroArpFieldDefinition, contentNativeType:ComplexType, concreteDs:Bool) {
 		super(definition, contentNativeType, concreteDs);
 		if (!concreteDs) _nativeType = coerce(super.nativeType);
 	}
@@ -53,7 +53,7 @@ class MacroArpObjectReferenceMapField extends MacroArpObjectReferenceCollectionF
 	}
 
 	public function buildDisposeBlock(initBlock:Array<Expr>):Void {
-		initBlock.push(macro @:pos(this.nativePos) { null; } );
+		initBlock.push(macro @:pos(this.nativePos) { null; });
 	}
 
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
@@ -66,7 +66,7 @@ class MacroArpObjectReferenceMapField extends MacroArpObjectReferenceCollectionF
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.slotMap.set(element.key(uniqId), this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${this.metaArpType}))); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.slotSet.add(this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType(${this.metaArpType}))); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
@@ -82,7 +82,7 @@ class MacroArpObjectReferenceMapField extends MacroArpObjectReferenceCollectionF
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
 		copyFromBlock.push(macro @:pos(this.nativePos) {
 			this.$iFieldName.clear();
-			for (k in src.$iFieldName.keys()) this.$iFieldName.set(k, src.$iFieldName.get(k));
+			for (v in src.$iFieldName) this.$iFieldName.add(v);
 		});
 	}
 }

@@ -2,14 +2,14 @@ package net.kaikoga.arp.macro.fields;
 
 #if macro
 
-import net.kaikoga.arp.macro.fields.base.MacroArpObjectFieldBase;
+import net.kaikoga.arp.macro.fields.base.MacroArpFieldBase;
 import haxe.macro.Expr;
 
-class MacroArpObjectValueField extends MacroArpObjectFieldBase implements IMacroArpObjectField {
+class MacroArpValueField extends MacroArpFieldBase implements IMacroArpField {
 
-	public var type(default, null):IMacroArpObjectValueType;
+	public var type(default, null):IMacroArpValueType;
 
-	public function new(definition:MacroArpObjectFieldDefinition, type:IMacroArpObjectValueType) {
+	public function new(definition:MacroArpFieldDefinition, type:IMacroArpValueType) {
 		super(definition);
 		this.type = type;
 	}

@@ -4,7 +4,7 @@ package net.kaikoga.arp.macro.valueTypes;
 
 import haxe.macro.Expr;
 
-class MacroArpObjectArpStruct implements IMacroArpObjectValueType {
+class MacroArpStructType implements IMacroArpValueType {
 
 	private var _nativeType:ComplexType;
 	private var nativeTypePath:TypePath;

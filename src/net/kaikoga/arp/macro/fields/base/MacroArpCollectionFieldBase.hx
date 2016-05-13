@@ -5,11 +5,11 @@ package net.kaikoga.arp.macro.fields.base;
 import haxe.macro.Printer;
 import haxe.macro.Expr;
 
-class MacroArpObjectCollectionFieldBase extends MacroArpObjectFieldBase {
+class MacroArpCollectionFieldBase extends MacroArpFieldBase {
 
 	private var concreteDs:Bool;
 
-	private function new(definition:MacroArpObjectFieldDefinition, concreteDs:Bool) {
+	private function new(definition:MacroArpFieldDefinition, concreteDs:Bool) {
 		super(definition);
 		this.concreteDs = concreteDs;
 	}

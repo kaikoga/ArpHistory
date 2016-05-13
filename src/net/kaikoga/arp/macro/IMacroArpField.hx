@@ -4,7 +4,7 @@ package net.kaikoga.arp.macro;
 
 import haxe.macro.Expr;
 
-interface IMacroArpObjectField {
+interface IMacroArpField {
 	public function buildField(outFields:Array<Field>):Void;
 	public function buildInitBlock(initBlock:Array<Expr>):Void;
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void;

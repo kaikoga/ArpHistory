@@ -1,18 +1,19 @@
-package net.kaikoga.arp.macro.fields.std;
+package net.kaikoga.arp.macro.fields.ds;
 
 #if macro
 
-import net.kaikoga.arp.macro.fields.base.MacroArpObjectValueTypeCollectionFieldBase;
+import net.kaikoga.arp.macro.fields.base.MacroArpValueCollectionFieldBase;
 import haxe.macro.Expr;
 
-class MacroArpObjectStdArrayField extends MacroArpObjectValueTypeCollectionFieldBase implements IMacroArpObjectField {
+class MacroArpValueOmapField extends MacroArpValueCollectionFieldBase implements IMacroArpField {
 
-	override private function createEmptyDs(concreteNativeTypePath:TypePath):Expr {
-		return macro [];
+	override private function guessConcreteNativeType():ComplexType {
+		var contentNativeType:ComplexType = this.type.nativeType();
+		return macro:net.kaikoga.arp.ds.impl.StdOmap<String, $contentNativeType>;
 	}
 
-	public function new(definition:MacroArpObjectFieldDefinition, type:IMacroArpObjectValueType) {
-		super(definition, type, true);
+	public function new(definition:MacroArpFieldDefinition, type:IMacroArpValueType, concreteDs:Bool) {
+		super(definition, type, concreteDs);
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
@@ -34,7 +35,7 @@ class MacroArpObjectStdArrayField extends MacroArpObjectValueTypeCollectionField
 	}
 
 	public function buildDisposeBlock(initBlock:Array<Expr>):Void {
-		initBlock.push(macro @:pos(this.nativePos) { null; });
+		initBlock.push(macro @:pos(this.nativePos) { null; } );
 	}
 
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
@@ -47,7 +48,7 @@ class MacroArpObjectStdArrayField extends MacroArpObjectValueTypeCollectionField
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.push(${this.type.createSeedElement(this.nativePos)}); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.addPair(element.key(uniqId), ${this.type.createSeedElement(this.nativePos)}); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
@@ -61,7 +62,10 @@ class MacroArpObjectStdArrayField extends MacroArpObjectValueTypeCollectionField
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
-		copyFromBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = src.$iFieldName.copy(); });
+		copyFromBlock.push(macro @:pos(this.nativePos) {
+			this.$iFieldName.clear();
+			for (k in src.$iFieldName.keys()) this.$iFieldName.addPair(k, src.$iFieldName.get(k));
+		});
 	}
 }
 

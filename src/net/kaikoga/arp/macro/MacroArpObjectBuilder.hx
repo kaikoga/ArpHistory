@@ -2,7 +2,7 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
-import net.kaikoga.arp.macro.MacroArpObjectFieldBuilder;
+import net.kaikoga.arp.macro.MacroArpFieldBuilder;
 import haxe.macro.Context;
 import haxe.macro.Expr;
 import haxe.macro.Type;
@@ -59,8 +59,8 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 		var outFields:Array<Field> = [];
 
 		for (field in Context.getBuildFields()) {
-			var definition:MacroArpObjectFieldDefinition = new MacroArpObjectFieldDefinition(field);
-			var arpObjectField:IMacroArpObjectField = MacroArpObjectFieldBuilder.fromDefinition(definition);
+			var definition:MacroArpFieldDefinition = new MacroArpFieldDefinition(field);
+			var arpObjectField:IMacroArpField = MacroArpFieldBuilder.fromDefinition(definition);
 			if (arpObjectField == null) {
 				outFields.push(field);
 				if (definition.metaArpInit != null) {

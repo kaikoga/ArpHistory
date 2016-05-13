@@ -2,10 +2,10 @@ package net.kaikoga.arp.macro.fields.ds;
 
 #if macro
 
-import net.kaikoga.arp.macro.fields.base.MacroArpObjectReferenceCollectionFieldBase;
+import net.kaikoga.arp.macro.fields.base.MacroArpReferenceCollectionFieldBase;
 import haxe.macro.Expr;
 
-class MacroArpObjectReferenceListField extends MacroArpObjectReferenceCollectionFieldBase implements IMacroArpObjectField {
+class MacroArpReferenceListField extends MacroArpReferenceCollectionFieldBase implements IMacroArpField {
 
 	private var _nativeType:ComplexType;
 	override private function get_nativeType():ComplexType return _nativeType;
@@ -29,7 +29,7 @@ class MacroArpObjectReferenceListField extends MacroArpObjectReferenceCollection
 		return macro:net.kaikoga.arp.domain.ds.ArpObjectList<$contentNativeType>;
 	}
 
-	public function new(definition:MacroArpObjectFieldDefinition, contentNativeType:ComplexType, concreteDs:Bool) {
+	public function new(definition:MacroArpFieldDefinition, contentNativeType:ComplexType, concreteDs:Bool) {
 		super(definition, contentNativeType, concreteDs);
 		if (!concreteDs) _nativeType = coerce(super.nativeType);
 	}

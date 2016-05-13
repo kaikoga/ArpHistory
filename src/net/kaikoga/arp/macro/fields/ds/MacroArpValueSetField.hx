@@ -2,17 +2,17 @@ package net.kaikoga.arp.macro.fields.ds;
 
 #if macro
 
-import net.kaikoga.arp.macro.fields.base.MacroArpObjectValueTypeCollectionFieldBase;
+import net.kaikoga.arp.macro.fields.base.MacroArpValueCollectionFieldBase;
 import haxe.macro.Expr;
 
-class MacroArpObjectSetField extends MacroArpObjectValueTypeCollectionFieldBase implements IMacroArpObjectField {
+class MacroArpValueSetField extends MacroArpValueCollectionFieldBase implements IMacroArpField {
 
 	override private function guessConcreteNativeType():ComplexType {
 		var contentNativeType:ComplexType = this.type.nativeType();
 		return macro:net.kaikoga.arp.ds.impl.ArraySet<$contentNativeType>;
 	}
 
-	public function new(definition:MacroArpObjectFieldDefinition, type:IMacroArpObjectValueType, concreteDs:Bool) {
+	public function new(definition:MacroArpFieldDefinition, type:IMacroArpValueType, concreteDs:Bool) {
 		super(definition, type, concreteDs);
 	}
 

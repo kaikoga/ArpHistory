@@ -4,7 +4,7 @@ package net.kaikoga.arp.macro.fields.base;
 
 import haxe.macro.Expr;
 
-class MacroArpObjectReferenceCollectionFieldBase extends MacroArpObjectCollectionFieldBase {
+class MacroArpReferenceCollectionFieldBase extends MacroArpCollectionFieldBase {
 
 	private var contentNativeType:ComplexType;
 
@@ -12,7 +12,7 @@ class MacroArpObjectReferenceCollectionFieldBase extends MacroArpObjectCollectio
 		return macro new $concreteNativeTypePath(slot.domain);
 	}
 
-	private function new(definition:MacroArpObjectFieldDefinition, contentNativeType:ComplexType, concreteDs:Bool) {
+	private function new(definition:MacroArpFieldDefinition, contentNativeType:ComplexType, concreteDs:Bool) {
 		super(definition, concreteDs);
 		this.contentNativeType = contentNativeType;
 	}
