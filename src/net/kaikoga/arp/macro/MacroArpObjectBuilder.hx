@@ -2,6 +2,7 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
+import haxe.macro.TypeTools;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.reflect.ArpTemplateInfo;
 import net.kaikoga.arp.macro.MacroArpFieldBuilder;
@@ -85,7 +86,7 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 				arpObjectField.buildField(outFields);
 			}
 		}
-		MacroArpObjectRegistry.registerTemplateInfo(templateInfo);
+		MacroArpObjectRegistry.registerTemplateInfo(TypeTools.toString(Context.getLocalType()), templateInfo);
 
 		if (this.isDerived) {
 			outFields = merge(this.genDerivedTypeFields(), outFields);
