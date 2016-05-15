@@ -59,6 +59,7 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 
 	public function run() {
 		var templateInfo:ArpTemplateInfo = new ArpTemplateInfo(new ArpType(this.arpTypeName), this.arpTemplateName, []);
+		MacroArpObjectRegistry.registerTemplateInfo(TypeTools.toString(Context.getLocalType()), templateInfo);
 
 		analyzeBaseClasses();
 		var outFields:Array<Field> = [];
@@ -86,7 +87,6 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 				arpObjectField.buildField(outFields);
 			}
 		}
-		MacroArpObjectRegistry.registerTemplateInfo(TypeTools.toString(Context.getLocalType()), templateInfo);
 
 		if (this.isDerived) {
 			outFields = merge(this.genDerivedTypeFields(), outFields);

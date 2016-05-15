@@ -8,6 +8,8 @@ class MacroArpObjectCollectionFieldBase extends MacroArpCollectionFieldBase {
 
 	private var contentNativeType:ComplexType;
 
+	override private function get_metaArpType():String return MacroArpObjectRegistry.arpTypeOf(toFqn(contentNativeType)).toString();
+
 	override private function createEmptyDs(concreteNativeTypePath:TypePath):Expr {
 		return macro new $concreteNativeTypePath(slot.domain);
 	}

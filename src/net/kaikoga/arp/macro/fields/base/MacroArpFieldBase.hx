@@ -2,7 +2,9 @@ package net.kaikoga.arp.macro.fields.base;
 
 #if macro
 
+import haxe.macro.TypeTools;
 import haxe.macro.Expr;
+import haxe.macro.ComplexTypeTools;
 
 class MacroArpFieldBase {
 
@@ -16,7 +18,8 @@ class MacroArpFieldBase {
 	private var metaArpValue(get, never):Bool;
 	private function get_metaArpValue():Bool return definition.metaArpValue;
 	private var metaArpType(get, never):String;
-	private function get_metaArpType():String return definition.metaArpType;
+	// private function get_metaArpType():String return definition.metaArpType;
+	private function get_metaArpType():String return MacroArpObjectRegistry.arpTypeOf(toFqn(nativeType)).toString();
 	private var metaArpBarrier(get, never):Bool;
 	private function get_metaArpBarrier():Bool return definition.metaArpBarrier;
 	private var metaArpField(get, never):String;
@@ -44,6 +47,9 @@ class MacroArpFieldBase {
 		this.definition = definition;
 	}
 
+	private function toFqn(complexType:ComplexType):String {
+		return TypeTools.toString(ComplexTypeTools.toType(complexType));
+	}
 }
 
 #end

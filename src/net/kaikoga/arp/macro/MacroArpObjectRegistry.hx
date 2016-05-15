@@ -3,8 +3,6 @@ package net.kaikoga.arp.macro;
 #if macro
 
 import net.kaikoga.arp.domain.core.ArpType;
-import haxe.macro.Expr;
-import haxe.macro.Context;
 import net.kaikoga.arp.domain.reflect.ArpTemplateInfo;
 
 class MacroArpObjectRegistry {
@@ -16,16 +14,12 @@ class MacroArpObjectRegistry {
 			templateInfos = new Map();
 			// in case of reuse, nvm
 		}
-		Context.warning(fqn + ":" + templateInfo.arpType + "/" + templateInfo.templateName, Context.currentPos());
-		for (fieldInfo in templateInfo.fields) {
-			Context.warning(Std.string(fieldInfo), Context.currentPos());
-		}
 		templateInfos.set(fqn, templateInfo);
 	}
 
 	public static function arpTypeOf(fqn:String):ArpType {
 		var templateInfo:ArpTemplateInfo = templateInfos.get(fqn);
-		if (templateInfo == null) throw "nullnullnull" + fqn;
+		if (templateInfo == null) throw "ArpType not registered for " + fqn;
 		return templateInfo.arpType;
 	}
 }
