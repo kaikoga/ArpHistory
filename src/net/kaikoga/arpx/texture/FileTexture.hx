@@ -7,7 +7,7 @@ import net.kaikoga.arpx.backends.flash.texture.ITextureFlashImpl;
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("texture", "file"))
 class FileTexture extends Texture
 {
-	@:arpType("file") @:arpBarrier public var file:File;
+	@:arpField @:arpBarrier public var file:File;
 
 	#if arp_backend_flash
 

@@ -12,12 +12,12 @@ import net.kaikoga.arpx.backends.flash.shadow.IShadowFlashImpl;
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("shadow", "chip"))
 class ChipShadow extends Shadow {
 
-	@:arpValue public var visible:Bool = true;
-	@:arpValue public var params:ArpParams;
-	@:arpValue public var position:ArpPosition;
-	@:arpValue public var mass:Float = 1.0;
+	@:arpField public var visible:Bool = true;
+	@:arpField public var params:ArpParams;
+	@:arpField public var position:ArpPosition;
+	@:arpField public var mass:Float = 1.0;
 
-	@:arpType("chip") public var chip:Chip;
+	@:arpField public var chip:Chip;
 
 	#if arp_backend_flash
 

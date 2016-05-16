@@ -9,11 +9,11 @@ import net.kaikoga.arpx.console.Console;
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("state", "state"))
 class AutomatonState implements IArpObject {
 
-	@:arpValue public var label:String;
-	@:arpType("state") public var originalState:AutomatonState;
-	@:arpType("state") @:arpField("state") public var childState:AutomatonState;
-	@:arpType("state") @:arpField("transition") public var transitions:IMap<String, AutomatonState>;
-	@:arpType("automaton") public var automaton:Automaton;
+	@:arpField public var label:String;
+	@:arpField public var originalState:AutomatonState;
+	@:arpField("state") public var childState:AutomatonState;
+	@:arpField("transition") public var transitions:IMap<String, AutomatonState>;
+	@:arpField public var automaton:Automaton;
 
 	public function new() {
 	}

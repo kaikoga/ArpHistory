@@ -6,7 +6,7 @@ import net.kaikoga.arpx.backends.flash.file.IFileFlashImpl;
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("file", "resource"))
 class ResourceFile extends File {
 
-	@:arpValue public var src:String;
+	@:arpField public var src:String;
 
 	#if arp_backend_flash
 

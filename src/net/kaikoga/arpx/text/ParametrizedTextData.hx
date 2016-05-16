@@ -5,7 +5,7 @@ import net.kaikoga.arp.iter.ERegIterator;
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("text", "ptext"))
 class ParametrizedTextData extends TextData {
 
-	@:arpValue public var value:String = null;
+	@:arpField public var value:String = null;
 
 	private var _nodes:Array<INode>;
 

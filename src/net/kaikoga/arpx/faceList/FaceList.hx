@@ -7,11 +7,11 @@ import net.kaikoga.arp.domain.IArpObject;
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("faceList", "faceList"))
 class FaceList implements IArpObject
 {
-	@:arpValue public var isVertical:Bool;
-	@:arpValue public var extraFaces:Array<String>;
-	@:arpValue public var chars:String;
-	@:arpValue public var range:ArpRange;
-	@:arpValue @:arpField("value") public var csvFaces:String;
+	@:arpField public var isVertical:Bool;
+	@:arpField public var extraFaces:Array<String>;
+	@:arpField public var chars:String;
+	@:arpField public var range:ArpRange;
+	@:arpField("value") public var csvFaces:String;
 
 	public function new() {
 	}

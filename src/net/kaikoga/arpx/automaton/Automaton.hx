@@ -13,9 +13,9 @@ import net.kaikoga.arpx.console.Console;
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("automaton", "automaton"))
 class Automaton implements IArpObject {
 
-	@:arpType("state") public var stateStack:IList<AutomatonState>;
-	@:arpType("state") public var state:AutomatonState;
-	@:arpType("console") public var console:Console;
+	@:arpField public var stateStack:IList<AutomatonState>;
+	@:arpField public var state:AutomatonState;
+	@:arpField public var console:Console;
 
 	private var _onEnterState:ArpSignal<AutomatonStateEvent>;
 	public var onEnterState(get, never):IArpSignalOut<AutomatonStateEvent>;

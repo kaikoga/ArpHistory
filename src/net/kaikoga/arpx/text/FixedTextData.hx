@@ -3,7 +3,7 @@ package net.kaikoga.arpx.text;
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("text"))
 class FixedTextData extends TextData {
 
-	@:arpValue public var value:String = null;
+	@:arpField public var value:String = null;
 
 	public function new() {
 		super();

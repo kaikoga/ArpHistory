@@ -6,8 +6,9 @@ import net.kaikoga.arpx.shadow.Shadow;
 
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("camera", "camera"))
 class Camera implements IArpObject {
-	@:arpType("shadow") public var shadow:Shadow;
-	@:arpValue public var position:ArpPosition;
+
+	@:arpField public var shadow:Shadow;
+	@:arpField public var position:ArpPosition;
 
 	public function new() {
 	}

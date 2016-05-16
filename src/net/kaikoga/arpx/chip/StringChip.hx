@@ -13,15 +13,15 @@ class StringChip extends Chip {
 
 	private static var _workParams:ArpParams = new ArpParams();
 
-	@:arpValue public var baseX:Int;
-	@:arpValue public var baseY:Int;
-	@:arpValue public var chipWidth:Int;
-	@:arpValue public var chipHeight:Int;
+	@:arpField public var baseX:Int;
+	@:arpField public var baseY:Int;
+	@:arpField public var chipWidth:Int;
+	@:arpField public var chipHeight:Int;
 
-	@:arpValue public var isProportional:Bool;
-	@:arpValue public var orientation:Int;
+	@:arpField public var isProportional:Bool;
+	@:arpField public var orientation:Int;
 
-	@:arpType("chip") public var chip:Chip;
+	@:arpField public var chip:Chip;
 
 	override public function chipWidthOf(params:ArpParams):Int {
 		if (params == null) {

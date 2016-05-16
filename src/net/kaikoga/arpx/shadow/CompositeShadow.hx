@@ -12,11 +12,11 @@ import net.kaikoga.arpx.backends.flash.shadow.IShadowFlashImpl;
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("shadow", "composite"))
 class CompositeShadow extends Shadow {
 
-	@:arpValue public var visible:Bool = true;
+	@:arpField public var visible:Bool = true;
 	public var params:ArpParams;
-	@:arpValue public var position:ArpPosition;
-	@:arpValue public var mass:Float = 1.0;
-	@:arpType("shadow") @:arpField("shadow") public var shadows:ISet<Shadow>;
+	@:arpField public var position:ArpPosition;
+	@:arpField public var mass:Float = 1.0;
+	@:arpField("shadow") public var shadows:ISet<Shadow>;
 
 	#if arp_backend_flash
 

@@ -14,9 +14,9 @@ import flash.display.BitmapData;
 class Console implements IArpObject
 #if arp_backend_flash implements IConsoleFlashImpl #end
 {
-	@:arpType("camera") @:arpField("camera") public var cameras:IOmap<String, Camera>;
-	@:arpValue public var width:Int;
-	@:arpValue public var height:Int;
+	@:arpField("camera") public var cameras:IOmap<String, Camera>;
+	@:arpField public var width:Int;
+	@:arpField public var height:Int;
 
 	#if arp_backend_flash
 

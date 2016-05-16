@@ -11,12 +11,12 @@ import net.kaikoga.arpx.backends.flash.chip.RectChipFlashImpl;
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("chip", "rect"))
 class RectChip extends Chip {
 
-	@:arpValue public var baseX(get, set):Int;
-	@:arpValue public var baseY(get, set):Int;
-	@:arpValue public var chipWidth(get, set):Int;
-	@:arpValue public var chipHeight(get, set):Int;
-	@:arpValue public var color(get, set):ArpColor;
-	@:arpValue public var border(get, set):ArpColor;
+	@:arpField public var baseX(get, set):Int;
+	@:arpField public var baseY(get, set):Int;
+	@:arpField public var chipWidth(get, set):Int;
+	@:arpField public var chipHeight(get, set):Int;
+	@:arpField public var color(get, set):ArpColor;
+	@:arpField public var border(get, set):ArpColor;
 
 	override public function chipWidthOf(params:ArpParams):Int {
 		return this.chipWidth;
