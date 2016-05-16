@@ -45,7 +45,7 @@ class MacroArpObjectStdMapField extends MacroArpObjectCollectionFieldBase implem
 
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {
 		if (this.metaArpBarrier) {
-			heatLaterBlock.push(macro @:pos(this.nativePos) { for (slot in this.$iFieldName.slots) this._arpDomain.heatLater(slot); });
+			heatLaterBlock.push(macro @:pos(this.nativePos) { for (slot in this.$iNativeName.slots) this._arpDomain.heatLater(slot); });
 		}
 	}
 
@@ -62,31 +62,29 @@ class MacroArpObjectStdMapField extends MacroArpObjectCollectionFieldBase implem
 	}
 
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
-		var iFieldName:String = this.iFieldName;
-
 		var caseBlock:Array<Expr> = [];
 		cases.push({
 			values: [macro @:pos(this.nativePos) $v{this.columnName}],
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.slots.set(element.key(uniqId), this._arpDomain.loadSeed(element, ${this.eArpType})); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iNativeName.slots.set(element.key(uniqId), this._arpDomain.loadSeed(element, ${this.eArpType})); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
 		// FIXME persist over serialize
-		fieldBlock.push(macro @:pos(this.nativePos) { input.readPersistable($v{this.columnName}, this.$iFieldName); });
+		fieldBlock.push(macro @:pos(this.nativePos) { input.readPersistable($v{this.columnName}, this.$iNativeName); });
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
 		// FIXME persist over serialize
-		fieldBlock.push(macro @:pos(this.nativePos) { output.writePersistable($v{this.columnName}, this.$iFieldName); });
+		fieldBlock.push(macro @:pos(this.nativePos) { output.writePersistable($v{this.columnName}, this.$iNativeName); });
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
 		copyFromBlock.push(macro @:pos(this.nativePos) {
-			for (k in this.$iFieldName.keys()) this.$iFieldName.remove(k);
-			for (k in src.$iFieldName.keys()) this.$iFieldName.set(k, src.$iFieldName.get(k));
+			for (k in this.$iNativeName.keys()) this.$iNativeName.remove(k);
+			for (k in src.$iNativeName.keys()) this.$iNativeName.set(k, src.$iNativeName.get(k));
 		});
 	}
 }

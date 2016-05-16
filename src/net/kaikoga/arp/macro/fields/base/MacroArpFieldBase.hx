@@ -25,14 +25,16 @@ class MacroArpFieldBase {
 	private var nativePos(get, never):Position;
 	private function get_nativePos():Position return this.nativeField.pos;
 
-	private var iFieldName(get, never):String;
-	private function get_iFieldName():String return this.nativeField.name;
-	private var i_field(get, never):String;
-	private function get_i_field():String return "_" + this.iFieldName;
-	private var iGet_field(get, never):String;
-	private function get_iGet_field():String return "get_" + this.iFieldName;
-	private var iSet_field(get, never):String;
-	private function get_iSet_field():String return "set_" + this.iFieldName;
+	private var iNativeName(get, never):String;
+	private function get_iNativeName():String return this.nativeField.name;
+	private var iNativeSlot(get, never):String;
+	private function get_iNativeSlot():String return this.nativeField.name + "Slot";
+	private var i_nativeName(get, never):String;
+	private function get_i_nativeName():String return "_" + this.iNativeName;
+	private var iGet_nativeName(get, never):String;
+	private function get_iGet_nativeName():String return "get_" + this.iNativeName;
+	private var iSet_nativeName(get, never):String;
+	private function get_iSet_nativeName():String return "set_" + this.iNativeName;
 
 	private var arpType(get, never):String;
 	private function get_arpType():String return MacroArpObjectRegistry.arpTypeOf(nativeType).toString();
@@ -43,7 +45,7 @@ class MacroArpFieldBase {
 	private var columnName(get, never):String;
 	private function get_columnName():String {
 		if (metaArpField != null) return metaArpField;
-		return iFieldName;
+		return iNativeName;
 	}
 
 	private var arpFieldType(get, never):ArpFieldType;

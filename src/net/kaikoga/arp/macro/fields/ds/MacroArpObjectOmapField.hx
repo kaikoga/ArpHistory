@@ -60,31 +60,29 @@ class MacroArpObjectOmapField extends MacroArpObjectCollectionFieldBase implemen
 	}
 
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
-		var iFieldName:String = this.iFieldName;
-
 		var caseBlock:Array<Expr> = [];
 		cases.push({
 			values: [macro @:pos(this.nativePos) $v{this.columnName}],
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.slotOmap.addPair(element.key(uniqId), this._arpDomain.loadSeed(element, ${this.eArpType})); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iNativeName.slotOmap.addPair(element.key(uniqId), this._arpDomain.loadSeed(element, ${this.eArpType})); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
 		// FIXME persist over serialize
-		fieldBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = haxe.Unserializer.run(input.readUtf($v{iFieldName})); });
+		fieldBlock.push(macro @:pos(this.nativePos) { this.$iNativeName = haxe.Unserializer.run(input.readUtf($v{iNativeName})); });
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
 		// FIXME persist over serialize
-		fieldBlock.push(macro @:pos(this.nativePos) { output.writeUtf($v{iFieldName}, haxe.Serializer.run(this.$iFieldName)); });
+		fieldBlock.push(macro @:pos(this.nativePos) { output.writeUtf($v{iNativeName}, haxe.Serializer.run(this.$iNativeName)); });
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
 		copyFromBlock.push(macro @:pos(this.nativePos) {
-			this.$iFieldName.clear();
-			for (k in src.$iFieldName.keys()) this.$iFieldName.addPair(k, src.$iFieldName.get(k));
+			this.$iNativeName.clear();
+			for (k in src.$iNativeName.keys()) this.$iNativeName.addPair(k, src.$iNativeName.get(k));
 		});
 	}
 }

@@ -17,19 +17,13 @@ class MacroArpValueField extends MacroArpFieldBase implements IMacroArpField {
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
-		var iField:String = this.iFieldName;
-		var i_field:String = this.i_field;
-		var iGet_field:String = this.iGet_field;
-		var iSet_field:String = this.iSet_field;
-		var nativeType:ComplexType = this.nativeType;
-
 		var generated:Array<Field> = (macro class Generated {
 			@:pos(this.nativePos)
-			private var $i_field:$nativeType = ${this.definition.nativeDefault};
+			private var $i_nativeName:$nativeType = ${this.definition.nativeDefault};
 			@:pos(this.nativePos)
-			inline private function $iGet_field():$nativeType return this.$i_field;
+			inline private function $iGet_nativeName():$nativeType return this.$i_nativeName;
 			@:pos(this.nativePos)
-			inline private function $iSet_field(value:$nativeType):$nativeType return this.$i_field = value;
+			inline private function $iSet_nativeName(value:$nativeType):$nativeType return this.$i_nativeName = value;
 		}).fields;
 		this.nativeField.kind = FieldType.FProp("get", "set", nativeType, null);
 		this.nativeField.meta.push({ name: ":isVar", pos : this.nativeField.pos });
@@ -39,7 +33,7 @@ class MacroArpValueField extends MacroArpFieldBase implements IMacroArpField {
 
 	public function buildInitBlock(initBlock:Array<Expr>):Void {
 		if (this.definition.nativeDefault == null) {
-			initBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = ${this.type.createEmptyVo(this.nativePos)}; });
+			initBlock.push(macro @:pos(this.nativePos) { this.$iNativeName = ${this.type.createEmptyVo(this.nativePos)}; });
 		}
 	}
 
@@ -60,7 +54,7 @@ class MacroArpValueField extends MacroArpFieldBase implements IMacroArpField {
 	}
 
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
-		var iFieldName:String = this.iFieldName;
+		var iNativeName:String = this.iNativeName;
 
 		var caseBlock:Array<Expr> = [];
 		cases.push({
@@ -68,19 +62,19 @@ class MacroArpValueField extends MacroArpFieldBase implements IMacroArpField {
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { ${this.type.readSeedElement(this.nativePos, this.iFieldName)}; });
+		caseBlock.push(macro @:pos(this.nativePos) { ${this.type.readSeedElement(this.nativePos, this.iNativeName)}; });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
-		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.readSelf(this.nativePos, this.iFieldName, this.columnName)}; });
+		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.readSelf(this.nativePos, this.iNativeName, this.columnName)}; });
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
-		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.writeSelf(this.nativePos, this.iFieldName, this.columnName)}; });
+		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.writeSelf(this.nativePos, this.iNativeName, this.columnName)}; });
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
-		copyFromBlock.push(macro @:pos(this.nativePos) { ${this.type.copyFrom(this.nativePos, this.iFieldName)}; });
+		copyFromBlock.push(macro @:pos(this.nativePos) { ${this.type.copyFrom(this.nativePos, this.iNativeName)}; });
 	}
 }
 

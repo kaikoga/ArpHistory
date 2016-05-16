@@ -16,8 +16,8 @@ class MacroArpCollectionFieldBase extends MacroArpFieldBase {
 
 	public function buildInitBlock(initBlock:Array<Expr>):Void {
 		if (this.definition.nativeDefault == null) {
-			var iFieldName:String = this.iFieldName;
-			initBlock.push(macro @:pos(this.nativePos) { this.$iFieldName = ${this.createEmptyDs(this.concreteNativeTypePath())}; } );
+			var iNativeName:String = this.iNativeName;
+			initBlock.push(macro @:pos(this.nativePos) { this.$iNativeName = ${this.createEmptyDs(this.concreteNativeTypePath())}; } );
 		}
 	}
 
