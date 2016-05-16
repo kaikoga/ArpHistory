@@ -42,8 +42,8 @@ class MacroArpFieldBase {
 	private function get_eArpType():Expr {
 		return macro new net.kaikoga.arp.domain.core.ArpType($v{arpType});
 	}
-	private var columnName(get, never):String;
-	private function get_columnName():String {
+	private var fieldName(get, never):String;
+	private function get_fieldName():String {
 		if (metaArpField != null) return metaArpField;
 		return iNativeName;
 	}

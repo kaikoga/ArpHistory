@@ -31,12 +31,12 @@ class MacroArpPrimIntType implements IMacroArpValueType {
 		return macro @:pos(pos) { this.$iFieldName = Std.parseInt(element.value()); };
 	}
 
-	public function readSelf(pos:Position, iFieldName:String, columnName:String):Expr {
-		return macro @:pos(pos) { this.$iFieldName = input.readInt32($v{columnName}); };
+	public function readSelf(pos:Position, iFieldName:String, fieldName:String):Expr {
+		return macro @:pos(pos) { this.$iFieldName = input.readInt32($v{fieldName}); };
 	}
 
-	public function writeSelf(pos:Position, iFieldName:String, columnName:String):Expr {
-		return macro @:pos(pos) { output.writeInt32($v{columnName}, this.$iFieldName); };
+	public function writeSelf(pos:Position, iFieldName:String, fieldName:String):Expr {
+		return macro @:pos(pos) { output.writeInt32($v{fieldName}, this.$iFieldName); };
 	}
 
 	public function copyFrom(pos:Position, iFieldName:String):Expr {

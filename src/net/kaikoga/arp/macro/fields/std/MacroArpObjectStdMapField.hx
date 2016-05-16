@@ -64,7 +64,7 @@ class MacroArpObjectStdMapField extends MacroArpObjectCollectionFieldBase implem
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
 		var caseBlock:Array<Expr> = [];
 		cases.push({
-			values: [macro @:pos(this.nativePos) $v{this.columnName}],
+			values: [macro @:pos(this.nativePos) $v{this.fieldName}],
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
@@ -73,12 +73,12 @@ class MacroArpObjectStdMapField extends MacroArpObjectCollectionFieldBase implem
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
 		// FIXME persist over serialize
-		fieldBlock.push(macro @:pos(this.nativePos) { input.readPersistable($v{this.columnName}, this.$iNativeName); });
+		fieldBlock.push(macro @:pos(this.nativePos) { input.readPersistable($v{this.fieldName}, this.$iNativeName); });
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
 		// FIXME persist over serialize
-		fieldBlock.push(macro @:pos(this.nativePos) { output.writePersistable($v{this.columnName}, this.$iNativeName); });
+		fieldBlock.push(macro @:pos(this.nativePos) { output.writePersistable($v{this.fieldName}, this.$iNativeName); });
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {

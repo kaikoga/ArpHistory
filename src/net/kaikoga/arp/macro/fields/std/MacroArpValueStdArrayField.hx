@@ -43,7 +43,7 @@ class MacroArpValueStdArrayField extends MacroArpValueCollectionFieldBase implem
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
 		var caseBlock:Array<Expr> = [];
 		cases.push({
-			values: [macro @:pos(this.nativePos) $v{this.columnName}],
+			values: [macro @:pos(this.nativePos) $v{this.fieldName}],
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
