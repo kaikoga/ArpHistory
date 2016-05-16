@@ -24,12 +24,12 @@ class MacroArpPrimBoolType implements IMacroArpValueType {
 		return macro @:pos(pos) { this.$iFieldName = element.value() == "true"; };
 	}
 
-	public function readSelf(pos:Position, iFieldName:String, eColumnName:String):Expr {
-		return macro @:pos(pos) { this.$iFieldName = input.readBool($v{eColumnName}); };
+	public function readSelf(pos:Position, iFieldName:String, columnName:String):Expr {
+		return macro @:pos(pos) { this.$iFieldName = input.readBool($v{columnName}); };
 	}
 
-	public function writeSelf(pos:Position, iFieldName:String, eColumnName:String):Expr {
-		return macro @:pos(pos) { output.writeBool($v{eColumnName}, this.$iFieldName); };
+	public function writeSelf(pos:Position, iFieldName:String, columnName:String):Expr {
+		return macro @:pos(pos) { output.writeBool($v{columnName}, this.$iFieldName); };
 	}
 
 	public function copyFrom(pos:Position, iFieldName:String):Expr {

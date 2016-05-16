@@ -42,7 +42,7 @@ class MacroArpValueStdArrayField extends MacroArpValueCollectionFieldBase implem
 
 		var caseBlock:Array<Expr> = [];
 		cases.push({
-			values: [macro @:pos(this.nativePos) $v{this.eColumnName}],
+			values: [macro @:pos(this.nativePos) $v{this.columnName}],
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 

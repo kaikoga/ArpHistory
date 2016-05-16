@@ -66,8 +66,8 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 
 		for (field in Context.getBuildFields()) {
 			var definition:MacroArpFieldDefinition = new MacroArpFieldDefinition(field);
-			var arpObjectField:IMacroArpField = MacroArpFieldBuilder.fromDefinition(definition);
-			if (arpObjectField == null) {
+			var arpField:IMacroArpField = MacroArpFieldBuilder.fromDefinition(definition);
+			if (arpField == null) {
 				outFields.push(field);
 				if (definition.metaArpInit != null) {
 					outFields = outFields.concat(this.genVoidCallbackField("arpSelfInit", definition.metaArpInit));
@@ -82,9 +82,9 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 					outFields = outFields.concat(this.genVoidCallbackField("arpSelfDispose", definition.metaArpDispose));
 				}
 			} else {
-				this.arpObjectFields.push(arpObjectField);
-				templateInfo.fields.push(definition.toFieldInfo());
-				arpObjectField.buildField(outFields);
+				this.arpFields.push(arpField);
+				templateInfo.fields.push(arpField.toFieldInfo());
+				arpField.buildField(outFields);
 			}
 		}
 

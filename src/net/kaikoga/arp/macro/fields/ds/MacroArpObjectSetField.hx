@@ -61,11 +61,11 @@ class MacroArpObjectSetField extends MacroArpObjectCollectionFieldBase implement
 
 		var caseBlock:Array<Expr> = [];
 		cases.push({
-			values: [macro @:pos(this.nativePos) $v{this.eColumnName}],
+			values: [macro @:pos(this.nativePos) $v{this.columnName}],
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.slotSet.add(this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType($v{this.metaArpType}))); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.slotSet.add(this._arpDomain.loadSeed(element, ${this.eArpType})); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {

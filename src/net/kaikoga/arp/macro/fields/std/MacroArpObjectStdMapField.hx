@@ -63,21 +63,21 @@ class MacroArpObjectStdMapField extends MacroArpObjectCollectionFieldBase implem
 
 		var caseBlock:Array<Expr> = [];
 		cases.push({
-			values: [macro @:pos(this.nativePos) $v{this.eColumnName}],
+			values: [macro @:pos(this.nativePos) $v{this.columnName}],
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.slots.set(element.key(uniqId), this._arpDomain.loadSeed(element, new net.kaikoga.arp.domain.core.ArpType($v{this.metaArpType}))); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iFieldName.slots.set(element.key(uniqId), this._arpDomain.loadSeed(element, ${this.eArpType})); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
 		// FIXME persist over serialize
-		fieldBlock.push(macro @:pos(this.nativePos) { input.readPersistable($v{this.eColumnName}, this.$iFieldName); });
+		fieldBlock.push(macro @:pos(this.nativePos) { input.readPersistable($v{this.columnName}, this.$iFieldName); });
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
 		// FIXME persist over serialize
-		fieldBlock.push(macro @:pos(this.nativePos) { output.writePersistable($v{this.eColumnName}, this.$iFieldName); });
+		fieldBlock.push(macro @:pos(this.nativePos) { output.writePersistable($v{this.columnName}, this.$iFieldName); });
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {

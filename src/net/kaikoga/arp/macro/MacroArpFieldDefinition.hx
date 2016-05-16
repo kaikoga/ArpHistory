@@ -17,8 +17,7 @@ class MacroArpFieldDefinition {
 	public var nativeType(default, null):ComplexType;
 	public var nativeDefault(default, null):Expr;
 
-	public var metaArpValue:Bool = false;
-	public var metaArpType:String = null;
+	public var metaArpEnabled:Bool = false;
 	public var metaArpBarrier:Bool = false;
 	public var metaArpField:String = null;
 	public var metaArpInit:String = null;
@@ -40,10 +39,10 @@ class MacroArpFieldDefinition {
 
 		for (meta in nativeField.meta) {
 			switch (meta.name) {
-				case ":arpType": metaArpType = valueOf(meta.params[0]);
-				case ":arpValue": metaArpValue = true;
+				case ":arpType": metaArpEnabled = true; // TODO delete
+				case ":arpValue": metaArpEnabled = true; // TODO delete
 				case ":arpBarrier": metaArpBarrier = true;
-				case ":arpField": metaArpField = valueOf(meta.params[0]);
+				case ":arpField": metaArpEnabled = true; metaArpField = valueOf(meta.params[0]);
 				case ":arpInit": metaArpInit = nativeField.name;
 				case ":arpHeatUp": metaArpHeatUp = nativeField.name;
 				case ":arpHeatDown": metaArpHeatDown = nativeField.name;
@@ -58,30 +57,25 @@ class MacroArpFieldDefinition {
 	}
 
 	public function expectPlainField():Bool {
-		if (this.metaArpValue || this.metaArpType != null || this.metaArpBarrier || this.metaArpField != null) {
+		if (this.metaArpEnabled || this.metaArpBarrier) {
 			Context.error("field type too complex: " + this.nativeType.toString(), this.nativeField.pos);
 		}
 		return true;
 	}
 
 	public function expectValueField():Bool {
-		if (metaArpType != null) Context.error('${this.nativeType.toString()} must be @:arpValue', this.nativeField.pos);
 		if (metaArpBarrier) Context.error('@:arpBarrier not available for ${this.nativeType.toString()}', this.nativeField.pos);
-		return metaArpValue;
+		return this.metaArpEnabled;
 	}
 
 	public function expectReferenceField():Bool {
-		if (this.metaArpValue) Context.error('${this.nativeType.toString()} must be @:arpType', this.nativeField.pos);
-		return this.metaArpType != null;
-	}
-
-	public function toFieldInfo():ArpFieldInfo {
-		return new ArpFieldInfo(this.metaArpField, new ArpType(this.metaArpType), this.nativeField.name, this.metaArpBarrier);
+		return this.metaArpEnabled;
 	}
 
 	private static function valueOf(expr:ExprOf<String>):String {
 		return switch (expr.expr) {
 			case ExprDef.EConst(Constant.CString(v)): return v;
+			case ExprDef.EConst(Constant.CIdent("null")): return null;
 			case _: Context.error("invalid expr", Context.currentPos());
 		}
 	}

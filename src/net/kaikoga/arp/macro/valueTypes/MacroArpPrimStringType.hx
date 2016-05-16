@@ -24,16 +24,16 @@ class MacroArpPrimStringType implements IMacroArpValueType {
 		return macro @:pos(pos) { this.$iFieldName = element.value(); };
 	}
 
-	public function readSelf(pos:Position, iFieldName:String, eColumnName:String):Expr {
+	public function readSelf(pos:Position, iFieldName:String, columnName:String):Expr {
 		// if (nonNull)
-		// return macro @:pos(pos) { this.$iFieldName = input.readUtf($v{eColumnName}); };
-		return macro @:pos(pos) { this.$iFieldName = net.kaikoga.arp.persistable.PersistableTool.readNullableUtf(input, $v{eColumnName}); };
+		// return macro @:pos(pos) { this.$iFieldName = input.readUtf($v{columnName}); };
+		return macro @:pos(pos) { this.$iFieldName = net.kaikoga.arp.persistable.PersistableTool.readNullableUtf(input, $v{columnName}); };
 	}
 
-	public function writeSelf(pos:Position, iFieldName:String, eColumnName:String):Expr {
+	public function writeSelf(pos:Position, iFieldName:String, columnName:String):Expr {
 		// if (nonNull)
 		// return macro @:pos(pos) { output.writeUtf($v{iFieldName}, this.$iFieldName); };
-		return macro @:pos(pos) { net.kaikoga.arp.persistable.PersistableTool.writeNullableUtf(output, $v{eColumnName}, this.$iFieldName); };
+		return macro @:pos(pos) { net.kaikoga.arp.persistable.PersistableTool.writeNullableUtf(output, $v{columnName}, this.$iFieldName); };
 	}
 
 	public function copyFrom(pos:Position, iFieldName:String):Expr {

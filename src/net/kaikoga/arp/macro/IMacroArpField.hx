@@ -2,6 +2,7 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
+import net.kaikoga.arp.domain.reflect.ArpFieldInfo;
 import haxe.macro.Expr;
 
 interface IMacroArpField {
@@ -15,6 +16,8 @@ interface IMacroArpField {
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void;
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void;
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void;
+
+	public function toFieldInfo():ArpFieldInfo;
 }
 
 #end
