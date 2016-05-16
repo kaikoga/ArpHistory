@@ -39,17 +39,15 @@ class MacroArpFieldDefinition {
 
 		for (meta in nativeField.meta) {
 			switch (meta.name) {
-				case ":arpType": metaArpEnabled = true; // TODO delete
-				case ":arpValue": metaArpEnabled = true; // TODO delete
-				case ":arpBarrier": metaArpBarrier = true;
 				case ":arpField": metaArpEnabled = true; metaArpField = valueOf(meta.params[0]);
+				case ":arpBarrier": metaArpBarrier = true;
 				case ":arpInit": metaArpInit = nativeField.name;
 				case ":arpHeatUp": metaArpHeatUp = nativeField.name;
 				case ":arpHeatDown": metaArpHeatDown = nativeField.name;
 				case ":arpDispose": metaArpDispose = nativeField.name;
 				case ":arpWithoutBackend": Context.warning('Not supported in this backend', nativeField.pos);
 				case m if (m.indexOf(":arp") == 0) :
-					Context.error('Unsupported arp metadata', this.nativeField.pos);
+					Context.error('Unsupported arp metadata @' + m, this.nativeField.pos);
 				case m if (m.indexOf("arp") == 0) :
 					Context.error('Use compile time metadata for arp metadatas; "@:arp", not "@arp".', this.nativeField.pos);
 			}
@@ -73,6 +71,7 @@ class MacroArpFieldDefinition {
 	}
 
 	private static function valueOf(expr:ExprOf<String>):String {
+		if (expr == null) return null;
 		return switch (expr.expr) {
 			case ExprDef.EConst(Constant.CString(v)): return v;
 			case ExprDef.EConst(Constant.CIdent("null")): return null;

@@ -12,13 +12,13 @@ import net.kaikoga.arp.domain.IArpObject;
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("mock", "structMacro"))
 class MockStructMacroArpObject implements IArpObject {
 
-	@:arpValue public var arpArea2dField:ArpArea2d;
-	@:arpValue public var arpColorField:ArpColor;
-	@:arpValue public var arpDirectionField:ArpDirection;
-	@:arpValue public var arpHitAreaField:ArpHitArea;
-	@:arpValue public var arpParamsField:ArpParams;
-	@:arpValue public var arpPositionField:ArpPosition;
-	@:arpValue public var arpRangeField:ArpRange;
+	@:arpField public var arpArea2dField:ArpArea2d;
+	@:arpField public var arpColorField:ArpColor;
+	@:arpField public var arpDirectionField:ArpDirection;
+	@:arpField public var arpHitAreaField:ArpHitArea;
+	@:arpField public var arpParamsField:ArpParams;
+	@:arpField public var arpPositionField:ArpPosition;
+	@:arpField public var arpRangeField:ArpRange;
 
 	public function new() {
 	}

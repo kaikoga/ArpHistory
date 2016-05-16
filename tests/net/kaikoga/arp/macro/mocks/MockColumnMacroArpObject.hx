@@ -5,12 +5,12 @@ import net.kaikoga.arp.domain.IArpObject;
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("mock", "columnMacro"))
 class MockColumnMacroArpObject implements IArpObject {
 
-	@:arpValue @:arpField("if") public var intField:Int = 0;
-	@:arpValue @:arpField("ff") public var floatField:Float = 0;
-	@:arpValue @:arpField("bf") public var boolField:Bool = false;
-	@:arpValue @:arpField("sf") public var stringField:String = null;
+	@:arpField("if") public var intField:Int = 0;
+	@:arpField("ff") public var floatField:Float = 0;
+	@:arpField("bf") public var boolField:Bool = false;
+	@:arpField("sf") public var stringField:String = null;
 
-	@:arpBarrier @:arpType("mock") @:arpField("rf") public var refField:MockColumnMacroArpObject;
+	@:arpBarrier @:arpField("rf") public var refField:MockColumnMacroArpObject;
 
 	public function new() {
 	}

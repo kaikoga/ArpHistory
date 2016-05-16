@@ -5,22 +5,22 @@ import net.kaikoga.arp.domain.IArpObject;
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("mock", "stdDsMacro"))
 class MockStdDsMacroArpObject implements IArpObject {
 
-	@:arpValue public var intStdArray:Array<Int>;
-	@:arpValue public var intStdList:List<Int>;
-	@:arpValue public var intStdMap:Map<String, Int>;
-	@:arpValue public var floatStdArray:Array<Float>;
-	@:arpValue public var floatStdList:List<Float>;
-	@:arpValue public var floatStdMap:Map<String, Float>;
-	@:arpValue public var boolStdArray:Array<Bool>;
-	@:arpValue public var boolStdList:List<Bool>;
-	@:arpValue public var boolStdMap:Map<String, Bool>;
-	@:arpValue public var stringStdArray:Array<String>;
-	@:arpValue public var stringStdList:List<String>;
-	@:arpValue public var stringStdMap:Map<String, String>;
+	@:arpField public var intStdArray:Array<Int>;
+	@:arpField public var intStdList:List<Int>;
+	@:arpField public var intStdMap:Map<String, Int>;
+	@:arpField public var floatStdArray:Array<Float>;
+	@:arpField public var floatStdList:List<Float>;
+	@:arpField public var floatStdMap:Map<String, Float>;
+	@:arpField public var boolStdArray:Array<Bool>;
+	@:arpField public var boolStdList:List<Bool>;
+	@:arpField public var boolStdMap:Map<String, Bool>;
+	@:arpField public var stringStdArray:Array<String>;
+	@:arpField public var stringStdList:List<String>;
+	@:arpField public var stringStdMap:Map<String, String>;
 
-	//@:arpType("mock") public var refStdArray:Array<MockStdDsMacroArpObject>;
-	//@:arpType("mock") public var refStdList:List<MockStdDsMacroArpObject>;
-	@:arpType("mock") public var refStdMap:Map<String, MockStdDsMacroArpObject>;
+	// @:arpField public var refStdArray:Array<MockStdDsMacroArpObject>;
+	// @:arpField public var refStdList:List<MockStdDsMacroArpObject>;
+	@:arpField public var refStdMap:Map<String, MockStdDsMacroArpObject>;
 
 	public function new() {
 	}
