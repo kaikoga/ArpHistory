@@ -2,10 +2,13 @@ package net.kaikoga.arp.macro.fields.ds;
 
 #if macro
 
+import net.kaikoga.arp.domain.reflect.ArpFieldDs;
 import net.kaikoga.arp.macro.fields.base.MacroArpValueCollectionFieldBase;
 import haxe.macro.Expr;
 
 class MacroArpValueMapField extends MacroArpValueCollectionFieldBase implements IMacroArpField {
+
+	override private function get_arpFieldDs():ArpFieldDs return ArpFieldDs.DsIMap;
 
 	override private function guessConcreteNativeType():ComplexType {
 		var contentNativeType:ComplexType = this.type.nativeType();

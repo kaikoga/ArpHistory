@@ -2,10 +2,13 @@ package net.kaikoga.arp.macro.fields.ds;
 
 #if macro
 
+import net.kaikoga.arp.domain.reflect.ArpFieldDs;
 import net.kaikoga.arp.macro.fields.base.MacroArpObjectCollectionFieldBase;
 import haxe.macro.Expr;
 
 class MacroArpObjectSetField extends MacroArpObjectCollectionFieldBase implements IMacroArpField {
+
+	override private function get_arpFieldDs():ArpFieldDs return ArpFieldDs.DsISet;
 
 	private var _nativeType:ComplexType;
 	override private function get_nativeType():ComplexType return _nativeType;

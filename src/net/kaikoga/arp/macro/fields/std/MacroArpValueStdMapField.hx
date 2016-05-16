@@ -2,10 +2,13 @@ package net.kaikoga.arp.macro.fields.std;
 
 #if macro
 
+import net.kaikoga.arp.domain.reflect.ArpFieldDs;
 import net.kaikoga.arp.macro.fields.base.MacroArpValueCollectionFieldBase;
 import haxe.macro.Expr;
 
 class MacroArpValueStdMapField extends MacroArpValueCollectionFieldBase implements IMacroArpField {
+
+	override private function get_arpFieldDs():ArpFieldDs return ArpFieldDs.StdMap;
 
 	override private function guessConcreteNativeType():ComplexType {
 		return macro:Map;

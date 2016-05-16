@@ -2,7 +2,10 @@ package net.kaikoga.arp.macro.valueTypes;
 
 #if macro
 
+import net.kaikoga.arp.domain.core.ArpType;
+import net.kaikoga.arp.domain.reflect.ArpFieldType;
 import haxe.macro.Expr;
+
 class MacroArpPrimFloatType implements IMacroArpValueType {
 
 	public function new() {
@@ -10,6 +13,10 @@ class MacroArpPrimFloatType implements IMacroArpValueType {
 
 	public function nativeType():ComplexType {
 		return macro:Float;
+	}
+
+	public function arpFieldType():ArpFieldType {
+		return ArpFieldType.PrimFloat(new ArpType("Float"));
 	}
 
 	public function createEmptyVo(pos:Position):Expr {

@@ -2,6 +2,7 @@ package net.kaikoga.arp.macro.valueTypes;
 
 #if macro
 
+import net.kaikoga.arp.domain.reflect.ArpFieldType;
 import haxe.macro.Expr;
 
 class MacroArpStructType implements IMacroArpValueType {
@@ -19,6 +20,9 @@ class MacroArpStructType implements IMacroArpValueType {
 	}
 
 	public function nativeType():ComplexType return _nativeType;
+	public function arpFieldType():ArpFieldType {
+		return ArpFieldType.StructType(MacroArpObjectRegistry.arpTypeOf(_nativeType));
+	}
 
 	public function createEmptyVo(pos:Position):Expr {
 		return {

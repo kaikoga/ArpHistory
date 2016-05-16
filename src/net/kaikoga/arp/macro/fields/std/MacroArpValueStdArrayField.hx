@@ -2,10 +2,13 @@ package net.kaikoga.arp.macro.fields.std;
 
 #if macro
 
+import net.kaikoga.arp.domain.reflect.ArpFieldDs;
 import net.kaikoga.arp.macro.fields.base.MacroArpValueCollectionFieldBase;
 import haxe.macro.Expr;
 
 class MacroArpValueStdArrayField extends MacroArpValueCollectionFieldBase implements IMacroArpField {
+
+	override private function get_arpFieldDs():ArpFieldDs return ArpFieldDs.StdArray;
 
 	override private function createEmptyDs(concreteNativeTypePath:TypePath):Expr {
 		return macro [];

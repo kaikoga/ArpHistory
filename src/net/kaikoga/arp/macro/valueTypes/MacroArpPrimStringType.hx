@@ -2,6 +2,8 @@ package net.kaikoga.arp.macro.valueTypes;
 
 #if macro
 
+import net.kaikoga.arp.domain.core.ArpType;
+import net.kaikoga.arp.domain.reflect.ArpFieldType;
 import haxe.macro.Expr;
 class MacroArpPrimStringType implements IMacroArpValueType {
 
@@ -10,6 +12,10 @@ class MacroArpPrimStringType implements IMacroArpValueType {
 
 	public function nativeType():ComplexType {
 		return macro:String;
+	}
+
+	public function arpFieldType():ArpFieldType {
+		return ArpFieldType.PrimString(new ArpType("String"));
 	}
 
 	public function createEmptyVo(pos:Position):Expr {
