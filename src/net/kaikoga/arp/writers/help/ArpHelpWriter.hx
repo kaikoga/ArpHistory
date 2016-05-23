@@ -8,7 +8,7 @@ class ArpHelpWriter {
 	public function new() {
 	}
 
-	public function write(domainInfo:ArpDomainInfo):Void {
+	public function write(domainInfo:ArpDomainInfo, prefix:String = "doc/"):Void {
 		var context:ArpWriterContext = new ArpWriterContext();
 
 		context.get("index_types.html").addString(HTML_HEAD);
@@ -26,7 +26,7 @@ class ArpHelpWriter {
 		context.get("toc_templates.html").addString('<div><a href="index_templates.html" target="body">All Templates</a></div>');
 		context.get("toc_templates.html").addString('<hr />');
 
-		var templates:Map<String, Array<ArpTemplateInfo>> = domainInfo.groupByArpType(); 
+		var templates:Map<String, Array<ArpTemplateInfo>> = domainInfo.groupByArpType();
 		for (arpType in templates.keys()) {
 			context.get("index_types.html").addString('<div><a href="index_templates.html#${arpType}">${arpType}</a></div>');
 			context.get("index_templates.html").addString('<a id=${arpType} name=${arpType}></a>');
@@ -55,7 +55,7 @@ class ArpHelpWriter {
 
 		context.get("index.html").addString(HTML_FRAMES);
 
-		context.writeAll("doc/");
+		context.writeAll(prefix);
 	}
 
 	public static inline var HTML_HEAD:String = '<html>\n<head><title>ArpDomain Reference</title></head>\n<body>\n';

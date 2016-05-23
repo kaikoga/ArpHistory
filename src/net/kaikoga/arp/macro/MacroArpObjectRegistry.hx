@@ -40,7 +40,9 @@ class MacroArpObjectRegistry {
 			registerBuiltin("Range", "net.kaikoga.arp.structs.ArpRange");
 			domainInfo = new ArpDomainInfo();
 			// in case of reuse, nvm
+			#if arp_doc
 			Context.onAfterGenerate(onAfterGenerate);
+			#end
 		}
 		templateInfos.set(fqn, templateInfo);
 		domainInfo.templates.push(templateInfo);
@@ -62,8 +64,10 @@ class MacroArpObjectRegistry {
 
 	public static function onAfterGenerate():Void {
 		var writer:ArpHelpWriter = new ArpHelpWriter();
-		writer.write(domainInfo);
-		
+		var prefix:String = Context.definedValue("arp_doc");
+		if (prefix == "1") prefix = "doc/";
+		if (prefix.indexOf("/") < 0) prefix = prefix + "/";
+		writer.write(domainInfo, prefix);
 	}
 }
 
