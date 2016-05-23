@@ -59,7 +59,7 @@ class MacroArpFieldBase {
 
 	@:final public function toFieldInfo():ArpFieldInfo {
 		return new ArpFieldInfo(
-			this.metaArpField,
+			this.metaArpField != null ? this.metaArpField : this.nativeField.name,
 			this.arpFieldType,
 			this.arpFieldDs,
 			this.nativeField.name,

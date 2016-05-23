@@ -2,6 +2,9 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
+import net.kaikoga.arp.writers.help.ArpHelpWriter;
+import haxe.macro.Context;
+import net.kaikoga.arp.domain.reflect.ArpDomainInfo;
 import haxe.macro.ComplexTypeTools;
 import haxe.macro.TypeTools;
 import haxe.macro.Expr.ComplexType;
@@ -10,6 +13,7 @@ import net.kaikoga.arp.domain.reflect.ArpTemplateInfo;
 
 class MacroArpObjectRegistry {
 
+	private static var domainInfo:ArpDomainInfo;
 	private static var templateInfos:Map<String, ArpTemplateInfo>;
 
 	private static function registerBuiltin(name:String, fqn:String = null):Void {
@@ -21,6 +25,7 @@ class MacroArpObjectRegistry {
 		if (templateInfos == null) {
 			templateInfos = new Map();
 
+			// don't add these to ArpDomainInfo
 			registerBuiltin("Int");
 			registerBuiltin("Float");
 			registerBuiltin("Bool");
@@ -33,9 +38,12 @@ class MacroArpObjectRegistry {
 			registerBuiltin("Params", "net.kaikoga.arp.structs.ArpParams");
 			registerBuiltin("Position", "net.kaikoga.arp.structs.ArpPosition");
 			registerBuiltin("Range", "net.kaikoga.arp.structs.ArpRange");
+			domainInfo = new ArpDomainInfo();
 			// in case of reuse, nvm
+			Context.onAfterGenerate(onAfterGenerate);
 		}
 		templateInfos.set(fqn, templateInfo);
+		domainInfo.templates.push(templateInfo);
 	}
 
 	private static function arpTypeOfFqn(fqn:String):ArpType {
@@ -50,6 +58,12 @@ class MacroArpObjectRegistry {
 
 	public static function arpTypeOf(nativeType:ComplexType):ArpType {
 		return arpTypeOfFqn(toFqn(nativeType));
+	}
+
+	public static function onAfterGenerate():Void {
+		var writer:ArpHelpWriter = new ArpHelpWriter();
+		writer.write(domainInfo);
+		
 	}
 }
 
