@@ -18,7 +18,7 @@ class MacroArpObjectRegistry {
 
 	private static function registerBuiltin(name:String, fqn:String = null):Void {
 		if (fqn == null) fqn = name;
-		templateInfos.set(fqn, new ArpTemplateInfo(new ArpType(name), name, null));
+		templateInfos.set(fqn, new ArpTemplateInfo(new ArpType(name), name, fqn, null));
 	}
 
 	public static function registerTemplateInfo(fqn:String, templateInfo:ArpTemplateInfo):Void {

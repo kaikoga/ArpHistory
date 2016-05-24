@@ -11,12 +11,13 @@ class ArpTemplateHelpPrinter {
 
 	public function new() {
 	}
-	
+
 	public function print(template:ArpTemplateInfo):String {
 		this.template = template;
-		
+
 		var result:String = "";
-		result += '<h2>${template.templateName}</h2>\n';
+		result += '<h2>${template.arpType}:${template.templateName}</h2>\n';
+		result += '<p>${template.fqn}</p>\n';
 		result += '<div><pre>${this.printXml()}</pre></div>\n\n';
 		return result;
 	}
@@ -58,7 +59,7 @@ class ArpTemplateHelpPrinter {
 			case ArpFieldType.ReferenceType(arpType):
 				node = Xml.parse('<${field.name} ref="${placeholder}" />').firstElement();
 		}
-		
+
 		switch (field.fieldDs) {
 			case ArpFieldDs.Scalar:
 				xml.set('${field.name}', placeholder);

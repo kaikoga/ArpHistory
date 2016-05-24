@@ -21,7 +21,7 @@ class ArpHelpWriter {
 		context.get("index_templates.html").addString('<h1>ArpDomain Reference</h1>');
 		context.get("index_templates.html").addString('<hr />');
 
-		context.get("toc_types.html").addString('<div><a href="index_types.html" target="body">All Banks</a></div>');
+		context.get("toc_types.html").addString('<div><a href="index_types.html" target="body">All Types</a></div>');
 		context.get("toc_types.html").addString('<hr />');
 		context.get("toc_templates.html").addString('<div><a href="index_templates.html" target="body">All Templates</a></div>');
 		context.get("toc_templates.html").addString('<hr />');

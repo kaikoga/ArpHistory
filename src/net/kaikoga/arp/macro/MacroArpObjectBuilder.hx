@@ -58,8 +58,9 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 	}
 
 	public function run() {
-		var templateInfo:ArpTemplateInfo = new ArpTemplateInfo(new ArpType(this.arpTypeName), this.arpTemplateName, []);
-		MacroArpObjectRegistry.registerTemplateInfo(TypeTools.toString(Context.getLocalType()), templateInfo);
+		var fqn:String = TypeTools.toString(Context.getLocalType());
+		var templateInfo:ArpTemplateInfo = new ArpTemplateInfo(new ArpType(this.arpTypeName), this.arpTemplateName, fqn, []);
+		MacroArpObjectRegistry.registerTemplateInfo(fqn, templateInfo);
 
 		analyzeBaseClasses();
 		var outFields:Array<Field> = [];
