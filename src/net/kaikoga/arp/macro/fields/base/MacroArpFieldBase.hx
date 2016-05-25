@@ -2,6 +2,7 @@ package net.kaikoga.arp.macro.fields.base;
 
 #if macro
 
+import net.kaikoga.arp.macro.MacroArpFieldDefinition.MacroArpMetaArpField;
 import net.kaikoga.arp.domain.reflect.ArpFieldDs;
 import net.kaikoga.arp.domain.reflect.ArpFieldType;
 import net.kaikoga.arp.domain.core.ArpType;
@@ -17,10 +18,8 @@ class MacroArpFieldBase {
 	private var nativeType(get, never):ComplexType;
 	private function get_nativeType():ComplexType return definition.nativeType;
 
-	private var metaArpBarrier(get, never):Bool;
-	private function get_metaArpBarrier():Bool return definition.metaArpBarrier;
-	private var metaArpField(get, never):String;
-	private function get_metaArpField():String return definition.metaArpField;
+	private var arpBarrier(get, never):Bool;
+	private function get_arpBarrier():Bool return definition.metaArpBarrier;
 
 	private var nativePos(get, never):Position;
 	private function get_nativePos():Position return this.nativeField.pos;
@@ -44,8 +43,18 @@ class MacroArpFieldBase {
 	}
 	private var fieldName(get, never):String;
 	private function get_fieldName():String {
-		if (metaArpField != null) return metaArpField;
-		return iNativeName;
+		return switch (definition.metaArpField) {
+			case MacroArpMetaArpField.Name(v): v;
+			case _: iNativeName;
+		}
+	}
+	public var isSeedable(get, never):Bool;
+	private function get_isSeedable():Bool {
+		return switch (definition.metaArpField) {
+			case MacroArpMetaArpField.Unmanaged: false;
+			case MacroArpMetaArpField.Runtime: false;
+			case _: true;
+		}
 	}
 
 	private var arpFieldType(get, never):ArpFieldType;
@@ -59,11 +68,11 @@ class MacroArpFieldBase {
 
 	@:final public function toFieldInfo():ArpFieldInfo {
 		return new ArpFieldInfo(
-			this.metaArpField != null ? this.metaArpField : this.nativeField.name,
+			this.fieldName,
 			this.arpFieldType,
 			this.arpFieldDs,
 			this.nativeField.name,
-			this.metaArpBarrier
+			this.arpBarrier
 		);
 	}
 }

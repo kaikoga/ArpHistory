@@ -15,9 +15,8 @@ class MacroArpFieldDefinition {
 	public var nativeType(default, null):ComplexType;
 	public var nativeDefault(default, null):Expr;
 
-	public var metaArpEnabled:Bool = false;
 	public var metaArpBarrier:Bool = false;
-	public var metaArpField:String = null;
+	public var metaArpField:MacroArpMetaArpField = MacroArpMetaArpField.Unmanaged;
 	public var metaArpInit:String = null;
 	public var metaArpHeatUp:String = null;
 	public var metaArpHeatDown:String = null;
@@ -37,7 +36,7 @@ class MacroArpFieldDefinition {
 
 		for (meta in nativeField.meta) {
 			switch (meta.name) {
-				case ":arpField": metaArpEnabled = true; metaArpField = valueOf(meta.params[0]);
+				case ":arpField": metaArpField = parseMetaArpField(meta.params[0]);
 				case ":arpBarrier": metaArpBarrier = true;
 				case ":arpInit": metaArpInit = nativeField.name;
 				case ":arpHeatUp": metaArpHeatUp = nativeField.name;
@@ -52,8 +51,15 @@ class MacroArpFieldDefinition {
 		}
 	}
 
+	private function isArpManaged():Bool {
+		switch (this.metaArpField) {
+			case MacroArpMetaArpField.Unmanaged: return false;
+			case _: return true;
+		}
+	}
+
 	public function expectPlainField():Bool {
-		if (this.metaArpEnabled || this.metaArpBarrier) {
+		if (this.isArpManaged() || this.metaArpBarrier) {
 			Context.error("field type too complex: " + this.nativeType.toString(), this.nativeField.pos);
 		}
 		return true;
@@ -61,21 +67,28 @@ class MacroArpFieldDefinition {
 
 	public function expectValueField():Bool {
 		if (metaArpBarrier) Context.error('@:arpBarrier not available for ${this.nativeType.toString()}', this.nativeField.pos);
-		return this.metaArpEnabled;
+		return this.isArpManaged();
 	}
 
 	public function expectReferenceField():Bool {
-		return this.metaArpEnabled;
+		return this.isArpManaged();
 	}
 
-	private static function valueOf(expr:ExprOf<String>):String {
-		if (expr == null) return null;
+	private static function parseMetaArpField(expr:ExprOf<String>):MacroArpMetaArpField {
+		if (expr == null) return MacroArpMetaArpField.Default;
 		return switch (expr.expr) {
-			case ExprDef.EConst(Constant.CString(v)): return v;
-			case ExprDef.EConst(Constant.CIdent("null")): return null;
+			case ExprDef.EConst(Constant.CString(v)): return MacroArpMetaArpField.Name(v);
+			case ExprDef.EConst(Constant.CIdent("false")): return MacroArpMetaArpField.Runtime;
+			case ExprDef.EConst(Constant.CIdent("null")): return MacroArpMetaArpField.Default;
 			case _: Context.error("invalid expr", Context.currentPos());
 		}
 	}
 }
 
+enum MacroArpMetaArpField {
+	Unmanaged;
+	Default;
+	Name(s:String);
+	Runtime;
+}
 #end

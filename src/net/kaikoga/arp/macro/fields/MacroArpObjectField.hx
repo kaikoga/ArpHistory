@@ -41,7 +41,7 @@ class MacroArpObjectField extends MacroArpFieldBase implements IMacroArpField {
 	}
 
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {
-		if (this.metaArpBarrier) {
+		if (this.arpBarrier) {
 			heatLaterBlock.push(macro @:pos(this.nativePos) { this._arpDomain.heatLater(this.$iNativeSlot); });
 		}
 	}

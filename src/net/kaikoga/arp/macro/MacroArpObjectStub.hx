@@ -19,7 +19,7 @@ class MacroArpObjectStub {
 	macro private function buildBlock(iFieldName:String):Expr {
 		return macro {
 			var block:Array<Expr> = [];
-			for (aoField in this.arpFields) aoField.$iFieldName(block);
+			for (arpField in this.arpFields) arpField.$iFieldName(block);
 			return block;
 		}
 	}
@@ -52,7 +52,9 @@ class MacroArpObjectStub {
 		var eDefault:Expr = if (isDerived) macro { super.arpConsumeSeedElement(element, uniqId); } else macro null;
 		var expr:Expr = { pos: Context.currentPos(), expr: ExprDef.ESwitch(macro element.typeName(), cases, eDefault) }
 
-		for (aoField in this.arpFields) aoField.buildConsumeSeedElementBlock(cases);
+		for (arpField in this.arpFields) {
+			if (arpField.isSeedable) arpField.buildConsumeSeedElementBlock(cases);
+		}
 
 		return [expr];
 	}

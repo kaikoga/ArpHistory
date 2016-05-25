@@ -44,7 +44,7 @@ class MacroArpObjectStdMapField extends MacroArpObjectCollectionFieldBase implem
 	}
 
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {
-		if (this.metaArpBarrier) {
+		if (this.arpBarrier) {
 			heatLaterBlock.push(macro @:pos(this.nativePos) { for (slot in this.$iNativeName.slots) this._arpDomain.heatLater(slot); });
 		}
 	}

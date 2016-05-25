@@ -6,6 +6,8 @@ import net.kaikoga.arp.domain.reflect.ArpFieldInfo;
 import haxe.macro.Expr;
 
 interface IMacroArpField {
+	public var isSeedable(get, never):Bool;
+
 	public function buildField(outFields:Array<Field>):Void;
 	public function buildInitBlock(initBlock:Array<Expr>):Void;
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void;
