@@ -16,10 +16,13 @@ class MacroArpObjectStub {
 
 	private var arpFields:Array<IMacroArpField> = [];
 
-	macro private function buildBlock(iFieldName:String):Expr {
+	macro private function buildBlock(iFieldName:String, forPersist:Bool = false):Expr {
 		return macro {
 			var block:Array<Expr> = [];
-			for (arpField in this.arpFields) arpField.$iFieldName(block);
+			for (arpField in this.arpFields) {
+				${if (forPersist) macro {if (!arpField.isPersistable) continue; } else macro null }
+				arpField.$iFieldName(block);
+			}
 			return block;
 		}
 	}
@@ -29,8 +32,8 @@ class MacroArpObjectStub {
 	private function buildHeatUpBlock():Array<Expr> return buildBlock("buildHeatUpBlock");
 	private function buildHeatDownBlock():Array<Expr> return buildBlock("buildHeatDownBlock");
 	private function buildDisposeBlock():Array<Expr> return buildBlock("buildDisposeBlock");
-	private function buildReadSelfBlock():Array<Expr> return buildBlock("buildReadSelfBlock");
-	private function buildWriteSelfBlock():Array<Expr> return buildBlock("buildWriteSelfBlock");
+	private function buildReadSelfBlock():Array<Expr> return buildBlock("buildReadSelfBlock", true);
+	private function buildWriteSelfBlock():Array<Expr> return buildBlock("buildWriteSelfBlock", true);
 	private function buildCopyFromBlock():Array<Expr> return buildBlock("buildCopyFromBlock");
 
 	private function genSelfTypePath():TypePath {

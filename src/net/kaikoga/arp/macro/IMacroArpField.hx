@@ -7,6 +7,7 @@ import haxe.macro.Expr;
 
 interface IMacroArpField {
 	public var isSeedable(get, never):Bool;
+	public var isPersistable(get, never):Bool;
 
 	public function buildField(outFields:Array<Field>):Void;
 	public function buildInitBlock(initBlock:Array<Expr>):Void;

@@ -17,6 +17,7 @@ class MacroArpFieldDefinition {
 
 	public var metaArpBarrier:Bool = false;
 	public var metaArpField:MacroArpMetaArpField = MacroArpMetaArpField.Unmanaged;
+	public var metaArpVolatile:Bool = false;
 	public var metaArpInit:String = null;
 	public var metaArpHeatUp:String = null;
 	public var metaArpHeatDown:String = null;
@@ -37,6 +38,7 @@ class MacroArpFieldDefinition {
 		for (meta in nativeField.meta) {
 			switch (meta.name) {
 				case ":arpField": metaArpField = parseMetaArpField(meta.params[0]);
+				case ":arpVolatile": metaArpVolatile = true;
 				case ":arpBarrier": metaArpBarrier = true;
 				case ":arpInit": metaArpInit = nativeField.name;
 				case ":arpHeatUp": metaArpHeatUp = nativeField.name;

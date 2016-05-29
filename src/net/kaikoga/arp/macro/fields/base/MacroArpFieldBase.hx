@@ -56,6 +56,10 @@ class MacroArpFieldBase {
 			case _: true;
 		}
 	}
+	public var isPersistable(get, never):Bool;
+	private function get_isPersistable():Bool {
+		return !definition.metaArpVolatile;
+	}
 
 	private var arpFieldType(get, never):ArpFieldType;
 	private function get_arpFieldType():ArpFieldType return ArpFieldType.ReferenceType(new ArpType(this.arpType));
