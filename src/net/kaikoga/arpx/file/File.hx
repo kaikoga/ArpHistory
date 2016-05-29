@@ -15,7 +15,7 @@ class File implements IArpObject {
 	private function createImpl():IFileFlashImpl return null;
 
 	public var exists(get, never):Bool;
-	private function get_exists():Bool return flashImpl.get_exists();
+	private function get_exists():Bool return flashImpl.exists;
 
 	public function new() {
 		flashImpl = createImpl();
