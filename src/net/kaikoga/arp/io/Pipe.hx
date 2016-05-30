@@ -1,0 +1,259 @@
+package net.kaikoga.arp.io;
+
+import haxe.io.Bytes;
+
+class Pipe implements IInput implements IOutput implements IBlobInput implements IBlobOutput{
+
+	public var bigEndian(get, set):Bool;
+	private function get_bigEndian():Bool return false;
+	private function set_bigEndian(value:Bool):Bool {
+		if (value == true) throw "big endian not supported"; // unfortunately
+		return false;
+	}
+
+	public var bytes:Bytes;
+
+	private var readPosition:Int = 0;
+	private var writePosition:Int = 0;
+	private var bytesAvailable(get, never):Int;
+	inline private function get_bytesAvailable():Int return writePosition - readPosition;
+
+	private var mode:PipeMode = PipeMode.Write;
+
+	private inline var GC_MINIMUM:Int = 1024;
+
+	public function Pipe() {
+		this.flush();
+	}
+
+	private function writeMode(spaceDemand:Int = 16):Void {
+		switch (this.mode) {
+			case PipeMode.Read:
+				this.mode = PipeMode.Write;
+				if (this.writePosition + spaceDemand > this.bytes.length) this.expand(spaceDemand);
+			case _:
+		}
+	}
+
+	private function readMode(dataDemand:Int = 16):Void {
+		switch (this.mode) {
+			case PipeMode.Write:
+				this.mode = PipeMode.Read;
+				if (this.readPosition >= GC_MINIMUM) this.gc();
+			case _:
+		}
+		if (this.bytesAvailable < dataDemand) throw "EOF";
+	}
+
+	private function gc():Void {
+		var len:Int = this.bytesAvailable;
+		var b:Bytes = new Bytes(GC_MINIMUM + len);
+		b.blit(0, this.bytes, this.readPosition, len);
+		this.bytes = b;
+		this.writePosition -= this.readPosition;
+		this.readPosition = 0;
+	}
+
+	private function expand(spaceDemand:Int):Void {
+		var len:Int = this.bytes.length;
+		while (len < this.writePosition + spaceDemand) len += len;
+		var b:Bytes = new Bytes();
+		b.blit(0, this.bytes, 0, this.writePosition);
+		this.bytes = b;
+	}
+
+	public function flush():Void {
+		this.readPosition = 0;
+		this.writePosition = 0;
+		this.bytes = new Bytes(GC_MINIMUM);
+	}
+
+	//IDataOutput
+
+	public function writeBool(value:Bool):Void {
+		this.writeMode(1);
+		this.bytes.set(this.writePosition, value ? 0xff : 0);
+		this.writePosition += 1;
+	}
+
+	public function writeInt8(value:Int):Void {
+		this.writeMode(1);
+		this.bytes.set(this.writePosition, value & 0xff);
+		this.writePosition += 1;
+	}
+
+	public function writeInt16(value:Int):Void {
+		this.writeMode(2);
+		this.bytes.setUInt16(this.writePosition, value & 0xffff);
+		this.writePosition += 2;
+	}
+
+	public function writeInt32(value:Int):Void {
+		this.writeMode(4);
+		this.bytes.setInt32(this.writePosition, value);
+		this.writePosition += 4;
+	}
+
+	public function writeUInt8(value:UInt):Void {
+		this.writeMode(1);
+		this.bytes.set(this.writePosition, value);
+		this.writePosition += 1;
+	}
+
+	public function writeUInt16(value:UInt):Void {
+		this.writeMode(2);
+		this.bytes.setUInt16(this.writePosition, value);
+		this.writePosition += 2;
+	}
+
+	public function writeUInt32(value:UInt):Void {
+		this.writeMode(4);
+		this.bytes.setInt32(this.writePosition, value);
+		this.writePosition += 4;
+	}
+
+	public function writeFloat(value:Float):Void {
+		this.writeMode(4);
+		this.bytes.setFloat(this.writePosition, value);
+		this.writePosition += 4;
+	}
+
+	public function writeDouble(value:Float):Void {
+		this.writeMode(8);
+		this.bytes.setDouble(this.writePosition, value);
+		this.writePosition += 8;
+	}
+
+	public function writeBytes(bytes:Bytes, offset:UInt = 0, length:UInt = 0):Void {
+		this.writeMode(length);
+		this.bytes.blit(this.writePosition, bytes, offset, length);
+		this.writePosition += length;
+	}
+
+	public function writeUtfBytes(value:String):Void {
+		var bytes:Bytes = Bytes.ofString(value);
+		this.writeBytes(bytes, 0, bytes.length);
+	}
+
+	public function writeBlob(bytes:Bytes):Void {
+		this.writeInt32(bytes.length);
+		this.writeBytes(bytes, 0, bytes.length);
+	}
+
+	public function writeUtfBlob(value:String):Void {
+		this.writeBlob(Bytes.ofString(value));
+	}
+
+	//IDataInput
+	public function readBool():Bool {
+		this.readMode(1);
+		var v = this.bytes.get(this.readPosition);
+		this.readPosition += 1;
+		return v != 0;
+	}
+
+	public function readInt8():Int {
+		this.readMode(1);
+		var v = this.bytes.get(this.readPosition);
+		this.readPosition += 1;
+		return if (v < 0) v | 0xffffff00 else v & 0x000000ff;
+	}
+
+	public function readInt16():Int {
+		this.readMode(2);
+		var v = this.bytes.getUInt16(this.readPosition);
+		this.readPosition += 2;
+		return if (v < 0) v | 0xffff0000 else v & 0x0000ffff;
+	}
+
+	public function readInt32():Int {
+		this.readMode(4);
+		var v = this.bytes.getInt32(this.readPosition);
+		this.readPosition += 4;
+		return v;
+	}
+
+	public function readUInt8():UInt {
+		this.readMode(1);
+		var v = this.bytes.get(this.readPosition);
+		this.readPosition += 1;
+		return v;
+	}
+
+	public function readUInt16():UInt {
+		this.readMode(2);
+		var v = this.bytes.getUInt16(this.readPosition);
+		this.readPosition += 2;
+		return v & 0xffff;
+	}
+
+	public function readUInt32():UInt {
+		this.readMode(4);
+		var v = this.bytes.getInt32(this.readPosition);
+		this.readPosition += 4;
+		return v;
+	}
+
+	public function readFloat():Float {
+		this.readMode(4);
+		var v = this.bytes.getFloat(this.readPosition);
+		this.readPosition += 8;
+		return v;
+	}
+
+	public function readDouble():Float {
+		this.readMode(8);
+		var v = this.bytes.getDouble(this.readPosition);
+		this.readPosition += 8;
+		return v;
+	}
+
+	public function readBytes(bytes:Bytes, offset:UInt = 0, length:UInt = 0):Void {
+		this.readMode(length);
+		bytes.blit(offset, this.bytes, this.readPosition, length);
+		this.readPosition += length;
+	}
+
+	public function readUtfBytes(length:UInt):String {
+		this.readMode(length);
+		var bytes:Bytes = new Bytes(length);
+		bytes.blit(0, this.bytes, this.readPosition, length);
+		this.readPosition += length;
+		return bytes.toString();
+	}
+
+	public function readBlob():Bytes {
+		this.readMode(4);
+		var len:Int = this.bytes.getInt32(this.readPosition);
+		this.readMode(4 + len);
+		var bytes:Bytes = new Bytes(len)
+		bytes.blit(0, this.bytes, this.readPosition + 4, len);
+		this.readPosition += length + 4;
+		return bytes;
+	}
+
+	public function readUtfBlob():String {
+		return this.readBlob().toString();
+	}
+
+	public function nextBytes(limit:Int):Bytes {
+		var len = this.bytesAvailable;
+		if (len > limit) len = limit;
+		var result:Bytes = new Bytes(len);
+		this.readBytes(result, 0, len);
+		return result;
+	}
+
+	public function nextBlob():Null<Bytes> {
+		return try this.readBlob() catch (d:Dynamic) null;
+	}
+
+	public function nextUtfBlob():Null<String> {
+		return try this.readUtfBlob() catch (d:Dynamic) null;
+	}
+}
+
+private enum PipeMode {
+	Write;
+	Read;
+}
