@@ -45,7 +45,7 @@ class InputWrapper implements IInput {
 	}
 
 	public function nextBytes(limit:Int = 0):Bytes {
-		var bytes:Bytes = new Bytes(limit);
+		var bytes:Bytes = Bytes.alloc(limit);
 		var len:Int = this.input.readBytes(bytes, 0, limit);
 		return bytes.sub(0, len);
 	}
