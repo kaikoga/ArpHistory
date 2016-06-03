@@ -215,19 +215,19 @@ class ArpPositionCase {
 		assertMatch(0, pos.dir.value);
 	}
 
-	public function testFrameMove():Void {
+	public function testTick():Void {
 		var pos:ArpPosition = new ArpPosition(0, 0, 0, 0, 3);
 		pos.toward(4, 4, 4, 4, false);
 		assertMatch(0, pos.x);
-		pos.frameMove();
+		pos.tick();
 		assertMatch(1, pos.x);
-		pos.frameMove();
+		pos.tick();
 		assertMatch(2, pos.x);
-		pos.frameMove();
+		pos.tick();
 		assertMatch(3, pos.x);
-		pos.frameMove();
+		pos.tick();
 		assertMatch(4, pos.x);
-		pos.frameMove();
+		pos.tick();
 		assertMatch(4, pos.x);
 	}
 

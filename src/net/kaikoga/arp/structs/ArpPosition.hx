@@ -5,12 +5,11 @@ import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.structs.ArpDirection;
-import net.kaikoga.arp.structs.IFrameMove;
 
 /**
 	handled as mutable
 */
-class ArpPosition implements IFrameMove implements IPersistable {
+class ArpPosition implements IPersistable {
 
 	public var x:Float = 0;
 	public var y:Float = 0;
@@ -258,7 +257,7 @@ class ArpPosition implements IFrameMove implements IPersistable {
 		}
 	}
 
-	public function frameMove():Void {
+	public function tick():Void {
 		if (this.period <= 0) {
 			return;
 		}
