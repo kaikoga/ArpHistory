@@ -1,15 +1,14 @@
 package net.kaikoga.arp.io;
 
 import haxe.io.Bytes;
+using net.kaikoga.arp.io.BytesTool;
 
 class Pipe implements IInput implements IOutput implements IBlobInput implements IBlobOutput{
 
+	private var _bigEndian:Bool;
 	public var bigEndian(get, set):Bool;
-	private function get_bigEndian():Bool return false;
-	private function set_bigEndian(value:Bool):Bool {
-		if (value == true) throw "big endian not supported"; // unfortunately
-		return false;
-	}
+	private function get_bigEndian():Bool return _bigEndian;
+	private function set_bigEndian(value:Bool):Bool return _bigEndian = value;
 
 	public var bytes:Bytes;
 
@@ -20,9 +19,9 @@ class Pipe implements IInput implements IOutput implements IBlobInput implements
 
 	private var mode:PipeMode = PipeMode.Write;
 
-	private inline var GC_MINIMUM:Int = 1024;
+	inline private static var GC_MINIMUM:Int = 1024;
 
-	public function Pipe() {
+	public function new() {
 		this.flush();
 	}
 
@@ -47,7 +46,7 @@ class Pipe implements IInput implements IOutput implements IBlobInput implements
 
 	private function gc():Void {
 		var len:Int = this.bytesAvailable;
-		var b:Bytes = new Bytes(GC_MINIMUM + len);
+		var b:Bytes = Bytes.alloc(GC_MINIMUM + len);
 		b.blit(0, this.bytes, this.readPosition, len);
 		this.bytes = b;
 		this.writePosition -= this.readPosition;
@@ -57,7 +56,7 @@ class Pipe implements IInput implements IOutput implements IBlobInput implements
 	private function expand(spaceDemand:Int):Void {
 		var len:Int = this.bytes.length;
 		while (len < this.writePosition + spaceDemand) len += len;
-		var b:Bytes = new Bytes();
+		var b:Bytes = Bytes.alloc(len);
 		b.blit(0, this.bytes, 0, this.writePosition);
 		this.bytes = b;
 	}
@@ -65,7 +64,7 @@ class Pipe implements IInput implements IOutput implements IBlobInput implements
 	public function flush():Void {
 		this.readPosition = 0;
 		this.writePosition = 0;
-		this.bytes = new Bytes(GC_MINIMUM);
+		this.bytes = Bytes.alloc(GC_MINIMUM);
 	}
 
 	//IDataOutput
@@ -84,13 +83,15 @@ class Pipe implements IInput implements IOutput implements IBlobInput implements
 
 	public function writeInt16(value:Int):Void {
 		this.writeMode(2);
-		this.bytes.setUInt16(this.writePosition, value & 0xffff);
+		if (bigEndian) this.bytes.setUInt16BE(this.writePosition, value & 0xffff)
+		else this.bytes.setUInt16(this.writePosition, value & 0xffff);
 		this.writePosition += 2;
 	}
 
 	public function writeInt32(value:Int):Void {
 		this.writeMode(4);
-		this.bytes.setInt32(this.writePosition, value);
+		if (bigEndian) this.bytes.setInt32BE(this.writePosition, value)
+		else this.bytes.setInt32(this.writePosition, value);
 		this.writePosition += 4;
 	}
 
@@ -102,25 +103,29 @@ class Pipe implements IInput implements IOutput implements IBlobInput implements
 
 	public function writeUInt16(value:UInt):Void {
 		this.writeMode(2);
-		this.bytes.setUInt16(this.writePosition, value);
+		if (bigEndian) this.bytes.setUInt16BE(this.writePosition, value)
+		else this.bytes.setUInt16(this.writePosition, value);
 		this.writePosition += 2;
 	}
 
 	public function writeUInt32(value:UInt):Void {
 		this.writeMode(4);
-		this.bytes.setInt32(this.writePosition, value);
+		if (bigEndian) this.bytes.setInt32BE(this.writePosition, value)
+		else this.bytes.setInt32(this.writePosition, value);
 		this.writePosition += 4;
 	}
 
 	public function writeFloat(value:Float):Void {
 		this.writeMode(4);
-		this.bytes.setFloat(this.writePosition, value);
+		if (bigEndian) this.bytes.setFloatBE(this.writePosition, value)
+		else this.bytes.setFloat(this.writePosition, value);
 		this.writePosition += 4;
 	}
 
 	public function writeDouble(value:Float):Void {
 		this.writeMode(8);
-		this.bytes.setDouble(this.writePosition, value);
+		if (bigEndian) this.bytes.setDoubleBE(this.writePosition, value)
+		else this.bytes.setDouble(this.writePosition, value);
 		this.writePosition += 8;
 	}
 
@@ -161,14 +166,16 @@ class Pipe implements IInput implements IOutput implements IBlobInput implements
 
 	public function readInt16():Int {
 		this.readMode(2);
-		var v = this.bytes.getUInt16(this.readPosition);
+		var v = if (bigEndian) this.bytes.getUInt16BE(this.readPosition)
+		else this.bytes.getUInt16(this.readPosition);
 		this.readPosition += 2;
 		return if (v < 0) v | 0xffff0000 else v & 0x0000ffff;
 	}
 
 	public function readInt32():Int {
 		this.readMode(4);
-		var v = this.bytes.getInt32(this.readPosition);
+		var v = if (bigEndian) this.bytes.getInt32BE(this.readPosition)
+		else this.bytes.getInt32(this.readPosition);
 		this.readPosition += 4;
 		return v;
 	}
@@ -182,28 +189,32 @@ class Pipe implements IInput implements IOutput implements IBlobInput implements
 
 	public function readUInt16():UInt {
 		this.readMode(2);
-		var v = this.bytes.getUInt16(this.readPosition);
+		var v = if (bigEndian) this.bytes.getUInt16BE(this.readPosition)
+		else this.bytes.getUInt16(this.readPosition);
 		this.readPosition += 2;
 		return v & 0xffff;
 	}
 
 	public function readUInt32():UInt {
 		this.readMode(4);
-		var v = this.bytes.getInt32(this.readPosition);
+		var v = if (bigEndian) this.bytes.getInt32BE(this.readPosition)
+		else this.bytes.getInt32(this.readPosition);
 		this.readPosition += 4;
 		return v;
 	}
 
 	public function readFloat():Float {
 		this.readMode(4);
-		var v = this.bytes.getFloat(this.readPosition);
+		var v = if (bigEndian) this.bytes.getFloatBE(this.readPosition)
+		else this.bytes.getFloat(this.readPosition);
 		this.readPosition += 8;
 		return v;
 	}
 
 	public function readDouble():Float {
 		this.readMode(8);
-		var v = this.bytes.getDouble(this.readPosition);
+		var v = if (bigEndian) this.bytes.getDoubleBE(this.readPosition)
+		else this.bytes.getDouble(this.readPosition);
 		this.readPosition += 8;
 		return v;
 	}
@@ -216,7 +227,7 @@ class Pipe implements IInput implements IOutput implements IBlobInput implements
 
 	public function readUtfBytes(length:UInt):String {
 		this.readMode(length);
-		var bytes:Bytes = new Bytes(length);
+		var bytes:Bytes = Bytes.alloc(length);
 		bytes.blit(0, this.bytes, this.readPosition, length);
 		this.readPosition += length;
 		return bytes.toString();
@@ -226,9 +237,9 @@ class Pipe implements IInput implements IOutput implements IBlobInput implements
 		this.readMode(4);
 		var len:Int = this.bytes.getInt32(this.readPosition);
 		this.readMode(4 + len);
-		var bytes:Bytes = new Bytes(len)
+		var bytes:Bytes = Bytes.alloc(len);
 		bytes.blit(0, this.bytes, this.readPosition + 4, len);
-		this.readPosition += length + 4;
+		this.readPosition += len + 4;
 		return bytes;
 	}
 
@@ -236,10 +247,10 @@ class Pipe implements IInput implements IOutput implements IBlobInput implements
 		return this.readBlob().toString();
 	}
 
-	public function nextBytes(limit:Int):Bytes {
+	public function nextBytes(limit:Int = 0):Bytes {
 		var len = this.bytesAvailable;
 		if (len > limit) len = limit;
-		var result:Bytes = new Bytes(len);
+		var result:Bytes = Bytes.alloc(len);
 		this.readBytes(result, 0, len);
 		return result;
 	}
