@@ -2,7 +2,6 @@ package net.kaikoga.arp.domain.dump;
 
 import net.kaikoga.arp.ds.Tree;
 import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
-import net.kaikoga.arp.domain.dump.ArpSlotDump.ArpSlotTreeStringPrinter;
 import net.kaikoga.arp.domain.core.ArpType;
 
 @:access(net.kaikoga.arp.domain.ArpDomain)
@@ -81,4 +80,10 @@ class ArpDomainDump {
 
 	public static var printer(get, never):ArpSlotTreeStringPrinter;
 	inline private static function get_printer():ArpSlotTreeStringPrinter return new ArpSlotTreeStringPrinter();
+
+	public static var anonPrinter(get, never):ArpSlotTreeAnonPrinter;
+	inline private static function get_anonPrinter():ArpSlotTreeAnonPrinter return new ArpSlotTreeAnonPrinter();
+
+	public static var jsonPrinter(get, never):ArpSlotTreeJsonPrinter;
+	inline private static function get_jsonPrinter():ArpSlotTreeJsonPrinter return new ArpSlotTreeJsonPrinter();
 }
