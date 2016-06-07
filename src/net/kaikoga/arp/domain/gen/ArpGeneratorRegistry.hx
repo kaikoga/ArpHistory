@@ -1,5 +1,7 @@
 package net.kaikoga.arp.domain.gen;
 
+import net.kaikoga.arp.ds.lambda.SetOp;
+import net.kaikoga.arp.ds.impl.ArraySet;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.domain.core.ArpType;
 
@@ -28,6 +30,13 @@ class ArpGeneratorRegistry {
 		return null;
 	}
 
+	public function allArpTypes():Array<ArpType> {
+		var result:ArraySet<ArpType> = new ArraySet();
+		for (arpType in this.genMap.allArpTypes()) result.add(arpType);
+		for (arpType in this.defaultGenMap.allArpTypes()) result.add(arpType);
+		return SetOp.toArray(result);
+	}
+
 }
 
 private class ArpGeneratorListMap {
@@ -46,4 +55,7 @@ private class ArpGeneratorListMap {
 		return a;
 	}
 
+	public function allArpTypes():Array<ArpType> {
+		return [for (arpType in this.map.keys()) new ArpType(arpType)];
+	}
 }

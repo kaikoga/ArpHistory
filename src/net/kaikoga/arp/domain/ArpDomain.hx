@@ -83,6 +83,9 @@ class ArpDomain {
 		return this.root.query(path, type);
 	}
 
+	public var allArpTypes(get, never):Array<ArpType>;
+	public function get_allArpTypes():Array<ArpType> return this.reg.allArpTypes();
+
 	public function addGenerator<T:IArpObject>(gen:IArpGenerator<T>) {
 		this.reg.addGenerator(gen);
 	}
