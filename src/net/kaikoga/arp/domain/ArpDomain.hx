@@ -69,6 +69,10 @@ class ArpDomain {
 		return new ArpDirectory(this, did);
 	}
 
+	public function getSlot<T:IArpObject>(sid:ArpSid):ArpSlot<T> {
+		return this.slots.get(sid.toString());
+	}
+
 	public function getOrCreateSlot<T:IArpObject>(sid:ArpSid):ArpSlot<T> {
 		var slot:ArpSlot<T> = this.slots.get(sid.toString());
 		if (slot != null) return slot;
