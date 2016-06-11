@@ -36,12 +36,16 @@ class ArpDomainDump {
 		var children:Map<String, ArpDirectory> = dir.children;
 		var slotNames:Array<String> = [for (key in children.keys()) key];
 		slotNames.sort(compareString);
-		for (name in slotNames) result.children.push(dumpSlotStatusByName(children.get(name), name, visitedSlotIds));
+		for (name in slotNames) {
+			var childrenDump:Tree<ArpSlotDump> = dumpSlotStatusByName(children.get(name), name, visitedSlotIds);
+			if (childrenDump.children.length > 0) result.children.push(childrenDump);
+		}
 
 		var namesToVisit:Array<String> = [];
 		var namesToIndex:Array<String> = [];
 		var slots:Map<String, ArpUntypedSlot> = dir.slots;
 		for (name in slots.keys()) {
+			if (!typeFilter(new ArpType(name))) continue;
 			var slot:ArpUntypedSlot = slots.get(name);
 			if (visitedSlotIds.exists(slot.sid.toString())) {
 				namesToIndex.push(name);
@@ -53,19 +57,20 @@ class ArpDomainDump {
 		if (namesToVisit.length > 0) {
 			namesToVisit.sort(compareString);
 			for (name in namesToVisit) {
-				result.children.push(ArpSlotDump.ofSlot(slots.get(name), '<$name>'));
+				result.children.push(ArpSlotDump.ofSlot(slots.get(name), ':$name'));
 			}
 		}
 		if (namesToIndex.length > 0) {
 			namesToIndex.sort(compareString);
 			for (name in namesToIndex) {
-				result.children.push(ArpSlotDump.ofSlot(slots.get(name), '<$name>'));
+				result.children.push(ArpSlotDump.ofSlot(slots.get(name), ':$name'));
 			}
 		}
 		if (dir == this.domain.root) {
 			for (child in this.domain.slots) {
+				if (child.value != null && !typeFilter(child.value.arpType())) continue;
 				if (!visitedSlotIds.exists(child.sid.toString())) {
-					result.children.push(ArpSlotDump.ofSlot(child, '</>'));
+					result.children.push(ArpSlotDump.ofSlot(child, ':/'));
 				}
 			}
 		}
