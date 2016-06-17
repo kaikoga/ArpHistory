@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.debugger;
 
+import net.kaikoga.arp.domain.dump.ArpDumpAnon;
+import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.core.ArpSid;
 import net.kaikoga.arp.domain.dump.ArpDomainDump;
 import net.kaikoga.arp.persistable.DynamicPersistOutput;
@@ -10,6 +12,7 @@ import net.kaikoga.arp.io.BlobInput;
 import net.kaikoga.arp.events.ArpProgressEvent;
 import net.kaikoga.arpx.socketClient.SocketClient;
 import haxe.Json;
+import net.kaikoga.arpx.debugger.DebuggerCommand;
 
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("debugger", "socketClient"))
 class SocketClientDebugger implements IArpObject {
@@ -31,33 +34,34 @@ class SocketClientDebugger implements IArpObject {
 	}
 
 	private function onSocketData(event:ArpProgressEvent):Void {
-		var arpType:String;
-		var arpSlot:String;
 		var json:String = null;
 		while ((json = this.blobInput.nextUtfBlob()) != null) {
 			trace("SocketClientDebugger.onSocketData(): " + json);
-			var result:String = null;
-			var command:Command = Json.parse(json);
+			var result:Dynamic = null;
+			var command:DebuggerCommand = Json.parse(json);
 			switch (command.command) {
-				case "banks":
-					result = Json.stringify({
-						command: "banks",
-						arpTypes: this.arpDomain().allArpTypes
-					});
-				case "bank":
-					arpType = command.arpType;
-					var obj:Dynamic = ArpDomainDump.anonPrinter.format(new ArpDomainDump(this.arpDomain(), function(value):Bool return value == arpType).dumpSlotStatusByName());
-					result = Json.stringify({
-						command : "bank",
-						arpType : arpType,
-						arpSlots : obj
-					});
+				case "types":
+					var typesResult:DebuggerTypesResult = {
+						command: "types",
+						arpTypes: this.arpDomain().allArpTypes.map(function(arpType:ArpType):String return arpType.toString())
+					};
+					result = typesResult;
+				case "dir":
+					var arpType:ArpType = new ArpType(command.arpType);
+					var typeFilter:ArpType->Bool = null;
+					if (arpType != "*") typeFilter = function(value:ArpType):Bool return value == arpType;
+					var dump:ArpDumpAnon = ArpDomainDump.anonPrinter.format(new ArpDomainDump(this.arpDomain(), typeFilter).dumpSlotStatusByName());
+					var dirResult:DebuggerDirResult = {
+						command: "dir",
+						arpType: arpType.toString(),
+						arpDump: dump
+					};
+					result = dirResult;
 				case "slot":
-					arpType = command.arpType;
-					arpSlot = command.arpSlot;
+					var arpSid:ArpSid = new ArpSid(command.arpSid);
 					var object:Dynamic = null;
 					var arpTemplateName:String = null;
-					var slot:ArpUntypedSlot = this.arpDomain().getSlot(new ArpSid(arpSlot));
+					var slot:ArpUntypedSlot = this.arpDomain().getSlot(arpSid);
 					var value:IPersistable = try cast(slot.value, IPersistable) catch (e:Dynamic) null;
 					if (value != null) {
 						var output:DynamicPersistOutput = new DynamicPersistOutput(null, -1);
@@ -68,19 +72,16 @@ class SocketClientDebugger implements IArpObject {
 					else {
 						object = { };
 					}
-					result = Json.stringify({
-						command : "slot",
-						arpType : arpType,
-						arpSlot : arpSlot,
-						arpTemplateName : arpTemplateName,
-						object : object
-					});
+					var slotResult:DebuggerSlotResult = {
+						command: "slot",
+						arpSid: arpSid.toString(),
+						object: object
+					};
+					result = slotResult;
 				default:
 					break;
 			}
-			this.socketClient.writeUtfBlob(result);
+			this.socketClient.writeUtfBlob(Json.stringify(result));
 		}
 	}
 }
-
-private typedef Command = { command:String, ?arpType:String, ?arpSlot:String };
