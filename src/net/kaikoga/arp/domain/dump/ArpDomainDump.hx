@@ -18,26 +18,27 @@ class ArpDomainDump {
 		this.typeFilter = typeFilter;
 	}
 
-	public function dumpSlotStatus():Tree<ArpSlotDump> {
-		var result:Tree<ArpSlotDump> = ArpSlotDump.ofDir(null, null);
+	public function dumpSlotStatus():Tree<ArpDump> {
+		var result:Tree<ArpDump> = ArpDump.ofDir(null, null);
 		for (slot in domain.slots) {
-			result.children.push(ArpSlotDump.ofSlot(slot, null));
+			result.children.push(ArpDump.ofSlot(slot, null));
 		}
-		result.children.sort(ArpSlotDump.compareTreeId);
+		result.children.sort(ArpDump.compareTreeId);
 		return result;
 	}
 
 	@:access(net.kaikoga.arp.domain.ArpDirectory)
-	public function dumpSlotStatusByName(dir:ArpDirectory = null, hashKey:String = null, visitedSlotIds:Map<String, Bool> = null):Tree<ArpSlotDump> {
+	public function dumpSlotStatusByName(dir:ArpDirectory = null, hashKey:String = null, visitedSlotIds:Map<String, Bool> = null):Tree<ArpDump> {
 		if (dir == null) dir = this.domain.root;
-		var result:Tree<ArpSlotDump> = ArpSlotDump.ofDir(dir, hashKey);
+		if (hashKey == null) hashKey = "</>";
+		var result:Tree<ArpDump> = ArpDump.ofDir(dir, hashKey);
 		if (visitedSlotIds == null) visitedSlotIds = new Map();
 
 		var children:Map<String, ArpDirectory> = dir.children;
 		var slotNames:Array<String> = [for (key in children.keys()) key];
 		slotNames.sort(compareString);
 		for (name in slotNames) {
-			var childrenDump:Tree<ArpSlotDump> = dumpSlotStatusByName(children.get(name), name, visitedSlotIds);
+			var childrenDump:Tree<ArpDump> = dumpSlotStatusByName(children.get(name), name, visitedSlotIds);
 			if (childrenDump.children.length > 0) result.children.push(childrenDump);
 		}
 
@@ -57,20 +58,20 @@ class ArpDomainDump {
 		if (namesToVisit.length > 0) {
 			namesToVisit.sort(compareString);
 			for (name in namesToVisit) {
-				result.children.push(ArpSlotDump.ofSlot(slots.get(name), ':$name'));
+				result.children.push(ArpDump.ofSlot(slots.get(name), '<$name>'));
 			}
 		}
 		if (namesToIndex.length > 0) {
 			namesToIndex.sort(compareString);
 			for (name in namesToIndex) {
-				result.children.push(ArpSlotDump.ofSlot(slots.get(name), ':$name'));
+				result.children.push(ArpDump.ofSlot(slots.get(name), '<$name>'));
 			}
 		}
 		if (dir == this.domain.root) {
 			for (child in this.domain.slots) {
 				if (child.value != null && !typeFilter(child.value.arpType())) continue;
 				if (!visitedSlotIds.exists(child.sid.toString())) {
-					result.children.push(ArpSlotDump.ofSlot(child, ':/'));
+					result.children.push(ArpDump.ofSlot(child, '</>'));
 				}
 			}
 		}
@@ -83,12 +84,12 @@ class ArpDomainDump {
 		return 0;
 	}
 
-	public static var printer(get, never):ArpSlotTreeStringPrinter;
-	inline private static function get_printer():ArpSlotTreeStringPrinter return new ArpSlotTreeStringPrinter();
+	public static var printer(get, never):ArpDumpStringPrinter;
+	inline private static function get_printer():ArpDumpStringPrinter return new ArpDumpStringPrinter();
 
-	public static var anonPrinter(get, never):ArpSlotTreeAnonPrinter;
-	inline private static function get_anonPrinter():ArpSlotTreeAnonPrinter return new ArpSlotTreeAnonPrinter();
+	public static var anonPrinter(get, never):ArpDumpAnonPrinter;
+	inline private static function get_anonPrinter():ArpDumpAnonPrinter return new ArpDumpAnonPrinter();
 
-	public static var jsonPrinter(get, never):ArpSlotTreeJsonPrinter;
-	inline private static function get_jsonPrinter():ArpSlotTreeJsonPrinter return new ArpSlotTreeJsonPrinter();
+	public static var jsonPrinter(get, never):ArpDumpJsonPrinter;
+	inline private static function get_jsonPrinter():ArpDumpJsonPrinter return new ArpDumpJsonPrinter();
 }
