@@ -20,7 +20,7 @@ class DynamicPersistOutput implements IPersistOutput {
 	}
 
 	private var _uniqId:Int = 0;
-	public function genName():String return '$${_uniqId++}';
+	public function genName():String return '$$${_uniqId++}';
 
 	public function writeName(value:String):Void {
 		if (this._keys == null) {
