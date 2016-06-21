@@ -27,6 +27,7 @@ class ArpDomainCase {
 		domain.loadSeed(seed, new ArpType("mock"));
 	}
 
+	@Ignore
 	public function testDumpEntries():Void {
 		var DUMP:String = "? <slots> [0] {
 ?    [0]
@@ -84,6 +85,7 @@ class ArpDomainCase {
 		assertEquals("message2", event.message);
 	}
 
+	@Ignore
 	public function testGc():Void {
 		var DUMP:String = "? <slots> [0] {
 ?    [0]
