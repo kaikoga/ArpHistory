@@ -1,6 +1,5 @@
 package net.kaikoga.arp.testParams;
 
-
 import haxe.io.Bytes;
 import net.kaikoga.arp.persistable.TaggedPersistInput;
 import net.kaikoga.arp.persistable.TaggedPersistOutput;
@@ -10,8 +9,8 @@ import net.kaikoga.arp.io.InputWrapper;
 import net.kaikoga.arp.persistable.PackedPersistInput;
 import net.kaikoga.arp.persistable.PackedPersistOutput;
 import haxe.io.BytesOutput;
-import net.kaikoga.arp.persistable.DynamicPersistInput;
-import net.kaikoga.arp.persistable.DynamicPersistOutput;
+import net.kaikoga.arp.persistable.AnonPersistInput;
+import net.kaikoga.arp.persistable.AnonPersistOutput;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.persistable.IPersistInput;
 
@@ -19,7 +18,7 @@ class PersistIoProviders {
 
 	public static function persistIoProvider():Iterable<Array<Dynamic>> {
 		return [
-			[new DynamicPersistIoProvider()],
+			[new AnonPersistIoProvider()],
 			[new PackedPersistIoProvider()],
 			[new TaggedPersistIoProvider()]
 		];
@@ -32,15 +31,15 @@ typedef IPersistIoProvider = {
 	var input(get, never):IPersistInput;
 }
 
-class DynamicPersistIoProvider {
+class AnonPersistIoProvider {
 	public var data:Dynamic;
-	private var _output:DynamicPersistOutput;
-	private var _input:DynamicPersistInput;
+	private var _output:AnonPersistOutput;
+	private var _input:AnonPersistInput;
 
 	public function new() {
 		this.data = { };
-		this._output = new DynamicPersistOutput(data);
-		this._input = new DynamicPersistInput(data);
+		this._output = new AnonPersistOutput(data);
+		this._input = new AnonPersistInput(data);
 	}
 
 	public var output(get, never):IPersistOutput;

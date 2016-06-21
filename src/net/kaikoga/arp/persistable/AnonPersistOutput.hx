@@ -3,7 +3,7 @@ package net.kaikoga.arp.persistable;
 import haxe.io.BytesOutput;
 import haxe.io.Bytes;
 
-class DynamicPersistOutput implements IPersistOutput {
+class AnonPersistOutput implements IPersistOutput {
 
 	private var _data:Dynamic;
 	public var data(get, never):Dynamic;
@@ -31,7 +31,7 @@ class DynamicPersistOutput implements IPersistOutput {
 	}
 	public function writeNameList(name:String, value:Array<String>):Void Reflect.setField(this._data, name, value);
 	public function writePersistable(name:String, persistable:IPersistable):Void {
-		var output:DynamicPersistOutput = new DynamicPersistOutput(null, this._persistLevel);
+		var output:AnonPersistOutput = new AnonPersistOutput(null, this._persistLevel);
 		persistable.writeSelf(output);
 		Reflect.setField(this._data, name, output.data);
 	}

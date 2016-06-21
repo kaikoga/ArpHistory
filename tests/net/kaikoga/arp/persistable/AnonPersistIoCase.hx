@@ -1,19 +1,19 @@
 package net.kaikoga.arp.persistable;
 
-import net.kaikoga.arp.testParams.PersistIoProviders.DynamicPersistIoProvider;
+import net.kaikoga.arp.testParams.PersistIoProviders.AnonPersistIoProvider;
 import net.kaikoga.arp.persistable.MockPersistable;
 
 import picotest.PicoAssert.*;
 
-class DynamicPersistIoCase {
+class AnonPersistIoCase {
 
-	private var provider:DynamicPersistIoProvider;
+	private var provider:AnonPersistIoProvider;
 
 	public function new() {
 	}
 
 	public function setup():Void {
-		this.provider = new DynamicPersistIoProvider();
+		this.provider = new AnonPersistIoProvider();
 	}
 
 	// TODO unit test
