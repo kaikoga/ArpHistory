@@ -1,5 +1,7 @@
 package net.kaikoga.arp.testParams;
 
+import net.kaikoga.arp.persistable.JsonPersistInput;
+import net.kaikoga.arp.persistable.JsonPersistOutput;
 import haxe.io.Bytes;
 import net.kaikoga.arp.persistable.TaggedPersistInput;
 import net.kaikoga.arp.persistable.TaggedPersistOutput;
@@ -19,6 +21,7 @@ class PersistIoProviders {
 	public static function persistIoProvider():Iterable<Array<Dynamic>> {
 		return [
 			[new AnonPersistIoProvider()],
+			[new JsonPersistIoProvider()],
 			[new PackedPersistIoProvider()],
 			[new TaggedPersistIoProvider()]
 		];
@@ -46,6 +49,24 @@ class AnonPersistIoProvider {
 	public var input(get, never):IPersistInput;
 	private function get_output():IPersistOutput return _output;
 	private function get_input():IPersistInput return _input;
+}
+
+class JsonPersistIoProvider {
+	public var data:Dynamic;
+	private var _output:JsonPersistOutput;
+	private var _input:JsonPersistInput;
+
+	public function new() {
+		this._output = new JsonPersistOutput(data);
+	}
+
+	public var output(get, never):IPersistOutput;
+	public var input(get, never):IPersistInput;
+	private function get_output():IPersistOutput return _output;
+	private function get_input():IPersistInput {
+		if (this._input != null) return this._input;
+		return this._input = new JsonPersistInput(this._output.json);
+	}
 }
 
 class PackedPersistIoProvider {
