@@ -1,11 +1,6 @@
 package net.kaikoga.arp.structs;
 
-import haxe.io.BytesOutput;
-import net.kaikoga.arp.persistable.TaggedPersistOutput;
-import net.kaikoga.arp.io.OutputWrapper;
-import net.kaikoga.arp.persistable.TaggedPersistInput;
-import net.kaikoga.arp.io.InputWrapper;
-import haxe.io.BytesInput;
+import net.kaikoga.arp.testParams.PersistIoProviders.IPersistIoProvider;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.structs.ArpParams;
 
@@ -13,6 +8,13 @@ import org.hamcrest.Matchers;
 import picotest.PicoAssert.*;
 
 class ArpParamsCase {
+
+	private var provider:IPersistIoProvider;
+
+	@Parameter
+	public function setup(provider:IPersistIoProvider):Void {
+		this.provider = provider;
+	}
 
 	public function testAddParam():Void {
 		var params:ArpParamsProxy = new ArpParams();
@@ -84,9 +86,8 @@ class ArpParamsCase {
 		params["d"] = ArpDirection.LEFT;
 		params["g"] = new ArpParamRewire("h");
 		var params2:ArpParamsProxy = new ArpParams();
-		var bytesOutput:BytesOutput = new BytesOutput();
-		params.writeSelf(new TaggedPersistOutput(new OutputWrapper(bytesOutput)));
-		params2.readSelf(new TaggedPersistInput(new InputWrapper(new BytesInput(bytesOutput.getBytes()))));
+		params.writeSelf(provider.output);
+		params2.readSelf(provider.input);
 		assertEquals(params["a"], params2["a"]);
 		assertEquals(params["c"], params2["c"]);
 		assertEquals(params["d"].value, params2["d"].value);

@@ -1,5 +1,6 @@
 package net.kaikoga.arp;
 
+import net.kaikoga.arp.structs.ArpArea2dCase;
 import net.kaikoga.arp.macro.DsMacroArpObjectCase;
 import net.kaikoga.arp.macro.EarlyPrepareMacroArpObjectCase;
 import net.kaikoga.arp.macro.LatePrepareMacroArpObjectCase;
@@ -26,6 +27,8 @@ import net.kaikoga.arp.domain.query.ArpDirectoryQueryCase;
 import net.kaikoga.arp.domain.query.ArpObjectQueryCase;
 import net.kaikoga.arp.domain.seed.ArpSeedCase;
 import net.kaikoga.arp.domain.ArpDomainCase;
+
+import net.kaikoga.arp.testParams.PersistIoProviders.*;
 
 import picotest.PicoTestRunner;
 
@@ -57,11 +60,12 @@ class ArpDomainTestSuite {
 
 		r.load(ArpStructsUtilCase);
 
-		r.load(ArpColorCase);
-		r.load(ArpDirectionCase);
-		r.load(ArpParamsCase);
-		r.load(ArpPositionCase);
-		r.load(ArpRangeCase);
+		//r.load(ArpArea2dCase, persistIoProvider());
+		r.load(ArpColorCase, persistIoProvider());
+		r.load(ArpDirectionCase, persistIoProvider());
+		r.load(ArpParamsCase, persistIoProvider());
+		r.load(ArpPositionCase, persistIoProvider());
+		r.load(ArpRangeCase, persistIoProvider());
 
 		ArpDomainDsCompatTestSuite.addTo(r);
 

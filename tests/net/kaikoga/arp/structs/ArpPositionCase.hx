@@ -1,17 +1,19 @@
 ﻿package net.kaikoga.arp.structs;
 
-import haxe.io.BytesOutput;
-import net.kaikoga.arp.persistable.TaggedPersistOutput;
-import net.kaikoga.arp.io.OutputWrapper;
-import net.kaikoga.arp.persistable.TaggedPersistInput;
-import net.kaikoga.arp.io.InputWrapper;
-import haxe.io.BytesInput;
+import net.kaikoga.arp.testParams.PersistIoProviders.IPersistIoProvider;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 
 import org.hamcrest.Matchers;
 import picotest.PicoAssert.*;
 
 class ArpPositionCase {
+
+	private var provider:IPersistIoProvider;
+
+	@Parameter
+	public function setup(provider:IPersistIoProvider):Void {
+		this.provider = provider;
+	}
 
 	public function testInitWithSeed():Void {
 		var ERR:Float = 0.01;
@@ -254,9 +256,8 @@ class ArpPositionCase {
 	public function testPersist():Void {
 		var pos:ArpPosition = new ArpPosition(1, 2, 3, 4, 5);
 		var pos2:ArpPosition = new ArpPosition();
-		var bytesOutput:BytesOutput = new BytesOutput();
-		pos.writeSelf(new TaggedPersistOutput(new OutputWrapper(bytesOutput)));
-		pos2.readSelf(new TaggedPersistInput(new InputWrapper(new BytesInput(bytesOutput.getBytes()))));
+		pos.writeSelf(provider.output);
+		pos2.readSelf(provider.input);
 		assertMatch(pos.x, pos2.x);
 		assertMatch(pos.y, pos2.y);
 		assertMatch(pos.z, pos2.z);

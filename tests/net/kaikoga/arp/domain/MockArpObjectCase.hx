@@ -2,12 +2,6 @@ package net.kaikoga.arp.domain;
 
 import net.kaikoga.arp.tests.ArpDomainTestUtil;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
-import haxe.io.BytesInput;
-import net.kaikoga.arp.io.OutputWrapper;
-import net.kaikoga.arp.persistable.TaggedPersistOutput;
-import net.kaikoga.arp.io.InputWrapper;
-import net.kaikoga.arp.persistable.TaggedPersistInput;
-import haxe.io.BytesOutput;
 import net.kaikoga.arp.domain.mocks.MockArpObject;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.domain.core.ArpType;

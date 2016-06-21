@@ -1,17 +1,19 @@
 ﻿package net.kaikoga.arp.structs;
 
-import haxe.io.BytesInput;
-import haxe.io.BytesOutput;
-import net.kaikoga.arp.persistable.TaggedPersistOutput;
-import net.kaikoga.arp.io.OutputWrapper;
-import net.kaikoga.arp.persistable.TaggedPersistInput;
-import net.kaikoga.arp.io.InputWrapper;
+import net.kaikoga.arp.testParams.PersistIoProviders.IPersistIoProvider;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 
 import org.hamcrest.Matchers;
 import picotest.PicoAssert.*;
 
 class ArpColorCase {
+
+	private var provider:IPersistIoProvider;
+
+	@Parameter
+	public function setup(provider:IPersistIoProvider):Void {
+		this.provider = provider;
+	}
 
 	public function testInitWithSeed():Void {
 		var color:ArpColor = new ArpColor();
@@ -36,9 +38,8 @@ class ArpColorCase {
 	public function testPersist():Void {
 		var color:ArpColor = new ArpColor(0xccddeeff);
 		var color2:ArpColor = new ArpColor();
-		var bytesOutput:BytesOutput = new BytesOutput();
-		color.writeSelf(new TaggedPersistOutput(new OutputWrapper(bytesOutput)));
-		color2.readSelf(new TaggedPersistInput(new InputWrapper(new BytesInput(bytesOutput.getBytes()))));
+		color.writeSelf(provider.output);
+		color2.readSelf(provider.input);
 		assertEquals(color.value32, color2.value32);
 	}
 
