@@ -1,5 +1,6 @@
 ﻿package net.kaikoga.arp.ds.persistable;
 
+import net.kaikoga.arp.ds.decorators.OmapDecorator;
 import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.persistable.IPersistable;
@@ -8,27 +9,25 @@ import net.kaikoga.arp.persistable.IPersistable;
  * ...
  * @author kaikoga
  */
-class PersistableIntMap extends MapList<String, Int> implements IPersistable {
+class PersistableIntMap extends OmapDecorator<String, Int> implements IPersistable {
 
-	public function new() {
-		super();
+	public function new(omap:IOmap<String, Int>) {
+		super(omap);
 	}
 
 	public function readSelf(input:IPersistInput):Void {
 		this.clear();
-		var name:String = input.readName();
-		while (name != "") {
+		for (name in input.readNameList("")) {
 			this.addPair(name, input.readInt32(name));
-			name = input.readName();
 		}
 	}
 
 	public function writeSelf(output:IPersistOutput):Void {
-		for (name in this._keys) {
-			output.writeName(name);
+		var nameList:Array<String> = [for (name in this.keys()) name];
+		output.writeNameList("", nameList);
+		for (name in nameList) {
 			output.writeInt32(name, this.get(name));
 		}
-		output.writeName("");
 	}
 
 }

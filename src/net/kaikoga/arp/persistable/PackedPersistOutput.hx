@@ -19,7 +19,6 @@ class PackedPersistOutput implements IPersistOutput {
 	private var _uniqId:Int = 0;
 	public function genName():String return '$${_uniqId++}';
 
-	public function writeName(value:String):Void this._output.writeUtfBlob(value);
 	public function writeNameList(name:String, value:Array<String>):Void {
 		this._output.writeUInt32(value.length);
 		for (v in value) this._output.writeUtfBlob(v);

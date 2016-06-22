@@ -16,7 +16,6 @@ class PackedPersistInput implements IPersistInput {
 		this._persistLevel = persistLevel;
 	}
 
-	public function readName():String return this._input.readUtfBlob();
 	public function readNameList(name:String):Array<String> {
 		var nameList:Array<String> = [];
 		for (i in 0...this._input.readUInt32()) nameList.push(this._input.readUtfBlob());

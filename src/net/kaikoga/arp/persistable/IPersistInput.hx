@@ -6,8 +6,6 @@ interface IPersistInput {
 
 	var persistLevel(get, never):Int;
 
-	@:deprecated("IPersistInput.readName() is deprecated: anonymous name list is deprecated")
-	function readName():String;
 	function readNameList(name:String):Array<String>;
 	function readPersistable(name:String, persistable:IPersistable):Void;
 

@@ -8,8 +8,6 @@ interface IPersistOutput {
 
 	function genName():String;
 
-	@:deprecated("IPersistOutput.writeName() is deprecated: anonymous name list is deprecated")
-	function writeName(value:String):Void;
 	function writeNameList(name:String, value:Array<String>):Void;
 	function writePersistable(name:String, value:IPersistable):Void;
 
