@@ -3,8 +3,6 @@ package net.kaikoga.arp.testParams;
 import net.kaikoga.arp.persistable.JsonPersistInput;
 import net.kaikoga.arp.persistable.JsonPersistOutput;
 import haxe.io.Bytes;
-import net.kaikoga.arp.persistable.TaggedPersistInput;
-import net.kaikoga.arp.persistable.TaggedPersistOutput;
 import net.kaikoga.arp.io.OutputWrapper;
 import haxe.io.BytesInput;
 import net.kaikoga.arp.io.InputWrapper;
@@ -23,7 +21,6 @@ class PersistIoProviders {
 			[new AnonPersistIoProvider()],
 			[new JsonPersistIoProvider()],
 			[new PackedPersistIoProvider()],
-			[new TaggedPersistIoProvider()]
 		];
 	}
 
@@ -84,28 +81,6 @@ class PackedPersistIoProvider {
 	private function get_input():IPersistInput {
 		if (this._input != null) return this._input;
 		return this._input = new PackedPersistInput(new InputWrapper(new BytesInput(this.bytes)));
-	}
-
-	public var bytes(get, never):Bytes;
-	private function get_bytes():Bytes return this.bytesOutput.getBytes();
-}
-
-class TaggedPersistIoProvider {
-	public var bytesOutput:BytesOutput;
-	private var _output:TaggedPersistOutput;
-	private var _input:TaggedPersistInput;
-
-	public function new() {
-		this.bytesOutput = new BytesOutput();
-		this._output = new TaggedPersistOutput(new OutputWrapper(this.bytesOutput));
-	}
-
-	public var output(get, never):IPersistOutput;
-	public var input(get, never):IPersistInput;
-	private function get_output():IPersistOutput return _output;
-	private function get_input():IPersistInput {
-		if (this._input != null) return this._input;
-		return this._input = new TaggedPersistInput(new InputWrapper(new BytesInput(this.bytes)));
 	}
 
 	public var bytes(get, never):Bytes;
