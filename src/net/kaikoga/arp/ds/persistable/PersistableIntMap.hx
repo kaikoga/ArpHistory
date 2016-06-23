@@ -16,18 +16,11 @@ class PersistableIntMap extends OmapDecorator<String, Int> implements IPersistab
 	}
 
 	public function readSelf(input:IPersistInput):Void {
-		this.clear();
-		for (name in input.readNameList("")) {
-			this.addPair(name, input.readInt32(name));
-		}
+		PersistableMapTool.readIntOmap(this, input);
 	}
 
 	public function writeSelf(output:IPersistOutput):Void {
-		var nameList:Array<String> = [for (name in this.keys()) name];
-		output.writeNameList("", nameList);
-		for (name in nameList) {
-			output.writeInt32(name, this.get(name));
-		}
+		PersistableMapTool.writeIntOmap(this, output);
 	}
 
 }

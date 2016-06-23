@@ -19,22 +19,11 @@ class PersistableMap<V:IMappedPersistable> extends OmapDecorator<String, V> impl
 	}
 
 	public function readSelf(input:IPersistInput):Void {
-		for (name in input.readNameList("")) {
-			var element:V = this.get(name);
-			if (element == null) {
-				element = cast proto.clonePersistable(name);
-				this.addPair(name, element);
-			}
-			input.readPersistable(name, element);
-		}
+		PersistableMapTool.readIntOmap(this, input, proto);
 	}
 
 	public function writeSelf(output:IPersistOutput):Void {
-		var nameList:Array<String> = [for (name in this.keys()) name];
-		output.writeNameList("", nameList);
-		for (name in nameList) {
-			output.writePersistable(name, this.get(name));
-		}
+		PersistableMapTool.writePersistableOmap(this, output);
 	}
 
 }
