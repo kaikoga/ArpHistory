@@ -21,6 +21,8 @@ private class JsonPersistInputBase extends AnonPersistInput {
 		persistable.readSelf(new JsonPersistInputBase(Reflect.field(this._data, name), this.persistLevel));
 	}
 
+	override public function readEnter(name:String):IPersistInput return new JsonPersistInputBase(Reflect.field(this._data, name), this._persistLevel);
+
 	override public function readBlob(name:String):Bytes {
 		return Base64.decode(Reflect.field(this._data, name));
 	}

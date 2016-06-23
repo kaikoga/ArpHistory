@@ -12,7 +12,7 @@ class AnonPersistOutput implements IPersistOutput {
 
 	private var _persistLevel:Int = 0;
 	public var persistLevel(get, never):Int;
-	private function get_persistLevel():Int return this._persistLevel;
+	inline private function get_persistLevel():Int return this._persistLevel;
 
 	public function new(data:Dynamic = null, persistLevel:Int = 0) {
 		this._data = (data != null) ? data : {};
@@ -28,6 +28,13 @@ class AnonPersistOutput implements IPersistOutput {
 		persistable.writeSelf(output);
 		Reflect.setField(this._data, name, output.data);
 	}
+
+	public function writeEnter(name:String):IPersistOutput {
+		var output:AnonPersistOutput = new AnonPersistOutput(null, this._persistLevel);
+		Reflect.setField(this._data, name, output.data);
+		return output;
+	}
+	public function writeExit():Void return;
 
 	public function writeBool(name:String, value:Bool):Void Reflect.setField(this._data, name, value);
 	public function writeInt32(name:String, value:Int):Void Reflect.setField(this._data, name, value);

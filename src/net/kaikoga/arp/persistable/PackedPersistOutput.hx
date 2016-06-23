@@ -9,7 +9,7 @@ class PackedPersistOutput implements IPersistOutput {
 
 	public var persistLevel(get, never):Int;
 	private var _persistLevel:Int = 0;
-	private function get_persistLevel():Int return this._persistLevel;
+	inline private function get_persistLevel():Int return this._persistLevel;
 
 	public function new(output:IOutput, persistLevel:Int = 0) {
 		this._output = output;
@@ -25,6 +25,9 @@ class PackedPersistOutput implements IPersistOutput {
 	}
 	public function writePersistable(name:String, persistable:IPersistable):Void persistable.writeSelf(this);
 
+	public function writeEnter(name:String):IPersistOutput return new PackedPersistOutput(this._output, this._persistLevel);
+	public function writeExit():Void return;
+
 	public function writeBool(name:String, value:Bool):Void this._output.writeBool(value);
 	public function writeInt32(name:String, value:Int):Void this._output.writeInt32(value);
 	public function writeUInt32(name:String, value:Int):Void this._output.writeUInt32(value);
@@ -33,4 +36,3 @@ class PackedPersistOutput implements IPersistOutput {
 	public function writeUtf(name:String, value:String):Void this._output.writeUtfBlob(value);
 	public function writeBlob(name:String, bytes:Bytes):Void this._output.writeBlob(bytes);
 }
-

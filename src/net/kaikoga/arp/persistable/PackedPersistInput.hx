@@ -9,7 +9,7 @@ class PackedPersistInput implements IPersistInput {
 
 	public var persistLevel(get, never):Int;
 	private var _persistLevel:Int = 0;
-	private function get_persistLevel():Int return this._persistLevel;
+	inline private function get_persistLevel():Int return this._persistLevel;
 
 	public function new(input:IInput, persistLevel:Int = 0) {
 		this._input = input;
@@ -23,6 +23,9 @@ class PackedPersistInput implements IPersistInput {
 	}
 	public function readPersistable(name:String, persistable:IPersistable):Void persistable.readSelf(this);
 
+	public function readEnter(name:String):IPersistInput return new PackedPersistInput(this._input, this._persistLevel);
+	public function readExit():Void return;
+
 	public function readBool(name:String):Bool return this._input.readBool();
 	public function readInt32(name:String):Int return this._input.readInt32();
 	public function readUInt32(name:String):Int return this._input.readUInt32();
@@ -31,4 +34,3 @@ class PackedPersistInput implements IPersistInput {
 	public function readUtf(name:String):String return this._input.readUtfBlob();
 	public function readBlob(name:String):Bytes return this._input.readBlob();
 }
-

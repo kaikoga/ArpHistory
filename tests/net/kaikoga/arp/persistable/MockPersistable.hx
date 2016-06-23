@@ -15,6 +15,7 @@ class MockPersistable implements IPersistable {
 	private var utfField:String;
 	private var blobField:Bytes;
 	private var childField:MockPersistable;
+	private var enterField:MockPersistable;
 
 	public function new(hasChild:Bool = false) {
 		this.nameListField = ["a", "b", "c"];
@@ -25,6 +26,7 @@ class MockPersistable implements IPersistable {
 		this.blobField = Bytes.alloc(hasChild ? 64 : 8);
 		if (hasChild) {
 			this.childField = new MockPersistable(false);
+			this.enterField = new MockPersistable(false);
 		}
 	}
 
@@ -38,6 +40,11 @@ class MockPersistable implements IPersistable {
 		if (this.childField != null) {
 			input.readPersistable("childValue", this.childField);
 		}
+		if (this.enterField != null) {
+			var i:IPersistInput = input.readEnter("enterValue");
+			this.childField.readSelf(i);
+			i.readExit();
+		}
 	}
 
 	public function writeSelf(output:IPersistOutput):Void {
@@ -49,6 +56,11 @@ class MockPersistable implements IPersistable {
 		output.writeBlob("blobValue", this.blobField);
 		if (this.childField != null) {
 			output.writePersistable("childValue", this.childField);
+		}
+		if (this.enterField != null) {
+			var o:IPersistOutput = output.writeEnter("enterValue");
+			this.childField.writeSelf(o);
+			o.writeExit();
 		}
 	}
 
@@ -62,6 +74,7 @@ class MockPersistable implements IPersistable {
 			this.utfField,
 			this.blobField.length,
 			this.childField,
+			this.enterField,
 			"]"].join(" ");
 	}
 }
