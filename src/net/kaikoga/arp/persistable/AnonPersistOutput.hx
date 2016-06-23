@@ -24,9 +24,9 @@ class AnonPersistOutput implements IPersistOutput {
 
 	public function writeNameList(name:String, value:Array<String>):Void Reflect.setField(this._data, name, value);
 	public function writePersistable(name:String, persistable:IPersistable):Void {
-		var output:AnonPersistOutput = new AnonPersistOutput(null, this._persistLevel);
+		var output:IPersistOutput = this.writeEnter(name);
 		persistable.writeSelf(output);
-		Reflect.setField(this._data, name, output.data);
+		output.writeExit();
 	}
 
 	public function writeEnter(name:String):IPersistOutput {

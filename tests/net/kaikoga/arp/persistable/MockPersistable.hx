@@ -40,11 +40,6 @@ class MockPersistable implements IPersistable {
 		if (this.childField != null) {
 			input.readPersistable("childValue", this.childField);
 		}
-		if (this.enterField != null) {
-			var i:IPersistInput = input.readEnter("enterValue");
-			this.childField.readSelf(i);
-			i.readExit();
-		}
 	}
 
 	public function writeSelf(output:IPersistOutput):Void {
@@ -56,11 +51,6 @@ class MockPersistable implements IPersistable {
 		output.writeBlob("blobValue", this.blobField);
 		if (this.childField != null) {
 			output.writePersistable("childValue", this.childField);
-		}
-		if (this.enterField != null) {
-			var o:IPersistOutput = output.writeEnter("enterValue");
-			this.childField.writeSelf(o);
-			o.writeExit();
 		}
 	}
 

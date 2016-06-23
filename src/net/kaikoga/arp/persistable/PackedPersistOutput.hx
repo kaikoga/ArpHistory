@@ -23,7 +23,11 @@ class PackedPersistOutput implements IPersistOutput {
 		this._output.writeUInt32(value.length);
 		for (v in value) this._output.writeUtfBlob(v);
 	}
-	public function writePersistable(name:String, persistable:IPersistable):Void persistable.writeSelf(this);
+	public function writePersistable(name:String, persistable:IPersistable):Void {
+		var output:IPersistOutput = this.writeEnter(name);
+		persistable.writeSelf(output);
+		output.writeExit();
+	}
 
 	public function writeEnter(name:String):IPersistOutput return new PackedPersistOutput(this._output, this._persistLevel);
 	public function writeExit():Void return;

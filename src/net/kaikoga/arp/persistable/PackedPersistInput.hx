@@ -21,7 +21,11 @@ class PackedPersistInput implements IPersistInput {
 		for (i in 0...this._input.readUInt32()) nameList.push(this._input.readUtfBlob());
 		return nameList;
 	}
-	public function readPersistable(name:String, persistable:IPersistable):Void persistable.readSelf(this);
+	public function readPersistable(name:String, persistable:IPersistable):Void {
+		var input:IPersistInput = this.readEnter(name);
+		persistable.readSelf(input);
+		input.readExit();
+	}
 
 	public function readEnter(name:String):IPersistInput return new PackedPersistInput(this._input, this._persistLevel);
 	public function readExit():Void return;

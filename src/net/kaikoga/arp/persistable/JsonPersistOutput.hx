@@ -13,12 +13,6 @@ class JsonPersistOutput extends AnonPersistOutput {
 		super(null, persistLevel);
 	}
 
-	override public function writePersistable(name:String, persistable:IPersistable):Void {
-		var output:JsonPersistOutput = new JsonPersistOutput(this.persistLevel);
-		persistable.writeSelf(output);
-		Reflect.setField(this._data, name, output.data);
-	}
-
 	override public function writeEnter(name:String):IPersistOutput {
 		var output:JsonPersistOutput = new JsonPersistOutput(this.persistLevel);
 		Reflect.setField(this._data, name, output.data);
