@@ -130,10 +130,12 @@ class MacroArpObjectStub {
 			}
 
 			public function readSelf(input:net.kaikoga.arp.persistable.IPersistInput):Void {
+				var collection:net.kaikoga.arp.persistable.IPersistInput;
 				$b{ this.buildReadSelfBlock() }
 			}
 
 			public function writeSelf(output:net.kaikoga.arp.persistable.IPersistOutput):Void {
+				var collection:net.kaikoga.arp.persistable.IPersistOutput;
 				$b{ this.buildWriteSelfBlock() }
 			}
 

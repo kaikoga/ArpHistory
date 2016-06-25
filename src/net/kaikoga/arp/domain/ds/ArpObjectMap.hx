@@ -1,12 +1,16 @@
 package net.kaikoga.arp.domain.ds;
 
+import net.kaikoga.arp.persistable.IPersistable;
+import net.kaikoga.arp.persistable.IPersistOutput;
+import net.kaikoga.arp.domain.core.ArpSid;
+import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.ds.impl.StdMap;
 import net.kaikoga.arp.domain.ArpSlot;
 import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.IMap;
 
 @:generic @:remove
-class ArpObjectMap<K, V:IArpObject> implements IMap<K, V> {
+class ArpObjectMap<K, V:IArpObject> implements IMap<K, V> implements IPersistable {
 
 	private var domain:ArpDomain;
 	inline private function slotOf(v:V):ArpSlot<V> return ArpSlot.of(v, domain);
@@ -51,4 +55,29 @@ class ArpObjectMap<K, V:IArpObject> implements IMap<K, V> {
 		for (slot in this.slotMap) slot.delReference();
 		this.slotMap.clear();
 	}
+
+	// persist
+	public function readSelf(input:IPersistInput):Void {
+		var oldSlotMap:IMap<K, ArpSlot<V>> = this.slotMap;
+		this.slotMap = new StdMap<K, ArpSlot<V>>();
+		var nameList:Array<String> = input.readNameList("keys");
+		var values:IPersistInput = input.readEnter("values");
+		for (name in nameList) {
+			this.slotMap.set(cast name, this.domain.getOrCreateSlot(new ArpSid(values.readUtf(name))).addReference());
+		}
+		values.readExit();
+
+		for (item in oldSlotMap) item.delReference();
+	}
+
+	public function writeSelf(output:IPersistOutput):Void {
+		var nameList:Array<String> = [for (key in this.slotMap.keys()) cast key];
+		output.writeNameList("keys", nameList);
+		var values:IPersistOutput = output.writeEnter("values");
+		for (name in nameList) {
+			values.writeUtf(name, this.slotMap.get(cast name).sid.toString());
+		}
+		values.writeExit();
+	}
+
 }

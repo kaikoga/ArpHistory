@@ -50,24 +50,24 @@ class ArpObjectStdMap<V:IArpObject> implements IMap<String, V> implements IPersi
 	public function readSelf(input:IPersistInput):Void {
 		var oldSlots:Map<String, ArpSlot<V>> = this.slots;
 		this.slots = new Map();
-		var key:String;
-		// TODO better format
-		for (key in input.readNameList("")) {
-			this.slots.set(key, this.domain.getOrCreateSlot(new ArpSid(input.readUtf(key))).addReference());
+		var nameList:Array<String> = input.readNameList("keys");
+		var values:IPersistInput = input.readEnter("values");
+		for (name in nameList) {
+			this.slots.set(name, this.domain.getOrCreateSlot(new ArpSid(values.readUtf(name))).addReference());
 		}
+		values.readExit();
+
 		for (item in oldSlots) item.delReference();
 	}
 
 	public function writeSelf(output:IPersistOutput):Void {
-		// TODO better format
-		var nl:Array<String> = [];
-		for (key in this.slots.keys()) {
-			nl.push(key);
+		var nameList:Array<String> = [for (name in this.slots.keys()) name];
+		output.writeNameList("keys", nameList);
+		var values:IPersistOutput = output.writeEnter("values");
+		for (name in nameList) {
+			values.writeUtf(name, this.slots.get(name).sid.toString());
 		}
-		output.writeNameList("", nl);
-		for (key in nl) {
-			output.writeUtf(key, this.slots.get(key).sid.toString());
-		}
+		values.writeExit();
 	}
 }
 

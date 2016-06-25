@@ -1,10 +1,14 @@
 package net.kaikoga.arp.domain.ds;
 
+import net.kaikoga.arp.persistable.IPersistable;
+import net.kaikoga.arp.persistable.IPersistOutput;
+import net.kaikoga.arp.domain.core.ArpSid;
+import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.ds.impl.ArrayList;
 import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.IList;
 
-class ArpObjectList<V:IArpObject> implements IList<V> {
+class ArpObjectList<V:IArpObject> implements IList<V> implements IPersistable {
 
 	private var domain:ArpDomain;
 	inline private function slotOf(v:V):ArpSlot<V> return ArpSlot.of(v, domain);
@@ -55,5 +59,22 @@ class ArpObjectList<V:IArpObject> implements IList<V> {
 	public function clear():Void {
 		for (slot in this.slotList) slot.delReference();
 		this.slotList.clear();
+	}
+
+	// persist
+	public function readSelf(input:IPersistInput):Void {
+		var oldSlotList:IList<ArpSlot<V>> = this.slotList;
+		this.slotList = new ArrayList();
+		var values:Array<String> = input.readNameList("values");
+		for (value in values) {
+			this.slotList.push(this.domain.getOrCreateSlot(new ArpSid(value)).addReference());
+		}
+
+		for (item in oldSlotList) item.delReference();
+	}
+
+	public function writeSelf(output:IPersistOutput):Void {
+		var values:Array<String> = [for (slot in this.slotList) slot.sid.toString()];
+		output.writeNameList("values", values);
 	}
 }
