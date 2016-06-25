@@ -66,11 +66,13 @@ class MacroArpValueField extends MacroArpFieldBase implements IMacroArpField {
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
-		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.readSelf(this.nativePos, this.iNativeName, this.fieldName)}; });
+		var eField:Expr = macro @:pos(this.nativePos) this.$iNativeName;
+		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.readSelf(this.nativePos, eField, this.fieldName)}; });
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
-		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.writeSelf(this.nativePos, this.iNativeName, this.fieldName)}; });
+		var eField:Expr = macro @:pos(this.nativePos) this.$iNativeName;
+		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.writeSelf(this.nativePos, eField, this.fieldName)}; });
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
