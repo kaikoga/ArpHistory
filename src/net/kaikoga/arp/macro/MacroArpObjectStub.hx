@@ -194,11 +194,13 @@ class MacroArpObjectStub {
 
 			override public function readSelf(input:net.kaikoga.arp.persistable.IPersistInput):Void {
 				super.readSelf(input);
+				var collection:net.kaikoga.arp.persistable.IPersistInput;
 				$b{ this.buildReadSelfBlock() }
 			}
 
 			override public function writeSelf(output:net.kaikoga.arp.persistable.IPersistOutput):Void {
 				super.writeSelf(output);
+				var collection:net.kaikoga.arp.persistable.IPersistOutput;
 				$b{ this.buildWriteSelfBlock() }
 			}
 
