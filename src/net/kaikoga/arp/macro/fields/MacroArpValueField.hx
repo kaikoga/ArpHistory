@@ -58,7 +58,7 @@ class MacroArpValueField extends MacroArpFieldBase implements IMacroArpField {
 
 		var caseBlock:Array<Expr> = [];
 		cases.push({
-			values: [macro @:pos(this.nativePos) $v{this.fieldName}],
+			values: [this.eFieldName],
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
@@ -66,13 +66,12 @@ class MacroArpValueField extends MacroArpFieldBase implements IMacroArpField {
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
-		var eField:Expr = macro @:pos(this.nativePos) this.$iNativeName;
-		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.readSelf(this.nativePos, eField, this.fieldName)}; });
+		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.readAsPersistable(this.nativePos, this.eFieldName, this.iNativeName)}; });
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
 		var eField:Expr = macro @:pos(this.nativePos) this.$iNativeName;
-		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.writeSelf(this.nativePos, eField, this.fieldName)}; });
+		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.writeAsPersistable(this.nativePos, this.eFieldName, eField)}; });
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {

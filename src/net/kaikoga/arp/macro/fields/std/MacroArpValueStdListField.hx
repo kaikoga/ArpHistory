@@ -44,7 +44,7 @@ class MacroArpValueStdListField extends MacroArpValueCollectionFieldBase impleme
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
 		var caseBlock:Array<Expr> = [];
 		cases.push({
-			values: [macro @:pos(this.nativePos) $v{this.fieldName}],
+			values: [this.eFieldName],
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
@@ -52,13 +52,15 @@ class MacroArpValueStdListField extends MacroArpValueCollectionFieldBase impleme
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
-		// FIXME persist over serialize
-		fieldBlock.push(macro @:pos(this.nativePos) { this.$iNativeName = haxe.Unserializer.run(input.readUtf($v{iNativeName})); });
+		fieldBlock.push(macro @:pos(this.nativePos) {
+			this.$iNativeName = haxe.Unserializer.run(input.readUtf($v{iNativeName}));
+		});
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
-		// FIXME persist over serialize
-		fieldBlock.push(macro @:pos(this.nativePos) { output.writeUtf($v{iNativeName}, haxe.Serializer.run(this.$iNativeName)); });
+		fieldBlock.push(macro @:pos(this.nativePos) {
+			output.writeUtf($v{iNativeName}, haxe.Serializer.run(this.$iNativeName));
+		});
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {

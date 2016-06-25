@@ -62,7 +62,7 @@ class MacroArpObjectListField extends MacroArpObjectCollectionFieldBase implemen
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
 		var caseBlock:Array<Expr> = [];
 		cases.push({
-			values: [macro @:pos(this.nativePos) $v{this.fieldName}],
+			values: [this.eFieldName],
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
@@ -70,11 +70,15 @@ class MacroArpObjectListField extends MacroArpObjectCollectionFieldBase implemen
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
-		fieldBlock.push(macro @:pos(this.nativePos) { input.readPersistable($v{this.fieldName}, this.$iNativeName); });
+		fieldBlock.push(macro @:pos(this.nativePos) {
+			input.readPersistable(${this.eFieldName}, this.$iNativeName);
+		});
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
-		fieldBlock.push(macro @:pos(this.nativePos) { output.writePersistable($v{this.fieldName}, this.$iNativeName); });
+		fieldBlock.push(macro @:pos(this.nativePos) {
+			output.writePersistable(${this.eFieldName}, this.$iNativeName);
+		});
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {

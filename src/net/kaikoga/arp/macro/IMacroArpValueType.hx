@@ -12,8 +12,9 @@ interface IMacroArpValueType {
 	function createEmptyVo(pos:Position):Expr;
 	function createSeedElement(pos:Position):Expr;
 	function readSeedElement(pos:Position, iFieldName:String):Expr;
-	function readSelf(pos:Position, eField:Expr, fieldName:String):Expr;
-	function writeSelf(pos:Position, eField:Expr, fieldName:String):Expr;
+	function createAsPersistable(pos:Position, eName:Expr):Expr;
+	function readAsPersistable(pos:Position, eName:Expr, iFieldName:String):Expr;
+	function writeAsPersistable(pos:Position, eName:Expr, eValue:Expr):Expr;
 	function copyFrom(pos:Position, iFieldName:String):Expr;
 
 }

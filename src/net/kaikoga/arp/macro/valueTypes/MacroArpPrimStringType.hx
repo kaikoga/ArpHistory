@@ -30,16 +30,24 @@ class MacroArpPrimStringType implements IMacroArpValueType {
 		return macro @:pos(pos) { this.$iFieldName = element.value(); };
 	}
 
-	public function readSelf(pos:Position, eField:Expr, fieldName:String):Expr {
+	public function createAsPersistable(pos:Position, eName:Expr):Expr {
 		// if (nonNull)
-		// return macro @:pos(pos) { ${eField} = input.readUtf($v{fieldName}); };
-		return macro @:pos(pos) { ${eField} = net.kaikoga.arp.persistable.PersistableTool.readNullableUtf(input, $v{fieldName}); };
+		// return macro @:pos(pos) { input.readUtf(${eName}); };
+		return macro @:pos(pos) { net.kaikoga.arp.persistable.PersistableTool.readNullableUtf(input, ${eName}); };
 	}
 
-	public function writeSelf(pos:Position, eField:Expr, fieldName:String):Expr {
+	public function readAsPersistable(pos:Position, eName:Expr, iFieldName:String):Expr {
 		// if (nonNull)
-		// return macro @:pos(pos) { output.writeUtf($v{iFieldName}, ${eField}); };
-		return macro @:pos(pos) { net.kaikoga.arp.persistable.PersistableTool.writeNullableUtf(output, $v{fieldName}, ${eField}); };
+		// return macro @:pos(pos) { this.$iFieldName = input.readUtf(${eName}); };
+		return macro @:pos(pos) { this.$iFieldName = net.kaikoga.arp.persistable.PersistableTool.readNullableUtf(input, ${eName}); };
+
+	}
+
+	public function writeAsPersistable(pos:Position, eName:Expr, eValue:Expr):Expr {
+		// if (nonNull)
+		// return macro @:pos(pos) { output.writeUtf($v{iFieldName}, ${eValue}); };
+		return macro @:pos(pos) { net.kaikoga.arp.persistable.PersistableTool.writeNullableUtf(output, ${eName}, ${eValue}); };
+
 	}
 
 	public function copyFrom(pos:Position, iFieldName:String):Expr {

@@ -48,6 +48,10 @@ class MacroArpFieldBase {
 			case _: iNativeName;
 		}
 	}
+	private var eFieldName(get, never):ExprOf<String>;
+	private function get_eFieldName():ExprOf<String> {
+		return macro @:pos(nativePos) $v{this.fieldName};
+	}
 	public var isSeedable(get, never):Bool;
 	private function get_isSeedable():Bool {
 		return switch (definition.metaArpField) {

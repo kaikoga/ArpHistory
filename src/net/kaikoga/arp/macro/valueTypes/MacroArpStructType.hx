@@ -39,12 +39,16 @@ class MacroArpStructType implements IMacroArpValueType {
 		return macro @:pos(pos) { this.$iFieldName.initWithSeed(element); };
 	}
 
-	public function readSelf(pos:Position, eField:Expr, fieldName:String):Expr {
-		return macro @:pos(pos) { input.readPersistable($v{fieldName}, ${eField}); };
+	public function createAsPersistable(pos:Position, eName:Expr):Expr {
+		return macro @:pos(pos) { input.readPersistable(${eName}, ${this.createEmptyVo(pos)}); };
 	}
 
-	public function writeSelf(pos:Position, eField:Expr, fieldName:String):Expr {
-		return macro @:pos(pos) { output.writePersistable($v{fieldName}, ${eField}); };
+	public function readAsPersistable(pos:Position, eName:Expr, iFieldName:String):Expr {
+		return macro @:pos(pos) { input.readPersistable(${eName}, this.$iFieldName); };
+	}
+
+	public function writeAsPersistable(pos:Position, eName:Expr, eValue:Expr):Expr {
+		return macro @:pos(pos) { output.writePersistable(${eName}, ${eValue}); };
 	}
 
 	public function copyFrom(pos:Position, iFieldName:String):Expr {
