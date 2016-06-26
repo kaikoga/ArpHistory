@@ -12,4 +12,4 @@
 -swf-version 11
 -D fdb
 -D arp_backend_flash
--D no_inline
+#-D no_inline
