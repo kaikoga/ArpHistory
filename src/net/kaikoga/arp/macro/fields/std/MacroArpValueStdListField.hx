@@ -52,12 +52,14 @@ class MacroArpValueStdListField extends MacroArpValueCollectionFieldBase impleme
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
+		// intentionally serialized
 		fieldBlock.push(macro @:pos(this.nativePos) {
 			this.$iNativeName = haxe.Unserializer.run(input.readUtf($v{iNativeName}));
 		});
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
+		// intentionally serialized
 		fieldBlock.push(macro @:pos(this.nativePos) {
 			output.writeUtf($v{iNativeName}, haxe.Serializer.run(this.$iNativeName));
 		});

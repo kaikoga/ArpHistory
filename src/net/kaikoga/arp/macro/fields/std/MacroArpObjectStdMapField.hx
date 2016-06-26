@@ -72,12 +72,10 @@ class MacroArpObjectStdMapField extends MacroArpObjectCollectionFieldBase implem
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
-		// FIXME persist over serialize
 		fieldBlock.push(macro @:pos(this.nativePos) { input.readPersistable(${this.eFieldName}, this.$iNativeName); });
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
-		// FIXME persist over serialize
 		fieldBlock.push(macro @:pos(this.nativePos) { output.writePersistable(${this.eFieldName}, this.$iNativeName); });
 	}
 
