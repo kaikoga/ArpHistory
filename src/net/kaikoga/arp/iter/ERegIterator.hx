@@ -12,7 +12,7 @@ class ERegIterator {
 		this.pos = 0;
 	}
 
-	private var matched:String;
+	private var matched:String = null;
 
 	inline private function match():Void {
 		if (this.matched != null) return;
