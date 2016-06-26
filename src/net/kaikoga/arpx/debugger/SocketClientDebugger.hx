@@ -4,7 +4,7 @@ import net.kaikoga.arp.domain.dump.ArpDumpAnon;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.core.ArpSid;
 import net.kaikoga.arp.domain.dump.ArpDomainDump;
-import net.kaikoga.arp.persistable.DynamicPersistOutput;
+import net.kaikoga.arp.persistable.AnonPersistOutput;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
@@ -64,7 +64,7 @@ class SocketClientDebugger implements IArpObject {
 					var slot:ArpUntypedSlot = this.arpDomain().getSlot(arpSid);
 					var value:IPersistable = try cast(slot.value, IPersistable) catch (e:Dynamic) null;
 					if (value != null) {
-						var output:DynamicPersistOutput = new DynamicPersistOutput(null, -1);
+						var output:AnonPersistOutput = new AnonPersistOutput(null, -1);
 						value.writeSelf(output);
 						object = output.data;
 						arpTemplateName = "slot.arpTemplateName";
