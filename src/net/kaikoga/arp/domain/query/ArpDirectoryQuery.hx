@@ -4,9 +4,9 @@ class ArpDirectoryQuery {
 
 	private var root:ArpDirectory;
 	private var path:String;
-	private var pathArray:Array<String> = null;
+	private var pathArray:Array<String>;
 
-	inline public function new(root:ArpDirectory, path:String = null) {
+	public function new(root:ArpDirectory, path:String = null) {
 		if (path == null) path = "";
 		if (path.charAt(0) == ArpDirectory.PATH_DELIMITER) {
 			//absolute path
@@ -15,12 +15,13 @@ class ArpDirectoryQuery {
 		}
 		this.root = root;
 		this.path = path;
+		this.pathArray = null;
 		if (path.indexOf(ArpDirectory.PATH_DELIMITER) >= 0) {
 			this.pathArray = path.split(ArpDirectory.PATH_DELIMITER);
 		}
 	}
 
-	inline public function directory():ArpDirectory {
+	public function directory():ArpDirectory {
 		if (this.path == null) return this.root;
 		if (this.pathArray == null) return this.root.child(this.path);
 		var slot:ArpDirectory = this.root;
@@ -28,7 +29,7 @@ class ArpDirectoryQuery {
 		return slot;
 	}
 
-	inline public function link(dir:ArpDirectory):ArpDirectory {
+	public function link(dir:ArpDirectory):ArpDirectory {
 		var target:ArpDirectory = this.directory();
 		target.linkTo(dir);
 		return dir;

@@ -7,7 +7,7 @@ class ArpObjectQuery<T:IArpObject> extends ArpDirectoryQuery {
 
 	private var type:ArpType;
 
-	inline public function new(root:ArpDirectory, path:String = null, type:ArpType = null) {
+	public function new(root:ArpDirectory, path:String = null, type:ArpType = null) {
 		super(root, path);
 		this.type = type;
 	}
