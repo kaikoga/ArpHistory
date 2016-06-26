@@ -44,24 +44,26 @@ class PrepareQueue {
 	}
 
 	private function onTaskRunnerComplete(i:Int):Void {
+		this.domain.log("arp_debug_prepare", 'PrepareQueue.onTaskRunnerComplete()');
 		// TODO this.dispatchEvent(event);
 	}
 
 	private function onTaskRunnerDeadlock(i:Int):Void {
+		this.domain.log("arp_debug_prepare", 'PrepareQueue.onTaskRunnerDeadlock()');
 		// TODO this.dispatchEvent(event);
 	}
 
 	private function onTaskRunnerProgress(progress:ArpProgressEvent):Void {
-		this.domain.log("arp_debug_prepare", 'PrepareTaskManager.onTaskRunnerProgress(): [prepare task cycle ${progress.progress}/${progress.total}]');
+		this.domain.log("arp_debug_prepare", 'PrepareQueue.onTaskRunnerProgress(): [prepare task cycle ${progress.progress}/${progress.total}]');
 	}
 
 	private function onTaskRunnerError(error:Dynamic):Void {
 		for (task in this.tasksBySlots) {
 			// var waitsFor:Array<Dynamic> = task.slot.waitsFor(task.heat).map(this.arpSlotToString);
 			// TODO
-			this.domain.log("arp", 'PrepareTaskManager.onTaskRunnerError() ${task.slot} ${task.slot.heat}');
-			// this.domain.log("arp", 'PrepareTaskManager.onTaskRunnerError() waits for ${waitsFor.length} slots');
-			// this.domain.log("arp", 'PrepareTaskManager.onTaskRunnerError() ${waitsFor}');
+			this.domain.log("arp", 'PrepareQueue.onTaskRunnerError() ${task.slot} ${task.slot.heat}');
+			// this.domain.log("arp", 'PrepareQueue.onTaskRunnerError() waits for ${waitsFor.length} slots');
+			// this.domain.log("arp", 'PrepareQueue.onTaskRunnerError() ${waitsFor}');
 		}
 		// TODO this.dispatchEvent(event);
 	}
@@ -81,6 +83,7 @@ class PrepareQueue {
 		this.tasksBySlots.set(slot, task);
 		this.taskRunner.append(task);
 		task.slot.heat = ArpHeat.Warming;
+		this.domain.log("arp_debug_prepare", 'PrepareQueue.prepareLater(): prepare later ${slot}');
 	}
 
 	public function prepareChildLater(slot:ArpUntypedSlot, name:String, childSlot:ArpUntypedSlot):Void {
