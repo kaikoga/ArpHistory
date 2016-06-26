@@ -1,6 +1,8 @@
 package net.kaikoga.arpx.logger;
 
+import net.kaikoga.arp.domain.events.ArpLogEvent;
 import net.kaikoga.arpx.socketClient.SocketClient;
+
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("logger", "socketClient"))
 class SocketClientLogger extends Logger {
 
@@ -10,10 +12,10 @@ class SocketClientLogger extends Logger {
 		super();
 	}
 
-	override public function log(category:String, message:String):Void {
-		if (!this.respondsTo(category)) return;
+	override public function log(event:ArpLogEvent):Void {
+		if (!this.respondsTo(event.category)) return;
 		try {
-			this.socketClient.writeUtfBlob("[" + category + "]" + StringTools.replace(message, "\n", "\n ") + "\n");
+			this.socketClient.writeUtfBlob("[" + event.category + "]" + StringTools.replace(event.message, "\n", "\n ") + "\n");
 		} catch (d:Dynamic) {
 			// ignore
 		}

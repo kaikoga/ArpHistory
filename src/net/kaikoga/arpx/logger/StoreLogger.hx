@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.logger;
 
+import net.kaikoga.arp.domain.events.ArpLogEvent;
+
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("logger", "store"))
 class StoreLogger extends Logger {
 
@@ -14,15 +16,15 @@ class StoreLogger extends Logger {
 		return this._store;
 	}
 
-	override public function log(category:String, message:String):Void {
-		if (!this.respondsTo(category)) return;
+	override public function log(event:ArpLogEvent):Void {
+		if (!this.respondsTo(event.category)) return;
 
-		var array:Array<String> = this.store.get(category);
+		var array:Array<String> = this.store.get(event.category);
 		if (array == null) {
 			array = [];
-			this.store.set(category, array);
+			this.store.set(event.category, array);
 		}
-		array.push(message);
+		array.push(event.message);
 	}
 
 	public function dump(category:String):Array<String> {

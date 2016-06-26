@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.logger;
 
+import net.kaikoga.arp.domain.events.ArpLogEvent;
+
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("logger", "trace"))
 class TraceLogger extends Logger {
 
@@ -7,9 +9,9 @@ class TraceLogger extends Logger {
 		super();
 	}
 
-	override public function log(category:String, message:String):Void {
-		if (!this.respondsTo(category)) return;
-		trace("[" + category + "]", message);
+	override public function log(event:ArpLogEvent):Void {
+		if (!this.respondsTo(event.category)) return;
+		trace("[" + event.category + "]", event.message);
 	}
 }
 
