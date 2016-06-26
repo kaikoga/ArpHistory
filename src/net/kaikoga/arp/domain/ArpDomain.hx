@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain;
 
+import net.kaikoga.arp.domain.core.ArpIdGenerator;
 import net.kaikoga.arp.events.IArpSignalIn;
 import net.kaikoga.arp.events.IArpSignalOut;
 import net.kaikoga.arp.domain.events.ArpLogEvent;
@@ -17,8 +18,6 @@ import net.kaikoga.arp.domain.core.ArpDid;
 
 class ArpDomain {
 
-	inline private static var AUTO_HEADER:String = "$";
-
 	public var root(default, null):ArpDirectory;
 	private var slots:Map<String, ArpUntypedSlot>;
 	public var nullSlot(default, null):ArpUntypedSlot;
@@ -27,8 +26,8 @@ class ArpDomain {
 
 	private var reg:ArpGeneratorRegistry;
 
-	private var _sid:Int = 0;
-	private var _did:Int = 0;
+	private var _sid:ArpIdGenerator = new ArpIdGenerator();
+	private var _did:ArpIdGenerator = new ArpIdGenerator();
 
 	private var _rawTick:ArpSignal<Float>;
 	public var rawTick(get, never):IArpSignalIn<Float>;
@@ -58,14 +57,14 @@ class ArpDomain {
 	}
 
 	private function allocSlot(sid:ArpSid = null):ArpUntypedSlot {
-		if (sid == null) sid = new ArpSid('$AUTO_HEADER${Std.string(_sid++)}');
+		if (sid == null) sid = new ArpSid(_sid.next());
 		var slot:ArpUntypedSlot = new ArpUntypedSlot(this, sid);
 		this.slots.set(sid.toString(), slot);
 		return slot;
 	}
 
 	private function allocDir(did:ArpDid = null):ArpDirectory {
-		if (did == null) did = new ArpDid('$AUTO_HEADER${Std.string(_did++)}');
+		if (did == null) did = new ArpDid(_did.next());
 		return new ArpDirectory(this, did);
 	}
 
