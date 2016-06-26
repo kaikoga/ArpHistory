@@ -213,26 +213,29 @@ class TaskRunner<T:ITask> {
 						this._readyTasks = [];
 						this.processedSomething = false;
 					} else if (this.tasksWaiting > 0) {
+						// we have some tasks waiting
 						if (!this.verbose) this.triggerProgressEvent();
 						this.stop();
-						break;
+						return;
 					} else {
-						// No work done, tasks depends each other, we can only halt
+						// No work done, tasks depends each other, we can only halt now
 						this.isDeadlock = true;
 						if (!this._onDeadlock.willTrigger()) throw "TaskRunner.tick(): TaskRunner has encountered a deadlock";
 						this._onDeadlock.dispatch(this.tasksTotal - this.tasksProcessed);
 						//deadlock is fatal, so we must stop
 						this.stop();
-						break;
+						return;
 					}
 				} else {
 					if (this.tasksWaiting > 0) {
 						if (!this.verbose) this.triggerProgressEvent();
+						this.stop();
+						return;
 					} else {
 						// No tasks, no ready tasks, done!
 						this._onComplete.dispatch(0);
 						this.stop();
-						break;
+						return;
 					}
 				}
 			}
