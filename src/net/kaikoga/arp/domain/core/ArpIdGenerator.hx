@@ -8,4 +8,7 @@ abstract ArpIdGenerator(Int) {
 	inline public function next():String {
 		return '$AUTO_HEADER${Std.string(this++)}';
 	}
+	inline public function reset():Void {
+		this = 0;
+	}
 }

@@ -131,11 +131,16 @@ class MacroArpObjectStub {
 
 			public function readSelf(input:net.kaikoga.arp.persistable.IPersistInput):Void {
 				var collection:net.kaikoga.arp.persistable.IPersistInput;
+				var nameList:Array<String>;
+				var values:net.kaikoga.arp.persistable.IPersistInput;
 				$b{ this.buildReadSelfBlock() }
 			}
 
 			public function writeSelf(output:net.kaikoga.arp.persistable.IPersistOutput):Void {
 				var collection:net.kaikoga.arp.persistable.IPersistOutput;
+				var nameList:Array<String>;
+				var values:net.kaikoga.arp.persistable.IPersistOutput;
+				var uniqId:net.kaikoga.arp.domain.core.ArpIdGenerator = new net.kaikoga.arp.domain.core.ArpIdGenerator();
 				$b{ this.buildWriteSelfBlock() }
 			}
 
@@ -195,12 +200,17 @@ class MacroArpObjectStub {
 			override public function readSelf(input:net.kaikoga.arp.persistable.IPersistInput):Void {
 				super.readSelf(input);
 				var collection:net.kaikoga.arp.persistable.IPersistInput;
+				var nameList:Array<String>;
+				var values:net.kaikoga.arp.persistable.IPersistInput;
 				$b{ this.buildReadSelfBlock() }
 			}
 
 			override public function writeSelf(output:net.kaikoga.arp.persistable.IPersistOutput):Void {
 				super.writeSelf(output);
 				var collection:net.kaikoga.arp.persistable.IPersistOutput;
+				var nameList:Array<String>;
+				var values:net.kaikoga.arp.persistable.IPersistOutput;
+				var uniqId:net.kaikoga.arp.domain.core.ArpIdGenerator = new net.kaikoga.arp.domain.core.ArpIdGenerator();
 				$b{ this.buildWriteSelfBlock() }
 			}
 

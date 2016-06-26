@@ -52,16 +52,30 @@ class MacroArpValueSetField extends MacroArpValueCollectionFieldBase implements 
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
-		// FIXME persist over serialize
 		fieldBlock.push(macro @:pos(this.nativePos) {
-			this.$iNativeName = haxe.Unserializer.run(input.readUtf($v{iNativeName}));
+			collection = input.readEnter(${eFieldName});
+			nameList = collection.readNameList("names");
+			values = input.readEnter("values");
+			for (name in nameList) {
+				this.$iNativeName.add(${this.type.createAsPersistable(this.nativePos, macro name)});
+			}
+			values.readExit();
+			collection.readExit();
 		});
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
-		// FIXME persist over serialize
 		fieldBlock.push(macro @:pos(this.nativePos) {
-			output.writeUtf($v{iNativeName}, haxe.Serializer.run(this.$iNativeName));
+			collection = output.writeEnter(${eFieldName});
+			uniqId.reset();
+			collection.writeNameList("names", [for (value in this.$iNativeName) uniqId.next()]);
+			values = output.writeEnter("values");
+			uniqId.reset();
+			for (value in this.$iNativeName) {
+				${this.type.writeAsPersistable(this.nativePos, macro uniqId.next(), macro value)}
+			}
+			values.writeExit();
+			collection.writeExit();
 		});
 	}
 
