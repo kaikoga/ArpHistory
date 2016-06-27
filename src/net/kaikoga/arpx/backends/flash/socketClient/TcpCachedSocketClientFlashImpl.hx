@@ -43,7 +43,7 @@ class TcpCachedSocketClientFlashImpl implements ISocketClientImpl {
 			return true;
 		}
 		if (this.socket != null) {
-			return this.socket.connected;
+			return true;
 		}
 		this.socket = new Socket();
 		var host:String = "127.0.0.1";
@@ -55,12 +55,12 @@ class TcpCachedSocketClientFlashImpl implements ISocketClientImpl {
 		this.socket.addEventListener(IOErrorEvent.IO_ERROR, this.onSocketIoError);
 		this.socket.addEventListener(ProgressEvent.SOCKET_DATA, this.onSocketData);
 		this.socket.connect(host, port);
-		this.socketClient.arpDomain().waitFor(this.socketClient);
-		return false;
+		// this.socketClient.arpDomain().waitFor(this.socketClient);
+		return true;
 	}
 
 	private function onSocketConnect(event:Event):Void {
-		this.socketClient.arpDomain().notifyFor(this.socketClient);
+		// this.socketClient.arpDomain().notifyFor(this.socketClient);
 		this.input = new DataInputWrapper(this.socket);
 		this.output = new DataOutputWrapper(this.socket);
 		this.input.bigEndian = true;
@@ -106,19 +106,19 @@ class TcpCachedSocketClientFlashImpl implements ISocketClientImpl {
 	inline public function readUtfBlob():String return inPipe.readUtfBlob();
 	inline public function nextBytes(limit:Int = 0):Bytes return inPipe.nextBytes(limit);
 
-	inline public function writeBool(value:Bool):Void { output.writeBool(value); flush(); }
-	inline public function writeInt8(value:Int):Void { output.writeInt8(value); flush(); }
-	inline public function writeInt16(value:Int):Void { output.writeInt16(value); flush(); }
-	inline public function writeInt32(value:Int):Void { output.writeInt32(value); flush(); }
-	inline public function writeUInt8(value:UInt):Void { output.writeUInt8(value); flush(); }
-	inline public function writeUInt16(value:UInt):Void { output.writeUInt16(value); flush(); }
-	inline public function writeUInt32(value:UInt):Void { output.writeUInt32(value); flush(); }
-	inline public function writeFloat(value:Float):Void { output.writeFloat(value); flush(); }
-	inline public function writeDouble(value:Float):Void { output.writeDouble(value); flush(); }
-	inline public function writeBytes(bytes:Bytes, offset:UInt = 0, length:UInt = 0):Void { output.writeBytes(bytes, offset, length); flush(); }
-	inline public function writeUtfBytes(value:String):Void { output.writeUtfBytes(value); flush(); }
-	inline public function writeBlob(bytes:Bytes):Void { output.writeBlob(bytes); flush(); }
-	inline public function writeUtfBlob(value:String):Void { output.writeUtfBlob(value); flush(); }
+	inline public function writeBool(value:Bool):Void { outPipe.writeBool(value); flush(); }
+	inline public function writeInt8(value:Int):Void { outPipe.writeInt8(value); flush(); }
+	inline public function writeInt16(value:Int):Void { outPipe.writeInt16(value); flush(); }
+	inline public function writeInt32(value:Int):Void { outPipe.writeInt32(value); flush(); }
+	inline public function writeUInt8(value:UInt):Void { outPipe.writeUInt8(value); flush(); }
+	inline public function writeUInt16(value:UInt):Void { outPipe.writeUInt16(value); flush(); }
+	inline public function writeUInt32(value:UInt):Void { outPipe.writeUInt32(value); flush(); }
+	inline public function writeFloat(value:Float):Void { outPipe.writeFloat(value); flush(); }
+	inline public function writeDouble(value:Float):Void { outPipe.writeDouble(value); flush(); }
+	inline public function writeBytes(bytes:Bytes, offset:UInt = 0, length:UInt = 0):Void { outPipe.writeBytes(bytes, offset, length); flush(); }
+	inline public function writeUtfBytes(value:String):Void { outPipe.writeUtfBytes(value); flush(); }
+	inline public function writeBlob(bytes:Bytes):Void { outPipe.writeBlob(bytes); flush(); }
+	inline public function writeUtfBlob(value:String):Void { outPipe.writeUtfBlob(value); flush(); }
 
 }
 
