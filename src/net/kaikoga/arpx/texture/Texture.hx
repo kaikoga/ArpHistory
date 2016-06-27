@@ -8,7 +8,7 @@ import net.kaikoga.arp.domain.IArpObject;
 class Texture implements IArpObject
 #if arp_backend_flash implements ITextureFlashImpl #end
 {
-	@:arpField public var hasAlpha:Bool;
+	@:arpField public var hasAlpha:Bool = true;
 
 	#if arp_backend_flash
 	private var flashImpl:ITextureFlashImpl;
