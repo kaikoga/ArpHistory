@@ -33,6 +33,8 @@ class ArpDomain {
 	public var rawTick(get, never):IArpSignalIn<Float>;
 	inline private function get_rawTick():IArpSignalIn<Float> return this._rawTick;
 
+	private var _prepareTick:ArpSignal<Float>;
+
 	private var _tick:ArpSignal<Float>;
 	public var tick(get, never):IArpSignalOut<Float>;
 	inline private function get_tick():IArpSignalOut<Float> return this._tick;
@@ -43,6 +45,7 @@ class ArpDomain {
 
 	public function new() {
 		this._rawTick = new ArpSignal<Float>();
+		this._prepareTick = new ArpSignal<Float>();
 		this._tick = new ArpSignal<Float>();
 		this._onLog = new ArpSignal<ArpLogEvent>();
 
@@ -52,8 +55,15 @@ class ArpDomain {
 		this.reg = new ArpGeneratorRegistry();
 		this.prepareQueue = new PrepareQueue(this, this._rawTick);
 
-		// TODO deal with pending
-		this._rawTick.push(function(v) this._tick.dispatch(v));
+		this._rawTick.push(this.onRawTick);
+	}
+
+	private function onRawTick(v:Float):Void {
+		if (this.prepareQueue.isPending) {
+			this._prepareTick.dispatch(v);
+		} else {
+			this._tick.dispatch(v);
+		}
 	}
 
 	private function allocSlot(sid:ArpSid = null):ArpUntypedSlot {
