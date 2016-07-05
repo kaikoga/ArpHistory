@@ -24,9 +24,9 @@ class MacroArpObjectField extends MacroArpFieldBase implements IMacroArpField {
 			@:pos(this.nativePos)
 			public var $iNativeSlot:$nativeSlotType;
 			@:pos(this.nativePos)
-			inline private function $iGet_nativeName():$nativeType return this.$iNativeSlot.value;
+			/* inline */ private function $iGet_nativeName():$nativeType return this.$iNativeSlot.value;
 			@:pos(this.nativePos)
-			inline private function $iSet_nativeName(value:$nativeType):$nativeType {
+			/* inline */ private function $iSet_nativeName(value:$nativeType):$nativeType {
 				this.$iNativeSlot= net.kaikoga.arp.domain.ArpSlot.of(value, this._arpDomain).takeReference(this.$iNativeSlot);
 				return value;
 			}

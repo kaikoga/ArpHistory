@@ -21,9 +21,9 @@ class MacroArpValueField extends MacroArpFieldBase implements IMacroArpField {
 			@:pos(this.nativePos)
 			private var $i_nativeName:$nativeType = ${this.definition.nativeDefault};
 			@:pos(this.nativePos)
-			inline private function $iGet_nativeName():$nativeType return this.$i_nativeName;
+			/* inline */ private function $iGet_nativeName():$nativeType return this.$i_nativeName;
 			@:pos(this.nativePos)
-			inline private function $iSet_nativeName(value:$nativeType):$nativeType return this.$i_nativeName = value;
+			/* inline */ private function $iSet_nativeName(value:$nativeType):$nativeType return this.$i_nativeName = value;
 		}).fields;
 		this.nativeField.kind = FieldType.FProp("get", "set", nativeType, null);
 		this.nativeField.meta.push({ name: ":isVar", pos : this.nativeField.pos });
