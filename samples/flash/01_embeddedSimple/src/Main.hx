@@ -1,7 +1,7 @@
 package;
 
-import net.kaikoga.arpx.shadow.CompositeShadow;
-import net.kaikoga.arpx.shadow.ChipShadow;
+import net.kaikoga.arpx.mortal.CompositeMortal;
+import net.kaikoga.arpx.mortal.ChipMortal;
 import haxe.Resource;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
@@ -24,16 +24,16 @@ class Main extends Sprite {
 
 		var domain:ArpDomain = new ArpDomain();
 		domain.addGenerator(new ArpObjectGenerator(RectChip));
-		domain.addGenerator(new ArpObjectGenerator(ChipShadow));
-		domain.addGenerator(new ArpObjectGenerator(CompositeShadow));
+		domain.addGenerator(new ArpObjectGenerator(ChipMortal));
+		domain.addGenerator(new ArpObjectGenerator(CompositeMortal));
 
 		domain.loadSeed(ArpSeed.fromXmlString(Resource.getString("arpdata")));
 		var rectChip:RectChip = domain.query("rectChip", new RectChip().arpType()).value();
 		rectChip.copyChip(bitmapData, new APoint(32, 32));
-		var shadow:ChipShadow = domain.query("chipShadow", new ChipShadow().arpType()).value();
-		shadow.copySelf(bitmapData, new APoint());
-		var shadow2:CompositeShadow = domain.query("compositeShadow", new CompositeShadow().arpType()).value();
-		shadow2.copySelf(bitmapData, new APoint());
+		var mortal:ChipMortal = domain.query("chipMortal", new ChipMortal().arpType()).value();
+		mortal.copySelf(bitmapData, new APoint());
+		var mortal2:CompositeMortal = domain.query("compositeMortal", new CompositeMortal().arpType()).value();
+		mortal2.copySelf(bitmapData, new APoint());
 	}
 
 	public static function main():Void {

@@ -1,0 +1,28 @@
+package net.kaikoga.arpx.backends.flash.mortal;
+
+import flash.display.BitmapData;
+
+import net.kaikoga.arp.structs.ArpPosition;
+import net.kaikoga.arpx.backends.flash.geom.ITransform;
+import net.kaikoga.arpx.mortal.ChipMortal;
+
+class ChipMortalFlashImpl implements IMortalFlashImpl {
+
+	private var mortal:ChipMortal;
+
+	public function new(mortal:ChipMortal) {
+		this.mortal = mortal;
+	}
+
+	public function copySelf(bitmapData:BitmapData, transform:ITransform):Void {
+		if (mortal.visible && mortal.chip != null) {
+			var pos:ArpPosition = mortal.position;
+			transform = transform.concatXY(pos.x, pos.y);
+			// TODO mortal.params.dir = pos.dir;
+			mortal.chip.copyChip(bitmapData, transform, mortal.params);
+		}
+	}
+
+}
+
+

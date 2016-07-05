@@ -2,15 +2,17 @@
 	<chip name="rectChip" class="rect" border="#ff0000@ff" color="#0000ff@ff" chipWidth="32" chipHeight="32" baseX="16" baseY="16" />
 	<chip name="text" class="nativeText" color="#ff0000@ff" chipWidth="100" chipHeight="32" baseX="16" baseY="16" />
 	<chip name="string" class="string" chip="text" chipWidth="16" chipHeight="16" baseX="16" baseY="16" orientation="270" />
-	<shadow name="chipShadow" class="chip" chip="rectChip" position="128,32" />
-	<shadow name="compositeShadow" class="composite" position="0,128">
-		<shadow class="chip" chip="rectChip" position="32,0" />
-		<shadow class="chip" chip="text" position="64,0" params="face:hello" />
-		<shadow class="chip" chip="rectChip" position="96,0" />
-		<shadow name="loader" class="chip" chip="string" position="128,0" params="world" />
-	</shadow>
+	<field name="root">
+		<mortal name="chipMortal" class="chip" chip="rectChip" position="128,32" />
+		<mortal name="compositeMortal" class="composite" position="0,128">
+			<mortal class="chip" chip="rectChip" position="32,0" />
+			<mortal class="chip" chip="text" position="64,0" params="face:hello" />
+			<mortal class="chip" chip="rectChip" position="96,0" />
+			<mortal name="loader" class="chip" chip="string" position="128,0" params="world" />
+		</mortal>
+		</field>
 	<console name="console">
-		<camera shadow="/compositeShadow" position="0,0" />
+		<camera field="/root" position="0,0" />
 	</console>
 	<delay name="delay" delayMs="3000" />
 </data>

@@ -1,32 +1,55 @@
 package net.kaikoga.arpx.field;
 
 import net.kaikoga.arp.ds.lambda.OmapOp;
-import net.kaikoga.arpx.shadow.CompositeShadow;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arpx.anchor.Anchor;
 import net.kaikoga.arp.ds.IOmap;
 import net.kaikoga.arpx.mortal.Mortal;
 import net.kaikoga.arpx.reactFrame.ReactFrame;
-import net.kaikoga.arpx.shadow.Shadow;
+
+#if arp_backend_flash
+import net.kaikoga.arpx.backends.flash.field.IFieldFlashImpl;
+import net.kaikoga.arpx.backends.flash.field.FieldFlashImpl;
+import net.kaikoga.arpx.backends.flash.geom.ITransform;
+import flash.display.BitmapData;
+#end
 
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("field"))
 class Field implements IArpObject {
 
 	@:arpField("mortal") public var initMortals:IOmap<String, Mortal>;
 	@:arpField(false) public var mortals:IOmap<String, Mortal>;
-	@:arpField(false) public var cachedShadow:CompositeShadow;
 	@:arpField("anchor") public var anchors:IOmap<String, Anchor>;
 
 	public var gridSize(get, never):Int;
 	public var width(get, never):Int;
 	public var height(get, never):Int;
 
+	#if arp_backend_flash
+
+	private var flashImpl:IFieldFlashImpl;
+
+	private function createImpl():IFieldFlashImpl return new FieldFlashImpl(this);
+
+	public function new() {
+		flashImpl = createImpl();
+	}
+
+	inline public function copySelf(bitmapData:BitmapData, transform:ITransform):Void {
+		flashImpl.copySelf(bitmapData, transform);
+	}
+
+	#else
+
+	@:arpWithoutBackend
+	public function new () {
+	}
+
+	#end
+
 	@:arpHeatUp private function heatUp():Bool {
 		this.reinitMortals();
 		return true;
-	}
-
-	public function new() {
 	}
 
 	private function get_gridSize():Int {
@@ -99,24 +122,6 @@ class Field implements IArpObject {
 		return result;
 	}
 
-	public function toShadow():Shadow {
-		var shadow:CompositeShadow;
-		if (this.cachedShadow == null) {
-			shadow = new CompositeShadow();
-			this.arpDomain().addObject(shadow);
-			this.cachedShadow = shadow;
-		} else {
-			shadow = cast(this.cachedShadow, CompositeShadow);
-		}
-		this.cachedShadow.shadows.clear();
-		for (mortal in this.mortals) {
-			var mortalShadow:Shadow = mortal.toShadow();
-			if (mortalShadow != null) {
-				this.cachedShadow.shadows.add(mortalShadow);
-			}
-		}
-		return shadow;
-	}
 }
 
 

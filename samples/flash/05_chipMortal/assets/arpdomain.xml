@@ -5,7 +5,7 @@
 			<file class="resource" src="a" />
 		</texture>
 	</chip>
-	<field name="field" heat="warm">
+	<field name="root" heat="warm">
 		<mortal name="mortal1" class="chip" position="16,16">
 			<chip ref="gridChip" />
 		</mortal>
@@ -14,7 +14,7 @@
 		</mortal>
 	</field>
 	<console name="console">
-		<camera key="main" position="0,0" />
+		<camera key="main" field="/root" position="0,0" />
 	</console>
 	<logger class="socketClient" heat="warm" category="*">
 		<socketClient class="tcpCached" host="localhost:57771" />

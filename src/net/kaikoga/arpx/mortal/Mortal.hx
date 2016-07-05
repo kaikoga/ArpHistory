@@ -9,10 +9,17 @@ import net.kaikoga.arp.ds.IOmap;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.reactFrame.ReactFrame;
-import net.kaikoga.arpx.shadow.Shadow;
+
+#if arp_backend_flash
+import net.kaikoga.arpx.backends.flash.mortal.IMortalFlashImpl;
+import net.kaikoga.arpx.backends.flash.geom.ITransform;
+import flash.display.BitmapData;
+#end
 
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("mortal", "null"))
-class Mortal implements IArpObject {
+class Mortal implements IArpObject
+#if arp_backend_flash implements IMortalFlashImpl #end
+{
 
 	@:arpField public var position:ArpPosition;
 	@:arpField public var mass:Float = 1.0;
@@ -21,8 +28,28 @@ class Mortal implements IArpObject {
 	@:arpField("hitFrame") public var hitFrames:IOmap<String, HitFrame>;
 	@:arpField(false) public var lastReactions:IOmap<String, Int>;
 
+	#if arp_backend_flash
+
+	private var flashImpl:IMortalFlashImpl;
+
+	private function createImpl():IMortalFlashImpl return null;
+
 	public function new() {
+		flashImpl = createImpl();
 	}
+
+	inline public function copySelf(bitmapData:BitmapData, transform:ITransform):Void {
+		flashImpl.copySelf(bitmapData, transform);
+	}
+
+	#else
+
+	@:arpWithoutBackend
+	public function new () {
+	}
+
+	#end
+
 
 	public function collidesPosition(position:ArpPosition, hitType:String):Bool {
 		var hitFrame:HitFrame = this.hitFrames.get(hitType);
@@ -88,9 +115,6 @@ class Mortal implements IArpObject {
 
 	}
 
-	public function toShadow():Shadow {
-		return null;
-	}
 }
 
 

@@ -1,9 +1,7 @@
 package net.kaikoga.arpx.chip;
 
-import net.kaikoga.arpx.shadow.ChipShadow;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arpx.shadow.Shadow;
 
 #if arp_backend_flash
 import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
@@ -35,13 +33,6 @@ class Chip implements IArpObject
 
 	//TODO hasChipName must distinguish explicit and implicit existence
 	public function hasFace(face:String):Bool return false;
-
-	public function toShadow(params:ArpParams = null):Shadow {
-		var shadow:ChipShadow = this.arpDomain().allocObject(ChipShadow);
-		shadow.chip = this;
-		shadow.params = params;
-		return shadow;
-	}
 
 	#if arp_backend_flash
 

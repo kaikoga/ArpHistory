@@ -1,23 +1,38 @@
 package net.kaikoga.arpx.mortal;
 
+#if arp_backend_flash
+import net.kaikoga.arpx.backends.flash.mortal.CompositeMortalFlashImpl;
+import net.kaikoga.arpx.backends.flash.mortal.IMortalFlashImpl;
+#end
+
 import net.kaikoga.arpx.reactFrame.ReactFrame;
 import net.kaikoga.arp.ds.IList;
 import net.kaikoga.arpx.mortal.Mortal;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.field.Field;
-import net.kaikoga.arpx.shadow.CompositeShadow;
-import net.kaikoga.arpx.shadow.Shadow;
 
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("mortal", "composite"))
 class CompositeMortal extends Mortal {
 
 	@:arpField public var sort:String;
 	@:arpField("mortal") @:arpBarrier public var mortals:IList<Mortal>;
-	@:arpField public var cachedShadow:CompositeShadow;
 
-	public function new() {
+	#if arp_backend_flash
+
+	override private function createImpl():IMortalFlashImpl return new CompositeMortalFlashImpl(this);
+
+	public function new () {
 		super();
 	}
+
+	#else
+
+	@:arpWithoutBackend
+	public function new () {
+		super();
+	}
+
+	#end
 
 	override public function tick(field:Field):Void {
 		super.tick(field);
@@ -40,25 +55,6 @@ class CompositeMortal extends Mortal {
 		}
 	}
 
-	@:access(net.kaikoga.arpx.shadow.CompositeShadow)
-	override public function toShadow():Shadow {
-		var shadow:CompositeShadow = this.cachedShadow;
-		if (shadow == null) {
-			shadow = this.arpDomain().addObject(new CompositeShadow());
-			this.cachedShadow = shadow;
-		}
-		shadow.shadows.clear();
-		for (mortal in this.mortals) {
-			var mortalShadow:Shadow = mortal.toShadow();
-			if (mortalShadow != null) {
-				shadow.shadows.add(mortalShadow);
-			}
-		}
-		shadow.visible = this.visible;
-		shadow.position.copyFrom(this.position);
-		return shadow;
-	}
-
 	override private function get_params():ArpParams {
 		return new ArpParams();
 	}
@@ -69,6 +65,7 @@ class CompositeMortal extends Mortal {
 		}
 		return value;
 	}
+
 }
 
 

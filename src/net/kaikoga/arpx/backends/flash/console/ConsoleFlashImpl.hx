@@ -22,7 +22,7 @@ class ConsoleFlashImpl implements IConsoleFlashImpl {
 			var pos:ArpPosition = camera.position;
 			workPt.x = -pos.x;
 			workPt.y = -pos.y;
-			camera.shadow.copySelf(bitmapData, workPt);
+			camera.field.copySelf(bitmapData, workPt);
 		}
 		// if (this.console.dissolve) {
 		// 	if (this.console.dissolve.frameMove()) {

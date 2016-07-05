@@ -13,8 +13,6 @@ import net.kaikoga.arpx.chip.GridChip;
 import flash.events.Event;
 import net.kaikoga.arpx.camera.Camera;
 import net.kaikoga.arpx.console.Console;
-import net.kaikoga.arpx.shadow.CompositeShadow;
-import net.kaikoga.arpx.shadow.ChipShadow;
 import haxe.Resource;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
@@ -43,8 +41,6 @@ class Main extends Sprite {
 		this.domain.addGenerator(new ArpObjectGenerator(FileTexture));
 		this.domain.addGenerator(new ArpObjectGenerator(GridChip));
 		this.domain.addGenerator(new ArpObjectGenerator(FaceList));
-		this.domain.addGenerator(new ArpObjectGenerator(ChipShadow));
-		this.domain.addGenerator(new ArpObjectGenerator(CompositeShadow));
 		this.domain.addGenerator(new ArpObjectGenerator(ChipMortal));
 		this.domain.addGenerator(new ArpObjectGenerator(Field));
 		this.domain.addGenerator(new ArpObjectGenerator(Console));
@@ -73,7 +69,6 @@ class Main extends Sprite {
 	}
 
 	private function onTick(value:Float):Void {
-		this.camera.shadow = this.field.toShadow();
 		this.bitmapData.fillRect(this.bitmapData.rect, 0xffffffff);
 		this.console.display(this.bitmapData);
 		this.mortal1.position.x = (this.mortal1.position.x + 1) % 128;

@@ -1,5 +1,8 @@
 package;
 
+import net.kaikoga.arpx.field.Field;
+import net.kaikoga.arpx.mortal.ChipMortal;
+import net.kaikoga.arpx.mortal.CompositeMortal;
 import net.kaikoga.arpx.faceList.FaceList;
 import net.kaikoga.arpx.texture.FileTexture;
 import net.kaikoga.arpx.file.ResourceFile;
@@ -8,8 +11,6 @@ import net.kaikoga.arpx.chip.GridChip;
 import flash.events.Event;
 import net.kaikoga.arpx.camera.Camera;
 import net.kaikoga.arpx.console.Console;
-import net.kaikoga.arpx.shadow.CompositeShadow;
-import net.kaikoga.arpx.shadow.ChipShadow;
 import haxe.Resource;
 import net.kaikoga.arp.domain.seed.ArpSeed;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
@@ -35,10 +36,11 @@ class Main extends Sprite {
 		this.domain.addGenerator(new ArpObjectGenerator(ResourceTexture));
 		this.domain.addGenerator(new ArpObjectGenerator(GridChip));
 		this.domain.addGenerator(new ArpObjectGenerator(FaceList));
-		this.domain.addGenerator(new ArpObjectGenerator(ChipShadow));
-		this.domain.addGenerator(new ArpObjectGenerator(CompositeShadow));
+		this.domain.addGenerator(new ArpObjectGenerator(ChipMortal));
+		this.domain.addGenerator(new ArpObjectGenerator(CompositeMortal));
 		this.domain.addGenerator(new ArpObjectGenerator(Console));
 		this.domain.addGenerator(new ArpObjectGenerator(Camera));
+		this.domain.addGenerator(new ArpObjectGenerator(Field));
 
 		this.domain.loadSeed(ArpSeed.fromXmlString(Resource.getString("arpdata")));
 		this.domain.tick.push(this.onTick);

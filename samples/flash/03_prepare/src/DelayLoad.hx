@@ -6,7 +6,7 @@ import net.kaikoga.arp.domain.IArpObject;
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("delay", "delay"))
 class DelayLoad implements IArpObject {
 
-	@:arpValue public var delayMs(get, set):Int;
+	@:arpField public var delayMs:Int;
 
 	private var heat:Int = 0;
 
