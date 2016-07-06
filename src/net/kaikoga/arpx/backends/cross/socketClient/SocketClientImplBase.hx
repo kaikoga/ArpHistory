@@ -3,7 +3,6 @@ package net.kaikoga.arpx.backends.cross.socketClient;
 import net.kaikoga.arp.io.IOutput;
 import net.kaikoga.arp.io.IInput;
 import haxe.io.Bytes;
-import net.kaikoga.net.BlobIo;
 
 class SocketClientImplBase implements ISocketClientImpl {
 
@@ -17,8 +16,8 @@ class SocketClientImplBase implements ISocketClientImpl {
 	public function new() {
 	}
 
-	function heatUp():Bool return true;
-	function heatDown():Bool return true;
+	public function heatUp():Bool return true;
+	public function heatDown():Bool return true;
 
 	inline public function readBool():Bool if (input != null) return input.readBool() else throw "EOF";
 	inline public function readInt8():Int if (input != null) return input.readInt8() else throw "EOF";
@@ -30,7 +29,7 @@ class SocketClientImplBase implements ISocketClientImpl {
 	inline public function readFloat():Float if (input != null) return input.readFloat() else throw "EOF";
 	inline public function readDouble():Float if (input != null) return input.readDouble() else throw "EOF";
 	inline public function readBytes(bytes:Bytes, offset:UInt = 0, length:UInt = 0):Void if (input != null) input.readBytes(bytes, offset, length) else throw "EOF";
-	inline public function readUtfBytes(length:UInt):String if (input != null) return input.readUtfBytes() else throw "EOF";
+	inline public function readUtfBytes(length:UInt):String if (input != null) return input.readUtfBytes(length) else throw "EOF";
 	inline public function readBlob():Bytes if (input != null) return input.readBlob() else throw "EOF";
 	inline public function readUtfBlob():String if (input != null) return input.readUtfBlob() else throw "EOF";
 	inline public function nextBytes(limit:Int = 0):Bytes if (input != null) return input.nextBytes(limit) else throw "EOF";
@@ -46,7 +45,7 @@ class SocketClientImplBase implements ISocketClientImpl {
 	inline public function writeDouble(value:Float):Void if (output != null) output.writeDouble(value) else throw "closed";
 	inline public function writeBytes(bytes:Bytes, offset:UInt = 0, length:UInt = 0):Void if (output != null) output.writeBytes(bytes, offset, length) else throw "closed";
 	inline public function writeUtfBytes(value:String):Void if (output != null) output.writeUtfBytes(value) else throw "closed";
-	inline public function writeBlob(bytes:Bytes):Void if (output != null) output.writeBlob(value) else throw "closed";
+	inline public function writeBlob(bytes:Bytes):Void if (output != null) output.writeBlob(bytes) else throw "closed";
 	inline public function writeUtfBlob(value:String):Void if (output != null) output.writeUtfBlob(value) else throw "closed";
 
 }

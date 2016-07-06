@@ -1,10 +1,10 @@
 <data>
 	<chip name="rectChip" class="rect" border="#ff0000@ff" color="#0000ff@ff" chipWidth="32" chipHeight="32" baseX="16" baseY="16" />
 	<chip name="rectChip2" class="rect" border="#ffff00@ff" color="#00ffff@ff" chipWidth="32" chipHeight="32" baseX="16" baseY="16" />
-	<field name="root1" heat="warm">
+	<field name="root1">
 		<mortal name="chipMortal" class="chip" visible="true" chip="rectChip" position="128,32" />
 	</field>
-	<field name="root2" heat="warm">
+	<field name="root2">
 		<mortal name="compositeMortal" class="composite" visible="true" position="0,128">
 			<mortal class="chip" visible="true" chip="rectChip" position="32,0" />
 			<mortal class="chip" visible="true" chip="rectChip2" position="64,0" />

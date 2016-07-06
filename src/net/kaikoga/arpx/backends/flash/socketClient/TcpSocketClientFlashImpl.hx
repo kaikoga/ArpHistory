@@ -1,8 +1,8 @@
 package net.kaikoga.arpx.backends.flash.socketClient;
 
+import net.kaikoga.arp.io.flash.DataOutputWrapper;
+import net.kaikoga.arp.io.flash.DataInputWrapper;
 import net.kaikoga.arpx.backends.cross.socketClient.SocketClientImplBase;
-import net.kaikoga.arp.io.OutputWrapper;
-import net.kaikoga.arp.io.InputWrapper;
 import net.kaikoga.arp.events.IArpSignalIn;
 import net.kaikoga.arp.events.ArpProgressEvent;
 import net.kaikoga.arp.events.ArpSignal;
@@ -14,14 +14,11 @@ import net.kaikoga.arpx.socketClient.TcpSocketClient;
 
 class TcpSocketClientFlashImpl extends SocketClientImplBase {
 
-	public var bigEndian(get, set):Bool;
-	inline public function get_bigEndian():Bool return false;
-	inline public function set_bigEndian(value:Bool):Bool return false;
-
 	private var socketClient:TcpSocketClient;
 	private var onData:IArpSignalIn<ArpProgressEvent>;
 
 	public function new(socketClient:TcpSocketClient, onData:ArpSignal<ArpProgressEvent>) {
+		super();
 		this.socketClient = socketClient;
 		this.onData = onData;
 	}
@@ -36,27 +33,29 @@ class TcpSocketClientFlashImpl extends SocketClientImplBase {
 			return this.socket.connected;
 		}
 		this.socket = new Socket();
-		var array:Array<String> = this.host.split(":", 2);
-		var host:String = array[0] || "127.0.0.1";
-		var port:Int = array[1] || 57771;
+		var host:String = "127.0.0.1";
+		var port:Int = 57772;
+		var array:Array<String> = this.socketClient.host.split(":");
+		if (array[0] != null) host = array[0];
+		if (array[1] != null) try { port = Std.parseInt(array[1]); } catch(d:Dynamic) {}
 		this.socket.addEventListener(Event.CONNECT, this.onSocketConnect);
 		this.socket.addEventListener(IOErrorEvent.IO_ERROR, this.onSocketConnect);
 		this.socket.addEventListener(ProgressEvent.SOCKET_DATA, this.onSocketData);
 		this.socket.connect(host, port);
-		this.socketClient.arpDomain().waitFor(this);
+		this.socketClient.arpDomain().waitFor(this.socketClient);
 		return false;
 	}
 
 	private function onSocketConnect(event:Event):Void {
-		this.socketClient.arpDomain().notifyWaitFor(this);
-		this.input = new InputWrapper(this.socket);
-		this.output = new OutputWrapper(this.socket);
+		this.socketClient.arpDomain().notifyFor(this.socketClient);
+		this.input = new DataInputWrapper(this.socket);
+		this.output = new DataOutputWrapper(this.socket);
 		this.input.bigEndian = true;
 		this.output.bigEndian = true;
 	}
 
 	private function onSocketIoError(event:IOErrorEvent):Void {
-		this.socketClient.arpDomain().notifyWaitFor(this);
+		this.socketClient.arpDomain().notifyFor(this.socketClient);
 		this.socket = null;
 	}
 

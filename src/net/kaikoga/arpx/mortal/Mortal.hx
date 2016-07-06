@@ -1,7 +1,6 @@
 package net.kaikoga.arpx.mortal;
 
 import net.kaikoga.arp.domain.ArpDirectory;
-import net.kaikoga.arpx.backends.flash.geom.APoint;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.hitFrame.HitFrame;
@@ -11,8 +10,9 @@ import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.reactFrame.ReactFrame;
 
 #if arp_backend_flash
-import net.kaikoga.arpx.backends.flash.mortal.IMortalFlashImpl;
 import net.kaikoga.arpx.backends.flash.geom.ITransform;
+import net.kaikoga.arpx.backends.flash.geom.APoint;
+import net.kaikoga.arpx.backends.flash.mortal.IMortalFlashImpl;
 import flash.display.BitmapData;
 #end
 

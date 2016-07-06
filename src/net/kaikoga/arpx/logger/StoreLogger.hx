@@ -28,7 +28,7 @@ class StoreLogger extends Logger {
 	}
 
 	public function dump(category:String):Array<String> {
-		var result:Array<Dynamic> = this.store.get(category);
+		var result:Array<String> = this.store.get(category);
 		if (result == null) {
 			result = [];
 		} else {
