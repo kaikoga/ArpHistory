@@ -11,6 +11,11 @@
 		</mortal>
 		<mortal name="mortal2" class="chip" position="48,16" params="3">
 			<chip ref="gridChip" />
+			<driver class="linear" target="128,128" period="60" />
+		</mortal>
+		<mortal name="mortal3" class="chip" position="80,16" params="3">
+			<chip ref="gridChip" />
+			<driver class="linear" target="128,128" period="60" />
 		</mortal>
 	</field>
 	<console name="console">

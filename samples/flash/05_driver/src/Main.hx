@@ -1,5 +1,6 @@
 package;
 
+import net.kaikoga.arpx.driver.LinearDriver;
 import net.kaikoga.arpx.mortal.Mortal;
 import net.kaikoga.arpx.logger.SocketClientLogger;
 import net.kaikoga.arpx.socketClient.TcpCachedSocketClient;
@@ -33,6 +34,7 @@ class Main extends Sprite {
 	private var field:Field;
 	private var mortal1:Mortal;
 	private var mortal2:Mortal;
+	private var mortal3:Mortal;
 
 	public function new() {
 		super();
@@ -42,6 +44,7 @@ class Main extends Sprite {
 		this.domain.addGenerator(new ArpObjectGenerator(GridChip));
 		this.domain.addGenerator(new ArpObjectGenerator(FaceList));
 		this.domain.addGenerator(new ArpObjectGenerator(ChipMortal));
+		this.domain.addGenerator(new ArpObjectGenerator(LinearDriver));
 		this.domain.addGenerator(new ArpObjectGenerator(Field));
 		this.domain.addGenerator(new ArpObjectGenerator(Console));
 		this.domain.addGenerator(new ArpObjectGenerator(Camera));
@@ -57,9 +60,10 @@ class Main extends Sprite {
 
 		this.console = this.domain.query("console", Console).value();
 		this.camera = this.console.cameras.get("main");
-		this.field = this.domain.query("field", Field).value();
+		this.field = this.domain.query("root", Field).value();
 		this.mortal1 = this.domain.query("mortal1", Mortal).value();
 		this.mortal2 = this.domain.query("mortal2", Mortal).value();
+		this.mortal3 = this.domain.query("mortal3", Mortal).value();
 		Lib.current.stage.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
 		this.domain.heatLater(this.domain.query("gridChip", GridChip).slot());
 	}
@@ -72,7 +76,10 @@ class Main extends Sprite {
 		this.bitmapData.fillRect(this.bitmapData.rect, 0xffffffff);
 		this.console.display(this.bitmapData);
 		this.mortal1.position.x = (this.mortal1.position.x + 1) % 128;
-		this.mortal2.position.y = (this.mortal2.position.y + 1) % 128;
+		this.field.tick();
+		if (Math.random() < 0.05) {
+			cast(this.mortal2.driver, LinearDriver).toward(30, Math.random() * 256, Math.random() * 256);
+		}
 	}
 
 	public static function main():Void {

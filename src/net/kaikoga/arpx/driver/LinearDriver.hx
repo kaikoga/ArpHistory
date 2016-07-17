@@ -1,0 +1,85 @@
+package net.kaikoga.arpx.driver;
+
+import net.kaikoga.arpx.mortal.Mortal;
+import net.kaikoga.arpx.field.Field;
+import net.kaikoga.arp.structs.ArpPosition;
+
+@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("driver", "linear"))
+class LinearDriver extends Driver {
+
+	@:arpField public var target:ArpPosition;
+	@:arpField public var isDelta:Bool;
+	@:arpField public var period:Float;
+
+	public function new() {
+		super();
+	}
+
+	inline public function toward(period:Float, x:Float, y:Float, z:Float = 0, gridSize:Float = 1.0):Void {
+		this.target.x = x * gridSize;
+		this.target.y = y * gridSize;
+		this.target.z = z * gridSize;
+		this.isDelta = false;
+		this.period = period;
+	}
+
+	inline public function towardD(period:Float, x:Float = 0, y:Float = 0, z:Float = 0, gridSize:Float = 1.0):Void {
+		this.target.x += x * gridSize;
+		this.target.y += y * gridSize;
+		this.target.z += z * gridSize;
+		this.isDelta = true;
+		this.period = period;
+	}
+
+	override public function tick(field:Field, mortal:Mortal):Void {
+		if (this.period <= 0) {
+			return;
+		}
+
+		var pos:ArpPosition = mortal.position;
+		if (this.isDelta) {
+			if (this.target.x != 0 || this.target.y != 0) {
+				var valueRadian:Float = Math.atan2(this.target.y, this.target.x);
+				pos.dir.valueRadian = valueRadian;
+			}
+			var dx:Float;
+			var dy:Float;
+			var dz:Float;
+			if (this.period < 1) {
+				dx = this.target.x;
+				dy = this.target.y;
+				dz = this.target.z;
+				this.period = 0;
+			} else {
+				dx = this.target.x / this.period;
+				dy = this.target.y / this.period;
+				dz = this.target.z / this.period;
+				this.period--;
+			}
+			pos.x += dx;
+			pos.y += dy;
+			pos.z += dz;
+			this.target.x -= dx;
+			this.target.y -= dy;
+			this.target.z -= dz;
+		} else {
+			if (this.target.x != pos.x || this.target.y != pos.y) {
+				var valueRadian:Float = Math.atan2(this.target.y - pos.y, this.target.x - pos.x);
+				pos.dir.valueRadian = valueRadian;
+			}
+			if (this.period < 1) {
+				this.period = 0;
+				pos.x = this.target.x;
+				pos.y = this.target.y;
+				pos.z = this.target.z;
+			} else {
+				var p:Float = this.period--;
+				pos.x = (pos.x * this.period + this.target.x) / p;
+				pos.y = (pos.y * this.period + this.target.y) / p;
+				pos.z = (pos.z * this.period + this.target.z) / p;
+			}
+		}
+	}
+}
+
+

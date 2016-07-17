@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.mortal;
 
+import net.kaikoga.arpx.driver.Driver;
 import net.kaikoga.arp.domain.ArpDirectory;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.structs.ArpParams;
@@ -21,8 +22,8 @@ class Mortal implements IArpObject
 #if arp_backend_flash implements IMortalFlashImpl #end
 {
 
+	@:arpField public var driver:Driver;
 	@:arpField public var position:ArpPosition;
-	@:arpField public var mass:Float = 1.0;
 	@:arpField public var visible:Bool = true;
 	@:arpField public var params:ArpParams;
 	@:arpField("hitFrame") public var hitFrames:IOmap<String, HitFrame>;
@@ -69,7 +70,8 @@ class Mortal implements IArpObject
 	private static var _workPt:APoint = new APoint();
 
 	public function tick(field:Field):Void {
-		this.position.tick();
+		if (this.driver != null) this.driver.tick(field, this);
+
 		if (this.lastReactions.length == 0) {
 			return;
 		}
