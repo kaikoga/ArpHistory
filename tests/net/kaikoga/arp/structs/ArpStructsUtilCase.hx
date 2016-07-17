@@ -45,4 +45,17 @@ class ArpStructsUtilCase {
 		assertEquals(2.0, ArpStructsUtil.parseFloatDefault("", 2.0));
 		assertEquals(2.0, ArpStructsUtil.parseFloatDefault(null, 2.0));
 	}
+
+	public function testParseRichFloat():Void {
+		function getUnit(unit:String):Float return if (unit == "g") 16.0 else 1.0;
+
+		assertEquals(0.0, ArpStructsUtil.parseRichFloat("0.0", getUnit));
+		assertEquals(6.0, ArpStructsUtil.parseRichFloat("1+2+3", getUnit));
+		assertEquals(16.0, ArpStructsUtil.parseRichFloat("1g", getUnit));
+		assertEquals(1.0, ArpStructsUtil.parseRichFloat("1c", getUnit));
+		assertEquals(1.0, ArpStructsUtil.parseRichFloat("1e", getUnit));
+		assertEquals(0.1, ArpStructsUtil.parseRichFloat("1.0e-1.0", getUnit));
+		assertEquals(-42.0, ArpStructsUtil.parseRichFloat("-4.2e+1.0n", getUnit));
+		assertEquals(16.0, ArpStructsUtil.parseRichFloat("10.0e-1.0g", getUnit));
+	}
 }

@@ -22,4 +22,25 @@ class ArpStructsUtil {
 		var value:Float = Std.parseFloat(string);
 		return Math.isNaN(value) ? defaultValue : value;
 	}
+
+	public static function parseRichFloat(str:String, getUnit:String->Float):Float {
+		if (str == null) return 0.0;
+		var value:Float = 0.0;
+		var ereg:EReg = ~/([-+]?(?:[0-9]+\.?[0-9]*)|(?:\.[0-9]+))([a-zA-Z]*)/;
+		var pos = 0;
+		while (ereg.matchSub(str, pos)) {
+			pos += ereg.matchedPos().len;
+			var coefficient:Float = Std.parseFloat(ereg.matched(1));
+			var unit:String = ereg.matched(2);
+			if (unit == "e") {
+				if (ereg.matchSub(str, pos)) {
+					pos += ereg.matchedPos().len;
+					coefficient *= Math.pow(10, Std.parseFloat(ereg.matched(1)));
+					unit = ereg.matched(2);
+				}
+			}
+			value += coefficient * getUnit(unit);
+		}
+		return value;
+	}
 }
