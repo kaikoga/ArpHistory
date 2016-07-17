@@ -32,7 +32,7 @@ class SimpleHitFrame extends HitFrame {
 		var tframe:SimpleHitFrame = try cast(target, SimpleHitFrame) catch (e:Dynamic) null;
 		if (tframe != null) {
 			var tarea:ArpHitArea = tframe.hitArea;
-			if (output == null) output = new ArpPosition(targetBase.x, targetBase.y, targetBase.z, input.dir.value, input.gridSize);
+			if (output == null) output = new ArpPosition(targetBase.x, targetBase.y, targetBase.z, input.dir.value);
 			var areaWidth:Float = this.hitArea.width;
 			if (areaWidth > 0) {
 				output.x += (input.x - base.x - this.hitArea.areaLeft) / areaWidth * tarea.width + tarea.areaLeft;
