@@ -66,7 +66,7 @@ class ArpStructsMacroArpObjectCase {
 		assertMatch({dir:0x20000000}, arpObj.arpDirectionField.toHash());
 		assertMatch({areaLeft:1, areaRight:2, areaTop:3, areaBottom:4, areaHind:5, areaFore:6}, arpObj.arpHitAreaField.toHash());
 		assertMatch(Matchers.containsInAnyOrder("a:b", "c:10", "d:2147483648:dir", "g:h:rewire", "face:faceValue"), arpObj.arpParamsField.toHash().params.split(","));
-		assertMatch({dir:0, x:2, y:4, z:6, gridSize:0, period:0, tx:0, ty:0, tz:0}, arpObj.arpPositionField.toHash());
+		assertMatch({dir:0, x:2, y:4, z:6, period:0, tx:0, ty:0, tz:0}, arpObj.arpPositionField.toHash());
 		assertMatch({min:7, max:9}, arpObj.arpRangeField.toHash());
 	}
 

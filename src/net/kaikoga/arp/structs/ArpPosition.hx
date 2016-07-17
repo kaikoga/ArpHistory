@@ -21,155 +21,46 @@ class ArpPosition implements IPersistable {
 	public var tz:Float = 0;
 	public var period:Float = 0;
 
-	private var _gridSize:Float = 1;
-	private var _explicitGridSize:Float = 1;
-	public var gridSize(get, set):Float;
-	private function get_gridSize():Float {
-		return this._explicitGridSize;
-	}
-	private function set_gridSize(value:Float):Float {
-		this._explicitGridSize = value;
-		this._gridSize = (value != 0) ? value : 1;
-		return value;
-	}
-
-	public var gridScale(get, set):Float;
-	private function get_gridScale():Float {
-		return this._explicitGridSize;
-	}
-	private function set_gridScale(value:Float):Float {
-		if (value != 0) {
-			//input is non-zero
-			if (this._explicitGridSize != 0) {
-				//do scaling only if explicit grid size is non-zero
-				value = (value != 0) ? value : 1;
-				this.x = this.x / this._gridSize * value;
-				this.y = this.y / this._gridSize * value;
-				this.z = this.z / this._gridSize * value;
-			}
-			this._explicitGridSize = value;
-			this._gridSize = value;
-		}
-		else {
-			//input is zero
-			this._explicitGridSize = 0;
-			this._gridSize = 1;
-		}
-		return value;
-	}
-
-	public var gridX(get, set):Float;
-	private function get_gridX():Float {
-		return this.x / this._gridSize;
-	}
-	private function set_gridX(value:Float):Float {
-		this.x = value * this._gridSize;
-		return value;
-	}
-
-	public var gridY(get, set):Float;
-	private function get_gridY():Float {
-		return this.y / this._gridSize;
-	}
-	private function set_gridY(value:Float):Float {
-		this.y = value * this._gridSize;
-		return value;
-	}
-
-
-	public var gridZ(get, set):Float;
-	private function get_gridZ():Float {
-		return this.z / this._gridSize;
-	}
-	private function set_gridZ(value:Float):Float {
-		this.z = value * this._gridSize;
-		return value;
-	}
-
-	public var gridTx(get, set):Float;
-	private function get_gridTx():Float {
-		return this.tx / this._gridSize;
-	}
-	private function set_gridTx(value:Float):Float {
-		this.tx = value * this._gridSize;
-		return value;
-	}
-
-	public var gridTy(get, set):Float;
-	private function get_gridTy():Float {
-		return this.ty / this._gridSize;
-	}
-	private function set_gridTy(value:Float):Float {
-		this.ty = value * this._gridSize;
-		return value;
-	}
-
-	public var gridTz(get, set):Float;
-	private function get_gridTz():Float {
-		return this.tz / this._gridSize;
-	}
-	private function set_gridTz(value:Float):Float {
-		this.tz = value * this._gridSize;
-		return value;
-	}
-
-	public function new(x:Float = 0, y:Float = 0, z:Float = 0, dir:Int = 0, gridSize:Float = 1) {
+	public function new(x:Float = 0, y:Float = 0, z:Float = 0, dir:Int = 0) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		this.dir = new ArpDirection(dir);
-		this.gridSize = gridSize;
 	}
 
 	public function initWithSeed(seed:ArpSeed):ArpPosition {
 		if (seed == null) return this;
-		if (seed.isSimple()) return this.initWithString(seed.value());
+		if (seed.isSimple()) return this.initWithString(seed.value(), seed.env().getUnit);
 
-		this._gridSize = 1;
-		this._explicitGridSize = 0;
 		for (child in seed) {
 			switch (child.typeName()) {
-				case "x": this.x = Std.parseFloat(child.value());
-				case "y": this.y = Std.parseFloat(child.value());
-				case "z": this.z = Std.parseFloat(child.value());
-				case "gridX": this.x = Std.parseFloat(child.value()); this._explicitGridSize = 1;
-				case "gridY": this.y = Std.parseFloat(child.value()); this._explicitGridSize = 1;
-				case "gridZ": this.z = Std.parseFloat(child.value()); this._explicitGridSize = 1;
+				case "x": this.x = ArpStructsUtil.parseRichFloat(child.value(), seed.env().getUnit);
+				case "y": this.y = ArpStructsUtil.parseRichFloat(child.value(), seed.env().getUnit);
+				case "z": this.z = ArpStructsUtil.parseRichFloat(child.value(), seed.env().getUnit);
 				case "dir": this.dir.initWithString(child.value());
 			}
 		}
 		return this;
 	}
 
-	public function initWithString(definition:String):ArpPosition {
+	public function initWithString(definition:String, getUnit:String->Float):ArpPosition {
 		if (definition == null) return this;
-		this._gridSize = 1;
-		if (definition.charAt(0) == "g") {
-			this._explicitGridSize = 1;
-			definition = definition.substring(1);
-		}
-		else {
-			this._explicitGridSize = 0;
-		}
-		var ereg:EReg = ~/[^-0-9.]+/g;
-		var array:Array<String> = ereg.split(definition);
-		this.x = ArpStructsUtil.parseFloatDefault(array[0], 0.0);
-		this.y = ArpStructsUtil.parseFloatDefault(array[1], 0.0);
-		this.z = ArpStructsUtil.parseFloatDefault(array[2], 0.0);
+		var array:Array<String> = definition.split(",");
+		this.x = ArpStructsUtil.parseRichFloat(array[0], getUnit);
+		this.y = ArpStructsUtil.parseRichFloat(array[1], getUnit);
+		this.z = ArpStructsUtil.parseRichFloat(array[2], getUnit);
 		this.dir.valueDegree = ArpStructsUtil.parseFloatDefault(array[3], 0.0);
 		return this;
 	}
 
 	public function clone():ArpPosition {
-		return new ArpPosition(this.x, this.y, this.z, this.dir.value, this._gridSize);
+		return new ArpPosition(this.x, this.y, this.z, this.dir.value);
 	}
 
 	public function copyFrom(source:ArpPosition):ArpPosition {
 		this.x = source.x;
 		this.y = source.y;
 		this.z = source.z;
-		this._gridSize = source._gridSize;
-		this._explicitGridSize = source._explicitGridSize;
 		this.dir.value = source.dir.value;
 		this.tx = source.tx;
 		this.ty = source.ty;
@@ -178,83 +69,43 @@ class ArpPosition implements IPersistable {
 		return this;
 	}
 
-	public function toString(byGrid:Bool = false):String {
-		if (byGrid) {
-			return "[ArpPosition (" + this.gridX + ", " + this.gridY + ", " + this.gridZ + ")]";
-		}
-		return "[ArpPosition (" + this.x + ", " + this.y + ", " + this.z + ")]";
+	public function toString(gridSize:Float = 1.0):String {
+		return "[ArpPosition (" + this.x / gridSize + ", " + this.y / gridSize + ", " + this.z / gridSize + ")]";
 	}
 
-	public function relocate(x:Float, y:Float, z:Float = 0, byGrid:Bool = false):Void {
-		if (byGrid) {
-			this.gridX = x;
-			this.gridY = y;
-			this.gridZ = z;
-		}
-		else {
-			this.x = x;
-			this.y = y;
-			this.z = z;
-		}
+	public function relocate(x:Float, y:Float, z:Float = 0, gridSize:Float = 1.0):Void {
+		this.x = x * gridSize;
+		this.y = y * gridSize;
+		this.z = z * gridSize;
 		this.period = 0;
 	}
 
-	public function toward(period:Float, x:Float, y:Float, z:Float = 0, byGrid:Bool = false):Void {
+	public function toward(period:Float, x:Float, y:Float, z:Float = 0, gridSize:Float = 1.0):Void {
 		this.period = period;
-		if (byGrid) {
-			this.gridTx = x;
-			this.gridTy = y;
-			this.gridTz = z;
-		}
-		else {
-			this.tx = x;
-			this.ty = y;
-			this.tz = z;
-		}
+		this.tx = x * gridSize;
+		this.ty = y * gridSize;
+		this.tz = z * gridSize;
 		if (this.tx != this.x || this.ty != this.y) {
 			var valueRadian:Float = Math.atan2(this.ty - this.y, this.tx - this.x);
 			this.dir.valueRadian = valueRadian;
 		}
 	}
 
-	public function relocateD(x:Float = 0, y:Float = 0, z:Float = 0, byGrid:Bool = false):Void {
-		if (byGrid) {
-			this.relocate(
-				x + this.gridX,
-				y + this.gridY,
-				z + this.gridZ,
-				true
-			);
-		}
-		else {
-			this.relocate(
-				x + this.x,
-				y + this.y,
-				z + this.z,
-				false
-			);
-		}
+	inline public function relocateD(x:Float = 0, y:Float = 0, z:Float = 0, gridSize:Float = 1.0):Void {
+		this.relocate(
+			this.x + x * gridSize,
+			this.y + y * gridSize,
+			this.z + z * gridSize
+		);
 	}
 
-	public function towardD(period:Float, x:Float = 0, y:Float = 0, z:Float = 0, byGrid:Bool = false):Void {
-		if (byGrid) {
-			this.toward(
-				period,
-				x + this.gridX,
-				y + this.gridY,
-				z + this.gridZ,
-				true
-			);
-		}
-		else {
-			this.toward(
-				period,
-				x + this.x,
-				y + this.y,
-				z + this.z,
-				false
-			);
-		}
+	inline public function towardD(period:Float, x:Float = 0, y:Float = 0, z:Float = 0, gridSize:Float = 1.0):Void {
+		this.toward(
+			period,
+			this.x + x * gridSize,
+			this.y + y * gridSize,
+			this.z + z * gridSize
+		);
 	}
 
 	public function tick():Void {
@@ -295,7 +146,6 @@ class ArpPosition implements IPersistable {
 		this.x = input.readDouble("x");
 		this.y = input.readDouble("y");
 		this.z = input.readDouble("z");
-		this.gridSize = input.readDouble("gridSize");
 		this.dir.readSelf(input);
 		this.tx = input.readDouble("tx");
 		this.ty = input.readDouble("ty");
@@ -307,7 +157,6 @@ class ArpPosition implements IPersistable {
 		output.writeDouble("x", this.x);
 		output.writeDouble("y", this.y);
 		output.writeDouble("z", this.z);
-		output.writeDouble("gridSize", this.gridSize);
 		this.dir.writeSelf(output);
 		output.writeDouble("tx", this.tx);
 		output.writeDouble("ty", this.ty);
