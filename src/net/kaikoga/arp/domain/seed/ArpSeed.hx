@@ -14,10 +14,11 @@ class ArpSeed {
 	private var _heat:ArpHeat;
 	private var _key:String;
 	private var _value:Dynamic;
+	private var _env:ArpSeedEnv;
 	private var _children:Array<ArpSeed>;
 	private var _isSimple:Bool;
 
-	inline public function new(typeName:String, template:String, name:String, ref:String, heat:ArpHeat, key:String, value:Dynamic, explicitChildren:Array<ArpSeed>) {
+	inline public function new(typeName:String, template:String, name:String, ref:String, heat:ArpHeat, key:String, value:Dynamic, env:ArpSeedEnv, explicitChildren:Array<ArpSeed>) {
 		this._typeName = typeName;
 		this._template = template;
 		this._name = name;
@@ -25,13 +26,14 @@ class ArpSeed {
 		this._heat = heat;
 		this._key = key;
 		this._value = value;
+		this._env = env;
 		if (explicitChildren != null) this.createChildren(explicitChildren);
 		this._isSimple = explicitChildren == null;
 	}
 
 	private function createChildren(explicitChildren:Array<ArpSeed>):Void {
 		this._children = explicitChildren;
-		if (this._value != null) this._children.push(simpleValue("value", this._value));
+		if (this._value != null) this._children.push(simpleValue("value", this._value, null));
 	}
 
 	inline public function typeName():String return this._typeName;
@@ -43,6 +45,7 @@ class ArpSeed {
 		return if (this._key != null) this._key else Std.string(AUTO_HEADER + uniqId);
 	}
 	inline public function value():Dynamic return this._value;
+	inline public function env():ArpSeedEnv return this._env;
 	inline public function isSimple():Bool return this._isSimple;
 
 	public function iterator():Iterator<ArpSeed> {
@@ -50,67 +53,23 @@ class ArpSeed {
 		return this._children.iterator();
 	}
 
+	inline public static function simpleRefValue(typeName:String, value:String, env:ArpSeedEnv):ArpSeed {
+		return new ArpSeed(typeName, null, null, value, ArpHeat.Cold, null, value, env, null);
+	}
+
+	inline public static function simpleValue(typeName:String, value:String, env:ArpSeedEnv):ArpSeed {
+		return new ArpSeed(typeName, null, null, null, ArpHeat.Cold, null, value, env, null);
+	}
+
 	inline public static function fromXmlBytes(bytes:Bytes):ArpSeed {
-		return fromXmlString(bytes.toString());
+		return new ArpXmlSeedReader().parseXmlBytes(bytes);
 	}
 
 	inline public static function fromXmlString(xmlString:String):ArpSeed {
-		return fromXml(Xml.parse(xmlString));
-	}
-
-	inline public static function simpleRefValue(typeName:String, value:String):ArpSeed {
-		return new ArpSeed(typeName, null, null, value, ArpHeat.Cold, null, value, null);
-	}
-
-	inline public static function simpleValue(typeName:String, value:String):ArpSeed {
-		return new ArpSeed(typeName, null, null, null, ArpHeat.Cold, null, value, null);
+		return new ArpXmlSeedReader().parseXmlString(xmlString);
 	}
 
 	public static function fromXml(xml:Xml):ArpSeed {
-		switch (xml.nodeType) {
-			case XmlType.Document: xml = xml.firstElement();
-			case XmlType.Element:
-			case _: return simpleRefValue(xml.nodeName, xml.nodeValue);
-		}
-
-		var typeName:String = xml.nodeName;
-		var template:String = null;
-		var name:String = null;
-		var ref:String = null;
-		var heat:ArpHeat = ArpHeat.Cold;
-		var key:String = null;
-		var value:String = null;
-		var children:Array<ArpSeed> = null;
-
-		for (attrName in xml.attributes()) {
-			var attr:String = xml.get(attrName);
-			switch (attrName) {
-				case "type":
-					typeName = attr;
-				case "class", "template":
-					template = attr;
-				case "name":
-					name = attr;
-				case "ref":
-					ref = attr;
-				case "heat":
-					heat = ArpHeat.fromName(attr);
-				case "key":
-					key = attr;
-				case "value":
-					value = attr;
-				case _:
-					// NOTE leaf seeds by xml attr are also treated as ref; text nodes are not
-					if (children == null) children = []; children.push(simpleRefValue(attrName, attr));
-			}
-		}
-		for (node in xml) {
-			switch (node.nodeType) {
-				case XmlType.Element: if (children == null) children = []; children.push(ArpSeed.fromXml(node));
-				case XmlType.PCData, XmlType.CData: if (value == null) value = ""; value += node.nodeValue;
-				case _: // ignore
-			}
-		}
-		return new ArpSeed(typeName, template, name, ref, heat, key, value, children);
+		return new ArpXmlSeedReader().parse(xml);
 	}
 }
