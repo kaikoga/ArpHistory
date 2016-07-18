@@ -41,6 +41,7 @@ class LinearDriver extends Driver {
 			if (this.target.x != 0 || this.target.y != 0) {
 				var valueRadian:Float = Math.atan2(this.target.y, this.target.x);
 				pos.dir.valueRadian = valueRadian;
+				mortal.params.set("dir", pos.dir);
 			}
 			var dx:Float;
 			var dy:Float;
@@ -66,6 +67,7 @@ class LinearDriver extends Driver {
 			if (this.target.x != pos.x || this.target.y != pos.y) {
 				var valueRadian:Float = Math.atan2(this.target.y - pos.y, this.target.x - pos.x);
 				pos.dir.valueRadian = valueRadian;
+				mortal.params.set("dir", pos.dir);
 			}
 			if (this.period < 1) {
 				this.period = 0;
