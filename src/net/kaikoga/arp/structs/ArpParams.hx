@@ -65,6 +65,8 @@ class ArpParams implements IPersistable {
 			var type:String = array[2];
 			switch (type) {
 				case "dir":
+					this.set(key, new ArpDirection().initWithString(value));
+				case "idir":
 					this.set(key, new ArpDirection(Std.parseInt(value)));
 				case "rewire":
 					this.set(key, new ArpParamRewire(value));
@@ -125,7 +127,7 @@ class ArpParams implements IPersistable {
 		for (name in this.keys()) {
 			var value:Dynamic = this.get(name);
 			if (Std.is(value, ArpDirection)) {
-				value = cast(value, ArpDirection).value + ":dir";
+				value = cast(value, ArpDirection).value + ":idir";
 			}
 			else if (Std.is(value, ArpParamRewire)) {
 				value = cast(value, ArpParamRewire).rewireFrom + ":rewire";
