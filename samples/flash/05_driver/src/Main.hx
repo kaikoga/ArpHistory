@@ -1,5 +1,11 @@
 package;
 
+import net.kaikoga.arpx.reactFrame.ReactFrame;
+import net.kaikoga.arpx.motionFrame.MotionFrame;
+import net.kaikoga.arpx.nextMotion.NextMotion;
+import net.kaikoga.arpx.motion.Motion;
+import net.kaikoga.arpx.motionSet.MotionSet;
+import net.kaikoga.arpx.driver.MotionDriver;
 import net.kaikoga.arpx.driver.LinearDriver;
 import net.kaikoga.arpx.mortal.Mortal;
 import net.kaikoga.arpx.logger.SocketClientLogger;
@@ -45,6 +51,12 @@ class Main extends Sprite {
 		this.domain.addGenerator(new ArpObjectGenerator(FaceList));
 		this.domain.addGenerator(new ArpObjectGenerator(ChipMortal));
 		this.domain.addGenerator(new ArpObjectGenerator(LinearDriver));
+		this.domain.addGenerator(new ArpObjectGenerator(MotionDriver));
+		this.domain.addGenerator(new ArpObjectGenerator(MotionSet));
+		this.domain.addGenerator(new ArpObjectGenerator(Motion));
+		this.domain.addGenerator(new ArpObjectGenerator(NextMotion));
+		this.domain.addGenerator(new ArpObjectGenerator(MotionFrame));
+		this.domain.addGenerator(new ArpObjectGenerator(ReactFrame));
 		this.domain.addGenerator(new ArpObjectGenerator(Field));
 		this.domain.addGenerator(new ArpObjectGenerator(Console));
 		this.domain.addGenerator(new ArpObjectGenerator(Camera));

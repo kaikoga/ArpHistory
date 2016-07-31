@@ -13,6 +13,9 @@ class Driver implements IArpObject {
 	public function tick(field:Field, mortal:Mortal):Void {
 	}
 
+	public function startAction(mortal:Mortal, actionName:String, restart:Bool = false):Bool {
+		return false;
+	}
 }
 
 

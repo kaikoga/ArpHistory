@@ -11,5 +11,6 @@
 -swf bin/main.swf
 -swf-version 11
 -D fdb
+-D arp_doc
 -D arp_backend_flash
 #-D no_inline

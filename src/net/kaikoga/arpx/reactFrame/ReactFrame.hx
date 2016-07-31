@@ -11,6 +11,7 @@ import net.kaikoga.arpx.mortal.Mortal;
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("reactFrame"))
 class ReactFrame implements IArpObject {
 
+	@:arpField public var time:Float;
 	@:arpField public var hitArea:ArpHitArea;
 	@:arpField public var hitType:String;
 	@:arpField public var reactType:String;

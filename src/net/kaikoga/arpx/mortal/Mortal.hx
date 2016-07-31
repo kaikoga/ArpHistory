@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.mortal;
 
+import net.kaikoga.arpx.motion.Motion;
 import net.kaikoga.arpx.driver.Driver;
 import net.kaikoga.arp.domain.ArpDirectory;
 import net.kaikoga.arp.domain.IArpObject;
@@ -86,7 +87,11 @@ class Mortal implements IArpObject
 	}
 
 	public function startAction(actionName:String, restart:Bool = false):Bool {
-		return false;
+		return this.driver.startAction(this, actionName, restart);
+	}
+
+	public function onStartAction(actionName:String, newMotion:Motion):Void {
+
 	}
 
 	public function react(field:Field, source:Mortal, reactFrame:ReactFrame, delay:Float):Void {
