@@ -10,12 +10,12 @@ import net.kaikoga.arp.domain.IArpObject;
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("motion", "motion"))
 class Motion implements IArpObject {
 
-	@:arpField("motion") public var motions:IMap<String, Motion>;
+	@:arpBarrier @:arpField("motion") public var motions:IMap<String, Motion>;
 	@:arpField public var time:Float;
-	@:arpField("nextMotion") public var nextMotions:IList<NextMotion>;
+	@:arpBarrier @:arpField("nextMotion") public var nextMotions:IList<NextMotion>;
 	@:arpField public var loopAction:String;
-	@:arpField("motionFrame") public var motionFrames:IList<MotionFrame>;
-	@:arpField("reactFrame") public var reactFrames:IList<ReactFrame>;
+	@:arpBarrier @:arpField("motionFrame") public var motionFrames:IList<MotionFrame>;
+	@:arpBarrier @:arpField("reactFrame") public var reactFrames:IList<ReactFrame>;
 
 	public function new() {
 	}

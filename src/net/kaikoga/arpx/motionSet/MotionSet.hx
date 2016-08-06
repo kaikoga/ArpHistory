@@ -9,9 +9,9 @@ import net.kaikoga.arpx.motion.Motion;
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("motionSet", "motionSet"))
 class MotionSet implements IArpObject {
 
-	@:arpField("motion") public var motions:IMap<String, Motion>;
-	@:arpField("nextMotion") public var nextMotions:IList<NextMotion>;
-	@:arpField public var initMotion:Motion;
+	@:arpBarrier @:arpField("motion") public var motions:IMap<String, Motion>;
+	@:arpBarrier @:arpField("nextMotion") public var nextMotions:IList<NextMotion>;
+	@:arpBarrier @:arpField public var initMotion:Motion;
 
 	public function new() {
 	}

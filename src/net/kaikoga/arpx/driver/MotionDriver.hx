@@ -15,10 +15,10 @@ import net.kaikoga.arpx.motionSet.MotionSet;
 class MotionDriver extends Driver {
 
 	@:arpField public var motionSpeed:Float = 1;
-	@:arpField public var motionSet:MotionSet;
-	@:arpField public var nowMotion:Motion;
+	@:arpBarrier @:arpField public var motionSet:MotionSet;
+	@:arpField(false) public var nowMotion:Motion;
 	@:arpField public var nowTime:Float;
-	@:arpField public var nowMotionFrame:MotionFrame;
+	@:arpField(false) public var nowMotionFrame:MotionFrame;
 
 	@:arpField private var willReact:Bool;
 

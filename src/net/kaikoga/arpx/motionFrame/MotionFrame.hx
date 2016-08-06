@@ -12,7 +12,7 @@ import net.kaikoga.arpx.mortal.Mortal;
 class MotionFrame implements IArpObject {
 
 	@:arpField public var params:ArpParams;
-	@:arpField("hitFrame") public var hitFrames:IOmap<String, HitFrame>;
+	@:arpBarrier @:arpField("hitFrame") public var hitFrames:IOmap<String, HitFrame>;
 	@:arpField public var time:Float;
 	@:arpField public var dHitType:String;
 	@:arpField public var dX:Float;
