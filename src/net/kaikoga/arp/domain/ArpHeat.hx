@@ -5,6 +5,9 @@ package net.kaikoga.arp.domain;
 	var Warming = 2;
 	var Warm = 3;
 
+	public static var Min = Cold;
+	public static var Max = Warm;
+
 	@:op(a > b) static function opGt( a:ArpHeat, b:ArpHeat):Bool;
 	@:op(a < b) static function opLt( a:ArpHeat, b:ArpHeat):Bool;
 	@:op(a >= b) static function opGte( a:ArpHeat, b:ArpHeat):Bool;

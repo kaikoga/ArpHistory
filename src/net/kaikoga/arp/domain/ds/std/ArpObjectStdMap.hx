@@ -12,6 +12,16 @@ class ArpObjectStdMap<V:IArpObject> implements IMap<String, V> implements IPersi
 	private var domain:ArpDomain;
 	public var slots(default, null):Map<String, ArpSlot<V>>;
 
+	public var heat(get, never):ArpHeat;
+	private function get_heat():ArpHeat {
+		var result:ArpHeat = ArpHeat.Max;
+		for (slot in this.slots) {
+			var h = slot.heat;
+			if (result > h) result = h;
+		}
+		return result;
+	}
+
 	public function new(domain:ArpDomain) {
 		this.domain = domain;
 		this.slots = new Map();

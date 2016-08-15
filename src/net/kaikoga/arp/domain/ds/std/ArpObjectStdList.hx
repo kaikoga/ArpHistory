@@ -4,6 +4,16 @@ class ArpObjectStdList<T:IArpObject> extends List<T> {
 
 	private var domain:ArpDomain;
 
+	public var heat(get, never):ArpHeat;
+	private function get_heat():ArpHeat {
+		var result:ArpHeat = ArpHeat.Max;
+		for (obj in this) {
+			var h = obj.arpSlot().heat;
+			if (result > h) result = h;
+		}
+		return result;
+	}
+
 	public function new(domain:ArpDomain) {
 		super();
 		this.domain = domain;

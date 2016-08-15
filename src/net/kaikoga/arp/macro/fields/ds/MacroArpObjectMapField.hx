@@ -44,11 +44,15 @@ class MacroArpObjectMapField extends MacroArpObjectCollectionFieldBase implement
 	}
 
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {
-		heatLaterBlock.push(macro @:pos(this.nativePos) { null; });
+		if (this.arpBarrier) {
+			heatLaterBlock.push(macro @:pos(this.nativePos) { for (slot in this.$iNativeName.slotMap) this._arpDomain.heatLater(slot); });
+		}
 	}
 
 	public function buildHeatUpBlock(heatUpBlock:Array<Expr>):Void {
-		heatUpBlock.push(macro @:pos(this.nativePos) { null; });
+		if (this.arpBarrier) {
+			heatUpBlock.push(macro @:pos(this.nativePos) { if (this.$iNativeName.heat != net.kaikoga.arp.domain.ArpHeat.Warm) return false; });
+		}
 	}
 
 	public function buildHeatDownBlock(heatDownBlock:Array<Expr>):Void {

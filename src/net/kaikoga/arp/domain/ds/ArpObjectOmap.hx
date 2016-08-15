@@ -16,6 +16,16 @@ class ArpObjectOmap<K, V:IArpObject> implements IOmap<K, V> implements IPersista
 
 	public var slotOmap(default, null):IOmap<K, ArpSlot<V>>;
 
+	public var heat(get, never):ArpHeat;
+	private function get_heat():ArpHeat {
+		var result:ArpHeat = ArpHeat.Max;
+		for (slot in this.slotOmap) {
+			var h = slot.heat;
+			if (result > h) result = h;
+		}
+		return result;
+	}
+
 	public var isUniqueKey(get, never):Bool;
 	public function get_isUniqueKey():Bool return true;
 	public var isUniqueValue(get, never):Bool;

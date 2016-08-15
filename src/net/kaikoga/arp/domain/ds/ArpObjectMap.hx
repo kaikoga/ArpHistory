@@ -17,6 +17,16 @@ class ArpObjectMap<K, V:IArpObject> implements IMap<K, V> implements IPersistabl
 
 	public var slotMap(default, null):IMap<K, ArpSlot<V>>;
 
+	public var heat(get, never):ArpHeat;
+	private function get_heat():ArpHeat {
+		var result:ArpHeat = ArpHeat.Max;
+		for (slot in this.slotMap) {
+			var h = slot.heat;
+			if (result > h) result = h;
+		}
+		return result;
+	}
+
 	public var isUniqueKey(get, never):Bool;
 	public function get_isUniqueKey():Bool return true;
 	public var isUniqueValue(get, never):Bool;

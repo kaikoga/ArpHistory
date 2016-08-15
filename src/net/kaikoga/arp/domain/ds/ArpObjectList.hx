@@ -15,6 +15,16 @@ class ArpObjectList<V:IArpObject> implements IList<V> implements IPersistable {
 
 	public var slotList(default, null):IList<ArpSlot<V>>;
 
+	public var heat(get, never):ArpHeat;
+	private function get_heat():ArpHeat {
+		var result:ArpHeat = ArpHeat.Max;
+		for (slot in this.slotList) {
+			var h = slot.heat;
+			if (result > h) result = h;
+		}
+		return result;
+	}
+
 	public var isUniqueValue(get, never):Bool;
 	public function get_isUniqueValue():Bool return false;
 

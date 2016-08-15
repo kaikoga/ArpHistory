@@ -50,7 +50,9 @@ class MacroArpObjectStdMapField extends MacroArpObjectCollectionFieldBase implem
 	}
 
 	public function buildHeatUpBlock(heatUpBlock:Array<Expr>):Void {
-		heatUpBlock.push(macro @:pos(this.nativePos) { null; });
+		if (this.arpBarrier) {
+			heatUpBlock.push(macro @:pos(this.nativePos) { if (this.$iNativeName.heat != net.kaikoga.arp.domain.ArpHeat.Warm) return false; });
+		}
 	}
 
 	public function buildHeatDownBlock(heatDownBlock:Array<Expr>):Void {

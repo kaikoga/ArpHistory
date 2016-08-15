@@ -15,6 +15,16 @@ class ArpObjectSet<V:IArpObject> implements ISet<V> implements IPersistable {
 
 	public var slotSet(default, null):ISet<ArpSlot<V>>;
 
+	public var heat(get, never):ArpHeat;
+	private function get_heat():ArpHeat {
+		var result:ArpHeat = ArpHeat.Max;
+		for (slot in this.slotSet) {
+			var h = slot.heat;
+			if (result > h) result = h;
+		}
+		return result;
+	}
+
 	public var isUniqueValue(get, never):Bool;
 	public function get_isUniqueValue():Bool return true;
 
