@@ -19,29 +19,29 @@
 		</mortal>
 		<mortal name="mortal4" class="chip" position="80,32" params="6">
 			<chip ref="gridChip" />
-			<driver class="motion" willReact="true" heat="warm">
-				<motionSet initMotion="init" heat="warm">
-					<motion name="init" key="init" time="32" loopAction="loop" heat="warm">
-						<motionFrame time="0" params="dir:right:dir" dY="-4" heat="warm"/>
-						<motionFrame time="4" params="dir:down:dir" dY="-3" heat="warm"/>
-						<motionFrame time="8" params="dir:left:dir" dY="-2" heat="warm" />
-						<motionFrame time="12" params="dir:up:dir" dY="-1" heat="warm" />
-						<motionFrame time="16" params="dir:right:dir" dY="1" heat="warm"/>
-						<motionFrame time="20" params="dir:down:dir" dY="2" heat="warm"/>
-						<motionFrame time="24" params="dir:left:dir" dY="3" heat="warm" />
-						<motionFrame time="28" params="dir:up:dir" dY="4" heat="warm" />
-						<reactFrame time="4" duration="4" heat="warm" />
+			<driver class="motion" willReact="true">
+				<motionSet initMotion="init">
+					<motion name="init" key="init" time="32" loopAction="loop">
+						<motionFrame time="0" params="dir:right:dir" dY="-4" />
+						<motionFrame time="4" params="dir:down:dir" dY="-3" />
+						<motionFrame time="8" params="dir:left:dir" dY="-2" />
+						<motionFrame time="12" params="dir:up:dir" dY="-1" />
+						<motionFrame time="16" params="dir:right:dir" dY="1" />
+						<motionFrame time="20" params="dir:down:dir" dY="2" />
+						<motionFrame time="24" params="dir:left:dir" dY="3" />
+						<motionFrame time="28" params="dir:up:dir" dY="4" />
+						<reactFrame time="4" duration="4" />
 					</motion>
-					<motion name="stop" key="stop" time="32" loopAction="loop" heat="warm">
-						<nextMotion action="loop" motion="walk" heat="warm"/>
+					<motion name="stop" key="stop" time="32" loopAction="loop">
+						<nextMotion action="loop" motion="walk" />
 					</motion>
-					<motion name="walk" key="walk" time="32" loopAction="loop" heat="warm">
-						<motionFrame time="0" params="6,dir:right:dir" dX="1" heat="warm"/>
-						<motionFrame time="8" params="7" dX="1" heat="warm"/>
-						<motionFrame time="16" params="6,dir:90:dir" dY="1" heat="warm" />
-						<motionFrame time="24" params="7" dY="1" heat="warm" />
+					<motion name="walk" key="walk" time="32" loopAction="loop">
+						<motionFrame time="0" params="6,dir:right:dir" dX="1" />
+						<motionFrame time="8" params="7" dX="1" />
+						<motionFrame time="16" params="6,dir:90:dir" dY="1" />
+						<motionFrame time="24" params="7" dY="1" />
 					</motion>
-					<nextMotion action="loop" motion="stop" heat="warm"/>
+					<nextMotion action="loop" motion="stop" />
 				</motionSet>
 			</driver>
 		</mortal>
