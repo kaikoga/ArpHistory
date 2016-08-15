@@ -23,11 +23,11 @@ class Mortal implements IArpObject
 #if arp_backend_flash implements IMortalFlashImpl #end
 {
 
-	@:arpField public var driver:Driver;
+	@:arpBarrier @:arpField public var driver:Driver;
 	@:arpField public var position:ArpPosition;
 	@:arpField public var visible:Bool = true;
 	@:arpField public var params:ArpParams;
-	@:arpField("hitFrame") public var hitFrames:IOmap<String, HitFrame>;
+	@:arpBarrier @:arpField("hitFrame") public var hitFrames:IOmap<String, HitFrame>;
 	@:arpField(false) public var lastReactions:IOmap<String, Int>;
 
 	#if arp_backend_flash

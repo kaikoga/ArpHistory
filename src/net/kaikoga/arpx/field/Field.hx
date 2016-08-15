@@ -17,9 +17,9 @@ import flash.display.BitmapData;
 @:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("field"))
 class Field implements IArpObject {
 
-	@:arpField("mortal") public var initMortals:IOmap<String, Mortal>;
-	@:arpField(false) public var mortals:IOmap<String, Mortal>;
-	@:arpField("anchor") public var anchors:IOmap<String, Anchor>;
+	@:arpBarrier @:arpField("mortal") public var initMortals:IOmap<String, Mortal>;
+	@:arpBarrier @:arpField(false) public var mortals:IOmap<String, Mortal>;
+	@:arpBarrier @:arpField("anchor") public var anchors:IOmap<String, Anchor>;
 
 	public var gridSize(get, never):Int;
 	public var width(get, never):Int;
