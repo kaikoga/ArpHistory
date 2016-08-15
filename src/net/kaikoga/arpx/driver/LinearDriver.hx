@@ -24,9 +24,9 @@ class LinearDriver extends Driver {
 	}
 
 	inline public function towardD(period:Float, x:Float = 0, y:Float = 0, z:Float = 0, gridSize:Float = 1.0):Void {
-		this.target.x += x * gridSize;
-		this.target.y += y * gridSize;
-		this.target.z += z * gridSize;
+		this.target.x = x * gridSize;
+		this.target.y = y * gridSize;
+		this.target.z = z * gridSize;
 		this.isDelta = true;
 		this.period = period;
 	}
