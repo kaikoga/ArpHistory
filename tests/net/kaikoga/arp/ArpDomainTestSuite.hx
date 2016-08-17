@@ -1,6 +1,5 @@
 package net.kaikoga.arp;
 
-import net.kaikoga.arp.structs.ArpArea2dCase;
 import net.kaikoga.arp.macro.DsMacroArpObjectCase;
 import net.kaikoga.arp.macro.EarlyPrepareMacroArpObjectCase;
 import net.kaikoga.arp.macro.LatePrepareMacroArpObjectCase;
@@ -58,7 +57,6 @@ class ArpDomainTestSuite {
 
 		r.load(ArpStructsUtilCase);
 
-		//r.load(ArpArea2dCase, persistIoProvider());
 		r.load(ArpColorCase, persistIoProvider());
 		r.load(ArpDirectionCase, persistIoProvider());
 		r.load(ArpParamsCase, persistIoProvider());

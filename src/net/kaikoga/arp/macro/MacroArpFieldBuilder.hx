@@ -81,8 +81,6 @@ class MacroArpFieldBuilder {
 				return MacroArpNativeFieldType.NativeDsIMap(typeToNativeFieldType(typeParam(type, 1)), isImpl);
 			case "net.kaikoga.arp.ds.IOmap":
 				return MacroArpNativeFieldType.NativeDsIOmap(typeToNativeFieldType(typeParam(type, 1)), isImpl);
-			case "net.kaikoga.arp.structs.ArpArea2d":
-				return MacroArpNativeFieldType.NativeValueType(new MacroArpStructType(macro :net.kaikoga.arp.structs.ArpArea2d));
 			case "net.kaikoga.arp.structs.ArpColor":
 				return MacroArpNativeFieldType.NativeValueType(new MacroArpStructType(macro :net.kaikoga.arp.structs.ArpColor));
 			case "net.kaikoga.arp.structs.ArpDirection":

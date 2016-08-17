@@ -27,7 +27,6 @@ class ArpStructsMacroArpObjectCase {
 		domain.addGenerator(new ArpObjectGenerator(MockStructMacroArpObject, true));
 		xml = Xml.parse('
 <mock name="name1">
-<arpArea2dField>1,2,3,4,5,6</arpArea2dField>
 <arpColorField>#ff00ff@7f</arpColorField>
 <arpDirectionField>southeast</arpDirectionField>
 <arpHitAreaField>1,2,3,4,5,6</arpHitAreaField>
@@ -44,7 +43,6 @@ class ArpStructsMacroArpObjectCase {
 
 		assertEquals(domain, arpObj.arpDomain());
 		assertEquals(new ArpType("mock"), arpObj.arpType());
-		assertNotNull(arpObj.arpArea2dField);
 		assertNotNull(arpObj.arpColorField);
 		assertNotNull(arpObj.arpDirectionField);
 		assertNotNull(arpObj.arpHitAreaField);
@@ -61,7 +59,6 @@ class ArpStructsMacroArpObjectCase {
 		assertEquals(new ArpType("mock"), arpObj.arpType());
 		assertEquals(slot, arpObj.arpSlot());
 
-		assertMatch({x:1, y:2, gridSize:1, areaLeft:3, areaTop:4, areaRight:5, areaBottom:6}, arpObj.arpArea2dField.toHash());
 		assertMatch({color:0x7fff00ff}, arpObj.arpColorField.toHash());
 		assertMatch({dir:0x20000000}, arpObj.arpDirectionField.toHash());
 		assertMatch({areaLeft:1, areaRight:2, areaTop:3, areaBottom:4, areaHind:5, areaFore:6}, arpObj.arpHitAreaField.toHash());
@@ -75,7 +72,6 @@ class ArpStructsMacroArpObjectCase {
 		assertEquals(original.arpType(), clone.arpType());
 		assertNotEquals(original.arpSlot(), clone.arpSlot());
 
-		assertMatch(original.arpArea2dField.toHash(), clone.arpArea2dField.toHash());
 		assertMatch(original.arpColorField.toHash(), clone.arpColorField.toHash());
 		assertMatch(original.arpDirectionField.toHash(), clone.arpDirectionField.toHash());
 		assertMatch(original.arpHitAreaField.toHash(), clone.arpHitAreaField.toHash());
