@@ -6,7 +6,7 @@ import net.kaikoga.arpx.console.Console;
 import net.kaikoga.arpx.mortal.CompositeMortal;
 import net.kaikoga.arpx.mortal.ChipMortal;
 import haxe.Resource;
-import net.kaikoga.arp.domain.seed.ArpSeed;
+import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import flash.Lib;
 import flash.display.PixelSnapping;

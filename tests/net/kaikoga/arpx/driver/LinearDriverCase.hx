@@ -4,7 +4,7 @@ import net.kaikoga.arp.structs.ArpDirection;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.mortal.Mortal;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
-import net.kaikoga.arp.domain.seed.ArpSeed;
+import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.domain.ArpDomain;
 
 import picotest.PicoAssert.*;

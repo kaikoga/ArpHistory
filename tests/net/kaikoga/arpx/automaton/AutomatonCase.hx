@@ -3,7 +3,7 @@ package net.kaikoga.arpx.automaton;
 import net.kaikoga.arpx.automaton.events.AutomatonEventListener;
 import net.kaikoga.arpx.state.AutomatonState;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
-import net.kaikoga.arp.domain.seed.ArpSeed;
+import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arpx.automaton.Automaton;
 
 import net.kaikoga.arp.domain.ArpDomain;

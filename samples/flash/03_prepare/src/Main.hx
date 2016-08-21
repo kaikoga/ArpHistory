@@ -9,7 +9,7 @@ import net.kaikoga.arpx.chip.NativeTextChip;
 import net.kaikoga.arpx.camera.Camera;
 import net.kaikoga.arpx.console.Console;
 import haxe.Resource;
-import net.kaikoga.arp.domain.seed.ArpSeed;
+import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import flash.Lib;
 import flash.display.PixelSnapping;

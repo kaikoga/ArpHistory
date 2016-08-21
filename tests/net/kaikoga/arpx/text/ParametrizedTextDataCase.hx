@@ -1,7 +1,7 @@
 ﻿package net.kaikoga.arpx.text;
 
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
-import net.kaikoga.arp.domain.seed.ArpSeed;
+import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.domain.core.ArpType;
 
