@@ -19,19 +19,10 @@ class MacroArpObjectRegistry {
 	private function new() {
 		templateInfos = new Map();
 
-		// don't add these to ArpDomainInfo
 		registerBuiltin("Int");
 		registerBuiltin("Float");
 		registerBuiltin("Bool");
 		registerBuiltin("String");
-
-		registerBuiltinStruct("Area2d", "net.kaikoga.arp.structs.ArpArea2d");
-		registerBuiltinStruct("Color", "net.kaikoga.arp.structs.ArpColor");
-		registerBuiltinStruct("Direction", "net.kaikoga.arp.structs.ArpDirection");
-		registerBuiltinStruct("HitArea", "net.kaikoga.arp.structs.ArpHitArea");
-		registerBuiltinStruct("Params", "net.kaikoga.arp.structs.ArpParams");
-		registerBuiltinStruct("Position", "net.kaikoga.arp.structs.ArpPosition");
-		registerBuiltinStruct("Range", "net.kaikoga.arp.structs.ArpRange");
 
 		domainInfo = new ArpDomainInfo();
 
@@ -43,10 +34,6 @@ class MacroArpObjectRegistry {
 
 	private function registerBuiltin(name:String, fqn:String = null):Void {
 		if (fqn == null) fqn = name;
-		templateInfos.set(fqn, new ArpTemplateInfo(new ArpType(name), name, fqn, null));
-	}
-
-	private function registerBuiltinStruct(name:String, fqn:String):Void {
 		templateInfos.set(fqn, new ArpTemplateInfo(new ArpType(name), name, fqn, null));
 	}
 

@@ -10,6 +10,7 @@ import net.kaikoga.arp.structs.ArpPosition;
 	* handled as immutable
 	* @author kaikoga
 */
+@:build(net.kaikoga.arp.ArpDomainMacros.buildStruct("HitArea"))
 class ArpHitArea implements IPersistable {
 
 	public var areaLeft:Float = 0;

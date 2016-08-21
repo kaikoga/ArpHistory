@@ -8,6 +8,7 @@ import net.kaikoga.arp.seed.ArpSeed;
 /**
 	handled as mutable
 */
+@:build(net.kaikoga.arp.ArpDomainMacros.buildStruct("Direction"))
 class ArpDirection implements IPersistable {
 
 	public static var RIGHT(get, never):ArpDirection;

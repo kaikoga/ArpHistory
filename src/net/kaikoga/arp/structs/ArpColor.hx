@@ -14,6 +14,7 @@ import flash.geom.ColorTransform;
 /**
 	handled as mutable
 */
+@:build(net.kaikoga.arp.ArpDomainMacros.buildStruct("Color"))
 class ArpColor implements IPersistable {
 
 	public var value32:Int;

@@ -30,6 +30,7 @@ abstract ArpParamsProxy(ArpParams) from ArpParams to ArpParams {
 	@:arrayAccess inline private function arraySet(k:String, v:Dynamic):Dynamic return this.set(k, v);
 }
 
+@:build(net.kaikoga.arp.ArpDomainMacros.buildStruct("Params"))
 class ArpParams implements IPersistable {
 
 	private var map:Map<String, Dynamic>;

@@ -9,6 +9,7 @@ import net.kaikoga.arp.structs.ArpDirection;
 /**
 	handled as mutable
 */
+@:build(net.kaikoga.arp.ArpDomainMacros.buildStruct("Position"))
 class ArpPosition implements IPersistable {
 
 	public var x:Float = 0;

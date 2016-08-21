@@ -5,6 +5,7 @@ import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.seed.ArpSeed;
 
+@:build(net.kaikoga.arp.ArpDomainMacros.buildStruct("Range"))
 class ArpRange implements IPersistable {
 
 	//TODO assure min < max
