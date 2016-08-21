@@ -13,42 +13,45 @@ import net.kaikoga.arp.domain.reflect.ArpTemplateInfo;
 
 class MacroArpObjectRegistry {
 
-	private static var domainInfo:ArpDomainInfo;
-	private static var templateInfos:Map<String, ArpTemplateInfo>;
+	private var domainInfo:ArpDomainInfo;
+	private var templateInfos:Map<String, ArpTemplateInfo>;
 
-	private static function registerBuiltin(name:String, fqn:String = null):Void {
+	private function registerBuiltin(name:String, fqn:String = null):Void {
 		if (fqn == null) fqn = name;
 		templateInfos.set(fqn, new ArpTemplateInfo(new ArpType(name), name, fqn, null));
 	}
 
-	public static function registerTemplateInfo(fqn:String, templateInfo:ArpTemplateInfo):Void {
-		if (templateInfos == null) {
-			templateInfos = new Map();
+	private function new() {
+		templateInfos = new Map();
 
-			// don't add these to ArpDomainInfo
-			registerBuiltin("Int");
-			registerBuiltin("Float");
-			registerBuiltin("Bool");
-			registerBuiltin("String");
+		// don't add these to ArpDomainInfo
+		registerBuiltin("Int");
+		registerBuiltin("Float");
+		registerBuiltin("Bool");
+		registerBuiltin("String");
 
-			registerBuiltin("Area2d", "net.kaikoga.arp.structs.ArpArea2d");
-			registerBuiltin("Color", "net.kaikoga.arp.structs.ArpColor");
-			registerBuiltin("Direction", "net.kaikoga.arp.structs.ArpDirection");
-			registerBuiltin("HitArea", "net.kaikoga.arp.structs.ArpHitArea");
-			registerBuiltin("Params", "net.kaikoga.arp.structs.ArpParams");
-			registerBuiltin("Position", "net.kaikoga.arp.structs.ArpPosition");
-			registerBuiltin("Range", "net.kaikoga.arp.structs.ArpRange");
-			domainInfo = new ArpDomainInfo();
-			// in case of reuse, nvm
-			#if arp_doc
-			Context.onAfterGenerate(onAfterGenerate);
-			#end
-		}
-		templateInfos.set(fqn, templateInfo);
-		domainInfo.templates.push(templateInfo);
+		registerBuiltin("Area2d", "net.kaikoga.arp.structs.ArpArea2d");
+		registerBuiltin("Color", "net.kaikoga.arp.structs.ArpColor");
+		registerBuiltin("Direction", "net.kaikoga.arp.structs.ArpDirection");
+		registerBuiltin("HitArea", "net.kaikoga.arp.structs.ArpHitArea");
+		registerBuiltin("Params", "net.kaikoga.arp.structs.ArpParams");
+		registerBuiltin("Position", "net.kaikoga.arp.structs.ArpPosition");
+		registerBuiltin("Range", "net.kaikoga.arp.structs.ArpRange");
+
+		domainInfo = new ArpDomainInfo();
+
+		Context.onMacroContextReused(function() return onMacroContextReused());
+		#if arp_doc
+		Context.onAfterGenerate(function() onAfterGenerate());
+		#end
 	}
 
-	private static function arpTypeOfFqn(fqn:String):ArpType {
+	public static function registerTemplateInfo(fqn:String, templateInfo:ArpTemplateInfo):Void {
+		instance.templateInfos.set(fqn, templateInfo);
+		instance.domainInfo.templates.push(templateInfo);
+	}
+
+	private function arpTypeOfFqn(fqn:String):ArpType {
 		var templateInfo:ArpTemplateInfo = templateInfos.get(fqn);
 		if (templateInfo == null) throw "ArpType not registered for " + fqn;
 		return templateInfo.arpType;
@@ -59,15 +62,29 @@ class MacroArpObjectRegistry {
 	}
 
 	public static function arpTypeOf(nativeType:ComplexType):ArpType {
-		return arpTypeOfFqn(toFqn(nativeType));
+		return instance.arpTypeOfFqn(toFqn(nativeType));
 	}
 
-	public static function onAfterGenerate():Void {
+	private function onAfterGenerate():Void {
 		var writer:ArpHelpWriter = new ArpHelpWriter();
 		var prefix:String = Context.definedValue("arp_doc");
 		if (prefix == "1") prefix = "doc/";
 		if (prefix.indexOf("/") < 0) prefix = prefix + "/";
 		writer.write(domainInfo, prefix);
+	}
+
+	private function onMacroContextReused():Bool {
+		// discard registered types
+		domainInfo = null;
+		templateInfos = null;
+		return true;
+	}
+
+	private static var _instance:MacroArpObjectRegistry;
+	private static var instance(get, never):MacroArpObjectRegistry;
+	private static function get_instance():MacroArpObjectRegistry {
+		if (_instance == null) _instance = new MacroArpObjectRegistry();
+		return _instance;
 	}
 }
 
