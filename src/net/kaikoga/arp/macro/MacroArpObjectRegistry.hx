@@ -16,11 +16,6 @@ class MacroArpObjectRegistry {
 	private var domainInfo:ArpDomainInfo;
 	private var templateInfos:Map<String, ArpTemplateInfo>;
 
-	private function registerBuiltin(name:String, fqn:String = null):Void {
-		if (fqn == null) fqn = name;
-		templateInfos.set(fqn, new ArpTemplateInfo(new ArpType(name), name, fqn, null));
-	}
-
 	private function new() {
 		templateInfos = new Map();
 
@@ -30,13 +25,13 @@ class MacroArpObjectRegistry {
 		registerBuiltin("Bool");
 		registerBuiltin("String");
 
-		registerBuiltin("Area2d", "net.kaikoga.arp.structs.ArpArea2d");
-		registerBuiltin("Color", "net.kaikoga.arp.structs.ArpColor");
-		registerBuiltin("Direction", "net.kaikoga.arp.structs.ArpDirection");
-		registerBuiltin("HitArea", "net.kaikoga.arp.structs.ArpHitArea");
-		registerBuiltin("Params", "net.kaikoga.arp.structs.ArpParams");
-		registerBuiltin("Position", "net.kaikoga.arp.structs.ArpPosition");
-		registerBuiltin("Range", "net.kaikoga.arp.structs.ArpRange");
+		registerBuiltinStruct("Area2d", "net.kaikoga.arp.structs.ArpArea2d");
+		registerBuiltinStruct("Color", "net.kaikoga.arp.structs.ArpColor");
+		registerBuiltinStruct("Direction", "net.kaikoga.arp.structs.ArpDirection");
+		registerBuiltinStruct("HitArea", "net.kaikoga.arp.structs.ArpHitArea");
+		registerBuiltinStruct("Params", "net.kaikoga.arp.structs.ArpParams");
+		registerBuiltinStruct("Position", "net.kaikoga.arp.structs.ArpPosition");
+		registerBuiltinStruct("Range", "net.kaikoga.arp.structs.ArpRange");
 
 		domainInfo = new ArpDomainInfo();
 
@@ -44,6 +39,19 @@ class MacroArpObjectRegistry {
 		#if arp_doc
 		Context.onAfterGenerate(function() onAfterGenerate());
 		#end
+	}
+
+	private function registerBuiltin(name:String, fqn:String = null):Void {
+		if (fqn == null) fqn = name;
+		templateInfos.set(fqn, new ArpTemplateInfo(new ArpType(name), name, fqn, null));
+	}
+
+	private function registerBuiltinStruct(name:String, fqn:String):Void {
+		templateInfos.set(fqn, new ArpTemplateInfo(new ArpType(name), name, fqn, null));
+	}
+
+	public static function registerStructInfo(name:String, fqn:String):Void {
+		instance.templateInfos.set(fqn, new ArpTemplateInfo(new ArpType(name), name, fqn, null));
 	}
 
 	public static function registerTemplateInfo(fqn:String, templateInfo:ArpTemplateInfo):Void {
