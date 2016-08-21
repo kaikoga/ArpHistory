@@ -4,7 +4,7 @@ import net.kaikoga.arp.domain.core.ArpSid;
 import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.domain.core.ArpType;
-import net.kaikoga.arp.domain.seed.ArpSeed;
+import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 
 class MockDerivedArpObject extends MockArpObject {

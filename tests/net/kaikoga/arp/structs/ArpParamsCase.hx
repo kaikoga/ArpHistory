@@ -1,7 +1,7 @@
 package net.kaikoga.arp.structs;
 
 import net.kaikoga.arp.testParams.PersistIoProviders.IPersistIoProvider;
-import net.kaikoga.arp.domain.seed.ArpSeed;
+import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.structs.ArpParams;
 
 import org.hamcrest.Matchers;

@@ -9,7 +9,7 @@ import net.kaikoga.arp.domain.prepare.PrepareQueue;
 import net.kaikoga.arp.domain.dump.ArpDomainDump;
 import net.kaikoga.arp.domain.gen.ArpGeneratorRegistry;
 import net.kaikoga.arp.domain.gen.IArpGenerator;
-import net.kaikoga.arp.domain.seed.ArpSeed;
+import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.query.ArpObjectQuery;

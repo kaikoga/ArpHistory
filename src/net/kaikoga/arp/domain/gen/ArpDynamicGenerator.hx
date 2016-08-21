@@ -1,6 +1,6 @@
 package net.kaikoga.arp.domain.gen;
 
-import net.kaikoga.arp.domain.seed.ArpSeed;
+import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.domain.core.ArpType;
 
 class ArpDynamicGenerator<T:IArpObject> implements IArpGenerator<T> {

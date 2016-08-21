@@ -3,7 +3,7 @@ package net.kaikoga.arp.domain;
 import net.kaikoga.arp.tests.ArpDomainTestUtil;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.domain.mocks.MockColumnArpObject;
-import net.kaikoga.arp.domain.seed.ArpSeed;
+import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.ArpSlot;
 

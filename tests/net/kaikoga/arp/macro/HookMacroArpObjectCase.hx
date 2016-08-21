@@ -4,7 +4,7 @@ import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.macro.mocks.MockHookMacroArpObject;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.domain.ArpDomain;
-import net.kaikoga.arp.domain.seed.ArpSeed;
+import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.ArpSlot;
 

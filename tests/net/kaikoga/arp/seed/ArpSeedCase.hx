@@ -1,6 +1,4 @@
-package net.kaikoga.arp.domain.seed;
-
-import net.kaikoga.arp.domain.seed.ArpSeed;
+package net.kaikoga.arp.seed;
 
 import picotest.PicoAssert.*;
 

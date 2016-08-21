@@ -25,7 +25,7 @@ import net.kaikoga.arp.structs.ArpRangeCase;
 import net.kaikoga.arp.structs.ArpParamsCase;
 import net.kaikoga.arp.domain.query.ArpDirectoryQueryCase;
 import net.kaikoga.arp.domain.query.ArpObjectQueryCase;
-import net.kaikoga.arp.domain.seed.ArpSeedCase;
+import net.kaikoga.arp.seed.ArpSeedCase;
 import net.kaikoga.arp.domain.ArpDomainCase;
 
 import net.kaikoga.arp.testParams.PersistIoProviders.*;

@@ -2,7 +2,7 @@ package net.kaikoga.arp.domain.gen;
 
 import net.kaikoga.arp.ds.lambda.SetOp;
 import net.kaikoga.arp.ds.impl.ArraySet;
-import net.kaikoga.arp.domain.seed.ArpSeed;
+import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.domain.core.ArpType;
 
 class ArpGeneratorRegistry {

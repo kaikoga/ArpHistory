@@ -86,7 +86,7 @@ class MacroArpObjectStub {
 				return this._arpSlot;
 			}
 
-			public function arpInit(slot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot, seed:net.kaikoga.arp.domain.seed.ArpSeed = null):net.kaikoga.arp.domain.IArpObject {
+			public function arpInit(slot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot, seed:net.kaikoga.arp.seed.ArpSeed = null):net.kaikoga.arp.domain.IArpObject {
 				this._arpDomain = slot.domain;
 				this._arpSlot = slot;
 				var uniqId:Int = 0;
@@ -125,7 +125,7 @@ class MacroArpObjectStub {
 			}
 
 			@:noDoc @:noCompletion
-			private function arpConsumeSeedElement(element:net.kaikoga.arp.domain.seed.ArpSeed, uniqId:Int):Void {
+			private function arpConsumeSeedElement(element:net.kaikoga.arp.seed.ArpSeed, uniqId:Int):Void {
 				$b{ this.buildArpConsumeSeedElement() }
 			}
 
@@ -167,7 +167,7 @@ class MacroArpObjectStub {
 			override public function arpTypeInfo():net.kaikoga.arp.domain.ArpTypeInfo return _arpTypeInfo;
 			override public function arpType():net.kaikoga.arp.domain.core.ArpType return _arpTypeInfo.arpType;
 
-			override public function arpInit(slot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot, seed:net.kaikoga.arp.domain.seed.ArpSeed = null):net.kaikoga.arp.domain.IArpObject {
+			override public function arpInit(slot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot, seed:net.kaikoga.arp.seed.ArpSeed = null):net.kaikoga.arp.domain.IArpObject {
 				$b{ this.buildInitBlock() }
 				return super.arpInit(slot, seed);
 			}
@@ -193,7 +193,7 @@ class MacroArpObjectStub {
 			}
 
 			@:noDoc @:noCompletion
-			override private function arpConsumeSeedElement(element:net.kaikoga.arp.domain.seed.ArpSeed, uniqId:Int):Void {
+			override private function arpConsumeSeedElement(element:net.kaikoga.arp.seed.ArpSeed, uniqId:Int):Void {
 				$b{ this.buildArpConsumeSeedElement() }
 			}
 

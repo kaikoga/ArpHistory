@@ -2,7 +2,7 @@ package net.kaikoga.arp.testFixtures;
 
 import net.kaikoga.arp.testFixtures.ArpSupportFixtures.IArpSupportFixture;
 import net.kaikoga.arp.domain.ArpDomain;
-import net.kaikoga.arp.domain.seed.ArpSeed;
+import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.domain.mocks.MockArpObject;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 

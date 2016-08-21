@@ -1,7 +1,7 @@
 ﻿package net.kaikoga.arp.structs;
 
 import net.kaikoga.arp.testParams.PersistIoProviders.IPersistIoProvider;
-import net.kaikoga.arp.domain.seed.ArpSeed;
+import net.kaikoga.arp.seed.ArpSeed;
 
 import org.hamcrest.Matchers;
 import picotest.PicoAssert.*;

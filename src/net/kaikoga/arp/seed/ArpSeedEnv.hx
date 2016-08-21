@@ -1,4 +1,4 @@
-package net.kaikoga.arp.domain.seed;
+package net.kaikoga.arp.seed;
 
 import net.kaikoga.arp.structs.ArpStructsUtil;
 import net.kaikoga.arp.ds.lambda.MapOp;

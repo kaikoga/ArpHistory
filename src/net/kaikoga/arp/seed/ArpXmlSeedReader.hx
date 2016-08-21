@@ -1,4 +1,4 @@
-package net.kaikoga.arp.domain.seed;
+package net.kaikoga.arp.seed;
 
 import haxe.io.Bytes;
 import Xml.XmlType;
