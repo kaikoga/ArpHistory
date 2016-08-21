@@ -11,14 +11,14 @@ class ArpSeed {
 	private var _name:String;
 	private var _ref:String;
 	private var _template:String;
-	private var _heat:ArpHeat;
+	private var _heat:String;
 	private var _key:String;
 	private var _value:Dynamic;
 	private var _env:ArpSeedEnv;
 	private var _children:Array<ArpSeed>;
 	private var _isSimple:Bool;
 
-	inline public function new(typeName:String, template:String, name:String, ref:String, heat:ArpHeat, key:String, value:Dynamic, env:ArpSeedEnv, explicitChildren:Array<ArpSeed>) {
+	inline public function new(typeName:String, template:String, name:String, ref:String, heat:String, key:String, value:Dynamic, env:ArpSeedEnv, explicitChildren:Array<ArpSeed>) {
 		this._typeName = typeName;
 		this._template = template;
 		this._name = name;
@@ -40,7 +40,7 @@ class ArpSeed {
 	inline public function template():String return this._template;
 	inline public function name():String return this._name;
 	inline public function ref():String return this._ref;
-	inline public function heat():ArpHeat return this._heat;
+	inline public function heat():String return this._heat;
 	inline public function key(uniqId:Int):String {
 		return if (this._key != null) this._key else Std.string(AUTO_HEADER + uniqId);
 	}
@@ -54,11 +54,11 @@ class ArpSeed {
 	}
 
 	inline public static function simpleRefValue(typeName:String, value:String, env:ArpSeedEnv):ArpSeed {
-		return new ArpSeed(typeName, null, null, value, ArpHeat.Cold, null, value, env, null);
+		return new ArpSeed(typeName, null, null, value, null, null, value, env, null);
 	}
 
 	inline public static function simpleValue(typeName:String, value:String, env:ArpSeedEnv):ArpSeed {
-		return new ArpSeed(typeName, null, null, null, ArpHeat.Cold, null, value, env, null);
+		return new ArpSeed(typeName, null, null, null, null, null, value, env, null);
 	}
 
 	inline public static function fromXmlBytes(bytes:Bytes):ArpSeed {

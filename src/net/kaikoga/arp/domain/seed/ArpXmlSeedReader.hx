@@ -31,7 +31,7 @@ class ArpXmlSeedReader {
 		var template:String = null;
 		var name:String = null;
 		var ref:String = null;
-		var heat:ArpHeat = ArpHeat.Cold;
+		var heat:String = null;
 		var key:String = null;
 		var value:String = null;
 		var children:Array<ArpSeed> = null;
@@ -48,7 +48,7 @@ class ArpXmlSeedReader {
 				case "ref":
 					ref = attr;
 				case "heat":
-					heat = ArpHeat.fromName(attr);
+					heat = attr;
 				case "key":
 					key = attr;
 				case "value":
