@@ -4,7 +4,7 @@ import net.kaikoga.arpx.mortal.Mortal;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arp.structs.ArpPosition;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("driver", "linear"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("driver", "linear"))
 class LinearDriver extends Driver {
 
 	@:arpField public var target:ArpPosition;

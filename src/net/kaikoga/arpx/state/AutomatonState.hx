@@ -6,7 +6,7 @@ import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arpx.console.Console;
 
 @:access(net.kaikoga.arpx.automaton.Automaton)
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("state", "state"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("state", "state"))
 class AutomatonState implements IArpObject {
 
 	@:arpField public var label:String;

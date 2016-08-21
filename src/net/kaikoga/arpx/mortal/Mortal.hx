@@ -18,7 +18,7 @@ import net.kaikoga.arpx.backends.flash.mortal.IMortalFlashImpl;
 import flash.display.BitmapData;
 #end
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("mortal", "null"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("mortal", "null"))
 class Mortal implements IArpObject
 #if arp_backend_flash implements IMortalFlashImpl #end
 {

@@ -3,7 +3,7 @@ package net.kaikoga.arpx.logger;
 import net.kaikoga.arp.domain.events.ArpLogEvent;
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("logger", "null"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("logger", "null"))
 class Logger implements IArpObject {
 
 	@:arpField("category") public var categories:Array<String>;

@@ -14,7 +14,7 @@ import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import flash.display.BitmapData;
 #end
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("field"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("field"))
 class Field implements IArpObject {
 
 	@:arpBarrier @:arpField("mortal") public var initMortals:IOmap<String, Mortal>;

@@ -3,7 +3,7 @@ package net.kaikoga.arpx.logger;
 import net.kaikoga.arp.domain.events.ArpLogEvent;
 import net.kaikoga.arpx.socketClient.SocketClient;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("logger", "socketClient"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("logger", "socketClient"))
 class SocketClientLogger extends Logger {
 
 	@:arpField @:arpBarrier public var socketClient:SocketClient;

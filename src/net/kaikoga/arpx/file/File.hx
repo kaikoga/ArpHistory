@@ -5,7 +5,7 @@ import net.kaikoga.arpx.backends.flash.file.IFileFlashImpl;
 import net.kaikoga.arp.io.IInput;
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("file", "null"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("file", "null"))
 class File implements IArpObject {
 
 	#if arp_backend_flash

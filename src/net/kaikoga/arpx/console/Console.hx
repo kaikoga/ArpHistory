@@ -10,7 +10,7 @@ import net.kaikoga.arpx.backends.flash.console.ConsoleFlashImpl;
 import flash.display.BitmapData;
 #end
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("console", "console"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("console", "console"))
 class Console implements IArpObject
 #if arp_backend_flash implements IConsoleFlashImpl #end
 {

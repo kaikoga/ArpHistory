@@ -3,7 +3,7 @@ package net.kaikoga.arpx.hitFrame;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.structs.ArpPosition;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("hitFrame", "null"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("hitFrame", "null"))
 class HitFrame implements IArpObject {
 
 	public function new() {

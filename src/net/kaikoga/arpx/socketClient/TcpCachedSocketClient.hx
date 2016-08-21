@@ -8,7 +8,7 @@ import net.kaikoga.arpx.backends.cross.socketClient.ISocketClientImpl;
 import net.kaikoga.arpx.backends.flash.socketClient.TcpCachedSocketClientFlashImpl;
 #end
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("socketClient", "tcpCached"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("socketClient", "tcpCached"))
 class TcpCachedSocketClient extends SocketClient {
 
 	@:arpField public var host:String;

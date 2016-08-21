@@ -6,7 +6,7 @@ import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arpx.motion.Motion;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("motionSet", "motionSet"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("motionSet", "motionSet"))
 class MotionSet implements IArpObject {
 
 	@:arpBarrier @:arpField("motion") public var motions:IMap<String, Motion>;

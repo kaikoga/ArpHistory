@@ -9,7 +9,7 @@ import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
 import net.kaikoga.arpx.backends.flash.chip.GridChipFlashImpl;
 #end
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("chip", "grid"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("chip", "grid"))
 class GridChip extends Chip {
 
 	private static var _workParams:ArpParams = new ArpParams();

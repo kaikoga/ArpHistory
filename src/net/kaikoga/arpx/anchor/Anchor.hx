@@ -5,7 +5,7 @@ import net.kaikoga.arpx.hitFrame.HitFrame;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.mortal.Mortal;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("anchor"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("anchor"))
 class Anchor implements IArpObject {
 
 	@:arpField public var position:ArpPosition;

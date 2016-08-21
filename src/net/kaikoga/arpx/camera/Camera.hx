@@ -4,7 +4,7 @@ import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.structs.ArpPosition;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("camera", "camera"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("camera", "camera"))
 class Camera implements IArpObject {
 
 	@:arpField public var field:Field;

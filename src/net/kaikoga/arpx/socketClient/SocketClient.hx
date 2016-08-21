@@ -8,7 +8,7 @@ import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arpx.backends.cross.socketClient.ISocketClientImpl;
 import net.kaikoga.arpx.backends.cross.socketClient.SocketClientNullImpl;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("socketClient", "null"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("socketClient", "null"))
 class SocketClient implements IArpObject implements ISocketClientImpl {
 
 	public var bigEndian(get, set):Bool;

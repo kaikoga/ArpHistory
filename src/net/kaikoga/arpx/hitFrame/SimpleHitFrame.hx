@@ -3,7 +3,7 @@ package net.kaikoga.arpx.hitFrame;
 import net.kaikoga.arp.structs.ArpHitArea;
 import net.kaikoga.arp.structs.ArpPosition;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("hitFrame", "simple"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("hitFrame", "simple"))
 class SimpleHitFrame extends HitFrame {
 
 	@:arpField public var hitArea:ArpHitArea;

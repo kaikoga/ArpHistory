@@ -3,7 +3,7 @@ package net.kaikoga.arpx.file;
 import net.kaikoga.arpx.backends.flash.file.ResourceFileFlashImpl;
 import net.kaikoga.arpx.backends.flash.file.IFileFlashImpl;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("file", "resource"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("file", "resource"))
 class ResourceFile extends File {
 
 	@:arpField public var src:String;

@@ -8,7 +8,7 @@ import net.kaikoga.arpx.hitFrame.HitFrame;
 import net.kaikoga.arpx.hitFrame.SimpleHitFrame;
 import net.kaikoga.arpx.mortal.Mortal;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("reactFrame"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("reactFrame"))
 class ReactFrame implements IArpObject {
 
 	@:arpField public var time:Float;

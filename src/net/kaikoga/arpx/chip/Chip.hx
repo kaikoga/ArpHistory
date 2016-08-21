@@ -9,7 +9,7 @@ import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import flash.display.BitmapData;
 #end
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("chip", "null"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("chip", "null"))
 class Chip implements IArpObject
 #if arp_backend_flash implements IChipFlashImpl #end
 {
