@@ -1,5 +1,6 @@
 package net.kaikoga.arp;
 
+import net.kaikoga.arp.seed.ArpSeedCase;
 import net.kaikoga.arp.ds.proxy.ProxyCaseUtilCase;
 import net.kaikoga.arp.ds.proxy.OmapSelfProxyCase;
 import net.kaikoga.arp.ds.proxy.MapSelfProxyCase;
@@ -84,6 +85,8 @@ class ArpSupportTestSuite {
 		r.load(TaskRunnerCase);
 
 		r.load(PersistIoCase, persistIoProvider());
+
+		r.load(ArpSeedCase);
 	}
 
 
