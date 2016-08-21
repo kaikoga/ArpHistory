@@ -12,12 +12,7 @@ import haxe.macro.Type;
 
 class MacroArpObjectBuilder extends MacroArpObjectStub {
 
-	public static function build(arpTypeName:String, arpTemplateName:String = null):Array<Field> {
-		if (arpTemplateName == null) arpTemplateName = arpTypeName;
-		return new MacroArpObjectBuilder(arpTypeName, arpTemplateName).run();
-	}
-
-	private function new(arpTypeName:String, arpTemplateName:String) {
+	public function new(arpTypeName:String, arpTemplateName:String) {
 		this.arpTypeName = arpTypeName;
 		this.arpTemplateName = arpTemplateName;
 	}

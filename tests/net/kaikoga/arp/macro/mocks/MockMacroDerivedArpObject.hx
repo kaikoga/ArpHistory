@@ -1,6 +1,6 @@
 package net.kaikoga.arp.macro.mocks;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("mock", "macroDerived"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("mock", "macroDerived"))
 class MockMacroDerivedArpObject extends MockMacroArpObject {
 
 	@:arpField public var intField2:Int = 0;

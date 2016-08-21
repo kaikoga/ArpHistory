@@ -4,7 +4,7 @@ import net.kaikoga.arp.domain.IArpObject;
 
 import picotest.PicoTestAsync.*;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("mock", "latePrepare"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("mock", "latePrepare"))
 class MockLatePrepareMacroArpObject implements IArpObject {
 
 	public var volatileInt:Int = 0;

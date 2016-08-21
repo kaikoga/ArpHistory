@@ -2,7 +2,7 @@ package net.kaikoga.arp.macro.mocks;
 
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("mock", "hookMacro"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("mock", "hookMacro"))
 class MockHookMacroArpObject implements IArpObject {
 
 	public var volatileInt:Int = 0;

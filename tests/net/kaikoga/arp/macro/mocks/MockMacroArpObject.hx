@@ -2,7 +2,7 @@ package net.kaikoga.arp.macro.mocks;
 
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("mock", "macro"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("mock", "macro"))
 class MockMacroArpObject implements IArpObject {
 
 	@:arpField public var intField:Int = 1000000;

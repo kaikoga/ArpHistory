@@ -2,7 +2,7 @@ package net.kaikoga.arp.macro.mocks;
 
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("mock", "stdDsMacro"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("mock", "stdDsMacro"))
 class MockStdDsMacroArpObject implements IArpObject {
 
 	@:arpField public var intStdArray:Array<Int>;

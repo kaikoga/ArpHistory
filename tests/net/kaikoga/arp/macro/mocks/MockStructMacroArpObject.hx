@@ -8,7 +8,7 @@ import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arp.structs.ArpRange;
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.macro.MacroArpObjectBuilder.build("mock", "structMacro"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("mock", "structMacro"))
 class MockStructMacroArpObject implements IArpObject {
 
 	@:arpField public var arpColorField:ArpColor;
