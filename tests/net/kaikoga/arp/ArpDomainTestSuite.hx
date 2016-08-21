@@ -25,7 +25,6 @@ import net.kaikoga.arp.structs.ArpRangeCase;
 import net.kaikoga.arp.structs.ArpParamsCase;
 import net.kaikoga.arp.domain.query.ArpDirectoryQueryCase;
 import net.kaikoga.arp.domain.query.ArpObjectQueryCase;
-import net.kaikoga.arp.seed.ArpSeedCase;
 import net.kaikoga.arp.domain.ArpDomainCase;
 
 import net.kaikoga.arp.testParams.PersistIoProviders.*;
@@ -36,7 +35,6 @@ class ArpDomainTestSuite {
 	public static function addTo(r:PicoTestRunner) {
 		r.load(ArpDomainTestUtilCase);
 
-		r.load(ArpSeedCase);
 		r.load(ArpDirectoryCase);
 		r.load(ArpDirectoryQueryCase);
 		r.load(ArpObjectQueryCase);
