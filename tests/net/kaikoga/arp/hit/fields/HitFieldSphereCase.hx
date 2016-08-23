@@ -11,11 +11,11 @@ class HitFieldSphereCase {
 
 	public function setup() {
 		me = new HitField<String, HitSphere>(new HitWithSphere());
-		me.add("a", new HitSphere().setSphere(2, 1, 1, 1));
-		me.add("b", new HitSphere().setSphere(1, 3, 1, 1));
-		me.add("c", new HitSphere().setSphere(1, 5, 1, 1));
-		me.add("d", new HitSphere().setSphere(9, 3, 3, 3));
-		me.add("e", new HitSphere().setSphere(0, 0, 0, -200));
+		me.add("a").setSphere(2, 1, 1, 1);
+		me.add("b").setSphere(1, 3, 1, 1);
+		me.add("c").setSphere(1, 5, 1, 1);
+		me.add("d").setSphere(9, 3, 3, 3);
+		me.add("e").setSphere(0, 0, 0, -200);
 	}
 
 	public function testCollides() {

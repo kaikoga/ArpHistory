@@ -7,6 +7,10 @@ class HitWithSphere implements IHitTester<HitSphere> {
 	public function new() {
 	}
 
+	public function createHit():HitSphere {
+		return new HitSphere();
+	}
+
 	public function collides(a:HitSphere, b:HitSphere):Bool {
 		var dr:Float = a.r + b.r;
 		var dx:Float = a.x - b.x;

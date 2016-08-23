@@ -12,8 +12,12 @@ class HitField<T, Hit> {
 		this.strategy = strategy;
 	}
 
-	public function add(owner:T, hit:Hit):Void {
+	public function add(owner:T):Hit {
+		for (hitItem in this.hitItems) if (hitItem.owner == owner) return hitItem.hit;
+
+		var hit:Hit = this.strategy.createHit();
 		this.hitItems.push(new HitItem(owner, hit));
+		return hit;
 	}
 
 	public function hitTest(callback:T->T->Bool):Void {
