@@ -2,9 +2,11 @@ package net.kaikoga.arp.hit.fields;
 
 import net.kaikoga.arp.hit.strategies.IHitTester;
 
-class HitField<T, Hit> {
+// very naive implementation of IHitField
+class HitField<T, Hit> implements IHitField<T, Hit> {
 
 	private var hitItems:Array<HitItem<T, Hit>>;
+	private var hitItemsLength:Int = 0;
 	private var strategy:IHitTester<Hit>;
 
 	public function new(strategy:IHitTester<Hit>) {
@@ -12,19 +14,50 @@ class HitField<T, Hit> {
 		this.strategy = strategy;
 	}
 
-	public function add(owner:T):Hit {
-		for (hitItem in this.hitItems) if (hitItem.owner == owner) return hitItem.hit;
+	public function tick(timeslice:Float = 1.0):Void {
+		var j:Int = 0;
+		for (i in 0...this.hitItemsLength) {
+			var hitItem:HitItem<T, Hit> = this.hitItems[i];
+			if ((hitItem.life -= timeslice) > 0.0) {
+				this.hitItems[j++] = hitItem;
+			}
+		}
+		for (i in j...this.hitItemsLength) {
+			this.hitItems[i] = null;
+		}
+		this.hitItemsLength = j;
+	}
+
+	public function add(owner:T, life:Float = 0.0):Hit {
+		var hitItem:HitItem<T, Hit>;
+		for (i in 0...this.hitItemsLength) {
+			hitItem = this.hitItems[i];
+			if (hitItem.owner == owner) {
+				if (hitItem.life < life) hitItem.life = life;
+				return hitItem.hit;
+			}
+		}
 
 		var hit:Hit = this.strategy.createHit();
-		this.hitItems.push(new HitItem(owner, hit));
+		hitItem = new HitItem<T, Hit>(owner, life, hit);
+		this.hitItems.push(hitItem);
+		this.hitItemsLength++;
 		return hit;
 	}
 
+	public function addOnce(owner:T):Hit {
+		return add(owner, 0);
+	}
+
+	public function addEternal(owner:T):Hit {
+		return add(owner, Math.POSITIVE_INFINITY);
+	}
+
 	public function hitTest(callback:T->T->Bool):Void {
-		for (i in 0...(hitItems.length - 1)) {
-			var obj:HitItem<T, Hit> = hitItems[i];
-			for (j in (i + 1)...hitItems.length) {
-				var other:HitItem<T, Hit> = hitItems[j];
+		for (i in 0...(this.hitItemsLength - 1)) {
+			var obj:HitItem<T, Hit> = this.hitItems[i];
+			for (j in (i + 1)...hitItemsLength) {
+				var other:HitItem<T, Hit> = this.hitItems[j];
 				if (strategy.collides(obj.hit, other.hit)) {
 					if (callback(obj.owner, other.owner)) return;
 				}
@@ -33,7 +66,7 @@ class HitField<T, Hit> {
 	}
 
 	public function hitRaw(hit:Hit, callback:T->Bool):Void {
-		for (other in hitItems) {
+		for (other in this.hitItems) {
 			if (other.hit == hit) continue;
 			if (strategy.collides(hit, other.hit)) {
 				if (callback(other.owner)) return;
@@ -45,10 +78,12 @@ class HitField<T, Hit> {
 private class HitItem<T, Hit> {
 
 	public var owner:T;
+	public var life:Float = 0;
 	public var hit:Hit;
 
-	public function new(owner:T, hit:Hit) {
+	public function new(owner:T, life:Float, hit:Hit) {
 		this.owner = owner;
+		this.life = life;
 		this.hit = hit;
 	}
 }

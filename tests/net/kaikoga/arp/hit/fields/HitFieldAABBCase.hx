@@ -11,16 +11,29 @@ class HitFieldAABBCase {
 
 	public function setup() {
 		me = new HitField<String, HitGeneric>(new HitWithAABB());
-		me.add("a").setAABB(1, 1, 1, 2, 2, 2);
-		me.add("b").setAABB(3, 1, 1, 1, 1, 1);
-		me.add("c").setAABB(5, 1, 1, 1, 1, 1);
+		me.add("a", 3).setAABB(1, 1, 1, 2, 2, 2);
+		me.add("b", 3).setAABB(3, 1, 1, 1, 1, 1);
+		me.add("c", 3).setAABB(5, 1, 1, 1, 1, 1);
 		me.add("d").setAABB(3, 3, 3, 9, 9, 9);
 		me.add("e").setAABB(-200, -200, -200, 0, 0, 0);
 	}
 
 	public function testHitTest() {
 		var map:Array<Array<String>> = [];
+		map = [];
 		me.hitTest(function(a:String, b:String):Bool { map.push([a, b]); return false; } );
 		assertMatch([["a", "b"], ["a", "d"], ["b", "d"], ["c", "d"]], map);
+		me.tick();
+		map = [];
+		me.hitTest(function(a:String, b:String):Bool { map.push([a, b]); return false; } );
+		assertMatch([["a", "b"]], map);
+		me.tick();
+		map = [];
+		me.hitTest(function(a:String, b:String):Bool { map.push([a, b]); return false; } );
+		assertMatch([["a", "b"]], map);
+		me.tick();
+		map = [];
+		me.hitTest(function(a:String, b:String):Bool { map.push([a, b]); return false; } );
+		assertMatch([], map);
 	}
 }
