@@ -1,5 +1,7 @@
 package net.kaikoga.arp.hit;
 
+import net.kaikoga.arp.hit.fields.HitObjectFieldSphereCase;
+import net.kaikoga.arp.hit.fields.HitObjectFieldAABBCase;
 import net.kaikoga.arp.hit.fields.HitFieldSphereCase;
 import net.kaikoga.arp.hit.fields.HitFieldAABBCase;
 import net.kaikoga.arp.hit.strategies.HitWithAABBCase;
@@ -14,6 +16,8 @@ class ArpHitTestTestSuite {
 		r.load(HitWithSphereCase);
 		r.load(HitFieldAABBCase);
 		r.load(HitFieldSphereCase);
+		r.load(HitObjectFieldAABBCase);
+		r.load(HitObjectFieldSphereCase);
 	}
 
 }

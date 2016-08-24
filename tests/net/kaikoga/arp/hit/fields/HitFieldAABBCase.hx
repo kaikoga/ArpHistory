@@ -7,10 +7,10 @@ import picotest.PicoAssert.*;
 
 class HitFieldAABBCase {
 
-	private var me:HitField<String, HitGeneric>;
+	private var me:HitField<HitGeneric, String>;
 
 	public function setup() {
-		me = new HitField<String, HitGeneric>(new HitWithAABB());
+		me = new HitField<HitGeneric, String>(new HitWithAABB());
 		me.add("a", 3).setAABB(1, 1, 1, 2, 2, 2);
 		me.add("b", 3).setAABB(3, 1, 1, 1, 1, 1);
 		me.add("c", 3).setAABB(5, 1, 1, 1, 1, 1);

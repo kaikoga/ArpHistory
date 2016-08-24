@@ -21,5 +21,3 @@ class HitSphere {
 		return this;
 	}
 }
-
-

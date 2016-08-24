@@ -7,10 +7,10 @@ import picotest.PicoAssert.*;
 
 class HitFieldSphereCase {
 
-	private var me:HitField<String, HitSphere>;
+	private var me:HitField<HitSphere, String>;
 
 	public function setup() {
-		me = new HitField<String, HitSphere>(new HitWithSphere());
+		me = new HitField<HitSphere, String>(new HitWithSphere());
 		me.add("a", 3).setSphere(2, 1, 1, 1);
 		me.add("b", 3).setSphere(1, 3, 1, 1);
 		me.add("c", 3).setSphere(1, 5, 1, 1);
