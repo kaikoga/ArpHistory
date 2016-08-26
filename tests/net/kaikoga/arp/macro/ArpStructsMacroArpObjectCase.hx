@@ -29,7 +29,7 @@ class ArpStructsMacroArpObjectCase {
 <mock name="name1">
 <arpColorField>#ff00ff@7f</arpColorField>
 <arpDirectionField>southeast</arpDirectionField>
-<arpHitAreaField>1,2,3,4,5,6</arpHitAreaField>
+<arpHitCuboidField>1,2,3,4,5,6</arpHitCuboidField>
 <arpPositionField>2,4,6,0</arpPositionField>
 <arpRangeField>7..9</arpRangeField>
 <arpParamsField>a:b,c:10,d:2147483648:idir,g:h:rewire,faceValue</arpParamsField>
@@ -45,7 +45,7 @@ class ArpStructsMacroArpObjectCase {
 		assertEquals(new ArpType("mock"), arpObj.arpType());
 		assertNotNull(arpObj.arpColorField);
 		assertNotNull(arpObj.arpDirectionField);
-		assertNotNull(arpObj.arpHitAreaField);
+		assertNotNull(arpObj.arpHitCuboidField);
 		assertNotNull(arpObj.arpParamsField);
 		assertNotNull(arpObj.arpPositionField);
 		assertNotNull(arpObj.arpRangeField);
@@ -61,7 +61,7 @@ class ArpStructsMacroArpObjectCase {
 
 		assertMatch({color:0x7fff00ff}, arpObj.arpColorField.toHash());
 		assertMatch({dir:0x20000000}, arpObj.arpDirectionField.toHash());
-		assertMatch({areaLeft:1, areaRight:2, areaTop:3, areaBottom:4, areaHind:5, areaFore:6}, arpObj.arpHitAreaField.toHash());
+		assertMatch({dX:1, dY:2, dZ:3, sizeX:4, sizeY:5, sizeZ:6}, arpObj.arpHitCuboidField.toHash());
 		assertMatch(Matchers.containsInAnyOrder("a:b", "c:10", "d:2147483648:idir", "g:h:rewire", "face:faceValue"), arpObj.arpParamsField.toHash().params.split(","));
 		assertMatch({dir:0, x:2, y:4, z:6}, arpObj.arpPositionField.toHash());
 		assertMatch({min:7, max:9}, arpObj.arpRangeField.toHash());
@@ -74,7 +74,7 @@ class ArpStructsMacroArpObjectCase {
 
 		assertMatch(original.arpColorField.toHash(), clone.arpColorField.toHash());
 		assertMatch(original.arpDirectionField.toHash(), clone.arpDirectionField.toHash());
-		assertMatch(original.arpHitAreaField.toHash(), clone.arpHitAreaField.toHash());
+		assertMatch(original.arpHitCuboidField.toHash(), clone.arpHitCuboidField.toHash());
 		assertMatch(original.arpPositionField.toHash(), clone.arpPositionField.toHash());
 		assertMatch(original.arpRangeField.toHash(), clone.arpRangeField.toHash());
 	}

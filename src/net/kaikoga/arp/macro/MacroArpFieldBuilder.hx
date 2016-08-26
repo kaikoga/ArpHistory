@@ -85,8 +85,8 @@ class MacroArpFieldBuilder {
 				return MacroArpNativeFieldType.NativeValueType(new MacroArpStructType(macro :net.kaikoga.arp.structs.ArpColor));
 			case "net.kaikoga.arp.structs.ArpDirection":
 				return MacroArpNativeFieldType.NativeValueType(new MacroArpStructType(macro :net.kaikoga.arp.structs.ArpDirection));
-			case "net.kaikoga.arp.structs.ArpHitArea":
-				return MacroArpNativeFieldType.NativeValueType(new MacroArpStructType(macro :net.kaikoga.arp.structs.ArpHitArea));
+			case "net.kaikoga.arp.structs.ArpHitCuboid":
+				return MacroArpNativeFieldType.NativeValueType(new MacroArpStructType(macro :net.kaikoga.arp.structs.ArpHitCuboid));
 			case "net.kaikoga.arp.structs.ArpParams":
 				return MacroArpNativeFieldType.NativeValueType(new MacroArpStructType(macro :net.kaikoga.arp.structs.ArpParams));
 			case "net.kaikoga.arp.structs.ArpPosition":
