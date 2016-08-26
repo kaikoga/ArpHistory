@@ -4,18 +4,18 @@ import net.kaikoga.arp.hit.structs.HitGeneric;
 
 import picotest.PicoAssert.*;
 
-class HitWithAABBCase {
+class HitWithCuboidCase {
 
-	private var me:HitWithAABB;
+	private var me:HitWithCuboid;
 
 	public function setup() {
-		me = new HitWithAABB();
+		me = new HitWithCuboid();
 	}
 
 	public function testCollides() {
-		var a = new HitGeneric().setAABB(1, 1, 1, 2, 2, 2);
-		var b = new HitGeneric().setAABB(3, 1, 1, 1, 1, 1);
-		var c = new HitGeneric().setAABB(5, 1, 1, 1, 1, 1);
+		var a = new HitGeneric().setCuboid(1, 1, 1, 2, 2, 2);
+		var b = new HitGeneric().setCuboid(3, 1, 1, 1, 1, 1);
+		var c = new HitGeneric().setCuboid(5, 1, 1, 1, 1, 1);
 		assertTrue(me.collides(a, b));
 		assertFalse(me.collides(b, c));
 		assertFalse(me.collides(a, c));

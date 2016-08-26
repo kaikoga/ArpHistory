@@ -1,21 +1,21 @@
 package net.kaikoga.arp.hit.fields;
 
-import net.kaikoga.arp.hit.strategies.HitWithAABB;
+import net.kaikoga.arp.hit.strategies.HitWithCuboid;
 import net.kaikoga.arp.hit.structs.HitGeneric;
 
 import picotest.PicoAssert.*;
 
-class HitFieldAABBCase {
+class HitFieldCuboidCase {
 
 	private var me:HitField<HitGeneric, String>;
 
 	public function setup() {
-		me = new HitField<HitGeneric, String>(new HitWithAABB());
-		me.add("a", 3).setAABB(1, 1, 1, 2, 2, 2);
-		me.add("b", 3).setAABB(3, 1, 1, 1, 1, 1);
-		me.add("c", 3).setAABB(5, 1, 1, 1, 1, 1);
-		me.add("d").setAABB(3, 3, 3, 9, 9, 9);
-		me.add("e").setAABB(-200, -200, -200, 0, 0, 0);
+		me = new HitField<HitGeneric, String>(new HitWithCuboid());
+		me.add("a", 3).setCuboid(1, 1, 1, 2, 2, 2);
+		me.add("b", 3).setCuboid(3, 1, 1, 1, 1, 1);
+		me.add("c", 3).setCuboid(5, 1, 1, 1, 1, 1);
+		me.add("d").setCuboid(3, 3, 3, 9, 9, 9);
+		me.add("e").setCuboid(-200, -200, -200, 0, 0, 0);
 	}
 
 	public function testHitTest() {

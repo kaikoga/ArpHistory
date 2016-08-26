@@ -1,10 +1,10 @@
 package net.kaikoga.arp.hit;
 
 import net.kaikoga.arp.hit.fields.HitObjectFieldSphereCase;
-import net.kaikoga.arp.hit.fields.HitObjectFieldAABBCase;
+import net.kaikoga.arp.hit.fields.HitObjectFieldCuboidCase;
 import net.kaikoga.arp.hit.fields.HitFieldSphereCase;
-import net.kaikoga.arp.hit.fields.HitFieldAABBCase;
-import net.kaikoga.arp.hit.strategies.HitWithAABBCase;
+import net.kaikoga.arp.hit.fields.HitFieldCuboidCase;
+import net.kaikoga.arp.hit.strategies.HitWithCuboidCase;
 import net.kaikoga.arp.hit.strategies.HitWithSphereCase;
 
 import picotest.PicoTestRunner;
@@ -12,11 +12,11 @@ import picotest.PicoTestRunner;
 class ArpHitTestTestSuite {
 
 	public static function addTo(r:PicoTestRunner) {
-		r.load(HitWithAABBCase);
+		r.load(HitWithCuboidCase);
 		r.load(HitWithSphereCase);
-		r.load(HitFieldAABBCase);
+		r.load(HitFieldCuboidCase);
 		r.load(HitFieldSphereCase);
-		r.load(HitObjectFieldAABBCase);
+		r.load(HitObjectFieldCuboidCase);
 		r.load(HitObjectFieldSphereCase);
 	}
 

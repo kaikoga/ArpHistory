@@ -2,7 +2,7 @@ package net.kaikoga.arp.hit.strategies;
 
 import net.kaikoga.arp.hit.structs.HitGeneric;
 
-class HitWithAABB implements IHitTester<HitGeneric> {
+class HitWithCuboid implements IHitTester<HitGeneric> {
 
 	public function new() {
 	}

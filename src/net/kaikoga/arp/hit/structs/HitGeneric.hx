@@ -33,7 +33,7 @@ class HitGeneric {
 		return this;
 	}
 
-	public function setAABB(x:Float, y:Float, z:Float, sizeX, sizeY, sizeZ):HitGeneric {
+	public function setCuboid(x:Float, y:Float, z:Float, sizeX, sizeY, sizeZ):HitGeneric {
 		this.x = x;
 		this.y = y;
 		this.z = z;
