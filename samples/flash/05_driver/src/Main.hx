@@ -1,5 +1,6 @@
 package;
 
+import net.kaikoga.arpx.hitFrame.CuboidHitFrame;
 import net.kaikoga.arpx.reactFrame.ReactFrame;
 import net.kaikoga.arpx.motionFrame.MotionFrame;
 import net.kaikoga.arpx.nextMotion.NextMotion;
@@ -39,7 +40,9 @@ class Main extends Sprite {
 	private var camera:Camera;
 	private var field:Field;
 	private var mortal1:Mortal;
-	private var mortal2:Mortal;
+	private var mortal21:Mortal;
+	private var mortal22:Mortal;
+	private var mortal23:Mortal;
 	private var mortal3:Mortal;
 
 	public function new() {
@@ -57,6 +60,7 @@ class Main extends Sprite {
 		this.domain.addGenerator(new ArpObjectGenerator(NextMotion));
 		this.domain.addGenerator(new ArpObjectGenerator(MotionFrame));
 		this.domain.addGenerator(new ArpObjectGenerator(ReactFrame));
+		this.domain.addGenerator(new ArpObjectGenerator(CuboidHitFrame));
 		this.domain.addGenerator(new ArpObjectGenerator(Field));
 		this.domain.addGenerator(new ArpObjectGenerator(Console));
 		this.domain.addGenerator(new ArpObjectGenerator(Camera));
@@ -74,7 +78,9 @@ class Main extends Sprite {
 		this.camera = this.console.cameras.get("main");
 		this.field = this.domain.query("root", Field).value();
 		this.mortal1 = this.domain.query("mortal1", Mortal).value();
-		this.mortal2 = this.domain.query("mortal2", Mortal).value();
+		this.mortal21 = this.domain.query("mortal21", Mortal).value();
+		this.mortal22 = this.domain.query("mortal22", Mortal).value();
+		this.mortal23 = this.domain.query("mortal23", Mortal).value();
 		this.mortal3 = this.domain.query("mortal3", Mortal).value();
 		Lib.current.stage.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
 		this.domain.heatLater(this.domain.query("gridChip", GridChip).slot());
@@ -90,7 +96,13 @@ class Main extends Sprite {
 		this.mortal1.position.x = (this.mortal1.position.x + 1) % 128;
 		this.field.tick();
 		if (Math.random() < 0.05) {
-			cast(this.mortal2.driver, LinearDriver).toward(30, Math.random() * 256, Math.random() * 256);
+			cast(this.mortal21.driver, LinearDriver).toward(30, Math.random() * 256, Math.random() * 256);
+		}
+		if (Math.random() < 0.05) {
+			cast(this.mortal22.driver, LinearDriver).toward(30, Math.random() * 256, Math.random() * 256);
+		}
+		if (Math.random() < 0.05) {
+			cast(this.mortal23.driver, LinearDriver).toward(30, Math.random() * 256, Math.random() * 256);
 		}
 	}
 

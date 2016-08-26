@@ -3,6 +3,7 @@
 -cp src
 -cp ../../../../ArpDomain/src
 -cp ../../../../ArpEngine/src
+-cp ../../../../ArpHitTest/src
 -cp ../../../../ArpSupport/src
 -resource assets/arpdomain.xml@arpdata
 -resource assets/a.png@a

@@ -1,10 +1,10 @@
 package net.kaikoga.arpx.driver;
 
+import net.kaikoga.arp.ds.impl.VoidSet;
+import net.kaikoga.arp.ds.ISet;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.hitFrame.HitFrame;
-import net.kaikoga.arp.ds.IOmap;
-import net.kaikoga.arp.ds.impl.VoidOmap;
 import net.kaikoga.arpx.motion.Motion;
 import net.kaikoga.arpx.reactFrame.ReactFrame;
 import net.kaikoga.arpx.motionFrame.MotionFrame;
@@ -20,6 +20,7 @@ class MotionDriver extends Driver {
 	@:arpField public var nowTime:Float;
 	@:arpField(false) public var nowMotionFrame:MotionFrame;
 
+	@:arpField public var dHitType:String;
 	@:arpField private var willReact:Bool;
 
 	@:arpHeatUp
@@ -42,8 +43,8 @@ class MotionDriver extends Driver {
 		mortal.params.merge(motionFrame.params);
 	}
 
-	private function hitFrames():IOmap<String, HitFrame> {
-		if (this.nowMotionFrame == null) return new VoidOmap();
+	private function hitFrames():ISet<HitFrame> {
+		if (this.nowMotionFrame == null) return new VoidSet();
 		return this.nowMotionFrame.hitFrames;
 	}
 
@@ -70,6 +71,7 @@ class MotionDriver extends Driver {
 		return true;
 	}
 
+	@:access(net.kaikoga.arpx.field.Field.hitField)
 	override public function tick(field:Field, mortal:Mortal):Void {
 		var nowMotion:Motion = this.nowMotion;
 		if (nowMotion != null) {
@@ -78,6 +80,7 @@ class MotionDriver extends Driver {
 			var time:Float;
 
 			var motionFrame:MotionFrame = null;
+			var moved:Bool = false;
 			for (frame in this.nowMotion.motionFrames) {
 				time = frame.time;
 				if (time < oldTime) {
@@ -87,7 +90,7 @@ class MotionDriver extends Driver {
 				} else if (time < newTime) {
 					// last frame has just ended
 					if (motionFrame != null) {
-						motionFrame.updateMortalPosition(field, mortal, oldTime, time);
+						motionFrame.updateMortalPosition(field, mortal, oldTime, time, this.dHitType);
 					}
 					oldTime = time;
 					motionFrame = frame;
@@ -96,9 +99,12 @@ class MotionDriver extends Driver {
 					break;
 				}
 			}
-			// cleanup current motion frame
 			if (motionFrame != null) {
-				motionFrame.updateMortalPosition(field, mortal, oldTime, newTime);
+				// cleanup current motion frame
+				motionFrame.updateMortalPosition(field, mortal, oldTime, newTime, this.dHitType);
+			} else {
+				// movement did not occur
+				mortal.stayWithHit(field, this.dHitType);
 			}
 
 			if (this.willReact) {

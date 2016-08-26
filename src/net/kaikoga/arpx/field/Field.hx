@@ -1,5 +1,9 @@
 package net.kaikoga.arpx.field;
 
+import net.kaikoga.arp.hit.fields.HitObjectField;
+import net.kaikoga.arp.hit.strategies.HitWithCuboid;
+import net.kaikoga.arp.hit.structs.HitGeneric;
+import net.kaikoga.arp.hit.fields.HitField;
 import net.kaikoga.arp.ds.lambda.OmapOp;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arpx.anchor.Anchor;
@@ -25,6 +29,9 @@ class Field implements IArpObject {
 	public var width(get, never):Int;
 	public var height(get, never):Int;
 
+	private var hitField:HitObjectField<HitGeneric, HitMortal>;
+	private var anchorField:HitField<HitGeneric, Anchor>;
+
 	#if arp_backend_flash
 
 	private var flashImpl:IFieldFlashImpl;
@@ -48,6 +55,8 @@ class Field implements IArpObject {
 	#end
 
 	@:arpHeatUp private function heatUp():Bool {
+		if (this.hitField == null) this.hitField = new HitObjectField<HitGeneric, HitMortal>(new HitWithCuboid());
+		if (this.anchorField == null) this.anchorField = new HitField<HitGeneric, Anchor>(new HitWithCuboid());
 		this.reinitMortals();
 		return true;
 	}
@@ -64,64 +73,85 @@ class Field implements IArpObject {
 		return 0;
 	}
 
+	public function addHit(mortal:Mortal, hitType:String, life:Float):HitGeneric {
+		return hitField.add(mortal.asHitType(hitType), life);
+	}
+
+	public function addAnchorHit(anchor:Anchor, life:Float):HitGeneric {
+		return anchorField.add(anchor, life);
+	}
+
 	public function reinitMortals():Void {
 		OmapOp.copy(this.initMortals, this.mortals);
 	}
 
 	public function tick():Void {
 		for (mortal in this.mortals) mortal.tick(this);
+		for (anchor in this.anchors) anchor.tick(this);
+		this.hitField.tick();
+		this.anchorField.tick();
+		this.hitField.hitTest(function(a:HitMortal, b:HitMortal):Bool {
+			a.mortal.collide(this, b.mortal);
+			b.mortal.collide(this, a.mortal);
+			return false;
+		});
 	}
 
-	public function objectAt(self:Mortal, x:Float, y:Float, z:Float, hitType:String):Dynamic {
-		return this.mortalAt(self, x, y, z, hitType);
+	public function hitRaw(hit:HitGeneric, hitType:String, callback:HitMortal->Bool):Void {
+		this.hitField.hitRaw(hit, function(other:HitMortal):Bool {
+			if (other.hitType != hitType) return false;
+			return callback(other);
+		});
 	}
 
 	public function mortalAt(self:Mortal, x:Float, y:Float, z:Float, hitType:String):Mortal {
-		for (mortal in this.mortals) {
-			if ((mortal != self) && mortal.collidesCoordinate(x, y, z, hitType)) {
-				return mortal;
+		var result:Mortal = null;
+		this.hitField.hitRaw(new HitGeneric().setCuboid(x, y, z, 0, 0, 0), function(other:HitMortal):Bool {
+			if (self != other.mortal) {
+				result = other.mortal;
+				return true;
 			}
-		}
-		return null;
+			return false;
+		});
+		return result;
 	}
 
-	public function mortalsAt(self:Mortal, x:Float, y:Float, z:Float, hitType:String):Array<Dynamic> {
-		var result:Array<Dynamic> = [];
-		for (mortal in this.mortals) {
-			if ((mortal != self) && mortal.collidesCoordinate(x, y, z, hitType)) {
-				result.push(mortal);
+	public function mortalsAt(self:Mortal, x:Float, y:Float, z:Float, hitType:String):Array<Mortal> {
+		var result:Array<Mortal> = [];
+		this.hitField.hitRaw(new HitGeneric().setCuboid(x, y, z, 0, 0, 0), function(other:HitMortal):Bool {
+			if (self != other.mortal) {
+				result.push(other.mortal);
 			}
-		}
+			return false;
+		});
 		return result;
 	}
 
 	public function dispatchReactFrame(self:Mortal, reactFrame:ReactFrame, delay:Float):Void {
-		for (mortal in this.mortals) {
-			if ((mortal != self) && reactFrame.collidesMortal(self.position, mortal)) {
-				mortal.react(this, self, reactFrame, delay);
+		this.hitField.hitRaw(reactFrame.exportHitGeneric(self.position, new HitGeneric()), function(other:HitMortal):Bool {
+			if (self != other.mortal) {
+				other.mortal.react(this, self, reactFrame, delay);
 			}
-		}
+			return false;
+		});
 	}
 
 	public function anchorAt(x:Float, y:Float, z:Float):Anchor {
-		for (anchor in this.anchors) {
-			if (anchor.collidesCoordinate(x, y, z)) {
-				return anchor;
-			}
-		}
-		return null;
+		var result:Anchor = null;
+		this.anchorField.hitRaw(new HitGeneric().setCuboid(x, y, z, 0, 0, 0), function(other:Anchor):Bool {
+			result = other;
+			return true;
+		});
+		return result;
 	}
 
-	public function anchorsAt(x:Float, y:Float, z:Float):Array<Dynamic> {
-		var result:Array<Dynamic> = [];
-		for (anchor in this.anchors) {
-			if (anchor.collidesCoordinate(x, y, z)) {
-				result.push(anchor);
-			}
-		}
+	public function anchorsAt(x:Float, y:Float, z:Float):Array<Anchor> {
+		var result:Array<Anchor> = [];
+		this.anchorField.hitRaw(new HitGeneric().setCuboid(x, y, z, 0, 0, 0), function(other:Anchor):Bool {
+			result.push(other);
+			return false;
+		});
 		return result;
 	}
 
 }
-
-

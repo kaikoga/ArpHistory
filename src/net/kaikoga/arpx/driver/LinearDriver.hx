@@ -9,6 +9,7 @@ class LinearDriver extends Driver {
 
 	@:arpField public var target:ArpPosition;
 	@:arpField public var isDelta:Bool;
+	@:arpField public var dHitType:String;
 	@:arpField public var period:Float;
 
 	public function new() {
@@ -33,6 +34,7 @@ class LinearDriver extends Driver {
 
 	override public function tick(field:Field, mortal:Mortal):Void {
 		if (this.period <= 0) {
+			mortal.stayWithHit(field, this.dHitType);
 			return;
 		}
 
@@ -57,9 +59,7 @@ class LinearDriver extends Driver {
 				dz = this.target.z / this.period;
 				this.period--;
 			}
-			pos.x += dx;
-			pos.y += dy;
-			pos.z += dz;
+			mortal.moveDWithHit(field, dx, dy, dz, this.dHitType);
 			this.target.x -= dx;
 			this.target.y -= dy;
 			this.target.z -= dz;
@@ -69,17 +69,21 @@ class LinearDriver extends Driver {
 				pos.dir.valueRadian = valueRadian;
 				mortal.params.set("dir", pos.dir);
 			}
+			var x:Float;
+			var y:Float;
+			var z:Float;
 			if (this.period < 1) {
 				this.period = 0;
-				pos.x = this.target.x;
-				pos.y = this.target.y;
-				pos.z = this.target.z;
+				x = this.target.x;
+				y = this.target.y;
+				z = this.target.z;
 			} else {
 				var p:Float = this.period--;
-				pos.x = (pos.x * this.period + this.target.x) / p;
-				pos.y = (pos.y * this.period + this.target.y) / p;
-				pos.z = (pos.z * this.period + this.target.z) / p;
+				x = (pos.x * this.period + this.target.x) / p;
+				y = (pos.y * this.period + this.target.y) / p;
+				z = (pos.z * this.period + this.target.z) / p;
 			}
+			mortal.moveWithHit(field, x, y, z, this.dHitType);
 		}
 	}
 }
