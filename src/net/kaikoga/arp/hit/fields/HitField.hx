@@ -82,7 +82,8 @@ class HitField<Hit, T> implements IHitField<Hit, T> {
 	}
 
 	public function hitRaw(hit:Hit, callback:T->Bool):Void {
-		for (other in this.hitItems) {
+		for (i in 0...(this.hitItemsLength - 1)) {
+			var other:HitItem<Hit, T> = this.hitItems[i];
 			if (other.hit == hit) continue;
 			if (strategy.collides(hit, other.hit)) {
 				if (callback(other.owner)) return;
