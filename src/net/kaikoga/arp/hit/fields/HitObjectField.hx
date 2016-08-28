@@ -40,8 +40,7 @@ class HitObjectField<Hit, T:HitObject<Hit>> implements IHitField<Hit, T> {
 		var hit:Hit = this.strategy.createHit();
 		owner.life = 0.0;
 		owner.hit = hit;
-		this.hitObjects.push(owner);
-		this.hitObjectsLength++;
+		this.hitObjects[this.hitObjectsLength++] = owner;
 		return hit;
 	}
 
@@ -58,8 +57,7 @@ class HitObjectField<Hit, T:HitObject<Hit>> implements IHitField<Hit, T> {
 		var hit:Hit = this.strategy.createHit();
 		owner.life = life;
 		owner.hit = hit;
-		this.hitObjects.push(owner);
-		this.hitObjectsLength++;
+		this.hitObjects[this.hitObjectsLength++] = owner;
 		return hit;
 	}
 
