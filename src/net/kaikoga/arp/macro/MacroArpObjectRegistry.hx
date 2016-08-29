@@ -47,18 +47,16 @@ class MacroArpObjectRegistry {
 		instance.domainInfo.templates.push(templateInfo);
 	}
 
-	private function arpTypeOfFqn(fqn:String):ArpType {
-		var templateInfo:ArpTemplateInfo = templateInfos.get(fqn);
-		if (templateInfo == null) throw "ArpType not registered for " + fqn;
-		return templateInfo.arpType;
-	}
-
 	private static function toFqn(complexType:ComplexType):String {
 		return TypeTools.toString(ComplexTypeTools.toType(complexType));
 	}
 
+	public static function templateInfoOf(nativeType:ComplexType):ArpTemplateInfo {
+		return instance.templateInfos.get(toFqn(nativeType));
+	}
+
 	public static function arpTypeOf(nativeType:ComplexType):ArpType {
-		return instance.arpTypeOfFqn(toFqn(nativeType));
+		return templateInfoOf(nativeType).arpType;
 	}
 
 	private function onAfterGenerate():Void {

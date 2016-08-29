@@ -2,6 +2,9 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
+import net.kaikoga.arp.macro.valueTypes.MacroArpStructType;
+import net.kaikoga.arp.domain.reflect.ArpFieldKind;
+import net.kaikoga.arp.domain.reflect.ArpTemplateInfo;
 import net.kaikoga.arp.macro.fields.ds.MacroArpObjectSetField;
 import net.kaikoga.arp.macro.fields.ds.MacroArpObjectListField;
 import net.kaikoga.arp.macro.fields.ds.MacroArpObjectOmapField;
@@ -10,7 +13,6 @@ import net.kaikoga.arp.macro.fields.ds.MacroArpValueOmapField;
 import net.kaikoga.arp.macro.fields.ds.MacroArpValueMapField;
 import net.kaikoga.arp.macro.fields.ds.MacroArpValueListField;
 import net.kaikoga.arp.macro.fields.ds.MacroArpValueSetField;
-import net.kaikoga.arp.macro.valueTypes.MacroArpStructType;
 import net.kaikoga.arp.macro.valueTypes.MacroArpPrimIntType;
 import net.kaikoga.arp.macro.valueTypes.MacroArpPrimFloatType;
 import net.kaikoga.arp.macro.valueTypes.MacroArpPrimBoolType;
@@ -56,17 +58,9 @@ class MacroArpFieldBuilder {
 		}
 	}
 
-	private function fqnToNativeFieldType(fqn:Array<String>, type:Type, isImpl:Bool):Null<MacroArpNativeFieldType> {
+	private function baseFqnToNativeFieldType(fqn:Array<String>, type:Type, isImpl:Bool):Null<MacroArpNativeFieldType> {
 		this.log("fqn=" + fqn.join("."));
 		switch (fqn.join(".")) {
-			case "Int":
-				return MacroArpNativeFieldType.NativeValueType(new MacroArpPrimIntType());
-			case "Float":
-				return MacroArpNativeFieldType.NativeValueType(new MacroArpPrimFloatType());
-			case "Bool":
-				return MacroArpNativeFieldType.NativeValueType(new MacroArpPrimBoolType());
-			case "String":
-				return MacroArpNativeFieldType.NativeValueType(new MacroArpPrimStringType());
 			case "Array":
 				return MacroArpNativeFieldType.NativeStdArray(typeToNativeFieldType(typeParam(type)));
 			case "List":
@@ -81,26 +75,27 @@ class MacroArpFieldBuilder {
 				return MacroArpNativeFieldType.NativeDsIMap(typeToNativeFieldType(typeParam(type, 1)), isImpl);
 			case "net.kaikoga.arp.ds.IOmap":
 				return MacroArpNativeFieldType.NativeDsIOmap(typeToNativeFieldType(typeParam(type, 1)), isImpl);
-			case "net.kaikoga.arp.structs.ArpColor":
-				return MacroArpNativeFieldType.NativeValueType(new MacroArpStructType(macro :net.kaikoga.arp.structs.ArpColor));
-			case "net.kaikoga.arp.structs.ArpDirection":
-				return MacroArpNativeFieldType.NativeValueType(new MacroArpStructType(macro :net.kaikoga.arp.structs.ArpDirection));
-			case "net.kaikoga.arp.structs.ArpHitCuboid":
-				return MacroArpNativeFieldType.NativeValueType(new MacroArpStructType(macro :net.kaikoga.arp.structs.ArpHitCuboid));
-			case "net.kaikoga.arp.structs.ArpParams":
-				return MacroArpNativeFieldType.NativeValueType(new MacroArpStructType(macro :net.kaikoga.arp.structs.ArpParams));
-			case "net.kaikoga.arp.structs.ArpPosition":
-				return MacroArpNativeFieldType.NativeValueType(new MacroArpStructType(macro :net.kaikoga.arp.structs.ArpPosition));
-			case "net.kaikoga.arp.structs.ArpRange":
-				return MacroArpNativeFieldType.NativeValueType(new MacroArpStructType(macro :net.kaikoga.arp.structs.ArpRange));
-			case "net.kaikoga.arp.domain.IArpObject":
-				return MacroArpNativeFieldType.NativeMaybeReference(TypeTools.toComplexType(type));
 			default:
-				return null;
+				var templateInfo:ArpTemplateInfo = MacroArpObjectRegistry.templateInfoOf(TypeTools.toComplexType(type));
+				if (templateInfo == null) return null;
+				switch (templateInfo.fieldKind) {
+					case ArpFieldKind.PrimInt:
+						return MacroArpNativeFieldType.NativeValueType(new MacroArpPrimIntType());
+					case ArpFieldKind.PrimFloat:
+						return MacroArpNativeFieldType.NativeValueType(new MacroArpPrimFloatType());
+					case ArpFieldKind.PrimBool:
+						return MacroArpNativeFieldType.NativeValueType(new MacroArpPrimBoolType());
+					case ArpFieldKind.PrimString:
+						return MacroArpNativeFieldType.NativeValueType(new MacroArpPrimStringType());
+					case ArpFieldKind.StructKind:
+						return MacroArpNativeFieldType.NativeValueType(new MacroArpStructType(TypeTools.toComplexType(type)));
+					case ArpFieldKind.ReferenceKind:
+						return MacroArpNativeFieldType.NativeReferenceType(TypeTools.toComplexType(type));
+				}
 		}
 	}
 
-	private function baseTypeToNativeFieldType(type:Type, baseType:Type):MacroArpNativeFieldType {
+	private function baseTypeToNativeFieldType(type:Type, baseType:Type):Null<MacroArpNativeFieldType> {
 		var result:MacroArpNativeFieldType = null;
 		var fqn:Array<String>;
 		switch (baseType) {
@@ -108,7 +103,7 @@ class MacroArpFieldBuilder {
 				var classType:ClassType = classRef.get();
 				fqn = classType.pack.copy();
 				fqn.push(classType.name);
-				result = fqnToNativeFieldType(fqn, type, !classType.isInterface);
+				result = baseFqnToNativeFieldType(fqn, type, !classType.isInterface);
 				if (result != null) return result;
 				// follow super class and interfaces
 				if (classType.superClass != null) {
@@ -127,7 +122,7 @@ class MacroArpFieldBuilder {
 				var abstractType:AbstractType = abstractRef.get();
 				fqn = abstractType.pack.copy();
 				fqn.push(abstractType.name);
-				result = fqnToNativeFieldType(fqn, type, true);
+				result = baseFqnToNativeFieldType(fqn, type, true);
 				if (result != null) return result;
 				// follow underlying type
 				this.log("underlying=" + Std.string(abstractType.type));
@@ -172,7 +167,7 @@ class MacroArpFieldBuilder {
 				if (this.definition.expectValueField()) {
 					return new MacroArpValueField(this.definition, p);
 				}
-			case MacroArpNativeFieldType.NativeMaybeReference(p):
+			case MacroArpNativeFieldType.NativeReferenceType(p):
 				if (this.definition.expectReferenceField()) {
 					return new MacroArpObjectField(this.definition);
 				}
@@ -188,7 +183,7 @@ class MacroArpFieldBuilder {
 				if (this.definition.expectValueField()) {
 					return new MacroArpValueStdMapField(this.definition, p, isImpl);
 				}
-			case MacroArpNativeFieldType.NativeStdMap(MacroArpNativeFieldType.NativeMaybeReference(p), isImpl):
+			case MacroArpNativeFieldType.NativeStdMap(MacroArpNativeFieldType.NativeReferenceType(p), isImpl):
 				if (this.definition.expectReferenceField()) {
 					return new MacroArpObjectStdMapField(this.definition, p, isImpl);
 				}
@@ -196,7 +191,7 @@ class MacroArpFieldBuilder {
 				if (this.definition.expectValueField()) {
 					return new MacroArpValueSetField(this.definition, p, isImpl);
 				}
-			case MacroArpNativeFieldType.NativeDsISet(MacroArpNativeFieldType.NativeMaybeReference(p), isImpl):
+			case MacroArpNativeFieldType.NativeDsISet(MacroArpNativeFieldType.NativeReferenceType(p), isImpl):
 				if (this.definition.expectReferenceField()) {
 					return new MacroArpObjectSetField(this.definition, p, isImpl);
 				}
@@ -204,7 +199,7 @@ class MacroArpFieldBuilder {
 				if (this.definition.expectValueField()) {
 					return new MacroArpValueListField(this.definition, p, isImpl);
 				}
-			case MacroArpNativeFieldType.NativeDsIList(MacroArpNativeFieldType.NativeMaybeReference(p), isImpl):
+			case MacroArpNativeFieldType.NativeDsIList(MacroArpNativeFieldType.NativeReferenceType(p), isImpl):
 				if (this.definition.expectReferenceField()) {
 					return new MacroArpObjectListField(this.definition, p, isImpl);
 				}
@@ -212,7 +207,7 @@ class MacroArpFieldBuilder {
 				if (this.definition.expectValueField()) {
 					return new MacroArpValueMapField(this.definition, p, isImpl);
 				}
-			case MacroArpNativeFieldType.NativeDsIMap(MacroArpNativeFieldType.NativeMaybeReference(p), isImpl):
+			case MacroArpNativeFieldType.NativeDsIMap(MacroArpNativeFieldType.NativeReferenceType(p), isImpl):
 				if (this.definition.expectReferenceField()) {
 					return new MacroArpObjectMapField(this.definition, p, isImpl);
 				}
@@ -220,7 +215,7 @@ class MacroArpFieldBuilder {
 				if (this.definition.expectValueField()) {
 					return new MacroArpValueOmapField(this.definition, p, isImpl);
 				}
-			case MacroArpNativeFieldType.NativeDsIOmap(MacroArpNativeFieldType.NativeMaybeReference(p), isImpl):
+			case MacroArpNativeFieldType.NativeDsIOmap(MacroArpNativeFieldType.NativeReferenceType(p), isImpl):
 				if (this.definition.expectReferenceField()) {
 					return new MacroArpObjectOmapField(this.definition, p, isImpl);
 				}
@@ -252,6 +247,7 @@ class MacroArpFieldBuilder {
 private enum MacroArpNativeFieldType {
 	NativeInvalid;
 	NativeValueType(type:IMacroArpValueType);
+	NativeReferenceType(contentNativeType:ComplexType);
 	NativeStdArray(param:MacroArpNativeFieldType);
 	NativeStdList(param:MacroArpNativeFieldType);
 	NativeStdMap(param:MacroArpNativeFieldType, isImpl:Bool);
@@ -259,7 +255,6 @@ private enum MacroArpNativeFieldType {
 	NativeDsIList(param:MacroArpNativeFieldType, isImpl:Bool);
 	NativeDsIMap(param:MacroArpNativeFieldType, isImpl:Bool);
 	NativeDsIOmap(param:MacroArpNativeFieldType, isImpl:Bool);
-	NativeMaybeReference(contentNativeType:ComplexType);
 }
 
 #end
