@@ -3,7 +3,7 @@ package net.kaikoga.arp.macro.valueTypes;
 #if macro
 
 import net.kaikoga.arp.domain.core.ArpType;
-import net.kaikoga.arp.domain.reflect.ArpFieldType;
+import net.kaikoga.arp.domain.reflect.ArpFieldKind;
 import haxe.macro.Expr;
 
 class MacroArpPrimBoolType implements IMacroArpValueType {
@@ -11,13 +11,10 @@ class MacroArpPrimBoolType implements IMacroArpValueType {
 	public function new() {
 	}
 
-	public function nativeType():ComplexType {
-		return macro:Bool;
-	}
+	public function nativeType():ComplexType return macro:Bool;
+	public function arpFieldKind():ArpFieldKind return ArpFieldKind.PrimBool;
+	public function arpType():ArpType return new ArpType("Bool");
 
-	public function arpFieldType():ArpFieldType {
-		return ArpFieldType.PrimBool(new ArpType("Bool"));
-	}
 
 	public function createEmptyVo(pos:Position):Expr {
 		return macro @:pos(pos) { false; };

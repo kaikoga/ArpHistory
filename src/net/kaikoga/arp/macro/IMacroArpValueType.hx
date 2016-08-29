@@ -2,13 +2,15 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
-import net.kaikoga.arp.domain.reflect.ArpFieldType;
+import net.kaikoga.arp.domain.core.ArpType;
+import net.kaikoga.arp.domain.reflect.ArpFieldKind;
 import haxe.macro.Expr;
 
 interface IMacroArpValueType {
 
 	function nativeType():ComplexType;
-	function arpFieldType():ArpFieldType;
+	function arpFieldKind():ArpFieldKind;
+	function arpType():ArpType;
 	function createEmptyVo(pos:Position):Expr;
 	function createSeedElement(pos:Position):Expr;
 	function readSeedElement(pos:Position, iFieldName:String):Expr;

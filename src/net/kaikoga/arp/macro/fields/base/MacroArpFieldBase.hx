@@ -4,7 +4,7 @@ package net.kaikoga.arp.macro.fields.base;
 
 import net.kaikoga.arp.macro.MacroArpFieldDefinition.MacroArpMetaArpField;
 import net.kaikoga.arp.domain.reflect.ArpFieldDs;
-import net.kaikoga.arp.domain.reflect.ArpFieldType;
+import net.kaikoga.arp.domain.reflect.ArpFieldKind;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.reflect.ArpFieldInfo;
 import haxe.macro.Expr;
@@ -65,8 +65,8 @@ class MacroArpFieldBase {
 		return !definition.metaArpVolatile;
 	}
 
-	private var arpFieldType(get, never):ArpFieldType;
-	private function get_arpFieldType():ArpFieldType return ArpFieldType.ReferenceType(new ArpType(this.arpType));
+	private var arpFieldKind(get, never):ArpFieldKind;
+	private function get_arpFieldKind():ArpFieldKind return ArpFieldKind.ReferenceKind;
 	private var arpFieldDs(get, never):ArpFieldDs;
 	private function get_arpFieldDs():ArpFieldDs return ArpFieldDs.Scalar;
 
@@ -77,7 +77,8 @@ class MacroArpFieldBase {
 	@:final public function toFieldInfo():ArpFieldInfo {
 		return new ArpFieldInfo(
 			this.fieldName,
-			this.arpFieldType,
+			new ArpType(this.arpType),
+			this.arpFieldKind,
 			this.arpFieldDs,
 			this.nativeField.name,
 			this.arpBarrier

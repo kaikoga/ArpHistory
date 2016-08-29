@@ -13,7 +13,7 @@ class ArpDomainInfo {
 	public function groupByArpType():Map<String, Array<ArpTemplateInfo>> {
 		var result:Map<String, Array<ArpTemplateInfo>> = new Map();
 		for (template in this.templates) {
-			var arpType:String = template.arpType; 
+			var arpType:String = template.arpType;
 			if (result.exists(arpType)) {
 				result.get(arpType).push(template);
 			} else {

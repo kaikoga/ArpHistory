@@ -1,7 +1,7 @@
 ﻿package net.kaikoga.arp.writers.help;
 
 import net.kaikoga.arp.domain.reflect.ArpFieldDs;
-import net.kaikoga.arp.domain.reflect.ArpFieldType;
+import net.kaikoga.arp.domain.reflect.ArpFieldKind;
 import net.kaikoga.arp.domain.reflect.ArpFieldInfo;
 import net.kaikoga.arp.domain.reflect.ArpTemplateInfo;
 
@@ -38,11 +38,11 @@ class ArpTemplateHelpPrinter {
 		*/
 		var node:Xml;
 
-		switch (field.fieldType) {
-			case ArpFieldType.PrimBool(_), ArpFieldType.PrimInt(_), ArpFieldType.PrimFloat(_), ArpFieldType.PrimString(_):
+		switch (field.fieldKind) {
+			case ArpFieldKind.PrimBool, ArpFieldKind.PrimInt, ArpFieldKind.PrimFloat, ArpFieldKind.PrimString:
 				node = Xml.parse('<${field.name}>${placeholder}</${field.name}>').firstElement();
-			case ArpFieldType.StructType(arpType):
-				switch (arpType.toString()) {
+			case ArpFieldKind.StructKind:
+				switch (field.arpType.toString()) {
 					case "Range":
 						node = Xml.parse('<${field.name} min="minValue" max="maxValue" />').firstElement();
 					case "Color":
@@ -56,7 +56,7 @@ class ArpTemplateHelpPrinter {
 					case some:
 						node = Xml.parse('<${field.name} ${some}="${placeholder}">${placeholder}</${field.name}>').firstElement();
 				}
-			case ArpFieldType.ReferenceType(arpType):
+			case ArpFieldKind.ReferenceKind:
 				node = Xml.parse('<${field.name} ref="${placeholder}" />').firstElement();
 		}
 

@@ -2,6 +2,7 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
+import net.kaikoga.arp.domain.reflect.ArpFieldKind;
 import net.kaikoga.arp.writers.help.ArpHelpWriter;
 import haxe.macro.Context;
 import net.kaikoga.arp.domain.reflect.ArpDomainInfo;
@@ -19,10 +20,10 @@ class MacroArpObjectRegistry {
 	private function new() {
 		templateInfos = new Map();
 
-		registerBuiltin("Int");
-		registerBuiltin("Float");
-		registerBuiltin("Bool");
-		registerBuiltin("String");
+		registerPrimitive(ArpFieldKind.PrimInt, "Int");
+		registerPrimitive(ArpFieldKind.PrimFloat, "Float");
+		registerPrimitive(ArpFieldKind.PrimBool, "Bool");
+		registerPrimitive(ArpFieldKind.PrimString, "String");
 
 		domainInfo = new ArpDomainInfo();
 
@@ -32,13 +33,13 @@ class MacroArpObjectRegistry {
 		#end
 	}
 
-	private function registerBuiltin(name:String, fqn:String = null):Void {
+	private function registerPrimitive(fieldKind:ArpFieldKind, name:String, fqn:String = null):Void {
 		if (fqn == null) fqn = name;
-		templateInfos.set(fqn, new ArpTemplateInfo(new ArpType(name), name, fqn, null));
+		templateInfos.set(fqn, ArpTemplateInfo.primitive(fieldKind, new ArpType(name), fqn));
 	}
 
 	public static function registerStructInfo(name:String, fqn:String):Void {
-		instance.templateInfos.set(fqn, new ArpTemplateInfo(new ArpType(name), name, fqn, null));
+		instance.templateInfos.set(fqn, ArpTemplateInfo.struct(new ArpType(name), fqn));
 	}
 
 	public static function registerTemplateInfo(fqn:String, templateInfo:ArpTemplateInfo):Void {
