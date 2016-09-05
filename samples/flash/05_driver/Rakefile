@@ -1,0 +1,21 @@
+require "rake"
+require "rake/clean"
+
+task "test" do
+  sh "haxe swf.hxml; open bin/main.swf"
+end
+
+task "debug" do
+  sh "haxe swf.hxml; fdb bin/main.swf"
+end
+
+task "dump" do
+  sh "haxe swf.hxml -D dump=pretty ; fdb bin/main.swf"
+end
+
+CLEAN << "dump"
+CLOBBER << "bin"
+CLOBBER << "doc"
+
+task :default => "dump"
+
