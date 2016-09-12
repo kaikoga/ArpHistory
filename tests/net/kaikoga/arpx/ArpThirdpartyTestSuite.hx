@@ -1,0 +1,9 @@
+package net.kaikoga.arpx;
+
+import picotest.PicoTestRunner;
+
+class ArpThirdpartyTestSuite {
+	public static function addTo(r:PicoTestRunner) {
+		r.load(ArpThirdpartyComponentsCase);
+	}
+}
