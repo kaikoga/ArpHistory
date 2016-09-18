@@ -36,6 +36,7 @@ class ArpParams implements IPersistable {
 	private var map:Map<String, Dynamic>;
 
 	inline private function keys():Iterator<String> return this.map.keys();
+	inline public function exists(key:String):Bool return this.map.exists(key);
 	inline public function get(key:String):Dynamic return this.map.get(key);
 	inline public function set(key:String, value:Dynamic):Dynamic {
 		this.map.set(key, value);
