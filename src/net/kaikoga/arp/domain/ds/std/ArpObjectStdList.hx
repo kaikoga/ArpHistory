@@ -21,12 +21,12 @@ class ArpObjectStdList<T:IArpObject> extends List<T> {
 
 	override public function add(item:T) {
 		item.arpSlot().addReference();
-		super.add();
+		super.add(item);
 	}
 
 	override public function push(item:T) {
 		item.arpSlot().addReference();
-		super.push();
+		super.push(item);
 	}
 
 	override public function pop():Null<T> {
