@@ -51,12 +51,11 @@ class TileMapView {
 	private var gridHeight:Int;
 
 	public function new(tileMap:TileMap, chip:Chip, width:Int, height:Int) {
-		super();
 		if (tileMap == null || chip == null) {
 			throw "TileMapView.constructor(): Required argument is null.";
 		}
 		this.renderer = new TileMapRenderer(tileMap, chip);
-		this._bitmapData = new BitmapData(width, height);
+		this.bitmapData = new BitmapData(width, height);
 		this.width = width;
 		this.height = height;
 		this.gridWidth = Math.ceil(width / chip.chipWidth);
@@ -66,7 +65,7 @@ class TileMapView {
 	}
 
 	public function drawSelf(bitmapData:BitmapData, mergeAlpha:Bool = false):Void {
-		bitmapData.copyPixels(this._bitmapData, this._rect, this._point, null, null, mergeAlpha);
+		bitmapData.copyPixels(this.bitmapData, this._rect, this._point, null, null, mergeAlpha);
 	}
 
 	public function scrollTo(x:Int, y:Int, dirty:Bool = false):Void {
@@ -76,7 +75,7 @@ class TileMapView {
 		var offsetGridX:Int = Math.floor(x / chipWidth);
 		var offsetGridY:Int = Math.floor(y / chipHeight);
 		if (dirty) {
-			this.renderer.copyArea(this._bitmapData, offsetGridX, offsetGridY, this.gridWidth + 1, this.gridHeight + 1, -x, -y);
+			this.renderer.copyArea(this.bitmapData, offsetGridX, offsetGridY, this.gridWidth + 1, this.gridHeight + 1, -x, -y);
 		}
 		else {
 			var dx:Int = this._scrollX - x;
@@ -87,14 +86,14 @@ class TileMapView {
 				var cleanGridRight:Int = offsetGridX + this.gridWidth;
 				var dirtyGridWidth:Int = Math.ceil(Math.abs(dx / chipWidth)) + 1;
 				var dirtyGridLeft:Int = ((dx < 0)) ? cleanGridRight - dirtyGridWidth + 1 : cleanGridLeft;
-				this.renderer.copyArea(this._bitmapData, dirtyGridLeft, offsetGridY, dirtyGridWidth, this.gridHeight + 1, -x, -y);
+				this.renderer.copyArea(this.bitmapData, dirtyGridLeft, offsetGridY, dirtyGridWidth, this.gridHeight + 1, -x, -y);
 			}
 			if (dy != 0) {
 				var cleanGridTop:Int = offsetGridY;
 				var cleanGridBottom:Int = offsetGridY + this.gridHeight;
 				var dirtyGridHeight:Int = Math.ceil(Math.abs(dy / chipHeight)) + 1;
 				var dirtyGridTop:Int = ((dy < 0)) ? cleanGridBottom - dirtyGridHeight + 1 : cleanGridTop;
-				this.renderer.copyArea(this._bitmapData, offsetGridX, dirtyGridTop, this.gridWidth + 1, dirtyGridHeight, -x, -y);
+				this.renderer.copyArea(this.bitmapData, offsetGridX, dirtyGridTop, this.gridWidth + 1, dirtyGridHeight, -x, -y);
 			}
 		}
 		this._scrollX = x;

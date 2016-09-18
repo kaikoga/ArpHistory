@@ -17,13 +17,15 @@ class CsvTileMap extends ArrayTileMap {
 	}
 
 	override private function heatUp():Bool {
-		if (!this.map) {
+		if (this.map == null) {
 			this.map = [];
-			for (row in ~/\s*(?:\r|\n|\r\n)+\s*/g.split(this.data || "")) {
-				if (row != "") {
-					var rowData:Array<Int> = row.split(~/\s*,\s*/g.map(arrayContentToInt));
-					this.map.push(rowData);
-					if (this.width < rowData.length) this.width = rowData.length;
+			if (this.data != null) {
+				for (row in ~/\s*(?:\r|\n|\r\n)+\s*/g.split(this.data)) {
+					if (row != "") {
+						var rowData:Array<Int> = ~/\s*,\s*/g.split(row).map(arrayContentToInt);
+						this.map.push(rowData);
+						if (this.width < rowData.length) this.width = rowData.length;
+					}
 				}
 			}
 		}

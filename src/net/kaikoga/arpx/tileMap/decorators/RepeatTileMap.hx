@@ -3,6 +3,7 @@ package net.kaikoga.arpx.tileMap.decorators;
 @:build(net.kaikoga.arp.ArpDomainMacros.buildObject("tileMap", "repeat"))
 class RepeatTileMap extends TileMap {
 
+	@:arpBarrier @:arpField public var tileMap:TileMap;
 	@:arpField public var repeatX:Bool;
 	@:arpField public var repeatY:Bool;
 
