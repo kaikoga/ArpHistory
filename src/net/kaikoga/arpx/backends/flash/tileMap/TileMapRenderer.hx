@@ -14,7 +14,6 @@ class TileMapRenderer {
 	public var tileMap:TileMap;
 
 	public function new(tileMap:TileMap, chip:Chip) {
-		super();
 		this.tileMap = tileMap;
 		this.chip = chip;
 	}

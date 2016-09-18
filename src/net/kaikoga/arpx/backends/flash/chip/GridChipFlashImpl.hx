@@ -128,7 +128,7 @@ class GridChipFlashImpl implements IChipFlashImpl {
 		var face:String = (params != null) ? params.get("face") : null;
 		var dir:ArpDirection = (params != null) ? cast (params.get("dir"), ArpDirection) : null;
 		var index:Int;
-		if (params.get("index") != null) {
+		if (params.exists("index")) {
 			index = params.get("index");
 		} else if (face != null) {
 			if (this.indexesByFaces.exists(face)) {
@@ -148,10 +148,15 @@ class GridChipFlashImpl implements IChipFlashImpl {
 		}
 		var pt:Point = transform.asPoint();
 		if (pt != null) {
-			bitmapData.copyPixels(this.sourceBitmap, this.bounds[index], pt, null, null, this.chip.texture.hasAlpha);
+			var bounds:Rectangle = this.bounds[index];
+			if (bounds != null) {
+				bitmapData.copyPixels(this.sourceBitmap, bounds, pt, null, null, this.chip.texture.hasAlpha);
+			}
 		} else {
 			var bitmap:BitmapData = this.getTrimmedBitmap(index);
-			bitmapData.draw(bitmap, transform.toMatrix(), transform.colorTransform, transform.blendMode);
+			if (bitmap != null) {
+				bitmapData.draw(bitmap, transform.toMatrix(), transform.colorTransform, transform.blendMode);
+			}
 		}
 
 	}
