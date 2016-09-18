@@ -5,21 +5,17 @@ import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.persistable.IPersistable;
 
-/**
- * ...
- * @author kaikoga
- */
 class PersistableOmap<V:IMappedPersistable> extends OmapDecorator<String, V> implements IPersistable {
 
 	private var proto:V;
 
 	public function new(omap:IOmap<String, V>, proto:V) {
-		super();
+		super(omap);
 		this.proto = proto;
 	}
 
 	public function readSelf(input:IPersistInput):Void {
-		PersistableOmapTool.readIntOmap(this, input, proto);
+		PersistableOmapTool.readPersistableOmap(this, input, proto);
 	}
 
 	public function writeSelf(output:IPersistOutput):Void {

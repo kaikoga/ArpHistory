@@ -5,10 +5,6 @@ import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.persistable.IPersistable;
 
-/**
- * ...
- * @author kaikoga
- */
 class PersistableStringOmap extends OmapDecorator<String, String> implements IPersistable {
 
 	public function new(omap:IOmap<String, String>) {
