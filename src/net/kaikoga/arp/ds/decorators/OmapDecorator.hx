@@ -19,7 +19,7 @@ class OmapDecorator<K, V> implements IOmap<K, V> {
 	public function iterator():Iterator<V> return this.omap.iterator();
 	public function toString():String return this.omap.toString();
 	public function get(k:K):Null<V> return this.omap.get(k);
-	public function hasKey(key:K):Bool return this.omap.hasKey(k);
+	public function hasKey(k:K):Bool return this.omap.hasKey(k);
 	public function keys():Iterator<K> return this.omap.keys();
 	public var length(get, null):Int;
 	public function get_length():Int return this.omap.length;

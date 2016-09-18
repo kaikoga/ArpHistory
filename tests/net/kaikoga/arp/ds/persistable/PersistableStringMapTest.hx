@@ -1,4 +1,4 @@
-﻿package net.kaikoga.arp.collections.persistable;
+﻿package net.kaikoga.arp.ds.persistable;
 
 import net.kaikoga.arp.nanotest.ArpSupportTestCase;
 import flash.utils.ByteArray;

@@ -18,7 +18,7 @@ class ListDecorator<V> implements IList<V> {
 	public function toString():String return this.list.toString();
 	public var length(get, null):Int;
 	public function get_length():Int return this.list.length;
-	public function first():Null<V> return ths.list.first();
+	public function first():Null<V> return this.list.first();
 	public function last():Null<V> return this.list.last();
 	public function getAt(index:Int):Null<V> return this.list.getAt(index);
 
