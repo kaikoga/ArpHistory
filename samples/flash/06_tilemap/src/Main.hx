@@ -1,5 +1,7 @@
 package;
 
+import net.kaikoga.arpx.tileMap.StringTileMap;
+import net.kaikoga.arpx.mortal.TileMapMortal;
 import net.kaikoga.arpx.external.FileExternal;
 import flash.ui.Keyboard;
 import net.kaikoga.arpx.input.KeyInput;
@@ -10,7 +12,6 @@ import net.kaikoga.arpx.motionFrame.MotionFrame;
 import net.kaikoga.arpx.nextMotion.NextMotion;
 import net.kaikoga.arpx.motion.Motion;
 import net.kaikoga.arpx.motionSet.MotionSet;
-import net.kaikoga.arpx.mortal.Mortal;
 import net.kaikoga.arpx.logger.SocketClientLogger;
 import net.kaikoga.arpx.socketClient.TcpCachedSocketClient;
 import net.kaikoga.arpx.debugger.SocketClientDebugger;
@@ -49,7 +50,9 @@ class Main extends Sprite {
 		this.domain.addGenerator(new ArpObjectGenerator(FileTexture));
 		this.domain.addGenerator(new ArpObjectGenerator(GridChip));
 		this.domain.addGenerator(new ArpObjectGenerator(FaceList));
+		this.domain.addGenerator(new ArpObjectGenerator(StringTileMap));
 		this.domain.addGenerator(new ArpObjectGenerator(ChipMortal));
+		this.domain.addGenerator(new ArpObjectGenerator(TileMapMortal));
 		this.domain.addGenerator(new ArpObjectGenerator(InputLinearDriver));
 		this.domain.addGenerator(new ArpObjectGenerator(MotionDriver));
 		this.domain.addGenerator(new ArpObjectGenerator(MotionSet));

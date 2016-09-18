@@ -1,7 +1,8 @@
 <data>
 	<input class="key" name="input" />
+	<faceList name="fl">0,1,2,3,4,5,6,7,a,b,c,d,e,f,g,h</faceList>
 	<chip name="gridChip" class="grid" chipWidth="32" chipHeight="32" baseX="16" baseY="16" dirs="4">
-		<faceList name="fl">0,1,2,3,4,5,6,7</faceList>
+		<faceList ref="fl" />
 		<texture class="file">
 			<file class="resource" src="a" />
 		</texture>
@@ -35,6 +36,15 @@
 	<hitFrame class="cuboid" name="hit" hitCuboid="0,0,0,8,8,8" hitType="solid" />
 
 	<field name="root" heat="warm">
+		<mortal name="tileMap" class="tileMap">
+			<chip ref="gridChip" />
+			<tileMap class="string" faceList="fl">
+				01234567
+				23456701
+				abcdefgh
+				cdefgha_
+			</tileMap>
+		</mortal>
 		<mortal name="mortal" class="chip" position="80,32" params="6">
 			<chip ref="gridChip" />
 			<driver ref="inputLinear" />
