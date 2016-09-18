@@ -1,9 +1,12 @@
 package net.kaikoga.arp.writers;
 
+import haxe.io.BytesBuffer;
+
+#if sys
 import sys.FileSystem;
 import sys.io.FileOutput;
 import sys.io.File;
-import haxe.io.BytesBuffer;
+#end
 
 class ArpWriterContext {
 
@@ -28,13 +31,17 @@ class ArpWriterContext {
 	}
 
 	public function writeAll(prefix:String = ""):Void {
+#if sys
 		for (dir in this.dirs) FileSystem.createDirectory(prefix + dir);
-		
+
 		for (name in this.contents.keys()) {
 			var out:FileOutput = File.write(prefix + name, true);
 			out.write(this.contents.get(name).getBytes());
 			out.close();
 		}
+#else
+		throw "ArpWriterContext.writeAll(): not supported";
+#end
 	}
 
 }
