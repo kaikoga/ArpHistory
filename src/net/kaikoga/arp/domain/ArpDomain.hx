@@ -1,5 +1,7 @@
 package net.kaikoga.arp.domain;
 
+import net.kaikoga.arp.data.DataGroup;
+import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.domain.core.ArpIdGenerator;
 import net.kaikoga.arp.events.IArpSignalIn;
 import net.kaikoga.arp.events.IArpSignalOut;
@@ -56,6 +58,8 @@ class ArpDomain {
 		this.prepareQueue = new PrepareQueue(this, this._rawTick);
 
 		this._rawTick.push(this.onRawTick);
+
+		this.addGenerator(new ArpObjectGenerator(DataGroup));
 	}
 
 	private function onRawTick(v:Float):Void {
@@ -108,26 +112,23 @@ class ArpDomain {
 		var type:ArpType = (lexicalType != null) ? lexicalType : new ArpType(seed.typeName());
 		var slot:ArpSlot<T>;
 		var name:String;
-		if (seed.typeName() == "data") {
-			// NOTE seed iterates through value, which we must ignore for data groups
-			for (child in seed) if (child.typeName() != "value") loadSeed(child, path, null);
-			slot = null;
-		} else if (seed.ref() != null) {
+		if (seed.ref() != null) {
 			slot = path.query(seed.ref(), type).slot();
 			name = seed.name();
 			if (name != null) path.query(name, type).setSlot(slot);
 		} else {
 			name = seed.name();
 			slot = if (name == null) allocSlot() else path.query(name, type).slot();
-			slot.addReference();
 			var gen:IArpGenerator<T> = this.reg.resolve(seed, type);
 			if (gen == null) throw 'generator not found for <$type>: template=${seed.template()}';
 			var arpObj:T = gen.alloc(seed);
-			slot.value = arpObj;
-			arpObj.arpInit(slot, seed);
-			switch (ArpHeat.fromName(seed.heat())) {
-				case ArpHeat.Cold:
-				case ArpHeat.Warming, ArpHeat.Warm: this.heatLater(slot);
+			var init = arpObj.arpInit(slot, seed);
+			if (init != null) {
+				slot.value = arpObj;
+				switch (ArpHeat.fromName(seed.heat())) {
+					case ArpHeat.Cold:
+					case ArpHeat.Warming, ArpHeat.Warm: this.heatLater(slot);
+				}
 			}
 		}
 		return slot;

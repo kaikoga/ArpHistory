@@ -24,7 +24,7 @@ class ArpDomainCase {
 		</data>
 		').firstElement();
 		seed = ArpSeed.fromXml(xml);
-		domain.loadSeed(seed, new ArpType("mock"));
+		domain.loadSeed(seed, new ArpType("data"));
 	}
 
 	@Ignore
