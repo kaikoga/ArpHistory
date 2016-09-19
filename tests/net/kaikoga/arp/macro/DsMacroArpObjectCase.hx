@@ -59,7 +59,7 @@ class DsMacroArpObjectCase {
 	public function testCreateEmpty():Void {
 		arpObj = domain.allocObject(MockDsMacroArpObject);
 
-		assertEquals(domain, arpObj.arpDomain());
+		assertEquals(domain, arpObj.arpDomain);
 		assertEquals(new ArpType("mock"), arpObj.arpType());
 	}
 
@@ -67,7 +67,7 @@ class DsMacroArpObjectCase {
 		slot = domain.loadSeed(seed, new ArpType("mock"));
 		arpObj = slot.value;
 
-		assertEquals(domain, arpObj.arpDomain());
+		assertEquals(domain, arpObj.arpDomain);
 		assertEquals(new ArpType("mock"), arpObj.arpType());
 		assertEquals(slot, arpObj.arpSlot());
 
@@ -105,7 +105,7 @@ class DsMacroArpObjectCase {
 		matcher.addMatcher(matchArpDs);
 		matcher.withStandard();
 
-		assertEquals(original.arpDomain(), clone.arpDomain());
+		assertEquals(original.arpDomain, clone.arpDomain);
 		assertEquals(original.arpType(), clone.arpType());
 		assertNotEquals(original.arpSlot(), clone.arpSlot());
 

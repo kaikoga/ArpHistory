@@ -67,7 +67,8 @@ class MacroArpObjectStub {
 		var selfComplexType = this.genSelfComplexType();
 		return (macro class Generated {
 			@:noDoc @:noCompletion private var _arpDomain:net.kaikoga.arp.domain.ArpDomain;
-			public function arpDomain():net.kaikoga.arp.domain.ArpDomain {
+			public var arpDomain(get, never):net.kaikoga.arp.domain.ArpDomain;
+			@:noDoc @:noCompletion private function get_arpDomain():net.kaikoga.arp.domain.ArpDomain {
 				#if arp_debug
 				if (_arpDomain == null) throw("Warning: access to inactive or disposed ArpObject detected");
 				#end

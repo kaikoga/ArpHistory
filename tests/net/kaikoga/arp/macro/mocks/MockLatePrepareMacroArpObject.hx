@@ -17,7 +17,7 @@ class MockLatePrepareMacroArpObject implements IArpObject {
 	public function heatUp():Bool {
 		if (this.volatileInt == 1) return true;
 		if (!this.warming) {
-			this.arpDomain().waitFor(this);
+			this.arpDomain.waitFor(this);
 			this.warming = true;
 			createCallback(
 				function():Void return,
@@ -25,7 +25,7 @@ class MockLatePrepareMacroArpObject implements IArpObject {
 				function():Void {
 					this.warming = false;
 					this.volatileInt = 1;
-					this.arpDomain().notifyFor(this);
+					this.arpDomain.notifyFor(this);
 				}
 			);
 		}

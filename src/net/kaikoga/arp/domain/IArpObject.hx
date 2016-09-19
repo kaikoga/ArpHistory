@@ -7,7 +7,7 @@ import net.kaikoga.arp.domain.core.ArpType;
 
 interface IArpObject extends IPersistable {
 
-	function arpDomain():ArpDomain;
+	var arpDomain(get, never):ArpDomain;
 	function arpType():ArpType;
 	function arpTypeInfo():ArpTypeInfo;
 	function arpSlot():ArpUntypedSlot;

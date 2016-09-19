@@ -29,7 +29,7 @@ class MockColumnArpObjectCase {
 		arpObj = new MockColumnArpObject();
 		arpObj.arpInit(slot, seed);
 
-		assertEquals(domain, arpObj.arpDomain());
+		assertEquals(domain, arpObj.arpDomain);
 		assertEquals(new ArpType("mock"), arpObj.arpType());
 		assertEquals(slot, arpObj.arpSlot());
 
@@ -46,7 +46,7 @@ class MockColumnArpObjectCase {
 	public function testCreateEmpty():Void {
 		arpObj = domain.allocObject(MockColumnArpObject);
 
-		assertEquals(domain, arpObj.arpDomain());
+		assertEquals(domain, arpObj.arpDomain);
 		assertEquals(new ArpType("mock"), arpObj.arpType());
 
 		assertEquals(arpObj.intField, 0);
@@ -68,7 +68,7 @@ class MockColumnArpObjectCase {
 	}
 
 	private function checkIsClone(original:MockColumnArpObject, clone:MockColumnArpObject):Void {
-		assertEquals(original.arpDomain(), clone.arpDomain());
+		assertEquals(original.arpDomain, clone.arpDomain);
 		assertEquals(original.arpType(), clone.arpType());
 		assertNotEquals(original.arpSlot(), clone.arpSlot());
 
