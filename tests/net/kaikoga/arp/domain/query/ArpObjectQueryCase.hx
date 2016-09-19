@@ -11,12 +11,12 @@ class ArpObjectQueryCase {
 	private var dir:ArpDirectory;
 	private var arpObject:IArpObject;
 	private var arpType:ArpType;
-	
+
 	public function setup():Void {
 		domain = new ArpDomain();
 		dir = domain.root.trueChild("path").trueChild("to").trueChild("dir");
 		arpObject = new MockArpObject();
-		arpType = arpObject.arpType();
+		arpType = arpObject.arpType;
 		dir.addArpObject(arpObject);
 	}
 

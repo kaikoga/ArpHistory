@@ -69,7 +69,7 @@ class ArpDomainDump {
 		}
 		if (dir == this.domain.root) {
 			for (child in this.domain.slots) {
-				if (child.value != null && !typeFilter(child.value.arpType())) continue;
+				if (child.value != null && !typeFilter(child.value.arpType)) continue;
 				if (!visitedSlotIds.exists(child.sid.toString())) {
 					result.children.push(ArpDump.ofSlot(child, '</>'));
 				}

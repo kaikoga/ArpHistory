@@ -43,13 +43,13 @@ class ArpDirectory {
 	}
 
 	public function addArpObject(value:IArpObject):Void {
-		this.getOrCreateSlot(value.arpType()).value = value;
+		this.getOrCreateSlot(value.arpType).value = value;
 	}
 
 	public function linkTo(dir:ArpDirectory):Void {
 		this.linkDir = dir;
 	}
-	
+
 	public function child(name:String):ArpDirectory {
 		return if (this.linkDir != null) this.linkDir.child(name) else this.trueChild(name);
 	}

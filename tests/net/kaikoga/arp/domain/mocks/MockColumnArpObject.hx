@@ -28,7 +28,8 @@ class MockColumnArpObject implements IArpObject {
 
 	public static var _arpTypeInfo(default, never):ArpTypeInfo = new ArpTypeInfo("column", new ArpType("mock"));
 	public function arpTypeInfo():ArpTypeInfo return _arpTypeInfo;
-	public function arpType():ArpType return _arpTypeInfo.arpType;
+	public var arpType(get, never):ArpType;
+	private function get_arpType():ArpType return _arpTypeInfo.arpType;
 
 	private var _arpSlot:ArpSlot<MockColumnArpObject>;
 	public function arpSlot():ArpSlot<MockColumnArpObject> return this._arpSlot;

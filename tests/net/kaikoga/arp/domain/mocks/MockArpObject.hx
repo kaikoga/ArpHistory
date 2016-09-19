@@ -29,7 +29,8 @@ class MockArpObject implements IArpObject {
 
 	public static var _arpTypeInfo(default, never):ArpTypeInfo = new ArpTypeInfo("mock", new ArpType("mock"));
 	public function arpTypeInfo():ArpTypeInfo return _arpTypeInfo;
-	public function arpType():ArpType return _arpTypeInfo.arpType;
+	public var arpType(get, never):ArpType;
+	private function get_arpType():ArpType return _arpTypeInfo.arpType;
 
 	private var _arpSlot:ArpSlot<MockArpObject>;
 	public function arpSlot():ArpSlot<MockArpObject> return this._arpSlot;

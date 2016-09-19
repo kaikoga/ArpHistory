@@ -59,7 +59,7 @@ class StdDsMacroArpObjectCase {
 		arpObj = domain.allocObject(MockStdDsMacroArpObject);
 
 		assertEquals(domain, arpObj.arpDomain);
-		assertEquals(new ArpType("mock"), arpObj.arpType());
+		assertEquals(new ArpType("mock"), arpObj.arpType);
 	}
 
 	public function testLoadSeed():Void {
@@ -67,7 +67,7 @@ class StdDsMacroArpObjectCase {
 		arpObj = slot.value;
 
 		assertEquals(domain, arpObj.arpDomain);
-		assertEquals(new ArpType("mock"), arpObj.arpType());
+		assertEquals(new ArpType("mock"), arpObj.arpType);
 		assertEquals(slot, arpObj.arpSlot());
 
 		assertMatch([112, 134], arpObj.intStdArray);
@@ -92,7 +92,7 @@ class StdDsMacroArpObjectCase {
 
 	private function checkIsClone(original:MockStdDsMacroArpObject, clone:MockStdDsMacroArpObject):Void {
 		assertEquals(original.arpDomain, clone.arpDomain);
-		assertEquals(original.arpType(), clone.arpType());
+		assertEquals(original.arpType, clone.arpType);
 		assertNotEquals(original.arpSlot(), clone.arpSlot());
 
 		assertMatch(original.intStdArray, clone.intStdArray);
