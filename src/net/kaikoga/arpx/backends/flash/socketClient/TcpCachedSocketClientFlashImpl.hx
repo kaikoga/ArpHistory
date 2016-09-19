@@ -55,12 +55,12 @@ class TcpCachedSocketClientFlashImpl implements ISocketClientImpl {
 		this.socket.addEventListener(IOErrorEvent.IO_ERROR, this.onSocketIoError);
 		this.socket.addEventListener(ProgressEvent.SOCKET_DATA, this.onSocketData);
 		this.socket.connect(host, port);
-		// this.socketClient.arpDomain().waitFor(this.socketClient);
+		// this.socketClient.arpDomain.waitFor(this.socketClient);
 		return true;
 	}
 
 	private function onSocketConnect(event:Event):Void {
-		// this.socketClient.arpDomain().notifyFor(this.socketClient);
+		// this.socketClient.arpDomain.notifyFor(this.socketClient);
 		this.input = new DataInputWrapper(this.socket);
 		this.output = new DataOutputWrapper(this.socket);
 		this.input.bigEndian = true;
@@ -68,7 +68,7 @@ class TcpCachedSocketClientFlashImpl implements ISocketClientImpl {
 	}
 
 	private function onSocketIoError(event:IOErrorEvent):Void {
-		this.socketClient.arpDomain().notifyFor(this.socketClient);
+		this.socketClient.arpDomain.notifyFor(this.socketClient);
 		this.socket = null;
 	}
 

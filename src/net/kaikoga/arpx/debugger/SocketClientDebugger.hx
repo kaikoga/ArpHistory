@@ -43,14 +43,14 @@ class SocketClientDebugger implements IArpObject {
 				case "types":
 					var typesResult:DebuggerTypesResult = {
 						command: "types",
-						arpTypes: this.arpDomain().allArpTypes.map(function(arpType:ArpType):String return arpType.toString())
+						arpTypes: this.arpDomain.allArpTypes.map(function(arpType:ArpType):String return arpType.toString())
 					};
 					result = typesResult;
 				case "dir":
 					var arpType:ArpType = new ArpType(command.arpType);
 					var typeFilter:ArpType->Bool = null;
 					if (arpType != "*") typeFilter = function(value:ArpType):Bool return value == arpType;
-					var dump:ArpDumpAnon = ArpDomainDump.anonPrinter.format(new ArpDomainDump(this.arpDomain(), typeFilter).dumpSlotStatusByName());
+					var dump:ArpDumpAnon = ArpDomainDump.anonPrinter.format(new ArpDomainDump(this.arpDomain, typeFilter).dumpSlotStatusByName());
 					var dirResult:DebuggerDirResult = {
 						command: "dir",
 						arpType: arpType.toString(),
@@ -61,7 +61,7 @@ class SocketClientDebugger implements IArpObject {
 					var arpSid:ArpSid = new ArpSid(command.arpSid);
 					var object:Dynamic = null;
 					var arpTemplateName:String = null;
-					var slot:ArpUntypedSlot = this.arpDomain().getSlot(arpSid);
+					var slot:ArpUntypedSlot = this.arpDomain.getSlot(arpSid);
 					var value:IPersistable = try cast(slot.value, IPersistable) catch (e:Dynamic) null;
 					if (value != null) {
 						var output:AnonPersistOutput = new AnonPersistOutput(null, -1);

@@ -17,7 +17,7 @@ class ConsoleFlashImpl implements IConsoleFlashImpl {
 
 	public function display(bitmapData:BitmapData):Void {
 		var workPt:APoint = _workPt;
-		//throw this.console.arpDomain().dumpEntries();
+		//throw this.console.arpDomain.dumpEntries();
 		for (camera in this.console.cameras) {
 			var pos:ArpPosition = camera.position;
 			workPt.x = -pos.x;

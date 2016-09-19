@@ -107,7 +107,7 @@ class GridChipFlashImpl implements IChipFlashImpl {
 					result.copyPixels(this.sourceBitmap, bound, nullPoint);
 					this.trimmedBitmaps.set(index, result);
 				} else {
-					this.chip.arpDomain().log("gridchip", 'GridChip.getTrimmedBitmap(): Chip index out of range: ${this}:$index');
+					this.chip.arpDomain.log("gridchip", 'GridChip.getTrimmedBitmap(): Chip index out of range: ${this}:$index');
 				}
 			}
 			return result;
@@ -120,8 +120,8 @@ class GridChipFlashImpl implements IChipFlashImpl {
 
 	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:ArpParams = null):Void {
 		if (this.chip.arpSlot().heat < ArpHeat.Warm) {
-			this.chip.arpDomain().log("gridchip", 'GridChip.copyChip(): Chip not warm: ${this}:$params');
-			this.chip.arpDomain().heatLater(this.chip.arpSlot());
+			this.chip.arpDomain.log("gridchip", 'GridChip.copyChip(): Chip not warm: ${this}:$params');
+			this.chip.arpDomain.heatLater(this.chip.arpSlot());
 			return;
 		}
 
@@ -135,7 +135,7 @@ class GridChipFlashImpl implements IChipFlashImpl {
 				index = this.indexesByFaces[face];
 			} else {
 				index = 0;
-				this.chip.arpDomain().log("gridchip", 'GridChip.copyChip(): Chip name not found in: ${this}:$params');
+				this.chip.arpDomain.log("gridchip", 'GridChip.copyChip(): Chip name not found in: ${this}:$params');
 			}
 			index += ((dir != null) ? dir.toIndex(this.chip.dirs) : 0);
 		} else {

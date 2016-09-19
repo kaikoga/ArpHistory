@@ -12,12 +12,12 @@ class Logger implements IArpObject {
 	}
 
 	@:arpHeatUp private function heatUp():Bool {
-		this.arpDomain().onLog.push(this.log);
+		this.arpDomain.onLog.push(this.log);
 		return true;
 	}
 
 	@:arpHeatDown private function heatDown():Bool {
-		this.arpDomain().onLog.remove(this.log);
+		this.arpDomain.onLog.remove(this.log);
 		return true;
 	}
 

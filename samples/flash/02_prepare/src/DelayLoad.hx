@@ -17,9 +17,9 @@ class DelayLoad implements IArpObject {
 	private function heatUp():Bool {
 		#if flash
 		if (this.heat == 0) {
-			this.arpDomain().waitFor(this);
+			this.arpDomain.waitFor(this);
 			Timer.delay(function():Void {
-				this.arpDomain().notifyFor(this);
+				this.arpDomain.notifyFor(this);
 				this.heat = 2;
 			}, this.delayMs);
 			this.heat = 1;

@@ -29,17 +29,17 @@ class ResourceTextureFlashImpl implements ITextureFlashImpl {
 			this.loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, this.onLoadError);
 			this.loader.loadBytes(bytes.getData());
 		}
-		this.texture.arpDomain().waitFor(this.texture);
+		this.texture.arpDomain.waitFor(this.texture);
 		return false;
 	}
 
 	private function onLoadError(event:IOErrorEvent):Void {
-		this.texture.arpDomain().notifyFor(this.texture);
+		this.texture.arpDomain.notifyFor(this.texture);
 	}
 
 	private function onLoadComplete(event:Event):Void {
 		this.value = cast(this.loader.content, Bitmap).bitmapData;
-		this.texture.arpDomain().notifyFor(this.texture);
+		this.texture.arpDomain.notifyFor(this.texture);
 	}
 
 	public function heatDown():Bool {

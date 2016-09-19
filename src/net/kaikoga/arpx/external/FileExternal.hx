@@ -33,7 +33,7 @@ class FileExternal extends External {
 		}
 		var bytes:Bytes = this.file.bytes();
 		if (bytes != null) {
-			var slot:ArpUntypedSlot = this.arpDomain().loadSeed(ArpSeed.fromXmlBytes(bytes));
+			var slot:ArpUntypedSlot = this.arpDomain.loadSeed(ArpSeed.fromXmlBytes(bytes));
 			this.loaded = true;
 		}
 	}

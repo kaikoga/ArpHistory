@@ -29,7 +29,7 @@ class AutomatonState implements IArpObject {
 	}
 
 	public function toAutomaton():Automaton {
-		var automaton:Automaton = this.arpDomain().addObject(new Automaton());
+		var automaton:Automaton = this.arpDomain.addObject(new Automaton());
 		automaton.enterState(this);
 		return automaton;
 	}

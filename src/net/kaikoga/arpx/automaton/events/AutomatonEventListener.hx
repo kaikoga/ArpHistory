@@ -23,22 +23,22 @@ class AutomatonEventListener {
 	}
 
 	private function onEnterState(event:AutomatonStateEvent):Void {
-		if (this.verbose) this.automaton.arpDomain().log("automaton", event.describe());
+		if (this.verbose) this.automaton.arpDomain.log("automaton", event.describe());
 		this._onEvent.dispatch(AutomatonEvents.EnterState(event));
 	}
 
 	private function onLeaveState(event:AutomatonStateEvent):Void {
-		if (this.verbose) this.automaton.arpDomain().log("automaton", event.describe());
+		if (this.verbose) this.automaton.arpDomain.log("automaton", event.describe());
 		this._onEvent.dispatch(AutomatonEvents.LeaveState(event));
 	}
 
 	private function onTransition(event:AutomatonTransitionEvent):Void {
-		if (this.verbose) this.automaton.arpDomain().log("automaton", event.describe());
+		if (this.verbose) this.automaton.arpDomain.log("automaton", event.describe());
 		this._onEvent.dispatch(AutomatonEvents.Transition(event));
 	}
 
 	private function onError(event:AutomatonErrorEvent):Void {
-		if (this.verbose) this.automaton.arpDomain().log("automaton", event.describe());
+		if (this.verbose) this.automaton.arpDomain.log("automaton", event.describe());
 		this._onEvent.dispatch(AutomatonEvents.Error(event));
 	}
 
