@@ -82,7 +82,8 @@ class MacroArpObjectStub {
 			@:noDoc @:noCompletion private function get_arpType():net.kaikoga.arp.domain.core.ArpType return _arpTypeInfo.arpType;
 
 			@:noDoc @:noCompletion private var _arpSlot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
-			public function arpSlot():net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot {
+			public var arpSlot(get, never):net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
+			@:noDoc @:noCompletion private function get_arpSlot():net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot {
 				#if arp_debug
 				if (_arpSlot == null) throw("Warning: access to inactive or disposed ArpObject detected");
 				#end
@@ -106,10 +107,10 @@ class MacroArpObjectStub {
 			public function arpHeatUp():Bool {
 				$b{ this.buildHeatUpBlock() }
 				if (this.arpSelfHeatUp()) {
-					this.arpSlot().heat = net.kaikoga.arp.domain.ArpHeat.Warm;
+					this.arpSlot.heat = net.kaikoga.arp.domain.ArpHeat.Warm;
 					return true;
 				} else {
-					this.arpSlot().heat = net.kaikoga.arp.domain.ArpHeat.Warming;
+					this.arpSlot.heat = net.kaikoga.arp.domain.ArpHeat.Warming;
 					return false;
 				}
 			}

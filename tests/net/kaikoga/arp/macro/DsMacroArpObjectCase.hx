@@ -69,7 +69,7 @@ class DsMacroArpObjectCase {
 
 		assertEquals(domain, arpObj.arpDomain);
 		assertEquals(new ArpType("mock"), arpObj.arpType);
-		assertEquals(slot, arpObj.arpSlot());
+		assertEquals(slot, arpObj.arpSlot);
 
 		assertMatch([100, 101], SetOp.toArray(arpObj.intSet));
 		assertMatch([200, 201], ListOp.toArray(arpObj.intList));
@@ -107,7 +107,7 @@ class DsMacroArpObjectCase {
 
 		assertEquals(original.arpDomain, clone.arpDomain);
 		assertEquals(original.arpType, clone.arpType);
-		assertNotEquals(original.arpSlot(), clone.arpSlot());
+		assertNotEquals(original.arpSlot, clone.arpSlot);
 
 		assertMatch(original.intSet, clone.intSet);
 		assertMatch(original.intList, clone.intList);

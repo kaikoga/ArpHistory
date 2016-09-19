@@ -32,7 +32,7 @@ class MockDerivedArpObjectCase {
 
 		assertEquals(domain, arpObj.arpDomain);
 		assertEquals(new ArpType("mock"), arpObj.arpType);
-		assertEquals(slot, arpObj.arpSlot());
+		assertEquals(slot, arpObj.arpSlot);
 
 		assertEquals(42, arpObj.intField);
 		assertEquals(168, arpObj.intField2);
@@ -77,7 +77,7 @@ class MockDerivedArpObjectCase {
 	private function checkIsClone(original:MockDerivedArpObject, clone:MockDerivedArpObject):Void {
 		assertEquals(original.arpDomain, clone.arpDomain);
 		assertEquals(original.arpType, clone.arpType);
-		assertNotEquals(original.arpSlot(), clone.arpSlot());
+		assertNotEquals(original.arpSlot, clone.arpSlot);
 
 		assertEquals(original.intField, clone.intField);
 		assertEquals(original.intField2, clone.intField2);

@@ -17,7 +17,7 @@ class MockColumnArpObject implements IArpObject {
 	public var refFieldSlot:ArpSlot<MockColumnArpObject>;
 	public var refField(get, set):MockColumnArpObject;
 	inline private function get_refField():MockColumnArpObject return refFieldSlot.value;
-	inline private function set_refField(value:MockColumnArpObject):MockColumnArpObject { refFieldSlot = value.arpSlot(); return value; }
+	inline private function set_refField(value:MockColumnArpObject):MockColumnArpObject { refFieldSlot = value.arpSlot; return value; }
 
 	public function new() {
 	}
@@ -33,7 +33,8 @@ class MockColumnArpObject implements IArpObject {
 	private function get_arpType():ArpType return _arpTypeInfo.arpType;
 
 	private var _arpSlot:ArpSlot<MockColumnArpObject>;
-	public function arpSlot():ArpSlot<MockColumnArpObject> return this._arpSlot;
+	public var arpSlot(get, never):ArpSlot<MockColumnArpObject>;
+	private function get_arpSlot():ArpSlot<MockColumnArpObject> return this._arpSlot;
 
 	public function arpInit(slot:ArpUntypedSlot, seed:ArpSeed = null):IArpObject {
 		this._arpDomain = slot.domain;

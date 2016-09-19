@@ -186,7 +186,7 @@ class ArpDomain {
 		return ArpDomainDump.printer.format(new ArpDomainDump(this, typeFilter).dumpSlotStatusByName());
 	}
 
-	public function waitFor(obj:IArpObject):Void this.prepareQueue.waitBySlot(obj.arpSlot());
+	public function waitFor(obj:IArpObject):Void this.prepareQueue.waitBySlot(obj.arpSlot);
 
-	public function notifyFor(obj:IArpObject):Void this.prepareQueue.notifyBySlot(obj.arpSlot());
+	public function notifyFor(obj:IArpObject):Void this.prepareQueue.notifyBySlot(obj.arpSlot);
 }

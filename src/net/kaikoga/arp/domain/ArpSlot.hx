@@ -36,13 +36,13 @@ abstract ArpSlot<T:IArpObject>(ArpUntypedSlot) from ArpUntypedSlot to ArpUntyped
 
 	@:noUsing
 	public static function of<T:IArpObject>(arpObj:T, domain:ArpDomain):ArpSlot<T> {
-		if (arpObj != null) return arpObj.arpSlot();
+		if (arpObj != null) return arpObj.arpSlot;
 		return domain.nullSlot;
 	}
 
 	@:noUsing
 	public static function get<T:IArpObject>(arpObj:T):ArpSlot<T> {
-		if (arpObj != null) return arpObj.arpSlot();
+		if (arpObj != null) return arpObj.arpSlot;
 		return null;
 	}
 }

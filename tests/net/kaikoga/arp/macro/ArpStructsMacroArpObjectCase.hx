@@ -57,7 +57,7 @@ class ArpStructsMacroArpObjectCase {
 
 		assertEquals(domain, arpObj.arpDomain);
 		assertEquals(new ArpType("mock"), arpObj.arpType);
-		assertEquals(slot, arpObj.arpSlot());
+		assertEquals(slot, arpObj.arpSlot);
 
 		assertMatch({color:0x7fff00ff}, arpObj.arpColorField.toHash());
 		assertMatch({dir:0x20000000}, arpObj.arpDirectionField.toHash());
@@ -70,7 +70,7 @@ class ArpStructsMacroArpObjectCase {
 	private function checkIsClone(original:MockStructMacroArpObject, clone:MockStructMacroArpObject):Void {
 		assertEquals(original.arpDomain, clone.arpDomain);
 		assertEquals(original.arpType, clone.arpType);
-		assertNotEquals(original.arpSlot(), clone.arpSlot());
+		assertNotEquals(original.arpSlot, clone.arpSlot);
 
 		assertMatch(original.arpColorField.toHash(), clone.arpColorField.toHash());
 		assertMatch(original.arpDirectionField.toHash(), clone.arpDirectionField.toHash());
