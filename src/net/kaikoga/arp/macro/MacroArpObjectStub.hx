@@ -76,7 +76,8 @@ class MacroArpObjectStub {
 			}
 
 			public static var _arpTypeInfo(default, never):net.kaikoga.arp.domain.ArpTypeInfo = new net.kaikoga.arp.domain.ArpTypeInfo($v{arpTemplateName}, new net.kaikoga.arp.domain.core.ArpType($v{arpTypeName}));
-			public function arpTypeInfo():net.kaikoga.arp.domain.ArpTypeInfo return _arpTypeInfo;
+			public var arpTypeInfo(get, never):net.kaikoga.arp.domain.ArpTypeInfo;
+			@:noDoc @:noCompletion private function get_arpTypeInfo():net.kaikoga.arp.domain.ArpTypeInfo return _arpTypeInfo;
 			public var arpType(get, never):net.kaikoga.arp.domain.core.ArpType;
 			@:noDoc @:noCompletion private function get_arpType():net.kaikoga.arp.domain.core.ArpType return _arpTypeInfo.arpType;
 
@@ -166,7 +167,7 @@ class MacroArpObjectStub {
 		var selfComplexType = this.genSelfComplexType();
 		return (macro class Generated {
 			public static var _arpTypeInfo(default, never):net.kaikoga.arp.domain.ArpTypeInfo = new net.kaikoga.arp.domain.ArpTypeInfo($v{arpTemplateName}, new net.kaikoga.arp.domain.core.ArpType($v{arpTypeName}));
-			override public function arpTypeInfo():net.kaikoga.arp.domain.ArpTypeInfo return _arpTypeInfo;
+			override private function get_arpTypeInfo():net.kaikoga.arp.domain.ArpTypeInfo return _arpTypeInfo;
 			@:noDoc @:noCompletion override private function get_arpType():net.kaikoga.arp.domain.core.ArpType return _arpTypeInfo.arpType;
 
 			override public function arpInit(slot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot, seed:net.kaikoga.arp.seed.ArpSeed = null):net.kaikoga.arp.domain.IArpObject {

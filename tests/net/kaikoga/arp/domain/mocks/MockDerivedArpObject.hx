@@ -21,7 +21,7 @@ class MockDerivedArpObject extends MockArpObject {
 	}
 
 	public static var _arpTypeInfo(default, never):ArpTypeInfo = new ArpTypeInfo("derived", new ArpType("mock"));
-	override public function arpTypeInfo():ArpTypeInfo return _arpTypeInfo;
+	override private function get_arpTypeInfo():ArpTypeInfo return _arpTypeInfo;
 	override private function get_arpType():ArpType return _arpTypeInfo.arpType;
 
 	override public function arpInit(slot:ArpUntypedSlot, seed:ArpSeed = null):IArpObject {

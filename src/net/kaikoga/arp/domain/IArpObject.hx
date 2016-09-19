@@ -9,7 +9,7 @@ interface IArpObject extends IPersistable {
 
 	var arpDomain(get, never):ArpDomain;
 	var arpType(get, never):ArpType;
-	function arpTypeInfo():ArpTypeInfo;
+	var arpTypeInfo(get, never):ArpTypeInfo;
 	function arpSlot():ArpUntypedSlot;
 	function arpInit(slot:ArpUntypedSlot, seed:ArpSeed = null):IArpObject;
 	function arpDispose():Void;
