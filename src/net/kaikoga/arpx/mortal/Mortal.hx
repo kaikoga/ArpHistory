@@ -96,7 +96,7 @@ class Mortal implements IArpObject
 	}
 
 	public function react(field:Field, source:Mortal, reactFrame:ReactFrame, delay:Float):Void {
-		var reactionName:String = source.arpSlot().sid + ArpDirectory.PATH_DELIMITER + reactFrame.arpSlot().sid;
+		var reactionName:String = source.arpSlot.sid + ArpDirectory.PATH_DELIMITER + reactFrame.arpSlot.sid;
 		if (delay != 0 && !reactFrame.hold && this.lastReactions.hasKey(reactionName)) {
 			this.lastReactions.addPair(reactionName, 1);
 			return;
@@ -110,7 +110,7 @@ class Mortal implements IArpObject
 	}
 
 	public function collide(field:Field, source:Mortal):Void {
-		var reactionName:String = source.arpSlot().sid.toString();
+		var reactionName:String = source.arpSlot.sid.toString();
 		if (this.lastReactions.hasKey(reactionName)) {
 			this.lastReactions.addPair(reactionName, 1);
 			return;

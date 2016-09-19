@@ -26,7 +26,7 @@ class AutomatonCase {
 		domain.addGenerator(new ArpObjectGenerator(AutomatonState));
 		domain.loadSeed(seed);
 		me = (domain.query("init", AutomatonState).value():AutomatonState).toAutomaton();
-		me.arpSlot().addReference();
+		me.arpSlot.addReference();
 	}
 
 	private static var DEFINITION:Xml = Xml.parse('<data>
