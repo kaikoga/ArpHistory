@@ -1,5 +1,6 @@
 ﻿package net.kaikoga.arpx.external;
 
+import net.kaikoga.arp.data.DataGroup;
 import haxe.io.Bytes;
 import net.kaikoga.arpx.file.File;
 import net.kaikoga.arp.seed.ArpSeed;
@@ -9,7 +10,8 @@ import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 class FileExternal extends External {
 
 	@:arpField("file") @:arpBarrier public var file:File;
-	private var loaded:Bool = false;
+
+	private var data:DataGroup;
 
 	public function new() {
 		super();
@@ -28,20 +30,20 @@ class FileExternal extends External {
 	}
 
 	override public function load(force:Bool = false):Void {
-		if (this.loaded && !force) {
+		if (this.data != null && !force) {
 			return;
 		}
 		var bytes:Bytes = this.file.bytes();
 		if (bytes != null) {
-			var slot:ArpUntypedSlot = this.arpDomain.loadSeed(ArpSeed.fromXmlBytes(bytes));
-			this.loaded = true;
+			this.data = this.arpDomain.addObject(new DataGroup());
+			this.data.add(this.arpDomain.loadSeed(ArpSeed.fromXmlBytes(bytes)));
 		}
 	}
 
 	override public function unload():Void {
-		if (this.loaded = true) {
-			// TODO release data
-			this.loaded = false;
+		if (this.data != null) {
+			this.data.arpSlot.delReference();
+			this.data = null;
 		}
 	}
 
