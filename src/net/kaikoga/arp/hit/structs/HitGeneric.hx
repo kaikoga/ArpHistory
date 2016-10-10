@@ -5,22 +5,22 @@ package net.kaikoga.arp.hit.structs;
 */
 class HitGeneric {
 
-	public var r:Float;
-	public var x:Float;
-	public var y:Float;
-	public var z:Float;
-	public var sizeX:Float;
-	public var normXx:Float;
-	public var normXy:Float;
-	public var normXz:Float;
-	public var sizeY:Float;
-	public var normYx:Float;
-	public var normYy:Float;
-	public var normYz:Float;
-	public var sizeZ:Float;
-	public var normZx:Float;
-	public var normZy:Float;
-	public var normZz:Float;
+	public var r:Float = 0;
+	public var x:Float = 0;
+	public var y:Float = 0;
+	public var z:Float = 0;
+	public var sizeX:Float = 0;
+	public var normXx:Float = 0;
+	public var normXy:Float = 0;
+	public var normXz:Float = 0;
+	public var sizeY:Float = 0;
+	public var normYx:Float = 0;
+	public var normYy:Float = 0;
+	public var normYz:Float = 0;
+	public var sizeZ:Float = 0;
+	public var normZx:Float = 0;
+	public var normZy:Float = 0;
+	public var normZz:Float = 0;
 
 	public function new() {
 	}

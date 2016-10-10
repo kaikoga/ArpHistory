@@ -5,10 +5,10 @@ package net.kaikoga.arp.hit.structs;
 */
 class HitSphere {
 
-	public var r:Float;
-	public var x:Float;
-	public var y:Float;
-	public var z:Float;
+	public var r:Float = 0;
+	public var x:Float = 0;
+	public var y:Float = 0;
+	public var z:Float = 0;
 
 	public function new() {
 	}
