@@ -77,6 +77,10 @@ class Field implements IArpObject {
 		return hitField.add(mortal.asHitType(hitType), life);
 	}
 
+	public function findHit(mortal:Mortal, hitType:String):HitGeneric {
+		return hitField.find(mortal.asHitType(hitType));
+	}
+
 	public function addAnchorHit(anchor:Anchor, life:Float):HitGeneric {
 		return anchorField.add(anchor, life);
 	}
@@ -91,6 +95,16 @@ class Field implements IArpObject {
 		this.hitField.tick();
 		this.anchorField.tick();
 		this.hitField.hitTest(function(a:HitMortal, b:HitMortal):Bool {
+			if (a.hitType != b.hitType) return false;
+			if (a.isComplex) {
+				if (b.isComplex) {
+					return false;
+				} else {
+					if (!a.mortal.complexHitTest(a.hit, b.hit)) return false;
+				}
+			} else if (b.isComplex) {
+				if (!b.mortal.complexHitTest(b.hit, a.hit)) return false;
+			}
 			a.mortal.collide(this, b.mortal);
 			b.mortal.collide(this, a.mortal);
 			return false;
@@ -100,13 +114,16 @@ class Field implements IArpObject {
 	public function hitRaw(hit:HitGeneric, hitType:String, callback:HitMortal->Bool):Void {
 		this.hitField.hitRaw(hit, function(other:HitMortal):Bool {
 			if (other.hitType != hitType) return false;
+			if (other.isComplex) {
+				if (!other.mortal.complexHitTest(other.hit, hit)) return false;
+			}
 			return callback(other);
 		});
 	}
 
 	public function mortalAt(self:Mortal, x:Float, y:Float, z:Float, hitType:String):Mortal {
 		var result:Mortal = null;
-		this.hitField.hitRaw(new HitGeneric().setCuboid(x, y, z, 0, 0, 0), function(other:HitMortal):Bool {
+		this.hitRaw(new HitGeneric().setCuboid(x, y, z, 0, 0, 0), hitType, function(other:HitMortal):Bool {
 			if (self != other.mortal) {
 				result = other.mortal;
 				return true;
@@ -118,7 +135,7 @@ class Field implements IArpObject {
 
 	public function mortalsAt(self:Mortal, x:Float, y:Float, z:Float, hitType:String):Array<Mortal> {
 		var result:Array<Mortal> = [];
-		this.hitField.hitRaw(new HitGeneric().setCuboid(x, y, z, 0, 0, 0), function(other:HitMortal):Bool {
+		this.hitRaw(new HitGeneric().setCuboid(x, y, z, 0, 0, 0), hitType, function(other:HitMortal):Bool {
 			if (self != other.mortal) {
 				result.push(other.mortal);
 			}
@@ -128,7 +145,7 @@ class Field implements IArpObject {
 	}
 
 	public function dispatchReactFrame(self:Mortal, reactFrame:ReactFrame, delay:Float):Void {
-		this.hitField.hitRaw(reactFrame.exportHitGeneric(self.position, new HitGeneric()), function(other:HitMortal):Bool {
+		this.hitRaw(reactFrame.exportHitGeneric(self.position, new HitGeneric()), reactFrame.hitType, function(other:HitMortal):Bool {
 			if (self != other.mortal) {
 				other.mortal.react(this, self, reactFrame, delay);
 			}

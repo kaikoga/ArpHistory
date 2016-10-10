@@ -43,7 +43,6 @@ class MotionFrame implements IArpObject {
 		pos.z += dZ;
 	}
 
-	@:access(net.kaikoga.arpx.field.Field.hitField)
 	public function updateMortalPosition(field:Field, mortal:Mortal, oldTime:Float, newTime:Float, dHitType:String):Void {
 		var factor:Float = newTime - oldTime;
 		var pos:ArpPosition = mortal.position;

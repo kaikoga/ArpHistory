@@ -1,12 +1,9 @@
 package net.kaikoga.arpx.tileMap;
 
-import net.kaikoga.arpx.faceList.FaceList;
-
 @:build(net.kaikoga.arp.ArpDomainMacros.buildObject("tileMap", "string"))
 class StringTileMap extends ArrayTileMap {
 
 	@:arpField("value") public var data:String;
-	@:arpBarrier @:arpField public var faceList:FaceList;
 
 	public function new() {
 		super();

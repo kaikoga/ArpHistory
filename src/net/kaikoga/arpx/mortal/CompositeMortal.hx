@@ -21,18 +21,20 @@ class CompositeMortal extends Mortal {
 
 	override private function createImpl():IMortalFlashImpl return new CompositeMortalFlashImpl(this);
 
-	public function new () {
+	public function new() {
 		super();
 	}
 
 	#else
 
 	@:arpWithoutBackend
-	public function new () {
+	public function new() {
 		super();
 	}
 
 	#end
+
+	override private function get_isComplex():Bool return true;
 
 	override public function tick(field:Field):Void {
 		super.tick(field);

@@ -58,9 +58,12 @@ class Mortal implements IArpObject
 
 	#end
 
+	private var isComplex(get, never):Bool;
+	private function get_isComplex():Bool return false;
+
 	public function asHitType(hitType:String):HitMortal {
 		if (hitMortals.exists(hitType)) return hitMortals.get(hitType);
-		var hitMortal:HitMortal = new HitMortal(this, hitType);
+		var hitMortal:HitMortal = new HitMortal(this, hitType, this.isComplex);
 		hitMortals.set(hitType, hitMortal);
 		return hitMortal;
 	}
@@ -136,8 +139,7 @@ class Mortal implements IArpObject
 			return;
 		}
 
-		var hitMortal:HitMortal = this.asHitType(dHitType);
-		var hit:HitGeneric = field.hitField.find(hitMortal);
+		var hit:HitGeneric = field.findHit(this, dHitType);
 		var p:Float;
 
 		p = this.position.x;
@@ -182,16 +184,22 @@ class Mortal implements IArpObject
 	public function stayWithHit(field:Field, dHitType:String):Void {
 		this.updateHitMortals(field, 2.0);
 	}
+
+	public function complexHitTest(self:HitGeneric, other:HitGeneric):Bool {
+		return true;
+	}
 }
 
 class HitMortal extends HitObject<HitGeneric> {
 
 	public var mortal:Mortal;
 	public var hitType:String;
+	public var isComplex:Bool;
 
-	public function new(mortal:Mortal, hitType:String) {
+	public function new(mortal:Mortal, hitType:String, isComplex:Bool) {
 		super();
 		this.mortal = mortal;
 		this.hitType = hitType;
+		this.isComplex = isComplex;
 	}
 }

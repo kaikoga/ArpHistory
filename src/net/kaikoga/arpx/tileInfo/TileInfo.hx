@@ -3,7 +3,7 @@ package net.kaikoga.arpx.tileInfo;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.structs.ArpRange;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("tileInfo", "tileInfo"))
+@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("tileInfo"))
 class TileInfo implements IArpObject {
 
 	@:arpField public var enterableRange:ArpRange;
@@ -11,7 +11,7 @@ class TileInfo implements IArpObject {
 	public function new() {
 	}
 
-	public function tileWeight(tileIndex:Int):Int {
+	public function tileZ(tileIndex:Int):Float {
 		if (tileIndex == 0) {
 			return 0;
 		}
