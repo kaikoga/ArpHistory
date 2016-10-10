@@ -20,4 +20,25 @@ class HitSphere {
 		this.z = z;
 		return this;
 	}
+
+	public function toString():String {
+		var result:String = "{";
+		var bitmap:Int = 0;
+		if (r != 0) bitmap |= 0x1;
+		if (x != 0) bitmap |= 0x2;
+		if (y != 0) bitmap |= 0x4;
+		if (z != 0) bitmap |= 0x8;
+		if (bitmap & 0xe != 0) {
+			if (bitmap & 0x8 == 0) {
+				result += '$x,$y';
+			} else {
+				result += '$x,$y,$z';
+			}
+		}
+		if (bitmap & 0x1 != 0) {
+			result += '}*{($r)';
+		}
+		result += "}";
+		return result;
+	}
 }
