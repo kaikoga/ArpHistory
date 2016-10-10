@@ -1,5 +1,6 @@
 package;
 
+import net.kaikoga.arpx.tileInfo.TileInfo;
 import net.kaikoga.arpx.tileMap.StringTileMap;
 import net.kaikoga.arpx.mortal.TileMapMortal;
 import net.kaikoga.arpx.external.FileExternal;
@@ -50,6 +51,7 @@ class Main extends Sprite {
 		this.domain.addGenerator(new ArpObjectGenerator(FileTexture));
 		this.domain.addGenerator(new ArpObjectGenerator(GridChip));
 		this.domain.addGenerator(new ArpObjectGenerator(FaceList));
+		this.domain.addGenerator(new ArpObjectGenerator(TileInfo));
 		this.domain.addGenerator(new ArpObjectGenerator(StringTileMap));
 		this.domain.addGenerator(new ArpObjectGenerator(ChipMortal));
 		this.domain.addGenerator(new ArpObjectGenerator(TileMapMortal));

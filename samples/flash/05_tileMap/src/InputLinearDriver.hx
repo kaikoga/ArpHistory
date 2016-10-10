@@ -9,6 +9,7 @@ import net.kaikoga.arpx.field.Field;
 class InputLinearDriver extends Driver {
 
 	@:arpField public var input:Input;
+	@:arpField public var speed:Float;
 
 	public function new() {
 		super();
@@ -16,8 +17,8 @@ class InputLinearDriver extends Driver {
 
 	override public function tick(field:Field, mortal:Mortal):Void {
 		input.tick(1.0);
-		mortal.moveDWithHit(field, input.axis("x").value, 0, 0, "solid");
-		mortal.moveDWithHit(field, 0, input.axis("y").value, 0, "solid");
+		mortal.moveDWithHit(field, input.axis("x").value * speed, 0, 0, "solid");
+		mortal.moveDWithHit(field, 0, input.axis("y").value * speed, 0, "solid");
 	}
 }
 

@@ -1,13 +1,14 @@
 <data>
 	<input class="key" name="input" />
 	<faceList name="fl">0,1,2,3,4,5,6,7,a,b,c,d,e,f,g,h</faceList>
+	<tileInfo name="ti" enterableRange="0..7" />
 	<chip name="gridChip" class="grid" chipWidth="32" chipHeight="32" baseX="16" baseY="16" dirs="4">
 		<faceList ref="fl" />
 		<texture class="file">
 			<file class="resource" src="a" />
 		</texture>
 	</chip>
-	<driver class="inputLinear" name="inputLinear" input="input" />
+	<driver class="inputLinear" name="inputLinear" input="input" speed="4" />
 	<driver class="motion" dHitType="solid" willReact="true" >
 		<motionSet initMotion="init">
 			<motion name="init" key="init" time="32" loopAction="loop">
@@ -34,18 +35,23 @@
 		</motionSet>
 	</driver>
 	<hitFrame class="cuboid" name="hit" hitCuboid="0,0,0,8,8,8" hitType="solid" />
+	<hitFrame class="cuboid" name="field" hitCuboid="0,0,0,9999,9999,9999" hitType="solid" />
 
 	<field name="root" heat="warm">
-		<mortal name="tileMap" class="tileMap">
+		<mortal name="tileMap" class="tileMap" hitFrame="field">
 			<chip ref="gridChip" />
-			<tileMap class="string" faceList="fl">
+			<tileMap class="string" faceList="fl" tileInfo="ti">
+				aaaaaaaa
+				a000000a
+				a000000a
+				a000000a
 				01234567
 				23456701
 				abcdefgh
 				cdefgha_
 			</tileMap>
 		</mortal>
-		<mortal name="mortal" class="chip" position="80,32" params="6">
+		<mortal name="mortal" class="chip" position="80,32" params="6" hitFrame="hit">
 			<chip ref="gridChip" />
 			<driver ref="inputLinear" />
 		</mortal>
