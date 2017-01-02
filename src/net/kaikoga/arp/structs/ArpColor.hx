@@ -4,6 +4,7 @@ import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.seed.ArpSeed;
+import net.kaikoga.arp.utils.ArpStringUtil;
 
 #if openfl
 import openfl.geom.ColorTransform;
@@ -49,8 +50,8 @@ class ArpColor implements IPersistable {
 	public function initWithString(definition:String):ArpColor {
 		if (definition == null) return this;
 		var array:Array<String> = definition.split("@");
-		var value:Int = ArpStructsUtil.parseHex(array[0].substring(1));
-		var alpha:Int = (array[1] != null) ? ArpStructsUtil.parseHex(array[1]) : 0xff;
+		var value:Int = ArpStringUtil.parseHex(array[0].substring(1));
+		var alpha:Int = (array[1] != null) ? ArpStringUtil.parseHex(array[1]) : 0xff;
 		this.value32 = (alpha << 24) | value;
 		return this;
 	}

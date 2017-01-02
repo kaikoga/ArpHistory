@@ -3,9 +3,9 @@ package net.kaikoga.arp.structs;
 import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.persistable.IPersistInput;
-import net.kaikoga.arp.structs.ArpStructsUtil;
 import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.structs.ArpDirection;
+import net.kaikoga.arp.utils.ArpStringUtil;
 
 @:forward(
 	keys,
@@ -73,7 +73,7 @@ class ArpParams implements IPersistable {
 				case "rewire":
 					this.set(key, new ArpParamRewire(value));
 				default:
-					if (ArpStructsUtil.isNumeric(value)) {
+					if (ArpStringUtil.isNumeric(value)) {
 						this.set(key, Std.parseFloat(value));
 					} else {
 						this.set(key, value);

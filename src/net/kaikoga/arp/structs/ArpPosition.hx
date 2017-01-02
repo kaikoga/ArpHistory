@@ -5,6 +5,7 @@ import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.structs.ArpDirection;
+import net.kaikoga.arp.utils.ArpStringUtil;
 
 /**
 	handled as mutable
@@ -30,9 +31,9 @@ class ArpPosition implements IPersistable {
 
 		for (child in seed) {
 			switch (child.typeName()) {
-				case "x": this.x = ArpStructsUtil.parseRichFloat(child.value(), seed.env().getUnit);
-				case "y": this.y = ArpStructsUtil.parseRichFloat(child.value(), seed.env().getUnit);
-				case "z": this.z = ArpStructsUtil.parseRichFloat(child.value(), seed.env().getUnit);
+				case "x": this.x = ArpStringUtil.parseRichFloat(child.value(), seed.env().getUnit);
+				case "y": this.y = ArpStringUtil.parseRichFloat(child.value(), seed.env().getUnit);
+				case "z": this.z = ArpStringUtil.parseRichFloat(child.value(), seed.env().getUnit);
 				case "dir": this.dir.initWithString(child.value());
 			}
 		}
@@ -42,10 +43,10 @@ class ArpPosition implements IPersistable {
 	public function initWithString(definition:String, getUnit:String->Float):ArpPosition {
 		if (definition == null) return this;
 		var array:Array<String> = definition.split(",");
-		this.x = ArpStructsUtil.parseRichFloat(array[0], getUnit);
-		this.y = ArpStructsUtil.parseRichFloat(array[1], getUnit);
-		this.z = ArpStructsUtil.parseRichFloat(array[2], getUnit);
-		this.dir.valueDegree = ArpStructsUtil.parseFloatDefault(array[3], 0.0);
+		this.x = ArpStringUtil.parseRichFloat(array[0], getUnit);
+		this.y = ArpStringUtil.parseRichFloat(array[1], getUnit);
+		this.z = ArpStringUtil.parseRichFloat(array[2], getUnit);
+		this.dir.valueDegree = ArpStringUtil.parseFloatDefault(array[3], 0.0);
 		return this;
 	}
 

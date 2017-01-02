@@ -1,5 +1,6 @@
 ﻿package net.kaikoga.arp.structs;
 
+import net.kaikoga.arp.utils.ArpStringUtil;
 import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.persistable.IPersistOutput;
@@ -132,7 +133,7 @@ class ArpDirection implements IPersistable {
 
 	public function initWithString(definition:String):ArpDirection {
 		if (definition == null) return this;
-		if (ArpStructsUtil.isNumeric(definition)) {
+		if (ArpStringUtil.isNumeric(definition)) {
 			this.valueDegree = Std.parseInt(definition);
 		} else if (VALS_BY_NAMES.exists(definition)){
 			this.value = VALS_BY_NAMES.get(definition);
