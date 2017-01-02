@@ -1,5 +1,6 @@
 package net.kaikoga.arp;
 
+import net.kaikoga.arp.utils.ArpStringUtilCase;
 import net.kaikoga.arp.seed.ArpSeedCase;
 import net.kaikoga.arp.ds.proxy.ProxyCaseUtilCase;
 import net.kaikoga.arp.ds.proxy.OmapSelfProxyCase;
@@ -34,6 +35,8 @@ class ArpSupportTestSuite {
 
 	public static function addTo(r:PicoTestRunner) {
 		r.load(ERegIteratorCase);
+
+		r.load(ArpStringUtilCase);
 
 		r.load(IntSetCase, setProvider());
 		r.load(IntListCase, listProvider());
