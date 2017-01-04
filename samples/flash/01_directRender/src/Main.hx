@@ -28,11 +28,11 @@ class Main extends Sprite {
 		domain.addGenerator(new ArpObjectGenerator(CompositeMortal));
 
 		domain.loadSeed(ArpSeed.fromXmlString(Resource.getString("arpdata")));
-		var rectChip:RectChip = domain.query("rectChip", new RectChip().arpType()).value();
+		var rectChip:RectChip = domain.query("rectChip", new RectChip().arpType).value();
 		rectChip.copyChip(bitmapData, new APoint(32, 32));
-		var mortal:ChipMortal = domain.query("chipMortal", new ChipMortal().arpType()).value();
+		var mortal:ChipMortal = domain.query("chipMortal", new ChipMortal().arpType).value();
 		mortal.copySelf(bitmapData, new APoint());
-		var mortal2:CompositeMortal = domain.query("compositeMortal", new CompositeMortal().arpType()).value();
+		var mortal2:CompositeMortal = domain.query("compositeMortal", new CompositeMortal().arpType).value();
 		mortal2.copySelf(bitmapData, new APoint());
 	}
 

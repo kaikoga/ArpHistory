@@ -1,0 +1,20 @@
+require "rake"
+require "rake/clean"
+
+FLASH_HXML = FileList.new("flash/*/swf.hxml")
+
+FLASH = FLASH_HXML.map do |flash_hxml|
+  dir = File.dirname(flash_hxml)
+  flash = flash_hxml.sub("swf.hxml", "bin/main.swf")
+  task flash => flash_hxml do
+    Dir.chdir(dir) do
+      sh "haxe #{File.basename(flash_hxml)}"
+    end
+  end
+  CLOBBER << File.join(dir, "bin")
+  flash
+end
+
+task "all" => FLASH
+
+task "default" => "all"
