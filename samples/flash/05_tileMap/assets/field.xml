@@ -2,7 +2,13 @@
 	<input class="key" name="input" />
 	<faceList name="fl">0,1,2,3,4,5,6,7,a,b,c,d,e,f,g,h</faceList>
 	<tileInfo name="ti" enterableRange="0..7" />
-	<chip name="gridChip" class="grid" chipWidth="32" chipHeight="32" baseX="16" baseY="16" dirs="4">
+	<chip name="obj.gridChip" class="grid" chipWidth="32" chipHeight="32" baseX="16" baseY="16" dirs="4">
+		<faceList ref="fl" />
+		<texture class="file">
+			<file class="resource" src="a" />
+		</texture>
+	</chip>
+	<chip name="bg.gridChip" class="grid" chipWidth="32" chipHeight="32" dirs="4">
 		<faceList ref="fl" />
 		<texture class="file">
 			<file class="resource" src="a" />
@@ -39,7 +45,7 @@
 
 	<field name="root" heat="warm">
 		<mortal name="tileMap" class="tileMap" hitFrame="field">
-			<chip ref="gridChip" />
+			<chip ref="bg.gridChip" />
 			<tileMap class="string" faceList="fl" tileInfo="ti">
 				aaaaaaaa
 				a000000a
@@ -52,7 +58,7 @@
 			</tileMap>
 		</mortal>
 		<mortal name="mortal" class="chip" position="80,32" params="6" hitFrame="hit">
-			<chip ref="gridChip" />
+			<chip ref="obj.gridChip" />
 			<driver ref="inputLinear" />
 		</mortal>
 	</field>
