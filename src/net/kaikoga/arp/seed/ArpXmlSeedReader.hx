@@ -62,11 +62,13 @@ class ArpXmlSeedReader {
 
 		for (node in xml) {
 			switch (node.nodeType) {
-				case XmlType.Element if (node.nodeName == "env"):
-					env.add(node.get("name"), node.get("value"));
 				case XmlType.Element:
-					if (children == null) children = [];
-					children.push(parseInternal(node, env));
+					if (node.nodeName == "env") {
+						env.add(node.get("name"), node.get("value"));
+					} else {
+						if (children == null) children = [];
+						children.push(parseInternal(node, env));
+					}
 				case XmlType.PCData, XmlType.CData:
 					if (value == null) value = "";
 					value += node.nodeValue;

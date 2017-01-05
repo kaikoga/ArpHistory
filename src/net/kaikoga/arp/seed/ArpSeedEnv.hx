@@ -1,14 +1,12 @@
 package net.kaikoga.arp.seed;
 
 import net.kaikoga.arp.utils.ArpStringUtil;
-import net.kaikoga.arp.ds.lambda.MapOp;
-import net.kaikoga.arp.ds.impl.StdMap;
 
-abstract ArpSeedEnv(StdMap<String, String>) {
+abstract ArpSeedEnv(ArpSeedEnvNode) {
 
-	inline public static function empty():ArpSeedEnv return new ArpSeedEnv(new StdMap());
+	inline public static function empty():ArpSeedEnv return new ArpSeedEnv(ArpSeedEnvNode.empty());
 
-	inline public function new(map:StdMap<String, String>) this = map;
+	inline private function new(impl:ArpSeedEnvNode) this = impl;
 
 	inline public function get(key:String):String {
 		return this.get(key);
@@ -19,7 +17,34 @@ abstract ArpSeedEnv(StdMap<String, String>) {
 	}
 
 	inline public function add(key:String, value:String):Void {
-		this = MapOp.copy(this, new StdMap<String, String>());
-		this.set(key, value);
+		this = new ArpSeedEnvNode(key, value, this);
+	}
+}
+
+private class ArpSeedEnvNode {
+
+	private var key:String;
+	private var value:String;
+	private var rest:ArpSeedEnvNode;
+	private var map:Map<String, String>;
+
+	inline public static function empty():ArpSeedEnvNode return new ArpSeedEnvNode(null, null, null);
+
+	public function new(key:String, value:String, rest:ArpSeedEnvNode) {
+		this.key = key;
+		this.value = value;
+		this.rest = rest;
+	}
+
+	public function get(key:String):String {
+		if (this.map == null) {
+			this.map = new Map<String, String>();
+			var n:ArpSeedEnvNode = this;
+			while (n.key != null) {
+				this.map.set(n.key, n.value);
+				n = n.rest;
+			}
+		}
+		return this.map.get(key);
 	}
 }
