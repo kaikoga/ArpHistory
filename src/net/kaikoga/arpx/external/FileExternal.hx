@@ -1,10 +1,12 @@
 ﻿package net.kaikoga.arpx.external;
 
+import net.kaikoga.arp.seed.ArpSeedEnv;
+import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
+import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.data.DataGroup;
 import haxe.io.Bytes;
 import net.kaikoga.arpx.file.File;
 import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 
 @:build(net.kaikoga.arp.ArpDomainMacros.buildObject("external", "file"))
 class FileExternal extends External {
@@ -12,9 +14,15 @@ class FileExternal extends External {
 	@:arpField("file") @:arpBarrier public var file:File;
 
 	private var data:DataGroup;
+	private var env:ArpSeedEnv;
 
 	public function new() {
 		super();
+	}
+
+	// NOTE hack to acquire ArpSeedEnv
+	override public function arpInit(slot:ArpUntypedSlot, seed:ArpSeed):IArpObject {
+		this.env = seed.env();
 	}
 
 	@:arpHeatUp
@@ -36,7 +44,7 @@ class FileExternal extends External {
 		var bytes:Bytes = this.file.bytes();
 		if (bytes != null) {
 			this.data = this.arpDomain.addObject(new DataGroup());
-			this.data.add(this.arpDomain.loadSeed(ArpSeed.fromXmlBytes(bytes)));
+			this.data.add(this.arpDomain.loadSeed(ArpSeed.fromXmlBytes(bytes, env)));
 		}
 	}
 
