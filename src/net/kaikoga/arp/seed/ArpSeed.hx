@@ -61,15 +61,15 @@ class ArpSeed {
 		return new ArpSeed(typeName, null, null, null, null, null, value, env, null);
 	}
 
-	inline public static function fromXmlBytes(bytes:Bytes):ArpSeed {
-		return new ArpXmlSeedReader().parseXmlBytes(bytes);
+	inline public static function fromXmlBytes(bytes:Bytes, env:ArpSeedEnv = null):ArpSeed {
+		return new ArpXmlSeedReader().parseXmlBytes(bytes, env);
 	}
 
-	inline public static function fromXmlString(xmlString:String):ArpSeed {
-		return new ArpXmlSeedReader().parseXmlString(xmlString);
+	inline public static function fromXmlString(xmlString:String, env:ArpSeedEnv = null):ArpSeed {
+		return new ArpXmlSeedReader().parseXmlString(xmlString, env);
 	}
 
-	public static function fromXml(xml:Xml):ArpSeed {
-		return new ArpXmlSeedReader().parse(xml);
+	public static function fromXml(xml:Xml, env:ArpSeedEnv = null):ArpSeed {
+		return new ArpXmlSeedReader().parse(xml, env);
 	}
 }

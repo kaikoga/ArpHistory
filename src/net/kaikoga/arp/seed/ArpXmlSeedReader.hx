@@ -8,16 +8,17 @@ class ArpXmlSeedReader {
 	inline public function new() {
 	}
 
-	inline public function parseXmlBytes(bytes:Bytes):ArpSeed {
-		return parseXmlString(bytes.toString());
+	inline public function parseXmlBytes(bytes:Bytes, env:ArpSeedEnv = null):ArpSeed {
+		return parseXmlString(bytes.toString(), env);
 	}
 
-	inline public function parseXmlString(xmlString:String):ArpSeed {
-		return parse(Xml.parse(xmlString));
+	inline public function parseXmlString(xmlString:String, env:ArpSeedEnv = null):ArpSeed {
+		return parse(Xml.parse(xmlString), env);
 	}
 
-	inline public function parse(xml:Xml):ArpSeed {
-		return parseInternal(xml, ArpSeedEnv.empty());
+	inline public function parse(xml:Xml, env:ArpSeedEnv = null):ArpSeed {
+		if (env == null) env = ArpSeedEnv.empty();
+		return parseInternal(xml, env);
 	}
 
 	private function parseInternal(xml:Xml, env:ArpSeedEnv):ArpSeed {
