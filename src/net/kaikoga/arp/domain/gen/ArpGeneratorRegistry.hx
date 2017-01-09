@@ -21,8 +21,10 @@ class ArpGeneratorRegistry {
 	}
 
 	public function resolve<T:IArpObject>(seed:ArpSeed, type:ArpType):IArpGenerator<T> {
+		var template = seed.template();
+		if (template == null) template = seed.env().get(type.toString());
 		for (gen in this.genMap.listFor(type)) {
-			if (gen.matchSeed(seed, type, seed.template())) return cast gen;
+			if (gen.matchSeed(seed, type, template)) return cast gen;
 		}
 		for (gen in this.defaultGenMap.listFor(type)) {
 			if (gen.matchSeed(seed, type, gen.template)) return cast gen;
