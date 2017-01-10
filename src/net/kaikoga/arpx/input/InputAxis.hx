@@ -29,7 +29,7 @@ class InputAxis {
 	}
 
 	public function tick(timeslice:Float):Void {
-		var newState:Bool = this.nextValue >= threshold;
+		var newState:Bool = this.nextValue >= threshold || this.nextValue <= -threshold;
 		if (this.state != newState) {
 			this.duration = 0;
 			this.state = newState;
