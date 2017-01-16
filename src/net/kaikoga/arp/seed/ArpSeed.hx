@@ -13,12 +13,12 @@ class ArpSeed {
 	private var _template:String;
 	private var _heat:String;
 	private var _key:String;
-	private var _value:Dynamic;
+	private var _value:String;
 	private var _env:ArpSeedEnv;
 	private var _children:Array<ArpSeed>;
 	private var _isSimple:Bool;
 
-	inline public function new(typeName:String, template:String, name:String, ref:String, heat:String, key:String, value:Dynamic, env:ArpSeedEnv, explicitChildren:Array<ArpSeed>) {
+	private function new(typeName:String, template:String, name:String, ref:String, heat:String, key:String, value:String, env:ArpSeedEnv, explicitChildren:Array<ArpSeed>) {
 		this._typeName = typeName;
 		this._template = template;
 		this._name = name;
@@ -44,13 +44,17 @@ class ArpSeed {
 	inline public function key(uniqId:Int):String {
 		return if (this._key != null) this._key else Std.string(AUTO_HEADER + uniqId);
 	}
-	inline public function value():Dynamic return this._value;
+	inline public function value():String return this._value;
 	inline public function env():ArpSeedEnv return this._env;
 	inline public function isSimple():Bool return this._isSimple;
 
 	public function iterator():Iterator<ArpSeed> {
 		if (this._children == null) this.createChildren([]);
 		return this._children.iterator();
+	}
+
+	inline public static function complex(typeName:String, template:String, name:String, ref:String, heat:String, key:String, value:String, env:ArpSeedEnv, explicitChildren:Array<ArpSeed>):ArpSeed {
+		return new ArpSeed(typeName, template, name, ref, heat, key, value, env, explicitChildren);
 	}
 
 	inline public static function simpleRefValue(typeName:String, value:String, env:ArpSeedEnv):ArpSeed {
