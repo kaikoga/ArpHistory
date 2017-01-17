@@ -1,22 +1,22 @@
 package net.kaikoga.arp.domain;
 
 import net.kaikoga.arp.data.DataGroup;
+import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
+import net.kaikoga.arp.domain.core.ArpDid;
+import net.kaikoga.arp.domain.core.ArpSid;
+import net.kaikoga.arp.domain.core.ArpType;
+import net.kaikoga.arp.domain.dump.ArpDomainDump;
+import net.kaikoga.arp.domain.events.ArpLogEvent;
+import net.kaikoga.arp.domain.gen.ArpGeneratorRegistry;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
-import net.kaikoga.arp.domain.core.ArpIdGenerator;
+import net.kaikoga.arp.domain.gen.IArpGenerator;
+import net.kaikoga.arp.domain.prepare.PrepareQueue;
+import net.kaikoga.arp.domain.query.ArpObjectQuery;
+import net.kaikoga.arp.events.ArpSignal;
 import net.kaikoga.arp.events.IArpSignalIn;
 import net.kaikoga.arp.events.IArpSignalOut;
-import net.kaikoga.arp.domain.events.ArpLogEvent;
-import net.kaikoga.arp.events.ArpSignal;
-import net.kaikoga.arp.domain.prepare.PrepareQueue;
-import net.kaikoga.arp.domain.dump.ArpDomainDump;
-import net.kaikoga.arp.domain.gen.ArpGeneratorRegistry;
-import net.kaikoga.arp.domain.gen.IArpGenerator;
 import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
-import net.kaikoga.arp.domain.core.ArpType;
-import net.kaikoga.arp.domain.query.ArpObjectQuery;
-import net.kaikoga.arp.domain.core.ArpSid;
-import net.kaikoga.arp.domain.core.ArpDid;
+import net.kaikoga.arp.utils.ArpIdGenerator;
 
 class ArpDomain {
 

@@ -144,7 +144,7 @@ class MacroArpObjectStub {
 				var collection:net.kaikoga.arp.persistable.IPersistOutput;
 				var nameList:Array<String>;
 				var values:net.kaikoga.arp.persistable.IPersistOutput;
-				var uniqId:net.kaikoga.arp.domain.core.ArpIdGenerator = new net.kaikoga.arp.domain.core.ArpIdGenerator();
+				var uniqId:net.kaikoga.arp.utils.ArpIdGenerator = new net.kaikoga.arp.utils.ArpIdGenerator();
 				$b{ this.buildWriteSelfBlock() }
 			}
 
@@ -214,7 +214,7 @@ class MacroArpObjectStub {
 				var collection:net.kaikoga.arp.persistable.IPersistOutput;
 				var nameList:Array<String>;
 				var values:net.kaikoga.arp.persistable.IPersistOutput;
-				var uniqId:net.kaikoga.arp.domain.core.ArpIdGenerator = new net.kaikoga.arp.domain.core.ArpIdGenerator();
+				var uniqId:net.kaikoga.arp.utils.ArpIdGenerator = new net.kaikoga.arp.utils.ArpIdGenerator();
 				$b{ this.buildWriteSelfBlock() }
 			}
 
