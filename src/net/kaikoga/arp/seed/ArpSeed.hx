@@ -33,7 +33,7 @@ class ArpSeed {
 
 	private function createChildren(explicitChildren:Array<ArpSeed>):Void {
 		this._children = explicitChildren;
-		if (this._value != null) this._children.push(simpleValue("value", this._value, null));
+		if (this._value != null) this._children.push(simpleValue("value", "$$", this._value, null));
 	}
 
 	inline public function typeName():String return this._typeName;
@@ -57,12 +57,12 @@ class ArpSeed {
 		return new ArpSeed(typeName, template, name, ref, heat, key, value, env, explicitChildren);
 	}
 
-	inline public static function simpleRefValue(typeName:String, value:String, env:ArpSeedEnv):ArpSeed {
-		return new ArpSeed(typeName, null, null, value, null, null, value, env, null);
+	inline public static function simpleRefValue(typeName:String, key:String, value:String, env:ArpSeedEnv):ArpSeed {
+		return new ArpSeed(typeName, null, null, value, null, key, value, env, null);
 	}
 
-	inline public static function simpleValue(typeName:String, value:String, env:ArpSeedEnv):ArpSeed {
-		return new ArpSeed(typeName, null, null, null, null, null, value, env, null);
+	inline public static function simpleValue(typeName:String, key:String, value:String, env:ArpSeedEnv):ArpSeed {
+		return new ArpSeed(typeName, null, null, null, null, key, value, env, null);
 	}
 
 	inline public static function fromXmlBytes(bytes:Bytes, env:ArpSeedEnv = null):ArpSeed {

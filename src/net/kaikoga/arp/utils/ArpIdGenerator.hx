@@ -2,8 +2,11 @@ package net.kaikoga.arp.utils;
 
 abstract ArpIdGenerator(Int) {
 
-	inline private static var AUTO_HEADER:String = "$";
+	inline public static var AUTO_HEADER:String = "$";
 	private static var symbols:Array<String> = [];
+
+	public static var first(get, never):String;
+	inline private static function get_first():String return '${AUTO_HEADER}0';
 
 	inline public function new() {
 		this = 0;
@@ -11,7 +14,7 @@ abstract ArpIdGenerator(Int) {
 
 	inline public function next():String {
 		var result = symbols[this];
-		if (result == null) symbols[this] = result = '$AUTO_HEADER${Std.string(this)}';
+		if (result == null) symbols[this] = result = '${AUTO_HEADER}${Std.string(this)}';
 		this++;
 		return result;
 	}
