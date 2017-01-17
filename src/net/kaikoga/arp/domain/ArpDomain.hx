@@ -120,7 +120,7 @@ class ArpDomain {
 			name = seed.name();
 			slot = if (name == null) allocSlot() else path.query(name, type).slot();
 			var gen:IArpGenerator<T> = this.reg.resolve(seed, type);
-			if (gen == null) throw 'generator not found for <$type>: template=${seed.template()}';
+			if (gen == null) throw 'generator not found for <$type>: class=${seed.className()}';
 			var arpObj:T = gen.alloc(seed);
 			var init = arpObj.arpInit(slot, seed);
 			if (init != null) {
