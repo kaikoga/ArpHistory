@@ -8,19 +8,20 @@ class ArpSeed {
 	inline private static var AUTO_HEADER:String = "$";
 
 	private var _typeName:String;
+	private var _className:String;
 	private var _name:String;
 	private var _ref:String;
-	private var _template:String;
 	private var _heat:String;
 	private var _key:String;
 	private var _value:String;
 	private var _env:ArpSeedEnv;
-	private var _children:Array<ArpSeed>;
 	private var _isSimple:Bool;
 
-	private function new(typeName:String, template:String, name:String, ref:String, heat:String, key:String, value:String, env:ArpSeedEnv, explicitChildren:Array<ArpSeed>) {
+	private var _children:Array<ArpSeed>;
+
+	private function new(typeName:String, className:String, name:String, ref:String, heat:String, key:String, value:String, env:ArpSeedEnv, explicitChildren:Array<ArpSeed>) {
 		this._typeName = typeName;
-		this._template = template;
+		this._className = className;
 		this._name = name;
 		this._ref = ref;
 		this._heat = heat;
@@ -37,7 +38,7 @@ class ArpSeed {
 	}
 
 	inline public function typeName():String return this._typeName;
-	inline public function template():String return this._template;
+	inline public function className():String return this._className;
 	inline public function name():String return this._name;
 	inline public function ref():String return this._ref;
 	inline public function heat():String return this._heat;
@@ -51,8 +52,8 @@ class ArpSeed {
 		return this._children.iterator();
 	}
 
-	inline public static function complex(typeName:String, template:String, name:String, ref:String, heat:String, key:String, value:String, env:ArpSeedEnv, explicitChildren:Array<ArpSeed>):ArpSeed {
-		return new ArpSeed(typeName, template, name, ref, heat, key, value, env, explicitChildren);
+	inline public static function complex(typeName:String, className:String, name:String, ref:String, heat:String, key:String, value:String, env:ArpSeedEnv, explicitChildren:Array<ArpSeed>):ArpSeed {
+		return new ArpSeed(typeName, className, name, ref, heat, key, value, env, explicitChildren);
 	}
 
 	inline public static function simpleRefValue(typeName:String, key:String, value:String, env:ArpSeedEnv):ArpSeed {

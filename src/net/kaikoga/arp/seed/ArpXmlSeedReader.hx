@@ -32,7 +32,7 @@ class ArpXmlSeedReader {
 		var idGen:ArpIdGenerator = new ArpIdGenerator();
 
 		var typeName:String = xml.nodeName;
-		var template:String = null;
+		var className:String = null;
 		var name:String = null;
 		var ref:String = null;
 		var heat:String = null;
@@ -45,8 +45,8 @@ class ArpXmlSeedReader {
 			switch (attrName) {
 				case "type":
 					typeName = attr;
-				case "class", "template":
-					template = attr;
+				case "class":
+					className = attr;
 				case "name":
 					name = attr;
 				case "ref":
@@ -79,6 +79,6 @@ class ArpXmlSeedReader {
 				case _: // ignore
 			}
 		}
-		return ArpSeed.complex(typeName, template, name, ref, heat, key, value, env, children);
+		return ArpSeed.complex(typeName, className, name, ref, heat, key, value, env, children);
 	}
 }
