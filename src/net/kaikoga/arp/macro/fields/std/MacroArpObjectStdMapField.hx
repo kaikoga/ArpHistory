@@ -70,7 +70,7 @@ class MacroArpObjectStdMapField extends MacroArpObjectCollectionFieldBase implem
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iNativeName.slots.set(element.key(uniqId), this._arpDomain.loadSeed(element, ${this.eArpType})); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iNativeName.slots.set(element.key(), this._arpDomain.loadSeed(element, ${this.eArpType})); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
