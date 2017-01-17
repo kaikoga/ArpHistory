@@ -3,29 +3,29 @@
 import net.kaikoga.arp.domain.reflect.ArpFieldDs;
 import net.kaikoga.arp.domain.reflect.ArpFieldKind;
 import net.kaikoga.arp.domain.reflect.ArpFieldInfo;
-import net.kaikoga.arp.domain.reflect.ArpTemplateInfo;
+import net.kaikoga.arp.domain.reflect.ArpClassInfo;
 
-class ArpTemplateHelpPrinter {
+class ArpClassHelpPrinter {
 
-	private var template:ArpTemplateInfo;
+	private var classInfo:ArpClassInfo;
 
 	public function new() {
 	}
 
-	public function print(template:ArpTemplateInfo):String {
-		this.template = template;
+	public function print(classInfo:ArpClassInfo):String {
+		this.classInfo = classInfo;
 
 		var result:String = "";
-		result += '<h2>${template.arpType}:${template.templateName}</h2>\n';
-		result += '<p>${template.fqn}</p>\n';
+		result += '<h2>${classInfo.arpType}:${classInfo.className}</h2>\n';
+		result += '<p>${classInfo.fqn}</p>\n';
 		result += '<div><pre>${this.printXml()}</pre></div>\n\n';
 		return result;
 	}
 
 	private function printXml():String {
-		var xml:Xml = Xml.parse('<${template.arpType} name="name" class="${template.templateName}" />').firstElement();
+		var xml:Xml = Xml.parse('<${classInfo.arpType} name="name" class="${classInfo.className}" />').firstElement();
 		xml.addChild(Xml.parse('<tag value="tagName=tagValue" />').firstElement());
-		for (field in template.fields) this.addField(xml, field);
+		for (field in classInfo.fields) this.addField(xml, field);
 		return StringTools.htmlEscape(haxe.xml.Printer.print(xml, true));
 	}
 

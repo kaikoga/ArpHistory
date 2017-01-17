@@ -10,12 +10,12 @@ import haxe.macro.ComplexTypeTools;
 import haxe.macro.TypeTools;
 import haxe.macro.Expr.ComplexType;
 import net.kaikoga.arp.domain.core.ArpType;
-import net.kaikoga.arp.domain.reflect.ArpTemplateInfo;
+import net.kaikoga.arp.domain.reflect.ArpClassInfo;
 
 class MacroArpObjectRegistry {
 
 	private var domainInfo:ArpDomainInfo;
-	private var templateInfos:Map<String, ArpTemplateInfo>;
+	private var templateInfos:Map<String, ArpClassInfo>;
 
 	private function new() {
 		templateInfos = new Map();
@@ -35,23 +35,23 @@ class MacroArpObjectRegistry {
 
 	private function registerPrimitive(fieldKind:ArpFieldKind, name:String, fqn:String = null):Void {
 		if (fqn == null) fqn = name;
-		templateInfos.set(fqn, ArpTemplateInfo.primitive(fieldKind, new ArpType(name), fqn));
+		templateInfos.set(fqn, ArpClassInfo.primitive(fieldKind, new ArpType(name), fqn));
 	}
 
 	public static function registerStructInfo(name:String, fqn:String):Void {
-		instance.templateInfos.set(fqn, ArpTemplateInfo.struct(new ArpType(name), fqn));
+		instance.templateInfos.set(fqn, ArpClassInfo.struct(new ArpType(name), fqn));
 	}
 
-	public static function registerTemplateInfo(fqn:String, templateInfo:ArpTemplateInfo):Void {
+	public static function registerTemplateInfo(fqn:String, templateInfo:ArpClassInfo):Void {
 		instance.templateInfos.set(fqn, templateInfo);
-		instance.domainInfo.templates.push(templateInfo);
+		instance.domainInfo.classInfos.push(templateInfo);
 	}
 
 	private static function toFqn(complexType:ComplexType):String {
 		return TypeTools.toString(ComplexTypeTools.toType(complexType));
 	}
 
-	public static function templateInfoOf(nativeType:ComplexType):ArpTemplateInfo {
+	public static function templateInfoOf(nativeType:ComplexType):ArpClassInfo {
 		return instance.templateInfos.get(toFqn(nativeType));
 	}
 

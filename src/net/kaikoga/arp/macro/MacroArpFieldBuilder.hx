@@ -4,7 +4,7 @@ package net.kaikoga.arp.macro;
 
 import net.kaikoga.arp.macro.valueTypes.MacroArpStructType;
 import net.kaikoga.arp.domain.reflect.ArpFieldKind;
-import net.kaikoga.arp.domain.reflect.ArpTemplateInfo;
+import net.kaikoga.arp.domain.reflect.ArpClassInfo;
 import net.kaikoga.arp.macro.fields.ds.MacroArpObjectSetField;
 import net.kaikoga.arp.macro.fields.ds.MacroArpObjectListField;
 import net.kaikoga.arp.macro.fields.ds.MacroArpObjectOmapField;
@@ -76,7 +76,7 @@ class MacroArpFieldBuilder {
 			case "net.kaikoga.arp.ds.IOmap":
 				return MacroArpNativeFieldType.NativeDsIOmap(typeToNativeFieldType(typeParam(type, 1)), isImpl);
 			default:
-				var templateInfo:ArpTemplateInfo = MacroArpObjectRegistry.templateInfoOf(TypeTools.toComplexType(type));
+				var templateInfo:ArpClassInfo = MacroArpObjectRegistry.templateInfoOf(TypeTools.toComplexType(type));
 				if (templateInfo == null) return null;
 				switch (templateInfo.fieldKind) {
 					case ArpFieldKind.PrimInt:

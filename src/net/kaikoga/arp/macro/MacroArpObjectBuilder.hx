@@ -4,7 +4,7 @@ package net.kaikoga.arp.macro;
 
 import haxe.macro.TypeTools;
 import net.kaikoga.arp.domain.core.ArpType;
-import net.kaikoga.arp.domain.reflect.ArpTemplateInfo;
+import net.kaikoga.arp.domain.reflect.ArpClassInfo;
 import net.kaikoga.arp.macro.MacroArpFieldBuilder;
 import haxe.macro.Context;
 import haxe.macro.Expr;
@@ -54,7 +54,7 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 
 	public function run() {
 		var fqn:String = TypeTools.toString(Context.getLocalType());
-		var templateInfo:ArpTemplateInfo = ArpTemplateInfo.reference(new ArpType(this.arpTypeName), this.arpTemplateName, fqn, []);
+		var templateInfo:ArpClassInfo = ArpClassInfo.reference(new ArpType(this.arpTypeName), this.arpTemplateName, fqn, []);
 		MacroArpObjectRegistry.registerTemplateInfo(fqn, templateInfo);
 
 		analyzeBaseClasses();
