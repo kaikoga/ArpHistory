@@ -41,9 +41,7 @@ class ArpSeed {
 	inline public function name():String return this._name;
 	inline public function ref():String return this._ref;
 	inline public function heat():String return this._heat;
-	inline public function key(uniqId:Int):String {
-		return if (this._key != null) this._key else Std.string(AUTO_HEADER + uniqId);
-	}
+	inline public function key():String return this._key;
 	inline public function value():String return this._value;
 	inline public function env():ArpSeedEnv return this._env;
 	inline public function isSimple():Bool return this._isSimple;

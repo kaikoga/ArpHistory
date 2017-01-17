@@ -15,7 +15,7 @@ class ArpSeedCase {
 		template: seed.template(),
 		name: seed.name(),
 		ref: seed.ref(),
-		key: seed.key(12345678),
+		key: seed.key(),
 		value: seed.value()
 	};
 
