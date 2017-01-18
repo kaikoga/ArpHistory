@@ -7,6 +7,7 @@ class ArpSeed {
 
 	inline private static var AUTO_HEADER:String = "$";
 
+	private var kind:ArpSeedKind;
 	private var _typeName:String;
 	private var _className:String;
 	private var _name:String;
@@ -19,7 +20,8 @@ class ArpSeed {
 
 	private var _children:Array<ArpSeed>;
 
-	private function new(typeName:String, className:String, name:String, ref:String, heat:String, key:String, value:String, env:ArpSeedEnv, explicitChildren:Array<ArpSeed>) {
+	private function new(kind:ArpSeedKind, typeName:String, className:String, name:String, ref:String, heat:String, key:String, value:String, env:ArpSeedEnv, explicitChildren:Array<ArpSeed>) {
+		this.kind = kind;
 		this._typeName = typeName;
 		this._className = className;
 		this._name = name;
@@ -52,16 +54,16 @@ class ArpSeed {
 		return this._children.iterator();
 	}
 
-	inline public static function complex(typeName:String, className:String, name:String, ref:String, heat:String, key:String, value:String, env:ArpSeedEnv, explicitChildren:Array<ArpSeed>):ArpSeed {
-		return new ArpSeed(typeName, className, name, ref, heat, key, value, env, explicitChildren);
+	inline public static function maybeComplex(typeName:String, className:String, name:String, ref:String, heat:String, key:String, value:String, env:ArpSeedEnv, explicitChildren:Array<ArpSeed>):ArpSeed {
+		return new ArpSeed(ArpSeedKind.Complex, typeName, className, name, ref, heat, key, value, env, explicitChildren);
 	}
 
 	inline public static function simpleRefValue(typeName:String, key:String, value:String, env:ArpSeedEnv):ArpSeed {
-		return new ArpSeed(typeName, null, null, value, null, key, value, env, null);
+		return new ArpSeed(ArpSeedKind.SimpleRefValue, typeName, null, null, value, null, key, value, env, null);
 	}
 
 	inline public static function simpleValue(typeName:String, key:String, value:String, env:ArpSeedEnv):ArpSeed {
-		return new ArpSeed(typeName, null, null, null, null, key, value, env, null);
+		return new ArpSeed(ArpSeedKind.SimpleValue, typeName, null, null, null, null, key, value, env, null);
 	}
 
 	inline public static function fromXmlBytes(bytes:Bytes, env:ArpSeedEnv = null):ArpSeed {
@@ -75,4 +77,10 @@ class ArpSeed {
 	public static function fromXml(xml:Xml, env:ArpSeedEnv = null):ArpSeed {
 		return new ArpXmlSeedReader().parse(xml, env);
 	}
+}
+
+private enum ArpSeedKind {
+	SimpleValue;
+	SimpleRefValue;
+	Complex;
 }
