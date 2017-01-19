@@ -64,6 +64,8 @@ class ArpXmlSeedReader {
 			}
 		}
 
+		if (ref != null) return ArpSeed.simpleRefValue(typeName, key, ref, env);
+
 		for (node in xml) {
 			switch (node.nodeType) {
 				case XmlType.Element:
@@ -79,6 +81,6 @@ class ArpXmlSeedReader {
 				case _: // ignore
 			}
 		}
-		return ArpSeed.maybeComplex(typeName, className, name, ref, heat, key, value, env, children);
+		return ArpSeed.maybeComplex(typeName, className, name, heat, key, value, env, children);
 	}
 }
