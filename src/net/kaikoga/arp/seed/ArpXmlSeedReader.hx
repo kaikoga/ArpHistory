@@ -81,6 +81,11 @@ class ArpXmlSeedReader {
 				case _: // ignore
 			}
 		}
-		return ArpSeed.maybeComplex(typeName, className, name, heat, key, value, env, children);
+
+		if (children == null) {
+			return ArpSeed.simpleObject(typeName, className, name, heat, key, value, env);
+		}
+		if (value != null) children.push(ArpSeed.simpleValue("value", idGen.next(), value, env));
+		return ArpSeed.complex(typeName, className, name, heat, key, children, env);
 	}
 }

@@ -65,7 +65,7 @@ class ArpSeedCase {
 		var xml:Xml = Xml.parse('<data>value16<a />value32<b>valueb</b>value64</data>').firstElement();
 		var seed:ArpSeed = ArpSeed.fromXml(xml);
 		assertFalse(seed.isSimple());
-		assertMatch({typeName: "data", className: null, name: null, ref: null, key: autoKey, value: "value16value32value64"}, toHash(seed));
+		assertMatch({typeName: "data", className: null, name: null, ref: null, key: autoKey, value: null}, toHash(seed));
 		var iterator = seed.iterator();
 		assertTrue(iterator.hasNext());
 		assertMatch({typeName: "a", className: null, name: null, ref: null, key: autoKey, value: null}, toHash(iterator.next()));

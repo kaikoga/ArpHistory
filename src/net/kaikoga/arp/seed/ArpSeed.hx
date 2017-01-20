@@ -15,11 +15,11 @@ class ArpSeed {
 	private var _key:String;
 	private var _value:String;
 	private var _env:ArpSeedEnv;
-	private var _isSimple:Bool;
 
 	private var _children:Array<ArpSeed>;
+	private static var emptyChildren:Array<ArpSeed> = [];
 
-	private function new(kind:ArpSeedKind, typeName:String, className:String, name:String, heat:String, key:String, value:String, env:ArpSeedEnv, explicitChildren:Array<ArpSeed>) {
+	private function new(kind:ArpSeedKind, typeName:String, className:String, name:String, heat:String, key:String, value:String, env:ArpSeedEnv, children:Array<ArpSeed>) {
 		this.kind = kind;
 		this._typeName = typeName;
 		this._className = className;
@@ -28,13 +28,7 @@ class ArpSeed {
 		this._key = key;
 		this._value = value;
 		this._env = env;
-		if (explicitChildren != null) this.createChildren(explicitChildren);
-		this._isSimple = explicitChildren == null;
-	}
-
-	private function createChildren(explicitChildren:Array<ArpSeed>):Void {
-		this._children = explicitChildren;
-		if (this._value != null) this._children.push(simpleValue("value", "$$", this._value, null));
+		this._children = (children != null) ? children : emptyChildren;
 	}
 
 	inline public function typeName():String return this._typeName;
@@ -45,15 +39,24 @@ class ArpSeed {
 	inline public function key():String return this._key;
 	inline public function value():String return this._value;
 	inline public function env():ArpSeedEnv return this._env;
-	inline public function isSimple():Bool return this._isSimple;
+	inline public function isSimple():Bool return switch (this.kind) { case ArpSeedKind.Complex: false; case _: true; };
 
-	public function iterator():Iterator<ArpSeed> {
-		if (this._children == null) this.createChildren([]);
-		return this._children.iterator();
+	inline public function iterator():Iterator<ArpSeed> {
+		switch (this.kind) {
+			case ArpSeedKind.Complex:
+				return this._children.iterator();
+			case _:
+				if (this._value == null) return emptyChildren.iterator();
+				return [ArpSeed.simpleValue("value", "$$", this._value, this._env)].iterator();
+		};
 	}
 
-	inline public static function maybeComplex(typeName:String, className:String, name:String, heat:String, key:String, value:String, env:ArpSeedEnv, explicitChildren:Array<ArpSeed>):ArpSeed {
-		return new ArpSeed(ArpSeedKind.Complex, typeName, className, name, heat, key, value, env, explicitChildren);
+	inline public static function complex(typeName:String, className:String, name:String, heat:String, key:String, children:Array<ArpSeed>, env:ArpSeedEnv):ArpSeed {
+		return new ArpSeed(ArpSeedKind.Complex, typeName, className, name, heat, key, null, env, children);
+	}
+
+	inline public static function simpleObject(typeName:String, className:String, name:String, heat:String, key:String, value:String, env:ArpSeedEnv):ArpSeed {
+		return new ArpSeed(ArpSeedKind.SimpleObject, typeName, className, name, heat, key, value, env, null);
 	}
 
 	inline public static function simpleRefValue(typeName:String, key:String, value:String, env:ArpSeedEnv):ArpSeed {
@@ -80,5 +83,6 @@ class ArpSeed {
 private enum ArpSeedKind {
 	SimpleValue;
 	SimpleRefValue;
+	SimpleObject;
 	Complex;
 }
