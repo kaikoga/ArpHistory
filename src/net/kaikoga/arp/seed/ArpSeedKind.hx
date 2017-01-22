@@ -1,4 +1,4 @@
-package net.kaikoga.arp.seed.impl;
+package net.kaikoga.arp.seed;
 
 enum ArpSeedKind {
 	SimpleValue;
