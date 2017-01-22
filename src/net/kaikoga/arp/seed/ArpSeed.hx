@@ -1,5 +1,6 @@
 package net.kaikoga.arp.seed;
 
+import net.kaikoga.arp.seed.impl.ArpSeedKind;
 import haxe.io.Bytes;
 import Xml.XmlType;
 
@@ -8,46 +9,42 @@ class ArpSeed {
 	inline private static var AUTO_HEADER:String = "$";
 
 	private var kind:ArpSeedKind;
-	private var _typeName:String;
-	private var _className:String;
-	private var _name:String;
-	private var _heat:String;
-	private var _key:String;
-	private var _value:String;
-	private var _env:ArpSeedEnv;
+	public var typeName(default, null):String;
+	public var className(default, null):String;
+	public var name(default, null):String;
+	public var heat(default, null):String;
+	public var key(default, null):String;
+	public var value(default, null):String;
+	public var env(default, null):ArpSeedEnv;
 
-	private var _children:Array<ArpSeed>;
+	public var ref(get, never):String;
+	public var isSimple(get, never):Bool;
+
+	private var children:Array<ArpSeed>;
 	private static var emptyChildren:Array<ArpSeed> = [];
 
 	private function new(kind:ArpSeedKind, typeName:String, className:String, name:String, heat:String, key:String, value:String, env:ArpSeedEnv, children:Array<ArpSeed>) {
 		this.kind = kind;
-		this._typeName = typeName;
-		this._className = className;
-		this._name = name;
-		this._heat = heat;
-		this._key = key;
-		this._value = value;
-		this._env = env;
-		this._children = (children != null) ? children : emptyChildren;
+		this.typeName = typeName;
+		this.className = className;
+		this.name = name;
+		this.heat = heat;
+		this.key = key;
+		this.value = value;
+		this.env = env;
+		this.children = (children != null) ? children : emptyChildren;
 	}
 
-	inline public function typeName():String return this._typeName;
-	inline public function className():String return this._className;
-	inline public function name():String return this._name;
-	inline public function ref():String return switch (this.kind) { case ArpSeedKind.SimpleRefValue: this._value; case _: null; };
-	inline public function heat():String return this._heat;
-	inline public function key():String return this._key;
-	inline public function value():String return this._value;
-	inline public function env():ArpSeedEnv return this._env;
-	inline public function isSimple():Bool return switch (this.kind) { case ArpSeedKind.Complex: false; case _: true; };
+	private function get_ref():String return switch (this.kind) { case ArpSeedKind.SimpleRefValue: this.value; case _: null; };
+	private function get_isSimple():Bool return switch (this.kind) { case ArpSeedKind.Complex: false; case _: true; };
 
-	inline public function iterator():Iterator<ArpSeed> {
+	public function iterator():Iterator<ArpSeed> {
 		switch (this.kind) {
 			case ArpSeedKind.Complex:
-				return this._children.iterator();
+				return this.children.iterator();
 			case _:
-				if (this._value == null) return emptyChildren.iterator();
-				return [ArpSeed.simpleValue("value", "$$", this._value, this._env)].iterator();
+				if (this.value == null) return emptyChildren.iterator();
+				return [ArpSeed.simpleValue("value", "$$", this.value, this.env)].iterator();
 		};
 	}
 
@@ -78,11 +75,4 @@ class ArpSeed {
 	public static function fromXml(xml:Xml, env:ArpSeedEnv = null):ArpSeed {
 		return new ArpXmlSeedReader().parse(xml, env);
 	}
-}
-
-private enum ArpSeedKind {
-	SimpleValue;
-	SimpleRefValue;
-	SimpleObject;
-	Complex;
 }
