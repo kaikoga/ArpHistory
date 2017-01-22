@@ -58,21 +58,21 @@ class ArpHitCuboid implements IPersistable {
 
 	public function initWithSeed(seed:ArpSeed):ArpHitCuboid {
 		if (seed == null) return this;
-		if (seed.isSimple()) return this.initWithString(seed.value());
+		if (seed.isSimple) return this.initWithString(seed.value);
 		for (element in seed) {
-			switch (element.typeName()) {
+			switch (element.typeName) {
 				case "dX", "x":
-					this.dX = Std.parseFloat(element.value());
+					this.dX = Std.parseFloat(element.value);
 				case "dY", "y":
-					this.dY = Std.parseFloat(element.value());
+					this.dY = Std.parseFloat(element.value);
 				case "dZ", "z":
-					this.dZ = Std.parseFloat(element.value());
+					this.dZ = Std.parseFloat(element.value);
 				case "sizeX", "width":
-					this.sizeX = Std.parseFloat(element.value());
+					this.sizeX = Std.parseFloat(element.value);
 				case "sizeY", "height":
-					this.sizeY = Std.parseFloat(element.value());
+					this.sizeY = Std.parseFloat(element.value);
 				case "sizeZ", "depth":
-					this.sizeZ = Std.parseFloat(element.value());
+					this.sizeZ = Std.parseFloat(element.value);
 			}
 		}
 		return this;

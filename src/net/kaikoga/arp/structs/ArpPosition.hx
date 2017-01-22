@@ -27,14 +27,14 @@ class ArpPosition implements IPersistable {
 
 	public function initWithSeed(seed:ArpSeed):ArpPosition {
 		if (seed == null) return this;
-		if (seed.isSimple()) return this.initWithString(seed.value(), seed.env().getUnit);
+		if (seed.isSimple) return this.initWithString(seed.value, seed.env.getUnit);
 
 		for (child in seed) {
-			switch (child.typeName()) {
-				case "x": this.x = ArpStringUtil.parseRichFloat(child.value(), seed.env().getUnit);
-				case "y": this.y = ArpStringUtil.parseRichFloat(child.value(), seed.env().getUnit);
-				case "z": this.z = ArpStringUtil.parseRichFloat(child.value(), seed.env().getUnit);
-				case "dir": this.dir.initWithString(child.value());
+			switch (child.typeName) {
+				case "x": this.x = ArpStringUtil.parseRichFloat(child.value, seed.env.getUnit);
+				case "y": this.y = ArpStringUtil.parseRichFloat(child.value, seed.env.getUnit);
+				case "z": this.z = ArpStringUtil.parseRichFloat(child.value, seed.env.getUnit);
+				case "dir": this.dir.initWithString(child.value);
 			}
 		}
 		return this;

@@ -20,11 +20,11 @@ class MacroArpPrimIntType implements IMacroArpValueType {
 	}
 
 	public function createSeedElement(pos:Position):Expr {
-		return macro @:pos(pos) { Std.parseInt(element.value()); };
+		return macro @:pos(pos) { Std.parseInt(element.value); };
 	}
 
 	public function readSeedElement(pos:Position, iFieldName:String):Expr {
-		return macro @:pos(pos) { this.$iFieldName = Std.parseInt(element.value()); };
+		return macro @:pos(pos) { this.$iFieldName = Std.parseInt(element.value); };
 	}
 
 	public function createAsPersistable(pos:Position, eName:Expr):Expr {

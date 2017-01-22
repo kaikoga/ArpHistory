@@ -21,11 +21,11 @@ class MacroArpPrimBoolType implements IMacroArpValueType {
 	}
 
 	public function createSeedElement(pos:Position):Expr {
-		return macro @:pos(pos) { element.value() == "true"; };
+		return macro @:pos(pos) { element.value == "true"; };
 	}
 
 	public function readSeedElement(pos:Position, iFieldName:String):Expr {
-		return macro @:pos(pos) { this.$iFieldName = element.value() == "true"; };
+		return macro @:pos(pos) { this.$iFieldName = element.value == "true"; };
 	}
 
 	public function createAsPersistable(pos:Position, eName:Expr):Expr {

@@ -51,7 +51,7 @@ class ArpParams implements IPersistable {
 
 	public function initWithSeed(seed:ArpSeed):ArpParams {
 		if (seed == null) return this;
-		return initWithString(seed.value());
+		return initWithString(seed.value);
 	}
 
 	public function initWithString(definition:String):ArpParams {

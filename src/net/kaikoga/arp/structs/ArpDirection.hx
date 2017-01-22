@@ -128,7 +128,7 @@ class ArpDirection implements IPersistable {
 
 	public function initWithSeed(seed:ArpSeed):ArpDirection {
 		if (seed == null) return this;
-		return this.initWithString(seed.value());
+		return this.initWithString(seed.value);
 	}
 
 	public function initWithString(definition:String):ArpDirection {

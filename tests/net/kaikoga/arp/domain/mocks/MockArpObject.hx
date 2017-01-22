@@ -81,15 +81,15 @@ class MockArpObject implements IArpObject {
 	}
 
 	private function arpConsumeSeedElement(element:ArpSeed):Void {
-		switch (element.typeName()) {
+		switch (element.typeName) {
 			case "intField":
-				this.intField = Std.parseInt(element.value());
+				this.intField = Std.parseInt(element.value);
 			case "floatField":
-				this.floatField = Std.parseFloat(element.value());
+				this.floatField = Std.parseFloat(element.value);
 			case "boolField":
-				this.boolField = element.value() == "true";
+				this.boolField = element.value == "true";
 			case "stringField":
-				this.stringField = element.value();
+				this.stringField = element.value;
 			case "refField":
 				this.refFieldSlot = this._arpDomain.loadSeed(element, new ArpType("mock"));
 		}

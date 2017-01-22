@@ -53,7 +53,7 @@ class MacroArpObjectStub {
 		var cases:Array<Case> = [];
 
 		var eDefault:Expr = if (isDerived) macro { super.arpConsumeSeedElement(element); } else macro null;
-		var expr:Expr = { pos: Context.currentPos(), expr: ExprDef.ESwitch(macro element.typeName(), cases, eDefault) }
+		var expr:Expr = { pos: Context.currentPos(), expr: ExprDef.ESwitch(macro element.typeName, cases, eDefault) }
 
 		for (arpField in this.arpFields) {
 			if (arpField.isSeedable) arpField.buildConsumeSeedElementBlock(cases);

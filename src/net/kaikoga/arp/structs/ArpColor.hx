@@ -44,7 +44,7 @@ class ArpColor implements IPersistable {
 
 	public function initWithSeed(seed:ArpSeed):ArpColor {
 		if (seed == null) return this;
-		return initWithString(seed.value());
+		return initWithString(seed.value);
 	}
 
 	public function initWithString(definition:String):ArpColor {

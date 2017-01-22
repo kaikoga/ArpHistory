@@ -109,23 +109,23 @@ class ArpDomain {
 
 	public function loadSeed<T:IArpObject>(seed:ArpSeed, path:ArpDirectory = null, lexicalType:ArpType = null):Null<ArpSlot<T>> {
 		if (path == null) path = this.root;
-		var type:ArpType = (lexicalType != null) ? lexicalType : new ArpType(seed.typeName());
+		var type:ArpType = (lexicalType != null) ? lexicalType : new ArpType(seed.typeName);
 		var slot:ArpSlot<T>;
 		var name:String;
-		if (seed.ref() != null) {
-			slot = path.query(seed.ref(), type).slot();
-			name = seed.name();
+		if (seed.ref != null) {
+			slot = path.query(seed.ref, type).slot();
+			name = seed.name;
 			if (name != null) path.query(name, type).setSlot(slot);
 		} else {
-			name = seed.name();
+			name = seed.name;
 			slot = if (name == null) allocSlot() else path.query(name, type).slot();
 			var gen:IArpGenerator<T> = this.reg.resolve(seed, type);
-			if (gen == null) throw 'generator not found for <$type>: class=${seed.className()}';
+			if (gen == null) throw 'generator not found for <$type>: class=${seed.className}';
 			var arpObj:T = gen.alloc(seed);
 			var init = arpObj.arpInit(slot, seed);
 			if (init != null) {
 				slot.value = arpObj;
-				switch (ArpHeat.fromName(seed.heat())) {
+				switch (ArpHeat.fromName(seed.heat)) {
 					case ArpHeat.Cold:
 					case ArpHeat.Warming, ArpHeat.Warm: this.heatLater(slot);
 				}

@@ -19,11 +19,11 @@ class MacroArpPrimStringType implements IMacroArpValueType {
 	}
 
 	public function createSeedElement(pos:Position):Expr {
-		return macro @:pos(pos) { element.value(); };
+		return macro @:pos(pos) { element.value; };
 	}
 
 	public function readSeedElement(pos:Position, iFieldName:String):Expr {
-		return macro @:pos(pos) { this.$iFieldName = element.value(); };
+		return macro @:pos(pos) { this.$iFieldName = element.value; };
 	}
 
 	public function createAsPersistable(pos:Position, eName:Expr):Expr {

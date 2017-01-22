@@ -29,11 +29,11 @@ class ArpRange implements IPersistable {
 
 	public function initWithSeed(seed:ArpSeed):ArpRange {
 		if (seed == null) return this;
-		if (seed.isSimple()) return this.initWithString(seed.value());
+		if (seed.isSimple) return this.initWithString(seed.value);
 		for (child in seed) {
-			switch (child.typeName()) {
-				case "min": this.minValue = Std.parseFloat(child.value());
-				case "max": this.maxValue = Std.parseFloat(child.value());
+			switch (child.typeName) {
+				case "min": this.minValue = Std.parseFloat(child.value);
+				case "max": this.maxValue = Std.parseFloat(child.value);
 			}
 		}
 		return this;
