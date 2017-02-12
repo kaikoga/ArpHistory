@@ -22,7 +22,7 @@ class ArpGeneratorRegistry {
 
 	public function resolve<T:IArpObject>(seed:ArpSeed, type:ArpType):IArpGenerator<T> {
 		var className = seed.className;
-		if (className == null) className = seed.env.get(type.toString());
+		if (className == null) className = seed.env.getDefaultClass(type.toString());
 		for (gen in this.genMap.listFor(type)) {
 			if (gen.matchSeed(seed, type, className)) return cast gen;
 		}
