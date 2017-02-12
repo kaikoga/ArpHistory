@@ -12,6 +12,10 @@ abstract ArpSeedEnv(ArpSeedEnvNode) {
 		return this.get(key);
 	}
 
+	inline public function getDefaultClass(key:String):String {
+		return this.get(key);
+	}
+
 	inline public function getUnit(unit:String):Float {
 		return ArpStringUtil.parseFloatDefault(this.get(unit), 1.0);
 	}
