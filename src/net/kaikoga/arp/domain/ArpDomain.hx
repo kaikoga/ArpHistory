@@ -16,6 +16,7 @@ import net.kaikoga.arp.events.ArpSignal;
 import net.kaikoga.arp.events.IArpSignalIn;
 import net.kaikoga.arp.events.IArpSignalOut;
 import net.kaikoga.arp.seed.ArpSeed;
+import net.kaikoga.arp.seed.ArpSeedValueKind;
 import net.kaikoga.arp.utils.ArpIdGenerator;
 
 class ArpDomain {
@@ -112,24 +113,25 @@ class ArpDomain {
 		var type:ArpType = (lexicalType != null) ? lexicalType : new ArpType(seed.typeName);
 		var slot:ArpSlot<T>;
 		var name:String;
-		if (seed.ref != null) {
-			slot = path.query(seed.ref, type).slot();
-			name = seed.name;
-			if (name != null) path.query(name, type).setSlot(slot);
-		} else {
-			name = seed.name;
-			slot = if (name == null) allocSlot() else path.query(name, type).slot();
-			var gen:IArpGenerator<T> = this.reg.resolve(seed, type);
-			if (gen == null) throw 'generator not found for <$type>: class=${seed.className}';
-			var arpObj:T = gen.alloc(seed);
-			var init = arpObj.arpInit(slot, seed);
-			if (init != null) {
-				slot.value = arpObj;
-				switch (ArpHeat.fromName(seed.heat)) {
-					case ArpHeat.Cold:
-					case ArpHeat.Warming, ArpHeat.Warm: this.heatLater(slot);
+		switch (seed.valueKind) {
+			case ArpSeedValueKind.Reference, ArpSeedValueKind.Ambigious if (seed.value != null):
+				slot = path.query(seed.value, type).slot();
+				name = seed.name;
+				if (name != null) path.query(name, type).setSlot(slot);
+			case _:
+				name = seed.name;
+				slot = if (name == null) allocSlot() else path.query(name, type).slot();
+				var gen:IArpGenerator<T> = this.reg.resolve(seed, type);
+				if (gen == null) throw 'generator not found for <$type>: class=${seed.className}';
+				var arpObj:T = gen.alloc(seed);
+				var init = arpObj.arpInit(slot, seed);
+				if (init != null) {
+					slot.value = arpObj;
+					switch (ArpHeat.fromName(seed.heat)) {
+						case ArpHeat.Cold:
+						case ArpHeat.Warming, ArpHeat.Warm: this.heatLater(slot);
+					}
 				}
-			}
 		}
 		return slot;
 	}
