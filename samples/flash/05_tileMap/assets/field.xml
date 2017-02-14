@@ -1,16 +1,19 @@
 <data>
+	<env name="default.texture" value="file" />
+	<env name="default.hitFrame" value="cuboid" />
+
 	<input class="key" name="input" />
 	<faceList name="fl">0,1,2,3,4,5,6,7,a,b,c,d,e,f,g,h</faceList>
 	<tileInfo name="ti" enterableRange="0..7" />
 	<chip name="obj.gridChip" class="grid" chipWidth="32" chipHeight="32" baseX="16" baseY="16" dirs="4">
 		<faceList ref="fl" />
-		<texture class="file">
+		<texture>
 			<file class="resource" src="a" />
 		</texture>
 	</chip>
 	<chip name="bg.gridChip" class="grid" chipWidth="32" chipHeight="32" dirs="4">
 		<faceList ref="fl" />
-		<texture class="file">
+		<texture>
 			<file class="resource" src="a" />
 		</texture>
 	</chip>
@@ -40,8 +43,8 @@
 			<nextMotion action="loop" motion="stop" />
 		</motionSet>
 	</driver>
-	<hitFrame class="cuboid" name="hit" hitCuboid="0,0,0,8,8,8" hitType="solid" />
-	<hitFrame class="cuboid" name="field" hitCuboid="0,0,0,9999,9999,9999" hitType="solid" />
+	<hitFrame name="hit" hitCuboid="0,0,0,8,8,8" hitType="solid" />
+	<hitFrame name="field" hitCuboid="0,0,0,9999,9999,9999" hitType="solid" />
 
 	<field name="root" heat="warm">
 		<mortal name="tileMap" class="tileMap" hitFrame="field">
