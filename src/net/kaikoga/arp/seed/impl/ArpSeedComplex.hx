@@ -6,7 +6,7 @@ class ArpSeedComplex extends ArpSeed {
 
 	private var children:Array<ArpSeed>;
 
-	private function new(typeName:String, className:String, name:String, heat:String, key:String, children:Array<ArpSeed>, env:ArpSeedEnv) {
+	public function new(typeName:String, className:String, name:String, heat:String, key:String, children:Array<ArpSeed>, env:ArpSeedEnv) {
 		super(typeName, className, name, heat, key, env);
 		this.children = children;
 	}

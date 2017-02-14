@@ -35,26 +35,6 @@ class ArpSeed {
 
 	public function iterator():Iterator<ArpSeed> throw "not implemented";
 
-	// @:access(net.kaikoga.arp.seed.impl.ArpSeedComplex.new)
-	inline public static function complex(typeName:String, className:String, name:String, heat:String, key:String, children:Array<ArpSeed>, env:ArpSeedEnv):ArpSeed {
-		return new ArpSeedComplex(typeName, className, name, heat, key, children, env);
-	}
-
-	// @:access(net.kaikoga.arp.seed.impl.ArpSeedSimpleObject.new)
-	inline public static function simpleObject(typeName:String, className:String, name:String, heat:String, key:String, value:String, env:ArpSeedEnv):ArpSeed {
-		return new ArpSeedSimpleObject(typeName, className, name, heat, key, value, env);
-	}
-
-	// @:access(net.kaikoga.arp.seed.impl.ArpSeedSimpleRefValue.new)
-	inline public static function simpleRefValue(typeName:String, key:String, value:String, env:ArpSeedEnv):ArpSeed {
-		return new ArpSeedSimpleRefValue(typeName, key, value, env);
-	}
-
-	// @:access(net.kaikoga.arp.seed.impl.ArpSeedSimpleValue.new)
-	inline public static function simpleValue(typeName:String, key:String, value:String, env:ArpSeedEnv):ArpSeed {
-		return new ArpSeedSimpleValue(typeName, key, value, env);
-	}
-
 	inline public static function fromXmlBytes(bytes:Bytes, env:ArpSeedEnv = null):ArpSeed {
 		return new ArpXmlSeedReader().parseXmlBytes(bytes, env);
 	}

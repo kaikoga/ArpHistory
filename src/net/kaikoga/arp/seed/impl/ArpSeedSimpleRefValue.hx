@@ -8,7 +8,7 @@ class ArpSeedSimpleRefValue extends ArpSeed {
 
 	private var _value:String;
 
-	private function new(typeName:String, key:String, value:String, env:ArpSeedEnv) {
+	public function new(typeName:String, key:String, value:String, env:ArpSeedEnv) {
 		super(typeName, null, null, null, key, env);
 		this._value = value;
 	}
@@ -19,6 +19,6 @@ class ArpSeedSimpleRefValue extends ArpSeed {
 
 	override public function iterator():Iterator<ArpSeed> {
 		if (this.value == null) return emptyChildren.iterator();
-		return [ArpSeed.simpleValue("value", "$$", this.value, this.env)].iterator();
+		return [new ArpSeedSimpleValue("value", "$$", this.value, this.env)].iterator();
 	}
 }
