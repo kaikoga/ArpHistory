@@ -1,6 +1,6 @@
 package net.kaikoga.arp.seed.impl;
 
-import net.kaikoga.arp.seed.ArpSeedKind;
+import net.kaikoga.arp.seed.ArpSeedValueKind;
 
 class ArpSeedComplex extends ArpSeed {
 
@@ -11,8 +11,7 @@ class ArpSeedComplex extends ArpSeed {
 		this.children = children;
 	}
 
-	override private function get_kind():ArpSeedKind return ArpSeedKind.Complex;
-	override private function get_ref():String return null;
+	override private function get_valueKind():ArpSeedValueKind return ArpSeedValueKind.None;
 	override private function get_value():String return null;
 	override private function get_isSimple():Bool return false;
 

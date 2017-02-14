@@ -16,9 +16,8 @@ class ArpSeed {
 	public var key(default, null):String;
 	public var env(default, null):ArpSeedEnv;
 
-	public var kind(get, never):ArpSeedKind;
-	public var ref(get, never):String;
 	public var value(get, never):String;
+	public var valueKind(get, never):ArpSeedValueKind;
 	public var isSimple(get, never):Bool;
 
 	private function new(typeName:String, className:String, name:String, heat:String, key:String, env:ArpSeedEnv) {
@@ -30,8 +29,7 @@ class ArpSeed {
 		this.env = env;
 	}
 
-	private function get_kind():ArpSeedKind throw "not implemented";
-	private function get_ref():String throw "not implemented";
+	private function get_valueKind():ArpSeedValueKind throw "not implemented";
 	private function get_value():String throw "not implemented";
 	private function get_isSimple():Bool throw "not implemented";
 
