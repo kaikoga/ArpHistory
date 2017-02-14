@@ -13,11 +13,11 @@ abstract ArpSeedEnv(ArpSeedEnvNode) {
 	}
 
 	inline public function getDefaultClass(key:String):String {
-		return this.get(key);
+		return this.get('default.$key');
 	}
 
 	inline public function getUnit(unit:String):Float {
-		return ArpStringUtil.parseFloatDefault(this.get(unit), 1.0);
+		return ArpStringUtil.parseFloatDefault(this.get('unit.$unit'), 1.0);
 	}
 
 	inline public function add(key:String, value:String):Void {
