@@ -2,8 +2,9 @@ package net.kaikoga.arp.seed;
 
 import net.kaikoga.arp.seed.impl.ArpSeedComplex;
 import net.kaikoga.arp.seed.impl.ArpSeedSimpleObject;
-import net.kaikoga.arp.seed.impl.ArpSeedSimpleRefValue;
-import net.kaikoga.arp.seed.impl.ArpSeedSimpleValue;
+import net.kaikoga.arp.seed.impl.ArpSeedSimpleAmbigiousValue;
+import net.kaikoga.arp.seed.impl.ArpSeedSimpleLiteralValue;
+import net.kaikoga.arp.seed.impl.ArpSeedSimpleReferenceValue;
 import net.kaikoga.arp.utils.ArpIdGenerator;
 import haxe.io.Bytes;
 import Xml.XmlType;
@@ -30,7 +31,7 @@ class ArpXmlSeedReader {
 		switch (xml.nodeType) {
 			case XmlType.Document: xml = xml.firstElement();
 			case XmlType.Element:
-			case _: return new ArpSeedSimpleRefValue(xml.nodeName, uniqId, xml.nodeValue, env);
+			case _: return new ArpSeedSimpleAmbigiousValue(xml.nodeName, uniqId, xml.nodeValue, env);
 		}
 
 		var idGen:ArpIdGenerator = new ArpIdGenerator();
@@ -64,11 +65,11 @@ class ArpXmlSeedReader {
 				case _:
 					// NOTE leaf seeds by xml attr are also treated as ref; text nodes are not
 					if (children == null) children = [];
-					children.push(new ArpSeedSimpleRefValue(attrName, idGen.next(), attr, env));
+					children.push(new ArpSeedSimpleAmbigiousValue(attrName, idGen.next(), attr, env));
 			}
 		}
 
-		if (ref != null) return new ArpSeedSimpleRefValue(typeName, key, ref, env);
+		if (ref != null) return new ArpSeedSimpleReferenceValue(typeName, key, ref, env);
 
 		for (node in xml) {
 			switch (node.nodeType) {
@@ -89,7 +90,7 @@ class ArpXmlSeedReader {
 		if (children == null) {
 			return new ArpSeedSimpleObject(typeName, className, name, heat, key, value, env);
 		}
-		if (value != null) children.push(new ArpSeedSimpleValue("value", idGen.next(), value, env));
+		if (value != null) children.push(new ArpSeedSimpleLiteralValue("value", idGen.next(), value, env));
 		return new ArpSeedComplex(typeName, className, name, heat, key, children, env);
 	}
 }
