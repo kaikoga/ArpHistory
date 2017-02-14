@@ -4,21 +4,18 @@ import net.kaikoga.arp.seed.ArpSeedValueKind;
 
 class ArpSeedSimpleValue extends ArpSeed {
 
-	private static var emptyChildren:Array<ArpSeed> = [];
-
-	private var _value:String;
+	private var rawValue:ArpSeedRawValue;
 
 	public function new(typeName:String, key:String, value:String, env:ArpSeedEnv) {
-		super(typeName, null, null, null, key, env);
-		this._value = value;
+		super(typeName, null, null, null);
+		this.rawValue = new ArpSeedRawValue(key, value, env);
 	}
 
+	override private function get_key():String return this.rawValue._key;
+	override private function get_value():String return this.rawValue._value;
+	override private function get_env():ArpSeedEnv return this.rawValue._env;
 	override private function get_valueKind():ArpSeedValueKind return ArpSeedValueKind.Literal;
-	override private function get_value():String return this._value;
 	override private function get_isSimple():Bool return true;
 
-	override public function iterator():Iterator<ArpSeed> {
-		if (this.value == null) return emptyChildren.iterator();
-		return [new ArpSeedSimpleValue("value", "$$", this.value, this.env)].iterator();
-	}
+	override public function iterator():Iterator<ArpSeed> return this.rawValue.iterator();
 }

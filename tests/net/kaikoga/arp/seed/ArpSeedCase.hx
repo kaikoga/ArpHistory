@@ -37,10 +37,10 @@ class ArpSeedCase {
 		var xml:Xml = Xml.parse('<data name="name6" class="className14" key="key28" value="value42" />').firstElement();
 		var seed:ArpSeed = ArpSeed.fromXml(xml);
 		assertTrue(seed.isSimple);
-		assertMatch({typeName: "data", className: "className14", name: "name6", key:"key28", value: "value42", kind: "l"}, toHash(seed));
+		assertMatch({typeName: "data", className: "className14", name: "name6", key: "key28", value: "value42", kind: "l"}, toHash(seed));
 		var iterator = seed.iterator();
 		assertTrue(iterator.hasNext());
-		assertMatch({typeName: "value", className: null, name: null, key: autoKey, value: "value42", kind: "l"}, toHash(iterator.next()));
+		assertMatch({typeName: "value", className: null, name: null, key: "key28", value: "value42", kind: "l"}, toHash(iterator.next()));
 		assertFalse(iterator.hasNext());
 	}
 

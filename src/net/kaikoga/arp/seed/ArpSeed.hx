@@ -1,9 +1,5 @@
 package net.kaikoga.arp.seed;
 
-import net.kaikoga.arp.seed.impl.ArpSeedComplex;
-import net.kaikoga.arp.seed.impl.ArpSeedSimpleObject;
-import net.kaikoga.arp.seed.impl.ArpSeedSimpleRefValue;
-import net.kaikoga.arp.seed.impl.ArpSeedSimpleValue;
 import haxe.io.Bytes;
 import Xml.XmlType;
 
@@ -13,24 +9,24 @@ class ArpSeed {
 	public var className(default, null):String;
 	public var name(default, null):String;
 	public var heat(default, null):String;
-	public var key(default, null):String;
-	public var env(default, null):ArpSeedEnv;
 
+	public var key(get, never):String;
 	public var value(get, never):String;
+	public var env(get, never):ArpSeedEnv;
 	public var valueKind(get, never):ArpSeedValueKind;
 	public var isSimple(get, never):Bool;
 
-	private function new(typeName:String, className:String, name:String, heat:String, key:String, env:ArpSeedEnv) {
+	private function new(typeName:String, className:String, name:String, heat:String) {
 		this.typeName = typeName;
 		this.className = className;
 		this.name = name;
 		this.heat = heat;
-		this.key = key;
-		this.env = env;
 	}
 
-	private function get_valueKind():ArpSeedValueKind throw "not implemented";
+	private function get_key():String throw "not implemented";
 	private function get_value():String throw "not implemented";
+	private function get_env():ArpSeedEnv throw "not implemented";
+	private function get_valueKind():ArpSeedValueKind throw "not implemented";
 	private function get_isSimple():Bool throw "not implemented";
 
 	public function iterator():Iterator<ArpSeed> throw "not implemented";
