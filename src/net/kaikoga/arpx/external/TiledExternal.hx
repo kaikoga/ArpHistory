@@ -1,5 +1,7 @@
 ﻿package net.kaikoga.arpx.external;
 
+#if flash
+
 import net.kaikoga.arp.data.DataGroup;
 import flash.utils.CompressionAlgorithm;
 import net.kaikoga.arpx.chip.Chip;
@@ -203,3 +205,5 @@ private enum TiledObject {
 	TiledMortal(mortal:Mortal);
 	TiledAnchor(anchor:Anchor);
 }
+
+#end
