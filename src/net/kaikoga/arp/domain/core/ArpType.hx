@@ -8,7 +8,7 @@ abstract ArpType(String) {
 		return arpTypeInfo.arpType;
 	}
 	@:from inline public static function fromClass<T:IArpObject>(klass:Class<T>):ArpType {
-		return untyped klass._arpTypeInfo.arpType;
+		return Reflect.field(klass, "_arpTypeInfo").arpType;
 	}
 	@:to inline public function toString():String {
 		return this;
