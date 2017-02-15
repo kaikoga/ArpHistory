@@ -4,7 +4,7 @@ import net.kaikoga.arp.events.ArpProgressEvent;
 import net.kaikoga.arp.events.ArpSignal;
 import net.kaikoga.arpx.backends.cross.socketClient.ISocketClientImpl;
 
-#if flash
+#if arp_backend_flash
 import net.kaikoga.arpx.backends.flash.socketClient.TcpCachedSocketClientFlashImpl;
 #end
 

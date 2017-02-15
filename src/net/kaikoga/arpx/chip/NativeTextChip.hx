@@ -3,7 +3,7 @@ package net.kaikoga.arpx.chip;
 import net.kaikoga.arp.structs.ArpColor;
 import net.kaikoga.arp.structs.ArpParams;
 
-#if flash
+#if arp_backend_flash
 import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
 import net.kaikoga.arpx.backends.flash.chip.NativeTextChipFlashImpl;
 #end

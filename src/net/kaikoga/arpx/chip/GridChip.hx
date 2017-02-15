@@ -4,7 +4,7 @@ import net.kaikoga.arpx.faceList.FaceList;
 import net.kaikoga.arpx.texture.Texture;
 import net.kaikoga.arp.structs.ArpParams;
 
-#if flash
+#if arp_backend_flash
 import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
 import net.kaikoga.arpx.backends.flash.chip.GridChipFlashImpl;
 #end

@@ -4,7 +4,7 @@ import net.kaikoga.arp.ds.IOmap;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arpx.camera.Camera;
 
-#if flash
+#if arp_backend_flash
 import net.kaikoga.arpx.backends.flash.console.IConsoleFlashImpl;
 import net.kaikoga.arpx.backends.flash.console.ConsoleFlashImpl;
 import flash.display.BitmapData;
