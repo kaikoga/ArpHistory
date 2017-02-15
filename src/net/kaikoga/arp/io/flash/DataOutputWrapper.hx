@@ -1,10 +1,10 @@
 package net.kaikoga.arp.io.flash;
 
+#if (flash || openfl)
+
 import flash.utils.Endian;
 import flash.utils.IDataOutput;
 import haxe.io.Bytes;
-
-#if flash
 
 class DataOutputWrapper implements IOutput
 {

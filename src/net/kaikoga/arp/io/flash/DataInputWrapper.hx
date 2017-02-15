@@ -1,11 +1,11 @@
 package net.kaikoga.arp.io.flash;
 
+#if (flash || openfl)
+
 import flash.utils.ByteArray;
 import flash.utils.Endian;
 import flash.utils.IDataInput;
 import haxe.io.Bytes;
-
-#if flash
 
 class DataInputWrapper implements IInput {
 
