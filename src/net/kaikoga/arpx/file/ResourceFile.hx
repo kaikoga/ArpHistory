@@ -8,7 +8,7 @@ class ResourceFile extends File {
 
 	@:arpField public var src:String;
 
-	#if arp_backend_flash
+	#if (arp_backend_flash || arp_backend_openfl)
 
 	override private function createImpl():IFileFlashImpl return new ResourceFileFlashImpl(this);
 

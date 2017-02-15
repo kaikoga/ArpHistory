@@ -11,7 +11,7 @@ import net.kaikoga.arp.ds.IOmap;
 import net.kaikoga.arpx.mortal.Mortal;
 import net.kaikoga.arpx.reactFrame.ReactFrame;
 
-#if arp_backend_flash
+#if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.field.IFieldFlashImpl;
 import net.kaikoga.arpx.backends.flash.field.FieldFlashImpl;
 import net.kaikoga.arpx.backends.flash.geom.ITransform;
@@ -32,7 +32,7 @@ class Field implements IArpObject {
 	private var hitField:HitObjectField<HitGeneric, HitMortal>;
 	private var anchorField:HitField<HitGeneric, Anchor>;
 
-	#if arp_backend_flash
+	#if (arp_backend_flash || arp_backend_openfl)
 
 	private var flashImpl:IFieldFlashImpl;
 

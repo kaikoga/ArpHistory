@@ -4,7 +4,7 @@ import net.kaikoga.arp.events.ArpProgressEvent;
 import net.kaikoga.arp.events.ArpSignal;
 import net.kaikoga.arpx.backends.cross.socketClient.ISocketClientImpl;
 
-#if arp_backend_flash
+#if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.socketClient.TcpCachedSocketClientFlashImpl;
 #end
 
@@ -13,7 +13,7 @@ class TcpCachedSocketClient extends SocketClient {
 
 	@:arpField public var host:String;
 
-	#if arp_backend_flash
+	#if (arp_backend_flash || arp_backend_openfl)
 
 	override private function createImpl(onData:ArpSignal<ArpProgressEvent>):ISocketClientImpl return new TcpCachedSocketClientFlashImpl(this, onData);
 

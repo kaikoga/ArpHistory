@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.mortal;
 
-#if arp_backend_flash
+#if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.mortal.CompositeMortalFlashImpl;
 import net.kaikoga.arpx.backends.flash.mortal.IMortalFlashImpl;
 #end
@@ -17,7 +17,7 @@ class CompositeMortal extends Mortal {
 	@:arpField public var sort:String;
 	@:arpField("mortal") @:arpBarrier public var mortals:IList<Mortal>;
 
-	#if arp_backend_flash
+	#if (arp_backend_flash || arp_backend_openfl)
 
 	override private function createImpl():IMortalFlashImpl return new CompositeMortalFlashImpl(this);
 

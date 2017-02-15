@@ -10,7 +10,7 @@ class KeyInput extends Input {
 
 	public var keyBindings:IMap<Int, KeyInputBinding>;
 
-	#if arp_backend_flash
+	#if (arp_backend_flash || arp_backend_openfl)
 
 	override private function createImpl():IInputFlashImpl return new KeyInputFlashImpl(this);
 

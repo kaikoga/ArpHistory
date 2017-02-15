@@ -9,7 +9,7 @@ class FileTexture extends Texture
 {
 	@:arpField @:arpBarrier public var file:File;
 
-	#if arp_backend_flash
+	#if (arp_backend_flash || arp_backend_openfl)
 
 	override private function createImpl():ITextureFlashImpl return new FileTextureFlashImpl(this);
 

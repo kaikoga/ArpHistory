@@ -3,7 +3,7 @@ package net.kaikoga.arpx.chip;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.structs.ArpParams;
 
-#if arp_backend_flash
+#if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
 import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import flash.display.BitmapData;
@@ -11,7 +11,7 @@ import flash.display.BitmapData;
 
 @:build(net.kaikoga.arp.ArpDomainMacros.buildObject("chip", "null"))
 class Chip implements IArpObject
-#if arp_backend_flash implements IChipFlashImpl #end
+#if (arp_backend_flash || arp_backend_openfl) implements IChipFlashImpl #end
 {
 
 	public var baseX(get, set):Int;
@@ -34,7 +34,7 @@ class Chip implements IArpObject
 	//TODO hasChipName must distinguish explicit and implicit existence
 	public function hasFace(face:String):Bool return false;
 
-	#if arp_backend_flash
+	#if (arp_backend_flash || arp_backend_openfl)
 
 	private var flashImpl:IChipFlashImpl;
 

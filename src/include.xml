@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension>
 
-	<set name="arp_backend_flash" value="1" />
+	<section if="flash">
+		<set name="arp_backend_flash" value="1" />
+	</section>
+
+	<section unless="flash">
+		<set name="arp_backend_openfl" value="1" />
+	</section>
 
 </extension>

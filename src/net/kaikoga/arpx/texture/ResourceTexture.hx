@@ -8,7 +8,7 @@ class ResourceTexture extends Texture
 {
 	@:arpField public var src:String;
 
-	#if arp_backend_flash
+	#if (arp_backend_flash || arp_backend_openfl)
 
 	override private function createImpl():ITextureFlashImpl return new ResourceTextureFlashImpl(this);
 

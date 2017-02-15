@@ -4,7 +4,7 @@ import net.kaikoga.arpx.faceList.FaceList;
 import net.kaikoga.arpx.texture.Texture;
 import net.kaikoga.arp.structs.ArpParams;
 
-#if arp_backend_flash
+#if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
 import net.kaikoga.arpx.backends.flash.chip.GridChipFlashImpl;
 #end
@@ -35,7 +35,7 @@ class GridChip extends Chip {
 		return true;
 	}
 
-	#if arp_backend_flash
+	#if (arp_backend_flash || arp_backend_openfl)
 
 	override private function createImpl():IChipFlashImpl return new GridChipFlashImpl(this);
 

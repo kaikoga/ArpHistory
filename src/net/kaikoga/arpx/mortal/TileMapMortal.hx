@@ -13,7 +13,7 @@ class TileMapMortal extends Mortal {
 	@:arpBarrier @:arpField public var chip:Chip;
 	@:arpBarrier @:arpField public var tileMap:TileMap;
 
-	#if arp_backend_flash
+	#if (arp_backend_flash || arp_backend_openfl)
 
 	override private function createImpl():IMortalFlashImpl return new TileMapMortalFlashImpl(this);
 

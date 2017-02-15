@@ -14,7 +14,7 @@ import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.reactFrame.ReactFrame;
 
-#if arp_backend_flash
+#if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import net.kaikoga.arpx.backends.flash.geom.APoint;
 import net.kaikoga.arpx.backends.flash.mortal.IMortalFlashImpl;
@@ -23,7 +23,7 @@ import flash.display.BitmapData;
 
 @:build(net.kaikoga.arp.ArpDomainMacros.buildObject("mortal", "null"))
 class Mortal implements IArpObject
-#if arp_backend_flash implements IMortalFlashImpl #end
+#if (arp_backend_flash || arp_backend_openfl) implements IMortalFlashImpl #end
 {
 
 	@:arpBarrier @:arpField public var driver:Driver;
@@ -35,7 +35,7 @@ class Mortal implements IArpObject
 
 	private var hitMortals:Map<String, HitMortal>;
 
-	#if arp_backend_flash
+	#if (arp_backend_flash || arp_backend_openfl)
 
 	private var flashImpl:IMortalFlashImpl;
 

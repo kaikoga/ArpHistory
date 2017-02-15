@@ -5,7 +5,7 @@ import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arpx.backends.flash.input.IInputFlashImpl;
 import net.kaikoga.arp.domain.IArpObject;
 
-#if arp_backend_flash
+#if (arp_backend_flash || arp_backend_openfl)
 import flash.events.IEventDispatcher;
 #end
 
@@ -14,7 +14,7 @@ class Input implements IArpObject implements IInputFlashImpl{
 
 	public var inputAxes:IMap<String, InputAxis>;
 
-	#if arp_backend_flash
+	#if (arp_backend_flash || arp_backend_openfl)
 
 	private var flashImpl:IInputFlashImpl;
 

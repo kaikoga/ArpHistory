@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.mortal;
 
-#if arp_backend_flash
+#if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.mortal.ChipMortalFlashImpl;
 import net.kaikoga.arpx.backends.flash.mortal.IMortalFlashImpl;
 #end
@@ -12,7 +12,7 @@ class ChipMortal extends Mortal {
 
 	@:arpBarrier @:arpField public var chip:Chip;
 
-	#if arp_backend_flash
+	#if (arp_backend_flash || arp_backend_openfl)
 
 	override private function createImpl():IMortalFlashImpl return new ChipMortalFlashImpl(this);
 

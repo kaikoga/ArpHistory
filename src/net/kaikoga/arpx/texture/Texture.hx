@@ -6,11 +6,11 @@ import net.kaikoga.arp.domain.IArpObject;
 
 @:build(net.kaikoga.arp.ArpDomainMacros.buildObject("texture", "null"))
 class Texture implements IArpObject
-#if arp_backend_flash implements ITextureFlashImpl #end
+#if (arp_backend_flash || arp_backend_openfl) implements ITextureFlashImpl #end
 {
 	@:arpField public var hasAlpha:Bool = true;
 
-	#if arp_backend_flash
+	#if (arp_backend_flash || arp_backend_openfl)
 	private var flashImpl:ITextureFlashImpl;
 
 	private function createImpl():ITextureFlashImpl return null;

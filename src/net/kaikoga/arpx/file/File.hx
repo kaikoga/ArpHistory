@@ -8,7 +8,7 @@ import net.kaikoga.arp.domain.IArpObject;
 @:build(net.kaikoga.arp.ArpDomainMacros.buildObject("file", "null"))
 class File implements IArpObject {
 
-	#if arp_backend_flash
+	#if (arp_backend_flash || arp_backend_openfl)
 
 	private var flashImpl:IFileFlashImpl;
 
