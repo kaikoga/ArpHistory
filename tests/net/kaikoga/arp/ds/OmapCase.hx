@@ -219,13 +219,26 @@ class OmapCase<K, V> {
 		assertMatch(-1, me.indexOf(v.a3));
 	}
 
+	public function testFirstLast():Void {
+		assertEquals(me.first(), null);
+		assertEquals(me.last(), null);
+		me.addPair(k.a1, v.a1);
+		assertEquals(me.first(), v.a1);
+		assertEquals(me.last(), v.a1);
+		me.addPair(k.a2, v.a2);
+		assertEquals(me.first(), v.a1);
+		assertEquals(me.last(), v.a2);
+		me.removeKey(k.a1);
+		assertEquals(me.first(), v.a2);
+		assertEquals(me.last(), v.a2);
+	}
+
 	public function testResolveKeyIndex():Void {
 		me.addPair(k.a1, v.a1);
 		me.addPair(k.a2, v.a2);
 		assertMatch(0, me.resolveKeyIndex(k.a1));
 		assertMatch(1, me.resolveKeyIndex(k.a2));
 		assertMatch(-1, me.resolveKeyIndex(k.a3));
-
 	}
 
 	public function testResolveName():Void {

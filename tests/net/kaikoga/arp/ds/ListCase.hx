@@ -99,6 +99,28 @@ class ListCase<V> {
 		assertFalse(it.hasNext());
 	}
 
+	public function testIndexOf():Void {
+		me.push(v.a1);
+		me.push(v.a2);
+		assertMatch(0, me.indexOf(v.a1));
+		assertMatch(1, me.indexOf(v.a2));
+		assertMatch(-1, me.indexOf(v.a3));
+	}
+
+	public function testFirstLast():Void {
+		assertEquals(me.first(), null);
+		assertEquals(me.last(), null);
+		me.push(v.a1);
+		assertEquals(me.first(), v.a1);
+		assertEquals(me.last(), v.a1);
+		me.push(v.a2);
+		assertEquals(me.first(), v.a1);
+		assertEquals(me.last(), v.a2);
+		me.remove(v.a1);
+		assertEquals(me.first(), v.a2);
+		assertEquals(me.last(), v.a2);
+	}
+
 	public function testEmptyToString():Void {
 		assertEquals("[]", me.toString());
 	}
