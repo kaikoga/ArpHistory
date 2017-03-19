@@ -1,25 +1,30 @@
 package net.kaikoga.arp.macro;
 
+import picotest.matcher.patterns.PicoMatchBasic;
+import picotest.matcher.patterns.standard.PicoMatchStruct;
+import picotest.matcher.patterns.standard.PicoMatchArray;
+import picotest.matcher.patterns.PicoMatchPrimitive;
+import net.kaikoga.arp.domain.ArpDomain;
+import net.kaikoga.arp.domain.ArpSlot;
+import net.kaikoga.arp.domain.core.ArpType;
+import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
+import net.kaikoga.arp.ds.IList;
 import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arp.ds.IOmap;
-import net.kaikoga.arp.ds.IList;
 import net.kaikoga.arp.ds.ISet;
-import net.kaikoga.arp.tests.ArpDomainTestUtil;
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
-import net.kaikoga.arp.macro.mocks.MockDsMacroArpObject;
-import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arp.domain.ArpDomain;
-import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arp.domain.core.ArpType;
-import net.kaikoga.arp.domain.ArpSlot;
-
-import net.kaikoga.arp.ds.lambda.SetOp;
 import net.kaikoga.arp.ds.lambda.ListOp;
 import net.kaikoga.arp.ds.lambda.MapOp;
 import net.kaikoga.arp.ds.lambda.OmapOp;
+import net.kaikoga.arp.ds.lambda.SetOp;
+import net.kaikoga.arp.macro.mocks.MockDsMacroArpObject;
+import net.kaikoga.arp.seed.ArpSeed;
+import net.kaikoga.arp.tests.ArpDomainTestUtil;
 
-import picotest.PicoMatcher;
-import picotest.PicoAssert;
+import picotest.matcher.PicoMatcher;
+import picotest.matcher.PicoMatchResult;
+import picotest.matcher.PicoMatcherContext;
+import picotest.matcher.patterns.standard.PicoMatchCircular;
+
 import picotest.PicoAssert.*;
 
 class DsMacroArpObjectCase {
@@ -31,6 +36,15 @@ class DsMacroArpObjectCase {
 	private var seed:ArpSeed;
 
 	public function setup():Void {
+		var matcher:PicoMatcher = new PicoMatcher();
+		matcher.append(new PicoMatchPrimitive());
+		matcher.append(new PicoMatchCircular());
+		matcher.appendMatcher(matchArpDs);
+		matcher.append(new PicoMatchArray());
+		matcher.append(new PicoMatchStruct());
+		matcher.append(new PicoMatchBasic());
+		pushMatcher(matcher);
+
 		domain = new ArpDomain();
 		domain.addGenerator(new ArpObjectGenerator(MockDsMacroArpObject, true));
 		xml = Xml.parse('
@@ -54,6 +68,10 @@ class DsMacroArpObjectCase {
 </mock>
 		').firstElement();
 		seed = ArpSeed.fromXml(xml);
+	}
+
+	public function tearDown():Void {
+		popMatcher();
 	}
 
 	public function testCreateEmpty():Void {
@@ -81,30 +99,23 @@ class DsMacroArpObjectCase {
 		assertMatch({ro1: arpObj, ro2: arpObj}, OmapOp.toAnon(arpObj.refOmap));
 	}
 
-	// FIXME
-	@:access(picotest.PicoMatcher)
-	private static function matchArpDs(matcher:PicoMatcher, matched:Array<Dynamic>, expected:Dynamic, actual:Dynamic):MatchResult {
+	private static function matchArpDs(context:PicoMatcherContext, expected:Dynamic, actual:Dynamic):PicoMatchResult {
 		if (Std.is(expected, ISet) && Std.is(actual, ISet)) {
-			return matcher.matchInternal(matched, SetOp.toArray(expected), SetOp.toArray(actual));
+			return context.match(SetOp.toArray(expected), SetOp.toArray(actual));
 		}
 		if (Std.is(expected, IList) && Std.is(actual, IList)) {
-			return matcher.matchInternal(matched, ListOp.toArray(expected), ListOp.toArray(actual));
+			return context.match(ListOp.toArray(expected), ListOp.toArray(actual));
 		}
 		if (Std.is(expected, IMap) && Std.is(actual, IMap)) {
-			return matcher.matchInternal(matched, MapOp.toArray(expected), MapOp.toArray(actual));
+			return context.match(MapOp.toArray(expected), MapOp.toArray(actual));
 		}
 		if (Std.is(expected, IOmap) && Std.is(actual, IOmap)) {
-			return matcher.matchInternal(matched, OmapOp.toArray(expected), OmapOp.toArray(actual));
+			return context.match(OmapOp.toArray(expected), OmapOp.toArray(actual));
 		}
-		return MatchResult.Unknown;
+		return PicoMatchResult.Unknown;
 	}
 
 	private function checkIsClone(original:MockDsMacroArpObject, clone:MockDsMacroArpObject):Void {
-		var matcher:PicoMatcher = new PicoMatcher();
-		matcher.addMatcher(PicoMatcher.matchCircular);
-		matcher.addMatcher(matchArpDs);
-		matcher.withStandard();
-
 		assertEquals(original.arpDomain, clone.arpDomain);
 		assertEquals(original.arpType, clone.arpType);
 		assertNotEquals(original.arpSlot, clone.arpSlot);
