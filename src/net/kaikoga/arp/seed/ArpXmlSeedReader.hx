@@ -11,6 +11,20 @@ import Xml.XmlType;
 
 class ArpXmlSeedReader {
 
+	/*
+		ArpXmlSeedReader spec:
+		- Attributes:
+		  - All keyword attributes are ignored
+		  - All non-keyword attributes are ArpSeedSimpleAmbigiousValue
+		- Elements:
+		  - When an element has a "ref", it is an ArpSeedSimpleReferenceValue
+		  - Else, an element is a Literal
+			- ArpSeedSimpleObject if no child elements
+			  - Text nodes inside will become virtual element
+			- ArpSeedComplex if any child elements
+			  - Text nodes inside will become ArpSeedSimpleLiteralValue
+	 */
+
 	inline public function new() {
 	}
 
