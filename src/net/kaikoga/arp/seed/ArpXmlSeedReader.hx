@@ -66,7 +66,7 @@ class ArpXmlSeedReader {
 					typeName = attr;
 				case "class":
 					className = attr;
-				case "name":
+				case "name", "id":
 					name = attr;
 				case "ref":
 					ref = attr;
