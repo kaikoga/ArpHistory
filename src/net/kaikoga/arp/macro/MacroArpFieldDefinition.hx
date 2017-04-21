@@ -15,9 +15,15 @@ class MacroArpFieldDefinition {
 	public var nativeType(default, null):ComplexType;
 	public var nativeDefault(default, null):Expr;
 
+	// ArpField family
 	public var metaArpBarrier:Bool = false;
 	public var metaArpField:MacroArpMetaArpField = MacroArpMetaArpField.Unmanaged;
 	public var metaArpVolatile:Bool = false;
+
+	// Impl family
+	public var metaArpImpl:Bool = false;
+
+	// Unmanaged family
 	public var metaArpInit:String = null;
 	public var metaArpHeatUp:String = null;
 	public var metaArpHeatDown:String = null;
@@ -40,6 +46,7 @@ class MacroArpFieldDefinition {
 				case ":arpField": metaArpField = parseMetaArpField(meta.params[0]);
 				case ":arpVolatile": metaArpVolatile = true;
 				case ":arpBarrier": metaArpBarrier = true;
+				case ":arpImpl": metaArpImpl = true;
 				case ":arpInit": metaArpInit = nativeField.name;
 				case ":arpHeatUp": metaArpHeatUp = nativeField.name;
 				case ":arpHeatDown": metaArpHeatDown = nativeField.name;

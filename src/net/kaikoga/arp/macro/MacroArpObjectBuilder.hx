@@ -52,7 +52,7 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 		return target;
 	}
 
-	public function run() {
+	public function run():Array<Field> {
 		var fqn:String = TypeTools.toString(Context.getLocalType());
 		var templateInfo:ArpClassInfo = ArpClassInfo.reference(new ArpType(this.arpTypeName), this.arpTemplateName, fqn, []);
 		MacroArpObjectRegistry.registerTemplateInfo(fqn, templateInfo);
@@ -62,25 +62,27 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 
 		for (field in Context.getBuildFields()) {
 			var definition:MacroArpFieldDefinition = new MacroArpFieldDefinition(field);
-			var arpField:IMacroArpField = MacroArpFieldBuilder.fromDefinition(definition);
-			if (arpField == null) {
-				outFields.push(field);
-				if (definition.metaArpInit != null) {
-					outFields = outFields.concat(this.genVoidCallbackField("arpSelfInit", definition.metaArpInit));
-				}
-				if (definition.metaArpHeatUp != null) {
-					outFields = outFields.concat(this.genBoolCallbackField("arpSelfHeatUp", definition.metaArpHeatUp));
-				}
-				if (definition.metaArpHeatDown != null) {
-					outFields = outFields.concat(this.genBoolCallbackField("arpSelfHeatDown", definition.metaArpHeatDown));
-				}
-				if (definition.metaArpDispose != null) {
-					outFields = outFields.concat(this.genVoidCallbackField("arpSelfDispose", definition.metaArpDispose));
-				}
-			} else {
-				this.arpFields.push(arpField);
-				templateInfo.fields.push(arpField.toFieldInfo());
-				arpField.buildField(outFields);
+			switch (MacroArpFieldBuilder.fromDefinition(definition)) {
+				case MacroArpFieldBuilderResult.Unmanaged:
+					outFields.push(field);
+					if (definition.metaArpInit != null) {
+						outFields = outFields.concat(this.genVoidCallbackField("arpSelfInit", definition.metaArpInit));
+					}
+					if (definition.metaArpHeatUp != null) {
+						outFields = outFields.concat(this.genBoolCallbackField("arpSelfHeatUp", definition.metaArpHeatUp));
+					}
+					if (definition.metaArpHeatDown != null) {
+						outFields = outFields.concat(this.genBoolCallbackField("arpSelfHeatDown", definition.metaArpHeatDown));
+					}
+					if (definition.metaArpDispose != null) {
+						outFields = outFields.concat(this.genVoidCallbackField("arpSelfDispose", definition.metaArpDispose));
+					}
+				case MacroArpFieldBuilderResult.Impl:
+					throw "not implemented";
+				case MacroArpFieldBuilderResult.ArpField(arpField):
+					this.arpFields.push(arpField);
+					templateInfo.fields.push(arpField.toFieldInfo());
+					arpField.buildField(outFields);
 			}
 		}
 

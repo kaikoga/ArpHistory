@@ -226,14 +226,17 @@ class MacroArpFieldBuilder {
 		return null;
 	}
 
-	private function run():IMacroArpField {
+	private function run():MacroArpFieldBuilderResult {
 		this.log("field: " + definition.nativeField.name);
+		if (definition.metaArpImpl) {
+			return MacroArpFieldBuilderResult.Impl;
+		}
 		var result = doRun();
 		this.log("done: " + definition.nativeField.name);
-		return result;
+		return if (result == null) MacroArpFieldBuilderResult.Unmanaged else MacroArpFieldBuilderResult.ArpField(result);
 	}
 
-	public static function fromDefinition(definition:MacroArpFieldDefinition):IMacroArpField {
+	public static function fromDefinition(definition:MacroArpFieldDefinition):MacroArpFieldBuilderResult {
 		return new MacroArpFieldBuilder(definition).run();
 	}
 
@@ -242,6 +245,12 @@ class MacroArpFieldBuilder {
 		Context.warning(message, this.definition.nativeField.pos);
 		#end
 	}
+}
+
+enum MacroArpFieldBuilderResult {
+	Unmanaged;
+	Impl;
+	ArpField(value:IMacroArpField);
 }
 
 private enum MacroArpNativeFieldType {
