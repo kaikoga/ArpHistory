@@ -9,15 +9,13 @@ using haxe.macro.ComplexTypeTools;
 
 class MacroArpFieldDefinition {
 
-	public function isValidNativeType():Bool return this.nativeType != null;
-
 	public var nativeField(default, null):Field;
 	public var nativeType(default, null):ComplexType;
 	public var nativeDefault(default, null):Expr;
 
 	// ArpField family
-	public var metaArpBarrier:Bool = false;
 	public var metaArpField:MacroArpMetaArpField = MacroArpMetaArpField.Unmanaged;
+	public var metaArpBarrier:Bool = false;
 	public var metaArpVolatile:Bool = false;
 
 	// Impl family
@@ -28,6 +26,17 @@ class MacroArpFieldDefinition {
 	public var metaArpHeatUp:String = null;
 	public var metaArpHeatDown:String = null;
 	public var metaArpDispose:String = null;
+
+	private var _family:MacroArpFieldDefinitionFamily = MacroArpFieldDefinitionFamily.ImplicitUnmanaged;
+	public var family(get, set):MacroArpFieldDefinitionFamily;
+	inline private function get_family():MacroArpFieldDefinitionFamily return _family;
+	inline private function set_family(value:MacroArpFieldDefinitionFamily):MacroArpFieldDefinitionFamily {
+		switch (_family) {
+			case MacroArpFieldDefinitionFamily.ImplicitUnmanaged: _family = value;
+			case _: if (!Type.enumEq(value, _family)) throw 'Cannot mix';
+		}
+		return value;
+	}
 
 	public function new(nativeField:Field) {
 		this.nativeField = nativeField;
@@ -42,56 +51,80 @@ class MacroArpFieldDefinition {
 		}
 
 		for (meta in nativeField.meta) {
-			switch (meta.name) {
-				case ":arpField": metaArpField = parseMetaArpField(meta.params[0]);
-				case ":arpVolatile": metaArpVolatile = true;
-				case ":arpBarrier": metaArpBarrier = true;
-				case ":arpImpl": metaArpImpl = true;
-				case ":arpInit": metaArpInit = nativeField.name;
-				case ":arpHeatUp": metaArpHeatUp = nativeField.name;
-				case ":arpHeatDown": metaArpHeatDown = nativeField.name;
-				case ":arpDispose": metaArpDispose = nativeField.name;
-				case ":arpWithoutBackend": Context.warning('Not supported in this backend', nativeField.pos);
-				case m if (m.indexOf(":arp") == 0) :
-					Context.error('Unsupported arp metadata @' + m, this.nativeField.pos);
-				case m if (m.indexOf("arp") == 0) :
-					Context.error('Use compile time metadata for arp metadatas; "@:arp", not "@arp".', this.nativeField.pos);
+			try {
+				switch (meta.name) {
+					case ":arpField":
+						family = MacroArpFieldDefinitionFamily.ArpField;
+						metaArpField = parseMetaArpField(meta.params[0]);
+					case ":arpVolatile":
+						family = MacroArpFieldDefinitionFamily.ArpField;
+						metaArpVolatile = true;
+					case ":arpBarrier":
+						family = MacroArpFieldDefinitionFamily.ArpField;
+						metaArpBarrier = true;
+					case ":arpImpl":
+						family = MacroArpFieldDefinitionFamily.Impl;
+						metaArpImpl = true;
+					case ":arpInit":
+						family = MacroArpFieldDefinitionFamily.Unmanaged;
+						metaArpInit = nativeField.name;
+					case ":arpHeatUp":
+						family = MacroArpFieldDefinitionFamily.Unmanaged;
+						metaArpHeatUp = nativeField.name;
+					case ":arpHeatDown":
+						family = MacroArpFieldDefinitionFamily.Unmanaged;
+						metaArpHeatDown = nativeField.name;
+					case ":arpDispose":
+						family = MacroArpFieldDefinitionFamily.Unmanaged;
+						metaArpDispose = nativeField.name;
+					case ":arpWithoutBackend":
+						family = MacroArpFieldDefinitionFamily.Unmanaged;
+						Context.warning('Not supported in this backend', nativeField.pos);
+					case m if (m.indexOf(":arp") == 0):
+						throw 'Unsupported arp metadata';
+					case m if (m.indexOf("arp") == 0):
+						throw 'Arp metadata is compile time only';
+				}
+			} catch (d:Dynamic) {
+				Context.error(d + ': @' + meta.name, this.nativeField.pos);
 			}
 		}
 	}
 
 	private function isArpManaged():Bool {
-		switch (this.metaArpField) {
-			case MacroArpMetaArpField.Unmanaged: return false;
+		switch (this.family) {
+			case MacroArpFieldDefinitionFamily.ImplicitUnmanaged: return false;
+			case MacroArpFieldDefinitionFamily.Unmanaged: return false;
 			case _: return true;
 		}
 	}
 
-	public function expectPlainField():Bool {
-		if (this.isArpManaged() || this.metaArpBarrier) {
-			Context.error("field type too complex: " + this.nativeType.toString(), this.nativeField.pos);
-		}
+	public function arpFieldIsForValue():Bool {
+		if (metaArpBarrier) Context.error('@:arpBarrier not available for ${this.nativeType.toString()}', this.nativeField.pos);
 		return true;
 	}
 
-	public function expectValueField():Bool {
-		if (metaArpBarrier) Context.error('@:arpBarrier not available for ${this.nativeType.toString()}', this.nativeField.pos);
-		return this.isArpManaged();
-	}
-
-	public function expectReferenceField():Bool {
-		return this.isArpManaged();
+	public function arpFieldIsForReference():Bool {
+		// everything is welcome
+		return true;
 	}
 
 	private static function parseMetaArpField(expr:ExprOf<String>):MacroArpMetaArpField {
 		if (expr == null) return MacroArpMetaArpField.Default;
 		return switch (expr.expr) {
-			case ExprDef.EConst(Constant.CString(v)): return MacroArpMetaArpField.Name(v);
-			case ExprDef.EConst(Constant.CIdent("false")): return MacroArpMetaArpField.Runtime;
-			case ExprDef.EConst(Constant.CIdent("null")): return MacroArpMetaArpField.Default;
+			case ExprDef.EConst(Constant.CString(v)): MacroArpMetaArpField.Name(v);
+			case ExprDef.EConst(Constant.CIdent("false")): MacroArpMetaArpField.Runtime;
+			case ExprDef.EConst(Constant.CIdent("null")): MacroArpMetaArpField.Default;
 			case _: Context.error("invalid expr", Context.currentPos());
 		}
 	}
+}
+
+enum MacroArpFieldDefinitionFamily {
+	ImplicitUnmanaged;
+	Unmanaged;
+	ArpField;
+	Impl;
 }
 
 enum MacroArpMetaArpField {
