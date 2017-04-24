@@ -34,13 +34,13 @@ using haxe.macro.ComplexTypeTools;
 
 class MacroArpFieldBuilder {
 
-	private var definition:MacroArpFieldDefinition;
+	private var fieldDef:MacroArpFieldDefinition;
 
 	private var pos:Position;
 
-	private function new(definition:MacroArpFieldDefinition) {
-		this.definition = definition;
-		this.pos = definition.nativeField.pos;
+	private function new(fieldDef:MacroArpFieldDefinition) {
+		this.fieldDef = fieldDef;
+		this.pos = fieldDef.nativeField.pos;
 	}
 
 	private function typeParam(type:Type, index:Int = 0):Type {
@@ -156,10 +156,10 @@ class MacroArpFieldBuilder {
 	}
 
 	private function doRun():IMacroArpField {
-		this.log("ComplexType=" + new Printer().printComplexType(this.definition.nativeType));
+		this.log("ComplexType=" + new Printer().printComplexType(this.fieldDef.nativeType));
 
-		var complexType:ComplexType = this.definition.nativeType;
-		var pos:Position = this.definition.nativeField.pos;
+		var complexType:ComplexType = this.fieldDef.nativeType;
+		var pos:Position = this.fieldDef.nativeField.pos;
 
 		var nativeFieldType:MacroArpNativeFieldType = MacroArpNativeFieldType.NativeInvalid;
 		if (complexType != null) nativeFieldType = complexTypeToNativeFieldType(complexType);
@@ -168,60 +168,60 @@ class MacroArpFieldBuilder {
 
 		switch (nativeFieldType) {
 			case MacroArpNativeFieldType.NativeValueType(p):
-				if (this.definition.arpFieldIsForValue()) {
-					return new MacroArpValueField(this.definition, p);
+				if (this.fieldDef.arpFieldIsForValue()) {
+					return new MacroArpValueField(this.fieldDef, p);
 				}
 			case MacroArpNativeFieldType.NativeReferenceType(p):
-				if (this.definition.arpFieldIsForReference()) {
-					return new MacroArpObjectField(this.definition);
+				if (this.fieldDef.arpFieldIsForReference()) {
+					return new MacroArpObjectField(this.fieldDef);
 				}
 			case MacroArpNativeFieldType.NativeStdArray(MacroArpNativeFieldType.NativeValueType(p)):
-				if (this.definition.arpFieldIsForValue()) {
-					return new MacroArpValueStdArrayField(this.definition, p);
+				if (this.fieldDef.arpFieldIsForValue()) {
+					return new MacroArpValueStdArrayField(this.fieldDef, p);
 				}
 			case MacroArpNativeFieldType.NativeStdList(MacroArpNativeFieldType.NativeValueType(p)):
-				if (this.definition.arpFieldIsForValue()) {
-					return new MacroArpValueStdListField(this.definition, p);
+				if (this.fieldDef.arpFieldIsForValue()) {
+					return new MacroArpValueStdListField(this.fieldDef, p);
 				}
 			case MacroArpNativeFieldType.NativeStdMap(MacroArpNativeFieldType.NativeValueType(p), isImpl):
-				if (this.definition.arpFieldIsForValue()) {
-					return new MacroArpValueStdMapField(this.definition, p, isImpl);
+				if (this.fieldDef.arpFieldIsForValue()) {
+					return new MacroArpValueStdMapField(this.fieldDef, p, isImpl);
 				}
 			case MacroArpNativeFieldType.NativeStdMap(MacroArpNativeFieldType.NativeReferenceType(p), isImpl):
-				if (this.definition.arpFieldIsForReference()) {
-					return new MacroArpObjectStdMapField(this.definition, p, isImpl);
+				if (this.fieldDef.arpFieldIsForReference()) {
+					return new MacroArpObjectStdMapField(this.fieldDef, p, isImpl);
 				}
 			case MacroArpNativeFieldType.NativeDsISet(MacroArpNativeFieldType.NativeValueType(p), isImpl):
-				if (this.definition.arpFieldIsForValue()) {
-					return new MacroArpValueSetField(this.definition, p, isImpl);
+				if (this.fieldDef.arpFieldIsForValue()) {
+					return new MacroArpValueSetField(this.fieldDef, p, isImpl);
 				}
 			case MacroArpNativeFieldType.NativeDsISet(MacroArpNativeFieldType.NativeReferenceType(p), isImpl):
-				if (this.definition.arpFieldIsForReference()) {
-					return new MacroArpObjectSetField(this.definition, p, isImpl);
+				if (this.fieldDef.arpFieldIsForReference()) {
+					return new MacroArpObjectSetField(this.fieldDef, p, isImpl);
 				}
 			case MacroArpNativeFieldType.NativeDsIList(MacroArpNativeFieldType.NativeValueType(p), isImpl):
-				if (this.definition.arpFieldIsForValue()) {
-					return new MacroArpValueListField(this.definition, p, isImpl);
+				if (this.fieldDef.arpFieldIsForValue()) {
+					return new MacroArpValueListField(this.fieldDef, p, isImpl);
 				}
 			case MacroArpNativeFieldType.NativeDsIList(MacroArpNativeFieldType.NativeReferenceType(p), isImpl):
-				if (this.definition.arpFieldIsForReference()) {
-					return new MacroArpObjectListField(this.definition, p, isImpl);
+				if (this.fieldDef.arpFieldIsForReference()) {
+					return new MacroArpObjectListField(this.fieldDef, p, isImpl);
 				}
 			case MacroArpNativeFieldType.NativeDsIMap(MacroArpNativeFieldType.NativeValueType(p), isImpl):
-				if (this.definition.arpFieldIsForValue()) {
-					return new MacroArpValueMapField(this.definition, p, isImpl);
+				if (this.fieldDef.arpFieldIsForValue()) {
+					return new MacroArpValueMapField(this.fieldDef, p, isImpl);
 				}
 			case MacroArpNativeFieldType.NativeDsIMap(MacroArpNativeFieldType.NativeReferenceType(p), isImpl):
-				if (this.definition.arpFieldIsForReference()) {
-					return new MacroArpObjectMapField(this.definition, p, isImpl);
+				if (this.fieldDef.arpFieldIsForReference()) {
+					return new MacroArpObjectMapField(this.fieldDef, p, isImpl);
 				}
 			case MacroArpNativeFieldType.NativeDsIOmap(MacroArpNativeFieldType.NativeValueType(p), isImpl):
-				if (this.definition.arpFieldIsForValue()) {
-					return new MacroArpValueOmapField(this.definition, p, isImpl);
+				if (this.fieldDef.arpFieldIsForValue()) {
+					return new MacroArpValueOmapField(this.fieldDef, p, isImpl);
 				}
 			case MacroArpNativeFieldType.NativeDsIOmap(MacroArpNativeFieldType.NativeReferenceType(p), isImpl):
-				if (this.definition.arpFieldIsForReference()) {
-					return new MacroArpObjectOmapField(this.definition, p, isImpl);
+				if (this.fieldDef.arpFieldIsForReference()) {
+					return new MacroArpObjectOmapField(this.fieldDef, p, isImpl);
 				}
 			case MacroArpNativeFieldType.NativeInvalid:
 			case _:
@@ -231,30 +231,30 @@ class MacroArpFieldBuilder {
 	}
 
 	private function run():MacroArpFieldBuilderResult {
-		this.log("field: " + definition.nativeField.name);
-		switch (definition.family) {
+		this.log("field: " + fieldDef.nativeField.name);
+		switch (fieldDef.family) {
 			case MacroArpFieldDefinitionFamily.Impl(typePath):
-				this.log("done: " + definition.nativeField.name);
+				this.log("done: " + fieldDef.nativeField.name);
 				return MacroArpFieldBuilderResult.Impl(typePath);
 			case MacroArpFieldDefinitionFamily.ImplicitUnmanaged, MacroArpFieldDefinitionFamily.Unmanaged:
-				this.log("done: " + definition.nativeField.name);
+				this.log("done: " + fieldDef.nativeField.name);
 				return MacroArpFieldBuilderResult.Unmanaged;
 			case MacroArpFieldDefinitionFamily.ArpField:
 				var result = doRun();
-				this.log("done: " + definition.nativeField.name);
+				this.log("done: " + fieldDef.nativeField.name);
 				return MacroArpFieldBuilderResult.ArpField(result);
 			case MacroArpFieldDefinitionFamily.Constructor(func):
 				return MacroArpFieldBuilderResult.Constructor(func);
 		}
 	}
 
-	public static function fromDefinition(definition:MacroArpFieldDefinition):MacroArpFieldBuilderResult {
-		return new MacroArpFieldBuilder(definition).run();
+	public static function fromDefinition(fieldDef:MacroArpFieldDefinition):MacroArpFieldBuilderResult {
+		return new MacroArpFieldBuilder(fieldDef).run();
 	}
 
 	inline private function log(message:String):Void {
 		#if arp_macro_verbose
-		Context.warning(message, this.definition.nativeField.pos);
+		Context.warning(message, this.fieldDef.nativeField.pos);
 		#end
 	}
 }

@@ -14,13 +14,13 @@ class MacroArpValueStdMapField extends MacroArpValueCollectionFieldBase implemen
 		return macro:Map;
 	}
 
-	public function new(definition:MacroArpFieldDefinition, type:IMacroArpValueType, concreteDs:Bool) {
-		super(definition, type, concreteDs);
+	public function new(fieldDef:MacroArpFieldDefinition, type:IMacroArpValueType, concreteDs:Bool) {
+		super(fieldDef, type, concreteDs);
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
 		var nativeType:ComplexType = this.nativeType;
-		this.nativeField.kind = FieldType.FProp("default", "null", nativeType, this.definition.nativeDefault);
+		this.nativeField.kind = FieldType.FProp("default", "null", nativeType, this.fieldDef.nativeDefault);
 		outFields.push(nativeField);
 	}
 

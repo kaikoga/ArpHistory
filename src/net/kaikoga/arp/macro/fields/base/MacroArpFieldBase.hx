@@ -11,15 +11,15 @@ import haxe.macro.Expr;
 
 class MacroArpFieldBase {
 
-	private var definition:MacroArpFieldDefinition;
+	private var fieldDef:MacroArpFieldDefinition;
 
 	private var nativeField(get, never):Field;
-	private function get_nativeField():Field return definition.nativeField;
+	private function get_nativeField():Field return fieldDef.nativeField;
 	private var nativeType(get, never):ComplexType;
-	private function get_nativeType():ComplexType return definition.nativeType;
+	private function get_nativeType():ComplexType return fieldDef.nativeType;
 
 	private var arpBarrier(get, never):Bool;
-	private function get_arpBarrier():Bool return definition.metaArpBarrier;
+	private function get_arpBarrier():Bool return fieldDef.metaArpBarrier;
 
 	private var nativePos(get, never):Position;
 	private function get_nativePos():Position return this.nativeField.pos;
@@ -43,7 +43,7 @@ class MacroArpFieldBase {
 	}
 	private var fieldName(get, never):String;
 	private function get_fieldName():String {
-		return switch (definition.metaArpField) {
+		return switch (fieldDef.metaArpField) {
 			case MacroArpMetaArpField.Name(v): v;
 			case _: iNativeName;
 		}
@@ -54,7 +54,7 @@ class MacroArpFieldBase {
 	}
 	public var isSeedable(get, never):Bool;
 	private function get_isSeedable():Bool {
-		return switch (definition.metaArpField) {
+		return switch (fieldDef.metaArpField) {
 			case MacroArpMetaArpField.Unmanaged: false;
 			case MacroArpMetaArpField.Runtime: false;
 			case _: true;
@@ -62,7 +62,7 @@ class MacroArpFieldBase {
 	}
 	public var isPersistable(get, never):Bool;
 	private function get_isPersistable():Bool {
-		return !definition.metaArpVolatile;
+		return !fieldDef.metaArpVolatile;
 	}
 
 	private var arpFieldKind(get, never):ArpFieldKind;
@@ -70,8 +70,8 @@ class MacroArpFieldBase {
 	private var arpFieldDs(get, never):ArpFieldDs;
 	private function get_arpFieldDs():ArpFieldDs return ArpFieldDs.Scalar;
 
-	private function new(definition:MacroArpFieldDefinition) {
-		this.definition = definition;
+	private function new(fieldDef:MacroArpFieldDefinition) {
+		this.fieldDef = fieldDef;
 	}
 
 	@:final public function toFieldInfo():ArpFieldInfo {

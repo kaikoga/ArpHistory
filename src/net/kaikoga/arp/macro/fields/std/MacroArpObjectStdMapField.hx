@@ -32,9 +32,9 @@ class MacroArpObjectStdMapField extends MacroArpObjectCollectionFieldBase implem
 		return macro:net.kaikoga.arp.domain.ds.std.ArpObjectStdMap<$contentNativeType>;
 	}
 
-	public function new(definition:MacroArpFieldDefinition, contentNativeType:ComplexType, concreteDs:Bool) {
-		super(definition, contentNativeType, concreteDs);
-		if (definition.nativeDefault != null) throw "can't inline initialize arp reference field";
+	public function new(fieldDef:MacroArpFieldDefinition, contentNativeType:ComplexType, concreteDs:Bool) {
+		super(fieldDef, contentNativeType, concreteDs);
+		if (fieldDef.nativeDefault != null) throw "can't inline initialize arp reference field";
 		_nativeType = coerce(super.nativeType);
 	}
 

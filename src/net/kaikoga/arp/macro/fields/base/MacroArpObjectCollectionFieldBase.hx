@@ -14,8 +14,8 @@ class MacroArpObjectCollectionFieldBase extends MacroArpCollectionFieldBase {
 		return macro new $concreteNativeTypePath(slot.domain);
 	}
 
-	private function new(definition:MacroArpFieldDefinition, contentNativeType:ComplexType, concreteDs:Bool) {
-		super(definition, concreteDs);
+	private function new(fieldDef:MacroArpFieldDefinition, contentNativeType:ComplexType, concreteDs:Bool) {
+		super(fieldDef, concreteDs);
 		this.contentNativeType = contentNativeType;
 	}
 }

@@ -32,14 +32,14 @@ class MacroArpObjectSetField extends MacroArpObjectCollectionFieldBase implement
 		return macro:net.kaikoga.arp.domain.ds.ArpObjectSet<$contentNativeType>;
 	}
 
-	public function new(definition:MacroArpFieldDefinition, contentNativeType:ComplexType, concreteDs:Bool) {
-		super(definition, contentNativeType, concreteDs);
+	public function new(fieldDef:MacroArpFieldDefinition, contentNativeType:ComplexType, concreteDs:Bool) {
+		super(fieldDef, contentNativeType, concreteDs);
 		if (!concreteDs) _nativeType = coerce(super.nativeType);
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
 		var nativeType:ComplexType = this.nativeType;
-		this.nativeField.kind = FieldType.FProp("default", "null", nativeType, this.definition.nativeDefault);
+		this.nativeField.kind = FieldType.FProp("default", "null", nativeType, this.fieldDef.nativeDefault);
 		outFields.push(nativeField);
 	}
 

@@ -9,13 +9,13 @@ class MacroArpCollectionFieldBase extends MacroArpFieldBase {
 
 	private var concreteDs:Bool;
 
-	private function new(definition:MacroArpFieldDefinition, concreteDs:Bool) {
-		super(definition);
+	private function new(fieldDef:MacroArpFieldDefinition, concreteDs:Bool) {
+		super(fieldDef);
 		this.concreteDs = concreteDs;
 	}
 
 	public function buildInitBlock(initBlock:Array<Expr>):Void {
-		if (this.definition.nativeDefault == null) {
+		if (this.fieldDef.nativeDefault == null) {
 			var iNativeName:String = this.iNativeName;
 			initBlock.push(macro @:pos(this.nativePos) { this.$iNativeName = ${this.createEmptyDs(this.concreteNativeTypePath())}; } );
 		}

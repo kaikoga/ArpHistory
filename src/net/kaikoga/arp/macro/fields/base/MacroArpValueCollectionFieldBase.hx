@@ -12,8 +12,8 @@ class MacroArpValueCollectionFieldBase extends MacroArpCollectionFieldBase {
 	override private function get_arpType():String return MacroArpObjectRegistry.arpTypeOf(this.type.nativeType()).toString();
 	override private function get_arpFieldKind():ArpFieldKind return this.type.arpFieldKind();
 
-	private function new(definition:MacroArpFieldDefinition, type:IMacroArpValueType, concreteDs:Bool) {
-		super(definition, concreteDs);
+	private function new(fieldDef:MacroArpFieldDefinition, type:IMacroArpValueType, concreteDs:Bool) {
+		super(fieldDef, concreteDs);
 		this.type = type;
 	}
 

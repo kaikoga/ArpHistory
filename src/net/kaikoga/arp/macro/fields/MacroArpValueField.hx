@@ -11,15 +11,15 @@ class MacroArpValueField extends MacroArpFieldBase implements IMacroArpField {
 	public var type(default, null):IMacroArpValueType;
 	override private function get_arpFieldKind():ArpFieldKind return this.type.arpFieldKind();
 
-	public function new(definition:MacroArpFieldDefinition, type:IMacroArpValueType) {
-		super(definition);
+	public function new(fieldDef:MacroArpFieldDefinition, type:IMacroArpValueType) {
+		super(fieldDef);
 		this.type = type;
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
 		var generated:Array<Field> = (macro class Generated {
 			@:pos(this.nativePos)
-			private var $i_nativeName:$nativeType = ${this.definition.nativeDefault};
+			private var $i_nativeName:$nativeType = ${this.fieldDef.nativeDefault};
 			@:pos(this.nativePos)
 			/* inline */ private function $iGet_nativeName():$nativeType return this.$i_nativeName;
 			@:pos(this.nativePos)
@@ -32,7 +32,7 @@ class MacroArpValueField extends MacroArpFieldBase implements IMacroArpField {
 	}
 
 	public function buildInitBlock(initBlock:Array<Expr>):Void {
-		if (this.definition.nativeDefault == null) {
+		if (this.fieldDef.nativeDefault == null) {
 			initBlock.push(macro @:pos(this.nativePos) { this.$iNativeName = ${this.type.createEmptyVo(this.nativePos)}; });
 		}
 	}

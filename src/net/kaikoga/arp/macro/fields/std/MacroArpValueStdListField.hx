@@ -15,13 +15,13 @@ class MacroArpValueStdListField extends MacroArpValueCollectionFieldBase impleme
 		return macro:List;
 	}
 
-	public function new(definition:MacroArpFieldDefinition, type:IMacroArpValueType) {
-		super(definition, type, true);
+	public function new(fieldDef:MacroArpFieldDefinition, type:IMacroArpValueType) {
+		super(fieldDef, type, true);
 	}
 
 	public function buildField(outFields:Array<Field>):Void {
 		var nativeType:ComplexType = this.nativeType;
-		this.nativeField.kind = FieldType.FProp("default", "null", nativeType, this.definition.nativeDefault);
+		this.nativeField.kind = FieldType.FProp("default", "null", nativeType, this.fieldDef.nativeDefault);
 		outFields.push(nativeField);
 	}
 

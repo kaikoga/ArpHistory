@@ -61,25 +61,25 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 		var outFields:Array<Field> = [];
 
 		for (field in Context.getBuildFields()) {
-			var definition:MacroArpFieldDefinition = new MacroArpFieldDefinition(field);
-			switch (MacroArpFieldBuilder.fromDefinition(definition)) {
+			var fieldDef:MacroArpFieldDefinition = new MacroArpFieldDefinition(field);
+			switch (MacroArpFieldBuilder.fromDefinition(fieldDef)) {
 				case MacroArpFieldBuilderResult.Unmanaged:
 					outFields.push(field);
-					if (definition.metaArpInit != null) {
-						outFields = outFields.concat(this.genVoidCallbackField("arpSelfInit", definition.metaArpInit));
+					if (fieldDef.metaArpInit != null) {
+						outFields = outFields.concat(this.genVoidCallbackField("arpSelfInit", fieldDef.metaArpInit));
 					}
-					if (definition.metaArpHeatUp != null) {
-						outFields = outFields.concat(this.genBoolCallbackField("arpSelfHeatUp", definition.metaArpHeatUp));
+					if (fieldDef.metaArpHeatUp != null) {
+						outFields = outFields.concat(this.genBoolCallbackField("arpSelfHeatUp", fieldDef.metaArpHeatUp));
 					}
-					if (definition.metaArpHeatDown != null) {
-						outFields = outFields.concat(this.genBoolCallbackField("arpSelfHeatDown", definition.metaArpHeatDown));
+					if (fieldDef.metaArpHeatDown != null) {
+						outFields = outFields.concat(this.genBoolCallbackField("arpSelfHeatDown", fieldDef.metaArpHeatDown));
 					}
-					if (definition.metaArpDispose != null) {
-						outFields = outFields.concat(this.genVoidCallbackField("arpSelfDispose", definition.metaArpDispose));
+					if (fieldDef.metaArpDispose != null) {
+						outFields = outFields.concat(this.genVoidCallbackField("arpSelfDispose", fieldDef.metaArpDispose));
 					}
 				case MacroArpFieldBuilderResult.Impl(typePath):
-					Context.warning('${definition.nativeType}', Context.currentPos());
-					var type:Type = Context.resolveType(definition.nativeType, Context.currentPos());
+					Context.warning('${fieldDef.nativeType}', Context.currentPos());
+					var type:Type = Context.resolveType(fieldDef.nativeType, Context.currentPos());
 					Context.warning('${type}', Context.currentPos());
 					var classType:ClassType = switch (type) {
 						case TInst(c, _): c.get();
@@ -87,11 +87,11 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 					}
 					Context.warning('${classType}', Context.currentPos());
 					if (this.isDerived) {
+						outFields = outFields.concat(this.genDerivedImplFields(typePath));
+					} else {
 						outFields = outFields.concat(this.genImplFields(typePath));
 						Context.warning("forward_all_instance_fields()", Context.currentPos());
 						Context.warning("and_perhaps_implement_interfaces()", Context.currentPos());
-					} else {
-						outFields = outFields.concat(this.genDerivedImplFields(typePath));
 					}
 					//throw "not implemented";
 				case MacroArpFieldBuilderResult.ArpField(arpField):
@@ -99,7 +99,7 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 					templateInfo.fields.push(arpField.toFieldInfo());
 					arpField.buildField(outFields);
 				case MacroArpFieldBuilderResult.Constructor(func):
-					outFields = outFields.concat(this.genConstructorField(definition.nativeField, func));
+					outFields = outFields.concat(this.genConstructorField(fieldDef.nativeField, func));
 			}
 		}
 
