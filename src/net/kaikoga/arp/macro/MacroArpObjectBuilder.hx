@@ -16,30 +16,6 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 		super(arpTypeName, arpTemplateName);
 	}
 
-	private function analyzeBaseClasses():Void {
-		var map:Map<String, ClassField> = new Map<String, ClassField>();
-
-		var classType:ClassType = Context.getLocalClass().get();
-		do {
-			var superClass = classType.superClass;
-			if (superClass == null) break;
-			classType = superClass.t.get();
-			for (intfRef in classType.interfaces) {
-				var intf:ClassType = intfRef.t.get();
-				if (intf.pack.join(".") + "." + intf.name == "net.kaikoga.arp.domain.IArpObject") {
-					this.classDef.isDerived = true;
-				}
-			}
-			for (field in classType.fields.get()) {
-				if (!map.exists(field.name)) map.set(field.name, field);
-			}
-		} while (classType != null);
-
-		this.mergedBaseFields = map;
-	}
-
-	private var mergedBaseFields:Map<String, ClassField>;
-
 	private function merge(target:Array<Field>, source:Array<Field>):Array<Field> {
 		for (field in source) {
 			var hasField:Bool = false;
@@ -56,14 +32,12 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 		var templateInfo:ArpClassInfo = ArpClassInfo.reference(new ArpType(this.classDef.arpTypeName), this.classDef.arpTemplateName, fqn, []);
 		MacroArpObjectRegistry.registerTemplateInfo(fqn, templateInfo);
 
-		analyzeBaseClasses();
 		var outFields:Array<Field> = [];
 
-		for (field in Context.getBuildFields()) {
-			var fieldDef:MacroArpFieldDefinition = new MacroArpFieldDefinition(field);
+		for (fieldDef in this.classDef.fieldDefs) {
 			switch (MacroArpFieldBuilder.fromDefinition(fieldDef)) {
 				case MacroArpFieldBuilderResult.Unmanaged:
-					outFields.push(field);
+					outFields.push(fieldDef.nativeField);
 					if (fieldDef.metaArpInit != null) {
 						outFields = outFields.concat(this.genVoidCallbackField("arpSelfInit", fieldDef.metaArpInit));
 					}
@@ -111,7 +85,7 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 
 		var mergedOutFields:Array<Field> = [];
 		for (outField in outFields) {
-			if (!mergedBaseFields.exists(outField.name)) {
+			if (!this.classDef.mergedBaseFields.exists(outField.name)) {
 				// statics not included in mergedBaseFields
 				mergedOutFields.push(outField);
 				continue;
