@@ -13,8 +13,7 @@ import haxe.macro.Type;
 class MacroArpObjectBuilder extends MacroArpObjectStub {
 
 	public function new(arpTypeName:String, arpTemplateName:String) {
-		this.arpTypeName = arpTypeName;
-		this.arpTemplateName = arpTemplateName;
+		super(arpTypeName, arpTemplateName);
 	}
 
 	private function analyzeBaseClasses():Void {
@@ -28,7 +27,7 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 			for (intfRef in classType.interfaces) {
 				var intf:ClassType = intfRef.t.get();
 				if (intf.pack.join(".") + "." + intf.name == "net.kaikoga.arp.domain.IArpObject") {
-					this.isDerived = true;
+					this.classDef.isDerived = true;
 				}
 			}
 			for (field in classType.fields.get()) {
@@ -54,7 +53,7 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 
 	public function run():Array<Field> {
 		var fqn:String = TypeTools.toString(Context.getLocalType());
-		var templateInfo:ArpClassInfo = ArpClassInfo.reference(new ArpType(this.arpTypeName), this.arpTemplateName, fqn, []);
+		var templateInfo:ArpClassInfo = ArpClassInfo.reference(new ArpType(this.classDef.arpTypeName), this.classDef.arpTemplateName, fqn, []);
 		MacroArpObjectRegistry.registerTemplateInfo(fqn, templateInfo);
 
 		analyzeBaseClasses();
@@ -86,7 +85,7 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 						case _: throw "impl must be class or interface instance";
 					}
 					Context.warning('${classType}', Context.currentPos());
-					if (this.isDerived) {
+					if (this.classDef.isDerived) {
 						outFields = outFields.concat(this.genDerivedImplFields(typePath));
 					} else {
 						outFields = outFields.concat(this.genImplFields(typePath));
@@ -103,7 +102,7 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 			}
 		}
 
-		if (this.isDerived) {
+		if (this.classDef.isDerived) {
 			outFields = merge(this.genDerivedTypeFields(), outFields);
 		} else {
 			outFields = merge(this.genTypeFields(), outFields);

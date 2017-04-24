@@ -10,11 +10,13 @@ import haxe.macro.Type;
 
 class MacroArpObjectStub {
 
-	private var arpTypeName:String;
-	private var arpTemplateName:String;
-	private var isDerived:Bool;
+	private var classDef:MacroArpClassDefinition;
 
 	private var arpFields:Array<IMacroArpField> = [];
+
+	private function new(arpTypeName:String, arpTemplateName:String) {
+		this.classDef = new MacroArpClassDefinition(arpTypeName, arpTemplateName);
+	}
 
 	macro private function buildBlock(iFieldName:String, forPersist:Bool = false):Expr {
 		return macro {
@@ -52,7 +54,12 @@ class MacroArpObjectStub {
 	private function buildArpConsumeSeedElement():Array<Expr> {
 		var cases:Array<Case> = [];
 
-		var eDefault:Expr = if (isDerived) macro { super.arpConsumeSeedElement(element); } else macro null;
+		var eDefault:Expr;
+		if (this.classDef.isDerived) {
+			eDefault = macro { super.arpConsumeSeedElement(element); }
+		} else {
+			eDefault = macro null;
+		}
 		var expr:Expr = { pos: Context.currentPos(), expr: ExprDef.ESwitch(macro element.typeName, cases, eDefault) }
 
 		for (arpField in this.arpFields) {
@@ -63,6 +70,8 @@ class MacroArpObjectStub {
 	}
 
 	private function genTypeFields():Array<Field> {
+		var arpTypeName = this.classDef.arpTypeName;
+		var arpTemplateName = this.classDef.arpTemplateName;
 		var selfTypePath = this.genSelfTypePath();
 		var selfComplexType = this.genSelfComplexType();
 		return (macro class Generated {
@@ -70,9 +79,9 @@ class MacroArpObjectStub {
 			public var arpDomain(get, never):net.kaikoga.arp.domain.ArpDomain;
 			@:noDoc @:noCompletion private function get_arpDomain():net.kaikoga.arp.domain.ArpDomain {
 				#if arp_debug
-				if (_arpDomain == null) throw("Warning: access to inactive or disposed ArpObject detected");
+			if (_arpDomain == null) throw("Warning: access to inactive or disposed ArpObject detected");
 				#end
-				return this._arpDomain;
+			return this._arpDomain;
 			}
 
 			public static var _arpTypeInfo(default, never):net.kaikoga.arp.domain.ArpTypeInfo = new net.kaikoga.arp.domain.ArpTypeInfo($v{arpTemplateName}, new net.kaikoga.arp.domain.core.ArpType($v{arpTypeName}));
@@ -163,6 +172,8 @@ class MacroArpObjectStub {
 	}
 
 	private function genDerivedTypeFields():Array<Field> {
+		var arpTypeName = this.classDef.arpTypeName;
+		var arpTemplateName = this.classDef.arpTemplateName;
 		var selfTypePath = this.genSelfTypePath();
 		var selfComplexType = this.genSelfComplexType();
 		return (macro class Generated {
