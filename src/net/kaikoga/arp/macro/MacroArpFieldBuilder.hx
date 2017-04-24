@@ -243,6 +243,8 @@ class MacroArpFieldBuilder {
 				var result = doRun();
 				this.log("done: " + definition.nativeField.name);
 				return MacroArpFieldBuilderResult.ArpField(result);
+			case MacroArpFieldDefinitionFamily.Constructor(func):
+				return MacroArpFieldBuilderResult.Constructor(func);
 		}
 	}
 
@@ -261,6 +263,7 @@ enum MacroArpFieldBuilderResult {
 	Unmanaged;
 	Impl;
 	ArpField(value:IMacroArpField);
+	Constructor(func:Function);
 }
 
 private enum MacroArpNativeFieldType {

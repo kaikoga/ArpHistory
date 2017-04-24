@@ -257,6 +257,17 @@ class MacroArpObjectStub {
 				return this.$callback();
 			}
 		}).fields;
-	}}
+	}
+
+	private function genConstructorField(func:Function):Array<Field> {
+		return (macro class Generated {
+			public function new() {
+				// this.arpImpl = this.createImpl();
+				${func.expr};
+			}
+		}).fields;
+	}
+
+}
 
 #end

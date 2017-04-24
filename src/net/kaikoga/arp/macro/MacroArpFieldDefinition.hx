@@ -45,40 +45,44 @@ class MacroArpFieldDefinition {
 			case FieldType.FProp(_, _, n, d), FieldType.FVar(n, d):
 				this.nativeType = n;
 				this.nativeDefault = d;
-			case FieldType.FFun(_):
+			case FieldType.FFun(func):
 				this.nativeType = null;
 				this.nativeDefault = null;
+				if (nativeField.name == "new") {
+					this.family = MacroArpFieldDefinitionFamily.Constructor(func);
+					return;
+				}
 		}
 
 		for (meta in nativeField.meta) {
 			try {
 				switch (meta.name) {
 					case ":arpField":
-						family = MacroArpFieldDefinitionFamily.ArpField;
-						metaArpField = parseMetaArpField(meta.params[0]);
+						this.family = MacroArpFieldDefinitionFamily.ArpField;
+						this.metaArpField = parseMetaArpField(meta.params[0]);
 					case ":arpVolatile":
-						family = MacroArpFieldDefinitionFamily.ArpField;
-						metaArpVolatile = true;
+						this.family = MacroArpFieldDefinitionFamily.ArpField;
+						this.metaArpVolatile = true;
 					case ":arpBarrier":
-						family = MacroArpFieldDefinitionFamily.ArpField;
-						metaArpBarrier = true;
+						this.family = MacroArpFieldDefinitionFamily.ArpField;
+						this.metaArpBarrier = true;
 					case ":arpImpl":
-						family = MacroArpFieldDefinitionFamily.Impl;
-						metaArpImpl = true;
+						this.family = MacroArpFieldDefinitionFamily.Impl;
+						this.metaArpImpl = true;
 					case ":arpInit":
-						family = MacroArpFieldDefinitionFamily.Unmanaged;
-						metaArpInit = nativeField.name;
+						this.family = MacroArpFieldDefinitionFamily.Unmanaged;
+						this.metaArpInit = nativeField.name;
 					case ":arpHeatUp":
-						family = MacroArpFieldDefinitionFamily.Unmanaged;
-						metaArpHeatUp = nativeField.name;
+						this.family = MacroArpFieldDefinitionFamily.Unmanaged;
+						this.metaArpHeatUp = nativeField.name;
 					case ":arpHeatDown":
-						family = MacroArpFieldDefinitionFamily.Unmanaged;
-						metaArpHeatDown = nativeField.name;
+						this.family = MacroArpFieldDefinitionFamily.Unmanaged;
+						this.metaArpHeatDown = nativeField.name;
 					case ":arpDispose":
-						family = MacroArpFieldDefinitionFamily.Unmanaged;
-						metaArpDispose = nativeField.name;
+						this.family = MacroArpFieldDefinitionFamily.Unmanaged;
+						this.metaArpDispose = nativeField.name;
 					case ":arpWithoutBackend":
-						family = MacroArpFieldDefinitionFamily.Unmanaged;
+						this.family = MacroArpFieldDefinitionFamily.Unmanaged;
 						Context.warning('Not supported in this backend', nativeField.pos);
 					case m if (m.indexOf(":arp") == 0):
 						throw 'Unsupported arp metadata';
@@ -125,6 +129,7 @@ enum MacroArpFieldDefinitionFamily {
 	Unmanaged;
 	ArpField;
 	Impl;
+	Constructor(func:Function);
 }
 
 enum MacroArpMetaArpField {

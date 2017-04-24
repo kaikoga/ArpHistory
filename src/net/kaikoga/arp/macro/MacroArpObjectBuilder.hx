@@ -83,6 +83,8 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 					this.arpFields.push(arpField);
 					templateInfo.fields.push(arpField.toFieldInfo());
 					arpField.buildField(outFields);
+				case MacroArpFieldBuilderResult.Constructor(func):
+					outFields = outFields.concat(this.genConstructorField(func));
 			}
 		}
 
