@@ -298,7 +298,11 @@ class MacroArpObjectStub {
 				args:nativeFunc.args,
 				ret:nativeFunc.ret,
 				expr: macro @:mergeBlock {
-					// this.arpImpl = this.createImpl();
+					${if (this.classDef.hasImpl) {
+						macro { /*this.arpImpl = this.createImpl();*/  };
+					} else {
+						macro { };
+					}}
 					${nativeFunc.expr}
 				},
 				params: nativeFunc.params
