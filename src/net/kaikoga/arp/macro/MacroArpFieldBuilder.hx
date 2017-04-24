@@ -233,9 +233,9 @@ class MacroArpFieldBuilder {
 	private function run():MacroArpFieldBuilderResult {
 		this.log("field: " + definition.nativeField.name);
 		switch (definition.family) {
-			case MacroArpFieldDefinitionFamily.Impl:
+			case MacroArpFieldDefinitionFamily.Impl(typePath):
 				this.log("done: " + definition.nativeField.name);
-				return MacroArpFieldBuilderResult.Impl;
+				return MacroArpFieldBuilderResult.Impl(typePath);
 			case MacroArpFieldDefinitionFamily.ImplicitUnmanaged, MacroArpFieldDefinitionFamily.Unmanaged:
 				this.log("done: " + definition.nativeField.name);
 				return MacroArpFieldBuilderResult.Unmanaged;
@@ -261,7 +261,7 @@ class MacroArpFieldBuilder {
 
 enum MacroArpFieldBuilderResult {
 	Unmanaged;
-	Impl;
+	Impl(typePath:TypePath);
 	ArpField(value:IMacroArpField);
 	Constructor(func:Function);
 }

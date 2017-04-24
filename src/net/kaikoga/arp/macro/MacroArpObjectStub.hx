@@ -259,13 +259,42 @@ class MacroArpObjectStub {
 		}).fields;
 	}
 
-	private function genConstructorField(func:Function):Array<Field> {
+	private function genImplFields(implTypePath:TypePath):Array<Field> {
+		var implType:ComplexType = ComplexType.TPath(implTypePath);
 		return (macro class Generated {
-			public function new() {
-				// this.arpImpl = this.createImpl();
-				${func.expr};
-			}
+			@:noDoc @:noCompletion
+			private var arpImpl:$implType;
+
+			@:noDoc @:noCompletion
+			private function createImpl():$implType return null;
 		}).fields;
+	}
+
+	private function genDerivedImplFields(implTypePath:TypePath):Array<Field> {
+		var implType = ComplexType.TPath(implTypePath);
+		return (macro class Generated {
+			@:noDoc @:noCompletion
+			override private function createImpl() return new $implTypePath(this);
+		}).fields;
+	}
+
+	private function genConstructorField(nativeField:Field, nativeFunc:Function):Array<Field> {
+		return [{
+			name: "new",
+			doc: nativeField.doc,
+			access: nativeField.access,
+			kind: FieldType.FFun({
+				args:nativeFunc.args,
+				ret:nativeFunc.ret,
+				expr: macro @:mergeBlock {
+					// this.arpImpl = this.createImpl();
+					${nativeFunc.expr}
+				},
+				params: nativeFunc.params
+			}),
+			pos: nativeField.pos,
+			meta:nativeField.meta
+		}];
 	}
 
 }

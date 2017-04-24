@@ -67,8 +67,13 @@ class MacroArpFieldDefinition {
 						this.family = MacroArpFieldDefinitionFamily.ArpField;
 						this.metaArpBarrier = true;
 					case ":arpImpl":
-						this.family = MacroArpFieldDefinitionFamily.Impl;
-						this.metaArpImpl = true;
+						switch (nativeType) {
+							case ComplexType.TPath(typePath):
+								this.family = MacroArpFieldDefinitionFamily.Impl(typePath);
+								this.metaArpImpl = true;
+							case _:
+								throw "TypePath expected for arpImpl";
+						}
 					case ":arpInit":
 						this.family = MacroArpFieldDefinitionFamily.Unmanaged;
 						this.metaArpInit = nativeField.name;
@@ -128,7 +133,7 @@ enum MacroArpFieldDefinitionFamily {
 	ImplicitUnmanaged;
 	Unmanaged;
 	ArpField;
-	Impl;
+	Impl(typePath:TypePath);
 	Constructor(func:Function);
 }
 
