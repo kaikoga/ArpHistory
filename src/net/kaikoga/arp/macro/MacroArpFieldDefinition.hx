@@ -45,6 +45,28 @@ class MacroArpFieldDefinition {
 			case FieldType.FProp(_, _, n, d), FieldType.FVar(n, d):
 				this.nativeType = n;
 				this.nativeDefault = d;
+				for (meta in nativeField.meta) {
+					switch (meta.name) {
+						case ":arpField":
+							this.family = MacroArpFieldDefinitionFamily.ArpField;
+							this.metaArpField = parseMetaArpField(meta.params[0]);
+						case ":arpVolatile":
+							this.family = MacroArpFieldDefinitionFamily.ArpField;
+							this.metaArpVolatile = true;
+						case ":arpBarrier":
+							this.family = MacroArpFieldDefinitionFamily.ArpField;
+							this.metaArpBarrier = true;
+						case ":arpImpl":
+							switch (nativeType) {
+								case ComplexType.TPath(typePath):
+									this.family = MacroArpFieldDefinitionFamily.Impl(typePath);
+									this.metaArpImpl = true;
+								case _: throw "TypePath expected for arpImpl";
+							}
+						case m:
+							assertNotInvalidArpMeta(m);
+					}
+				}
 			case FieldType.FFun(func):
 				this.nativeType = null;
 				this.nativeDefault = null;
@@ -52,52 +74,25 @@ class MacroArpFieldDefinition {
 					this.family = MacroArpFieldDefinitionFamily.Constructor(func);
 					return;
 				}
+				this.family = MacroArpFieldDefinitionFamily.Unmanaged;
+				for (meta in nativeField.meta) {
+					switch (meta.name) {
+						case ":arpInit":
+							this.metaArpInit = nativeField.name;
+						case ":arpHeatUp":
+							this.metaArpHeatUp = nativeField.name;
+						case ":arpHeatDown":
+							this.metaArpHeatDown = nativeField.name;
+						case ":arpDispose":
+							this.metaArpDispose = nativeField.name;
+						case ":arpWithoutBackend":
+							Context.warning('Not supported in this backend', nativeField.pos);
+						case m:
+							assertNotInvalidArpMeta(m);
+					}
+				}
 		}
 
-		for (meta in nativeField.meta) {
-			try {
-				switch (meta.name) {
-					case ":arpField":
-						this.family = MacroArpFieldDefinitionFamily.ArpField;
-						this.metaArpField = parseMetaArpField(meta.params[0]);
-					case ":arpVolatile":
-						this.family = MacroArpFieldDefinitionFamily.ArpField;
-						this.metaArpVolatile = true;
-					case ":arpBarrier":
-						this.family = MacroArpFieldDefinitionFamily.ArpField;
-						this.metaArpBarrier = true;
-					case ":arpImpl":
-						switch (nativeType) {
-							case ComplexType.TPath(typePath):
-								this.family = MacroArpFieldDefinitionFamily.Impl(typePath);
-								this.metaArpImpl = true;
-							case _:
-								throw "TypePath expected for arpImpl";
-						}
-					case ":arpInit":
-						this.family = MacroArpFieldDefinitionFamily.Unmanaged;
-						this.metaArpInit = nativeField.name;
-					case ":arpHeatUp":
-						this.family = MacroArpFieldDefinitionFamily.Unmanaged;
-						this.metaArpHeatUp = nativeField.name;
-					case ":arpHeatDown":
-						this.family = MacroArpFieldDefinitionFamily.Unmanaged;
-						this.metaArpHeatDown = nativeField.name;
-					case ":arpDispose":
-						this.family = MacroArpFieldDefinitionFamily.Unmanaged;
-						this.metaArpDispose = nativeField.name;
-					case ":arpWithoutBackend":
-						this.family = MacroArpFieldDefinitionFamily.Unmanaged;
-						Context.warning('Not supported in this backend', nativeField.pos);
-					case m if (m.indexOf(":arp") == 0):
-						throw 'Unsupported arp metadata';
-					case m if (m.indexOf("arp") == 0):
-						throw 'Arp metadata is compile time only';
-				}
-			} catch (d:Dynamic) {
-				Context.error(d + ': @' + meta.name, this.nativeField.pos);
-			}
-		}
 	}
 
 	private function isArpManaged():Bool {
@@ -105,6 +100,14 @@ class MacroArpFieldDefinition {
 			case MacroArpFieldDefinitionFamily.ImplicitUnmanaged: return false;
 			case MacroArpFieldDefinitionFamily.Unmanaged: return false;
 			case _: return true;
+		}
+	}
+
+	private function assertNotInvalidArpMeta(metaName:String):Void {
+		if (metaName.indexOf(":arp") == 0) {
+			Context.error('Unsupported arp metadata: @${metaName}', this.nativeField.pos);
+		} else if (metaName.indexOf("arp") == 0) {
+			Context.error('Arp metadata is compile time only: @${metaName}', this.nativeField.pos);
 		}
 	}
 
