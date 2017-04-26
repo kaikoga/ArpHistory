@@ -11,6 +11,7 @@ using haxe.macro.TypeTools;
 class MacroArpImplClassDefinition {
 
 	public var isInterface:Bool;
+	private var interfaces:Array<ClassType>;
 	public var fields(default, null):Array<Field>;
 
 	@:access(haxe.macro.TypeTools)
@@ -27,13 +28,13 @@ class MacroArpImplClassDefinition {
 
 		// extract fields from interfaces which fields must be explicitly typed
 		// types of class instance fields may be TLazy and therefore unable to generate delegate methods
-		var interfaces:Array<ClassType>;
+		this.interfaces = [];
 		if (classType.isInterface) {
 			this.isInterface = true;
-			interfaces = [classType];
+			this.recordAllInterfaces(classType);
 		} else {
 			this.isInterface = false;
-			interfaces = [for (intf in classType.interfaces) intf.t.get()];
+			for (intf in classType.interfaces) this.recordAllInterfaces(intf.t.get());
 		}
 
 		for (intf in interfaces) {
@@ -55,6 +56,14 @@ class MacroArpImplClassDefinition {
 				}
 			}
 		}
+	}
+
+	private function recordAllInterfaces(intf:ClassType):Void {
+		this.interfaces.push(intf);
+
+		// TODO do we have to implement recursively...?
+		// if (this.interfaces.indexOf(intf) < 0) this.interfaces.push(intf);
+		// for (i in intf.interfaces) this.recordAllInterfaces(i.t.get());
 	}
 
 	private function genVarDelegate(classField:ClassField, isR:Bool, isW:Bool):Void {
