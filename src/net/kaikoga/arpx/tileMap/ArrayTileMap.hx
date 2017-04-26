@@ -5,9 +5,14 @@ class ArrayTileMap extends TileMap {
 
 	@:arpField public var outerTileIndex:Int;
 
-	public function new(array:Array<Array<Int>> = null) {
+	public function new() {
 		super();
-		this.map = array;
+	}
+
+	public static function fromArray(array:Array<Array<Int>>):ArrayTileMap {
+		var arrayTileMap:ArrayTileMap = new ArrayTileMap();
+		arrayTileMap.map = array;
+		return arrayTileMap;
 	}
 
 	private var map:Array<Array<Int>>;
