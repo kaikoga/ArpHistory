@@ -79,7 +79,7 @@ class TiledExternal extends External {
 
 		for (layer in xml.elementsNamed("layer")) {
 			var layerData:Array<Array<Int>> = this.readTiledLayer(layer);
-			var tileMap:ArrayTileMap = this.data.addObject(new ArrayTileMap(layerData));
+			var tileMap:ArrayTileMap = this.data.addObject(ArrayTileMap.fromArray(layerData));
 			tileMap.width = Std.parseInt(xml.get("width"));
 			tileMap.height = Std.parseInt(xml.get("height"));
 			tileMap.outerTileIndex = (this.outerTileIndex != 0) ? this.outerTileIndex : layerData[0][0];
