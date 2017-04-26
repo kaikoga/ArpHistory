@@ -49,13 +49,14 @@ class KeyInputFlashImpl implements IInputFlashImpl {
 		input.clear();
 		for (keyCode in this.keyStates.keys()) {
 			if (!this.keyStates.get(keyCode)) continue;
-			
+
 			var binding:KeyInputBinding = this.input.keyBindings.get(keyCode);
 			if (binding != null) {
 				var axis:InputAxis = this.input.axis(binding.axis);
 				axis.nextValue += binding.factor;
 			}
 		}
+		for (axis in input.inputAxes) axis.tick(timeslice);
 	}
 
 }

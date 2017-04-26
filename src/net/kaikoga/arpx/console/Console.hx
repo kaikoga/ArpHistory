@@ -7,7 +7,6 @@ import net.kaikoga.arpx.camera.Camera;
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.console.IConsoleFlashImpl;
 import net.kaikoga.arpx.backends.flash.console.ConsoleFlashImpl;
-import flash.display.BitmapData;
 #end
 
 @:build(net.kaikoga.arp.ArpDomainMacros.buildObject("console", "console"))
@@ -18,23 +17,11 @@ class Console implements IArpObject
 	@:arpField public var width:Int;
 	@:arpField public var height:Int;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-
-	public function new() {
-		flashImpl = new ConsoleFlashImpl(this);
-	}
-
-	private var flashImpl:ConsoleFlashImpl;
-
-	inline public function display(bitmapData:BitmapData):Void {
-		flashImpl.display(bitmapData);
-	}
-
-	#else
-
+#if (arp_backend_flash || arp_backend_openfl)
+	@:arpImpl private var flashImpl:ConsoleFlashImpl;
+#else
 	@:arpWithoutBackend
-	public function new () {
+#end
+	public function new() {
 	}
-
-	#end
 }

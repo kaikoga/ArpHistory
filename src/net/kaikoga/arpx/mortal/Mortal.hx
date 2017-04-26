@@ -15,10 +15,7 @@ import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.reactFrame.ReactFrame;
 
 #if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
-import net.kaikoga.arpx.backends.flash.geom.APoint;
 import net.kaikoga.arpx.backends.flash.mortal.IMortalFlashImpl;
-import flash.display.BitmapData;
 #end
 
 @:build(net.kaikoga.arp.ArpDomainMacros.buildObject("mortal", "null"))
@@ -35,28 +32,14 @@ class Mortal implements IArpObject
 
 	private var hitMortals:Map<String, HitMortal>;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-
-	private var flashImpl:IMortalFlashImpl;
-
-	private function createImpl():IMortalFlashImpl return null;
-
-	public function new() {
-		hitMortals = new Map<String, HitMortal>();
-		flashImpl = createImpl();
-	}
-
-	inline public function copySelf(bitmapData:BitmapData, transform:ITransform):Void {
-		flashImpl.copySelf(bitmapData, transform);
-	}
-
-	#else
-
+#if (arp_backend_flash || arp_backend_openfl)
+	@:arpImpl private var flashImpl:IMortalFlashImpl;
+#else
 	@:arpWithoutBackend
+#end
 	public function new () {
+		hitMortals = new Map<String, HitMortal>();
 	}
-
-	#end
 
 	private var isComplex(get, never):Bool;
 	private function get_isComplex():Bool return false;
@@ -67,8 +50,6 @@ class Mortal implements IArpObject
 		hitMortals.set(hitType, hitMortal);
 		return hitMortal;
 	}
-
-	private static var _workPt:APoint = new APoint();
 
 	public function tick(field:Field):Void {
 		if (this.driver != null) {

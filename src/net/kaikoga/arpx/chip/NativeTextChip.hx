@@ -4,7 +4,6 @@ import net.kaikoga.arp.structs.ArpColor;
 import net.kaikoga.arp.structs.ArpParams;
 
 #if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
 import net.kaikoga.arpx.backends.flash.chip.NativeTextChipFlashImpl;
 #end
 
@@ -24,25 +23,17 @@ class NativeTextChip extends Chip {
 	override public function chipHeightOf(params:ArpParams):Int return this.chipHeight;
 	override public function hasFace(face:String):Bool return true;
 
-	#if (arp_backend_flash || arp_backend_openfl)
+#if (arp_backend_flash || arp_backend_openfl)
+	@:arpImpl private var flashImpl:NativeTextChipFlashImpl;
 
-	override private function createImpl():IChipFlashImpl return new NativeTextChipFlashImpl(this);
-
-	public function new() {
-		super();
-	}
-
-	@:arpHeatUp private function heatUp():Bool return cast(this.flashImpl, NativeTextChipFlashImpl).heatUp();
-	@:arpHeatDown private function heatDown():Bool return cast(this.flashImpl, NativeTextChipFlashImpl).heatDown();
-
-	#else
-
+	@:arpHeatUp private function heatUp():Bool return cast(this.arpImpl, NativeTextChipFlashImpl).heatUp();
+	@:arpHeatDown private function heatDown():Bool return cast(this.arpImpl, NativeTextChipFlashImpl).heatDown();
+#else
 	@:arpWithoutBackend
+#end
 	public function new () {
 		super();
 	}
-
-	#end
 }
 
 

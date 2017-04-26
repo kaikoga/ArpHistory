@@ -14,12 +14,12 @@ import net.kaikoga.arpx.reactFrame.ReactFrame;
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.field.IFieldFlashImpl;
 import net.kaikoga.arpx.backends.flash.field.FieldFlashImpl;
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
-import flash.display.BitmapData;
 #end
 
 @:build(net.kaikoga.arp.ArpDomainMacros.buildObject("field"))
-class Field implements IArpObject {
+class Field implements IArpObject
+#if (arp_backend_flash || arp_backend_openfl) implements IFieldFlashImpl #end
+{
 
 	@:arpBarrier @:arpField("mortal") public var initMortals:IOmap<String, Mortal>;
 	@:arpBarrier @:arpField(false) public var mortals:IOmap<String, Mortal>;
@@ -32,27 +32,13 @@ class Field implements IArpObject {
 	private var hitField:HitObjectField<HitGeneric, HitMortal>;
 	private var anchorField:HitField<HitGeneric, Anchor>;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-
-	private var flashImpl:IFieldFlashImpl;
-
-	private function createImpl():IFieldFlashImpl return new FieldFlashImpl(this);
-
-	public function new() {
-		flashImpl = createImpl();
-	}
-
-	inline public function copySelf(bitmapData:BitmapData, transform:ITransform):Void {
-		flashImpl.copySelf(bitmapData, transform);
-	}
-
-	#else
-
+#if (arp_backend_flash || arp_backend_openfl)
+	@:arpImpl private var flashImpl:FieldFlashImpl;
+#else
 	@:arpWithoutBackend
+#end
 	public function new () {
 	}
-
-	#end
 
 	@:arpHeatUp private function heatUp():Bool {
 		if (this.hitField == null) this.hitField = new HitObjectField<HitGeneric, HitMortal>(new HitWithCuboid());

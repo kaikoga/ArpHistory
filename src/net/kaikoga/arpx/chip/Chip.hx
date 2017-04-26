@@ -5,8 +5,6 @@ import net.kaikoga.arp.structs.ArpParams;
 
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
-import flash.display.BitmapData;
 #end
 
 @:build(net.kaikoga.arp.ArpDomainMacros.buildObject("chip", "null"))
@@ -34,25 +32,12 @@ class Chip implements IArpObject
 	//TODO hasChipName must distinguish explicit and implicit existence
 	public function hasFace(face:String):Bool return false;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-
-	private var flashImpl:IChipFlashImpl;
-
-	private function createImpl():IChipFlashImpl return null;
-
-	public function new() {
-		flashImpl = createImpl();
-	}
-
-	inline public function copyChip(bitmapData:BitmapData, transform:ITransform, params:ArpParams = null):Void {
-		flashImpl.copyChip(bitmapData, transform, params);
-	}
-
-	#else
-
+#if (arp_backend_flash || arp_backend_openfl)
+	@:arpImpl private var flashImpl:IChipFlashImpl;
+#else
 	@:arpWithoutBackend
+#end
 	public function new () {
 	}
 
-	#end
 }

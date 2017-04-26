@@ -17,10 +17,10 @@ class TcpSocketClientFlashImpl extends SocketClientImplBase {
 	private var socketClient:TcpSocketClient;
 	private var onData:IArpSignalIn<ArpProgressEvent>;
 
-	public function new(socketClient:TcpSocketClient, onData:ArpSignal<ArpProgressEvent>) {
+	public function new(socketClient:TcpSocketClient) {
 		super();
 		this.socketClient = socketClient;
-		this.onData = onData;
+		this.onData = socketClient._onData;
 	}
 
 	private var socket:Socket;

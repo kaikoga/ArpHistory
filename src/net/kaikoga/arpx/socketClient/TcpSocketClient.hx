@@ -1,9 +1,5 @@
 package net.kaikoga.arpx.socketClient;
 
-import net.kaikoga.arp.events.ArpProgressEvent;
-import net.kaikoga.arp.events.ArpSignal;
-import net.kaikoga.arpx.backends.cross.socketClient.ISocketClientImpl;
-
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.socketClient.TcpSocketClientFlashImpl;
 #end
@@ -13,22 +9,15 @@ class TcpSocketClient extends SocketClient {
 
 	@:arpField public var host:String;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-
-	override private function createImpl(onData:ArpSignal<ArpProgressEvent>):ISocketClientImpl return new TcpSocketClientFlashImpl(this, onData);
-
-	public function new() {
-		super();
-	}
-
-	#else
-
+#if (arp_backend_flash || arp_backend_openfl)
+	@:arpImpl private var flashImpl:TcpSocketClientFlashImpl;
+#else
 	@:arpWithoutBackend
+#end
 	public function new () {
 		super();
 	}
 
-	#end
 }
 
 

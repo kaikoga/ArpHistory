@@ -23,9 +23,9 @@ class TcpCachedSocketClientFlashImpl implements ISocketClientImpl {
 	inline public function get_bigEndian():Bool return false;
 	inline public function set_bigEndian(value:Bool):Bool return false;
 
-	public function new(socketClient:TcpCachedSocketClient, onData:ArpSignal<ArpProgressEvent>) {
+	public function new(socketClient:TcpCachedSocketClient) {
 		this.socketClient = socketClient;
-		this.onData = onData;
+		this.onData = socketClient._onData;
 		this.inPipe = new Pipe();
 		this.inPipe.bigEndian = true;
 		this.outPipe = new Pipe();

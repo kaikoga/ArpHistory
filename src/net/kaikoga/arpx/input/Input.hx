@@ -5,43 +5,21 @@ import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arpx.backends.flash.input.IInputFlashImpl;
 import net.kaikoga.arp.domain.IArpObject;
 
-#if (arp_backend_flash || arp_backend_openfl)
-import flash.events.IEventDispatcher;
-#end
-
 @:build(net.kaikoga.arp.ArpDomainMacros.buildObject("input", "null"))
-class Input implements IArpObject implements IInputFlashImpl{
+class Input implements IArpObject
+#if (arp_backend_flash || arp_backend_openfl) implements IInputFlashImpl #end
+{
 
 	public var inputAxes:IMap<String, InputAxis>;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-
-	private var flashImpl:IInputFlashImpl;
-
-	private function createImpl():IInputFlashImpl return null;
-
-	public function new() {
-		this.inputAxes = new StdMap<String, InputAxis>();
-		flashImpl = createImpl();
-	}
-
-	public function listen(target:IEventDispatcher):Void flashImpl.listen(target);
-
-	public function purge():Void flashImpl.purge();
-
-	public function tick(timeslice:Float):Void {
-		flashImpl.tick(timeslice);
-		for (axis in this.inputAxes) axis.tick(timeslice);
-	}
-
-	#else
-
+#if (arp_backend_flash || arp_backend_openfl)
+	@:arpImpl private var flashImpl:IInputFlashImpl;
+#else
 	@:arpWithoutBackend
+#end
 	public function new () {
 		this.inputAxes = new StdMap<String, InputAxis>();
 	}
-
-	#end
 
 	public function clear():Void {
 		this.inputAxes.clear();

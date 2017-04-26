@@ -10,22 +10,11 @@ class Texture implements IArpObject
 {
 	@:arpField public var hasAlpha:Bool = true;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-	private var flashImpl:ITextureFlashImpl;
-
-	private function createImpl():ITextureFlashImpl return null;
-
-	public function new() {
-		flashImpl = createImpl();
-	}
-
-	inline public function bitmapData():BitmapData return flashImpl.bitmapData();
-
-	#else
-
+#if (arp_backend_flash || arp_backend_openfl)
+	@:arpImpl private var arpImpl:ITextureFlashImpl;
+#else
 	@:arpWithoutBackend
+#end
 	public function new () {
 	}
-
-	#end
 }

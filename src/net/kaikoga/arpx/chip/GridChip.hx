@@ -5,7 +5,6 @@ import net.kaikoga.arpx.texture.Texture;
 import net.kaikoga.arp.structs.ArpParams;
 
 #if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
 import net.kaikoga.arpx.backends.flash.chip.GridChipFlashImpl;
 #end
 
@@ -35,25 +34,18 @@ class GridChip extends Chip {
 		return true;
 	}
 
-	#if (arp_backend_flash || arp_backend_openfl)
+#if (arp_backend_flash || arp_backend_openfl)
+	@:arpImpl
+	private var flashImpl:GridChipFlashImpl;
 
-	override private function createImpl():IChipFlashImpl return new GridChipFlashImpl(this);
-
-	public function new() {
-		super();
-	}
-
-	@:arpHeatUp private function heatUp():Bool return cast(this.flashImpl, GridChipFlashImpl).heatUp();
-	@:arpHeatDown private function heatDown():Bool return cast(this.flashImpl, GridChipFlashImpl).heatDown();
-
-	#else
-
+	@:arpHeatUp private function heatUp():Bool return cast(this.arpImpl, GridChipFlashImpl).heatUp();
+	@:arpHeatDown private function heatDown():Bool return cast(this.arpImpl, GridChipFlashImpl).heatDown();
+#else
 	@:arpWithoutBackend
+#end
 	public function new () {
 		super();
 	}
-
-	#end
 }
 
 
