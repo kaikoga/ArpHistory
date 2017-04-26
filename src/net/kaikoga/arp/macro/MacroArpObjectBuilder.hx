@@ -51,21 +51,12 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 						outFields = outFields.concat(this.genVoidCallbackField("arpSelfDispose", fieldDef.metaArpDispose));
 					}
 				case MacroArpFieldBuilderResult.Impl(typePath):
-					Context.warning('${fieldDef.nativeType}', Context.currentPos());
-					var type:Type = Context.resolveType(fieldDef.nativeType, Context.currentPos());
-					Context.warning('${type}', Context.currentPos());
-					var classType:ClassType = switch (type) {
-						case TInst(c, _): c.get();
-						case _: throw "impl must be class or interface instance";
-					}
-					Context.warning('${classType}', Context.currentPos());
 					if (this.classDef.isDerived) {
 						outFields = outFields.concat(this.genDerivedImplFields(typePath));
 					} else {
 						outFields = outFields.concat(this.genImplFields(typePath));
-						Context.warning("forward_all_instance_fields()", Context.currentPos());
-						Context.warning("and_perhaps_implement_interfaces()", Context.currentPos());
 					}
+					// TODO we also want the class to implement impl interface
 					//throw "not implemented";
 				case MacroArpFieldBuilderResult.ArpField(arpField):
 					this.arpFields.push(arpField);

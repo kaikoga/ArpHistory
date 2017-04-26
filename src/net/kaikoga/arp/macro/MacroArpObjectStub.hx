@@ -272,13 +272,28 @@ class MacroArpObjectStub {
 
 	private function genImplFields(implTypePath:TypePath):Array<Field> {
 		var implType:ComplexType = ComplexType.TPath(implTypePath);
-		return (macro class Generated {
+		var implClassDef:MacroArpImplClassDefinition = new MacroArpImplClassDefinition(implType);
+
+		// generate arpImpl
+		var fields:Array<Field> = (macro class Generated {
 			@:noDoc @:noCompletion
 			private var arpImpl:$implType;
 
 			@:noDoc @:noCompletion
-			private function createImpl():$implType return null;
+			private function createImpl():$implType return ${
+				if (implClassDef.isInterface) {
+					// polymorphic impl
+					macro null;
+				} else {
+					// monomorphic impl
+					macro new $implTypePath(this);
+				}
+			};
 		}).fields;
+
+		// and populate delegate methods
+		fields = fields.concat(implClassDef.fields);
+		return fields;
 	}
 
 	private function genDerivedImplFields(implTypePath:TypePath):Array<Field> {
@@ -290,6 +305,7 @@ class MacroArpObjectStub {
 	}
 
 	private function genConstructorField(nativeField:Field, nativeFunc:Function):Array<Field> {
+		// insert `this.arpImpl = this.createImpl()` before constructor expr
 		return [{
 			name: "new",
 			doc: nativeField.doc,
@@ -299,7 +315,7 @@ class MacroArpObjectStub {
 				ret:nativeFunc.ret,
 				expr: macro @:mergeBlock {
 					${if (this.classDef.hasImpl) {
-						macro { /*this.arpImpl = this.createImpl();*/  };
+						macro { this.arpImpl = this.createImpl(); };
 					} else {
 						macro { };
 					}}
