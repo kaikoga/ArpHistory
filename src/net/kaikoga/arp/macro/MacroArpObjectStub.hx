@@ -304,28 +304,39 @@ class MacroArpObjectStub {
 		}).fields;
 	}
 
-	private function genConstructorField(nativeField:Field, nativeFunc:Function):Array<Field> {
-		// insert `this.arpImpl = this.createImpl()` before constructor expr
-		return [{
-			name: "new",
+	private function prependFunctionBody(nativeField:Field, expr:Expr):Field {
+		var nativeFunc:Function;
+		switch (nativeField.kind) {
+			case FieldType.FFun(func):
+				nativeFunc = func;
+			case _:
+				throw "Internal error: field is not a function";
+		}
+		return {
+			name: nativeField.name,
 			doc: nativeField.doc,
 			access: nativeField.access,
 			kind: FieldType.FFun({
 				args:nativeFunc.args,
 				ret:nativeFunc.ret,
 				expr: macro @:mergeBlock {
-					${if (this.classDef.hasImpl) {
-						macro { this.arpImpl = this.createImpl(); };
-					} else {
-						macro { };
-					}}
+					${expr}
 					${nativeFunc.expr}
 				},
 				params: nativeFunc.params
 			}),
 			pos: nativeField.pos,
 			meta:nativeField.meta
-		}];
+		};
+	}
+
+	private function genConstructorField(nativeField:Field, nativeFunc:Function):Array<Field> {
+		var expr:Expr = if (this.classDef.hasImpl) {
+			macro { this.arpImpl = this.createImpl(); };
+		} else {
+			macro { };
+		}
+		return [prependFunctionBody(nativeField, expr)];
 	}
 
 }
