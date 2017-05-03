@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.backends.flash.socketClient;
 
+import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arp.io.flash.DataOutputWrapper;
 import net.kaikoga.arp.io.flash.DataInputWrapper;
 import haxe.io.Bytes;
@@ -8,13 +9,12 @@ import net.kaikoga.arp.io.Pipe;
 import net.kaikoga.arpx.socketClient.TcpCachedSocketClient;
 import net.kaikoga.arp.events.IArpSignalIn;
 import net.kaikoga.arp.events.ArpProgressEvent;
-import net.kaikoga.arp.events.ArpSignal;
 import flash.events.ProgressEvent;
 import flash.events.IOErrorEvent;
 import flash.events.Event;
 import flash.net.Socket;
 
-class TcpCachedSocketClientFlashImpl implements ISocketClientImpl {
+class TcpCachedSocketClientFlashImpl extends ArpObjectImplBase implements ISocketClientImpl {
 
 	private var socketClient:TcpCachedSocketClient;
 	private var onData:IArpSignalIn<ArpProgressEvent>;
@@ -24,6 +24,7 @@ class TcpCachedSocketClientFlashImpl implements ISocketClientImpl {
 	inline public function set_bigEndian(value:Bool):Bool return false;
 
 	public function new(socketClient:TcpCachedSocketClient) {
+		super();
 		this.socketClient = socketClient;
 		this.onData = socketClient._onData;
 		this.inPipe = new Pipe();
@@ -38,7 +39,7 @@ class TcpCachedSocketClientFlashImpl implements ISocketClientImpl {
 	private var outPipe:Pipe;
 	private var inPipe:Pipe;
 
-	public function heatUp():Bool {
+	override public function arpHeatUp():Bool {
 		if (this.socketClient.host == null) {
 			return true;
 		}
@@ -83,7 +84,7 @@ class TcpCachedSocketClientFlashImpl implements ISocketClientImpl {
 		if (this.output != null) this.output.writeBytes(this.outPipe.nextBytes(this.outPipe.bytesAvailable));
 	}
 
-	public function heatDown():Bool {
+	override public function arpHeatDown():Bool {
 		this.input = null;
 		this.output = null;
 		this.socket.close();

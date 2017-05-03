@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.backends.flash.chip;
 
+import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import flash.geom.Matrix;
 import flash.geom.Point;
 import flash.geom.Rectangle;
@@ -8,11 +9,12 @@ import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import net.kaikoga.arpx.chip.RectChip;
 import flash.display.BitmapData;
 
-class RectChipFlashImpl implements IChipFlashImpl {
+class RectChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 
 	private var chip:RectChip;
 
 	public function new(chip:RectChip) {
+		super();
 		this.chip = chip;
 	}
 

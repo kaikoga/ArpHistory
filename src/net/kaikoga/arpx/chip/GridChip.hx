@@ -37,9 +37,6 @@ class GridChip extends Chip {
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl
 	private var flashImpl:GridChipFlashImpl;
-
-	@:arpHeatUp private function heatUp():Bool return cast(this.arpImpl, GridChipFlashImpl).heatUp();
-	@:arpHeatDown private function heatDown():Bool return cast(this.arpImpl, GridChipFlashImpl).heatDown();
 #else
 	@:arpWithoutBackend
 #end

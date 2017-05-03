@@ -5,7 +5,6 @@ import net.kaikoga.arp.io.flash.DataInputWrapper;
 import net.kaikoga.arpx.backends.cross.socketClient.SocketClientImplBase;
 import net.kaikoga.arp.events.IArpSignalIn;
 import net.kaikoga.arp.events.ArpProgressEvent;
-import net.kaikoga.arp.events.ArpSignal;
 import flash.events.ProgressEvent;
 import flash.events.IOErrorEvent;
 import flash.events.Event;
@@ -25,7 +24,7 @@ class TcpSocketClientFlashImpl extends SocketClientImplBase {
 
 	private var socket:Socket;
 
-	override public function heatUp():Bool {
+	override public function arpHeatUp():Bool {
 		if (this.socketClient.host == null) {
 			return true;
 		}
@@ -63,7 +62,7 @@ class TcpSocketClientFlashImpl extends SocketClientImplBase {
 		if (this.onData.willTrigger()) this.onData.dispatch(new ArpProgressEvent(event.bytesLoaded, event.bytesTotal));
 	}
 
-	override public function heatDown():Bool {
+	override public function arpHeatDown():Bool {
 		this.input = null;
 		this.output = null;
 		this.socket.close();

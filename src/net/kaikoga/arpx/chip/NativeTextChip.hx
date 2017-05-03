@@ -25,9 +25,6 @@ class NativeTextChip extends Chip {
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:NativeTextChipFlashImpl;
-
-	@:arpHeatUp private function heatUp():Bool return cast(this.arpImpl, NativeTextChipFlashImpl).heatUp();
-	@:arpHeatDown private function heatDown():Bool return cast(this.arpImpl, NativeTextChipFlashImpl).heatDown();
 #else
 	@:arpWithoutBackend
 #end

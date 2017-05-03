@@ -10,7 +10,7 @@ import net.kaikoga.arpx.backends.cross.socketClient.ISocketClientImpl;
 @:build(net.kaikoga.arp.ArpDomainMacros.buildObject("socketClient", "null"))
 class SocketClient implements IArpObject implements ISocketClientImpl {
 
-	@:arpImpl private var impl:ISocketClientImpl;
+	@:arpImpl private var arpImpl:ISocketClientImpl;
 
 	@:allow(net.kaikoga.arpx.backends.cross.socketClient.ISocketClientImpl)
 	private var _onData:ArpSignal<ArpProgressEvent>;
@@ -55,9 +55,6 @@ class SocketClient implements IArpObject implements ISocketClientImpl {
 	inline public function writeUtfBytes(value:String):Void arpImpl.writeUtfBytes(value);
 	inline public function writeBlob(bytes:Bytes):Void arpImpl.writeBlob(bytes);
 	inline public function writeUtfBlob(value:String):Void arpImpl.writeUtfBlob(value);
-
-	@:arpHeatUp public function heatUp():Bool return this.arpImpl.heatUp();
-	@:arpHeatDown public function heatDown():Bool return this.arpImpl.heatDown();
 }
 
 

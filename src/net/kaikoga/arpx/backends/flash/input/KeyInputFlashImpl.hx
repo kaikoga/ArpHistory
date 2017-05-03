@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.backends.flash.input;
 
+import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.input.InputAxis;
 import flash.events.Event;
 import flash.events.KeyboardEvent;
@@ -7,7 +8,7 @@ import flash.events.IEventDispatcher;
 
 import net.kaikoga.arpx.input.KeyInput;
 
-class KeyInputFlashImpl implements IInputFlashImpl {
+class KeyInputFlashImpl extends ArpObjectImplBase implements IInputFlashImpl {
 
 	private var input:KeyInput;
 
@@ -15,6 +16,7 @@ class KeyInputFlashImpl implements IInputFlashImpl {
 	private var keyStates:Map<Int, Bool>;
 
 	public function new(input:KeyInput) {
+		super();
 		this.input = input;
 		this.keyStates = new Map<Int, Bool>();
 	}

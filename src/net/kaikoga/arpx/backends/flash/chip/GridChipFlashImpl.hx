@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.backends.flash.chip;
 
+import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arp.domain.ArpHeat;
 import flash.geom.Point;
 import net.kaikoga.arp.structs.ArpDirection;
@@ -10,11 +11,12 @@ import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import flash.display.BitmapData;
 
-class GridChipFlashImpl implements IChipFlashImpl {
+class GridChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 
 	private var chip:GridChip;
 
 	public function new(chip:GridChip) {
+		super();
 		this.chip = chip;
 	}
 
@@ -23,7 +25,7 @@ class GridChipFlashImpl implements IChipFlashImpl {
 	private var bounds:Array<Rectangle>;
 	private var trimmedBitmaps:Map<Int, BitmapData>;
 
-	public function heatUp():Bool {
+	override public function arpHeatUp():Bool {
 		if (this.sourceBitmap != null) {
 			return true;
 		}
@@ -79,7 +81,7 @@ class GridChipFlashImpl implements IChipFlashImpl {
 		return true;
 	}
 
-	public function heatDown():Bool {
+	override public function arpHeatDown():Bool {
 		if (this.sourceBitmap == null) {
 			return true;
 		}

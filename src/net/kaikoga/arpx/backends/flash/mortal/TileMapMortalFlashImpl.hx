@@ -1,17 +1,19 @@
 package net.kaikoga.arpx.backends.flash.mortal;
 
+import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.flash.tileMap.TileMapRenderer;
 import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import net.kaikoga.arpx.mortal.TileMapMortal;
 import flash.display.BitmapData;
 import flash.geom.Point;
 
-class TileMapMortalFlashImpl implements IMortalFlashImpl {
+class TileMapMortalFlashImpl extends ArpObjectImplBase implements IMortalFlashImpl {
 
 	private var mortal:TileMapMortal;
 	private var renderer:TileMapRenderer;
 
 	public function new(mortal:TileMapMortal) {
+		super();
 		this.mortal = mortal;
 		this.renderer = new TileMapRenderer(null, null);
 	}

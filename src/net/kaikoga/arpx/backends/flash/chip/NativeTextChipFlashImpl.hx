@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.backends.flash.chip;
 
+import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.chip.NativeTextChip;
 import flash.text.TextFormat;
 import flash.text.TextFieldAutoSize;
@@ -9,15 +10,16 @@ import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import flash.display.BitmapData;
 
-class NativeTextChipFlashImpl implements IChipFlashImpl {
+class NativeTextChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 
 	private var chip:NativeTextChip;
 
 	public function new(chip:NativeTextChip) {
+		super();
 		this.chip = chip;
 	}
 
-	public function heatUp():Bool {
+	override public function arpHeatUp():Bool {
 		if (this.visual == null) {
 			this.visual = this.createVisual();
 			this.ascent = this.visual.getLineMetrics(0).ascent;
@@ -25,7 +27,7 @@ class NativeTextChipFlashImpl implements IChipFlashImpl {
 		return true;
 	}
 
-	public function heatDown():Bool {
+	override public function arpHeatDown():Bool {
 		this.visual = null;
 		return true;
 	}

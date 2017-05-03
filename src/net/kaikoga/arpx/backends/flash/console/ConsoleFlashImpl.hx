@@ -1,15 +1,17 @@
 package net.kaikoga.arpx.backends.flash.console;
 
+import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import flash.display.BitmapData;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.console.Console;
 import net.kaikoga.arpx.backends.flash.geom.APoint;
 
-class ConsoleFlashImpl implements IConsoleFlashImpl {
+class ConsoleFlashImpl extends ArpObjectImplBase implements IConsoleFlashImpl {
 
 	private var console:Console;
 
 	public function new(console:Console) {
+		super();
 		this.console = console;
 	}
 

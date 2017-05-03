@@ -9,9 +9,6 @@ class ResourceTexture extends Texture
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var impl:ResourceTextureFlashImpl;
-
-	@:arpHeatUp private function heatUp():Bool return cast(this.arpImpl, ResourceTextureFlashImpl).heatUp();
-	@:arpHeatDown private function heatDown():Bool return cast(this.arpImpl, ResourceTextureFlashImpl).heatDown();
 #else
 	@:arpWithoutBackend
 #end

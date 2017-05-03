@@ -10,9 +10,6 @@ class FileTexture extends Texture
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var impl:FileTextureFlashImpl;
-
-	@:arpHeatUp private function heatUp():Bool return cast(this.arpImpl, FileTextureFlashImpl).heatUp();
-	@:arpHeatDown private function heatDown():Bool return cast(this.arpImpl, FileTextureFlashImpl).heatDown();
 #else
 	@:arpWithoutBackend
 #end

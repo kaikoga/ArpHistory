@@ -1,8 +1,9 @@
 package net.kaikoga.arpx.backends.cross.socketClient;
 
+import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import haxe.io.Bytes;
 
-class SocketClientNullImpl implements ISocketClientImpl {
+class SocketClientNullImpl extends ArpObjectImplBase implements ISocketClientImpl {
 
 	public function new() {
 	}
@@ -10,9 +11,6 @@ class SocketClientNullImpl implements ISocketClientImpl {
 	public var bigEndian(get, set):Bool;
 	inline public function get_bigEndian():Bool return false;
 	inline public function set_bigEndian(value:Bool):Bool return false;
-
-	public function heatUp():Bool return false;
-	public function heatDown():Bool return false;
 
 	inline public function readBool():Bool throw "EOF";
 	inline public function readInt8():Int throw "EOF";

@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.backends.flash.texture;
 
+import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import flash.display.Bitmap;
 import flash.events.IOErrorEvent;
 import flash.events.Event;
@@ -8,17 +9,18 @@ import flash.display.Loader;
 import net.kaikoga.arpx.texture.FileTexture;
 import flash.display.BitmapData;
 
-class FileTextureFlashImpl implements ITextureFlashImpl {
+class FileTextureFlashImpl extends ArpObjectImplBase implements ITextureFlashImpl {
 
 	private var texture:FileTexture;
 	private var loader:Loader;
 	private var value:BitmapData;
 
 	public function new(texture:FileTexture) {
+		super();
 		this.texture = texture;
 	}
 
-	public function heatUp():Bool {
+	override public function arpHeatUp():Bool {
 		if (this.value != null) return true;
 
 		if (this.loader == null) {
@@ -41,7 +43,7 @@ class FileTextureFlashImpl implements ITextureFlashImpl {
 		this.texture.arpDomain.notifyFor(this.texture);
 	}
 
-	public function heatDown():Bool {
+	override public function arpHeatDown():Bool {
 		this.loader = null;
 		this.value = null;
 		return true;
