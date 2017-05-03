@@ -114,7 +114,16 @@ class MacroArpObjectStub {
 
 			public function arpHeatUp():Bool {
 				$b{ this.buildHeatUpBlock() }
-				if (this.arpSelfHeatUp()) {
+				var isSync:Bool = true;
+				if (!this.arpSelfHeatUp()) isSync = false;
+				$e{
+					if (this.classDef.hasImpl) {
+						macro if (!this.arpImpl.arpHeatUp()) isSync = false;
+					} else {
+						macro null;
+					}
+				}
+				if (isSync) {
 					this.arpSlot.heat = net.kaikoga.arp.domain.ArpHeat.Warm;
 					return true;
 				} else {
@@ -124,14 +133,30 @@ class MacroArpObjectStub {
 			}
 
 			public function arpHeatDown():Bool {
+				var isSync:Bool = true;
+				$e{
+					if (this.classDef.hasImpl) {
+						macro if (!this.arpImpl.arpHeatDown()) isSync = false;
+					} else {
+						macro null;
+					}
+				}
+				if (!this.arpSelfHeatDown()) isSync = false;
 				// $b{ this.buildHeatDownBlock() }
-				return this.arpSelfHeatDown();
+				return isSync;
 			}
 
 			public function arpDispose():Void {
 				this.arpHeatDown();
-				$b{ this.buildDisposeBlock() }
+				$e{
+					if (this.classDef.hasImpl) {
+						macro this.arpImpl.arpDispose();
+					} else {
+						macro null;
+					}
+				}
 				this.arpSelfDispose();
+				$b{ this.buildDisposeBlock() }
 				this._arpSlot = null;
 				this._arpDomain = null;
 			}

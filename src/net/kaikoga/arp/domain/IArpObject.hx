@@ -5,7 +5,7 @@ import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 import net.kaikoga.arp.domain.core.ArpType;
 
-interface IArpObject extends IPersistable {
+interface IArpObject extends IPersistable /* extends IArpObjectImpl */ {
 
 	var arpDomain(get, never):ArpDomain;
 	var arpType(get, never):ArpType;
