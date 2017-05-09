@@ -70,7 +70,7 @@ class MacroArpObjectSetField extends MacroArpObjectCollectionFieldBase implement
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iNativeName.slotSet.add(this._arpDomain.loadSeed(element, ${this.eArpType})); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$iNativeName.slotSet.add(this._arpDomain.loadSeed(element, ${this.eArpType}).addReference()); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
