@@ -97,6 +97,7 @@ class DsMacroArpObjectCase {
 		assertMatch([arpObj, arpObj], ListOp.toArray(arpObj.refList));
 		assertMatch({rm1: arpObj, rm2: arpObj}, MapOp.toAnon(arpObj.refMap));
 		assertMatch({ro1: arpObj, ro2: arpObj}, OmapOp.toAnon(arpObj.refOmap));
+		assertEquals(8, arpObj.arpSlot.refCount);
 	}
 
 	private static function matchArpDs(context:PicoMatcherContext, expected:Dynamic, actual:Dynamic):PicoMatchResult {
