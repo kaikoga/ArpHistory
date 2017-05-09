@@ -88,7 +88,7 @@ class StdDsMacroArpObjectCase {
 		assertEquals("stdMapBar", arpObj.stringStdMap.get("key8"));
 		assertEquals(arpObj, arpObj.refStdMap.get("key9"));
 		assertEquals(arpObj, arpObj.refStdMap.get("key0"));
-		assertEquals(0, arpObj.arpSlot.refCount);
+		assertEquals(2, arpObj.arpSlot.refCount);
 	}
 
 	private function checkIsClone(original:MockStdDsMacroArpObject, clone:MockStdDsMacroArpObject):Void {
