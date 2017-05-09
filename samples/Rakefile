@@ -6,7 +6,7 @@ FLASH_HXML = FileList.new("flash/*/swf.hxml")
 FLASH = FLASH_HXML.each_with_index.map do |flash_hxml, index|
   dir = File.dirname(flash_hxml)
   flash = flash_hxml.sub("swf.hxml", "bin/main.swf")
-  
+
   title = flash.split("/")[1].split("_")[0]
 
   task flash => flash_hxml do
@@ -17,7 +17,7 @@ FLASH = FLASH_HXML.each_with_index.map do |flash_hxml, index|
 
   task "#{flash}.dump" => flash_hxml do
     Dir.chdir(dir) do
-      sh "haxe #{File.basename(flash_hxml)}"
+      sh "haxe #{File.basename(flash_hxml)} -D dump=pretty"
     end
   end
 
@@ -48,7 +48,7 @@ FLASH = FLASH_HXML.each_with_index.map do |flash_hxml, index|
 
   desc "debug #{flash}" if index == 0
   task "#{title}.debug"=> "#{flash}.debug"
-  
+
   "#{title}.build"
 end
 
