@@ -51,7 +51,7 @@ class NativeTextChipFlashImpl extends ArpObjectImplBase implements IChipFlashImp
 
 	private static var _workDrawMatrix:Matrix = new Matrix();
 	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:ArpParams = null):Void {
-		this.heatUp();
+		this.arpHeatUp();
 		transform = transform.concatXY(-2, -2 - this.ascent);
 		var text:String = null;
 		if (params != null) text = params.get("face");

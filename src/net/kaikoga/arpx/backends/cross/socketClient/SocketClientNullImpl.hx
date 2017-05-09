@@ -6,6 +6,7 @@ import haxe.io.Bytes;
 class SocketClientNullImpl extends ArpObjectImplBase implements ISocketClientImpl {
 
 	public function new() {
+		super();
 	}
 
 	public var bigEndian(get, set):Bool;
