@@ -18,7 +18,7 @@
 		</texture>
 	</chip>
 	<driver class="inputLinear" name="inputLinear" input="input" speed="4" />
-	<driver class="motion" dHitType="solid" willReact="true" >
+	<driver class="motion" name="zako" dHitType="solid" willReact="true" >
 		<motionSet initMotion="init">
 			<motion name="init" key="init" time="32" loopAction="loop">
 				<motionFrame time="0" params="dir:right:dir" dY="-4" hitFrame="hit" />
@@ -59,6 +59,10 @@
 				abcdefgh
 				cdefgha_
 			</tileMap>
+		</mortal>
+		<mortal name="zako" class="chip" position="64,64" params="4" hitFrame="hit">
+			<chip ref="obj.gridChip" />
+			<driver ref="zako" />
 		</mortal>
 		<mortal name="mortal" class="chip" position="80,32" params="6" hitFrame="hit">
 			<chip ref="obj.gridChip" />

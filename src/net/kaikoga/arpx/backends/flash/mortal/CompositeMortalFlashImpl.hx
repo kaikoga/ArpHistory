@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.backends.flash.mortal;
 
+import net.kaikoga.arpx.backends.flash.field.FieldFlashImpl;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import flash.display.BitmapData;
 
@@ -20,9 +21,7 @@ class CompositeMortalFlashImpl extends ArpObjectImplBase implements IMortalFlash
 		if (mortal.visible) {
 			var pos:ArpPosition = mortal.position;
 			transform = transform.concatXY(pos.x, pos.y);
-			for (s in mortal.mortals) { // TODO sort mortals
-				s.copySelf(bitmapData, transform);
-			}
+			FieldFlashImpl.copySortedMortals(mortal.mortal, bitmapData, transform);
 		}
 	}
 
