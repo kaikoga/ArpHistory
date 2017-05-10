@@ -21,7 +21,7 @@ class CompositeMortalFlashImpl extends ArpObjectImplBase implements IMortalFlash
 		if (mortal.visible) {
 			var pos:ArpPosition = mortal.position;
 			transform = transform.concatXY(pos.x, pos.y);
-			FieldFlashImpl.copySortedMortals(mortal.mortal, bitmapData, transform);
+			FieldFlashImpl.copySortedMortals(mortal.mortals, bitmapData, transform);
 		}
 	}
 
