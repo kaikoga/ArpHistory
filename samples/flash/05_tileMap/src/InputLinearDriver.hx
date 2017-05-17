@@ -27,6 +27,8 @@ class InputLinearDriver extends Driver {
 			mortal.moveDWithHit(field, 0, inputY * speed, 0, "solid");
 			mortal.position.dir.valueRadian = -Math.atan2(inputY, inputX);
 			mortal.params.set("dir", mortal.position.dir);
+		} else {
+			mortal.stayWithHit(field, "solid");
 		}
 	}
 }
