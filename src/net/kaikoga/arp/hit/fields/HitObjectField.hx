@@ -22,7 +22,7 @@ class HitObjectField<Hit, T:HitObject<Hit>> implements IHitField<Hit, T> {
 				this.hitObjects[j++] = hitObject;
 			}
 		}
-		for (i in j...this.hitObjectsLength) {
+		for (i in j...this.hitObjects.length) {
 			this.hitObjects[i] = null;
 		}
 		this.hitObjectsLength = j;
@@ -82,7 +82,7 @@ class HitObjectField<Hit, T:HitObject<Hit>> implements IHitField<Hit, T> {
 	}
 
 	public function hitRaw(hit:Hit, callback:T->Bool):Void {
-		for (i in 0...(this.hitObjectsLength - 1)) {
+		for (i in 0...this.hitObjectsLength) {
 			var other:T = this.hitObjects[i];
 			if (other.hit == hit) continue;
 			if (strategy.collides(hit, other.hit)) {
