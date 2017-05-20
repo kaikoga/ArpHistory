@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.mortal;
 
+import net.kaikoga.arp.ds.impl.ArraySet;
 import net.kaikoga.arp.ds.ISet;
 import net.kaikoga.arp.hit.structs.HitGeneric;
 import net.kaikoga.arp.hit.fields.HitObject;
@@ -9,7 +10,6 @@ import net.kaikoga.arp.domain.ArpDirectory;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.hitFrame.HitFrame;
-import net.kaikoga.arp.ds.IOmap;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.reactFrame.ReactFrame;
@@ -28,9 +28,10 @@ class Mortal implements IArpObject
 	@:arpField public var visible:Bool = true;
 	@:arpField public var params:ArpParams;
 	@:arpBarrier @:arpField("hitFrame") public var hitFrames:ISet<HitFrame>;
-	@:arpField(false) public var lastReactions:IOmap<String, Int>;
 
 	private var hitMortals:Map<String, HitMortal>;
+	private var reactRecord:ISet<String>;
+	private var lastReactRecord:ISet<String>;
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:IMortalFlashImpl;
@@ -39,6 +40,8 @@ class Mortal implements IArpObject
 #end
 	public function new () {
 		hitMortals = new Map<String, HitMortal>();
+		reactRecord = new ArraySet<String>();
+		lastReactRecord = new ArraySet<String>();
 	}
 
 	private var isComplex(get, never):Bool;
@@ -58,17 +61,10 @@ class Mortal implements IArpObject
 			updateHitMortals(field, 2.0);
 		}
 
-		if (this.lastReactions.length == 0) {
-			return;
-		}
-		for (name in this.lastReactions.keys()) {
-			switch (this.lastReactions.get(name)) {
-				case 0:
-					this.lastReactions.removeKey(name);
-				case 1:
-					this.lastReactions.addPair(name, 0);
-			}
-		}
+		var rr = this.lastReactRecord;
+		if (!rr.isEmpty()) rr.clear();
+		this.lastReactRecord = reactRecord;
+		this.reactRecord = rr;
 	}
 
 	public function startAction(actionName:String, restart:Bool = false):Bool {
@@ -81,12 +77,11 @@ class Mortal implements IArpObject
 
 	public function react(field:Field, source:Mortal, reactFrame:ReactFrame, delay:Float):Void {
 		var reactionName:String = source.arpSlot.sid + ArpDirectory.PATH_DELIMITER + reactFrame.arpSlot.sid;
-		if (delay != 0 && !reactFrame.hold && this.lastReactions.hasKey(reactionName)) {
-			this.lastReactions.addPair(reactionName, 1);
-			return;
+		if (!this.lastReactRecord.hasValue(reactionName)) {
+			this.onReact(field, source, reactFrame, delay);
 		}
-		this.lastReactions.addPair(reactionName, 1);
-		this.onReact(field, source, reactFrame, delay);
+		this.reactRecord.add(reactionName);
+		this.lastReactRecord.add(reactionName);
 	}
 
 	public function onReact(field:Field, source:Mortal, reactFrame:ReactFrame, delay:Float):Void {
@@ -95,12 +90,11 @@ class Mortal implements IArpObject
 
 	public function collide(field:Field, source:Mortal):Void {
 		var reactionName:String = source.arpSlot.sid.toString();
-		if (this.lastReactions.hasKey(reactionName)) {
-			this.lastReactions.addPair(reactionName, 1);
-			return;
+		if (!this.lastReactRecord.hasValue(reactionName)) {
+			this.onCollide(field, source);
 		}
-		this.lastReactions.addPair(reactionName, 1);
-		this.onCollide(field, source);
+		this.reactRecord.add(reactionName);
+		this.lastReactRecord.add(reactionName);
 	}
 
 	public function onCollide(field:Field, source:Mortal):Void {
