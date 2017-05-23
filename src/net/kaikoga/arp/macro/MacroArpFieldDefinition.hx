@@ -17,6 +17,7 @@ class MacroArpFieldDefinition {
 	public var metaArpField:MacroArpMetaArpField = MacroArpMetaArpField.Unmanaged;
 	public var metaArpBarrier:Bool = false;
 	public var metaArpVolatile:Bool = false;
+	public var metaArpDefault:MacroArpMetaArpDefault = MacroArpMetaArpDefault.Zero;
 
 	// Impl family
 	public var metaArpImpl:Bool = false;
@@ -33,7 +34,7 @@ class MacroArpFieldDefinition {
 	inline private function set_family(value:MacroArpFieldDefinitionFamily):MacroArpFieldDefinitionFamily {
 		switch (_family) {
 			case MacroArpFieldDefinitionFamily.ImplicitUnmanaged: _family = value;
-			case _: if (!Type.enumEq(value, _family)) throw 'Cannot mix';
+			case _: if (!Type.enumEq(value, _family)) Context.error("Cannot mix", nativeField.pos);
 		}
 		return value;
 	}
@@ -56,12 +57,19 @@ class MacroArpFieldDefinition {
 						case ":arpBarrier":
 							this.family = MacroArpFieldDefinitionFamily.ArpField;
 							this.metaArpBarrier = true;
+						case ":arpDefault":
+							this.family = MacroArpFieldDefinitionFamily.ArpField;
+							switch (meta.params[0]) {
+								case { expr: ExprDef.EConst(CString(s))}:
+									this.metaArpDefault = MacroArpMetaArpDefault.Simple(s);
+								case _: Context.error("@:arpDefault is too complex", nativeField.pos);
+							}
 						case ":arpImpl":
 							switch (nativeType) {
 								case ComplexType.TPath(typePath):
 									this.family = MacroArpFieldDefinitionFamily.Impl(typePath);
 									this.metaArpImpl = true;
-								case _: throw "TypePath expected for arpImpl";
+								case _: Context.error("TypePath expected for arpImpl", nativeField.pos);
 							}
 						case m:
 							assertNotInvalidArpMeta(m);
@@ -121,13 +129,13 @@ class MacroArpFieldDefinition {
 		return true;
 	}
 
-	private static function parseMetaArpField(expr:ExprOf<String>):MacroArpMetaArpField {
+	private function parseMetaArpField(expr:ExprOf<String>):MacroArpMetaArpField {
 		if (expr == null) return MacroArpMetaArpField.Default;
 		return switch (expr.expr) {
 			case ExprDef.EConst(Constant.CString(v)): MacroArpMetaArpField.Name(v);
 			case ExprDef.EConst(Constant.CIdent("false")): MacroArpMetaArpField.Runtime;
 			case ExprDef.EConst(Constant.CIdent("null")): MacroArpMetaArpField.Default;
-			case _: Context.error("invalid expr", Context.currentPos());
+			case _: Context.error("invalid expr", nativeField.pos);
 		}
 	}
 }
@@ -145,5 +153,10 @@ enum MacroArpMetaArpField {
 	Default;
 	Name(s:String);
 	Runtime;
+}
+
+enum MacroArpMetaArpDefault {
+	Zero;
+	Simple(s:String);
 }
 #end
