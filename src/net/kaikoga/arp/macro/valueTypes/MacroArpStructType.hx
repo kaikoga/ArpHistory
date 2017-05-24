@@ -33,6 +33,10 @@ class MacroArpStructType implements IMacroArpValueType {
 		};
 	}
 
+	public function createWithString(pos:Position, cValue:String):Expr {
+		return macro @:pos(pos) { ${this.createEmptyVo(pos)}.initWithString($v{cValue}); };
+	}
+
 	public function createSeedElement(pos:Position):Expr {
 		return macro @:pos(pos) { ${this.createEmptyVo(pos)}.initWithSeed(element); };
 	}

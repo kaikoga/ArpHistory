@@ -20,6 +20,10 @@ class MacroArpPrimFloatType implements IMacroArpValueType {
 		return macro @:pos(pos) { 0.0; };
 	}
 
+	public function createWithString(pos:Position, cValue:String):Expr {
+		return macro @:pos(pos) $v{Std.parseFloat(cValue)};
+	}
+
 	public function createSeedElement(pos:Position):Expr {
 		return macro @:pos(pos) { Std.parseFloat(element.value); };
 	}

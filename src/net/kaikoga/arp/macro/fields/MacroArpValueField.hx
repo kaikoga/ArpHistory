@@ -2,6 +2,7 @@ package net.kaikoga.arp.macro.fields;
 
 #if macro
 
+import net.kaikoga.arp.macro.MacroArpFieldDefinition.MacroArpMetaArpDefault;
 import net.kaikoga.arp.domain.reflect.ArpFieldKind;
 import net.kaikoga.arp.macro.fields.base.MacroArpFieldBase;
 import haxe.macro.Expr;
@@ -32,8 +33,13 @@ class MacroArpValueField extends MacroArpFieldBase implements IMacroArpField {
 	}
 
 	public function buildInitBlock(initBlock:Array<Expr>):Void {
-		if (this.fieldDef.nativeDefault == null) {
-			initBlock.push(macro @:pos(this.nativePos) { this.$iNativeName = ${this.type.createEmptyVo(this.nativePos)}; });
+		switch (this.fieldDef.metaArpDefault) {
+			case MacroArpMetaArpDefault.Zero:
+				if (this.fieldDef.nativeDefault == null) {
+					initBlock.push(macro @:pos(this.nativePos) { this.$iNativeName = ${this.type.createEmptyVo(this.nativePos)}; });
+				}
+			case MacroArpMetaArpDefault.Simple(s):
+				initBlock.push(macro @:pos(this.nativePos) { this.$iNativeName = ${this.type.createWithString(this.nativePos, s)}; });
 		}
 	}
 
@@ -49,8 +55,8 @@ class MacroArpValueField extends MacroArpFieldBase implements IMacroArpField {
 		heatDownBlock.push(macro @:pos(this.nativePos) { null; });
 	}
 
-	public function buildDisposeBlock(initBlock:Array<Expr>):Void {
-		initBlock.push(macro @:pos(this.nativePos) { null; });
+	public function buildDisposeBlock(disposeBlock:Array<Expr>):Void {
+		disposeBlock.push(macro @:pos(this.nativePos) { null; });
 	}
 
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {

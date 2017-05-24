@@ -2,6 +2,7 @@ package net.kaikoga.arp.macro.fields;
 
 #if macro
 
+import net.kaikoga.arp.macro.MacroArpFieldDefinition.MacroArpMetaArpDefault;
 import net.kaikoga.arp.macro.fields.base.MacroArpFieldBase;
 import haxe.macro.Expr;
 
@@ -29,7 +30,7 @@ class MacroArpObjectField extends MacroArpFieldBase implements IMacroArpField {
 			/* inline */ private function $iGet_nativeName():$nativeType return this.$iNativeSlot.value;
 			@:pos(this.nativePos)
 			/* inline */ private function $iSet_nativeName(value:$nativeType):$nativeType {
-				this.$iNativeSlot= net.kaikoga.arp.domain.ArpSlot.of(value, this._arpDomain).takeReference(this.$iNativeSlot);
+				this.$iNativeSlot = net.kaikoga.arp.domain.ArpSlot.of(value, this._arpDomain).takeReference(this.$iNativeSlot);
 				return value;
 			}
 		}).fields;
@@ -39,7 +40,13 @@ class MacroArpObjectField extends MacroArpFieldBase implements IMacroArpField {
 	}
 
 	public function buildInitBlock(initBlock:Array<Expr>):Void {
-		initBlock.push(macro @:pos(this.nativePos) { this.$iNativeSlot = slot.domain.nullSlot; });
+		switch (this.fieldDef.metaArpDefault) {
+			case MacroArpMetaArpDefault.Zero:
+				initBlock.push(macro @:pos(this.nativePos) { this.$iNativeSlot = slot.domain.nullSlot; });
+			case MacroArpMetaArpDefault.Simple(s):
+				// FIXME must allow relative path from this ArpObject
+				initBlock.push(macro @:pos(this.nativePos) { this.$iNativeSlot = slot.domain.query($v{s}, ${this.eArpType}).slot().addReference(); });
+		}
 	}
 
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {

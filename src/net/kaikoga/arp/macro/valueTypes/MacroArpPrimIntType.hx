@@ -19,6 +19,10 @@ class MacroArpPrimIntType implements IMacroArpValueType {
 		return macro @:pos(pos) { 0; };
 	}
 
+	public function createWithString(pos:Position, cValue:String):Expr {
+		return macro @:pos(pos) $v{Std.parseInt(cValue)};
+	}
+
 	public function createSeedElement(pos:Position):Expr {
 		return macro @:pos(pos) { Std.parseInt(element.value); };
 	}
