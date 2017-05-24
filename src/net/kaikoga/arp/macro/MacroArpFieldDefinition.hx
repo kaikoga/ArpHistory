@@ -13,6 +13,11 @@ class MacroArpFieldDefinition {
 	public var nativeType(default, null):ComplexType;
 	public var nativeDefault(default, null):Expr;
 
+	public var nativeName(get, never):String;
+	inline private function get_nativeName():String return this.nativeField.name;
+	public var nativePos(get, never):Position;
+	inline private function get_nativePos():Position return this.nativeField.pos;
+
 	// ArpField family
 	public var metaArpField:MacroArpMetaArpField = MacroArpMetaArpField.Unmanaged;
 	public var metaArpBarrier:Bool = false;
@@ -34,7 +39,7 @@ class MacroArpFieldDefinition {
 	inline private function set_family(value:MacroArpFieldDefinitionFamily):MacroArpFieldDefinitionFamily {
 		switch (_family) {
 			case MacroArpFieldDefinitionFamily.ImplicitUnmanaged: _family = value;
-			case _: if (!Type.enumEq(value, _family)) Context.error("Cannot mix", nativeField.pos);
+			case _: if (!Type.enumEq(value, _family)) Context.error("Cannot mix", this.nativePos);
 		}
 		return value;
 	}
@@ -113,14 +118,16 @@ class MacroArpFieldDefinition {
 
 	private function assertNotInvalidArpMeta(metaName:String):Void {
 		if (metaName.indexOf(":arp") == 0) {
-			Context.error('Unsupported arp metadata: @${metaName}', this.nativeField.pos);
+			Context.error('Unsupported arp metadata: @${metaName}', this.nativePos);
 		} else if (metaName.indexOf("arp") == 0) {
-			Context.error('Arp metadata is compile time only: @${metaName}', this.nativeField.pos);
+			Context.error('Arp metadata is compile time only: @${metaName}', this.nativePos);
 		}
 	}
 
 	public function arpFieldIsForValue():Bool {
-		if (metaArpBarrier) Context.error('@:arpBarrier not available for ${this.nativeType.toString()}', this.nativeField.pos);
+		if (metaArpBarrier) {
+			Context.error('@:arpBarrier not available for ${this.nativeType.toString()}', this.nativePos);
+		}
 		return true;
 	}
 
@@ -135,7 +142,7 @@ class MacroArpFieldDefinition {
 			case ExprDef.EConst(Constant.CString(v)): MacroArpMetaArpField.Name(v);
 			case ExprDef.EConst(Constant.CIdent("false")): MacroArpMetaArpField.Runtime;
 			case ExprDef.EConst(Constant.CIdent("null")): MacroArpMetaArpField.Default;
-			case _: Context.error("invalid expr", nativeField.pos);
+			case _: Context.error("invalid expr", this.nativePos);
 		}
 	}
 }

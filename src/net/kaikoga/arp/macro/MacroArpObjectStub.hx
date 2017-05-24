@@ -335,7 +335,7 @@ class MacroArpObjectStub {
 			case FieldType.FFun(func):
 				nativeFunc = func;
 			case _:
-				throw "Internal error: field is not a function";
+				MacroArpUtil.error("Internal error: field is not a function", nativeField.pos);
 		}
 		return {
 			name: nativeField.name,

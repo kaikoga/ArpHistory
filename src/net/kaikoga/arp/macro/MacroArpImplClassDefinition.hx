@@ -23,7 +23,7 @@ class MacroArpImplClassDefinition {
 			case Type.TInst(classRef, params):
 				classType = classRef.get();
 			case _:
-				throw "impl must be class or interface instance";
+				MacroArpUtil.error("impl must be class or interface instance", classType.pos);
 		}
 
 		// extract fields from interfaces which fields must be explicitly typed
@@ -131,13 +131,13 @@ class MacroArpImplClassDefinition {
 						expr: macro return ${{
 							expr: ExprDef.ECall(
 								macro this.arpImpl.$iNativeName,
-								[for (a in args) { expr: ExprDef.EConst(Constant.CIdent(a.name)), pos:Context.currentPos() } ]
+								[for (a in args) { expr: ExprDef.EConst(Constant.CIdent(a.name)), pos:classField.pos } ]
 							),
-							pos: Context.currentPos()
+							pos: classField.pos
 						}}
 					});
 				default:
-					throw "Invalid " + Std.string(classField);
+					MacroArpUtil.fatal("Invalid " + Std.string(classField), classField.pos);
 			},
 			pos: classField.pos,
 			meta: classField.meta.get()

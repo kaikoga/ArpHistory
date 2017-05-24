@@ -2,6 +2,7 @@ package net.kaikoga.arp.macro.valueTypes;
 
 #if macro
 
+import haxe.macro.Context;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.reflect.ArpFieldKind;
 import haxe.macro.Expr;
@@ -11,12 +12,13 @@ class MacroArpStructType implements IMacroArpValueType {
 	private var _nativeType:ComplexType;
 	private var nativeTypePath:TypePath;
 
-	public function new(nativeType:ComplexType) {
+	public function new(nativeType:ComplexType, pos:Position) {
 		_nativeType = nativeType;
 		switch (nativeType) {
 			case ComplexType.TPath(typePath):
 				this.nativeTypePath = typePath;
-			case _: throw "invalid native type";
+			case _:
+				MacroArpUtil.error("invalid native type", pos);
 		}
 	}
 

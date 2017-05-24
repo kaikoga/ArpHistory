@@ -16,7 +16,9 @@ class MacroArpObjectField extends MacroArpFieldBase implements IMacroArpField {
 
 	public function new(fieldDef:MacroArpFieldDefinition) {
 		super(fieldDef);
-		if (fieldDef.nativeDefault != null) throw "can't inline initialize arp reference field";
+		if (fieldDef.nativeDefault != null) {
+			MacroArpUtil.error("can't inline initialize arp reference field", fieldDef.nativePos);
+		}
 	}
 
 	public function buildField(outFields:Array<Field>):Void {

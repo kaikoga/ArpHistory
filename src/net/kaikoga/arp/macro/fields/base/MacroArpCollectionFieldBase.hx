@@ -28,13 +28,15 @@ class MacroArpCollectionFieldBase extends MacroArpFieldBase {
 	private function concreteNativeTypePath():TypePath {
 		var concreteNativeType:ComplexType = if (this.concreteDs) this.nativeType else guessConcreteNativeType();
 		return switch (concreteNativeType) {
-			case ComplexType.TPath(p): p;
-			case _: throw "error";
+			case ComplexType.TPath(p):
+				p;
+			case _:
+				MacroArpUtil.fatal("error", this.nativePos);
 		}
 	}
 
 	private function guessConcreteNativeType():ComplexType {
-		throw new Printer().printComplexType(this.nativeType) + "is not constructable";
+		return MacroArpUtil.fatal(new Printer().printComplexType(this.nativeType) + "is not constructable", this.nativePos);
 	}
 }
 

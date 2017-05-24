@@ -36,11 +36,11 @@ class MacroArpFieldBuilder {
 
 	private var fieldDef:MacroArpFieldDefinition;
 
-	private var pos:Position;
+	private var pos(get, never):Position;
+	inline private function get_pos():Position return this.fieldDef.nativePos;
 
 	private function new(fieldDef:MacroArpFieldDefinition) {
 		this.fieldDef = fieldDef;
-		this.pos = fieldDef.nativeField.pos;
 	}
 
 	private function typeParam(type:Type, index:Int = 0):Type {
@@ -52,12 +52,15 @@ class MacroArpFieldBuilder {
 					Type.TInst(_, params),
 					Type.TType(_, params),
 					Type.TAbstract(_, params):
-					if (params.length <= index) throw "invalid type";
+					if (params.length <= index) {
+						throw "invalid type";
+					}
 					return params[index];
-				case _: throw "invalid type";
+				case _:
+					throw "invalid type";
 			}
 		} catch (e:String) {
-			throw "invalid type " + new Printer().printComplexType(TypeTools.toComplexType(type));
+			return MacroArpUtil.fatal("invalid type " + new Printer().printComplexType(TypeTools.toComplexType(type)), this.pos);
 		}
 	}
 
@@ -91,7 +94,7 @@ class MacroArpFieldBuilder {
 					case ArpFieldKind.PrimString:
 						return MacroArpNativeFieldType.NativeValueType(new MacroArpPrimStringType());
 					case ArpFieldKind.StructKind:
-						return MacroArpNativeFieldType.NativeValueType(new MacroArpStructType(TypeTools.toComplexType(type)));
+						return MacroArpNativeFieldType.NativeValueType(new MacroArpStructType(TypeTools.toComplexType(type), fieldDef.nativePos));
 					case ArpFieldKind.ReferenceKind:
 						return MacroArpNativeFieldType.NativeReferenceType(TypeTools.toComplexType(type));
 				}
@@ -159,7 +162,6 @@ class MacroArpFieldBuilder {
 		this.log("ComplexType=" + new Printer().printComplexType(this.fieldDef.nativeType));
 
 		var complexType:ComplexType = this.fieldDef.nativeType;
-		var pos:Position = this.fieldDef.nativeField.pos;
 
 		var nativeFieldType:MacroArpNativeFieldType = MacroArpNativeFieldType.NativeInvalid;
 		if (complexType != null) nativeFieldType = complexTypeToNativeFieldType(complexType);
@@ -226,22 +228,22 @@ class MacroArpFieldBuilder {
 			case MacroArpNativeFieldType.NativeInvalid:
 			case _:
 		}
-		Context.error("field type too complex: " + complexType.toString(), pos);
+		Context.error("field type too complex: " + complexType.toString(), this.pos);
 		return null;
 	}
 
 	private function run():MacroArpFieldBuilderResult {
-		this.log("field: " + fieldDef.nativeField.name);
+		this.log("field: " + fieldDef.nativeName);
 		switch (fieldDef.family) {
 			case MacroArpFieldDefinitionFamily.Impl(typePath):
-				this.log("done: " + fieldDef.nativeField.name);
+				this.log("done: " + fieldDef.nativeName);
 				return MacroArpFieldBuilderResult.Impl(typePath);
 			case MacroArpFieldDefinitionFamily.ImplicitUnmanaged, MacroArpFieldDefinitionFamily.Unmanaged:
-				this.log("done: " + fieldDef.nativeField.name);
+				this.log("done: " + fieldDef.nativeName);
 				return MacroArpFieldBuilderResult.Unmanaged;
 			case MacroArpFieldDefinitionFamily.ArpField:
 				var result = doRun();
-				this.log("done: " + fieldDef.nativeField.name);
+				this.log("done: " + fieldDef.nativeName);
 				return MacroArpFieldBuilderResult.ArpField(result);
 			case MacroArpFieldDefinitionFamily.Constructor(func):
 				return MacroArpFieldBuilderResult.Constructor(func);
@@ -254,7 +256,7 @@ class MacroArpFieldBuilder {
 
 	inline private function log(message:String):Void {
 		#if arp_macro_verbose
-		Context.warning(message, this.fieldDef.nativeField.pos);
+		Context.warning(message, this.pos);
 		#end
 	}
 }

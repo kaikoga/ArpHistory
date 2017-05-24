@@ -34,7 +34,9 @@ class MacroArpObjectStdMapField extends MacroArpObjectCollectionFieldBase implem
 
 	public function new(fieldDef:MacroArpFieldDefinition, contentNativeType:ComplexType, concreteDs:Bool) {
 		super(fieldDef, contentNativeType, concreteDs);
-		if (fieldDef.nativeDefault != null) throw "can't inline initialize arp reference field";
+		if (fieldDef.nativeDefault != null) {
+			MacroArpUtil.error("can't inline initialize arp reference field", fieldDef.nativePos);
+		}
 		_nativeType = coerce(super.nativeType);
 	}
 
