@@ -22,6 +22,8 @@ import net.kaikoga.arp.utils.ArpIdGenerator;
 class ArpDomain {
 
 	public var root(default, null):ArpDirectory;
+	private var currentDir:ArpDirectory;
+
 	private var slots:Map<String, ArpUntypedSlot>;
 	public var nullSlot(default, null):ArpUntypedSlot;
 
@@ -53,6 +55,7 @@ class ArpDomain {
 		this._onLog = new ArpSignal<ArpLogEvent>();
 
 		this.root = this.allocDir(new ArpDid(""));
+		this.currentDir = this.root;
 		this.slots = new Map();
 		this.nullSlot = this.allocSlot(new ArpSid(""));
 		this.reg = new ArpGeneratorRegistry();
@@ -108,23 +111,32 @@ class ArpDomain {
 		this.reg.addGenerator(gen);
 	}
 
-	public function loadSeed<T:IArpObject>(seed:ArpSeed, path:ArpDirectory = null, lexicalType:ArpType = null):Null<ArpSlot<T>> {
-		if (path == null) path = this.root;
+	public function loadSeed<T:IArpObject>(seed:ArpSeed, lexicalType:ArpType = null):Null<ArpSlot<T>> {
 		var type:ArpType = (lexicalType != null) ? lexicalType : new ArpType(seed.typeName);
 		var slot:ArpSlot<T>;
 		var name:String;
 		switch (seed.valueKind) {
 			case ArpSeedValueKind.Reference, ArpSeedValueKind.Ambigious if (seed.value != null):
-				slot = path.query(seed.value, type).slot();
+				slot = this.root.query(seed.value, type).slot();
 				name = seed.name;
-				if (name != null) path.query(name, type).setSlot(slot);
+				if (name != null) {
+					this.root.query(name, type).setSlot(slot);
+				}
 			case _:
 				name = seed.name;
-				slot = if (name == null) allocSlot() else path.query(name, type).slot();
+				var oldDir:ArpDirectory = this.currentDir;
+				if (name == null) {
+					slot = allocSlot();
+				} else {
+					var dir:ArpDirectory = this.currentDir.dir(name);
+					slot = dir.getOrCreateSlot(type);
+					this.currentDir = dir;
+				}
 				var gen:IArpGenerator<T> = this.reg.resolve(seed, type);
 				if (gen == null) throw 'generator not found for <$type>: class=${seed.className}';
 				var arpObj:T = gen.alloc(seed);
 				var init = arpObj.arpInit(slot, seed);
+				this.currentDir = oldDir;
 				if (init != null) {
 					slot.value = arpObj;
 					switch (ArpHeat.fromName(seed.heat)) {

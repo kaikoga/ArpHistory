@@ -62,7 +62,7 @@ class MacroHierarchicalArpObjectCase {
 
 		var explicit:MockHierarchicalMacroArpObject = domain.query("explicit", MOCK_TYPE).value();
 		var toInner:MockHierarchicalMacroArpObject = domain.query("toInner", MOCK_TYPE).value();
-		var fromInner:MockHierarchicalMacroArpObject = domain.query("fromInner", MOCK_TYPE).value();
+		var fromInner:MockHierarchicalMacroArpObject = domain.query("inner/fromInner", MOCK_TYPE).value();
 		var selfRef:MockHierarchicalMacroArpObject = domain.query("selfRef", MOCK_TYPE).value();
 
 		assertEquals(value, explicit.refField);
