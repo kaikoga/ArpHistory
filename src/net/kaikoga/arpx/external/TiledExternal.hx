@@ -116,7 +116,7 @@ class TiledExternal extends External {
 			for (property in xml.elementsNamed("properties").next().elementsNamed("property")) {
 				xml.set(property.get("name"), property.get("value"));
 			}
-			var mortal:Mortal = this.arpDomain.loadSeed(ArpSeed.fromXml(xml), null, Mortal).value;
+			var mortal:Mortal = this.arpDomain.loadSeed(ArpSeed.fromXml(xml), Mortal).value;
 			if (mortal == null) return null;
 
 			mortal.position.x = Std.parseFloat(xml.get("x"));
