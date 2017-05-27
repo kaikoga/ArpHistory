@@ -1,7 +1,6 @@
 ﻿package net.kaikoga.arpx.driver;
 
 import net.kaikoga.arp.structs.ArpDirection;
-import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.mortal.Mortal;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.seed.ArpSeed;
@@ -23,7 +22,7 @@ class LinearDriverCase {
 		domain.addGenerator(new ArpObjectGenerator(Mortal, true));
 		domain.loadSeed(seed);
 		mortal = domain.query("mortal", Mortal).value();
-		me = domain.query("driver", LinearDriver).value();
+		me = domain.query("mortal/driver", LinearDriver).value();
 	}
 
 
