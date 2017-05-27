@@ -16,6 +16,7 @@ import net.kaikoga.arp.macro.MacroArpObjectCase;
 import net.kaikoga.arp.macro.MacroColumnArpObjectCase;
 import net.kaikoga.arp.macro.MacroDefaultArpObjectCase;
 import net.kaikoga.arp.macro.MacroDerivedArpObjectCase;
+import net.kaikoga.arp.macro.MacroHierarchicalArpObjectCase;
 import net.kaikoga.arp.macro.StdDsMacroArpObjectCase;
 import net.kaikoga.arp.structs.ArpColorCase;
 import net.kaikoga.arp.structs.ArpColorFlashCase;
@@ -43,6 +44,7 @@ class ArpDomainTestSuite {
 
 		r.load(MacroArpObjectCase);
 		r.load(MacroDefaultArpObjectCase);
+		r.load(MacroHierarchicalArpObjectCase);
 		r.load(MacroColumnArpObjectCase);
 		r.load(MacroDerivedArpObjectCase);
 		r.load(ArpStructsMacroArpObjectCase);
