@@ -1,28 +1,30 @@
 package net.kaikoga.arp;
 
-import net.kaikoga.arp.macro.DsMacroArpObjectCase;
-import net.kaikoga.arp.macro.EarlyPrepareMacroArpObjectCase;
-import net.kaikoga.arp.macro.LatePrepareMacroArpObjectCase;
-import net.kaikoga.arp.structs.ArpColorFlashCase;
-import net.kaikoga.arp.macro.MacroColumnArpObjectCase;
-import net.kaikoga.arp.tests.ArpDomainTestUtilCase;
-import net.kaikoga.arp.macro.MacroDerivedArpObjectCase;
-import net.kaikoga.arp.domain.MockDerivedArpObjectCase;
-import net.kaikoga.arp.macro.HeatUpMacroArpObjectCase;
-import net.kaikoga.arp.macro.HookMacroArpObjectCase;
-import net.kaikoga.arp.macro.ArpStructsMacroArpObjectCase;
+import net.kaikoga.arp.domain.ArpDomainCase;
 import net.kaikoga.arp.domain.MockArpObjectCase;
-import net.kaikoga.arp.macro.StdDsMacroArpObjectCase;
+import net.kaikoga.arp.domain.MockDerivedArpObjectCase;
 import net.kaikoga.arp.domain.ArpDirectoryCase;
-import net.kaikoga.arp.macro.MacroArpObjectCase;
-import net.kaikoga.arp.structs.ArpColorCase;
-import net.kaikoga.arp.structs.ArpDirectionCase;
-import net.kaikoga.arp.structs.ArpPositionCase;
-import net.kaikoga.arp.structs.ArpRangeCase;
-import net.kaikoga.arp.structs.ArpParamsCase;
 import net.kaikoga.arp.domain.query.ArpDirectoryQueryCase;
 import net.kaikoga.arp.domain.query.ArpObjectQueryCase;
-import net.kaikoga.arp.domain.ArpDomainCase;
+import net.kaikoga.arp.macro.ArpStructsMacroArpObjectCase;
+import net.kaikoga.arp.macro.DsMacroArpObjectCase;
+import net.kaikoga.arp.macro.EarlyPrepareMacroArpObjectCase;
+import net.kaikoga.arp.macro.HeatUpMacroArpObjectCase;
+import net.kaikoga.arp.macro.HookMacroArpObjectCase;
+import net.kaikoga.arp.macro.LatePrepareMacroArpObjectCase;
+import net.kaikoga.arp.macro.MacroArpObjectCase;
+import net.kaikoga.arp.macro.MacroColumnArpObjectCase;
+import net.kaikoga.arp.macro.MacroDefaultArpObjectCase;
+import net.kaikoga.arp.macro.MacroDerivedArpObjectCase;
+import net.kaikoga.arp.macro.StdDsMacroArpObjectCase;
+import net.kaikoga.arp.structs.ArpColorCase;
+import net.kaikoga.arp.structs.ArpColorFlashCase;
+import net.kaikoga.arp.structs.ArpDirectionCase;
+import net.kaikoga.arp.structs.ArpParamsCase;
+import net.kaikoga.arp.structs.ArpPositionCase;
+import net.kaikoga.arp.structs.ArpRangeCase;
+
+import net.kaikoga.arp.tests.ArpDomainTestUtilCase;
 
 import net.kaikoga.arp.testParams.PersistIoProviders.*;
 
@@ -40,6 +42,7 @@ class ArpDomainTestSuite {
 		r.load(MockDerivedArpObjectCase);
 
 		r.load(MacroArpObjectCase);
+		r.load(MacroDefaultArpObjectCase);
 		r.load(MacroColumnArpObjectCase);
 		r.load(MacroDerivedArpObjectCase);
 		r.load(ArpStructsMacroArpObjectCase);
