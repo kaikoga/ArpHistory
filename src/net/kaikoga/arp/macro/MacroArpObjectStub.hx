@@ -104,6 +104,13 @@ class MacroArpObjectStub {
 				this._arpSlot = slot;
 				$b{ this.buildInitBlock() }
 				if (seed != null) for (element in seed) this.arpConsumeSeedElement(element);
+				${
+					if (this.classDef.hasImpl) {
+						macro this.arpImpl = this.createImpl();
+					} else {
+						macro @:mergeBlock { };
+					}
+				}
 				this.arpSelfInit();
 				return this;
 			}
@@ -356,12 +363,7 @@ class MacroArpObjectStub {
 	}
 
 	private function genConstructorField(nativeField:Field, nativeFunc:Function):Array<Field> {
-		var expr:Expr = if (this.classDef.hasImpl) {
-			macro { this.arpImpl = this.createImpl(); };
-		} else {
-			macro { };
-		}
-		return [prependFunctionBody(nativeField, expr)];
+		return [nativeField];
 	}
 
 }
