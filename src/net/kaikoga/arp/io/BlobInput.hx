@@ -8,17 +8,17 @@ class BlobInput implements IBlobInput {
 	private function get_bigEndian():Bool return this.input.bigEndian;
 	private function set_bigEndian(value:Bool):Bool {
 		this.input.bigEndian = value;
-		this.pipe.bigEndian = value;
+		this.fifo.bigEndian = value;
 		return value;
 	}
 
 	private var input:IInput;
 	private var bytes:Bytes;
-	private var pipe:Pipe;
+	private var fifo:Fifo;
 
 	public function new(input:IInput) {
 		this.input = input;
-		this.pipe = new Pipe();
+		this.fifo = new Fifo();
 	}
 
 	public function nextUtfBlob():Null<String> {
@@ -32,18 +32,18 @@ class BlobInput implements IBlobInput {
 		while (true) {
 			buf = this.input.nextBytes(8192);
 			if (buf.length == 0) break;
-			this.pipe.writeBytes(buf, 0, buf.length);
+			this.fifo.writeBytes(buf, 0, buf.length);
 		}
 
 		if (this.bytes == null) {
 			try {
-				this.bytes = Bytes.alloc(this.pipe.readInt32());
+				this.bytes = Bytes.alloc(this.fifo.readInt32());
 			} catch (d:Dynamic) {
 				return null;
 			}
 		}
 		try {
-			this.pipe.readBytes(this.bytes, 0, this.bytes.length);
+			this.fifo.readBytes(this.bytes, 0, this.bytes.length);
 			var result = this.bytes;
 			this.bytes = null;
 			return result;

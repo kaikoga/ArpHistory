@@ -3,7 +3,7 @@ package net.kaikoga.arp.io;
 import haxe.io.Bytes;
 using net.kaikoga.arp.io.BytesTool;
 
-class Pipe implements IInput implements IOutput implements IBlobInput implements IBlobOutput{
+class Fifo implements IInput implements IOutput implements IBlobInput implements IBlobOutput {
 
 	private var _bigEndian:Bool;
 	public var bigEndian(get, set):Bool;
@@ -17,7 +17,7 @@ class Pipe implements IInput implements IOutput implements IBlobInput implements
 	private var bytesAvailable(get, never):Int;
 	inline private function get_bytesAvailable():Int return writePosition - readPosition;
 
-	private var mode:PipeMode = PipeMode.Write;
+	private var mode:FifoMode = FifoMode.Write;
 
 	inline private static var GC_MINIMUM:Int = 1024;
 
@@ -27,8 +27,8 @@ class Pipe implements IInput implements IOutput implements IBlobInput implements
 
 	private function writeMode(spaceDemand:Int = 16):Void {
 		switch (this.mode) {
-			case PipeMode.Read:
-				this.mode = PipeMode.Write;
+			case FifoMode.Read:
+				this.mode = FifoMode.Write;
 				if (this.writePosition + spaceDemand > this.bytes.length) this.expand(spaceDemand);
 			case _:
 		}
@@ -36,8 +36,8 @@ class Pipe implements IInput implements IOutput implements IBlobInput implements
 
 	private function readMode(dataDemand:Int = 16):Void {
 		switch (this.mode) {
-			case PipeMode.Write:
-				this.mode = PipeMode.Read;
+			case FifoMode.Write:
+				this.mode = FifoMode.Read;
 				if (this.readPosition >= GC_MINIMUM) this.gc();
 			case _:
 		}
@@ -264,7 +264,7 @@ class Pipe implements IInput implements IOutput implements IBlobInput implements
 	}
 }
 
-private enum PipeMode {
+private enum FifoMode {
 	Write;
 	Read;
 }
