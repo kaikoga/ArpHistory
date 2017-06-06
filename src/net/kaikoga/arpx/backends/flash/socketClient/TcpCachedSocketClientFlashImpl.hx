@@ -5,7 +5,7 @@ import net.kaikoga.arp.io.flash.DataOutputWrapper;
 import net.kaikoga.arp.io.flash.DataInputWrapper;
 import haxe.io.Bytes;
 import net.kaikoga.arpx.backends.cross.socketClient.ISocketClientImpl;
-import net.kaikoga.arp.io.Pipe;
+import net.kaikoga.arp.io.Fifo;
 import net.kaikoga.arpx.socketClient.TcpCachedSocketClient;
 import net.kaikoga.arp.events.IArpSignalIn;
 import net.kaikoga.arp.events.ArpProgressEvent;
@@ -27,17 +27,17 @@ class TcpCachedSocketClientFlashImpl extends ArpObjectImplBase implements ISocke
 		super();
 		this.socketClient = socketClient;
 		this.onData = socketClient._onData;
-		this.inPipe = new Pipe();
-		this.inPipe.bigEndian = true;
-		this.outPipe = new Pipe();
-		this.outPipe.bigEndian = true;
+		this.inFifo = new Fifo();
+		this.inFifo.bigEndian = true;
+		this.outFifo = new Fifo();
+		this.outFifo.bigEndian = true;
 	}
 
 	private var socket:Socket;
 	private var output:DataOutputWrapper;
 	private var input:DataInputWrapper;
-	private var outPipe:Pipe;
-	private var inPipe:Pipe;
+	private var outFifo:Fifo;
+	private var inFifo:Fifo;
 
 	override public function arpHeatUp():Bool {
 		if (this.socketClient.host == null) {
@@ -75,13 +75,13 @@ class TcpCachedSocketClientFlashImpl extends ArpObjectImplBase implements ISocke
 
 	private function onSocketData(event:ProgressEvent):Void {
 		var bytes:Bytes = this.input.nextBytes(this.socket.bytesAvailable);
-		this.inPipe.writeBytes(bytes, 0, bytes.length);
+		this.inFifo.writeBytes(bytes, 0, bytes.length);
 		if (this.onData.willTrigger()) this.onData.dispatch(new ArpProgressEvent(event.bytesLoaded, event.bytesTotal));
 	}
 
-	@:access(net.kaikoga.arp.io.Pipe.bytesAvailable)
+	@:access(net.kaikoga.arp.io.Fifo.bytesAvailable)
 	private function flush():Void {
-		if (this.output != null) this.output.writeBytes(this.outPipe.nextBytes(this.outPipe.bytesAvailable));
+		if (this.output != null) this.output.writeBytes(this.outFifo.nextBytes(this.outFifo.bytesAvailable));
 	}
 
 	override public function arpHeatDown():Bool {
@@ -92,34 +92,34 @@ class TcpCachedSocketClientFlashImpl extends ArpObjectImplBase implements ISocke
 		return true;
 	}
 
-	inline public function readBool():Bool return inPipe.readBool();
-	inline public function readInt8():Int return inPipe.readInt8();
-	inline public function readInt16():Int return inPipe.readInt16();
-	inline public function readInt32():Int return inPipe.readInt32();
-	inline public function readUInt8():UInt return inPipe.readUInt8();
-	inline public function readUInt16():UInt return inPipe.readUInt16();
-	inline public function readUInt32():UInt return inPipe.readUInt32();
-	inline public function readFloat():Float return inPipe.readFloat();
-	inline public function readDouble():Float return inPipe.readDouble();
-	inline public function readBytes(bytes:Bytes, offset:UInt = 0, length:UInt = 0):Void inPipe.readBytes(bytes, offset, length);
-	inline public function readUtfBytes(length:UInt):String return inPipe.readUtfBytes(length);
-	inline public function readBlob():Bytes return inPipe.readBlob();
-	inline public function readUtfBlob():String return inPipe.readUtfBlob();
-	inline public function nextBytes(limit:Int = 0):Bytes return inPipe.nextBytes(limit);
+	inline public function readBool():Bool return inFifo.readBool();
+	inline public function readInt8():Int return inFifo.readInt8();
+	inline public function readInt16():Int return inFifo.readInt16();
+	inline public function readInt32():Int return inFifo.readInt32();
+	inline public function readUInt8():UInt return inFifo.readUInt8();
+	inline public function readUInt16():UInt return inFifo.readUInt16();
+	inline public function readUInt32():UInt return inFifo.readUInt32();
+	inline public function readFloat():Float return inFifo.readFloat();
+	inline public function readDouble():Float return inFifo.readDouble();
+	inline public function readBytes(bytes:Bytes, offset:UInt = 0, length:UInt = 0):Void inFifo.readBytes(bytes, offset, length);
+	inline public function readUtfBytes(length:UInt):String return inFifo.readUtfBytes(length);
+	inline public function readBlob():Bytes return inFifo.readBlob();
+	inline public function readUtfBlob():String return inFifo.readUtfBlob();
+	inline public function nextBytes(limit:Int = 0):Bytes return inFifo.nextBytes(limit);
 
-	inline public function writeBool(value:Bool):Void { outPipe.writeBool(value); flush(); }
-	inline public function writeInt8(value:Int):Void { outPipe.writeInt8(value); flush(); }
-	inline public function writeInt16(value:Int):Void { outPipe.writeInt16(value); flush(); }
-	inline public function writeInt32(value:Int):Void { outPipe.writeInt32(value); flush(); }
-	inline public function writeUInt8(value:UInt):Void { outPipe.writeUInt8(value); flush(); }
-	inline public function writeUInt16(value:UInt):Void { outPipe.writeUInt16(value); flush(); }
-	inline public function writeUInt32(value:UInt):Void { outPipe.writeUInt32(value); flush(); }
-	inline public function writeFloat(value:Float):Void { outPipe.writeFloat(value); flush(); }
-	inline public function writeDouble(value:Float):Void { outPipe.writeDouble(value); flush(); }
-	inline public function writeBytes(bytes:Bytes, offset:UInt = 0, length:UInt = 0):Void { outPipe.writeBytes(bytes, offset, length); flush(); }
-	inline public function writeUtfBytes(value:String):Void { outPipe.writeUtfBytes(value); flush(); }
-	inline public function writeBlob(bytes:Bytes):Void { outPipe.writeBlob(bytes); flush(); }
-	inline public function writeUtfBlob(value:String):Void { outPipe.writeUtfBlob(value); flush(); }
+	inline public function writeBool(value:Bool):Void { outFifo.writeBool(value); flush(); }
+	inline public function writeInt8(value:Int):Void { outFifo.writeInt8(value); flush(); }
+	inline public function writeInt16(value:Int):Void { outFifo.writeInt16(value); flush(); }
+	inline public function writeInt32(value:Int):Void { outFifo.writeInt32(value); flush(); }
+	inline public function writeUInt8(value:UInt):Void { outFifo.writeUInt8(value); flush(); }
+	inline public function writeUInt16(value:UInt):Void { outFifo.writeUInt16(value); flush(); }
+	inline public function writeUInt32(value:UInt):Void { outFifo.writeUInt32(value); flush(); }
+	inline public function writeFloat(value:Float):Void { outFifo.writeFloat(value); flush(); }
+	inline public function writeDouble(value:Float):Void { outFifo.writeDouble(value); flush(); }
+	inline public function writeBytes(bytes:Bytes, offset:UInt = 0, length:UInt = 0):Void { outFifo.writeBytes(bytes, offset, length); flush(); }
+	inline public function writeUtfBytes(value:String):Void { outFifo.writeUtfBytes(value); flush(); }
+	inline public function writeBlob(bytes:Bytes):Void { outFifo.writeBlob(bytes); flush(); }
+	inline public function writeUtfBlob(value:String):Void { outFifo.writeUtfBlob(value); flush(); }
 
 }
 
