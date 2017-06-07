@@ -1,33 +1,24 @@
 package net.kaikoga.arp.io;
 
-import haxe.io.BytesOutput;
+import net.kaikoga.arp.testParams.IoProviders.IOutputProvider;
 import haxe.io.Bytes;
 import picotest.PicoAssert.*;
 
 class OutputWrapperCase {
 
+	private var provider:IOutputProvider;
+	private var me:IOutput;
+
+	@Parameter
+	public function setup(provider:IOutputProvider):Void {
+		this.provider = provider;
+		me = provider.create();
+		me.bigEndian = true;
+	}
+
 	private var bytesData(get, never):Array<Int>;
-	private function get_bytesData():Array<Int> {
-		var bytes:Bytes = output.getBytes();
-		return [for (i in 0...bytes.length) bytes.get(i)];
-	}
+	private function get_bytesData():Array<Int> return this.provider.bytesData();
 
-	@:isVar private var output(get, null):BytesOutput;
-	private function get_output():BytesOutput {
-		if (output == null) {
-			output = new BytesOutput();
-		}
-		return output;
-	}
-
-	@:isVar private var me(get, null):OutputWrapper;
-	private function get_me():OutputWrapper {
-		if (me == null) {
-			me = new OutputWrapper(output);
-			me.bigEndian = true;
-		}
-		return me;
-	}
 
 	public function testWriteBool():Void {
 		me.writeBool(true);

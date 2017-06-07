@@ -1,34 +1,24 @@
 package net.kaikoga.arp.io;
 
+import net.kaikoga.arp.testParams.IoProviders.IInputProvider;
 import haxe.io.Bytes;
-import haxe.io.BytesInput;
 import picotest.PicoAssert.*;
 
 class InputWrapperCase {
 
+	private var provider:IInputProvider;
+	private var me:IInput;
+
+	@Parameter
+	public function setup(provider:IInputProvider):Void {
+		this.provider = provider;
+	}
+
 	private var bytesData(never, set):Array<Int>;
 	private function set_bytesData(value:Array<Int>):Array<Int> {
-		this.bytes = Bytes.alloc(value.length);
-		for (i in 0...value.length) this.bytes.set(i, value[i]); 
+		me = this.provider.create(value);
+		me.bigEndian = true;
 		return value;
-	}
-	private var bytes:Bytes;
-
-	@:isVar private var input(get, null):BytesInput;
-	private function get_input():BytesInput {
-		if (input == null) {
-			input = new BytesInput(bytes);
-		}
-		return input;
-	}
-
-	@:isVar private var me(get, null):InputWrapper;
-	private function get_me():InputWrapper {
-		if (me == null) {
-			me = new InputWrapper(input);
-			me.bigEndian = true;
-		}
-		return me;
 	}
 
 	public function testReadBool():Void {

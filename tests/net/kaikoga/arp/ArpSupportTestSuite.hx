@@ -31,6 +31,7 @@ import net.kaikoga.arp.utils.ArpStringUtilCase;
 import picotest.PicoTestRunner;
 
 import net.kaikoga.arp.testParams.DsImplProviders.*;
+import net.kaikoga.arp.testParams.IoProviders.*;
 import net.kaikoga.arp.testParams.PersistIoProviders.*;
 
 class ArpSupportTestSuite {
@@ -40,8 +41,8 @@ class ArpSupportTestSuite {
 
 		r.load(ArpStringUtilCase);
 
-		r.load(InputWrapperCase);
-		r.load(OutputWrapperCase);
+		r.load(InputWrapperCase, inputProvider());
+		r.load(OutputWrapperCase, outputProvider());
 
 		r.load(IntSetCase, setProvider());
 		r.load(IntListCase, listProvider());
