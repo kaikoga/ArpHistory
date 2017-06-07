@@ -67,5 +67,15 @@ class BytesTool {
 		setInt32BE(bytes, pos + 4, v.high);
 	}
 
+	inline public static function toBytes(bytesData:Array<Int>):Bytes {
+		var length = bytesData.length;
+		var bytes = Bytes.alloc(length);
+		for (i in 0...length) bytes.set(i, bytesData[i]);
+		return bytes;
+	}
+
+	inline public static function toArray(bytes:Bytes):Array<Int> {
+		return [for (i in 0...bytes.length) bytes.get(i)];
+	}
 }
 

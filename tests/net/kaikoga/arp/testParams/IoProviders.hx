@@ -2,11 +2,12 @@ package net.kaikoga.arp.testParams;
 
 import haxe.io.BytesInput;
 import haxe.io.BytesOutput;
-import haxe.io.Bytes;
 import net.kaikoga.arp.io.InputWrapper;
 import net.kaikoga.arp.io.OutputWrapper;
 import net.kaikoga.arp.io.IInput;
 import net.kaikoga.arp.io.IOutput;
+
+using net.kaikoga.arp.io.BytesTool;
 
 #if flash
 import flash.utils.ByteArray;
@@ -40,16 +41,13 @@ typedef IInputProvider = {
 
 typedef IOutputProvider = {
 	function create():IOutput;
-	function bytesData():Array<Int>; 
+	function bytesData():Array<Int>;
 }
 
 class InputWrapperProvider {
 	public function new() return;
 	public function create(bytesData:Array<Int>):IInput {
-		var length = bytesData.length;
-		var bytes = Bytes.alloc(length);
-		for (i in 0...length) bytes.set(i, bytesData[i]);
-		return new InputWrapper(new BytesInput(bytes));
+		return new InputWrapper(new BytesInput(bytesData.toBytes()));
 	}
 }
 
@@ -61,8 +59,7 @@ class OutputWrapperProvider {
 		return new OutputWrapper(this.bytesOutput);
 	}
 	public function bytesData():Array<Int> {
-		var bytes = this.bytesOutput.getBytes();
-		return [for (i in 0...bytes.length) bytes.get(i)];
+		return this.bytesOutput.getBytes().toArray();
 	}
 }
 
