@@ -1,5 +1,7 @@
 package net.kaikoga.arp;
 
+import net.kaikoga.arp.io.OutputWrapperCase;
+import net.kaikoga.arp.io.InputWrapperCase;
 import net.kaikoga.arp.ds.ListCase;
 import net.kaikoga.arp.ds.MapCase;
 import net.kaikoga.arp.ds.OmapCase;
@@ -37,6 +39,9 @@ class ArpSupportTestSuite {
 		r.load(ERegIteratorCase);
 
 		r.load(ArpStringUtilCase);
+
+		r.load(InputWrapperCase);
+		r.load(OutputWrapperCase);
 
 		r.load(IntSetCase, setProvider());
 		r.load(IntListCase, listProvider());
