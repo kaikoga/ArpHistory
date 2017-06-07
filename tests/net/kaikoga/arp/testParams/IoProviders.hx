@@ -1,13 +1,15 @@
 package net.kaikoga.arp.testParams;
 
 import haxe.io.Bytes;
-import net.kaikoga.arp.io.Fifo;
 import haxe.io.BytesInput;
 import haxe.io.BytesOutput;
-import net.kaikoga.arp.io.InputWrapper;
-import net.kaikoga.arp.io.OutputWrapper;
+import net.kaikoga.arp.io.Fifo;
+import net.kaikoga.arp.io.IBufferedInput;
 import net.kaikoga.arp.io.IInput;
 import net.kaikoga.arp.io.IOutput;
+import net.kaikoga.arp.io.InputWrapper;
+import net.kaikoga.arp.io.BufferedInput;
+import net.kaikoga.arp.io.OutputWrapper;
 
 using net.kaikoga.arp.io.BytesTool;
 
@@ -22,8 +24,11 @@ class IoProviders {
 		var providers:Array<Array<Dynamic>> = [];
 		providers.push([new InputWrapperProvider()]);
 		providers.push([new FifoInputProvider()]);
+		providers.push([new BufferedInputWrapperProvider(new InputWrapperProvider())]);
+		providers.push([new BufferedInputWrapperProvider(new FifoInputProvider())]);
 		#if flash
 		providers.push([new DataInputWrapperProvider()]);
+		providers.push([new BufferedInputWrapperProvider(new DataInputWrapperProvider())]);
 		#end
 		return providers;
 	}
@@ -89,6 +94,14 @@ class FifoOutputProvider {
 		var bytes = Bytes.alloc(this.fifo.bytesAvailable);
 		this.fifo.readBytes(bytes, 0, this.fifo.bytesAvailable);
 		return bytes.toArray();
+	}
+}
+
+class BufferedInputWrapperProvider {
+	private var provider:IInputProvider;
+	public function new(provider:IInputProvider) this.provider = provider;
+	public function create(bytesData:Array<Int>):IBufferedInput {
+		return new BufferedInput(provider.create(bytesData));
 	}
 }
 

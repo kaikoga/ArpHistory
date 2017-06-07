@@ -1,5 +1,6 @@
 package net.kaikoga.arp.io;
 
+import haxe.io.Eof;
 import haxe.io.Bytes;
 using net.kaikoga.arp.io.BytesTool;
 
@@ -41,7 +42,7 @@ class Fifo implements IBufferedInput implements IOutput implements IBlobInput im
 				if (this.readPosition >= GC_MINIMUM) this.gc();
 			case _:
 		}
-		if (this.bytesAvailable < dataDemand) throw "EOF";
+		if (this.bytesAvailable < dataDemand) throw new Eof();
 	}
 
 	private function gc():Void {

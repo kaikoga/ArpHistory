@@ -1,5 +1,6 @@
 package net.kaikoga.arp.io;
 
+import haxe.io.Eof;
 import haxe.io.Bytes;
 import haxe.io.Input;
 
@@ -46,7 +47,7 @@ class InputWrapper implements IInput {
 
 	public function nextBytes(limit:Int = 0):Bytes {
 		var bytes:Bytes = Bytes.alloc(limit);
-		var len:Int = this.input.readBytes(bytes, 0, limit);
+		var len:Int = try this.input.readBytes(bytes, 0, limit) catch (e:Eof) 0;
 		return bytes.sub(0, len);
 	}
 

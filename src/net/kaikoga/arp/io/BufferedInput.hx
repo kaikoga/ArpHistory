@@ -25,10 +25,13 @@ class BufferedInput implements IBufferedInput {
 
 	private function drain():Void {
 		var buf:Bytes;
-		while (true) {
+		while (this.input != null) {
 			buf = this.input.nextBytes(8192);
-			if (buf.length == 0) break;
-			this.fifo.writeBytes(buf, 0, buf.length);
+			if (buf.length == 0) {
+				this.input = null;
+			} else {
+				this.fifo.writeBytes(buf, 0, buf.length);
+			}
 		}
 	}
 
@@ -62,7 +65,7 @@ class BufferedInput implements IBufferedInput {
 		drain();
 		return this.fifo.readUInt32();
 	}
-	
+
 	public function readFloat():Float {
 		drain();
 		return this.fifo.readFloat();
@@ -71,7 +74,7 @@ class BufferedInput implements IBufferedInput {
 		drain();
 		return this.fifo.readDouble();
 	}
-	
+
 	public function readBytes(bytes:Bytes, offset:UInt = 0, length:UInt = 0):Void {
 		drain();
 		return this.fifo.readBytes(bytes, offset, length);
