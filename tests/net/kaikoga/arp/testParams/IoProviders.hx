@@ -1,5 +1,7 @@
 package net.kaikoga.arp.testParams;
 
+import haxe.io.Bytes;
+import net.kaikoga.arp.io.Fifo;
 import haxe.io.BytesInput;
 import haxe.io.BytesOutput;
 import net.kaikoga.arp.io.InputWrapper;
@@ -19,6 +21,7 @@ class IoProviders {
 	public static function inputProvider():Iterable<Array<Dynamic>> {
 		var providers:Array<Array<Dynamic>> = [];
 		providers.push([new InputWrapperProvider()]);
+		providers.push([new FifoInputProvider()]);
 		#if flash
 		providers.push([new DataInputWrapperProvider()]);
 		#end
@@ -28,6 +31,7 @@ class IoProviders {
 	public static function outputProvider():Iterable<Array<Dynamic>> {
 		var providers:Array<Array<Dynamic>> = [];
 		providers.push([new OutputWrapperProvider()]);
+		providers.push([new FifoOutputProvider()]);
 		#if flash
 		providers.push([new DataOutputWrapperProvider()]);
 		#end
@@ -60,6 +64,31 @@ class OutputWrapperProvider {
 	}
 	public function bytesData():Array<Int> {
 		return this.bytesOutput.getBytes().toArray();
+	}
+}
+
+class FifoInputProvider {
+	public function new() return;
+	public function create(bytesData:Array<Int>):IInput {
+		var fifo = new Fifo();
+		fifo.bigEndian = true;
+		for (i in bytesData) fifo.writeUInt8(i);
+		return fifo;
+	}
+}
+
+class FifoOutputProvider {
+	private var fifo:Fifo;
+	public function new() return;
+	public function create():IOutput {
+		this.fifo = new Fifo();
+		this.fifo.bigEndian = true;
+		return this.fifo;
+	}
+	public function bytesData():Array<Int> {
+		var bytes = Bytes.alloc(this.fifo.bytesAvailable);
+		this.fifo.readBytes(bytes, 0, this.fifo.bytesAvailable);
+		return bytes.toArray();
 	}
 }
 

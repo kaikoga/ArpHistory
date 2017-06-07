@@ -10,7 +10,7 @@ class Fifo implements IBufferedInput implements IOutput implements IBlobInput im
 	private function get_bigEndian():Bool return _bigEndian;
 	private function set_bigEndian(value:Bool):Bool return _bigEndian = value;
 
-	public var bytes:Bytes;
+	private var bytes:Bytes;
 
 	private var readPosition:Int = 0;
 	private var writePosition:Int = 0;
@@ -161,7 +161,7 @@ class Fifo implements IBufferedInput implements IOutput implements IBlobInput im
 		this.readMode(1);
 		var v = this.bytes.get(this.readPosition);
 		this.readPosition += 1;
-		return if (v < 0) v | 0xffffff00 else v & 0x000000ff;
+		return if (v >= 0x80) v - 0x100 else v;
 	}
 
 	public function readInt16():Int {
@@ -169,7 +169,7 @@ class Fifo implements IBufferedInput implements IOutput implements IBlobInput im
 		var v = if (bigEndian) this.bytes.getUInt16BE(this.readPosition)
 		else this.bytes.getUInt16(this.readPosition);
 		this.readPosition += 2;
-		return if (v < 0) v | 0xffff0000 else v & 0x0000ffff;
+		return if (v >= 0x8000) v - 0x10000 else v;
 	}
 
 	public function readInt32():Int {
@@ -235,7 +235,7 @@ class Fifo implements IBufferedInput implements IOutput implements IBlobInput im
 
 	public function readBlob():Bytes {
 		this.readMode(4);
-		var len:Int = this.bytes.getInt32(this.readPosition);
+		var len:Int = if (this._bigEndian) this.bytes.getInt32BE(this.readPosition) else this.bytes.getInt32(this.readPosition);
 		this.readMode(4 + len);
 		var bytes:Bytes = Bytes.alloc(len);
 		bytes.blit(0, this.bytes, this.readPosition + 4, len);

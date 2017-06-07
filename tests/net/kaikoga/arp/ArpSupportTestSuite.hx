@@ -1,5 +1,6 @@
 package net.kaikoga.arp;
 
+import net.kaikoga.arp.io.FifoCase;
 import net.kaikoga.arp.io.BytesToolCase;
 import net.kaikoga.arp.io.OutputWrapperCase;
 import net.kaikoga.arp.io.InputWrapperCase;
@@ -43,6 +44,7 @@ class ArpSupportTestSuite {
 		r.load(ArpStringUtilCase);
 
 		r.load(BytesToolCase);
+		r.load(FifoCase);
 		r.load(InputWrapperCase, inputProvider());
 		r.load(OutputWrapperCase, outputProvider());
 
