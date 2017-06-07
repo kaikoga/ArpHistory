@@ -17,11 +17,11 @@ import net.kaikoga.arp.persistable.IPersistInput;
 class PersistIoProviders {
 
 	public static function persistIoProvider():Iterable<Array<Dynamic>> {
-		return [
-			[new AnonPersistIoProvider()],
-			[new JsonPersistIoProvider()],
-			[new PackedPersistIoProvider()],
-		];
+		var providers:Array<Array<Dynamic>> = [];
+		providers.push([new AnonPersistIoProvider()]);
+		providers.push([new JsonPersistIoProvider()]);
+		providers.push([new PackedPersistIoProvider()]);
+		return providers;
 	}
 
 }

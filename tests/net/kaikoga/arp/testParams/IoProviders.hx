@@ -16,17 +16,21 @@ import net.kaikoga.arp.io.flash.DataInputWrapper;
 
 class IoProviders {
 	public static function inputProvider():Iterable<Array<Dynamic>> {
-		return [
-			[new InputWrapperProvider()]
-			#if flash ,[new DataInputWrapperProvider()] #end
-		];
+		var providers:Array<Array<Dynamic>> = [];
+		providers.push([new InputWrapperProvider()]);
+		#if flash
+		providers.push([new DataInputWrapperProvider()]);
+		#end
+		return providers;
 	}
 
 	public static function outputProvider():Iterable<Array<Dynamic>> {
-		return [
-			[new OutputWrapperProvider()]
-			#if flash ,[new DataOutputWrapperProvider()] #end
-		];
+		var providers:Array<Array<Dynamic>> = [];
+		providers.push([new OutputWrapperProvider()]);
+		#if flash
+		providers.push([new DataOutputWrapperProvider()]);
+		#end
+		return providers;
 	}
 }
 

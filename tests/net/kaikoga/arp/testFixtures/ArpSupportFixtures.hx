@@ -6,15 +6,15 @@ import org.hamcrest.Matchers.*;
 class ArpSupportFixtures {
 
 	public static function intFixture():Iterable<Array<Dynamic>> {
-		return [
-			[new DsIntFixture()]
-		];
+		var fixtures:Array<Array<Dynamic>> = [];
+		fixtures.push([new DsIntFixture()]);
+		return fixtures;
 	}
 
 	public static function stringFixture():Iterable<Array<Dynamic>> {
-		return [
-			[new DsStringFixture()]
-		];
+		var fixtures:Array<Array<Dynamic>> = [];
+		fixtures.push([new DsStringFixture()]);
+		return fixtures;
 	}
 }
 
