@@ -1,5 +1,6 @@
 package net.kaikoga.arp.io;
 
+import haxe.Int64;
 import haxe.io.Bytes;
 using net.kaikoga.arp.io.BytesTool;
 
@@ -51,7 +52,7 @@ class BytesTool {
 		return if( v & 0x80000000 != 0 ) v | 0x80000000 else v;
 	}
 
-	inline public static function getInt64BE(bytes:Bytes, pos:Int):haxe.Int64 {
+	inline public static function getInt64BE(bytes:Bytes, pos:Int):Int64 {
 		return haxe.Int64.make(getInt32BE(bytes, pos + 4), getInt32BE(bytes, pos));
 	}
 
@@ -62,9 +63,9 @@ class BytesTool {
 		bytes.set(pos, v >>> 24);
 	}
 
-	inline public static function setInt64BE(bytes:Bytes, pos:Int, v:haxe.Int64):Void {
-		setInt32BE(bytes, pos, v.low);
-		setInt32BE(bytes, pos + 4, v.high);
+	inline public static function setInt64BE(bytes:Bytes, pos:Int, v:Int64):Void {
+		setInt32BE(bytes, pos, v.high);
+		setInt32BE(bytes, pos + 4, v.low);
 	}
 
 	inline public static function toBytes(bytesData:Array<Int>):Bytes {
