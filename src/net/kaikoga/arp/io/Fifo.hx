@@ -3,7 +3,7 @@ package net.kaikoga.arp.io;
 import haxe.io.Bytes;
 using net.kaikoga.arp.io.BytesTool;
 
-class Fifo implements IInput implements IOutput implements IBlobInput implements IBlobOutput {
+class Fifo implements IBufferedInput implements IOutput implements IBlobInput implements IBlobOutput {
 
 	private var _bigEndian:Bool;
 	public var bigEndian(get, set):Bool;
@@ -14,7 +14,7 @@ class Fifo implements IInput implements IOutput implements IBlobInput implements
 
 	private var readPosition:Int = 0;
 	private var writePosition:Int = 0;
-	private var bytesAvailable(get, never):Int;
+	public var bytesAvailable(get, never):Int;
 	inline private function get_bytesAvailable():Int return writePosition - readPosition;
 
 	private var mode:FifoMode = FifoMode.Write;
