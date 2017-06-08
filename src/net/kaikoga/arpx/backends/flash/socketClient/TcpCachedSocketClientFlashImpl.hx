@@ -42,32 +42,45 @@ class TcpCachedSocketClientFlashImpl extends ArpObjectImplBase implements ISocke
 		if (this.socket != null) {
 			return true;
 		}
+		this.input = new BufferedInput();
+		this.output = new BufferedOutput();
+		this.input.bigEndian = true;
+		this.output.bigEndian = true;
 		this.socket = new Socket();
+		this.socket.addEventListener(Event.CONNECT, this.onSocketConnect);
+		this.socket.addEventListener(IOErrorEvent.IO_ERROR, this.onSocketError);
+		this.socket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.onSocketError);
+		this.socket.addEventListener(ProgressEvent.SOCKET_DATA, this.onSocketData);
+		this.connect();
+		// this.socketClient.arpDomain.waitFor(this.socketClient);
+		return true;
+	}
+
+	private function connect():Void {
 		var host:String = "127.0.0.1";
 		var port:Int = 57772;
 		var array:Array<String> = this.socketClient.host.split(":");
 		if (array[0] != null) host = array[0];
 		if (array[1] != null) try { port = Std.parseInt(array[1]); } catch(d:Dynamic) {}
-		this.socket.addEventListener(Event.CONNECT, this.onSocketConnect);
-		this.socket.addEventListener(IOErrorEvent.IO_ERROR, this.onSocketError);
-		this.socket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.onSocketError);
-		this.socket.addEventListener(ProgressEvent.SOCKET_DATA, this.onSocketData);
 		this.socket.connect(host, port);
-		// this.socketClient.arpDomain.waitFor(this.socketClient);
-		return true;
+	}
+
+	private function reconnect():Void {
+		this.socketClient.arpDomain.log("socketClient", "TcpCachedSocketClientFlashImpl.reconnect()");
+		this.connect();
 	}
 
 	private function onSocketConnect(event:Event):Void {
 		// this.socketClient.arpDomain.notifyFor(this.socketClient);
-		this.input = new BufferedInput(new DataInputWrapper(this.socket));
-		this.output = new BufferedOutput(new DataOutputWrapper(this.socket));
+		this.input.input = new DataInputWrapper(this.socket);
+		this.output.output = new DataOutputWrapper(this.socket);
 		this.input.bigEndian = true;
 		this.output.bigEndian = true;
 	}
 
 	private function onSocketError(event:Event):Void {
 		this.socketClient.arpDomain.notifyFor(this.socketClient);
-		this.socket = null;
+		haxe.Timer.delay(this.reconnect, 1000);
 	}
 
 	private function onSocketData(event:ProgressEvent):Void {

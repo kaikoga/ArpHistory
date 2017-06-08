@@ -33,18 +33,22 @@ class TcpSocketClientFlashImpl extends SocketClientImplBase {
 			return this.socket.connected;
 		}
 		this.socket = new Socket();
+		this.socket.addEventListener(Event.CONNECT, this.onSocketConnect);
+		this.socket.addEventListener(IOErrorEvent.IO_ERROR, this.onSocketError);
+		this.socket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.onSocketError);
+		this.socket.addEventListener(ProgressEvent.SOCKET_DATA, this.onSocketData);
+		this.connect();
+		this.socketClient.arpDomain.waitFor(this.socketClient);
+		return false;
+	}
+
+	private function connect():Void {
 		var host:String = "127.0.0.1";
 		var port:Int = 57772;
 		var array:Array<String> = this.socketClient.host.split(":");
 		if (array[0] != null) host = array[0];
 		if (array[1] != null) try { port = Std.parseInt(array[1]); } catch(d:Dynamic) {}
-		this.socket.addEventListener(Event.CONNECT, this.onSocketConnect);
-		this.socket.addEventListener(IOErrorEvent.IO_ERROR, this.onSocketError);
-		this.socket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.onSocketError);
-		this.socket.addEventListener(ProgressEvent.SOCKET_DATA, this.onSocketData);
 		this.socket.connect(host, port);
-		this.socketClient.arpDomain.waitFor(this.socketClient);
-		return false;
 	}
 
 	private function onSocketConnect(event:Event):Void {
