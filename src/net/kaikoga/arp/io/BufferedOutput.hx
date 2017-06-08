@@ -12,15 +12,20 @@ class BufferedOutput implements IBufferedOutput {
 		return value;
 	}
 
-	private var output:IOutput;
+	private var _output:IOutput;
+	public var output(get, set):IOutput;
+	inline private function get_output():IOutput return _output;
+	inline private function set_output(value:IOutput):IOutput return this._output = value;
+
 	private var fifo:Fifo;
 
-	public function new(output:IOutput) {
+	public function new(output:IOutput = null) {
 		this.output = output;
 		this.fifo = new Fifo();
 	}
 
 	public function flush():Void {
+		if (this.output == null) return;
 		while (this.fifo.bytesAvailable > 0) {
 			var buf:Bytes = this.fifo.nextBytes(8192);
 			this.output.writeBytes(buf, 0, buf.length);

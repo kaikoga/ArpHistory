@@ -15,10 +15,14 @@ class BufferedInput implements IBufferedInput {
 	public var bytesAvailable(get, never):Int;
 	private function get_bytesAvailable():Int return this.fifo.bytesAvailable;
 
-	private var input:IInput;
+	private var _input:IInput;
+	public var input(get, set):IInput;
+	inline function get_input():IInput return _input;
+	inline function set_input(value:IInput):IInput return this._input = value;
+
 	private var fifo:Fifo;
 
-	public function new(input:IInput) {
+	public function new(input:IInput = null) {
 		this.input = input;
 		this.fifo = new Fifo();
 	}
