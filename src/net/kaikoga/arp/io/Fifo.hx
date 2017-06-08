@@ -32,8 +32,9 @@ class Fifo implements IBufferedInput implements IOutput implements IBlobInput im
 		switch (this.mode) {
 			case FifoMode.Read:
 				this.mode = FifoMode.Write;
-				if (this.writePosition + spaceDemand > this.bytes.length) this.expand(spaceDemand);
+				this.ensure(spaceDemand);
 			case _:
+				if (this.writePosition + spaceDemand > this.bytes.length) this.ensure(spaceDemand);
 		}
 	}
 
@@ -56,11 +57,19 @@ class Fifo implements IBufferedInput implements IOutput implements IBlobInput im
 		this.readPosition = 0;
 	}
 
-	private function expand(spaceDemand:Int):Void {
+	private function ensure(spaceDemand:Int):Void {
+		if (this.writePosition + spaceDemand <= this.bytes.length) return;
+
 		var len:Int = this.bytes.length;
 		while (len < this.writePosition + spaceDemand) len += len;
 		var b:Bytes = Bytes.alloc(len);
-		b.blit(0, this.bytes, 0, this.writePosition);
+		if (this.readPosition > 0) {
+			b.blit(0, this.bytes, this.readPosition, this.writePosition - this.readPosition);
+			this.writePosition -= this.readPosition;
+			this.readPosition = 0;
+		} else {
+			b.blit(0, this.bytes, 0, this.writePosition);
+		}
 		this.bytes = b;
 	}
 
