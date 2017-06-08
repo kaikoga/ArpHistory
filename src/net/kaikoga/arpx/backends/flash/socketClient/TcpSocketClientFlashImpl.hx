@@ -1,14 +1,15 @@
 package net.kaikoga.arpx.backends.flash.socketClient;
 
-import net.kaikoga.arp.io.flash.DataOutputWrapper;
-import net.kaikoga.arp.io.flash.DataInputWrapper;
-import net.kaikoga.arpx.backends.cross.socketClient.SocketClientImplBase;
-import net.kaikoga.arp.events.IArpSignalIn;
-import net.kaikoga.arp.events.ArpProgressEvent;
-import flash.events.ProgressEvent;
-import flash.events.IOErrorEvent;
 import flash.events.Event;
+import flash.events.IOErrorEvent;
+import flash.events.ProgressEvent;
+import flash.events.SecurityErrorEvent;
 import flash.net.Socket;
+import net.kaikoga.arp.events.ArpProgressEvent;
+import net.kaikoga.arp.events.IArpSignalIn;
+import net.kaikoga.arp.io.flash.DataInputWrapper;
+import net.kaikoga.arp.io.flash.DataOutputWrapper;
+import net.kaikoga.arpx.backends.cross.socketClient.SocketClientImplBase;
 import net.kaikoga.arpx.socketClient.TcpSocketClient;
 
 class TcpSocketClientFlashImpl extends SocketClientImplBase {
@@ -38,7 +39,8 @@ class TcpSocketClientFlashImpl extends SocketClientImplBase {
 		if (array[0] != null) host = array[0];
 		if (array[1] != null) try { port = Std.parseInt(array[1]); } catch(d:Dynamic) {}
 		this.socket.addEventListener(Event.CONNECT, this.onSocketConnect);
-		this.socket.addEventListener(IOErrorEvent.IO_ERROR, this.onSocketConnect);
+		this.socket.addEventListener(IOErrorEvent.IO_ERROR, this.onSocketError);
+		this.socket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.onSocketError);
 		this.socket.addEventListener(ProgressEvent.SOCKET_DATA, this.onSocketData);
 		this.socket.connect(host, port);
 		this.socketClient.arpDomain.waitFor(this.socketClient);
@@ -53,7 +55,7 @@ class TcpSocketClientFlashImpl extends SocketClientImplBase {
 		this.output.bigEndian = true;
 	}
 
-	private function onSocketIoError(event:IOErrorEvent):Void {
+	private function onSocketError(event:Event):Void {
 		this.socketClient.arpDomain.notifyFor(this.socketClient);
 		this.socket = null;
 	}
