@@ -1,5 +1,7 @@
 package net.kaikoga.arp.testParams;
 
+import net.kaikoga.arp.io.BufferedOutput;
+import net.kaikoga.arp.io.IBufferedOutput;
 import haxe.io.Bytes;
 import haxe.io.BytesInput;
 import haxe.io.BytesOutput;
@@ -37,8 +39,11 @@ class IoProviders {
 		var providers:Array<Array<Dynamic>> = [];
 		providers.push([new OutputWrapperProvider()]);
 		providers.push([new FifoOutputProvider()]);
+		providers.push([new BufferedOutputWrapperProvider(new OutputWrapperProvider())]);
+		providers.push([new BufferedOutputWrapperProvider(new FifoOutputProvider())]);
 		#if flash
 		providers.push([new DataOutputWrapperProvider()]);
+		providers.push([new BufferedOutputWrapperProvider(new DataOutputWrapperProvider())]);
 		#end
 		return providers;
 	}
@@ -102,6 +107,19 @@ class BufferedInputWrapperProvider {
 	public function new(provider:IInputProvider) this.provider = provider;
 	public function create(bytesData:Array<Int>):IBufferedInput {
 		return new BufferedInput(provider.create(bytesData));
+	}
+}
+
+class BufferedOutputWrapperProvider {
+	private var provider:IOutputProvider;
+	private var output:IBufferedOutput;
+	public function new(provider:IOutputProvider) this.provider = provider;
+	public function create():IBufferedOutput {
+		return output = new BufferedOutput(provider.create());
+	}
+	public function bytesData():Array<Int> {
+		output.flush();
+		return provider.bytesData();
 	}
 }
 
