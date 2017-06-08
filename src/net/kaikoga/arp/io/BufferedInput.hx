@@ -13,7 +13,10 @@ class BufferedInput implements IBufferedInput {
 	}
 
 	public var bytesAvailable(get, never):Int;
-	private function get_bytesAvailable():Int return this.fifo.bytesAvailable;
+	private function get_bytesAvailable():Int {
+		drain();
+		return this.fifo.bytesAvailable;
+	}
 
 	private var _input:IInput;
 	public var input(get, set):IInput;
