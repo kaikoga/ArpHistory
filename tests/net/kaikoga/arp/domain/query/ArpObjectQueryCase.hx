@@ -17,7 +17,7 @@ class ArpObjectQueryCase {
 		dir = domain.root.trueChild("path").trueChild("to").trueChild("dir");
 		arpObject = new MockArpObject();
 		arpType = arpObject.arpType;
-		dir.addArpObject(arpObject);
+		dir.addOrphanObject(arpObject);
 	}
 
 	public function testSlot():Void {

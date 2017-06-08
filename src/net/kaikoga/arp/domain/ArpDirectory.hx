@@ -42,8 +42,20 @@ class ArpDirectory {
 		return this.getOrCreateSlot(type).value;
 	}
 
-	public function addArpObject(value:IArpObject):Void {
-		this.getOrCreateSlot(value.arpType).value = value;
+	public function allocObject<T:IArpObject>(klass:Class<T>, args:Array<Dynamic> = null):T {
+		if (args == null) args = [];
+		return this.addObject(Type.createInstance(klass, args));
+	}
+
+	public function addOrphanObject<T:IArpObject>(arpObj:T):T {
+		return this.addObject(arpObj);
+	}
+
+	private function addObject<T:IArpObject>(arpObj:T):T {
+		var slot:ArpSlot<T> = this.getOrCreateSlot(arpObj.arpType);
+		slot.value = arpObj;
+		arpObj.arpInit(slot);
+		return arpObj;
 	}
 
 	public function linkTo(dir:ArpDirectory):Void {

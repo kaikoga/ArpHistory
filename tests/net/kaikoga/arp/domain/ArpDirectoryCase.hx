@@ -12,7 +12,7 @@ class ArpDirectoryCase {
 		var domain = new ArpDomain();
 		var child1 = domain.root.trueChild("test");
 		var arpObj1:IArpObject = new MockArpObject();
-		child1.addArpObject(arpObj1);
+		child1.addOrphanObject(arpObj1);
 
 		var child2 = domain.root.trueChild("test");
 		var arpObj2:IArpObject = child2.getValue(new ArpType("mock"));

@@ -19,7 +19,7 @@ class ArpDirectoryQueryCase {
 		dir = child.trueChild("to").trueChild("dir");
 		arpObject = new MockArpObject();
 		arpType = arpObject.arpType;
-		dir.addArpObject(arpObject);
+		dir.addOrphanObject(arpObject);
 	}
 
 	public function testAbsoluteDirectoryFromRoot():Void {
