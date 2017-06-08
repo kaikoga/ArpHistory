@@ -30,15 +30,12 @@ class BufferedInput implements IBufferedInput {
 		this.fifo = new Fifo();
 	}
 
-	private function drain():Void {
-		var buf:Bytes;
-		while (this.input != null) {
-			buf = this.input.nextBytes(8192);
-			if (buf.length == 0) {
-				this.input = null;
-			} else {
-				this.fifo.writeBytes(buf, 0, buf.length);
-			}
+	public function drain():Void {
+		if (this.input == null) return;
+		while (true) {
+			var buf:Bytes = this.input.nextBytes(8192);
+			if (buf.length == 0) break;
+			this.fifo.writeBytes(buf, 0, buf.length);
 		}
 	}
 

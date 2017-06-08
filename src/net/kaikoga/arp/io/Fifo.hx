@@ -26,6 +26,8 @@ class Fifo implements IBufferedInput implements IOutput implements IBlobInput im
 		this.flush();
 	}
 
+	public function drain():Void return;
+
 	private function writeMode(spaceDemand:Int = 16):Void {
 		switch (this.mode) {
 			case FifoMode.Read:
