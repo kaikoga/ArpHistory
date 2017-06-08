@@ -101,19 +101,19 @@ class TcpCachedSocketClientFlashImpl extends ArpObjectImplBase implements ISocke
 	inline public function readUtfBlob():String return input.readUtfBlob();
 	inline public function nextBytes(limit:Int = 0):Bytes return input.nextBytes(limit);
 
-	inline public function writeBool(value:Bool):Void output.writeBool(value);
-	inline public function writeInt8(value:Int):Void output.writeInt8(value);
-	inline public function writeInt16(value:Int):Void output.writeInt16(value);
-	inline public function writeInt32(value:Int):Void output.writeInt32(value);
-	inline public function writeUInt8(value:UInt):Void output.writeUInt8(value);
-	inline public function writeUInt16(value:UInt):Void output.writeUInt16(value);
-	inline public function writeUInt32(value:UInt):Void output.writeUInt32(value);
-	inline public function writeFloat(value:Float):Void output.writeFloat(value);
-	inline public function writeDouble(value:Float):Void output.writeDouble(value);
-	inline public function writeBytes(bytes:Bytes, offset:UInt = 0, length:UInt = 0):Void output.writeBytes(bytes, offset, length);
-	inline public function writeUtfBytes(value:String):Void output.writeUtfBytes(value);
-	inline public function writeBlob(bytes:Bytes):Void output.writeBlob(bytes);
-	inline public function writeUtfBlob(value:String):Void output.writeUtfBlob(value);
+	inline public function writeBool(value:Bool):Void { output.writeBool(value); output.flush(); }
+	inline public function writeInt8(value:Int):Void { output.writeInt8(value); output.flush(); }
+	inline public function writeInt16(value:Int):Void { output.writeInt16(value); output.flush(); }
+	inline public function writeInt32(value:Int):Void { output.writeInt32(value); output.flush(); }
+	inline public function writeUInt8(value:UInt):Void { output.writeUInt8(value); output.flush(); }
+	inline public function writeUInt16(value:UInt):Void { output.writeUInt16(value); output.flush(); }
+	inline public function writeUInt32(value:UInt):Void { output.writeUInt32(value); output.flush(); }
+	inline public function writeFloat(value:Float):Void { output.writeFloat(value); output.flush(); }
+	inline public function writeDouble(value:Float):Void { output.writeDouble(value); output.flush(); }
+	inline public function writeBytes(bytes:Bytes, offset:UInt = 0, length:UInt = 0):Void { output.writeBytes(bytes, offset, length); output.flush(); }
+	inline public function writeUtfBytes(value:String):Void { output.writeUtfBytes(value); output.flush(); }
+	inline public function writeBlob(bytes:Bytes):Void { output.writeBlob(bytes); output.flush(); }
+	inline public function writeUtfBlob(value:String):Void { output.writeUtfBlob(value); output.flush(); }
 
 }
 
