@@ -77,12 +77,7 @@ class MacroArpObjectStub {
 		return (macro class Generated {
 			@:noDoc @:noCompletion private var _arpDomain:net.kaikoga.arp.domain.ArpDomain;
 			public var arpDomain(get, never):net.kaikoga.arp.domain.ArpDomain;
-			@:noDoc @:noCompletion private function get_arpDomain():net.kaikoga.arp.domain.ArpDomain {
-				#if arp_debug
-			if (_arpDomain == null) throw("Warning: access to inactive or disposed ArpObject detected");
-				#end
-			return this._arpDomain;
-			}
+			@:noDoc @:noCompletion private function get_arpDomain():net.kaikoga.arp.domain.ArpDomain return this._arpDomain;
 
 			public static var _arpTypeInfo(default, never):net.kaikoga.arp.domain.ArpTypeInfo = new net.kaikoga.arp.domain.ArpTypeInfo($v{arpTemplateName}, new net.kaikoga.arp.domain.core.ArpType($v{arpTypeName}));
 			public var arpTypeInfo(get, never):net.kaikoga.arp.domain.ArpTypeInfo;
@@ -92,14 +87,12 @@ class MacroArpObjectStub {
 
 			@:noDoc @:noCompletion private var _arpSlot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 			public var arpSlot(get, never):net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
-			@:noDoc @:noCompletion private function get_arpSlot():net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot {
-				#if arp_debug
-				if (_arpSlot == null) throw("Warning: access to inactive or disposed ArpObject detected");
-				#end
-				return this._arpSlot;
-			}
+			@:noDoc @:noCompletion private function get_arpSlot():net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot return this._arpSlot;
 
 			public function arpInit(slot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot, seed:net.kaikoga.arp.seed.ArpSeed = null):net.kaikoga.arp.domain.IArpObject {
+				#if arp_debug
+				if (this._arpSlot != null) throw("ArpObject " + this.arpType + this._arpSlot + " is initialized");
+				#end
 				this._arpDomain = slot.domain;
 				this._arpSlot = slot;
 				$b{ this.buildInitBlock() }
@@ -116,10 +109,16 @@ class MacroArpObjectStub {
 			}
 
 			public function arpHeatLater():Void {
+				#if arp_debug
+				if (this._arpSlot == null) throw("ArpObject is not initialized");
+				#end
 				$b{ this.buildHeatLaterBlock() }
 			}
 
 			public function arpHeatUp():Bool {
+				#if arp_debug
+				if (this._arpSlot == null) throw("ArpObject is not initialized");
+				#end
 				$b{ this.buildHeatUpBlock() }
 				var isSync:Bool = true;
 				if (!this.arpSelfHeatUp()) isSync = false;
@@ -140,6 +139,9 @@ class MacroArpObjectStub {
 			}
 
 			public function arpHeatDown():Bool {
+				#if arp_debug
+				if (this._arpSlot == null) throw("ArpObject is not initialized");
+				#end
 				var isSync:Bool = true;
 				$e{
 					if (this.classDef.hasImpl) {
@@ -154,6 +156,9 @@ class MacroArpObjectStub {
 			}
 
 			public function arpDispose():Void {
+				#if arp_debug
+				if (this._arpSlot == null) throw("ArpObject is not initialized");
+				#end
 				this.arpHeatDown();
 				$e{
 					if (this.classDef.hasImpl) {
