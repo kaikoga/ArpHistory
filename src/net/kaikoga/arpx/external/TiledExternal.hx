@@ -52,7 +52,7 @@ class TiledExternal extends External {
 		if (this.file.exists) {
 			var xml:Xml = Xml.parse(this.file.bytes().toString());
 			if (xml != null) {
-				this.data = this.arpDomain.addObject(new DataGroup());
+				this.data = this.arpDomain.allocObject(DataGroup);
 				this.data.arpSlot.addReference();
 				this.loadTiled(xml);
 			}
@@ -75,17 +75,17 @@ class TiledExternal extends External {
 
 	private function loadTiledMap(xml:Xml):Field {
 		//tiled map => arp field
-		var field:Field = this.data.addObject(new Field());
+		var field:Field = this.data.allocObject(Field);
 
 		for (layer in xml.elementsNamed("layer")) {
 			var layerData:Array<Array<Int>> = this.readTiledLayer(layer);
-			var tileMap:ArrayTileMap = this.data.addObject(ArrayTileMap.fromArray(layerData));
+			var tileMap:ArrayTileMap = this.data.addOrphanObject(ArrayTileMap.fromArray(layerData));
 			tileMap.width = Std.parseInt(xml.get("width"));
 			tileMap.height = Std.parseInt(xml.get("height"));
 			tileMap.outerTileIndex = (this.outerTileIndex != 0) ? this.outerTileIndex : layerData[0][0];
 			// tileMap.tileInfo = this.tileInfo;
 
-			var tmMortal:TileMapMortal = this.data.addObject(new TileMapMortal());
+			var tmMortal:TileMapMortal = this.data.allocObject(TileMapMortal);
 			tmMortal.chip = this.chip;
 			tmMortal.tileMap = tileMap;
 			field.initMortals.addPair('_layer_${layer.get("name")}', tmMortal);
@@ -124,11 +124,11 @@ class TiledExternal extends External {
 			return TiledObject.TiledMortal(mortal);
 		} else {
 			//tiled object without gid => arp anchor
-			var anchor:Anchor = this.data.addObject(new Anchor());
+			var anchor:Anchor = this.data.allocObject(Anchor);
 			anchor.position.x = Std.parseInt(xml.get("x"));
 			anchor.position.y = Std.parseInt(xml.get("y"));
 
-			var hitFrame:CuboidHitFrame = this.data.addObject(new CuboidHitFrame());
+			var hitFrame:CuboidHitFrame = this.data.allocObject(CuboidHitFrame);
 			var width:Float = Std.parseFloat(xml.get("width")) / 2;
 			var height:Float = Std.parseFloat(xml.get("width")) / 2;
 			hitFrame.hitCuboid.dX = width;
