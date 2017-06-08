@@ -7,21 +7,25 @@ class BufferedOutput implements IBufferedOutput {
 	public var bigEndian(get, set):Bool;
 	private function get_bigEndian():Bool return this.fifo.bigEndian;
 	private function set_bigEndian(value:Bool):Bool {
-		this.output.bigEndian = value;
 		this.fifo.bigEndian = value;
+		if (this.output != null) this.output.bigEndian = value;
 		return value;
 	}
 
 	private var _output:IOutput;
 	public var output(get, set):IOutput;
 	inline private function get_output():IOutput return _output;
-	inline private function set_output(value:IOutput):IOutput return this._output = value;
+	inline private function set_output(value:IOutput):IOutput {
+		if (value != null) value.bigEndian = this.bigEndian;
+		this._output = value;
+		return value;
+	}
 
 	private var fifo:Fifo;
 
 	public function new(output:IOutput = null) {
-		this.output = output;
 		this.fifo = new Fifo();
+		this.output = output;
 	}
 
 	public function flush():Void {

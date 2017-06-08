@@ -5,10 +5,10 @@ import haxe.io.Bytes;
 class BufferedInput implements IBufferedInput {
 
 	public var bigEndian(get, set):Bool;
-	private function get_bigEndian():Bool return this.input.bigEndian;
+	private function get_bigEndian():Bool return this.fifo.bigEndian;
 	private function set_bigEndian(value:Bool):Bool {
-		this.input.bigEndian = value;
 		this.fifo.bigEndian = value;
+		if (this.input != null) this.input.bigEndian = value;
 		return value;
 	}
 
@@ -21,13 +21,17 @@ class BufferedInput implements IBufferedInput {
 	private var _input:IInput;
 	public var input(get, set):IInput;
 	inline function get_input():IInput return _input;
-	inline function set_input(value:IInput):IInput return this._input = value;
+	inline function set_input(value:IInput):IInput {
+		if (value != null) value.bigEndian = this.bigEndian;
+		this._input = value;
+		return value;
+	}
 
 	private var fifo:Fifo;
 
 	public function new(input:IInput = null) {
-		this.input = input;
 		this.fifo = new Fifo();
+		this.input = input;
 	}
 
 	public function drain():Void {
