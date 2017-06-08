@@ -43,7 +43,7 @@ class FileExternal extends External {
 		}
 		var bytes:Bytes = this.file.bytes();
 		if (bytes != null) {
-			this.data = this.arpDomain.addObject(new DataGroup());
+			this.data = this.arpDomain.allocObject(DataGroup);
 			this.data.add(this.arpDomain.loadSeed(ArpSeed.fromXmlBytes(bytes, env)));
 		}
 	}
