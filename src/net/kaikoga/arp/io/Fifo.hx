@@ -219,7 +219,7 @@ class Fifo implements IBufferedInput implements IOutput implements IBlobInput im
 		this.readMode(4);
 		var v = if (bigEndian) this.bytes.getFloatBE(this.readPosition)
 		else this.bytes.getFloat(this.readPosition);
-		this.readPosition += 8;
+		this.readPosition += 4;
 		return v;
 	}
 
