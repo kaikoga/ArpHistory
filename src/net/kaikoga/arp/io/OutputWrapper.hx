@@ -3,15 +3,18 @@ package net.kaikoga.arp.io;
 import haxe.io.Bytes;
 import haxe.io.Output;
 
-class OutputWrapper implements IOutput
-{
+class OutputWrapper extends OutputWrapperBase<Output> {
+}
+
+class OutputWrapperBase<T:Output> implements IOutput {
+
 	public var bigEndian(get, set):Bool;
 	private function get_bigEndian():Bool return this.output.bigEndian;
 	private function set_bigEndian(value:Bool):Bool return this.output.bigEndian = value;
 
-	private var output:Output;
+	private var output:T;
 
-	public function new(output:Output) this.output = output;
+	public function new(output:T) this.output = output;
 
 	public function writeBool(value:Bool):Void this.output.writeByte(value ? 255 : 0);
 

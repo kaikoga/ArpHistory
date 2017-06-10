@@ -1,18 +1,21 @@
 package net.kaikoga.arp.io;
 
-import haxe.io.Eof;
 import haxe.io.Bytes;
+import haxe.io.Eof;
 import haxe.io.Input;
 
-class InputWrapper implements IInput {
+class InputWrapper extends InputWrapperBase<Input> {
+}
+
+class InputWrapperBase<T:Input> implements IInput {
 
 	public var bigEndian(get, set):Bool;
 	private function get_bigEndian():Bool return this.input.bigEndian;
 	private function set_bigEndian(value:Bool):Bool return this.input.bigEndian = value;
 
-	private var input:Input;
+	private var input:T;
 
-	public function new(input:Input) this.input = input;
+	public function new(input:T) this.input = input;
 
 	public function readBool():Bool return this.input.readByte() != 0;
 
