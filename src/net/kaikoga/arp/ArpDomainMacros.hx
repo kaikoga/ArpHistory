@@ -11,8 +11,17 @@ import haxe.macro.Expr.Field;
 class ArpDomainMacros {
 
 	public static function buildObject(arpTypeName:String, arpTemplateName:String = null):Array<Field> {
+#if arp_macro_debug
+		Sys.stdout().writeString(arpTypeName + ":" + arpTemplateName + " started\n");
+		Sys.stdout().flush();
+#end
 		if (arpTemplateName == null) arpTemplateName = arpTypeName;
-		return new MacroArpObjectBuilder(arpTypeName, arpTemplateName).run();
+		var v = new MacroArpObjectBuilder(arpTypeName, arpTemplateName).run();
+#if arp_macro_debug
+		Sys.stdout().writeString(arpTypeName + ":" + arpTemplateName + " completed\n");
+		Sys.stdout().flush();
+#end
+		return v;
 	}
 
 	public static function buildStruct(arpTypeName:String):Array<Field> {
