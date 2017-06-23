@@ -3,7 +3,7 @@ package net.kaikoga.arpx.tileMap;
 import net.kaikoga.arp.io.IInput;
 import net.kaikoga.arpx.file.File;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("tileMap", "fmfFile"))
+@:arpType("tileMap", "fmfFile")
 class FmfFileTileMap extends ArrayTileMap {
 
 	@:arpBarrier @:arpField public var file:File;

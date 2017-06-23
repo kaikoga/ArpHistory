@@ -19,7 +19,7 @@ import net.kaikoga.arpx.file.File;
 import flash.utils.ByteArray;
 import flash.utils.Endian;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("external", "tiled"))
+@:arpType("external", "tiled")
 class TiledExternal extends External {
 
 	@:arpBarrier @:arpField private var file:File;
