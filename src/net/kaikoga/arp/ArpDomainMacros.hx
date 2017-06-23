@@ -18,15 +18,17 @@ class ArpDomainMacros {
 	public static function autoBuildObject():Array<Field> {
 		var localClass:Null<Ref<ClassType>> = Context.getLocalClass();
 		if (localClass != null) {
-			var meta:MetadataEntry = localClass.get().meta.extract(":arpObject")[0];
-			if (meta != null) {
+			var meta:MetadataEntry = localClass.get().meta.extract(":arpNoGen")[0];
+			if (meta != null) return null;
+			var meta:MetadataEntry = localClass.get().meta.extract(":arpType")[0];
+				if (meta != null) {
 				var typeMeta:Expr = meta.params[0];
 				var templateMeta:Expr = meta.params[1];
 				var type:String = typeMeta != null ? ExprTools.getValue(typeMeta) : null;
 				var template:String = templateMeta != null ? ExprTools.getValue(templateMeta) : null;
 				return buildObject(type, template);
 			}
-			Context.error("@:arpObject required", Context.currentPos());
+			Context.error("@:arpType required for " + '${Context.getLocalType()}', Context.currentPos());
 		}
 		// maybe current class is an interface, so silently ignore
 		return null;

@@ -8,6 +8,7 @@ import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 
+@:arpNoGen
 class MockArpObject implements IArpObject {
 
 	public var intField:Int = 0;

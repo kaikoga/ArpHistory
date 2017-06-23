@@ -5,6 +5,9 @@ import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 import net.kaikoga.arp.domain.core.ArpType;
 
+#if !macro
+@:autoBuild(net.kaikoga.arp.ArpDomainMacros.autoBuildObject())
+#end
 interface IArpObject extends IPersistable /* extends IArpObjectImpl */ {
 
 	var arpDomain(get, never):ArpDomain;

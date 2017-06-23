@@ -7,6 +7,7 @@ import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 
+@:arpNoGen
 class MockDerivedArpObject extends MockArpObject {
 
 	public var intField2:Int = 0;

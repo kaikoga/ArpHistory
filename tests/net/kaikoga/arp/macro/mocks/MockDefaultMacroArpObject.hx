@@ -2,7 +2,7 @@ package net.kaikoga.arp.macro.mocks;
 
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("mock", "default"))
+@:arpType("mock", "default")
 class MockDefaultMacroArpObject implements IArpObject {
 
 	@:arpField @:arpDefault("5678") public var intField:Int = 1234;

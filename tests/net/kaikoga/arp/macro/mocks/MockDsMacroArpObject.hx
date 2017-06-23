@@ -7,7 +7,7 @@ import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arp.ds.IOmap;
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("mock", "stdMacro"))
+@:arpType("mock", "stdMacro")
 class MockDsMacroArpObject implements IArpObject {
 
 	@:arpField public var intSet:ISet<Int>;

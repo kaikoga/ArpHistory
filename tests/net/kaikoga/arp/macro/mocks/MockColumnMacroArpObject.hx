@@ -2,7 +2,7 @@ package net.kaikoga.arp.macro.mocks;
 
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("mock", "columnMacro"))
+@:arpType("mock", "columnMacro")
 class MockColumnMacroArpObject implements IArpObject {
 
 	@:arpField("if") public var intField:Int = 0;

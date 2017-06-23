@@ -2,7 +2,7 @@ package net.kaikoga.arp.macro.mocks;
 
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("mock", "reference"))
+@:arpType("mock", "reference")
 class MockHierarchicalMacroArpObject implements IArpObject {
 
 	@:arpField public var refField:MockHierarchicalMacroArpObject;

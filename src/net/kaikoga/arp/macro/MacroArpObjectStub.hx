@@ -2,8 +2,6 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
-import net.kaikoga.arp.domain.IArpObject;
-
 import haxe.macro.Context;
 import haxe.macro.Expr;
 import haxe.macro.Type;

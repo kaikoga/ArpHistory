@@ -3,7 +3,7 @@ package net.kaikoga.arp.macro.mocks;
 import net.kaikoga.arp.domain.ArpHeat;
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("mock", "impl"))
+@:arpType("mock", "impl")
 class MockImplMacroArpObject implements IArpObject {
 
 	@:arpField public var map:Map<String, Int>;
