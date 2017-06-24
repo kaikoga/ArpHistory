@@ -2,29 +2,51 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
+import haxe.macro.Expr;
+import haxe.macro.Expr.MetadataEntry;
+import haxe.macro.ExprTools;
 import haxe.macro.Type;
 import haxe.macro.Context;
 
 class MacroArpClassDefinition {
 
+	public var metaNoGen(default, null):Bool = false;
 	public var arpTypeName(default, null):String;
 	public var arpTemplateName(default, null):String;
 
-	public var fieldDefs(default, null):Array<MacroArpFieldDefinition>;
+	public var isDerived(default, null):Bool = false;
 	public var hasImpl(default, null):Bool = false;
 
-	public var isDerived(default, null):Bool;
+	public var fieldDefs(default, null):Array<MacroArpFieldDefinition>;
 	public var mergedBaseFields:Map<String, ClassField>;
 
-	public function new(arpTypeName:String, arpTemplateName:String) {
-		this.arpTypeName = arpTypeName;
-		this.arpTemplateName = arpTemplateName;
+	public function new(classType:ClassType) {
 		this.fieldDefs = [];
-		this.hasImpl = false;
 		this.mergedBaseFields = new Map<String, ClassField>();
 
-		this.loadClassFields();
-		this.loadBaseClasses();
+		this.loadMeta(classType);
+		if (!this.metaNoGen) {
+			this.loadClassFields();
+			this.loadBaseClasses(classType);
+		}
+	}
+
+	private function loadMeta(classType:ClassType):Void {
+		var metaNoGen:MetadataEntry = classType.meta.extract(":arpNoGen")[0];
+		if (metaNoGen != null) {
+			this.metaNoGen = true;
+			return;
+		}
+		var metaArpType:MetadataEntry = classType.meta.extract(":arpType")[0];
+		if (metaArpType != null) {
+			var typeMeta:Expr = metaArpType.params[0];
+			var templateMeta:Expr = metaArpType.params[1];
+			this.arpTypeName = typeMeta != null ? ExprTools.getValue(typeMeta) : null;
+			this.arpTemplateName = templateMeta != null ? ExprTools.getValue(templateMeta) : null;
+		}
+		if (this.arpTemplateName == null) {
+			this.arpTemplateName = this.arpTypeName;
+		}
 	}
 
 	private function loadClassFields():Void {
@@ -35,8 +57,7 @@ class MacroArpClassDefinition {
 		}
 	}
 
-	private function loadBaseClasses():Void {
-		var classType:ClassType = Context.getLocalClass().get();
+	private function loadBaseClasses(classType:ClassType):Void {
 		do {
 			var superClass = classType.superClass;
 			if (superClass == null) break;

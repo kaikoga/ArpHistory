@@ -8,12 +8,11 @@ import net.kaikoga.arp.domain.reflect.ArpClassInfo;
 import net.kaikoga.arp.macro.MacroArpFieldBuilder;
 import haxe.macro.Context;
 import haxe.macro.Expr;
-import haxe.macro.Type;
 
 class MacroArpObjectBuilder extends MacroArpObjectStub {
 
-	public function new(arpTypeName:String, arpTemplateName:String) {
-		super(arpTypeName, arpTemplateName);
+	public function new(classDef:MacroArpClassDefinition) {
+		super(classDef);
 	}
 
 	private function merge(target:Array<Field>, source:Array<Field>):Array<Field> {

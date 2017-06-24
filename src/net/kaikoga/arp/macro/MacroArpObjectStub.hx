@@ -8,12 +8,12 @@ import haxe.macro.Type;
 
 class MacroArpObjectStub {
 
-	private var classDef:MacroArpClassDefinition;
+	public var classDef(default, null):MacroArpClassDefinition;
 
 	private var arpFields:Array<IMacroArpField> = [];
 
-	private function new(arpTypeName:String, arpTemplateName:String) {
-		this.classDef = new MacroArpClassDefinition(arpTypeName, arpTemplateName);
+	private function new(classDef:MacroArpClassDefinition) {
+		this.classDef = classDef;
 	}
 
 	macro private function buildBlock(iFieldName:String, forPersist:Bool = false):Expr {
