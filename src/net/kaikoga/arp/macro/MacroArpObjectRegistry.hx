@@ -2,15 +2,16 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
-import net.kaikoga.arp.domain.reflect.ArpFieldKind;
-import net.kaikoga.arp.writers.help.ArpHelpWriter;
-import haxe.macro.Context;
-import net.kaikoga.arp.domain.reflect.ArpDomainInfo;
 import haxe.macro.ComplexTypeTools;
-import haxe.macro.TypeTools;
+import haxe.macro.Context;
 import haxe.macro.Expr.ComplexType;
+import haxe.macro.Type;
+import haxe.macro.TypeTools;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.reflect.ArpClassInfo;
+import net.kaikoga.arp.domain.reflect.ArpDomainInfo;
+import net.kaikoga.arp.domain.reflect.ArpFieldKind;
+import net.kaikoga.arp.writers.help.ArpHelpWriter;
 
 class MacroArpObjectRegistry {
 
@@ -51,12 +52,16 @@ class MacroArpObjectRegistry {
 		return TypeTools.toString(ComplexTypeTools.toType(complexType));
 	}
 
-	public static function templateInfoOf(nativeType:ComplexType):ArpClassInfo {
+	public static function templateInfoOfNativeType(nativeType:ComplexType):ArpClassInfo {
 		return instance.templateInfos.get(toFqn(nativeType));
 	}
 
+	public static function templateInfoOfTypedType(type:Type):ArpClassInfo {
+		return instance.templateInfos.get(TypeTools.toString(type));
+	}
+
 	public static function arpTypeOf(nativeType:ComplexType):ArpType {
-		return templateInfoOf(nativeType).arpType;
+		return templateInfoOfNativeType(nativeType).arpType;
 	}
 
 	private function onAfterGenerate():Void {

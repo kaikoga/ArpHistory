@@ -82,7 +82,7 @@ class MacroArpFieldBuilder {
 			case "net.kaikoga.arp.ds.IOmap":
 				return MacroArpNativeFieldType.NativeDsIOmap(typeToNativeFieldType(typeParam(type, 1)), isImpl);
 			default:
-				var templateInfo:ArpClassInfo = MacroArpObjectRegistry.templateInfoOf(TypeTools.toComplexType(type));
+				var templateInfo:ArpClassInfo = MacroArpObjectRegistry.templateInfoOfTypedType(type);
 				if (templateInfo == null) return null;
 				switch (templateInfo.fieldKind) {
 					case ArpFieldKind.PrimInt:
