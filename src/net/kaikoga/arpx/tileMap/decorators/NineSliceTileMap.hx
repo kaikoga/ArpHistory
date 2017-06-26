@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.tileMap.decorators;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("tileMap", "nineSlice"))
+@:arpType("tileMap", "nineSlice")
 class NineSliceTileMap extends TileMap {
 
 	@:arpBarrier @:arpField public var tileMap:TileMap;

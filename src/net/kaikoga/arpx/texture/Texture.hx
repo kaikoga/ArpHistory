@@ -4,7 +4,7 @@ import net.kaikoga.arpx.backends.flash.texture.ITextureFlashImpl;
 import flash.display.BitmapData;
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("texture", "null"))
+@:arpType("texture", "null")
 class Texture implements IArpObject
 #if (arp_backend_flash || arp_backend_openfl) implements ITextureFlashImpl #end
 {

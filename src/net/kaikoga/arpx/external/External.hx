@@ -2,7 +2,7 @@
 
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("external", "external"))
+@:arpType("external", "external")
 class External implements IArpObject {
 
 	public function new() {

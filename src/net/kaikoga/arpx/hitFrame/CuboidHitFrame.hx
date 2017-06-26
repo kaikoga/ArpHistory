@@ -4,7 +4,7 @@ import net.kaikoga.arp.hit.structs.HitGeneric;
 import net.kaikoga.arp.structs.ArpHitCuboid;
 import net.kaikoga.arp.structs.ArpPosition;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("hitFrame", "cuboid"))
+@:arpType("hitFrame", "cuboid")
 class CuboidHitFrame extends HitFrame {
 
 	@:arpField public var hitCuboid:ArpHitCuboid;

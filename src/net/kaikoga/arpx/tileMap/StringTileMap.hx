@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.tileMap;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("tileMap", "string"))
+@:arpType("tileMap", "string")
 class StringTileMap extends ArrayTileMap {
 
 	@:arpField("value") public var data:String;

@@ -18,7 +18,7 @@ import net.kaikoga.arpx.reactFrame.ReactFrame;
 import net.kaikoga.arpx.backends.flash.mortal.IMortalFlashImpl;
 #end
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("mortal", "null"))
+@:arpType("mortal", "null")
 class Mortal implements IArpObject
 #if (arp_backend_flash || arp_backend_openfl) implements IMortalFlashImpl #end
 {

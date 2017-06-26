@@ -11,7 +11,7 @@ import net.kaikoga.arpx.motionFrame.MotionFrame;
 import net.kaikoga.arpx.mortal.Mortal;
 import net.kaikoga.arpx.motionSet.MotionSet;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("driver", "motion"))
+@:arpType("driver", "motion")
 class MotionDriver extends Driver {
 
 	@:arpField public var motionSpeed:Float = 1;

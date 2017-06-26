@@ -7,7 +7,7 @@ import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
 #end
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("chip", "null"))
+@:arpType("chip", "null")
 class Chip implements IArpObject
 #if (arp_backend_flash || arp_backend_openfl) implements IChipFlashImpl #end
 {

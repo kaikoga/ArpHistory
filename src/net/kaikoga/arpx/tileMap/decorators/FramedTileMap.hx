@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.tileMap.decorators;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("tileMap", "framed"))
+@:arpType("tileMap", "framed")
 class FramedTileMap extends TileMap {
 
 	@:arpBarrier @:arpField public var tileMap:TileMap;

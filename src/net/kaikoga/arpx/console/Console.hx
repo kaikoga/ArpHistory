@@ -9,7 +9,7 @@ import net.kaikoga.arpx.backends.flash.console.IConsoleFlashImpl;
 import net.kaikoga.arpx.backends.flash.console.ConsoleFlashImpl;
 #end
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("console", "console"))
+@:arpType("console", "console")
 class Console implements IArpObject
 #if (arp_backend_flash || arp_backend_openfl) implements IConsoleFlashImpl #end
 {

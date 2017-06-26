@@ -10,7 +10,7 @@ import net.kaikoga.arpx.mortal.Mortal;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.field.Field;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("mortal", "composite"))
+@:arpType("mortal", "composite")
 class CompositeMortal extends Mortal {
 
 	@:arpField public var sort:String;

@@ -8,7 +8,7 @@ import haxe.io.Bytes;
 import net.kaikoga.arpx.file.File;
 import net.kaikoga.arp.seed.ArpSeed;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("external", "file"))
+@:arpType("external", "file")
 class FileExternal extends External {
 
 	@:arpField("file") @:arpBarrier public var file:File;

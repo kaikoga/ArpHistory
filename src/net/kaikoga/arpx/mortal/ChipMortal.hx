@@ -6,7 +6,7 @@ import net.kaikoga.arpx.backends.flash.mortal.ChipMortalFlashImpl;
 
 import net.kaikoga.arpx.chip.Chip;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("mortal", "chip"))
+@:arpType("mortal", "chip")
 class ChipMortal extends Mortal {
 
 	@:arpBarrier @:arpField public var chip:Chip;

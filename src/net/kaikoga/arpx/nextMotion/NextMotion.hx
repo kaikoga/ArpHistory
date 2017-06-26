@@ -4,7 +4,7 @@ import net.kaikoga.arpx.motion.Motion;
 import net.kaikoga.arp.structs.ArpRange;
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("nextMotion", "nextMotion"))
+@:arpType("nextMotion", "nextMotion")
 class NextMotion implements IArpObject {
 
 	@:arpField public var motion:Motion;

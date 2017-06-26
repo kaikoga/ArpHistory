@@ -2,7 +2,7 @@ package net.kaikoga.arpx.texture;
 
 import net.kaikoga.arpx.backends.flash.texture.ResourceTextureFlashImpl;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("texture", "resource"))
+@:arpType("texture", "resource")
 class ResourceTexture extends Texture
 {
 	@:arpField public var src:String;

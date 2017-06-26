@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.text;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("text"))
+@:arpType("text")
 class FixedTextData extends TextData {
 
 	@:arpField public var value:String = null;

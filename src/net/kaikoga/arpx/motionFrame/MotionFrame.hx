@@ -8,7 +8,7 @@ import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.mortal.Mortal;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("motionFrame", "motionFrame"))
+@:arpType("motionFrame", "motionFrame")
 class MotionFrame implements IArpObject {
 
 	@:arpField public var params:ArpParams;

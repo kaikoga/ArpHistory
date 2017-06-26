@@ -7,7 +7,7 @@ import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.backends.flash.chip.StringChipFlashImpl;
 #end
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("chip", "string"))
+@:arpType("chip", "string")
 class StringChip extends Chip {
 
 	private static var _workParams:ArpParams = new ArpParams();

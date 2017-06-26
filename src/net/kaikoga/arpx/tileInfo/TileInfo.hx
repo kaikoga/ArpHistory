@@ -3,7 +3,7 @@ package net.kaikoga.arpx.tileInfo;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.structs.ArpRange;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("tileInfo"))
+@:arpType("tileInfo")
 class TileInfo implements IArpObject {
 
 	@:arpField public var enterableRange:ArpRange;

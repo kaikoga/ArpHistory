@@ -7,7 +7,7 @@ import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.backends.flash.chip.RectChipFlashImpl;
 #end
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("chip", "rect"))
+@:arpType("chip", "rect")
 class RectChip extends Chip {
 
 	@:arpField public var baseX(get, set):Int;

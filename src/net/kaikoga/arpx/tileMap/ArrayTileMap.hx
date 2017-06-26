@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.tileMap;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("tileMap", "array"))
+@:arpType("tileMap", "array")
 class ArrayTileMap extends TileMap {
 
 	@:arpField public var outerTileIndex:Int;

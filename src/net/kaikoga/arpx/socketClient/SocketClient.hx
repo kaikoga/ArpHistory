@@ -7,7 +7,7 @@ import net.kaikoga.arp.events.IArpSignalOut;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arpx.backends.cross.socketClient.ISocketClientImpl;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("socketClient", "null"))
+@:arpType("socketClient", "null")
 class SocketClient implements IArpObject implements ISocketClientImpl {
 
 	@:arpImpl private var arpImpl:ISocketClientImpl;

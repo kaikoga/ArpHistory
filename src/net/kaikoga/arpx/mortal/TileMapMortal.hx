@@ -6,7 +6,7 @@ import net.kaikoga.arpx.backends.flash.mortal.TileMapMortalFlashImpl;
 import net.kaikoga.arpx.tileMap.TileMap;
 import net.kaikoga.arpx.chip.Chip;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("mortal", "tileMap"))
+@:arpType("mortal", "tileMap")
 class TileMapMortal extends Mortal {
 
 	@:arpBarrier @:arpField public var chip:Chip;

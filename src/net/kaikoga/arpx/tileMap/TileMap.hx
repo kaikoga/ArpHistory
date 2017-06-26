@@ -4,7 +4,7 @@ import net.kaikoga.arpx.faceList.FaceList;
 import net.kaikoga.arpx.tileInfo.TileInfo;
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("tileMap", "null"))
+@:arpType("tileMap", "null")
 class TileMap implements IArpObject {
 
 	@:arpField public var width:Int;

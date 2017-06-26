@@ -5,7 +5,7 @@ import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arpx.backends.flash.input.IInputFlashImpl;
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("input", "null"))
+@:arpType("input", "null")
 class Input implements IArpObject
 #if (arp_backend_flash || arp_backend_openfl) implements IInputFlashImpl #end
 {

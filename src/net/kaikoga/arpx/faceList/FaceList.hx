@@ -4,7 +4,7 @@ import net.kaikoga.arp.iter.ERegIterator;
 import net.kaikoga.arp.structs.ArpRange;
 import net.kaikoga.arp.domain.IArpObject;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("faceList", "faceList"))
+@:arpType("faceList", "faceList")
 class FaceList implements IArpObject {
 
 	@:arpField public var isVertical:Bool;

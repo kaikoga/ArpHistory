@@ -6,7 +6,7 @@ import net.kaikoga.arp.hit.structs.HitGeneric;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.structs.ArpPosition;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("hitFrame", "null"))
+@:arpType("hitFrame", "null")
 class HitFrame implements IArpObject {
 
 	@:arpField public var hitType:String;

@@ -4,7 +4,7 @@ import net.kaikoga.arp.ds.impl.StdMap;
 import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arpx.backends.flash.input.KeyInputFlashImpl;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("input", "key"))
+@:arpType("input", "key")
 class KeyInput extends Input {
 
 	public var keyBindings:IMap<Int, KeyInputBinding>;

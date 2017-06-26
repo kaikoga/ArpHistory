@@ -14,7 +14,7 @@ import net.kaikoga.arpx.socketClient.SocketClient;
 import haxe.Json;
 import net.kaikoga.arpx.debugger.DebuggerCommand;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("debugger", "socketClient"))
+@:arpType("debugger", "socketClient")
 class SocketClientDebugger implements IArpObject {
 
 	@:arpField @:arpBarrier public var socketClient:SocketClient;

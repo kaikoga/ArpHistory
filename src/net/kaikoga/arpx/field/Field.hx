@@ -16,7 +16,7 @@ import net.kaikoga.arpx.backends.flash.field.IFieldFlashImpl;
 import net.kaikoga.arpx.backends.flash.field.FieldFlashImpl;
 #end
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("field"))
+@:arpType("field")
 class Field implements IArpObject
 #if (arp_backend_flash || arp_backend_openfl) implements IFieldFlashImpl #end
 {

@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.tileMap;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("tileMap", "null"))
+@:arpType("tileMap", "null")
 class InfiniteTileMap extends TileMap {
 
 	@:arpField public var tileIndex:Int;

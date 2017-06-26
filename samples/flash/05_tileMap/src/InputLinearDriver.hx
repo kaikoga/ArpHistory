@@ -6,7 +6,7 @@ import net.kaikoga.arpx.driver.Driver;
 import net.kaikoga.arpx.mortal.Mortal;
 import net.kaikoga.arpx.field.Field;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("driver", "inputLinear"))
+@:arpType("driver", "inputLinear")
 class InputLinearDriver extends Driver {
 
 	@:arpField public var input:Input;

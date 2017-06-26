@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.tileMap;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("tileMap", "csv"))
+@:arpType("tileMap", "csv")
 class CsvTileMap extends ArrayTileMap {
 
 	@:arpField("value") public var data:String;

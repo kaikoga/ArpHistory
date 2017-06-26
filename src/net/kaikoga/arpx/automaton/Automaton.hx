@@ -10,7 +10,7 @@ import net.kaikoga.arpx.automaton.events.AutomatonStateEvent;
 import net.kaikoga.arpx.state.AutomatonState;
 import net.kaikoga.arpx.console.Console;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("automaton", "automaton"))
+@:arpType("automaton", "automaton")
 class Automaton implements IArpObject {
 
 	@:arpField public var stateStack:IList<AutomatonState>;

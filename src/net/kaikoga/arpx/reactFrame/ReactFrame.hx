@@ -6,7 +6,7 @@ import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arp.structs.ArpPosition;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("reactFrame"))
+@:arpType("reactFrame")
 class ReactFrame implements IArpObject {
 
 	@:arpField public var time:Float;

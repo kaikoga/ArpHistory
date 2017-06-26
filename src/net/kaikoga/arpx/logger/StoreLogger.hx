@@ -2,7 +2,7 @@ package net.kaikoga.arpx.logger;
 
 import net.kaikoga.arp.domain.events.ArpLogEvent;
 
-@:build(net.kaikoga.arp.ArpDomainMacros.buildObject("logger", "store"))
+@:arpType("logger", "store")
 class StoreLogger extends Logger {
 
 	public function new() {
