@@ -5,7 +5,6 @@ package net.kaikoga.arp.macro;
 import haxe.macro.ComplexTypeTools;
 import haxe.macro.Context;
 import haxe.macro.Expr.ComplexType;
-import haxe.macro.Type;
 import haxe.macro.TypeTools;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.reflect.ArpClassInfo;
@@ -52,12 +51,12 @@ class MacroArpObjectRegistry {
 		return TypeTools.toString(ComplexTypeTools.toType(complexType));
 	}
 
-	public static function templateInfoOfNativeType(nativeType:ComplexType):ArpClassInfo {
-		return instance.templateInfos.get(toFqn(nativeType));
+	public static function getTemplateInfo(fqn:String):ArpClassInfo {
+		return instance.templateInfos.get(fqn);
 	}
 
-	public static function templateInfoOfTypedType(type:Type):ArpClassInfo {
-		return instance.templateInfos.get(TypeTools.toString(type));
+	public static function templateInfoOfNativeType(nativeType:ComplexType):ArpClassInfo {
+		return instance.templateInfos.get(toFqn(nativeType));
 	}
 
 	public static function arpTypeOf(nativeType:ComplexType):ArpType {

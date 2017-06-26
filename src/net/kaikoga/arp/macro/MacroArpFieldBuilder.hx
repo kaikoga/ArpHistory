@@ -43,6 +43,19 @@ class MacroArpFieldBuilder {
 		this.fieldDef = fieldDef;
 	}
 
+	private function typePathParam(typePath:TypePath, index:Int = 0):ComplexType {
+		if (typePath.params != null) {
+			var param:TypeParam = typePath.params[index];
+			if (param != null) {
+				switch (param) {
+					case TypeParam.TPType(tp): return tp;
+					case _:
+				}
+			}
+		}
+		return null;
+	}
+
 	private function typeParam(type:Type, index:Int = 0):Type {
 		// TODO handle generic classes?
 		try {
@@ -65,8 +78,9 @@ class MacroArpFieldBuilder {
 	}
 
 	private function baseFqnToNativeFieldType(fqn:Array<String>, type:Type, isImpl:Bool):Null<MacroArpNativeFieldType> {
-		this.log("fqn=" + fqn.join("."));
-		switch (fqn.join(".")) {
+		var fqnStr:String = fqn.join(".");
+		this.log("fqn=" + fqnStr);
+		switch (fqnStr) {
 			case "Array":
 				return MacroArpNativeFieldType.NativeStdArray(typeToNativeFieldType(typeParam(type)));
 			case "List":
@@ -81,8 +95,8 @@ class MacroArpFieldBuilder {
 				return MacroArpNativeFieldType.NativeDsIMap(typeToNativeFieldType(typeParam(type, 1)), isImpl);
 			case "net.kaikoga.arp.ds.IOmap":
 				return MacroArpNativeFieldType.NativeDsIOmap(typeToNativeFieldType(typeParam(type, 1)), isImpl);
-			default:
-				var templateInfo:ArpClassInfo = MacroArpObjectRegistry.templateInfoOfTypedType(type);
+			case _:
+				var templateInfo:ArpClassInfo = MacroArpObjectRegistry.getTemplateInfo(fqnStr);
 				if (templateInfo == null) return null;
 				switch (templateInfo.fieldKind) {
 					case ArpFieldKind.PrimInt:
@@ -153,6 +167,58 @@ class MacroArpFieldBuilder {
 	}
 
 	private function complexTypeToNativeFieldType(complexType:ComplexType):MacroArpNativeFieldType {
+#if arp_macro_debug
+		Sys.stdout().writeString(this.fieldDef.nativeName + " : " + new Printer().printComplexType(complexType) + " @@@ " + '${Context.getLocalModule()}' + "\n");
+		Sys.stdout().flush();
+#end
+
+		// hard code well-known ComplexTypes to avoid Context.resolveType() issue in Haxe 3.4
+		// https://github.com/HaxeFoundation/haxe/issues/5918
+		switch (complexType) {
+			case ComplexType.TPath(typePath):
+				var fqnStr:String;
+				if (typePath.pack.length == 0) {
+					fqnStr = typePath.name;
+				} else {
+					fqnStr = typePath.pack.join(".") + typePath.name;
+				}
+				switch (fqnStr) {
+					case "Array":
+						return MacroArpNativeFieldType.NativeStdArray(complexTypeToNativeFieldType(typePathParam(typePath)));
+					case "List":
+						return MacroArpNativeFieldType.NativeStdList(complexTypeToNativeFieldType(typePathParam(typePath)));
+					case "haxe.IMap", "haxe.Constraints.IMap":
+						return MacroArpNativeFieldType.NativeStdMap(complexTypeToNativeFieldType(typePathParam(typePath, 1)), false);
+					case "net.kaikoga.arp.ds.ISet", "ISet":
+						return MacroArpNativeFieldType.NativeDsISet(complexTypeToNativeFieldType(typePathParam(typePath, 0)), false);
+					case "net.kaikoga.arp.ds.IList", "IList":
+						return MacroArpNativeFieldType.NativeDsIList(complexTypeToNativeFieldType(typePathParam(typePath, 0)), false);
+					case "net.kaikoga.arp.ds.IMap", "IMap":
+						return MacroArpNativeFieldType.NativeDsIMap(complexTypeToNativeFieldType(typePathParam(typePath, 1)), false);
+					case "net.kaikoga.arp.ds.IOmap", "IOmap":
+						return MacroArpNativeFieldType.NativeDsIOmap(complexTypeToNativeFieldType(typePathParam(typePath, 1)), false);
+					case _:
+						var templateInfo:ArpClassInfo = MacroArpObjectRegistry.getTemplateInfo(fqnStr);
+						if (templateInfo != null) {
+							switch (templateInfo.fieldKind) {
+								case ArpFieldKind.PrimInt:
+									return MacroArpNativeFieldType.NativeValueType(new MacroArpPrimIntType());
+								case ArpFieldKind.PrimFloat:
+									return MacroArpNativeFieldType.NativeValueType(new MacroArpPrimFloatType());
+								case ArpFieldKind.PrimBool:
+									return MacroArpNativeFieldType.NativeValueType(new MacroArpPrimBoolType());
+								case ArpFieldKind.PrimString:
+									return MacroArpNativeFieldType.NativeValueType(new MacroArpPrimStringType());
+								case ArpFieldKind.StructKind:
+									return MacroArpNativeFieldType.NativeValueType(new MacroArpStructType(complexType, fieldDef.nativePos));
+								case ArpFieldKind.ReferenceKind:
+									return MacroArpNativeFieldType.NativeReferenceType(complexType);
+							}
+						}
+				}
+			case _:
+		}
+
 		// we have to follow types in typed universe
 		var type:Type = Context.resolveType(complexType, this.pos);
 		return typeToNativeFieldType(type);

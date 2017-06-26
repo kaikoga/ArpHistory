@@ -24,12 +24,12 @@ class ArpDomainMacros {
 #if arp_macro_debug
 		var arpTypeName:String = classDef.arpTypeName;
 		var arpTemplateName:String = classDef.arpTemplateName;
-		Sys.stdout().writeString(arpTypeName + ":" + arpTemplateName + " started\n");
+		Sys.stdout().writeString(" ***** " + arpTypeName + ":" + arpTemplateName + " started\n");
 		Sys.stdout().flush();
 #end
 		var fields = builder.run();
 #if arp_macro_debug
-		Sys.stdout().writeString(arpTypeName + ":" + arpTemplateName + " completed\n");
+		Sys.stdout().writeString(" ***** " + arpTypeName + ":" + arpTemplateName + " completed\n");
 		Sys.stdout().flush();
 #end
 		return fields;
