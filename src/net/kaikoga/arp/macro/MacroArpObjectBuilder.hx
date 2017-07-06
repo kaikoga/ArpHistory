@@ -31,6 +31,8 @@ class MacroArpObjectBuilder extends MacroArpObjectStub {
 		var templateInfo:ArpClassInfo = ArpClassInfo.reference(new ArpType(this.classDef.arpTypeName), this.classDef.arpTemplateName, fqn, []);
 		MacroArpObjectRegistry.registerTemplateInfo(fqn, templateInfo);
 
+		if (this.classDef.metaNoGen) return null;
+
 		var outFields:Array<Field> = [];
 
 		for (fieldDef in this.classDef.fieldDefs) {

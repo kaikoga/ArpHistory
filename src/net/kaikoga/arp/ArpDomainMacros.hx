@@ -18,7 +18,6 @@ class ArpDomainMacros {
 		if (localClass == null) return null;
 
 		var classDef:MacroArpClassDefinition = new MacroArpClassDefinition(localClass.get());
-		if (classDef.metaNoGen) return null;
 
 		var builder:MacroArpObjectBuilder = new MacroArpObjectBuilder(classDef);
 #if arp_macro_debug

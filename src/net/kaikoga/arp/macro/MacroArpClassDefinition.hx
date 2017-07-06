@@ -35,7 +35,6 @@ class MacroArpClassDefinition {
 		var metaNoGen:MetadataEntry = classType.meta.extract(":arpNoGen")[0];
 		if (metaNoGen != null) {
 			this.metaNoGen = true;
-			return;
 		}
 		var metaArpType:MetadataEntry = classType.meta.extract(":arpType")[0];
 		if (metaArpType != null) {
