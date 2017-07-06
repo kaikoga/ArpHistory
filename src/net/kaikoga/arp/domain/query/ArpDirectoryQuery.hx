@@ -6,12 +6,18 @@ class ArpDirectoryQuery {
 	private var path:String;
 	private var pathArray:Array<String>;
 
+	@:access(net.kaikoga.arp.domain.ArpDomain.currentDir)
 	public function new(root:ArpDirectory, path:String = null) {
 		if (path == null) path = "";
-		if (path.charAt(0) == ArpDirectory.PATH_DELIMITER) {
-			//absolute path
-			root = root.domain.root;
-			path = path.substr(1);
+		switch (path.charAt(0)) {
+			case ArpDirectory.PATH_DELIMITER:
+				//force absolute path
+				root = root.domain.root;
+				path = path.substr(1);
+			case ArpDirectory.PATH_CURRENT:
+				//force current path
+				root = root.domain.currentDir;
+				path = path.substr(1);
 		}
 		this.root = root;
 		this.path = path;

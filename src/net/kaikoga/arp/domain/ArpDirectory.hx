@@ -11,6 +11,7 @@ import net.kaikoga.arp.domain.core.ArpDid;
 class ArpDirectory {
 
 	inline public static var PATH_DELIMITER:String = "/";
+	inline public static var PATH_CURRENT:String = "@";
 
 	public var domain(default, null):ArpDomain;
 	public var did(default, null):ArpDid;
