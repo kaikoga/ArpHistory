@@ -17,6 +17,7 @@ import net.kaikoga.arp.events.IArpSignalIn;
 import net.kaikoga.arp.events.IArpSignalOut;
 import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.seed.ArpSeedValueKind;
+import net.kaikoga.arp.seed.SeedObject;
 import net.kaikoga.arp.utils.ArpIdGenerator;
 
 class ArpDomain {
@@ -64,6 +65,7 @@ class ArpDomain {
 		this._rawTick.push(this.onRawTick);
 
 		this.addGenerator(new ArpObjectGenerator(DataGroup));
+		this.addGenerator(new ArpObjectGenerator(SeedObject));
 	}
 
 	private function onRawTick(v:Float):Void {
