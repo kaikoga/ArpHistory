@@ -70,11 +70,11 @@ class DataGroup implements IArpObject {
 
 	private function arpConsumeSeedElement(element:ArpSeed):Void {
 		// NOTE seed iterates through value, which we must ignore
-		if (element.typeName != "value") {
-			var slot = this.arpDomain.loadSeed(element).addReference();
-			if (slot != null && this.name != null) {
-				this.children.push(slot);
-			}
+		if (element.typeName == "value") return;
+
+		var slot = this.arpDomain.loadSeed(element).addReference();
+		if (slot != null && this.name != null) {
+			this.children.push(slot);
 		}
 	}
 
