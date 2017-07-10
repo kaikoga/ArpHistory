@@ -44,16 +44,19 @@ class MacroArpFieldBuilder {
 	}
 
 	private function typePathParam(typePath:TypePath, index:Int = 0):ComplexType {
-		if (typePath.params != null) {
+		try {
+			if (typePath.params == null) throw "invalid type";
 			var param:TypeParam = typePath.params[index];
-			if (param != null) {
-				switch (param) {
-					case TypeParam.TPType(tp): return tp;
-					case _:
-				}
+			if (param == null) throw "invalid type";
+			switch (param) {
+				case TypeParam.TPType(tp):
+					return tp;
+				case _:
+					throw "invalid type";
 			}
+		} catch (e:String) {
+			return MacroArpUtil.fatal("invalid type " + new Printer().printTypePath(typePath), this.pos);
 		}
-		return null;
 	}
 
 	private function typeParam(type:Type, index:Int = 0):Type {
