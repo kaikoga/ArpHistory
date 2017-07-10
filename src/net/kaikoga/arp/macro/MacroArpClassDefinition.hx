@@ -10,6 +10,7 @@ import haxe.macro.Context;
 
 class MacroArpClassDefinition {
 
+	public var metaGen(default, null):Bool = false;
 	public var metaNoGen(default, null):Bool = false;
 	public var arpTypeName(default, null):String;
 	public var arpTemplateName(default, null):String;
@@ -35,6 +36,11 @@ class MacroArpClassDefinition {
 		var metaNoGen:MetadataEntry = classType.meta.extract(":arpNoGen")[0];
 		if (metaNoGen != null) {
 			this.metaNoGen = true;
+		}
+		var metaGen:MetadataEntry = classType.meta.extract(":arpGen")[0];
+		if (metaGen != null) {
+			this.metaGen = true;
+			Sys.stdout().writeString('arpGen detected\n');
 		}
 		var metaArpType:MetadataEntry = classType.meta.extract(":arpType")[0];
 		if (metaArpType != null) {
