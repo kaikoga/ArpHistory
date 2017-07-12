@@ -10,7 +10,7 @@ import net.kaikoga.arp.macro.MacroArpFieldBuilder;
 import haxe.macro.Context;
 import haxe.macro.Expr;
 
-class MacroArpObjectBuilder extends MacroArpObjectStub {
+class MacroArpObjectBuilder extends MacroArpObjectSkeleton {
 
 	public function new(classDef:MacroArpClassDefinition) {
 		super(classDef);
