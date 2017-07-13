@@ -167,63 +167,63 @@ class MacroArpObjectSkeleton {
 			@:noDoc @:noCompletion override private function get_arpType():net.kaikoga.arp.domain.core.ArpType return _arpTypeInfo.arpType;
 
 			override public function arpInit(slot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot, seed:net.kaikoga.arp.seed.ArpSeed = null):net.kaikoga.arp.domain.IArpObject {
-				$e{ this.buildInitBlock() }
-				return super.arpInit(slot, seed);
+				net.kaikoga.arp.macro.stubs.MacroArpDerivedObjectStub.arpInit(
+					$e{ this.buildInitBlock() }
+				);
 			}
 
 			override public function arpHeatLater():Void {
-				super.arpHeatLater();
-				$e{ this.buildHeatLaterBlock() }
+				net.kaikoga.arp.macro.stubs.MacroArpDerivedObjectStub.arpHeatLater(
+					$e{ this.buildHeatLaterBlock() }
+				);
 			}
 
 			override public function arpHeatUp():Bool {
-				$e{ this.buildHeatUpBlock() }
-				return super.arpHeatUp();
+				net.kaikoga.arp.macro.stubs.MacroArpDerivedObjectStub.arpHeatUp(
+					$e{ this.buildHeatUpBlock() }
+				);
 			}
 
 			override public function arpHeatDown():Bool {
-				// $e{ this.buildHeatDownBlock() }
-				return super.arpHeatDown();
+				net.kaikoga.arp.macro.stubs.MacroArpDerivedObjectStub.arpHeatDown(
+					$e{ this.buildHeatDownBlock() }
+				);
 			}
 
 			override public function arpDispose():Void {
-				$e{ this.buildDisposeBlock() }
-				super.arpDispose();
+				net.kaikoga.arp.macro.stubs.MacroArpDerivedObjectStub.arpDispose(
+					$e{ this.buildDisposeBlock() }
+				);
 			}
 
 			@:noDoc @:noCompletion
 			override private function arpConsumeSeedElement(element:net.kaikoga.arp.seed.ArpSeed):Void {
-				$e{ this.buildArpConsumeSeedElement() }
+				net.kaikoga.arp.macro.stubs.MacroArpDerivedObjectStub.arpConsumeSeedElement(
+					$e{ this.buildArpConsumeSeedElement() }
+				);
 			}
 
 			override public function readSelf(input:net.kaikoga.arp.persistable.IPersistInput):Void {
-				super.readSelf(input);
-				var collection:net.kaikoga.arp.persistable.IPersistInput;
-				var nameList:Array<String>;
-				var values:net.kaikoga.arp.persistable.IPersistInput;
-				$e{ this.buildReadSelfBlock() }
+				net.kaikoga.arp.macro.stubs.MacroArpDerivedObjectStub.readSelf(
+					$e{ this.buildReadSelfBlock() }
+				);
 			}
 
 			override public function writeSelf(output:net.kaikoga.arp.persistable.IPersistOutput):Void {
-				super.writeSelf(output);
-				var collection:net.kaikoga.arp.persistable.IPersistOutput;
-				var nameList:Array<String>;
-				var values:net.kaikoga.arp.persistable.IPersistOutput;
-				var uniqId:net.kaikoga.arp.utils.ArpIdGenerator = new net.kaikoga.arp.utils.ArpIdGenerator();
-				$e{ this.buildWriteSelfBlock() }
+				net.kaikoga.arp.macro.stubs.MacroArpDerivedObjectStub.writeSelf(
+					$e{ this.buildWriteSelfBlock() }
+				);
 			}
 
 			@:access(net.kaikoga.arp.domain.ArpDomain)
 			override public function arpClone():net.kaikoga.arp.domain.IArpObject {
-				var clone:$selfComplexType = this._arpDomain.addObject(new $selfTypePath());
-				clone.arpCopyFrom(this);
-				return clone;
+				net.kaikoga.arp.macro.stubs.MacroArpDerivedObjectStub.arpClone();
 			}
 
 			override public function arpCopyFrom(source:net.kaikoga.arp.domain.IArpObject):net.kaikoga.arp.domain.IArpObject {
-				var src:$selfComplexType = cast source;
-				$e{ this.buildCopyFromBlock() }
-				return super.arpCopyFrom(source);
+				net.kaikoga.arp.macro.stubs.MacroArpDerivedObjectStub.arpCopyFrom(
+					$e{ this.buildCopyFromBlock() }
+				);
 			}
 		}).fields;
 	}
