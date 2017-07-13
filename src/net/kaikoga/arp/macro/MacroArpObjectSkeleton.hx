@@ -9,12 +9,15 @@ import net.kaikoga.arp.macro.stubs.MacroArpObjectStub;
 
 class MacroArpObjectSkeleton {
 
-	public var classDef(default, null):MacroArpClassDefinition;
+	private var template(default, null):MacroArpObject;
 
-	private var arpFields:Array<IMacroArpField> = [];
+	private var classDef(get, never):MacroArpClassDefinition;
+	private function get_classDef():MacroArpClassDefinition return template.classDef;
+	private var arpFields(get, never):Array<IMacroArpField>;
+	private function get_arpFields():Array<IMacroArpField> return template.arpFields;
 
 	private function new(classDef:MacroArpClassDefinition) {
-		this.classDef = classDef;
+		this.template = new MacroArpObject(classDef);
 	}
 
 	private function buildBlock(iFieldName:String, forPersist:Bool = false):Expr {
