@@ -53,6 +53,10 @@ class MacroArpObjectRegistry {
 		return templateInfoOfNativeType(nativeType).arpType;
 	}
 
+	public static function getMacroArpObject(fqn:String):MacroArpObject {
+		return instance.macroArpObjects.get(fqn);
+	}
+
 	private function onAfterGenerate():Void {
 		var writer:ArpHelpWriter = new ArpHelpWriter();
 		var prefix:String = Context.definedValue("arp_doc");

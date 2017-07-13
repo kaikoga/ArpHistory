@@ -19,14 +19,14 @@ class ArpDomainMacros {
 
 		var classDef:MacroArpClassDefinition = new MacroArpClassDefinition(localClass.get());
 
-		var builder:MacroArpObjectBuilder = new MacroArpObjectBuilder(classDef);
+		var builder:MacroArpObjectBuilder = new MacroArpObjectBuilder();
 #if arp_macro_debug
 		var arpTypeName:String = classDef.arpTypeName;
 		var arpTemplateName:String = classDef.arpTemplateName;
 		Sys.stdout().writeString(" ***** " + arpTypeName + ":" + arpTemplateName + " started\n");
 		Sys.stdout().flush();
 #end
-		var fields = builder.run();
+		var fields = builder.run(classDef);
 #if arp_macro_debug
 		Sys.stdout().writeString(" ***** " + arpTypeName + ":" + arpTemplateName + " completed\n");
 		Sys.stdout().flush();

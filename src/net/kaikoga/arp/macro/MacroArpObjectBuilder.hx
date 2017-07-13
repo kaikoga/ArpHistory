@@ -12,9 +12,7 @@ import haxe.macro.Expr;
 
 class MacroArpObjectBuilder extends MacroArpObjectSkeleton {
 
-	public function new(classDef:MacroArpClassDefinition) {
-		super(classDef);
-	}
+	public function new() super();
 
 	private function merge(target:Array<Field>, source:Array<Field>):Array<Field> {
 		for (field in source) {
@@ -27,18 +25,18 @@ class MacroArpObjectBuilder extends MacroArpObjectSkeleton {
 		return target;
 	}
 
-	public function run():Array<Field> {
+	public function run(classDef:MacroArpClassDefinition):Array<Field> {
 		var fqn:String = TypeTools.toString(Context.getLocalType());
-		var templateInfo:ArpClassInfo = ArpClassInfo.reference(new ArpType(this.classDef.arpTypeName), this.classDef.arpTemplateName, fqn, []);
-		MacroArpObjectRegistry.registerTemplateInfo(fqn, this.template, templateInfo);
+		var templateInfo:ArpClassInfo = ArpClassInfo.reference(new ArpType(classDef.arpTypeName), classDef.arpTemplateName, fqn, []);
+		MacroArpObjectRegistry.registerTemplateInfo(fqn, new MacroArpObject(classDef), templateInfo);
 
-		if (this.classDef.metaNoGen || this.classDef.metaGen) return null;
+		if (classDef.metaNoGen || classDef.metaGen) return null;
 
 		Compiler.addMetadata("@:arpGen", templateInfo.fqn);
 
 		var outFields:Array<Field> = [];
 
-		for (fieldDef in this.classDef.fieldDefs) {
+		for (fieldDef in classDef.fieldDefs) {
 			switch (MacroArpFieldBuilder.fromDefinition(fieldDef)) {
 				case MacroArpFieldBuilderResult.Unmanaged:
 					outFields.push(fieldDef.nativeField);
@@ -55,7 +53,7 @@ class MacroArpObjectBuilder extends MacroArpObjectSkeleton {
 						outFields = outFields.concat(this.genVoidCallbackField("arpSelfDispose", fieldDef.metaArpDispose));
 					}
 				case MacroArpFieldBuilderResult.Impl(typePath):
-					if (this.classDef.isDerived) {
+					if (classDef.isDerived) {
 						outFields = outFields.concat(this.genDerivedImplFields(typePath));
 					} else {
 						outFields = outFields.concat(this.genImplFields(typePath));
@@ -71,7 +69,7 @@ class MacroArpObjectBuilder extends MacroArpObjectSkeleton {
 			}
 		}
 
-		if (this.classDef.isDerived) {
+		if (classDef.isDerived) {
 			outFields = merge(this.genDerivedTypeFields(), outFields);
 		} else {
 			outFields = merge(this.genTypeFields(), outFields);
@@ -80,7 +78,7 @@ class MacroArpObjectBuilder extends MacroArpObjectSkeleton {
 
 		var mergedOutFields:Array<Field> = [];
 		for (outField in outFields) {
-			if (!this.classDef.mergedBaseFields.exists(outField.name)) {
+			if (!classDef.mergedBaseFields.exists(outField.name)) {
 				// statics not included in mergedBaseFields
 				mergedOutFields.push(outField);
 				continue;

@@ -5,20 +5,25 @@ package net.kaikoga.arp.macro;
 import haxe.macro.Context;
 import haxe.macro.Expr;
 import haxe.macro.Type;
+import haxe.macro.TypeTools;
 import net.kaikoga.arp.macro.stubs.MacroArpObjectStub;
 
 class MacroArpObjectSkeleton {
 
-	private var template(default, null):MacroArpObject;
+	private var _template:MacroArpObject;
+	private var template(get, null):MacroArpObject;
+	private function get_template():MacroArpObject {
+		if (_template != null) return _template;
+		var fqn:String = TypeTools.toString(Context.getLocalType());
+		return _template = MacroArpObjectRegistry.getMacroArpObject(fqn);
+	}
 
 	private var classDef(get, never):MacroArpClassDefinition;
 	private function get_classDef():MacroArpClassDefinition return template.classDef;
 	private var arpFields(get, never):Array<IMacroArpField>;
 	private function get_arpFields():Array<IMacroArpField> return template.arpFields;
 
-	private function new(classDef:MacroArpClassDefinition) {
-		this.template = new MacroArpObject(classDef);
-	}
+	private function new() return;
 
 	private function buildBlock(iFieldName:String, forPersist:Bool = false):Expr {
 		var block:Array<Expr> = [];
