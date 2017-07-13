@@ -30,7 +30,7 @@ class MacroArpObjectBuilder extends MacroArpObjectSkeleton {
 	public function run():Array<Field> {
 		var fqn:String = TypeTools.toString(Context.getLocalType());
 		var templateInfo:ArpClassInfo = ArpClassInfo.reference(new ArpType(this.classDef.arpTypeName), this.classDef.arpTemplateName, fqn, []);
-		MacroArpObjectRegistry.registerTemplateInfo(fqn, templateInfo);
+		MacroArpObjectRegistry.registerTemplateInfo(fqn, this.template, templateInfo);
 
 		if (this.classDef.metaNoGen || this.classDef.metaGen) return null;
 

@@ -16,21 +16,10 @@ class MacroArpObjectRegistry {
 
 	private var domainInfo:ArpDomainInfo;
 	private var templateInfos:Map<String, ArpClassInfo>;
+	private var macroArpObjects:Map<String, MacroArpObject>;
 
 	private function new() {
-		templateInfos = new Map();
-
-		registerPrimitive(ArpFieldKind.PrimInt, "Int");
-		registerPrimitive(ArpFieldKind.PrimFloat, "Float");
-		registerPrimitive(ArpFieldKind.PrimBool, "Bool");
-		registerPrimitive(ArpFieldKind.PrimString, "String");
-
-		domainInfo = new ArpDomainInfo();
-
-		Context.onMacroContextReused(function() return onMacroContextReused());
-		#if arp_doc
-		Context.onAfterGenerate(function() onAfterGenerate());
-		#end
+		this.onMacroContextReused();
 	}
 
 	private function registerPrimitive(fieldKind:ArpFieldKind, name:String, fqn:String = null):Void {
@@ -42,7 +31,8 @@ class MacroArpObjectRegistry {
 		instance.templateInfos.set(fqn, ArpClassInfo.struct(new ArpType(name), fqn));
 	}
 
-	public static function registerTemplateInfo(fqn:String, templateInfo:ArpClassInfo):Void {
+	public static function registerTemplateInfo(fqn:String, macroArpObject:MacroArpObject, templateInfo:ArpClassInfo):Void {
+		instance.macroArpObjects.set(fqn, macroArpObject);
 		instance.templateInfos.set(fqn, templateInfo);
 		instance.domainInfo.classInfos.push(templateInfo);
 	}
@@ -73,15 +63,27 @@ class MacroArpObjectRegistry {
 
 	private function onMacroContextReused():Bool {
 		// discard registered types
-		domainInfo = null;
-		templateInfos = null;
+		domainInfo = new ArpDomainInfo();
+		macroArpObjects = new Map();
+		templateInfos = new Map();
+
+		registerPrimitive(ArpFieldKind.PrimInt, "Int");
+		registerPrimitive(ArpFieldKind.PrimFloat, "Float");
+		registerPrimitive(ArpFieldKind.PrimBool, "Bool");
+		registerPrimitive(ArpFieldKind.PrimString, "String");
 		return true;
 	}
 
 	private static var _instance:MacroArpObjectRegistry;
 	private static var instance(get, never):MacroArpObjectRegistry;
 	private static function get_instance():MacroArpObjectRegistry {
-		if (_instance == null) _instance = new MacroArpObjectRegistry();
+		if (_instance == null) {
+			_instance = new MacroArpObjectRegistry();
+			Context.onMacroContextReused(_instance.onMacroContextReused);
+#if arp_doc
+			Context.onAfterGenerate(_instance.onAfterGenerate);
+#end
+		}
 		return _instance;
 	}
 }
