@@ -10,12 +10,15 @@ import net.kaikoga.arp.macro.stubs.MacroArpObjectStub;
 
 class MacroArpObjectSkeleton {
 
+	private static function getTemplate():MacroArpObject {
+		var fqn:String = TypeTools.toString(Context.getLocalType());
+		return MacroArpObjectRegistry.getMacroArpObject(fqn);
+	}
+
 	private var _template:MacroArpObject;
 	private var template(get, null):MacroArpObject;
 	private function get_template():MacroArpObject {
-		if (_template != null) return _template;
-		var fqn:String = TypeTools.toString(Context.getLocalType());
-		return _template = MacroArpObjectRegistry.getMacroArpObject(fqn);
+		return (_template != null) ? _template : (_template = getTemplate());
 	}
 
 	private var classDef(get, never):MacroArpClassDefinition;
@@ -26,16 +29,7 @@ class MacroArpObjectSkeleton {
 	private function new() return;
 
 	private function buildBlock(iFieldName:String, forPersist:Bool = false):Expr {
-		var block:Array<Expr> = [];
-		for (arpField in this.arpFields) {
-			if (forPersist) {
-				if (!arpField.isPersistable) continue;
-			} else {
-				macro null;
-			}
-			Reflect.callMethod(arpField, Reflect.field(arpField, iFieldName), [block]);
-		}
-		return macro @:mergeBlock $b{ block };
+		return macro net.kaikoga.arp.macro.stubs.MacroArpObjectStub.block($v{iFieldName}, $v{forPersist});
 	}
 
 	private function buildInitBlock():Expr return buildBlock("buildInitBlock");
@@ -47,42 +41,13 @@ class MacroArpObjectSkeleton {
 	private function buildWriteSelfBlock():Expr return buildBlock("buildWriteSelfBlock", true);
 	private function buildCopyFromBlock():Expr return buildBlock("buildCopyFromBlock");
 
-	private function genSelfTypePath():TypePath {
-		var localClassRef:Null<Ref<ClassType>> = Context.getLocalClass();
-		var localClass:ClassType = localClassRef.get();
-		return {
-			pack: localClass.pack,
-			name: localClass.name
-		}
-	}
-
-	private function genSelfComplexType():ComplexType {
-		return ComplexType.TPath(this.genSelfTypePath());
-	}
-
-	private function buildArpConsumeSeedElement():Expr {
-		var cases:Array<Case> = [];
-
-		var eDefault:Expr;
-		if (this.classDef.isDerived) {
-			eDefault = macro { super.arpConsumeSeedElement(element); }
-		} else {
-			eDefault = macro null;
-		}
-		var expr:Expr = { pos: Context.currentPos(), expr: ExprDef.ESwitch(macro element.typeName, cases, eDefault) }
-
-		for (arpField in this.arpFields) {
-			if (arpField.isSeedable) arpField.buildConsumeSeedElementBlock(cases);
-		}
-
-		return expr;
+	private function buildArpConsumeSeedElementBlock():Expr {
+		return macro net.kaikoga.arp.macro.stubs.MacroArpObjectStub.arpConsumeSeedElementBlock();
 	}
 
 	private function genTypeFields():Array<Field> {
 		var arpTypeName = this.classDef.arpTypeName;
 		var arpTemplateName = this.classDef.arpTemplateName;
-		var selfTypePath = this.genSelfTypePath();
-		var selfComplexType = this.genSelfComplexType();
 		return (macro class Generated {
 			@:noDoc @:noCompletion private var _arpDomain:net.kaikoga.arp.domain.ArpDomain;
 			public var arpDomain(get, never):net.kaikoga.arp.domain.ArpDomain;
@@ -135,7 +100,7 @@ class MacroArpObjectSkeleton {
 			@:noDoc @:noCompletion
 			private function arpConsumeSeedElement(element:net.kaikoga.arp.seed.ArpSeed):Void {
 				net.kaikoga.arp.macro.stubs.MacroArpObjectStub.arpConsumeSeedElement(
-					$e{ this.buildArpConsumeSeedElement() }
+					$e{ this.buildArpConsumeSeedElementBlock() }
 				);
 			}
 
@@ -167,8 +132,6 @@ class MacroArpObjectSkeleton {
 	private function genDerivedTypeFields():Array<Field> {
 		var arpTypeName = this.classDef.arpTypeName;
 		var arpTemplateName = this.classDef.arpTemplateName;
-		var selfTypePath = this.genSelfTypePath();
-		var selfComplexType = this.genSelfComplexType();
 		return (macro class Generated {
 			public static var _arpTypeInfo(default, never):net.kaikoga.arp.domain.ArpTypeInfo = new net.kaikoga.arp.domain.ArpTypeInfo($v{arpTemplateName}, new net.kaikoga.arp.domain.core.ArpType($v{arpTypeName}));
 			override private function get_arpTypeInfo():net.kaikoga.arp.domain.ArpTypeInfo return _arpTypeInfo;
@@ -207,7 +170,7 @@ class MacroArpObjectSkeleton {
 			@:noDoc @:noCompletion
 			override private function arpConsumeSeedElement(element:net.kaikoga.arp.seed.ArpSeed):Void {
 				net.kaikoga.arp.macro.stubs.MacroArpDerivedObjectStub.arpConsumeSeedElement(
-					$e{ this.buildArpConsumeSeedElement() }
+					$e{ this.buildArpConsumeSeedElementBlock() }
 				);
 			}
 
