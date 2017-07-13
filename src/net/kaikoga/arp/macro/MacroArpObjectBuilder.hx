@@ -26,11 +26,13 @@ class MacroArpObjectBuilder extends MacroArpObjectSkeleton {
 	}
 
 	public function run(classDef:MacroArpClassDefinition):Array<Field> {
+		if (classDef.metaGen) return null;
+
 		var fqn:String = TypeTools.toString(Context.getLocalType());
 		var templateInfo:ArpClassInfo = ArpClassInfo.reference(new ArpType(classDef.arpTypeName), classDef.arpTemplateName, fqn, []);
 		MacroArpObjectRegistry.registerTemplateInfo(fqn, new MacroArpObject(classDef), templateInfo);
 
-		if (classDef.metaNoGen || classDef.metaGen) return null;
+		if (classDef.metaNoGen) return null;
 
 		Compiler.addMetadata("@:arpGen", templateInfo.fqn);
 
