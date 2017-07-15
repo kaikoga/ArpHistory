@@ -1,5 +1,6 @@
 package net.kaikoga.arp.macro.stubs;
 
+import net.kaikoga.arp.macro.MacroArpObjectRegistry;
 import haxe.macro.Context;
 import haxe.macro.Expr;
 import haxe.macro.Type;
@@ -24,8 +25,7 @@ class MacroArpObjectStub {
 	}
 
 	private static function getTemplate():MacroArpObject {
-		var fqn:String = TypeTools.toString(Context.getLocalType());
-		return MacroArpObjectRegistry.getMacroArpObject(fqn);
+		return MacroArpObjectRegistry.getLocalMacroArpObject();
 	}
 
 #end
@@ -65,6 +65,10 @@ class MacroArpObjectStub {
 		@:macroLocal var slot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 		@:macroLocal var seed:net.kaikoga.arp.seed.ArpSeed = null;
 		@:macroReturn net.kaikoga.arp.domain.IArpObject;
+
+		// call populateReflectFields() via expression macro to take local imports
+		MacroArpObjectRegistry.getLocalMacroArpObject().populateReflectFields();
+
 		return macro @:mergeBlock {
 #if arp_debug
 			if (this._arpSlot != null) throw("ArpObject " + this.arpType + this._arpSlot + " is initialized");

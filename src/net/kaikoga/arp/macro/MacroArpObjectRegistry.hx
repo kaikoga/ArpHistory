@@ -31,10 +31,10 @@ class MacroArpObjectRegistry {
 		instance.templateInfos.set(fqn, ArpClassInfo.struct(new ArpType(name), fqn));
 	}
 
-	public static function registerTemplateInfo(fqn:String, macroArpObject:MacroArpObject, templateInfo:ArpClassInfo):Void {
+	public static function registerTemplateInfo(fqn:String, macroArpObject:MacroArpObject):Void {
 		instance.macroArpObjects.set(fqn, macroArpObject);
-		instance.templateInfos.set(fqn, templateInfo);
-		instance.domainInfo.classInfos.push(templateInfo);
+		instance.templateInfos.set(fqn, macroArpObject.templateInfo);
+		instance.domainInfo.classInfos.push(macroArpObject.templateInfo);
 	}
 
 	private static function toFqn(complexType:ComplexType):String {
@@ -55,6 +55,10 @@ class MacroArpObjectRegistry {
 
 	public static function getMacroArpObject(fqn:String):MacroArpObject {
 		return instance.macroArpObjects.get(fqn);
+	}
+
+	public static function getLocalMacroArpObject():MacroArpObject {
+		return getMacroArpObject(TypeTools.toString(Context.getLocalType()));
 	}
 
 	private function onAfterGenerate():Void {

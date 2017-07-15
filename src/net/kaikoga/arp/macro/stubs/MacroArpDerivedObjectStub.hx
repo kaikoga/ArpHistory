@@ -25,6 +25,10 @@ class MacroArpDerivedObjectStub {
 		@:macroLocal var slot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 		@:macroLocal var seed:net.kaikoga.arp.seed.ArpSeed = null;
 		@:macroReturn net.kaikoga.arp.domain.IArpObject;
+
+		// call populateReflectFields() via expression macro to take local imports
+		MacroArpObjectRegistry.getLocalMacroArpObject().populateReflectFields();
+
 		return macro @:mergeBlock {
 			$e{ initBlock }
 			return super.arpInit(slot, seed);

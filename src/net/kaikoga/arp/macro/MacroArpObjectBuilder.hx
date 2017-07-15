@@ -30,7 +30,7 @@ class MacroArpObjectBuilder extends MacroArpObjectSkeleton {
 
 		var fqn:String = TypeTools.toString(Context.getLocalType());
 		var templateInfo:ArpClassInfo = ArpClassInfo.reference(new ArpType(classDef.arpTypeName), classDef.arpTemplateName, fqn, []);
-		MacroArpObjectRegistry.registerTemplateInfo(fqn, new MacroArpObject(classDef), templateInfo);
+		MacroArpObjectRegistry.registerTemplateInfo(fqn, new MacroArpObject(classDef, templateInfo));
 
 		if (classDef.metaNoGen) return null;
 
@@ -64,7 +64,6 @@ class MacroArpObjectBuilder extends MacroArpObjectSkeleton {
 					//throw "not implemented";
 				case MacroArpFieldBuilderResult.ArpField(arpField):
 					this.arpFields.push(arpField);
-					templateInfo.fields.push(arpField.toFieldInfo());
 					arpField.buildField(outFields);
 				case MacroArpFieldBuilderResult.Constructor(func):
 					outFields = outFields.concat(this.genConstructorField(fieldDef.nativeField, func));

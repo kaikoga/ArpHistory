@@ -35,8 +35,11 @@ class MacroArpFieldBase {
 	private var iSet_nativeName(get, never):String;
 	private function get_iSet_nativeName():String return "set_" + this.iNativeName;
 
+	private var _arpType:String;
 	private var arpType(get, never):String;
-	private function get_arpType():String return MacroArpObjectRegistry.arpTypeOf(nativeType).toString();
+	private function get_arpType():String {
+		return (_arpType != null) ? _arpType : _arpType = MacroArpObjectRegistry.arpTypeOf(nativeType).toString();
+	}
 	private var eArpType(get, never):Expr;
 	private function get_eArpType():Expr {
 		return macro new net.kaikoga.arp.domain.core.ArpType($v{arpType});

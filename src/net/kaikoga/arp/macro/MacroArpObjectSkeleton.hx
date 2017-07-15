@@ -4,15 +4,12 @@ package net.kaikoga.arp.macro;
 
 import haxe.macro.Context;
 import haxe.macro.Expr;
-import haxe.macro.Type;
-import haxe.macro.TypeTools;
 import net.kaikoga.arp.macro.stubs.MacroArpObjectStub;
 
 class MacroArpObjectSkeleton {
 
 	private static function getTemplate():MacroArpObject {
-		var fqn:String = TypeTools.toString(Context.getLocalType());
-		return MacroArpObjectRegistry.getMacroArpObject(fqn);
+		return MacroArpObjectRegistry.getLocalMacroArpObject();
 	}
 
 	private var _template:MacroArpObject;
