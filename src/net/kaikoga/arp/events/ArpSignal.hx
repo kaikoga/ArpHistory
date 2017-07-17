@@ -28,4 +28,8 @@ class ArpSignal<T> implements IArpSignalOut<T> implements IArpSignalIn<T> {
 			handler(event);
 		}
 	}
+
+	public function dispatchLazy(event:Void->T):Void {
+		if (this.willTrigger()) this.dispatch(event());
+	}
 }

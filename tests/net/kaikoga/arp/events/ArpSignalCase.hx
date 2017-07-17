@@ -29,9 +29,11 @@ class ArpSignalCase {
 		this.signal.remove(f);
 		this.signal.dispatch(10);
 		assertEquals(v, 17);
+		this.signal.dispatchLazy(function() return 20);
+		assertEquals(v, 37);
 		this.signal.flush();
 		this.signal.dispatch(100);
-		assertEquals(v, 17);
+		assertEquals(v, 37);
 	}
 
 }
