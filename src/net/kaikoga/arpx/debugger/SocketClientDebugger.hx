@@ -86,7 +86,7 @@ class SocketClientDebugger implements IArpObject {
 		}
 	}
 
-	private function onClose(i:Int):Void {
+	private function onClose(_:Any):Void {
 		this.blobInput.flush();
 	}
 }

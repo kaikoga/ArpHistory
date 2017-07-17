@@ -20,7 +20,7 @@ class TcpCachedSocketClientFlashImpl extends ArpObjectImplBase implements ISocke
 
 	private var socketClient:TcpCachedSocketClient;
 	private var onData:IArpSignalIn<ArpProgressEvent>;
-	private var onClose:IArpSignalIn<Int>;
+	private var onClose:IArpSignalIn<Any>;
 
 	public var bigEndian(get, set):Bool;
 	inline public function get_bigEndian():Bool return false;
@@ -91,7 +91,7 @@ class TcpCachedSocketClientFlashImpl extends ArpObjectImplBase implements ISocke
 	}
 
 	private function onSocketClose(event:Event):Void {
-		this.onClose.dispatch(0);
+		this.onClose.dispatch(null);
 		this.reconnect();
 	}
 

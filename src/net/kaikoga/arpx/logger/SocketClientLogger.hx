@@ -20,7 +20,7 @@ class SocketClientLogger extends Logger {
 		return true;
 	}
 
-	private function onClose(i:Int):Void {
+	private function onClose(_:Any):Void {
 
 	}
 

@@ -18,13 +18,13 @@ class SocketClient implements IArpObject implements ISocketClientImpl {
 	private function get_onData():IArpSignalOut<ArpProgressEvent> return this._onData;
 
 	@:allow(net.kaikoga.arpx.backends.cross.socketClient.ISocketClientImpl)
-	private var _onClose:ArpSignal<Int>;
-	public var onClose(get, never):IArpSignalOut<Int>;
-	private function get_onClose():IArpSignalOut<Int> return this._onClose;
+	private var _onClose:ArpSignal<Any>;
+	public var onClose(get, never):IArpSignalOut<Any>;
+	private function get_onClose():IArpSignalOut<Any> return this._onClose;
 
 	public function new() {
 		this._onData = new ArpSignal<ArpProgressEvent>();
-		this._onClose = new ArpSignal<Int>();
+		this._onClose = new ArpSignal<Any>();
 	}
 
 	// we have to implement them manually because function default values are lost in TypedExpr world

@@ -16,7 +16,7 @@ class TcpSocketClientFlashImpl extends SocketClientImplBase {
 
 	private var socketClient:TcpSocketClient;
 	private var onData:IArpSignalIn<ArpProgressEvent>;
-	private var onClose:IArpSignalIn<Int>;
+	private var onClose:IArpSignalIn<Any>;
 
 	public function new(socketClient:TcpSocketClient) {
 		super();
@@ -72,7 +72,7 @@ class TcpSocketClientFlashImpl extends SocketClientImplBase {
 	}
 
 	private function onSocketClose(event:Event):Void {
-		this.onClose.dispatch(0);
+		this.onClose.dispatch(null);
 	}
 
 	override public function arpHeatDown():Bool {
