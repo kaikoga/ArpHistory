@@ -21,6 +21,8 @@ class BlobInput implements IBlobInput {
 		this.fifo = new Fifo();
 	}
 
+	public function flush():Void fifo.flush();
+
 	public function nextUtfBlob():Null<String> {
 		var blob:Bytes = this.nextBlob();
 		if (blob == null) return null;
