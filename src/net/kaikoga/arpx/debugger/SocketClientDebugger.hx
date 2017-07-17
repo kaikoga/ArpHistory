@@ -29,6 +29,7 @@ class SocketClientDebugger implements IArpObject {
 			this.blobInput = new BlobInput(this.socketClient);
 			this.blobInput.bigEndian = true;
 			this.socketClient.onData.push(this.onSocketData);
+			this.socketClient.onClose.push(this.onClose);
 		}
 		return true;
 	}
@@ -83,5 +84,9 @@ class SocketClientDebugger implements IArpObject {
 			}
 			this.socketClient.writeUtfBlob(Json.stringify(result));
 		}
+	}
+
+	private function onClose(i:Int):Void {
+		this.blobInput.flush();
 	}
 }

@@ -12,6 +12,18 @@ class SocketClientLogger extends Logger {
 		super();
 	}
 
+	override private function heatUp():Bool {
+		super.heatUp();
+		if (this.socketClient != null) {
+			this.socketClient.onClose.push(this.onClose);
+		}
+		return true;
+	}
+
+	private function onClose(i:Int):Void {
+
+	}
+
 	override public function log(event:ArpLogEvent):Void {
 		if (!this.respondsTo(event.category)) return;
 		try {
