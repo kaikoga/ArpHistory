@@ -29,6 +29,9 @@ class PrepareTask implements IPrepareTask {
 			if (this._slot.refCount <= 0) {
 				this.domain.log("arp_debug_prepare", 'PrepareTask.run(): ultimate unused and prepare canceled: ${this._slot}');
 				return TaskStatus.Complete;
+			} else {
+				this.domain.log("arp_debug_prepare", 'PrepareTask.run(): prepare complete (null): ${this._slot}');
+				return TaskStatus.Complete;
 			}
 		}
 
