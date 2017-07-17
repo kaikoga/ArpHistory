@@ -16,11 +16,13 @@ class TcpSocketClientFlashImpl extends SocketClientImplBase {
 
 	private var socketClient:TcpSocketClient;
 	private var onData:IArpSignalIn<ArpProgressEvent>;
+	private var onClose:IArpSignalIn<Int>;
 
 	public function new(socketClient:TcpSocketClient) {
 		super();
 		this.socketClient = socketClient;
 		this.onData = socketClient._onData;
+		this.onClose = socketClient._onClose;
 	}
 
 	private var socket:Socket;
@@ -37,6 +39,7 @@ class TcpSocketClientFlashImpl extends SocketClientImplBase {
 		this.socket.addEventListener(IOErrorEvent.IO_ERROR, this.onSocketError);
 		this.socket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.onSocketError);
 		this.socket.addEventListener(ProgressEvent.SOCKET_DATA, this.onSocketData);
+		this.socket.addEventListener(Event.CLOSE, this.onSocketClose);
 		this.connect();
 		this.socketClient.arpDomain.waitFor(this.socketClient);
 		return false;
@@ -68,10 +71,14 @@ class TcpSocketClientFlashImpl extends SocketClientImplBase {
 		if (this.onData.willTrigger()) this.onData.dispatch(new ArpProgressEvent(event.bytesLoaded, event.bytesTotal));
 	}
 
+	private function onSocketClose(event:Event):Void {
+		this.onClose.dispatch(0);
+	}
+
 	override public function arpHeatDown():Bool {
 		this.input = null;
 		this.output = null;
-		this.socket.close();
+		if (this.socket.connected) this.socket.close();
 		this.socket = null;
 		return true;
 	}

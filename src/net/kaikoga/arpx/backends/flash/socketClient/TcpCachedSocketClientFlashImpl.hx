@@ -20,6 +20,7 @@ class TcpCachedSocketClientFlashImpl extends ArpObjectImplBase implements ISocke
 
 	private var socketClient:TcpCachedSocketClient;
 	private var onData:IArpSignalIn<ArpProgressEvent>;
+	private var onClose:IArpSignalIn<Int>;
 
 	public var bigEndian(get, set):Bool;
 	inline public function get_bigEndian():Bool return false;
@@ -33,6 +34,7 @@ class TcpCachedSocketClientFlashImpl extends ArpObjectImplBase implements ISocke
 		super();
 		this.socketClient = socketClient;
 		this.onData = socketClient._onData;
+		this.onClose = socketClient._onClose;
 	}
 
 	override public function arpHeatUp():Bool {
@@ -51,6 +53,7 @@ class TcpCachedSocketClientFlashImpl extends ArpObjectImplBase implements ISocke
 		this.socket.addEventListener(IOErrorEvent.IO_ERROR, this.onSocketError);
 		this.socket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.onSocketError);
 		this.socket.addEventListener(ProgressEvent.SOCKET_DATA, this.onSocketData);
+		this.socket.addEventListener(Event.CLOSE, this.onSocketClose);
 		this.connect();
 		// this.socketClient.arpDomain.waitFor(this.socketClient);
 		return true;
@@ -87,6 +90,11 @@ class TcpCachedSocketClientFlashImpl extends ArpObjectImplBase implements ISocke
 		if (this.onData.willTrigger()) this.onData.dispatch(new ArpProgressEvent(event.bytesLoaded, event.bytesTotal));
 	}
 
+	private function onSocketClose(event:Event):Void {
+		this.onClose.dispatch(0);
+		this.reconnect();
+	}
+
 	private function flush():Void {
 		this.output.flush();
 	}
@@ -94,7 +102,7 @@ class TcpCachedSocketClientFlashImpl extends ArpObjectImplBase implements ISocke
 	override public function arpHeatDown():Bool {
 		this.input = null;
 		this.output = null;
-		this.socket.close();
+		if (this.socket.connected) this.socket.close();
 		this.socket = null;
 		return true;
 	}
