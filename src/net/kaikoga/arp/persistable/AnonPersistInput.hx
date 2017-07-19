@@ -16,10 +16,11 @@ class AnonPersistInput implements IPersistInput {
 	}
 
 	public function readNameList(name:String):Array<String> return Reflect.field(this._data, name);
-	public function readPersistable(name:String, persistable:IPersistable):Void {
+	public function readPersistable<T:IPersistable>(name:String, persistable:T):T {
 		var input:IPersistInput = this.readEnter(name);
 		persistable.readSelf(input);
 		input.readExit();
+		return persistable;
 	}
 
 	public function readEnter(name:String):IPersistInput return new AnonPersistInput(Reflect.field(this._data, name), this._persistLevel);

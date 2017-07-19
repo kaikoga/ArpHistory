@@ -10,7 +10,7 @@ interface IPersistInput {
 	function readExit():Void;
 
 	function readNameList(name:String):Array<String>;
-	function readPersistable(name:String, persistable:IPersistable):Void;
+	function readPersistable<T:IPersistable>(name:String, persistable:T):T;
 
 	function readBool(name:String):Bool;
 	function readInt32(name:String):Int;
