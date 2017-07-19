@@ -19,6 +19,10 @@ class FieldFlashImpl extends ArpObjectImplBase implements IFieldFlashImpl {
 
 	public function copySelf(bitmapData:BitmapData, transform:ITransform):Void {
 		copySortedMortals(field.mortals, bitmapData, transform);
+
+		for (fieldGizmo in field.fieldGizmos) {
+			fieldGizmo.render(field, bitmapData, transform);
+		}
 	}
 
 	inline public static function copySortedMortals(mortals:Iterable<Mortal>, bitmapData:BitmapData, transform:ITransform):Void {

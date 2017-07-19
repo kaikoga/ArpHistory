@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.field;
 
+import net.kaikoga.arp.ds.IList;
+import net.kaikoga.arpx.fieldGizmo.FieldGizmo;
 import net.kaikoga.arp.hit.fields.HitObjectField;
 import net.kaikoga.arp.hit.strategies.HitWithCuboid;
 import net.kaikoga.arp.hit.structs.HitGeneric;
@@ -24,6 +26,8 @@ class Field implements IArpObject
 	@:arpBarrier @:arpField("mortal") public var initMortals:IOmap<String, Mortal>;
 	@:arpBarrier @:arpField(false) public var mortals:IOmap<String, Mortal>;
 	@:arpBarrier @:arpField("anchor") public var anchors:IOmap<String, Anchor>;
+
+	@:arpBarrier @:arpField("fieldGizmo") public var fieldGizmos:IList<FieldGizmo>;
 
 	public var gridSize(get, never):Int;
 	public var width(get, never):Int;
