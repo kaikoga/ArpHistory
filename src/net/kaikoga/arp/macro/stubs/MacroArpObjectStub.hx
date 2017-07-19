@@ -110,7 +110,10 @@ class MacroArpObjectStub {
 			if (!this.arpSelfHeatUp()) isSync = false;
 			$e{
 				if (hasImpl) {
-					macro if (!this.arpImpl.arpHeatUp()) isSync = false;
+					macro {
+						if (this.arpImpl == null) throw $v{"@:arpImpl could not find backend for " + TypeTools.toString(Context.getLocalType())};
+						if (!this.arpImpl.arpHeatUp()) isSync = false;
+					}
 				} else {
 					macro null;
 				}
