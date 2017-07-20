@@ -101,6 +101,24 @@ class Field implements IArpObject
 		});
 	}
 
+	public function bulkHitRaw(srcHitType:String, hitType:String, callback:HitMortal->HitMortal->Bool):Void {
+		// TODO seriously use layer
+		this.hitField.hitTest(function(a:HitMortal, b:HitMortal):Bool {
+			if (a.hitType != srcHitType) return false;
+			if (b.hitType != hitType) return false;
+			if (a.isComplex) {
+				if (b.isComplex) {
+					return false;
+				} else {
+					if (!a.mortal.complexHitTest(a.hit, b.hit)) return false;
+				}
+			} else if (b.isComplex) {
+				if (!b.mortal.complexHitTest(b.hit, a.hit)) return false;
+			}
+			return callback(a, b);
+		});
+	}
+
 	public function hitRaw(hit:HitGeneric, hitType:String, callback:HitMortal->Bool):Void {
 		this.hitField.hitRaw(hit, function(other:HitMortal):Bool {
 			if (other.hitType != hitType) return false;
