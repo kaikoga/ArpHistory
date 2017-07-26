@@ -123,12 +123,12 @@ class ListCase<V> {
 
 	public function testKnit():Void {
 		me.push(v.a1);
-		assertMatch([v.a1], [for (p in me.knit()) p.value()]);
+		assertMatch([v.a1], [for (p in me.knit()) p.value]);
 		for (p in me.knit()) p.append(v.a2);
-		assertMatch([true, false], [for (p in me.knit()) (p.value() == v.a1) && p.remove()]);
-		assertMatch([v.a2], [for (p in me.knit()) p.value()]);
+		assertMatch([true, false], [for (p in me.knit()) (p.value == v.a1) && p.remove()]);
+		assertMatch([v.a2], [for (p in me.knit()) p.value]);
 		for (p in me.knit()) p.prepend(v.a3);
-		assertMatch([v.a3, v.a2], [for (p in me.knit()) p.value()]);
+		assertMatch([v.a3, v.a2], [for (p in me.knit()) p.value]);
 	}
 
 	public function testEmptyToString():Void {

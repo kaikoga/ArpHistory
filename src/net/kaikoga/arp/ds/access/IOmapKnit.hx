@@ -5,10 +5,11 @@ interface IOmapKnit<K, V> extends IOmapRead<K, V> {
 }
 
 interface IOmapKnitPin<K, V> {
-	public function index():Int;
-	public function key():K;
-	public function value():V;
-	public function prepend(k:K, v:V):Void;
-	public function append(k:K, v:V):Void;
-	public function remove():Bool;
+	var index(get, never):Int;
+	var key(get, never):K;
+	var value(get, never):V;
+
+	function prepend(k:K, v:V):Void;
+	function append(k:K, v:V):Void;
+	function remove():Bool;
 }

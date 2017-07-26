@@ -5,8 +5,9 @@ interface IMapKnit<K, V> extends IMapRead<K, V> {
 }
 
 interface IMapKnitPin<K, V> {
-	public function key():K;
-	public function value():V;
-	public function insert(k:K, v:V):Void;
-	public function remove():Bool;
+	var key(get, never):K;
+	var value(get, never):V;
+
+	function insert(k:K, v:V):Void;
+	function remove():Bool;
 }

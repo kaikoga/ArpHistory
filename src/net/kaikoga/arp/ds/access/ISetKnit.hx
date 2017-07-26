@@ -5,7 +5,8 @@ interface ISetKnit<V> extends ISetRead<V> {
 }
 
 interface ISetKnitPin<V> {
-	public function value():V;
-	public function insert(v:V):Void;
-	public function remove():Bool;
+	var value(get, never):V;
+
+	function insert(v:V):Void;
+	function remove():Bool;
 }

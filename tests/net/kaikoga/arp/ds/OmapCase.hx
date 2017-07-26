@@ -251,15 +251,16 @@ class OmapCase<K, V> {
 
 	public function testKnit():Void {
 		me.addPair(k.a1, v.a1);
-		assertMatch([k.a1], [for (p in me.knit()) p.key()]);
-		assertMatch([v.a1], [for (p in me.knit()) p.value()]);
+		assertMatch([k.a1], [for (p in me.knit()) p.key]);
+		assertMatch([v.a1], [for (p in me.knit()) p.value]);
 		for (p in me.knit()) p.append(k.a2, v.a2);
-		assertMatch([true, false], [for (p in me.knit()) (p.value() == v.a1) && p.remove()]);
-		assertMatch([k.a2], [for (p in me.knit()) p.key()]);
-		assertMatch([v.a2], [for (p in me.knit()) p.value()]);
+		assertMatch([true, false], [for (p in me.knit()) (p.value == v.a1) && p.remove()]);
+		assertMatch([k.a2], [for (p in me.knit()) p.key]);
+		assertMatch([v.a2], [for (p in me.knit()) p.value]);
 		for (p in me.knit()) p.prepend(k.a3, v.a3);
-		assertMatch([k.a3, k.a2], [for (p in me.knit()) p.key()]);
-		assertMatch([v.a3, v.a2], [for (p in me.knit()) p.value()]);
+		assertMatch([k.a3, k.a2], [for (p in me.knit()) p.key]);
+		assertMatch([v.a3, v.a2], [for (p in me.knit()) p.value]);
+		assertMatch([0, 0], [for (p in me.knit()) (p.key == v.a3) && p.remove()]);
 	}
 
 	public function testEmptyToString():Void {

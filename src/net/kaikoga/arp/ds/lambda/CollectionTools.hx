@@ -208,12 +208,15 @@ class ArraySetKnitPin<V> implements ISetKnitPin<V> {
 
 	inline public function hasNext():Bool return readIndex + 1 < values.length;
 	inline public function next():ISetKnitPin<V> { readIndex++; return this; }
-	inline public function value():V return values[readIndex];
+
+	public var value(get, never):V;
+	inline private function get_value():V return values[readIndex];
+
 	inline public function insert(v:V):Void me.add(v);
 	inline public function remove():Bool {
 		if (removedIndex == readIndex) throw "invalid operation";
 		removedIndex = readIndex;
-		return me.remove(this.value());
+		return me.remove(this.value);
 	}
 }
 
@@ -235,8 +238,12 @@ class ArrayListKnitPin<V> implements IListKnitPin<V> {
 
 	inline public function hasNext():Bool return readIndex + 1 < values.length;
 	inline public function next():IListKnitPin<V> { readIndex++; outIndex++; return this; }
-	inline public function value():V return values[readIndex];
-	inline public function index():Int return readIndex;
+
+	public var value(get, never):V;
+	inline private function get_value():V return values[readIndex];
+	public var index(get, never):Int;
+	inline private function get_index():Int return readIndex;
+
 	inline public function prepend(v:V):Void me.insertAt(outIndex++, v);
 	inline public function append(v:V):Void me.insertAt(++outIndex, v);
 	inline public function remove():Bool {
@@ -262,13 +269,17 @@ class ArrayMapKnitPin<K, V> implements IMapKnitPin<K, V> {
 
 	inline public function hasNext():Bool return readIndex + 1 < keys.length;
 	inline public function next():IMapKnitPin<K, V> { readIndex++; return this; }
-	inline public function key():K return keys[readIndex];
-	inline public function value():V return me.get(keys[readIndex]);
+
+	public var key(get, never):K;
+	inline private function get_key():K return keys[readIndex];
+	public var value(get, never):V;
+	inline private function get_value():V return me.get(keys[readIndex]);
+
 	inline public function insert(k:K, v:V):Void me.set(k, v);
 	inline public function remove():Bool {
 		if (removedIndex == readIndex) throw "invalid operation";
 		removedIndex = readIndex;
-		return me.removeKey(keys[readIndex]);
+		return me.removeKey(key);
 	}
 }
 
@@ -290,9 +301,14 @@ class ArrayOmapKnitPin<K, V> implements IOmapKnitPin<K, V> {
 
 	inline public function hasNext():Bool return readIndex + 1 < keys.length;
 	inline public function next():IOmapKnitPin<K, V> { readIndex++; outIndex++; return this; }
-	inline public function key():K return keys[readIndex];
-	inline public function value():V return me.get(keys[readIndex]);
-	inline public function index():Int return readIndex;
+
+	public var key(get, never):K;
+	inline private function get_key():K return keys[readIndex];
+	public var value(get, never):V;
+	inline private function get_value():V return me.get(keys[readIndex]);
+	public var index(get, never):Int;
+	inline private function get_index():Int return readIndex;
+
 	inline public function prepend(k:K, v:V):Void me.insertPairAt(outIndex++, k, v);
 	inline public function append(k:K, v:V):Void me.insertPairAt(++outIndex, k, v);
 	inline public function remove():Bool {

@@ -5,9 +5,10 @@ interface IListKnit<V> extends IListRead<V> {
 }
 
 interface IListKnitPin<V> {
-	public function index():Int;
-	public function value():V;
-	public function prepend(v:V):Void;
-	public function append(v:V):Void;
-	public function remove():Bool;
+	var index(get, never):Int;
+	var value(get, never):V;
+
+	function prepend(v:V):Void;
+	function append(v:V):Void;
+	function remove():Bool;
 }
