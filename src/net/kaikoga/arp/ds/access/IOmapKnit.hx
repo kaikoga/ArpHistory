@@ -5,6 +5,7 @@ interface IOmapKnit<K, V> extends IOmapRead<K, V> {
 }
 
 interface IOmapKnitPin<K, V> {
+	public function index():Int;
 	public function key():K;
 	public function value():V;
 	public function prepend(k:K, v:V):Void;

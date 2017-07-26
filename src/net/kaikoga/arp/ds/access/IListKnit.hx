@@ -5,6 +5,7 @@ interface IListKnit<V> extends IListRead<V> {
 }
 
 interface IListKnitPin<V> {
+	public function index():Int;
 	public function value():V;
 	public function prepend(v:V):Void;
 	public function append(v:V):Void;
