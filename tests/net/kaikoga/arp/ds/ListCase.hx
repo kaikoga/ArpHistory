@@ -131,6 +131,23 @@ class ListCase<V> {
 		assertMatch([v.a3, v.a2], [for (p in me.knit()) p.value]);
 	}
 
+	public function testBulkKnit():Void {
+		me.push(v.a1);
+		me.push(v.a5);
+		for (p in me.knit()) {
+			p.append(v.a2);
+			p.append(v.a3);
+			p.append(v.a4);
+			break;
+		}
+		assertMatch([v.a1, v.a2, v.a3, v.a4, v.a5], [for (p in me.knit()) p.value]);
+		assertMatch(
+			[0, 1, 2, 3, 4],
+			[for (p in me.knit()) { if (p.value == v.a1 || p.value == v.a2) p.remove(); p.index; } ]
+		);
+		assertMatch([v.a3, v.a4, v.a5], [for (p in me.knit()) p.value]);
+	}
+
 	public function testEmptyToString():Void {
 		assertEquals("[]", me.toString());
 	}

@@ -249,7 +249,7 @@ class ArrayListKnitPin<V> implements IListKnitPin<V> {
 	inline public function remove():Bool {
 		if (removedIndex == readIndex) throw "invalid operation";
 		removedIndex = readIndex;
-		return me.removeAt(outIndex);
+		return me.removeAt(outIndex--);
 	}
 }
 
@@ -314,6 +314,6 @@ class ArrayOmapKnitPin<K, V> implements IOmapKnitPin<K, V> {
 	inline public function remove():Bool {
 		if (removedIndex == readIndex) throw "invalid operation";
 		removedIndex = readIndex;
-		return me.removeAt(outIndex);
+		return me.removeAt(outIndex--);
 	}
 }

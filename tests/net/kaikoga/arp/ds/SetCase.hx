@@ -98,7 +98,7 @@ class SetCase<V> {
 		assertTrue(it.hasNext());
 		a.push(it.next());
 		assertFalse(it.hasNext());
-		var vm:ArpSupportFixtureMatchers<V> = v;
+		var vm:ArpSupportFixtureMatchers<V> = v; // a1 may be null
 		assertMatch(containsInAnyOrder(vm.a1, vm.a2, vm.a4, vm.a5), a);
 	}
 
@@ -108,6 +108,24 @@ class SetCase<V> {
 		for (p in me.knit()) p.insert(v.a2);
 		assertMatch(containsInAnyOrder(true, false), [for (p in me.knit()) (p.value == v.a1) && p.remove()]);
 		assertMatch([v.a2], [for (p in me.knit()) p.value]);
+	}
+
+	public function testBulkKnit():Void {
+		me.add(v.a1);
+		me.add(v.a5);
+		for (p in me.knit()) {
+			p.insert(v.a2);
+			p.insert(v.a3);
+			p.insert(v.a4);
+			break;
+		}
+		var vm:ArpSupportFixtureMatchers<V> = v; // a1 may be null
+		assertMatch(containsInAnyOrder(vm.a1, vm.a2, vm.a3, vm.a4, vm.a5), [for (p in me.knit()) p.value]);
+		assertMatch(
+			containsInAnyOrder(true, true, false, false, false),
+			[for (p in me.knit()) (p.value == v.a1 || p.value == v.a2) && p.remove()]
+		);
+		assertMatch(containsInAnyOrder(vm.a3, vm.a4, vm.a5), [for (p in me.knit()) p.value]);
 	}
 
 	public function testEmptyToString():Void {

@@ -260,7 +260,24 @@ class OmapCase<K, V> {
 		for (p in me.knit()) p.prepend(k.a3, v.a3);
 		assertMatch([k.a3, k.a2], [for (p in me.knit()) p.key]);
 		assertMatch([v.a3, v.a2], [for (p in me.knit()) p.value]);
-		assertMatch([0, 0], [for (p in me.knit()) (p.key == v.a3) && p.remove()]);
+		assertMatch([0, 1], [for (p in me.knit()) { if (p.key == k.a3) p.remove(); p.index; }]);
+	}
+
+	public function testBulkKnit():Void {
+		me.addPair(k.a1, v.a1);
+		me.addPair(k.a5, v.a5);
+		for (p in me.knit()) {
+			p.append(k.a2, v.a2);
+			p.append(k.a3, v.a3);
+			p.append(k.a4, v.a4);
+			break;
+		}
+		assertMatch([v.a1, v.a2, v.a3, v.a4, v.a5], [for (p in me.knit()) p.value]);
+		assertMatch(
+			[0, 1, 2, 3, 4],
+			[for (p in me.knit()) { if (p.value == v.a1 || p.value == v.a2) p.remove(); p.index; } ]
+		);
+		assertMatch([v.a3, v.a4, v.a5], [for (p in me.knit()) p.value]);
 	}
 
 	public function testEmptyToString():Void {
