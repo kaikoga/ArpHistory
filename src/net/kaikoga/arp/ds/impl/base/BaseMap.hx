@@ -1,7 +1,8 @@
 package net.kaikoga.arp.ds.impl.base;
 
-import net.kaikoga.arp.ds.lambda.CollectionTools;
+import net.kaikoga.arp.ds.access.IMapKnit.IMapKnitPin;
 import net.kaikoga.arp.ds.IMap;
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 
 class BaseMap<K, V> implements IMap<K, V> {
 
@@ -31,4 +32,7 @@ class BaseMap<K, V> implements IMap<K, V> {
 	public function remove(v:V):Bool return CollectionTools.removeImpl(this, v);
 	public function removeKey(k:K):Bool return CollectionTools.removeKeyImpl(this, k);
 	public function clear():Void CollectionTools.clearImpl(this);
+
+	// knit
+	public function knit():Iterator<IMapKnitPin<K, V>> return CollectionTools.mapKnitImpl(this);
 }

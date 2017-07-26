@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds;
 
+import net.kaikoga.arp.ds.access.IOmapKnit;
 import net.kaikoga.arp.ds.access.IOmapRemove;
 import net.kaikoga.arp.ds.access.IOmapResolve;
 import net.kaikoga.arp.ds.access.IOmapWrite;
@@ -10,5 +11,6 @@ extends IOmapRead<K, V>
 extends IOmapWrite<K, V>
 extends IOmapRemove<K, V>
 extends IOmapResolve<K, V>
+extends IOmapKnit<K, V>
 {
 }

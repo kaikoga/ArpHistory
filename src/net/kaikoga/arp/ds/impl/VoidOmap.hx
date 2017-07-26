@@ -1,7 +1,8 @@
 package net.kaikoga.arp.ds.impl;
 
-import net.kaikoga.arp.iter.EmptyIterator;
+import net.kaikoga.arp.ds.access.IOmapKnit.IOmapKnitPin;
 import net.kaikoga.arp.ds.IOmap;
+import net.kaikoga.arp.iter.EmptyIterator;
 
 class VoidOmap<K, V> implements IOmap<K, V> {
 
@@ -43,4 +44,7 @@ class VoidOmap<K, V> implements IOmap<K, V> {
 	public function pop():Null<V> return null;
 	public function shift():Null<V> return null;
 	public function clear():Void return;
+
+	// knit
+	public function knit():Iterator<IOmapKnitPin<K, V>> return new EmptyIterator();
 }

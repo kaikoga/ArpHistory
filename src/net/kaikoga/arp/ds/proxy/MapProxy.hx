@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.proxy;
 
+import net.kaikoga.arp.ds.access.IMapKnit.IMapKnitPin;
 import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.IMap;
 
@@ -49,4 +50,7 @@ class MapProxy<K, V, X, W> implements IMap<K, V> {
 	public function remove(v:V):Bool return this.map.remove(this.unproxyValue(v));
 	public function removeKey(k:K):Bool return this.map.removeKey(this.unproxyKey(k));
 	public function clear():Void this.map.clear();
+
+	// knit
+	public function knit():Iterator<IMapKnitPin<K, V>> return CollectionTools.mapKnitImpl(this);
 }

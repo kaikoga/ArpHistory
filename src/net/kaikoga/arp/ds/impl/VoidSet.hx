@@ -1,13 +1,14 @@
 package net.kaikoga.arp.ds.impl;
 
-import net.kaikoga.arp.iter.EmptyIterator;
+import net.kaikoga.arp.ds.access.ISetKnit.ISetKnitPin;
 import net.kaikoga.arp.ds.ISet;
+import net.kaikoga.arp.iter.EmptyIterator;
 
 class VoidSet<V> implements ISet<V> {
 
 	public var isUniqueValue(get, never):Bool;
 	public function get_isUniqueValue():Bool return true;
-	
+
 	public function new() return;
 
 	// read
@@ -22,4 +23,7 @@ class VoidSet<V> implements ISet<V> {
 	// remove
 	public function remove(v:V):Bool return false;
 	public function clear():Void return;
+
+	// knit
+	public function knit():Iterator<ISetKnitPin<V>> return new EmptyIterator();
 }

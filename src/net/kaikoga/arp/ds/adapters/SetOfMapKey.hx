@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.adapters;
 
+import net.kaikoga.arp.ds.access.ISetKnit.ISetKnitPin;
 import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.ISet;
 import net.kaikoga.arp.ds.IMap;
@@ -27,4 +28,6 @@ class SetOfMapKey<K, V> implements ISet<K> {
 	public function remove(v:K):Bool return this.map.removeKey(v);
 	public function clear():Void this.map.clear();
 
+	//knit
+	public function knit():Iterator<ISetKnitPin<K>> return CollectionTools.setKnitImpl(this);
 }

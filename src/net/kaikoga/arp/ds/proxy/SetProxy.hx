@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.proxy;
 
+import net.kaikoga.arp.ds.access.ISetKnit.ISetKnitPin;
 import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.ISet;
 
@@ -35,4 +36,6 @@ class SetProxy<V, W> implements ISet<V> {
 	public function remove(v:V):Bool return this.set.remove(this.unproxyValue(v));
 	public function clear():Void this.set.clear();
 
+	// knit
+	public function knit():Iterator<ISetKnitPin<V>> return CollectionTools.setKnitImpl(this);
 }

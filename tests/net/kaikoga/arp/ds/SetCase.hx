@@ -102,6 +102,13 @@ class SetCase<V> {
 		assertMatch(containsInAnyOrder(vm.a1, vm.a2, vm.a4, vm.a5), a);
 	}
 
+	public function testKnit():Void {
+		me.add(v.a1);
+		assertMatch([v.a1], [for (p in me.knit()) p.value()]);
+		for (p in me.knit()) p.insert(v.a2);
+		assertMatch(containsInAnyOrder(true, false), [for (p in me.knit()) (p.value() == v.a1) && p.remove()]);
+		assertMatch([v.a2], [for (p in me.knit()) p.value()]);
+	}
 
 	public function testEmptyToString():Void {
 		assertEquals("[]", me.toString());

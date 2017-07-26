@@ -1,7 +1,8 @@
 package net.kaikoga.arp.ds.impl;
 
-import net.kaikoga.arp.iter.EmptyIterator;
+import net.kaikoga.arp.ds.access.IMapKnit.IMapKnitPin;
 import net.kaikoga.arp.ds.IMap;
+import net.kaikoga.arp.iter.EmptyIterator;
 
 class VoidMap<K, V> implements IMap<K, V> {
 
@@ -32,4 +33,6 @@ class VoidMap<K, V> implements IMap<K, V> {
 	public function removeKey(k:K):Bool return false;
 	public function clear():Void return;
 
+	// knit
+	public function knit():Iterator<IMapKnitPin<K, V>> return new EmptyIterator();
 }

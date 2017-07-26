@@ -1,7 +1,8 @@
 package net.kaikoga.arp.ds.impl.base;
 
-import net.kaikoga.arp.ds.lambda.CollectionTools;
+import net.kaikoga.arp.ds.access.IListKnit.IListKnitPin;
 import net.kaikoga.arp.ds.IList;
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 
 class BaseList<V> implements IList<V> {
 
@@ -36,4 +37,7 @@ class BaseList<V> implements IList<V> {
 	public function remove(v:V):Bool return CollectionTools.removeImpl(this, v);
 	public function removeAt(index:Int):Bool return CollectionTools.removeAtImpl(this, index);
 	public function clear():Void CollectionTools.clearImpl(this);
+
+	// knit
+	public function knit():Iterator<IListKnitPin<V>> return CollectionTools.listKnitImpl(this);
 }

@@ -195,6 +195,16 @@ class MapCase<K, V> {
 		assertMatch(containsInAnyOrder(vm.a1, vm.a3, vm.a5), a);
 	}
 
+	public function testKnit():Void {
+		me.set(k.a1, v.a1);
+		assertMatch([k.a1], [for (p in me.knit()) p.key()]);
+		assertMatch([v.a1], [for (p in me.knit()) p.value()]);
+		for (p in me.knit()) p.insert(k.a2, v.a2);
+		assertMatch(containsInAnyOrder(true, false), [for (p in me.knit()) (p.value() == v.a1) && p.remove()]);
+		assertMatch([k.a2], [for (p in me.knit()) p.key()]);
+		assertMatch([v.a2], [for (p in me.knit()) p.value()]);
+	}
+
 	public function testEmptyToString():Void {
 		assertEquals("{}", me.toString());
 	}

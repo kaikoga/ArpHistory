@@ -1,5 +1,9 @@
 package net.kaikoga.arp.ds.lambda;
 
+import net.kaikoga.arp.ds.access.ISetKnit.ISetKnitPin;
+import net.kaikoga.arp.ds.access.IOmapKnit.IOmapKnitPin;
+import net.kaikoga.arp.ds.access.IMapKnit.IMapKnitPin;
+import net.kaikoga.arp.ds.access.IListKnit.IListKnitPin;
 import net.kaikoga.arp.ds.access.IOmapRead;
 import net.kaikoga.arp.ds.access.IListRead;
 import net.kaikoga.arp.ds.access.ISetRead;
@@ -169,6 +173,129 @@ class CollectionTools {
 		return '{${s.join("; ")}}';
 	}
 
+	// knit
 
+	public static function setKnitImpl<V>(base:ISet<V>):Iterator<ISetKnitPin<V>> {
+		return new ArraySetKnitPin(base);
+	}
+
+	public static function listKnitImpl<V>(base:IList<V>):Iterator<IListKnitPin<V>> {
+		return new ArrayListKnitPin(base);
+	}
+
+	public static function mapKnitImpl<K, V>(base:IMap<K, V>):Iterator<IMapKnitPin<K, V>> {
+		return new ArrayMapKnitPin(base);
+	}
+
+	public static function omapKnitImpl<K, V>(base:IOmap<K, V>):Iterator<IOmapKnitPin<K, V>> {
+		return new ArrayOmapKnitPin(base);
+	}
 }
 
+class ArraySetKnitPin<V> implements ISetKnitPin<V> {
+
+	private var me:ISet<V>;
+	private var values:Array<V>;
+	private var index:Int;
+	private var removedIndex:Int;
+
+	inline public function new(me:ISet<V>) {
+		this.me = me;
+		this.values = SetOp.toArray(me);
+		this.index = -1;
+		this.removedIndex = -1;
+	}
+
+	inline public function hasNext():Bool return index + 1 < values.length;
+	inline public function next():ISetKnitPin<V> { index++; return this; }
+	inline public function value():V return values[index];
+	inline public function insert(v:V):Void me.add(v);
+	inline public function remove():Bool {
+		if (removedIndex == index) throw "invalid operation";
+		removedIndex = index;
+		return me.remove(this.value());
+	}
+}
+
+class ArrayListKnitPin<V> implements IListKnitPin<V> {
+
+	private var me:IList<V>;
+	private var values:Array<V>;
+	private var index:Int;
+	private var outIndex:Int;
+	private var removedIndex:Int;
+
+	inline public function new(me:IList<V>) {
+		this.me = me;
+		this.values = ListOp.toArray(me);
+		this.index = -1;
+		this.outIndex = -1;
+		this.removedIndex = -1;
+	}
+
+	inline public function hasNext():Bool return index + 1 < values.length;
+	inline public function next():IListKnitPin<V> { index++; outIndex++; return this; }
+	inline public function value():V return values[index];
+	inline public function prepend(v:V):Void me.insertAt(outIndex++, v);
+	inline public function append(v:V):Void me.insertAt(++outIndex, v);
+	inline public function remove():Bool {
+		if (removedIndex == index) throw "invalid operation";
+		removedIndex = index;
+		return me.removeAt(outIndex);
+	}
+}
+
+class ArrayMapKnitPin<K, V> implements IMapKnitPin<K, V> {
+
+	private var me:IMap<K, V>;
+	private var keys:Array<K>;
+	private var index:Int;
+	private var removedIndex:Int;
+
+	inline public function new(me:IMap<K, V>) {
+		this.me = me;
+		this.keys = MapOp.toKeyArray(me);
+		this.index = -1;
+		this.removedIndex = -1;
+	}
+
+	inline public function hasNext():Bool return index + 1 < keys.length;
+	inline public function next():IMapKnitPin<K, V> { index++; return this; }
+	inline public function key():K return keys[index];
+	inline public function value():V return me.get(keys[index]);
+	inline public function insert(k:K, v:V):Void me.set(k, v);
+	inline public function remove():Bool {
+		if (removedIndex == index) throw "invalid operation";
+		removedIndex = index;
+		return me.removeKey(keys[index]);
+	}
+}
+
+class ArrayOmapKnitPin<K, V> implements IOmapKnitPin<K, V> {
+
+	private var me:IOmap<K, V>;
+	private var keys:Array<K>;
+	private var index:Int;
+	private var outIndex:Int;
+	private var removedIndex:Int;
+
+	inline public function new(me:IOmap<K, V>) {
+		this.me = me;
+		this.keys = OmapOp.toKeyArray(me);
+		this.index = -1;
+		this.outIndex = -1;
+		this.removedIndex = -1;
+	}
+
+	inline public function hasNext():Bool return index + 1 < keys.length;
+	inline public function next():IOmapKnitPin<K, V> { index++; outIndex++; return this; }
+	inline public function key():K return keys[index];
+	inline public function value():V return me.get(keys[index]);
+	inline public function prepend(k:K, v:V):Void me.insertPairAt(outIndex++, k, v);
+	inline public function append(k:K, v:V):Void me.insertPairAt(++outIndex, k, v);
+	inline public function remove():Bool {
+		if (removedIndex == index) throw "invalid operation";
+		removedIndex = index;
+		return me.removeAt(outIndex);
+	}
+}

@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.decorators;
 
+import net.kaikoga.arp.ds.access.IListKnit.IListKnitPin;
 import net.kaikoga.arp.ds.IList;
 
 class ListDecorator<V> implements IList<V> {
@@ -37,4 +38,7 @@ class ListDecorator<V> implements IList<V> {
 	public function remove(v:V):Bool return this.list.remove(v);
 	public function removeAt(index:Int):Bool return this.list.removeAt(index);
 	public function clear():Void this.list.clear();
+
+	//knit
+	public function knit():Iterator<IListKnitPin<V>> return this.list.knit();
 }

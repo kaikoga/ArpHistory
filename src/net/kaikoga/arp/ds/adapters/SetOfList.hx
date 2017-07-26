@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.adapters;
 
+import net.kaikoga.arp.ds.access.ISetKnit.ISetKnitPin;
 import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.ISet;
 import net.kaikoga.arp.ds.IList;
@@ -25,4 +26,6 @@ class SetOfList<V> implements ISet<V> {
 	public function remove(v:V):Bool return this.list.remove(v);
 	public function clear():Void this.list.clear();
 
+	//knit
+	public function knit():Iterator<ISetKnitPin<V>> return CollectionTools.setKnitImpl(this);
 }

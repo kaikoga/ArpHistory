@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.decorators;
 
+import net.kaikoga.arp.ds.access.ISetKnit.ISetKnitPin;
 import net.kaikoga.arp.ds.ISet;
 
 class SetDecorator<V> implements ISet<V> {
@@ -10,7 +11,7 @@ class SetDecorator<V> implements ISet<V> {
 	public function get_isUniqueValue():Bool return this.set.isUniqueValue;
 
 	public function new(set:ISet<V>) this.set = set;
-	
+
 	// read
 	public function isEmpty():Bool return set.isEmpty();
 	public function hasValue(v:V):Bool return set.hasValue(v);
@@ -23,4 +24,7 @@ class SetDecorator<V> implements ISet<V> {
 	// remove
 	public function remove(v:V):Bool return set.remove(v);
 	public function clear():Void set.clear();
+
+	//knit
+	public function knit():Iterator<ISetKnitPin<V>> return this.set.knit();
 }

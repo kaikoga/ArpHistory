@@ -1,7 +1,8 @@
 package net.kaikoga.arp.ds.impl;
 
-import net.kaikoga.arp.ds.lambda.CollectionTools;
+import net.kaikoga.arp.ds.access.IOmapKnit.IOmapKnitPin;
 import net.kaikoga.arp.ds.IOmap;
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 
 @:generic @:remove
 class StdOmap<K, V> implements IOmap<K, V> {
@@ -82,6 +83,9 @@ class StdOmap<K, V> implements IOmap<K, V> {
 		this.value.remove(k);
 		return v;
 	}
+
+	// knit
+	public function knit():Iterator<IOmapKnitPin<K, V>> return CollectionTools.omapKnitImpl(this);
 }
 
 @:generic @:remove

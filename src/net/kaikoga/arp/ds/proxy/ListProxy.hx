@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.proxy;
 
+import net.kaikoga.arp.ds.access.IListKnit.IListKnitPin;
 import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.IList;
 
@@ -48,4 +49,7 @@ class ListProxy<V, W> implements IList<V> {
 	public function remove(v:V):Bool return this.list.remove(this.unproxyValue(v));
 	public function removeAt(index:Int):Bool return this.list.removeAt(index);
 	public function clear():Void this.list.clear();
+
+	// knit
+	public function knit():Iterator<IListKnitPin<V>> return CollectionTools.listKnitImpl(this);
 }

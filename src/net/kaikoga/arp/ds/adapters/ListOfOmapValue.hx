@@ -1,5 +1,7 @@
 package net.kaikoga.arp.ds.adapters;
 
+import net.kaikoga.arp.ds.access.IListKnit.IListKnitPin;
+import net.kaikoga.arp.ds.access.IMapKnit.IMapKnitPin;
 import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.IList;
 import net.kaikoga.arp.ds.IOmap;
@@ -46,4 +48,6 @@ class ListOfOmapValue<K, V> implements IList<V> {
 	public function removeAt(index:Int):Bool return this.omap.removeAt(index);
 	public function clear():Void this.omap.clear();
 
+	//knit
+	public function knit():Iterator<IListKnitPin<V>> return CollectionTools.listKnitImpl(this);
 }

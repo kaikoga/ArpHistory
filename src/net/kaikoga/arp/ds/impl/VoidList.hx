@@ -1,7 +1,8 @@
 package net.kaikoga.arp.ds.impl;
 
-import net.kaikoga.arp.iter.EmptyIterator;
+import net.kaikoga.arp.ds.access.IListKnit.IListKnitPin;
 import net.kaikoga.arp.ds.IList;
+import net.kaikoga.arp.iter.EmptyIterator;
 
 class VoidList<V> implements IList<V> {
 
@@ -36,4 +37,8 @@ class VoidList<V> implements IList<V> {
 	public function remove(v:V):Bool return false;
 	public function removeAt(index:Int):Bool return false;
 	public function clear():Void return;
+
+	// knit
+	public function knit():Iterator<IListKnitPin<V>> return new EmptyIterator();
 }
+

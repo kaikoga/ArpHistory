@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.adapters;
 
+import net.kaikoga.arp.ds.access.IMapKnit.IMapKnitPin;
 import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arp.ds.IOmap;
@@ -37,4 +38,6 @@ class MapOfOmap<K, V> implements IMap<K, V> {
 	public function removeKey(k:K):Bool return this.omap.removeKey(k);
 	public function clear():Void this.omap.clear();
 
+	//knit
+	public function knit():Iterator<IMapKnitPin<K, V>> return CollectionTools.mapKnitImpl(this);
 }

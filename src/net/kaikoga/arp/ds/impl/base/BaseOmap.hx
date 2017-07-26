@@ -1,7 +1,8 @@
 package net.kaikoga.arp.ds.impl.base;
 
-import net.kaikoga.arp.ds.lambda.CollectionTools;
+import net.kaikoga.arp.ds.access.IOmapKnit.IOmapKnitPin;
 import net.kaikoga.arp.ds.IOmap;
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 
 class BaseOmap<K, V> implements IOmap<K, V> {
 
@@ -44,4 +45,6 @@ class BaseOmap<K, V> implements IOmap<K, V> {
 	public function shift():Null<V> return CollectionTools.shiftImpl(this);
 	public function clear():Void CollectionTools.clearImpl(this);
 
+	// knit
+	public function knit():Iterator<IOmapKnitPin<K, V>> return CollectionTools.omapKnitImpl(this);
 }

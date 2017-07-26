@@ -1,7 +1,8 @@
 package net.kaikoga.arp.ds.impl;
 
-import net.kaikoga.arp.ds.lambda.CollectionTools;
+import net.kaikoga.arp.ds.access.ISetKnit.ISetKnitPin;
 import net.kaikoga.arp.ds.ISet;
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 
 @:generic @:remove
 class StdMapSet<V> implements ISet<V> {
@@ -27,4 +28,7 @@ class StdMapSet<V> implements ISet<V> {
 	//remove
 	public function remove(v:V):Bool return this.value.remove(v);
 	public function clear():Void this.value = new Map();
+
+	// knit
+	public function knit():Iterator<ISetKnitPin<V>> return CollectionTools.setKnitImpl(this);
 }

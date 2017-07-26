@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds;
 
+import net.kaikoga.arp.ds.access.IListKnit;
 import net.kaikoga.arp.ds.access.IListRemove;
 import net.kaikoga.arp.ds.access.IListResolve;
 import net.kaikoga.arp.ds.access.IListWrite;
@@ -10,5 +11,6 @@ extends IListRead<V>
 extends IListWrite<V>
 extends IListRemove<V>
 extends IListResolve<V>
+extends IListKnit<V>
 {
 }

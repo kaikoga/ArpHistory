@@ -1,7 +1,8 @@
 package net.kaikoga.arp.ds.impl;
 
-import net.kaikoga.arp.ds.lambda.CollectionTools;
+import net.kaikoga.arp.ds.access.IMapKnit.IMapKnitPin;
 import net.kaikoga.arp.ds.IMap;
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 
 @:generic @:remove
 class StdMap<K, V> implements IMap<K, V> {
@@ -41,4 +42,6 @@ class StdMap<K, V> implements IMap<K, V> {
 	public function removeKey(k:K):Bool return this.value.remove(k);
 	public function clear():Void this.value = new Map<K, V>();
 
+	// knit
+	public function knit():Iterator<IMapKnitPin<K, V>> return CollectionTools.mapKnitImpl(this);
 }
