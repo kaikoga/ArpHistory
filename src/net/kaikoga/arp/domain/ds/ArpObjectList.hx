@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain.ds;
 
+import net.kaikoga.arp.ds.access.IListKnit.IListKnitPin;
 import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.domain.core.ArpSid;
@@ -87,4 +88,7 @@ class ArpObjectList<V:IArpObject> implements IList<V> implements IPersistable {
 		var values:Array<String> = [for (slot in this.slotList) slot.sid.toString()];
 		output.writeNameList("values", values);
 	}
+
+	// knit
+	public function knit():Iterator<IListKnitPin<V>> return CollectionTools.listKnitImpl(this);
 }

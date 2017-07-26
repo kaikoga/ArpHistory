@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain.ds;
 
+import net.kaikoga.arp.ds.access.ISetKnit.ISetKnitPin;
 import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.domain.core.ArpSid;
 import net.kaikoga.arp.persistable.IPersistOutput;
@@ -65,4 +66,7 @@ class ArpObjectSet<V:IArpObject> implements ISet<V> implements IPersistable {
 		var values:Array<String> = [for (slot in this.slotSet) slot.sid.toString()];
 		output.writeNameList("values", values);
 	}
+
+	// knit
+	public function knit():Iterator<ISetKnitPin<V>> return CollectionTools.setKnitImpl(this);
 }

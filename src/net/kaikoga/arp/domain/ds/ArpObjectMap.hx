@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain.ds;
 
+import net.kaikoga.arp.ds.access.IMapKnit.IMapKnitPin;
 import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.domain.core.ArpSid;
@@ -90,4 +91,6 @@ class ArpObjectMap<K, V:IArpObject> implements IMap<K, V> implements IPersistabl
 		values.writeExit();
 	}
 
+	// knit
+	public function knit():Iterator<IMapKnitPin<K, V>> return CollectionTools.mapKnitImpl(this);
 }
