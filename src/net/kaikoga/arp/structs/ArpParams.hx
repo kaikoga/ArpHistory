@@ -1,5 +1,6 @@
 package net.kaikoga.arp.structs;
 
+import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.persistable.IPersistInput;
@@ -33,9 +34,9 @@ abstract ArpParamsProxy(ArpParams) from ArpParams to ArpParams {
 @:build(net.kaikoga.arp.ArpDomainMacros.buildStruct("Params"))
 class ArpParams implements IPersistable {
 
-	private var map:Map<String, Dynamic>;
+	public var map:Map<String, Dynamic>;
 
-	inline private function keys():Iterator<String> return this.map.keys();
+	inline public function keys():Iterator<String> return this.map.keys();
 	inline public function exists(key:String):Bool return this.map.exists(key);
 	inline public function get(key:String):Dynamic return this.map.get(key);
 	inline public function set(key:String, value:Dynamic):Dynamic {
@@ -47,7 +48,6 @@ class ArpParams implements IPersistable {
 	public function new() {
 		this.map = new Map<String, Dynamic>();
 	}
-
 
 	public function initWithSeed(seed:ArpSeed):ArpParams {
 		if (seed == null) return this;
@@ -70,8 +70,6 @@ class ArpParams implements IPersistable {
 					this.set(key, new ArpDirection().initWithString(value));
 				case "idir":
 					this.set(key, new ArpDirection(Std.parseInt(value)));
-				case "rewire":
-					this.set(key, new ArpParamRewire(value));
 				default:
 					if (ArpStringUtil.isNumeric(value)) {
 						this.set(key, Std.parseFloat(value));
@@ -110,18 +108,8 @@ class ArpParams implements IPersistable {
 		return this;
 	}
 
-	public function filter(source:ArpParams = null):ArpParams {
-		if (source != null) {
-			for (name in source.keys()) {
-				var value:Dynamic = this.get(name);
-				if (Std.is(value, ArpParamRewire)) {
-					this.set(name, this.get(value.rewireFrom));
-				} else {
-					this.set(name, source.get(name));
-				}
-			}
-		}
-		return this;
+	public function clear():Void {
+		this.map = new Map<String, Dynamic>();
 	}
 
 	public function toString():String {
@@ -130,9 +118,6 @@ class ArpParams implements IPersistable {
 			var value:Dynamic = this.get(name);
 			if (Std.is(value, ArpDirection)) {
 				value = cast(value, ArpDirection).value + ":idir";
-			}
-			else if (Std.is(value, ArpParamRewire)) {
-				value = cast(value, ArpParamRewire).rewireFrom + ":rewire";
 			}
 			result.push(name + ":" + Std.string(value));
 		}
@@ -145,12 +130,5 @@ class ArpParams implements IPersistable {
 
 	public function writeSelf(output:IPersistOutput):Void {
 		output.writeUtf("params", toString());
-	}
-}
-
-class ArpParamRewire {
-	public var rewireFrom:String;
-	public function new(rewireFrom:String) {
-		this.rewireFrom = rewireFrom;
 	}
 }
