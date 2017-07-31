@@ -1,6 +1,7 @@
 package net.kaikoga.arp.structs;
 
-import net.kaikoga.arp.ds.IMap;
+import net.kaikoga.arp.ds.access.IMapWrite;
+import net.kaikoga.arp.ds.access.IMapRead;
 import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.persistable.IPersistInput;
@@ -8,42 +9,46 @@ import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.structs.ArpDirection;
 import net.kaikoga.arp.utils.ArpStringUtil;
 
-@:forward(
-	keys,
-	get,
-	set,
-	remove,
-	initWithSeed,
-	initWithString,
-	clone,
-	copyFrom,
-	merge,
-	filter,
-	toString,
-	readSelf,
-	writeSelf
-)
+@:forward
 abstract ArpParamsProxy(ArpParams) from ArpParams to ArpParams {
 
 	inline public function new(value:ArpParams) this = value;
 
 	@:arrayAccess inline private function arrayGet(k:String):Dynamic return this.get(k);
-	@:arrayAccess inline private function arraySet(k:String, v:Dynamic):Dynamic return this.set(k, v);
+	@:arrayAccess inline private function arraySet(k:String, v:Dynamic):Dynamic { this.set(k, v); return v; }
 }
 
 @:build(net.kaikoga.arp.ArpDomainMacros.buildStruct("Params"))
-class ArpParams implements IPersistable {
+class ArpParams
+implements IPersistable
+implements IMapRead<String, Dynamic>
+implements IMapWrite<String, Dynamic>
+{
+	public var isUniqueKey(get, never):Bool;
+	inline private function get_isUniqueKey():Bool return true;
+	public var isUniqueValue(get, never):Bool;
+	inline private function get_isUniqueValue():Bool return false;
 
-	public var map:Map<String, Dynamic>;
+	private var map:Map<String, Dynamic>;
+
+	inline public function isEmpty():Bool return !this.map.iterator().hasNext();
 
 	inline public function keys():Iterator<String> return this.map.keys();
-	inline public function exists(key:String):Bool return this.map.exists(key);
-	inline public function get(key:String):Dynamic return this.map.get(key);
-	inline public function set(key:String, value:Dynamic):Dynamic {
-		this.map.set(key, value);
-		return value;
+	inline public function iterator():Iterator<Dynamic> return this.map.iterator();
+
+	inline public function hasKey(k:String):Bool return this.map.exists(k);
+	public function hasValue(v:Dynamic):Bool { for (x in this.map) if (x == v) return true; return false; }
+
+	inline public function get(k:String):Dynamic return this.map.get(k);
+	inline public function set(k:String, v:Dynamic):Void this.map.set(k, v);
+
+	public function removeKey(k:String):Bool {
+		if (this.map.exists(k)) {
+			this.map.remove(k); return true;
+		}
+		return false;
 	}
-	inline public function remove(key:String):Void this.map.remove(key);
+	inline public function clear():Void this.map = new Map<String, Dynamic>();
 
 	public function new() {
 		this.map = new Map<String, Dynamic>();
@@ -88,9 +93,7 @@ class ArpParams implements IPersistable {
 	}
 
 	public function copyFrom(source:ArpParams = null):ArpParams {
-		for (name in this.keys()) {
-			this.remove(name);
-		}
+		this.clear();
 		if (source != null) {
 			for (name in source.keys()) {
 				this.set(name, source.get(name));
@@ -106,10 +109,6 @@ class ArpParams implements IPersistable {
 			}
 		}
 		return this;
-	}
-
-	public function clear():Void {
-		this.map = new Map<String, Dynamic>();
 	}
 
 	public function toString():String {
