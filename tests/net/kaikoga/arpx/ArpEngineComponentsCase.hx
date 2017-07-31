@@ -1,5 +1,6 @@
 ﻿package net.kaikoga.arpx;
 
+import net.kaikoga.arpx.chip.decorators.DecorateChip;
 import net.kaikoga.arpx.texture.Texture;
 import net.kaikoga.arpx.texture.ResourceTexture;
 import net.kaikoga.arpx.texture.FileTexture;
@@ -49,6 +50,8 @@ class ArpEngineComponentsCase {
 		assertNotNull(new NativeTextChip());
 		assertNotNull(new RectChip());
 		assertNotNull(new StringChip());
+
+		assertNotNull(new DecorateChip());
 
 		assertNotNull(new Console());
 

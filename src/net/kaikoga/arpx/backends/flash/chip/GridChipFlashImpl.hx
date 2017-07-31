@@ -130,7 +130,7 @@ class GridChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 		var face:String = (params != null) ? params.get("face") : null;
 		var dir:ArpDirection = (params != null) ? cast (params.get("dir"), ArpDirection) : null;
 		var index:Int;
-		if (params.exists("index")) {
+		if (params.hasKey("index")) {
 			index = params.get("index");
 		} else if (face != null) {
 			if (this.indexesByFaces.exists(face)) {
