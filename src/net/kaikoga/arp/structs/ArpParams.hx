@@ -1,7 +1,6 @@
 package net.kaikoga.arp.structs;
 
-import net.kaikoga.arp.ds.access.IMapWrite;
-import net.kaikoga.arp.ds.access.IMapRead;
+import net.kaikoga.arp.ds.impl.StdMap;
 import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.persistable.IPersistInput;
@@ -19,40 +18,9 @@ abstract ArpParamsProxy(ArpParams) from ArpParams to ArpParams {
 }
 
 @:build(net.kaikoga.arp.ArpDomainMacros.buildStruct("Params"))
-class ArpParams
-implements IPersistable
-implements IMapRead<String, Dynamic>
-implements IMapWrite<String, Dynamic>
+class ArpParams extends StdMap<String, Dynamic> implements IPersistable
 {
-	public var isUniqueKey(get, never):Bool;
-	inline private function get_isUniqueKey():Bool return true;
-	public var isUniqueValue(get, never):Bool;
-	inline private function get_isUniqueValue():Bool return false;
-
-	private var map:Map<String, Dynamic>;
-
-	inline public function isEmpty():Bool return !this.map.iterator().hasNext();
-
-	inline public function keys():Iterator<String> return this.map.keys();
-	inline public function iterator():Iterator<Dynamic> return this.map.iterator();
-
-	inline public function hasKey(k:String):Bool return this.map.exists(k);
-	public function hasValue(v:Dynamic):Bool { for (x in this.map) if (x == v) return true; return false; }
-
-	inline public function get(k:String):Dynamic return this.map.get(k);
-	inline public function set(k:String, v:Dynamic):Void this.map.set(k, v);
-
-	public function removeKey(k:String):Bool {
-		if (this.map.exists(k)) {
-			this.map.remove(k); return true;
-		}
-		return false;
-	}
-	inline public function clear():Void this.map = new Map<String, Dynamic>();
-
-	public function new() {
-		this.map = new Map<String, Dynamic>();
-	}
+	public function new() super();
 
 	public function initWithSeed(seed:ArpSeed):ArpParams {
 		if (seed == null) return this;
@@ -111,7 +79,7 @@ implements IMapWrite<String, Dynamic>
 		return this;
 	}
 
-	public function toString():String {
+	override public function toString():String {
 		var result:Array<Dynamic> = [];
 		for (name in this.keys()) {
 			var value:Dynamic = this.get(name);
