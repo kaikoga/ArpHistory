@@ -44,15 +44,13 @@ class MacroArpObjectSetField extends MacroArpObjectCollectionFieldBase implement
 	}
 
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {
-		if (this.arpBarrier) {
-			heatLaterBlock.push(macro @:pos(this.nativePos) { for (slot in this.$iNativeName.slotSet) this._arpDomain.heatLater(slot); });
-		}
+		if (!this.arpHasBarrier) return;
+		heatLaterBlock.push(macro @:pos(this.nativePos) { for (slot in this.$iNativeName.slotSet) this._arpDomain.heatLater(slot, $v{arpBarrierRequired}); });
 	}
 
 	public function buildHeatUpBlock(heatUpBlock:Array<Expr>):Void {
-		if (this.arpBarrier) {
-			heatUpBlock.push(macro @:pos(this.nativePos) { if (this.$iNativeName.heat != net.kaikoga.arp.domain.ArpHeat.Warm) return false; });
-		}
+		if (!this.arpHasBarrier) return;
+		heatUpBlock.push(macro @:pos(this.nativePos) { if (this.$iNativeName.heat != net.kaikoga.arp.domain.ArpHeat.Warm) return false; });
 	}
 
 	public function buildHeatDownBlock(heatDownBlock:Array<Expr>):Void {

@@ -20,7 +20,7 @@ class MacroArpFieldDefinition {
 
 	// ArpField family
 	public var metaArpField:MacroArpMetaArpField = MacroArpMetaArpField.Unmanaged;
-	public var metaArpBarrier:Bool = false;
+	public var metaArpBarrier:MacroArpMetaArpBarrier = MacroArpMetaArpBarrier.None;
 	public var metaArpVolatile:Bool = false;
 	public var metaArpDefault:MacroArpMetaArpDefault = MacroArpMetaArpDefault.Zero;
 
@@ -61,7 +61,7 @@ class MacroArpFieldDefinition {
 							this.metaArpVolatile = true;
 						case ":arpBarrier":
 							this.family = MacroArpFieldDefinitionFamily.ArpField;
-							this.metaArpBarrier = true;
+							this.metaArpBarrier = parseMetaArpBarrier(meta.params[0]);
 						case ":arpDefault":
 							this.family = MacroArpFieldDefinitionFamily.ArpField;
 							switch (meta.params[0]) {
@@ -125,8 +125,12 @@ class MacroArpFieldDefinition {
 	}
 
 	public function arpFieldIsForValue():Bool {
-		if (metaArpBarrier) {
-			Context.error('@:arpBarrier not available for ${this.nativeType.toString()}', this.nativePos);
+		switch (metaArpBarrier) {
+			case MacroArpMetaArpBarrier.None:
+			case
+				MacroArpMetaArpBarrier.Optional,
+				MacroArpMetaArpBarrier.Required:
+				Context.error('@:arpBarrier not available for ${this.nativeType.toString()}', this.nativePos);
 		}
 		return true;
 	}
@@ -145,6 +149,15 @@ class MacroArpFieldDefinition {
 			case _: Context.error("invalid expr", this.nativePos);
 		}
 	}
+
+	private function parseMetaArpBarrier(expr:ExprOf<Bool>):MacroArpMetaArpBarrier {
+		if (expr == null) return MacroArpMetaArpBarrier.Optional;
+		return switch (expr.expr) {
+			case ExprDef.EConst(Constant.CIdent("true")): MacroArpMetaArpBarrier.Required;
+			case ExprDef.EConst(Constant.CIdent("false")): MacroArpMetaArpBarrier.Optional;
+			case _: Context.error("invalid expr", this.nativePos);
+		}
+	}
 }
 
 enum MacroArpFieldDefinitionFamily {
@@ -160,6 +173,12 @@ enum MacroArpMetaArpField {
 	Default;
 	Name(s:String);
 	Runtime;
+}
+
+enum MacroArpMetaArpBarrier {
+	None;
+	Optional;
+	Required;
 }
 
 enum MacroArpMetaArpDefault {

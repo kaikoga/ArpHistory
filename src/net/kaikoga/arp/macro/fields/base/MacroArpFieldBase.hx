@@ -2,12 +2,12 @@ package net.kaikoga.arp.macro.fields.base;
 
 #if macro
 
-import net.kaikoga.arp.macro.MacroArpFieldDefinition.MacroArpMetaArpField;
-import net.kaikoga.arp.domain.reflect.ArpFieldDs;
-import net.kaikoga.arp.domain.reflect.ArpFieldKind;
-import net.kaikoga.arp.domain.core.ArpType;
-import net.kaikoga.arp.domain.reflect.ArpFieldInfo;
 import haxe.macro.Expr;
+import net.kaikoga.arp.domain.core.ArpType;
+import net.kaikoga.arp.domain.reflect.ArpFieldDs;
+import net.kaikoga.arp.domain.reflect.ArpFieldInfo;
+import net.kaikoga.arp.domain.reflect.ArpFieldKind;
+import net.kaikoga.arp.macro.MacroArpFieldDefinition;
 
 class MacroArpFieldBase {
 
@@ -18,8 +18,24 @@ class MacroArpFieldBase {
 	private var nativeType(get, never):ComplexType;
 	private function get_nativeType():ComplexType return fieldDef.nativeType;
 
-	private var arpBarrier(get, never):Bool;
-	private function get_arpBarrier():Bool return fieldDef.metaArpBarrier;
+	private var arpBarrier(get, never):MacroArpMetaArpBarrier;
+	private function get_arpBarrier():MacroArpMetaArpBarrier return fieldDef.metaArpBarrier;
+	private var arpHasBarrier(get, never):Bool;
+	private function get_arpHasBarrier():Bool {
+		return switch (arpBarrier) {
+			case MacroArpMetaArpBarrier.None: false;
+			case MacroArpMetaArpBarrier.Optional: true;
+			case MacroArpMetaArpBarrier.Required: true;
+		}
+	}
+	private var arpBarrierRequired(get, never):Bool;
+	private function get_arpBarrierRequired():Bool {
+		return switch (arpBarrier) {
+			case MacroArpMetaArpBarrier.None: false;
+			case MacroArpMetaArpBarrier.Optional: false;
+			case MacroArpMetaArpBarrier.Required: true;
+		}
+	}
 
 	private var nativePos(get, never):Position;
 	private function get_nativePos():Position return this.nativeField.pos;
@@ -84,7 +100,7 @@ class MacroArpFieldBase {
 			this.arpFieldKind,
 			this.arpFieldDs,
 			this.nativeField.name,
-			this.arpBarrier
+			this.arpHasBarrier
 		);
 	}
 }

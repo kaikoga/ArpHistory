@@ -50,15 +50,13 @@ class MacroArpObjectField extends MacroArpFieldBase implements IMacroArpField {
 	}
 
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {
-		if (this.arpBarrier) {
-			heatLaterBlock.push(macro @:pos(this.nativePos) { this._arpDomain.heatLater(this.$iNativeSlot); });
-		}
+		if (!this.arpHasBarrier) return;
+		heatLaterBlock.push(macro @:pos(this.nativePos) { this._arpDomain.heatLater(this.$iNativeSlot, $v{arpBarrierRequired}); });
 	}
 
 	public function buildHeatUpBlock(heatUpBlock:Array<Expr>):Void {
-		if (this.arpBarrier) {
-			heatUpBlock.push(macro @:pos(this.nativePos) { if (this.$iNativeSlot.heat != net.kaikoga.arp.domain.ArpHeat.Warm) return false; });
-		}
+		if (!this.arpHasBarrier) return;
+		heatUpBlock.push(macro @:pos(this.nativePos) { if (this.$iNativeSlot.heat != net.kaikoga.arp.domain.ArpHeat.Warm) return false; });
 	}
 
 	public function buildHeatDownBlock(heatDownBlock:Array<Expr>):Void {
