@@ -58,12 +58,28 @@ class MacroArpImplClassDefinition {
 		}
 	}
 
-	private function recordAllInterfaces(intf:ClassType):Void {
-		this.interfaces.push(intf);
+	private static function getFqnOfType(intf:BaseType):String {
+		var p = intf.module.split(".");
+		if (p[p.length - 1] != intf.name) p.push(intf.name);
+		return p.join(".");
+	}
 
-		// TODO do we have to implement recursively...?
-		// if (this.interfaces.indexOf(intf) < 0) this.interfaces.push(intf);
-		// for (i in intf.interfaces) this.recordAllInterfaces(i.t.get());
+	private function recordAllInterfaces(intf:ClassType):Bool {
+		var isArpObjectImpl:Bool = false;
+		for (i in intf.interfaces) {
+			if (this.recordAllInterfaces(i.t.get())) {
+				isArpObjectImpl = true;
+			}
+		}
+		if (isArpObjectImpl) {
+			if (this.interfaces.indexOf(intf) < 0) {
+				this.interfaces.push(intf);
+			}
+			return true;
+		} else if (getFqnOfType(intf) == "net.kaikoga.arp.backends.IArpObjectImpl") {
+			return true;
+		}
+		return false;
 	}
 
 	private function genVarDelegate(classField:ClassField, isR:Bool, isW:Bool):Void {
