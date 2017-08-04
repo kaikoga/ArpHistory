@@ -18,6 +18,11 @@ class ResourceTextureFlashImpl extends ArpObjectImplBase implements ITextureFlas
 	private var loader:Loader;
 	private var value:BitmapData;
 
+	public var width(get, never):Int;
+	private function get_width():Int return this.value.width;
+	public var height(get, never):Int;
+	private function get_height():Int return this.value.height;
+
 	public function new(texture:ResourceTexture) {
 		super();
 		this.texture = texture;

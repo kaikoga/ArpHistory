@@ -1,10 +1,10 @@
 package net.kaikoga.arpx.backends.flash.texture;
 
+import net.kaikoga.arpx.backends.cross.texture.ITextureImpl;
 import flash.geom.Rectangle;
-import net.kaikoga.arp.backends.IArpObjectImpl;
 import flash.display.BitmapData;
 
-interface ITextureFlashImpl extends IArpObjectImpl {
+interface ITextureFlashImpl extends ITextureImpl {
 
 	function bitmapData():BitmapData;
 	function trim(bound:Rectangle):BitmapData;

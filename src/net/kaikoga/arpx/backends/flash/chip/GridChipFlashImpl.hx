@@ -34,10 +34,10 @@ class GridChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 		this.bounds = [];
 		this.trimmedBitmaps = new Map();
 		if (this.chip.chipWidth == 0) {
-			this.chip.chipWidth = this.sourceBitmap.width;
+			this.chip.chipWidth = this.chip.texture.width;
 		}
 		if (this.chip.chipHeight == 0) {
-			this.chip.chipHeight = this.sourceBitmap.height;
+			this.chip.chipHeight = this.chip.texture.height;
 		}
 
 		var faces:Array<String>;
@@ -65,13 +65,13 @@ class GridChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 				this.bounds[index++] = new Rectangle(x, y, this.chip.chipWidth, this.chip.chipHeight);
 				if (isVertical) {
 					y += this.chip.chipHeight;
-					if (y >= this.sourceBitmap.height) {
+					if (y >= this.chip.texture.height) {
 						y = 0;
 						x += this.chip.chipWidth;
 					}
 				} else {
 					x += this.chip.chipWidth;
-					if (x >= this.sourceBitmap.width) {
+					if (x >= this.chip.texture.width) {
 						x = 0;
 						y += this.chip.chipHeight;
 					}

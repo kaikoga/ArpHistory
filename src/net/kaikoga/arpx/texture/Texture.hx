@@ -1,7 +1,6 @@
 package net.kaikoga.arpx.texture;
 
 import net.kaikoga.arpx.backends.flash.texture.ITextureFlashImpl;
-import flash.display.BitmapData;
 import net.kaikoga.arp.domain.IArpObject;
 
 @:arpType("texture", "null")
