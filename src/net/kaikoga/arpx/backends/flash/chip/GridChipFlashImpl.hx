@@ -105,9 +105,7 @@ class GridChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 			if (result == null) {
 				var bound:Rectangle = this.bounds[index];
 				if (bound != null) {
-					result = new BitmapData(Std.int(bound.width), Std.int(bound.height), true, 0x00000000);
-					result.copyPixels(this.sourceBitmap, bound, nullPoint);
-					this.trimmedBitmaps.set(index, result);
+					this.trimmedBitmaps.set(index, this.chip.texture.trim(bound));
 				} else {
 					this.chip.arpDomain.log("gridchip", 'GridChip.getTrimmedBitmap(): Chip index out of range: ${this}:$index');
 				}

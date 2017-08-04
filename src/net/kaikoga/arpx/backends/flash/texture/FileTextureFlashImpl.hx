@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.backends.flash.texture;
 
+import flash.geom.Point;
+import flash.geom.Rectangle;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import flash.display.Bitmap;
 import flash.events.IOErrorEvent;
@@ -51,6 +53,13 @@ class FileTextureFlashImpl extends ArpObjectImplBase implements ITextureFlashImp
 
 	public function bitmapData():BitmapData {
 		return this.value;
+	}
+
+	private static var nullPoint:Point = new Point(0, 0);
+	public function trim(bound:Rectangle):BitmapData {
+		var result = new BitmapData(Std.int(bound.width), Std.int(bound.height), true, 0x00000000);
+		result.copyPixels(this.bitmapData(), bound, nullPoint);
+		return result;
 	}
 }
 
