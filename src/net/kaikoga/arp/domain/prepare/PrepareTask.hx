@@ -33,8 +33,9 @@ class PrepareTask implements IPrepareTask {
 				this.domain.log("arp_debug_prepare", 'PrepareTask.run(): ultimate unused and prepare canceled: ${this._slot}');
 				return TaskStatus.Complete;
 			} else if (this.required) {
-				this.domain.log("arp_debug_prepare", 'PrepareTask.run(): null slot was required: ${this._slot}');
-				return TaskStatus.Error(this._slot.toString());
+				var message = 'PrepareTask.run(): slot is required but was null: ${this._slot}';
+				this.domain.log("arp_debug_prepare", message);
+				return TaskStatus.Error(message);
 			} else {
 				this.domain.log("arp_debug_prepare", 'PrepareTask.run(): prepare complete (null): ${this._slot}');
 				return TaskStatus.Complete;

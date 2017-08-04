@@ -10,6 +10,7 @@ import net.kaikoga.arp.domain.events.ArpLogEvent;
 import net.kaikoga.arp.domain.gen.ArpGeneratorRegistry;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.domain.gen.IArpGenerator;
+import net.kaikoga.arp.domain.prepare.IPrepareStatus;
 import net.kaikoga.arp.domain.prepare.PrepareQueue;
 import net.kaikoga.arp.domain.query.ArpObjectQuery;
 import net.kaikoga.arp.events.ArpSignal;
@@ -48,6 +49,9 @@ class ArpDomain {
 	private var _onLog:ArpSignal<ArpLogEvent>;
 	public var onLog(get, never):IArpSignalOut<ArpLogEvent>;
 	inline private function get_onLog():IArpSignalOut<ArpLogEvent> return this._onLog;
+
+	public var prepareStatus(get, never):IPrepareStatus;
+	inline private function get_prepareStatus():IPrepareStatus return this.prepareQueue;
 
 	public function new() {
 		this._rawTick = new ArpSignal<Float>();

@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain.prepare;
 
+import net.kaikoga.arp.events.ArpSignal;
 import net.kaikoga.arp.events.IArpSignalOut;
 import net.kaikoga.arp.events.ArpProgressEvent;
 import net.kaikoga.arp.task.TaskRunner;
@@ -8,24 +9,36 @@ import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 import net.kaikoga.arp.domain.IArpObject;
 
-class PrepareQueue {
+class PrepareQueue implements IPrepareStatus {
 
 	public var isPending(get, never):Bool;
-	private function get_isPending():Bool return !this.taskRunner.isCompleted;
+	inline private function get_isPending():Bool return !this.taskRunner.isCompleted;
 
 	public var tasksProcessed(get, never):Int;
-	private function get_tasksProcessed():Int return this.taskRunner.tasksProcessed;
+	inline private function get_tasksProcessed():Int return this.taskRunner.tasksProcessed;
 
 	public var tasksTotal(get, never):Int;
-	private function get_tasksTotal():Int return this.taskRunner.tasksTotal;
+	inline private function get_tasksTotal():Int return this.taskRunner.tasksTotal;
 
 	public var tasksWaiting(get, never):Int;
-	private function get_tasksWaiting():Int return this.taskRunner.tasksWaiting;
+	inline private function get_tasksWaiting():Int return this.taskRunner.tasksWaiting;
 
 	public var taskStatus(get, never):String;
 	private function get_taskStatus():String {
 		return "[" + Std.string(this.tasksProcessed + 1) + "/" + Std.string(this.tasksTotal) + "]";
 	}
+
+	private var _onComplete:ArpSignal<Int>;
+	public var onComplete(get, never):IArpSignalOut<Int>;
+	inline private function get_onComplete():IArpSignalOut<Int> return _onComplete;
+
+	private var _onError:ArpSignal<Dynamic>;
+	public var onError(get, never):IArpSignalOut<Dynamic>;
+	inline private function get_onError():IArpSignalOut<Dynamic> return _onError;
+
+	private var _onProgress:ArpSignal<ArpProgressEvent>;
+	public var onProgress(get, never):IArpSignalOut<ArpProgressEvent>;
+	inline private function get_onProgress():IArpSignalOut<ArpProgressEvent> return _onProgress;
 
 	private var domain:ArpDomain;
 	private var tasksBySlots:Map<ArpUntypedSlot, IPrepareTask>;
@@ -33,6 +46,9 @@ class PrepareQueue {
 
 	public function new(domain:ArpDomain, rawTick:IArpSignalOut<Float>) {
 		this.domain = domain;
+		this._onProgress = new ArpSignal<ArpProgressEvent>();
+		this._onError = new ArpSignal<Dynamic>();
+		this._onComplete = new ArpSignal<Int>();
 		this.tasksBySlots = new Map();
 		this.taskRunner = new TaskRunner(rawTick, true);
 		this.taskRunner.onComplete.push(this.onTaskRunnerComplete);
@@ -45,19 +61,20 @@ class PrepareQueue {
 
 	private function onTaskRunnerComplete(i:Int):Void {
 		this.domain.log("arp_debug_prepare", 'PrepareQueue.onTaskRunnerComplete()');
-		// TODO this.dispatchEvent(event);
+		_onComplete.dispatch(i);
 	}
 
 	private function onTaskRunnerDeadlock(i:Int):Void {
-		this.domain.log("arp_debug_prepare", 'PrepareQueue.onTaskRunnerDeadlock()');
-		// TODO this.dispatchEvent(event);
+		this.onTaskRunnerError("Arp prepare error: Task runner deadlock.");
 	}
 
 	private function onTaskRunnerProgress(progress:ArpProgressEvent):Void {
 		this.domain.log("arp_debug_prepare", 'PrepareQueue.onTaskRunnerProgress(): [prepare task cycle ${progress.progress}/${progress.total}]');
+		_onProgress.dispatch(progress);
 	}
 
 	private function onTaskRunnerError(error:Dynamic):Void {
+		this.domain.log("arp", 'PrepareQueue.onTaskRunnerError() ${error}');
 		for (task in this.tasksBySlots) {
 			// var waitsFor:Array<Dynamic> = task.slot.waitsFor(task.heat).map(this.arpSlotToString);
 			// TODO
@@ -65,7 +82,11 @@ class PrepareQueue {
 			// this.domain.log("arp", 'PrepareQueue.onTaskRunnerError() waits for ${waitsFor.length} slots');
 			// this.domain.log("arp", 'PrepareQueue.onTaskRunnerError() ${waitsFor}');
 		}
-		// TODO this.dispatchEvent(event);
+		if (_onError.willTrigger()) {
+			_onError.dispatch(error);
+		} else {
+			throw error;
+		}
 	}
 
 	private function onCompleteTask(task:IPrepareTask):Void {
