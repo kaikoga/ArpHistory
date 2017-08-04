@@ -19,8 +19,8 @@ class GridChip extends Chip {
 	@:arpField public var chipHeight:Int;
 
 	@:arpField public var dirs:Int = 1;
-	@:arpBarrier @:arpField public var faceList:FaceList;
-	@:arpBarrier @:arpField public var texture:Texture;
+	@:arpBarrier(true) @:arpField public var faceList:FaceList;
+	@:arpBarrier(true) @:arpField public var texture:Texture;
 
 	override public function chipWidthOf(params:ArpParams):Int {
 		return (params != null) ? this.hasFace(params.get("face")) ? this.chipWidth : 0 : this.chipWidth;

@@ -33,40 +33,34 @@ class GridChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 		this.indexesByFaces = new Map();
 		this.bounds = [];
 		this.trimmedBitmaps = new Map();
-		if (this.chip.chipWidth == 0) {
-			this.chip.chipWidth = this.chip.texture.width;
-		}
-		if (this.chip.chipHeight == 0) {
-			this.chip.chipHeight = this.chip.texture.height;
-		}
 
-		var faces:Array<String>;
-		var isVertical:Bool;
-		if (this.chip.faceList != null) {
-			faces = this.chip.faceList.toArray();
-			isVertical = this.chip.faceList.isVertical;
-		} else {
-			faces = [""];
-			isVertical = false;
-		}
+		var chipTextureWidth:Int = this.chip.texture.width;
+		var chipTextureHeight:Int = this.chip.texture.height;
+
+		var chipWidth:Int = this.chip.chipWidth;
+		if (chipWidth == 0) chipWidth = chipTextureWidth;
+		var chipHeight:Int = this.chip.chipHeight;
+		if (chipHeight == 0) chipHeight = chipTextureHeight;
+
+		var isVertical:Bool = this.chip.faceList.isVertical;
 		var index:Int = 0;
 		var x:Int = 0;
 		var y:Int = 0;
-		for (face in faces) {
+		for (face in this.chip.faceList.toArray()) {
 			this.indexesByFaces[face] = index;
 			for (dir in 0...this.chip.dirs) {
-				this.bounds[index++] = new Rectangle(x, y, this.chip.chipWidth, this.chip.chipHeight);
+				this.bounds[index++] = new Rectangle(x, y, chipWidth, chipHeight);
 				if (isVertical) {
-					y += this.chip.chipHeight;
-					if (y >= this.chip.texture.height) {
+					y += chipHeight;
+					if (y >= chipTextureHeight) {
 						y = 0;
-						x += this.chip.chipWidth;
+						x += chipWidth;
 					}
 				} else {
-					x += this.chip.chipWidth;
-					if (x >= this.chip.texture.width) {
+					x += chipWidth;
+					if (x >= chipTextureWidth) {
 						x = 0;
-						y += this.chip.chipHeight;
+						y += chipHeight;
 					}
 				}
 			}
