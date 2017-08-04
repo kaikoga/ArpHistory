@@ -77,13 +77,13 @@ class PrepareQueue {
 		return (object != null) ? Std.string(object.arpSlot) : "<invalid reference>";
 	}
 
-	public function prepareLater(slot:ArpUntypedSlot):Void {
+	public function prepareLater(slot:ArpUntypedSlot, required:Bool = false):Void {
 		if (this.tasksBySlots.exists(slot)) return;
-		var task:PrepareTask = new PrepareTask(this.domain, slot);
+		var task:PrepareTask = new PrepareTask(this.domain, slot, required);
 		this.tasksBySlots.set(slot, task);
 		this.taskRunner.append(task);
 		task.slot.heat = ArpHeat.Warming;
-		this.domain.log("arp_debug_prepare", 'PrepareQueue.prepareLater(): prepare later ${slot}');
+		this.domain.log("arp_debug_prepare", 'PrepareQueue.prepareLater(): prepare later ${slot} ${if (required) "(required)" else ""}');
 	}
 
 	public function prepareChildLater(slot:ArpUntypedSlot, name:String, childSlot:ArpUntypedSlot):Void {

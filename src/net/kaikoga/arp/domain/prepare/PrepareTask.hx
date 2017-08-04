@@ -10,6 +10,8 @@ class PrepareTask implements IPrepareTask {
 	private var _slot:ArpUntypedSlot;
 	private function get_slot():ArpUntypedSlot return _slot;
 
+	private var required:Bool;
+
 	public var waiting(get, set):Bool;
 	private var _waiting:Bool = false;
 	private function get_waiting():Bool return _waiting;
@@ -19,9 +21,10 @@ class PrepareTask implements IPrepareTask {
 
 	private var preparePropagated:Bool = false;
 
-	public function new(domain:ArpDomain, slot:ArpUntypedSlot) {
+	public function new(domain:ArpDomain, slot:ArpUntypedSlot, required:Bool = false) {
 		this.domain = domain;
 		this._slot = slot;
+		this.required = required;
 	}
 
 	public function run():TaskStatus {
@@ -29,6 +32,9 @@ class PrepareTask implements IPrepareTask {
 			if (this._slot.refCount <= 0) {
 				this.domain.log("arp_debug_prepare", 'PrepareTask.run(): ultimate unused and prepare canceled: ${this._slot}');
 				return TaskStatus.Complete;
+			} else if (this.required) {
+				this.domain.log("arp_debug_prepare", 'PrepareTask.run(): null slot was required: ${this._slot}');
+				return TaskStatus.Error(this._slot.toString());
 			} else {
 				this.domain.log("arp_debug_prepare", 'PrepareTask.run(): prepare complete (null): ${this._slot}');
 				return TaskStatus.Complete;
