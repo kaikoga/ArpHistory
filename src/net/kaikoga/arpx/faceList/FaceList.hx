@@ -52,6 +52,8 @@ class FaceList implements IArpObject {
 	}
 
 	public function toArray():Array<String> {
-		return this.arrayValue.copy();
+		var result = this.arrayValue.copy();
+		if (result.length == 0) result.push("");
+		return result;
 	}
 }

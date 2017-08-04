@@ -46,20 +46,13 @@ class GridChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 			faces = this.chip.faceList.toArray();
 			isVertical = this.chip.faceList.isVertical;
 		} else {
-			faces = [];
+			faces = [""];
 			isVertical = false;
 		}
 		var index:Int = 0;
-		var c:Int = faces.length;
 		var x:Int = 0;
 		var y:Int = 0;
-		if (c == 0) {
-			faces.push("");
-			c++;
-		}
-		//c *= this.dirs;
-		for (i in 0...c) {
-			var face:String = faces[i];
+		for (face in faces) {
 			this.indexesByFaces[face] = index;
 			for (dir in 0...this.chip.dirs) {
 				this.bounds[index++] = new Rectangle(x, y, this.chip.chipWidth, this.chip.chipHeight);
