@@ -22,8 +22,7 @@ class GridChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 
 	private var sourceBitmap:BitmapData = null;
 	private var indexesByFaces:Map<String, Int>;
-	private var bounds:Array<Rectangle>;
-	private var trimmedBitmaps:Map<Int, BitmapData>;
+	private var faces:Array<FaceInfo<BitmapData>>;
 
 	override public function arpHeatUp():Bool {
 		if (this.sourceBitmap != null) {
@@ -31,8 +30,7 @@ class GridChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 		}
 		this.sourceBitmap = this.chip.texture.bitmapData();
 		this.indexesByFaces = new Map();
-		this.bounds = [];
-		this.trimmedBitmaps = new Map();
+		this.faces = [];
 
 		var chipTextureWidth:Int = this.chip.texture.width;
 		var chipTextureHeight:Int = this.chip.texture.height;
@@ -49,7 +47,8 @@ class GridChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 		for (face in this.chip.faceList.toArray()) {
 			this.indexesByFaces[face] = index;
 			for (dir in 0...this.chip.dirs) {
-				this.bounds[index++] = new Rectangle(x, y, chipWidth, chipHeight);
+				this.faces.push(new FaceInfo(new Rectangle(x, y, chipWidth, chipHeight)));
+				index++;
 				if (isVertical) {
 					y += chipHeight;
 					if (y >= chipTextureHeight) {
@@ -69,37 +68,28 @@ class GridChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 	}
 
 	override public function arpHeatDown():Bool {
-		if (this.sourceBitmap == null) {
-			return true;
+		if (this.sourceBitmap != null) {
+			this.sourceBitmap.dispose();
+			this.sourceBitmap = null;
 		}
-		this.sourceBitmap.dispose();
-		this.sourceBitmap = null;
-		this.bounds = null;
-		for (bitmapData in this.trimmedBitmaps) {
-			bitmapData.dispose();
-		}
-		this.trimmedBitmaps = null;
+		for (face in this.faces) face.dispose();
+		this.faces = [];
 		return true;
 	}
 
 	private static var nullPoint:Point = new Point(0, 0);
 	private function getTrimmedBitmap(index:Int):BitmapData {
-		if (index >= 0 && index < this.bounds.length) {
-			var result:BitmapData = null;
-			if (this.trimmedBitmaps.exists(index)) {
-				result = this.trimmedBitmaps.get(index);
-			}
-			if (result == null) {
-				var bound:Rectangle = this.bounds[index];
-				if (bound != null) {
-					this.trimmedBitmaps.set(index, this.chip.texture.trim(bound));
-				} else {
-					this.chip.arpDomain.log("gridchip", 'GridChip.getTrimmedBitmap(): Chip index out of range: ${this}:$index');
-				}
-			}
-			return result;
+		var face = this.faces[index];
+		if (face == null) {
+			this.chip.arpDomain.log("gridchip", 'GridChip.getTrimmedBitmap(): Chip index out of range: ${this}:$index');
+			return null;
 		}
-		return null;
+		var result:BitmapData = face.data;
+		if (result == null) {
+			result = this.chip.texture.trim(face.bound);
+			face.data = result;
+		}
+		return result;
 	}
 
 	private var _workRect:Rectangle = new Rectangle();
@@ -134,10 +124,10 @@ class GridChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 			transform = transform.concatXY(-this.chip.baseX, -this.chip.baseY);
 		}
 		var pt:Point = transform.asPoint();
+		var faceInfo:FaceInfo<BitmapData> = this.faces[index];
 		if (pt != null) {
-			var bounds:Rectangle = this.bounds[index];
-			if (bounds != null) {
-				bitmapData.copyPixels(this.sourceBitmap, bounds, pt, null, null, this.chip.texture.hasAlpha);
+			if (face != null) {
+				bitmapData.copyPixels(this.sourceBitmap, faceInfo.bound, pt, null, null, this.chip.texture.hasAlpha);
 			}
 		} else {
 			var bitmap:BitmapData = this.getTrimmedBitmap(index);
@@ -145,15 +135,17 @@ class GridChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 				bitmapData.draw(bitmap, transform.toMatrix(), transform.colorTransform, transform.blendMode);
 			}
 		}
+	}
+}
 
+private class FaceInfo<T:{ public function dispose():Void; }> {
+
+	public var bound:Rectangle;
+	public var data:T;
+
+	public function FaceInfo(bound:Rectangle) {
+		this.bound = bound;
 	}
 
-	/*
-	public function exportChipSprite(params:ArpParams = null):AChipSprite {
-		var result:GridChipSprite = new GridChipSprite(this);
-		result.refresh(params);
-		return result;
-	}
-	*/
-
+	public function dispose():Void this.data.dispose();
 }
