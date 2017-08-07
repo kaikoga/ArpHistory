@@ -1,7 +1,6 @@
 package net.kaikoga.arpx.chip;
 
 import net.kaikoga.arpx.faceList.FaceList;
-import net.kaikoga.arpx.texture.Texture;
 import net.kaikoga.arp.structs.ArpParams;
 
 #if (arp_backend_flash || arp_backend_openfl)
@@ -9,18 +8,14 @@ import net.kaikoga.arpx.backends.flash.chip.GridChipFlashImpl;
 #end
 
 @:arpType("chip", "grid")
-class GridChip extends Chip {
-
-	private static var _workParams:ArpParams = new ArpParams();
+class GridChip extends SubtextureChip {
 
 	@:arpField public var baseX:Int;
 	@:arpField public var baseY:Int;
 	@:arpField public var chipWidth:Int;
 	@:arpField public var chipHeight:Int;
 
-	@:arpField public var dirs:Int = 1;
 	@:arpBarrier(true) @:arpField public var faceList:FaceList;
-	@:arpBarrier(true) @:arpField public var texture:Texture;
 
 	override public function chipWidthOf(params:ArpParams):Int {
 		return (params != null) ? this.hasFace(params.get("face")) ? this.chipWidth : 0 : this.chipWidth;
