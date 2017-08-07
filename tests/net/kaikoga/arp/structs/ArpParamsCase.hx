@@ -82,6 +82,25 @@ class ArpParamsCase {
 		assertEquals(params["c"], params2["c"]);
 		assertEquals(params["d"].value, params2["d"].value);
 	}
+
+	public function testGetSafe():Void {
+		var params:ArpParamsProxy = new ArpParams();
+		params["null"] = null;
+		params["str"] = "aaaa";
+		params["int"] = 10;
+
+		assertEquals(params.getString("null"), null);
+		assertEquals(params.getString("str"), "aaaa");
+		assertThrows(function() params.getString("int"));
+
+		assertEquals(params.getInt("null"), null);
+		assertEquals(params.getInt("int"), 10);
+		assertThrows(function() params.getInt("str"));
+
+		assertEquals(params.getAsString("null"), null);
+		assertEquals(params.getAsString("str"), "aaaa");
+		assertEquals(params.getAsString("int"), "10");
+	}
 }
 
 

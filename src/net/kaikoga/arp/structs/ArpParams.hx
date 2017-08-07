@@ -18,9 +18,16 @@ abstract ArpParamsProxy(ArpParams) from ArpParams to ArpParams {
 }
 
 @:build(net.kaikoga.arp.ArpDomainMacros.buildStruct("Params"))
-class ArpParams extends StdMap<String, Dynamic> implements IPersistable
-{
+class ArpParams extends StdMap<String, Dynamic> implements IPersistable {
 	public function new() super();
+
+	inline public function getInt(key:String):Null<Int> return ArpParamsMacros.getSafe();
+	inline public function getFloat(key:String):Null<Float> return ArpParamsMacros.getSafe();
+	inline public function getString(key:String):String return ArpParamsMacros.getSafe();
+	inline public function getBool(key:String):Null<Bool> return ArpParamsMacros.getSafe();
+	inline public function getArpDirection(key:String):ArpDirection return ArpParamsMacros.getSafe();
+
+	inline public function getAsString(key:String):String return ArpParamsMacros.getAsString();
 
 	public function initWithSeed(seed:ArpSeed):ArpParams {
 		if (seed == null) return this;
