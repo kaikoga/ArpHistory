@@ -60,7 +60,7 @@ class GridChipFlashImpl extends SubtextureChipFlashImplBase<GridChip> implements
 		} catch (d:Dynamic) {
 			this.chip.arpDomain.log("gridchip", 'GridChip.getFaceIndex(): Illegal dir: $this:$params');
 		}
-		return index;
+		return index + chip.offset;
 	}
 
 }

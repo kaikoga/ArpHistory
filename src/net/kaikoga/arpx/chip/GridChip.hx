@@ -17,6 +17,7 @@ class GridChip extends SubtextureChip {
 
 	@:arpBarrier(true) @:arpField public var faceList:FaceList;
 	@:arpField public var dirs:Int = 1;
+	@:arpField public var offset:Int = 0;
 
 	override public function chipWidthOf(params:ArpParams):Int {
 		return (params != null) ? this.hasFace(params.get("face")) ? this.chipWidth : 0 : this.chipWidth;
