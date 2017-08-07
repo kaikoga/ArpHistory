@@ -55,7 +55,7 @@ class GridChipFlashImpl extends SubtextureChipFlashImplBase<GridChip> implements
 		}
 		var index:Int = super.getFaceIndex(params);
 		try {
-			var dir:ArpDirection = (params != null) ? cast (params.get("dir"), ArpDirection) : null;
+			var dir:ArpDirection = params.getArpDirection("dir");
 			index += ((dir != null) ? dir.toIndex(this.chip.dirs) : 0);
 		} catch (d:Dynamic) {
 			this.chip.arpDomain.log("gridchip", 'GridChip.getFaceIndex(): Illegal dir: $this:$params');

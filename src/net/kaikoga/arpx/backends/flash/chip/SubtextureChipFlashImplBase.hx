@@ -5,7 +5,6 @@ import flash.geom.Matrix;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 import net.kaikoga.arp.domain.ArpHeat;
-import net.kaikoga.arp.structs.ArpDirection;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.flash.geom.ITransform;
@@ -51,23 +50,18 @@ class SubtextureChipFlashImplBase<T:SubtextureChip> extends ArpObjectImplBase im
 			return index;
 		}
 
-		var face:String = null;
-		try {
-			face = params.get("face");
-		} catch (d:Dynamic) {
-			this.chip.arpDomain.log("gridchip", 'SubtextureChipFlashImplBase.getFaceIndex(): Illegal face: $this:$params');
+		var face:String = Std.string(params.get("face"));
+		if (this.indexesByFaces.exists(face)) {
+			index = this.indexesByFaces.get(face);
+		} else {
+			this.chip.arpDomain.log("gridchip", 'SubtextureChipFlashImplBase.getFaceIndex(): Chip name not found in: $this:$params');
 		}
 
-		if (params.hasKey("index")) {
-			index = params.get("index");
-		} else if (face != null) {
-			if (this.indexesByFaces.exists(face)) {
-				index = this.indexesByFaces[face];
-			} else {
-				this.chip.arpDomain.log("gridchip", 'SubtextureChipFlashImplBase.getFaceIndex(): Chip name not found in: $this:$params');
-			}
-		} else {
-			// face unset, use chip index = 0 as default
+		try {
+			var dIndex:Null<Int> = params.getInt("index");
+			if (dIndex != null) index += dIndex;
+		} catch (d:String) {
+			this.chip.arpDomain.log("gridchip", 'SubtextureChipFlashImplBase.getFaceIndex(): Illegal index: $this:$params');
 		}
 
 		return index;
