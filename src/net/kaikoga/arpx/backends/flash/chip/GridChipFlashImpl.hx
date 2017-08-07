@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.backends.flash.chip;
 
+import net.kaikoga.arp.structs.ArpDirection;
+import net.kaikoga.arp.structs.ArpParams;
 import flash.geom.Rectangle;
 import net.kaikoga.arpx.chip.GridChip;
 
@@ -22,14 +24,12 @@ class GridChipFlashImpl extends SubtextureChipFlashImplBase<GridChip> implements
 		if (chipHeight == 0) chipHeight = chipTextureHeight;
 
 		var isVertical:Bool = this.chip.faceList.isVertical;
-		var index:Int = 0;
 		var x:Int = 0;
 		var y:Int = 0;
 		for (face in this.chip.faceList.toArray()) {
-			this.indexesByFaces[face] = index;
+			this.nextFaceName(face);
 			for (dir in 0...this.chip.dirs) {
-				this.pushChipFace(this.chip.texture, new Rectangle(x, y, chipWidth, chipHeight));
-				index++;
+				this.pushFaceInfo(this.chip.texture, new Rectangle(x, y, chipWidth, chipHeight));
 				if (isVertical) {
 					y += chipHeight;
 					if (y >= chipTextureHeight) {
@@ -47,4 +47,20 @@ class GridChipFlashImpl extends SubtextureChipFlashImplBase<GridChip> implements
 		}
 		return true;
 	}
+
+	override private function getFaceIndex(params:ArpParams = null):Int {
+		if (params == null) {
+			// face unset, use chip index = 0 as default
+			return 0;
+		}
+		var index:Int = super.getFaceIndex(params);
+		try {
+			var dir:ArpDirection = (params != null) ? cast (params.get("dir"), ArpDirection) : null;
+			index += ((dir != null) ? dir.toIndex(this.chip.dirs) : 0);
+		} catch (d:Dynamic) {
+			this.chip.arpDomain.log("gridchip", 'GridChip.getFaceIndex(): Illegal dir: $this:$params');
+		}
+		return index;
+	}
+
 }

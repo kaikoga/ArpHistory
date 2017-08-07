@@ -17,6 +17,10 @@ class SubtextureChipFlashImplBase<T:SubtextureChip> extends ArpObjectImplBase im
 
 	private var chip:T;
 
+	private var sourceBitmap:BitmapData = null;
+	private var indexesByFaces:Map<String, Int>;
+	private var faces:Array<FaceInfo>;
+
 	public function new(chip:T) {
 		super();
 		this.chip = chip;
@@ -24,18 +28,49 @@ class SubtextureChipFlashImplBase<T:SubtextureChip> extends ArpObjectImplBase im
 		this.faces = [];
 	}
 
-	private var sourceBitmap:BitmapData = null;
-	private var indexesByFaces:Map<String, Int>;
-	private var faces:Array<FaceInfo>;
-
-	private function pushChipFace(source:Texture, bound:Rectangle):Void {
-		this.faces.push(new FaceInfo(source, bound));
-	}
-
 	override public function arpHeatDown():Bool {
 		for (face in this.faces) face.dispose();
 		this.faces = [];
+		this.indexesByFaces = new Map();
 		return true;
+	}
+
+	inline private function nextFaceName(face:String):Void {
+		this.indexesByFaces[face] = this.faces.length;
+	}
+
+	inline private function pushFaceInfo(source:Texture, bound:Rectangle):Void {
+		this.faces.push(new FaceInfo(source, bound));
+	}
+
+	private function getFaceIndex(params:ArpParams = null):Int {
+		var index:Int = 0;
+
+		if (params == null) {
+			// face unset, use chip index = 0 as default
+			return index;
+		}
+
+		var face:String = null;
+		try {
+			face = params.get("face");
+		} catch (d:Dynamic) {
+			this.chip.arpDomain.log("gridchip", 'SubtextureChipFlashImplBase.getFaceIndex(): Illegal face: $this:$params');
+		}
+
+		if (params.hasKey("index")) {
+			index = params.get("index");
+		} else if (face != null) {
+			if (this.indexesByFaces.exists(face)) {
+				index = this.indexesByFaces[face];
+			} else {
+				this.chip.arpDomain.log("gridchip", 'SubtextureChipFlashImplBase.getFaceIndex(): Chip name not found in: $this:$params');
+			}
+		} else {
+			// face unset, use chip index = 0 as default
+		}
+
+		return index;
 	}
 
 	private var _workRect:Rectangle = new Rectangle();
@@ -48,25 +83,7 @@ class SubtextureChipFlashImplBase<T:SubtextureChip> extends ArpObjectImplBase im
 			return;
 		}
 
-		var face:String = (params != null) ? params.get("face") : null;
-		var index:Int;
-		if (params.hasKey("index")) {
-			index = params.get("index");
-		} else if (face != null) {
-			if (this.indexesByFaces.exists(face)) {
-				index = this.indexesByFaces[face];
-			} else {
-				index = 0;
-				this.chip.arpDomain.log("gridchip", 'GridChip.copyChip(): Chip name not found in: ${this}:$params');
-			}
-		} else {
-			// face unset, use chip index = 0 as default
-			index = 0;
-		}
-
-		var dir:ArpDirection = (params != null) ? cast (params.get("dir"), ArpDirection) : null;
-		index += ((dir != null) ? dir.toIndex(this.chip.dirs) : 0);
-
+		var index:Int = getFaceIndex(params);
 		if (this.chip.baseX | this.chip.baseY != 0) {
 			transform = transform.concatXY(-this.chip.baseX, -this.chip.baseY);
 		}
