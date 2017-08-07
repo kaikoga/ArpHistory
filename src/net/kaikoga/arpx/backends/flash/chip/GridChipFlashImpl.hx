@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.backends.flash.chip;
 
+import net.kaikoga.arpx.texture.Texture;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arp.domain.ArpHeat;
 import flash.geom.Point;
@@ -22,7 +23,7 @@ class GridChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 
 	private var sourceBitmap:BitmapData = null;
 	private var indexesByFaces:Map<String, Int>;
-	private var faces:Array<FaceInfo<BitmapData>>;
+	private var faces:Array<FaceInfo<BitmapData, Texture>>;
 
 	override public function arpHeatUp():Bool {
 		if (this.sourceBitmap != null) {
@@ -47,7 +48,7 @@ class GridChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 		for (face in this.chip.faceList.toArray()) {
 			this.indexesByFaces[face] = index;
 			for (dir in 0...this.chip.dirs) {
-				this.faces.push(new FaceInfo(new Rectangle(x, y, chipWidth, chipHeight)));
+				this.faces.push(new FaceInfo(this.chip.texture, new Rectangle(x, y, chipWidth, chipHeight)));
 				index++;
 				if (isVertical) {
 					y += chipHeight;
@@ -77,21 +78,6 @@ class GridChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 		return true;
 	}
 
-	private static var nullPoint:Point = new Point(0, 0);
-	private function getTrimmedBitmap(index:Int):BitmapData {
-		var face = this.faces[index];
-		if (face == null) {
-			this.chip.arpDomain.log("gridchip", 'GridChip.getTrimmedBitmap(): Chip index out of range: ${this}:$index');
-			return null;
-		}
-		var result:BitmapData = face.data;
-		if (result == null) {
-			result = this.chip.texture.trim(face.bound);
-			face.data = result;
-		}
-		return result;
-	}
-
 	private var _workRect:Rectangle = new Rectangle();
 	private var _workMatrix:Matrix = new Matrix();
 
@@ -102,8 +88,7 @@ class GridChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 			return;
 		}
 
-		var face:String = (params != null) ? params.get("face") : null;
-		var dir:ArpDirection = (params != null) ? cast (params.get("dir"), ArpDirection) : null;
+		var face:String = (params != null) ? cast (params.get("face"), String) : null;
 		var index:Int;
 		if (params.hasKey("index")) {
 			index = params.get("index");
@@ -114,36 +99,47 @@ class GridChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 				index = 0;
 				this.chip.arpDomain.log("gridchip", 'GridChip.copyChip(): Chip name not found in: ${this}:$params');
 			}
-			index += ((dir != null) ? dir.toIndex(this.chip.dirs) : 0);
 		} else {
-			//use chip index = 0 as default
-			index = (dir != null) ? dir.toIndex(this.chip.dirs) : 0;
+			// face unset, use chip index = 0 as default
+			index = 0;
 		}
+
+		var dir:ArpDirection = (params != null) ? cast (params.get("dir"), ArpDirection) : null;
+		index += ((dir != null) ? dir.toIndex(this.chip.dirs) : 0);
 
 		if (this.chip.baseX | this.chip.baseY != 0) {
 			transform = transform.concatXY(-this.chip.baseX, -this.chip.baseY);
 		}
-		var pt:Point = transform.asPoint();
+
 		var faceInfo:FaceInfo<BitmapData> = this.faces[index];
+		if (faceInfo == null) {
+			this.chip.arpDomain.log("gridchip", 'GridChip.getTrimmedBitmap(): Chip index out of range: ${this}:$index');
+			return;
+		}
+
+		var pt:Point = transform.asPoint();
 		if (pt != null) {
-			if (face != null) {
-				bitmapData.copyPixels(this.sourceBitmap, faceInfo.bound, pt, null, null, this.chip.texture.hasAlpha);
-			}
+			bitmapData.copyPixels(this.sourceBitmap, faceInfo.bound, pt, null, null, this.chip.texture.hasAlpha);
 		} else {
-			var bitmap:BitmapData = this.getTrimmedBitmap(index);
-			if (bitmap != null) {
-				bitmapData.draw(bitmap, transform.toMatrix(), transform.colorTransform, transform.blendMode);
-			}
+			bitmapData.draw(faceInfo.data, transform.toMatrix(), transform.colorTransform, transform.blendMode);
 		}
 	}
 }
 
-private class FaceInfo<T:{ public function dispose():Void; }> {
+@:generic @:remove
+private class FaceInfo<T:{ public function dispose():Void; }, S:{ public function trim(bound:Rectangle):T; }> {
 
-	public var bound:Rectangle;
-	public var data:T;
+	private var source:S;
+	private var bound:Rectangle;
+	private var _data:T;
+	public var data(get, never):T;
+	private function get_data():T {
+		if (this._data != null) return this._data;
+		return this._data = this.source.trim();
+	}
 
-	public function FaceInfo(bound:Rectangle) {
+	public function FaceInfo(source:T, bound:Rectangle) {
+		this.source = source;
 		this.bound = bound;
 	}
 
