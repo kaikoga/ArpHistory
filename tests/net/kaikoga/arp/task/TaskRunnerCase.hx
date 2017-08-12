@@ -76,7 +76,6 @@ class TaskRunnerCase {
 	}
 
 	public function testWaitNotify():Void {
-		trace(Std.string(this));
 		var task:DummyRealTimeTask = new DummyRealTimeTask(100);
 		taskRunner.append(task);
 		assertEquals(0, taskRunner.tasksProcessed);
