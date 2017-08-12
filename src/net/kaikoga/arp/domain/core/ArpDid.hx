@@ -1,11 +1,12 @@
 package net.kaikoga.arp.domain.core;
 
+import net.kaikoga.arp.utils.ArpIdGenerator;
 abstract ArpDid(String) {
 	inline public function new(value:String) {
 		this = value;
 	}
 	inline public static function build(did:ArpDid, name:String):ArpDid {
-		return new ArpDid('${did.toString()}${ArpDirectory.PATH_DELIMITER}${name}');
+		return new ArpDid('${did.toString()}${ArpDirectory.PATH_DELIMITER}$name');
 	}
 	inline public function toString():String {
 		return this;

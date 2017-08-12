@@ -62,7 +62,7 @@ class ArpDomain {
 		this.root = this.allocDir(new ArpDid(""));
 		this.currentDir = this.root;
 		this.slots = new Map();
-		this.nullSlot = this.allocSlot(new ArpSid(""));
+		this.nullSlot = this.allocSlot(new ArpSid(ArpIdGenerator.AUTO_HEADER + "null"));
 		this.reg = new ArpGeneratorRegistry();
 		this.prepareQueue = new PrepareQueue(this, this._rawTick);
 
@@ -80,7 +80,7 @@ class ArpDomain {
 		}
 	}
 
-	private function allocSlot(sid:ArpSid = null):ArpUntypedSlot {
+	private function allocSlot(sid:ArpSid = null, type:String = null):ArpUntypedSlot {
 		if (sid == null) sid = new ArpSid(_sid.next());
 		var slot:ArpUntypedSlot = new ArpUntypedSlot(this, sid);
 		this.slots.set(sid.toString(), slot);
@@ -132,7 +132,7 @@ class ArpDomain {
 				name = seed.name;
 				var oldDir:ArpDirectory = this.currentDir;
 				if (name == null) {
-					slot = allocSlot();
+					slot = allocSlot(new ArpSid('${_sid.next()}:${type}')); // FIXME
 				} else {
 					var dir:ArpDirectory = this.currentDir.dir(name);
 					slot = dir.getOrCreateSlot(type);

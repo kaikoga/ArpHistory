@@ -13,23 +13,23 @@ class ArpDump {
 	public var status:String;
 
 	public var isDir(get, never):Bool;
-	private function get_isDir():Bool return status == null;
+	private function get_isDir():Bool return switch (status) { case "%", "#": true; case _: false; }
 
 	@:access(net.kaikoga.arp.domain.ArpUntypedSlot._refCount)
 	private function new(dir:ArpDirectory = null, slot:ArpUntypedSlot = null, hashKey:String = null) {
 		this.hashKey = hashKey;
-		this.id = "<slots>";
+		this.id = "<<slots>>";
 		if (slot != null) {
 			this.slot = slot;
 			this.refCount = slot._refCount;
 			this.id = slot.sid.toString();
-			this.status = (slot.value == null) ? "." : slot.heat.toChar();
+			this.status = (slot.value == null) ? "!" : slot.heat.toChar();
 		} else if (dir != null) {
 			this.dir = dir;
 			this.id = dir.did.toString();
-			this.status = null;
+			this.status = "%";
 		} else {
-			throw "slot or dir is required.";
+			this.status = "#";
 		}
 	}
 

@@ -14,27 +14,27 @@ class ArpDumpStringPrinter implements ITreePrinter<ArpDump, String> {
 		var result = "";
 		var entry:String;
 		if (item.isDir) {
-			entry = item.status + " " + indent;
+			entry = '${item.status} $indent';
 			if (item.hashKey != null) {
-				entry += item.hashKey + ": ";
+				entry += '${item.hashKey}: ';
 			}
-			entry += item.id + "/";
+			entry += '${item.id}';
 			if (depth != 0 && tree.hasChildren) {
-				result += entry + " {\n";
+				result += '$entry {\n';
 				for (item in tree.children) {
 					result += format(item, depth - 1, level + 1);
 				}
-				result += indent + "  }\n";
+				result += '$indent  }\n';
 			} else {
-				result += entry + "\n";
+				result += '$entry\n';
 			}
 		} else {
-			entry = item.status + " " + indent;
+			entry = '${item.status} $indent';
 			if (item.hashKey != null) {
-				entry += item.hashKey + ": ";
+				entry += '${item.hashKey}: ';
 			}
-			entry += item.id + " [" + item.refCount + "]";
-			result += entry + "\n";
+			entry += '${item.id} [${item.refCount}]';
+			result += '$entry\n';
 		}
 		return result;
 	}

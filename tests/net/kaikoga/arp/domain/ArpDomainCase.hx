@@ -27,28 +27,29 @@ class ArpDomainCase {
 		domain.loadSeed(seed, new ArpType("data"));
 	}
 
-	@Ignore
 	public function testDumpEntries():Void {
-		var DUMP:String = "? <slots> [0] {
-?    [0]
-?   /name1:mock [1]
-?   /name2:mock [1]
-?   /name3:mock [1]
+		var DUMP:String = '# <<slots>> {
+-   $$0:data [0]
+!   $$null [0]
+-   /name1:mock [1]
+-   /name2:mock [1]
+-   /name3:mock [1]
   }
-";
-		var DUMP_BY_NAME:String = "?  [0] {
-?   name1: /name1 [0] {
-?     <mock>: /name1:mock [1]
+';
+		var DUMP_BY_NAME:String = '% <<dir>>:  {
+%   name1: /name1 {
+-     <mock>: /name1:mock [1]
     }
-?   name2: /name2 [0] {
-?     <mock>: /name2:mock [1]
+%   name2: /name2 {
+-     <mock>: /name2:mock [1]
     }
-?   name3: /name3 [0] {
-?     <mock>: /name3:mock [1]
+%   name3: /name3 {
+-     <mock>: /name3:mock [1]
     }
-?   </>:  [0]
+-   <<untyped>>: $$0:data [0]
+!   <<untyped>>: $$null [0]
   }
-";
+';
 		assertEquals(DUMP, domain.dumpEntries());
 		assertEquals(DUMP_BY_NAME, domain.dumpEntriesByName());
 	}
@@ -85,28 +86,29 @@ class ArpDomainCase {
 		assertEquals("message2", event.message);
 	}
 
-	@Ignore
 	public function testGc():Void {
-		var DUMP:String = "? <slots> [0] {
-?    [0]
-?   /name1:mock [0]
-?   /name2:mock [1]
-?   /name3:mock [1]
+		var DUMP:String = '# <<slots>> {
+-   $$0:data [0]
+!   $$null [0]
+!   /name1:mock [0]
+-   /name2:mock [1]
+-   /name3:mock [1]
   }
-";
-		var DUMP_BY_NAME:String = "?  [0] {
-?   name1: /name1 [0] {
-?     <mock>: /name1:mock [0]
+';
+		var DUMP_BY_NAME:String = '% <<dir>>:  {
+%   name1: /name1 {
+!     <mock>: /name1:mock [0]
     }
-?   name2: /name2 [0] {
-?     <mock>: /name2:mock [1]
+%   name2: /name2 {
+-     <mock>: /name2:mock [1]
     }
-?   name3: /name3 [0] {
-?     <mock>: /name3:mock [1]
+%   name3: /name3 {
+-     <mock>: /name3:mock [1]
     }
-?   </>:  [0]
+-   <<untyped>>: $$0:data [0]
+!   <<untyped>>: $$null [0]
   }
-";
+';
 		domain.query("name1", new ArpType("mock")).slot().delReference();
 		//domain.gc();
 		assertEquals(DUMP, domain.dumpEntries());
