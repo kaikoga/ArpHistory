@@ -9,7 +9,6 @@ import net.kaikoga.arp.ds.MapCase;
 import net.kaikoga.arp.ds.OmapCase;
 import net.kaikoga.arp.ds.SetCase;
 import net.kaikoga.arp.ds.impl.VoidCollectionCase;
-import net.kaikoga.arp.ds.impl.base.BaseCollectionCase;
 import net.kaikoga.arp.ds.lambda.ListOpCase;
 import net.kaikoga.arp.ds.lambda.MapOpCase;
 import net.kaikoga.arp.ds.lambda.OmapOpCase;
@@ -54,7 +53,6 @@ class ArpSupportTestSuite {
 		r.load(StringIntOmapCase, omapProvider());
 
 		r.load(VoidCollectionCase);
-		r.load(BaseCollectionCase);
 
 		r.load(SetOpCase, setProvider());
 		r.load(ListOpCase, listProvider());
