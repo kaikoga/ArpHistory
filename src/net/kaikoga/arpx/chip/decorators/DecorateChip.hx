@@ -10,7 +10,7 @@ import net.kaikoga.arpx.backends.flash.chip.decorators.DecorateChipFlashImpl;
 class DecorateChip extends Chip {
 
 	@:arpField @:arpBarrier public var chip:Chip;
-	@:arpField public var paramsOp:ParamsOp;
+	@:arpField @:arpBarrier public var paramsOp:ParamsOp;
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:DecorateChipFlashImpl;

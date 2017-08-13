@@ -26,6 +26,9 @@ class DecorateChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl 
 	}
 
 	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:ArpParams = null):Void {
-		this.chip.chip.copyChip(bitmapData, transform, this.chip.paramsOp.filter(params, this.workParams));
+		if (this.chip.paramsOp != null) {
+			params = this.chip.paramsOp.filter(params, this.workParams);
+		}
+		this.chip.chip.copyChip(bitmapData, transform, params);
 	}
 }
