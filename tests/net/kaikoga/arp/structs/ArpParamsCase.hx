@@ -93,8 +93,16 @@ class ArpParamsCase {
 		assertEquals(params.getString("str"), "aaaa");
 		assertThrows(function() params.getString("int"));
 
+		assertEquals(params.getString("null", "default"), "default");
+		assertEquals(params.getString("str", "default"), "aaaa");
+		assertThrows(function() params.getString("int"));
+
 		assertEquals(params.getInt("null"), null);
 		assertEquals(params.getInt("int"), 10);
+		assertThrows(function() params.getInt("str"));
+
+		assertEquals(params.getInt("null", 30), 30);
+		assertEquals(params.getInt("int", 30), 10);
 		assertThrows(function() params.getInt("str"));
 
 		assertEquals(params.getAsString("null"), null);

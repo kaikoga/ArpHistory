@@ -21,13 +21,13 @@ abstract ArpParamsProxy(ArpParams) from ArpParams to ArpParams {
 class ArpParams extends StdMap<String, Dynamic> implements IPersistable {
 	public function new() super();
 
-	inline public function getInt(key:String):Null<Int> return ArpParamsMacros.getSafe();
-	inline public function getFloat(key:String):Null<Float> return ArpParamsMacros.getSafe();
-	inline public function getString(key:String):String return ArpParamsMacros.getSafe();
-	inline public function getBool(key:String):Null<Bool> return ArpParamsMacros.getSafe();
-	inline public function getArpDirection(key:String):ArpDirection return ArpParamsMacros.getSafe();
+	inline public function getInt(key:String, defaultValue = null):Null<Int> return ArpParamsMacros.getSafe(key, defaultValue);
+	inline public function getFloat(key:String, defaultValue = null):Null<Float> return ArpParamsMacros.getSafe(key, defaultValue);
+	inline public function getString(key:String, defaultValue = null):String return ArpParamsMacros.getSafe(key, defaultValue);
+	inline public function getBool(key:String, defaultValue = null):Null<Bool> return ArpParamsMacros.getSafe(key, defaultValue);
+	inline public function getArpDirection(key:String, defaultValue = null):ArpDirection return ArpParamsMacros.getSafe(key, defaultValue);
 
-	inline public function getAsString(key:String):String return ArpParamsMacros.getAsString();
+	inline public function getAsString(key:String, defaultValue = null):String return ArpParamsMacros.getAsString(key, defaultValue);
 
 	public function initWithSeed(seed:ArpSeed):ArpParams {
 		if (seed == null) return this;
