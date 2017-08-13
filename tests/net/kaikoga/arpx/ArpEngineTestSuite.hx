@@ -1,5 +1,7 @@
 package net.kaikoga.arpx;
 
+import net.kaikoga.arpx.backends.flash.geom.APointCase;
+import net.kaikoga.arpx.backends.flash.geom.AMatrixCase;
 import net.kaikoga.arpx.paramsOp.ParamsOpCase;
 import net.kaikoga.arpx.driver.LinearDriverCase;
 import net.kaikoga.arpx.automaton.AutomatonCase;
@@ -10,6 +12,9 @@ import picotest.PicoTestRunner;
 
 class ArpEngineTestSuite {
 	public static function addTo(r:PicoTestRunner) {
+		r.load(AMatrixCase);
+		r.load(APointCase);
+
 		r.load(ArpEngineComponentsCase);
 
 		r.load(AutomatonCase);
