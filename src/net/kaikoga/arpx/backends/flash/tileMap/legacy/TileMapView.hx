@@ -1,4 +1,4 @@
-package net.kaikoga.arpx.backends.flash.tileMap;
+package net.kaikoga.arpx.backends.flash.tileMap.legacy;
 
 import net.kaikoga.arpx.tileMap.TileMap;
 import flash.display.BitmapData;
@@ -7,7 +7,6 @@ import flash.geom.Rectangle;
 
 import net.kaikoga.arpx.chip.Chip;
 
-@:deprecated("legacy implementation, not supported")
 class TileMapView {
 
 	public var bitmapData(default, null):BitmapData;

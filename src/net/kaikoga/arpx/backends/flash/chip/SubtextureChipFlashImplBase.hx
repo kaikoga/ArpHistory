@@ -95,6 +95,17 @@ class SubtextureChipFlashImplBase<T:SubtextureChip> extends ArpObjectImplBase im
 			bitmapData.copyPixels(this.chip.texture.bitmapData(), faceInfo.bound, pt, null, null, this.chip.texture.hasAlpha);
 		} else {
 			var colorTransform:ColorTransform = null;
+			if (params.getBool("tint")) {
+				var ra:Null<Float> = params.getFloat("redMultiplier", 1.0);
+				var ga:Null<Float> = params.getFloat("greenMultiplier", 1.0);
+				var ba:Null<Float> = params.getFloat("blueMultiplier", 1.0);
+				var aa:Null<Float> = params.getFloat("alphaMultiplier", 1.0);
+				var rb:Null<Float> = params.getFloat("redOffset", 0.0);
+				var gb:Null<Float> = params.getFloat("greenOffset", 0.0);
+				var bb:Null<Float> = params.getFloat("blueOffset", 0.0);
+				var ab:Null<Float> = params.getFloat("alphaOffset", 0.0);
+				colorTransform = new ColorTransform(ra, ga, ba, aa, rb, gb, bb, ab);
+			}
 			var blendMode:BlendMode = cast params.getAsString("blendMode");
 			bitmapData.draw(faceInfo.data, transform.toMatrix(), colorTransform, blendMode);
 		}

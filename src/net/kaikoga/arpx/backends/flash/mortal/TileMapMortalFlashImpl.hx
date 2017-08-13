@@ -1,11 +1,11 @@
 package net.kaikoga.arpx.backends.flash.mortal;
 
-import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.flash.tileMap.TileMapRenderer;
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
-import net.kaikoga.arpx.mortal.TileMapMortal;
 import flash.display.BitmapData;
 import flash.geom.Point;
+import net.kaikoga.arpx.backends.ArpObjectImplBase;
+import net.kaikoga.arpx.backends.flash.geom.ITransform;
+import net.kaikoga.arpx.backends.flash.tileMap.legacy.TileMapRenderer;
+import net.kaikoga.arpx.mortal.TileMapMortal;
 
 class TileMapMortalFlashImpl extends ArpObjectImplBase implements IMortalFlashImpl {
 

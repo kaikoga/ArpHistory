@@ -1,4 +1,4 @@
-package net.kaikoga.arpx.backends.flash.tileMap;
+package net.kaikoga.arpx.backends.flash.tileMap.legacy;
 
 import net.kaikoga.arpx.backends.flash.geom.APoint;
 import net.kaikoga.arpx.tileMap.TileMap;
@@ -7,7 +7,6 @@ import flash.display.BitmapData;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.chip.Chip;
 
-@:deprecated("legacy implementation, not supported")
 class TileMapRenderer {
 
 	public var chip:Chip;
