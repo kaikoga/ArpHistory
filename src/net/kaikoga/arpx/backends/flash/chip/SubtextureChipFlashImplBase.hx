@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.backends.flash.chip;
 
+import flash.display.BlendMode;
 import flash.geom.ColorTransform;
 import flash.display.BitmapData;
 import flash.geom.Matrix;
@@ -94,7 +95,8 @@ class SubtextureChipFlashImplBase<T:SubtextureChip> extends ArpObjectImplBase im
 			bitmapData.copyPixels(this.chip.texture.bitmapData(), faceInfo.bound, pt, null, null, this.chip.texture.hasAlpha);
 		} else {
 			var colorTransform:ColorTransform = null;
-			bitmapData.draw(faceInfo.data, transform.toMatrix(), colorTransform, transform.blendMode);
+			var blendMode:BlendMode = cast params.getAsString("blendMode");
+			bitmapData.draw(faceInfo.data, transform.toMatrix(), colorTransform, blendMode);
 		}
 	}
 }

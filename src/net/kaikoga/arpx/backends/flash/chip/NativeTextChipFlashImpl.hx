@@ -57,7 +57,7 @@ class NativeTextChipFlashImpl extends ArpObjectImplBase implements IChipFlashImp
 		if (params != null) text = params.get("face");
 		if (text == null) text = "null";
 		this.visual.text = text;
-		bitmapData.draw(this.visual, transform.toMatrix(), null, transform.blendMode);
+		bitmapData.draw(this.visual, transform.toMatrix());
 	}
 
 	/*

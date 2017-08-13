@@ -1,14 +1,11 @@
 package net.kaikoga.arpx.backends.flash.geom;
 
-import flash.display.BlendMode;
 import flash.display.DisplayObject;
 import flash.geom.Matrix;
 import flash.geom.Matrix3D;
 import flash.geom.Point;
 
 interface ITransform {
-
-	var blendMode(get, never):BlendMode;
 
 	function toCopy():ITransform;
 

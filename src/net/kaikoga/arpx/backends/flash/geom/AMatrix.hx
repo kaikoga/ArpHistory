@@ -1,6 +1,5 @@
 package net.kaikoga.arpx.backends.flash.geom;
 
-import flash.display.BlendMode;
 import flash.display.DisplayObject;
 import flash.geom.Matrix;
 import flash.geom.Matrix3D;
@@ -8,15 +7,23 @@ import flash.geom.Point;
 
 class AMatrix extends Matrix implements ITransform {
 
-	public var blendMode(get, never):BlendMode;
-	private function get_blendMode():BlendMode return null;
-
 	public function toCopy():ITransform {
 		return AMatrix.fromTransform(this);
 	}
 
 	public function new(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0) {
 		super(a, b, c, d, tx, ty);
+	}
+
+	public static function fromPoint(pt:Point):AMatrix {
+		var result:AMatrix = new AMatrix(1, 0, 0, 1, pt.x, pt.y);
+		return result;
+	}
+
+	public static function fromMatrix(matrix:Matrix):AMatrix {
+		var result:AMatrix = new AMatrix();
+		result.copyFrom(matrix);
+		return result;
 	}
 
 	public static function fromTransform(transform:ITransform):AMatrix {
@@ -74,12 +81,7 @@ class AMatrix extends Matrix implements ITransform {
 	}
 
 	public function _concatTransform(transform:ITransform):ITransform {
-		if (transform.blendMode != null) {
-			return ATransform.fromMatrix(this)._concatTransform(transform);
-		}
-		else {
-			return this._concatMatrix(transform.toMatrix());
-		}
+		return this._concatMatrix(transform.toMatrix());
 	}
 
 	public function _concatMatrix(matrix:Matrix):ITransform {
@@ -110,7 +112,7 @@ class AMatrix extends Matrix implements ITransform {
 	}
 
 	public function concatTransform(transform:ITransform):ITransform {
-		return ATransform.fromTransform(this)._concatTransform(transform);
+		return AMatrix.fromTransform(this)._concatTransform(transform);
 	}
 
 	public function concatMatrix(matrix:Matrix):ITransform {

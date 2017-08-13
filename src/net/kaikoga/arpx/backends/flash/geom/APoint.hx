@@ -1,15 +1,11 @@
 package net.kaikoga.arpx.backends.flash.geom;
 
-import flash.display.BlendMode;
 import flash.display.DisplayObject;
 import flash.geom.Matrix;
 import flash.geom.Matrix3D;
 import flash.geom.Point;
 
 class APoint extends Point implements ITransform {
-
-	public var blendMode(get, never):BlendMode;
-	private function get_blendMode():BlendMode return null;
 
 	public function toCopy():ITransform {
 		return APoint.fromTransform(this);
@@ -71,10 +67,8 @@ class APoint extends Point implements ITransform {
 	public function _concatTransform(transform:ITransform):ITransform {
 		if (Std.is(transform, APoint)) {
 			return this._concatPoint(cast transform);
-		} else if (Std.is(transform, AMatrix)) {
-			return this._concatMatrix(cast transform);
 		} else {
-			return ATransform.fromPoint(this)._concatTransform(transform);
+			return AMatrix.fromPoint(this)._concatTransform(transform);
 		}
 	}
 
@@ -105,7 +99,7 @@ class APoint extends Point implements ITransform {
 	}
 
 	public function concatTransform(transform:ITransform):ITransform {
-		return ATransform.fromTransform(this)._concatTransform(transform);
+		return AMatrix.fromTransform(this)._concatTransform(transform);
 	}
 
 	public function concatMatrix(matrix:Matrix):ITransform {
