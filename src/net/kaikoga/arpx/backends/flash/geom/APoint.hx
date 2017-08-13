@@ -2,7 +2,6 @@ package net.kaikoga.arpx.backends.flash.geom;
 
 import flash.display.BlendMode;
 import flash.display.DisplayObject;
-import flash.geom.ColorTransform;
 import flash.geom.Matrix;
 import flash.geom.Matrix3D;
 import flash.geom.Point;
@@ -11,9 +10,6 @@ class APoint extends Point implements ITransform {
 
 	public var blendMode(get, never):BlendMode;
 	private function get_blendMode():BlendMode return null;
-
-	public var colorTransform(get, never):ColorTransform;
-	private function get_colorTransform():ColorTransform return null;
 
 	public function toCopy():ITransform {
 		return APoint.fromTransform(this);
@@ -58,10 +54,6 @@ class APoint extends Point implements ITransform {
 		target.y = this.y;
 	}
 
-	public function _setColorTransform(colorTransform:ColorTransform):ITransform {
-		return ATransform.fromPoint(this)._setColorTransform(colorTransform);
-	}
-
 	public function _setMatrix(matrix:Matrix):ITransform {
 		return AMatrix.fromTransform(this)._setMatrix(matrix);
 	}
@@ -86,10 +78,6 @@ class APoint extends Point implements ITransform {
 		}
 	}
 
-	public function _concatColorTransform(colorTransform:ColorTransform):ITransform {
-		return ATransform.fromPoint(this)._concatColorTransform(colorTransform);
-	}
-
 	public function _concatMatrix(matrix:Matrix):ITransform {
 		return AMatrix.fromTransform(this)._concatMatrix(matrix);
 	}
@@ -102,10 +90,6 @@ class APoint extends Point implements ITransform {
 	public function _concatXY(x:Float, y:Float):ITransform {
 		this.offset(x, y);
 		return this;
-	}
-
-	public function setColorTransform(colorTransform:ColorTransform):ITransform {
-		return ATransform.fromTransform(this)._setColorTransform(colorTransform);
 	}
 
 	public function setMatrix(matrix:Matrix):ITransform {
@@ -122,10 +106,6 @@ class APoint extends Point implements ITransform {
 
 	public function concatTransform(transform:ITransform):ITransform {
 		return ATransform.fromTransform(this)._concatTransform(transform);
-	}
-
-	public function concatColorTransform(colorTransform:ColorTransform):ITransform {
-		return ATransform.fromTransform(this)._concatColorTransform(colorTransform);
 	}
 
 	public function concatMatrix(matrix:Matrix):ITransform {

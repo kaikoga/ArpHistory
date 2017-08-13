@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.backends.flash.chip;
 
+import flash.geom.ColorTransform;
 import flash.display.BitmapData;
 import flash.geom.Matrix;
 import flash.geom.Point;
@@ -92,7 +93,8 @@ class SubtextureChipFlashImplBase<T:SubtextureChip> extends ArpObjectImplBase im
 		if (pt != null) {
 			bitmapData.copyPixels(this.chip.texture.bitmapData(), faceInfo.bound, pt, null, null, this.chip.texture.hasAlpha);
 		} else {
-			bitmapData.draw(faceInfo.data, transform.toMatrix(), transform.colorTransform, transform.blendMode);
+			var colorTransform:ColorTransform = null;
+			bitmapData.draw(faceInfo.data, transform.toMatrix(), colorTransform, transform.blendMode);
 		}
 	}
 }

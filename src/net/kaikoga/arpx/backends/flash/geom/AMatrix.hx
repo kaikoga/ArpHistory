@@ -2,7 +2,6 @@ package net.kaikoga.arpx.backends.flash.geom;
 
 import flash.display.BlendMode;
 import flash.display.DisplayObject;
-import flash.geom.ColorTransform;
 import flash.geom.Matrix;
 import flash.geom.Matrix3D;
 import flash.geom.Point;
@@ -11,9 +10,6 @@ class AMatrix extends Matrix implements ITransform {
 
 	public var blendMode(get, never):BlendMode;
 	private function get_blendMode():BlendMode return null;
-
-	public var colorTransform(get, never):ColorTransform;
-	private function get_colorTransform():ColorTransform return null;
 
 	public function toCopy():ITransform {
 		return AMatrix.fromTransform(this);
@@ -60,10 +56,6 @@ class AMatrix extends Matrix implements ITransform {
 		target.transform.matrix = this.toMatrix();
 	}
 
-	public function _setColorTransform(colorTransform:ColorTransform):ITransform {
-		return ATransform.fromMatrix(this)._setColorTransform(colorTransform);
-	}
-
 	public function _setMatrix(matrix:Matrix):ITransform {
 		this.copyFrom(matrix);
 		return this;
@@ -82,16 +74,12 @@ class AMatrix extends Matrix implements ITransform {
 	}
 
 	public function _concatTransform(transform:ITransform):ITransform {
-		if (transform.blendMode != null || transform.colorTransform != null) {
+		if (transform.blendMode != null) {
 			return ATransform.fromMatrix(this)._concatTransform(transform);
 		}
 		else {
 			return this._concatMatrix(transform.toMatrix());
 		}
-	}
-
-	public function _concatColorTransform(colorTransform:ColorTransform):ITransform {
-		return ATransform.fromMatrix(this)._concatColorTransform(colorTransform);
 	}
 
 	public function _concatMatrix(matrix:Matrix):ITransform {
@@ -109,10 +97,6 @@ class AMatrix extends Matrix implements ITransform {
 		return this;
 	}
 
-	public function setColorTransform(colorTransform:ColorTransform):ITransform {
-		return ATransform.fromTransform(this)._setColorTransform(colorTransform);
-	}
-
 	public function setMatrix(matrix:Matrix):ITransform {
 		return AMatrix.fromTransform(this)._setMatrix(matrix);
 	}
@@ -127,10 +111,6 @@ class AMatrix extends Matrix implements ITransform {
 
 	public function concatTransform(transform:ITransform):ITransform {
 		return ATransform.fromTransform(this)._concatTransform(transform);
-	}
-
-	public function concatColorTransform(colorTransform:ColorTransform):ITransform {
-		return ATransform.fromTransform(this)._concatColorTransform(colorTransform);
 	}
 
 	public function concatMatrix(matrix:Matrix):ITransform {
