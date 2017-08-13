@@ -108,7 +108,7 @@ class DsMacroArpObjectCase {
 			return context.match(ListOp.toArray(expected), ListOp.toArray(actual));
 		}
 		if (Std.is(expected, IMap) && Std.is(actual, IMap)) {
-			return context.match(MapOp.toArray(expected), MapOp.toArray(actual));
+			return context.match(MapOp.toAnon(expected), MapOp.toAnon(actual));
 		}
 		if (Std.is(expected, IOmap) && Std.is(actual, IOmap)) {
 			return context.match(OmapOp.toArray(expected), OmapOp.toArray(actual));
