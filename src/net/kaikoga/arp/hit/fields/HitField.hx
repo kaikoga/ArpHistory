@@ -9,6 +9,9 @@ class HitField<Hit, T> implements IHitField<Hit, T> {
 	private var hitItemsLength:Int = 0;
 	private var strategy:IHitTester<Hit>;
 
+	public var size(get, never):Int;
+	private function get_size():Int return this.hitItemsLength;
+
 	public function new(strategy:IHitTester<Hit>) {
 		this.hitItems = [];
 		this.strategy = strategy;

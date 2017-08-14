@@ -2,6 +2,8 @@ package net.kaikoga.arp.hit.fields;
 
 interface IHitField<Hit, T> {
 
+	public var size(get, never):Int;
+
 	public function tick(timeslice:Float = 1.0):Void;
 
 	public function add(owner:T, life:Float = 0.0):Hit;
