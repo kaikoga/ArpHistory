@@ -20,9 +20,12 @@ class HitMortalFieldGizmoFlashImpl extends ArpObjectImplBase implements IFieldGi
 	}
 
 	@:access(net.kaikoga.arpx.mortal.Mortal.hitMortals)
+	@:access(net.kaikoga.arpx.field.Field.hitField)
 	public function render(field:Field, bitmapData:BitmapData, transform:ITransform):Void {
 		var pt:Point = transform.toPoint();
-		var rect:Rectangle = new Rectangle();
+		var rect:Rectangle = new Rectangle(0, 0, field.hitField.size, 16);
+
+		bitmapData.fillRect(rect, 0xffffffff);
 
 		for (mortal in field.mortals) {
 			for (hitMortal in mortal.hitMortals) {

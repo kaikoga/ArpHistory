@@ -25,6 +25,10 @@ class ConsoleFlashImpl extends ArpObjectImplBase implements IConsoleFlashImpl {
 			workPt.x = -pos.x;
 			workPt.y = -pos.y;
 			camera.field.copySelf(bitmapData, workPt);
+
+			for (fieldGizmo in camera.fieldGizmos) {
+				fieldGizmo.render(camera.field, bitmapData, workPt);
+			}
 		}
 		// if (this.console.dissolve) {
 		// 	if (this.console.dissolve.frameMove()) {
