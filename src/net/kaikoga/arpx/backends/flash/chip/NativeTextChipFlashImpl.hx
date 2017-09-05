@@ -40,12 +40,13 @@ class NativeTextChipFlashImpl extends ArpObjectImplBase implements IChipFlashImp
 		result.text = " ";
 		result.width = this.chip.chipWidth;
 		result.height = this.chip.chipHeight;
-		result.autoSize = TextFieldAutoSize.LEFT;
+		result.autoSize = TextFieldAutoSize.NONE;
 		var fontName:String = this.chip.font;
 		if (fontName == null) fontName = "_sans";
 		result.defaultTextFormat = new TextFormat(fontName, this.chip.fontSize, this.chip.color.value32);
 		result.embedFonts = fontName.charAt(0) != "_";
 		result.selectable = false;
+		result.wordWrap = true;
 		return result;
 	}
 
