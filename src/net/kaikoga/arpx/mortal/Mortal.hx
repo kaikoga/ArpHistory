@@ -29,6 +29,10 @@ class Mortal implements IArpObject
 	@:arpField public var params:ArpParams;
 	@:arpBarrier @:arpField("hitFrame") public var hitFrames:ISet<HitFrame>;
 
+	@:arpField(false) private var _field:Field;
+	public var field(get, never):Field;
+	inline private function get_field():Field return this._field;
+
 	private var hitMortals:Map<String, HitMortal>;
 	private var reactRecord:ISet<String>;
 	private var lastReactRecord:ISet<String>;
