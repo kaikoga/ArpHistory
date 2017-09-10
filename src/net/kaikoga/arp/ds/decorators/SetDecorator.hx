@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.decorators;
 
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.access.ISetKnit.ISetKnitPin;
 import net.kaikoga.arp.ds.ISet;
 
@@ -26,5 +27,5 @@ class SetDecorator<V> implements ISet<V> {
 	public function clear():Void set.clear();
 
 	//knit
-	public function knit():Iterator<ISetKnitPin<V>> return this.set.knit();
+	public function knit():Iterator<ISetKnitPin<V>> return CollectionTools.setKnitImpl(this);
 }

@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.decorators;
 
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.access.IOmapKnit.IOmapKnitPin;
 import net.kaikoga.arp.ds.IOmap;
 
@@ -47,5 +48,5 @@ class OmapDecorator<K, V> implements IOmap<K, V> {
 	public function clear():Void this.omap.clear();
 
 	//knit
-	public function knit():Iterator<IOmapKnitPin<K, V>> return this.omap.knit();
+	public function knit():Iterator<IOmapKnitPin<K, V>> return CollectionTools.omapKnitImpl(this);
 }

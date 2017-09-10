@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.decorators;
 
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.access.IMapKnit.IMapKnitPin;
 import net.kaikoga.arp.ds.IMap;
 
@@ -34,5 +35,5 @@ class MapDecorator<K, V> implements IMap<K, V> {
 	public function clear():Void this.map.clear();
 
 	//knit
-	public function knit():Iterator<IMapKnitPin<K, V>> return this.map.knit();
+	public function knit():Iterator<IMapKnitPin<K, V>> return CollectionTools.mapKnitImpl(this);
 }

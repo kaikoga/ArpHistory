@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.decorators;
 
+import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.access.IListKnit.IListKnitPin;
 import net.kaikoga.arp.ds.IList;
 
@@ -40,5 +41,5 @@ class ListDecorator<V> implements IList<V> {
 	public function clear():Void this.list.clear();
 
 	//knit
-	public function knit():Iterator<IListKnitPin<V>> return this.list.knit();
+	public function knit():Iterator<IListKnitPin<V>> return CollectionTools.listKnitImpl(this);
 }
