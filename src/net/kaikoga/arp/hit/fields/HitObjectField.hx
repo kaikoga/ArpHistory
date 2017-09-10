@@ -9,6 +9,8 @@ class HitObjectField<Hit, T:HitObject<Hit>> implements IHitField<Hit, T> {
 	private var hitObjectsLength:Int = 0;
 	private var strategy:IHitTester<Hit>;
 
+	private var generation:HitGeneration = HitGeneration.Blue;
+
 	public var size(get, never):Int;
 	private function get_size():Int return this.hitObjectsLength;
 
@@ -21,7 +23,7 @@ class HitObjectField<Hit, T:HitObject<Hit>> implements IHitField<Hit, T> {
 		var j:Int = 0;
 		for (i in 0...this.hitObjectsLength) {
 			var hitObject:T = this.hitObjects[i];
-			if ((hitObject.life -= timeslice) > 0.0) {
+			if (this.generation.preserve(hitObject.generation)) {
 				this.hitObjects[j++] = hitObject;
 			}
 		}
@@ -29,6 +31,7 @@ class HitObjectField<Hit, T:HitObject<Hit>> implements IHitField<Hit, T> {
 			this.hitObjects[i] = null;
 		}
 		this.hitObjectsLength = j;
+		this.generation.next();
 	}
 
 	public function find(owner:T):Hit {
@@ -41,35 +44,35 @@ class HitObjectField<Hit, T:HitObject<Hit>> implements IHitField<Hit, T> {
 		}
 
 		var hit:Hit = this.strategy.createHit();
-		owner.life = 0.0;
+		owner.generation = this.generation;
 		owner.hit = hit;
 		this.hitObjects[this.hitObjectsLength++] = owner;
 		return hit;
 	}
 
-	public function add(owner:T, life:Float = 0.0):Hit {
+	private function doAdd(owner:T, generation:HitGeneration):Hit {
 		var hitObject:T;
 		for (i in 0...this.hitObjectsLength) {
 			hitObject = this.hitObjects[i];
 			if (hitObject == owner) {
-				if (hitObject.life < life) hitObject.life = life;
+				hitObject.generation = generation;
 				return hitObject.hit;
 			}
 		}
 
 		var hit:Hit = this.strategy.createHit();
-		owner.life = life;
+		owner.generation = generation;
 		owner.hit = hit;
 		this.hitObjects[this.hitObjectsLength++] = owner;
 		return hit;
 	}
 
-	public function addOnce(owner:T):Hit {
-		return add(owner, 0);
+	public function add(owner:T):Hit {
+		return doAdd(owner, this.generation);
 	}
 
 	public function addEternal(owner:T):Hit {
-		return add(owner, Math.POSITIVE_INFINITY);
+		return doAdd(owner, HitGeneration.Eternal);
 	}
 
 	public function hitTest(callback:T->T->Bool):Void {

@@ -1,5 +1,6 @@
 package net.kaikoga.arp.hit;
 
+import net.kaikoga.arp.hit.fields.HitGenerationCase;
 import net.kaikoga.arp.hit.fields.HitObjectFieldSphereCase;
 import net.kaikoga.arp.hit.fields.HitObjectFieldCuboidCase;
 import net.kaikoga.arp.hit.fields.HitFieldSphereCase;
@@ -12,6 +13,8 @@ import picotest.PicoTestRunner;
 class ArpHitTestTestSuite {
 
 	public static function addTo(r:PicoTestRunner) {
+		r.load(HitGenerationCase);
+
 		r.load(HitWithCuboidCase);
 		r.load(HitWithSphereCase);
 		r.load(HitFieldCuboidCase);

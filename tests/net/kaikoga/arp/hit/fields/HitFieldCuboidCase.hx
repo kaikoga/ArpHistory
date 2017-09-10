@@ -21,9 +21,9 @@ class HitFieldCuboidCase {
 		c = "c";
 		d = "d";
 		e = "e";
-		me.add(a, 3).setCuboid(1, 1, 1, 2, 2, 2);
-		me.add(b, 3).setCuboid(3, 1, 1, 1, 1, 1);
-		me.add(c, 3).setCuboid(5, 1, 1, 1, 1, 1);
+		me.addEternal(a).setCuboid(1, 1, 1, 2, 2, 2);
+		me.addEternal(b).setCuboid(3, 1, 1, 1, 1, 1);
+		me.addEternal(c).setCuboid(5, 1, 1, 1, 1, 1);
 		me.add(d).setCuboid(3, 3, 3, 9, 9, 9);
 		me.add(e).setCuboid(-200, -200, -200, 0, 0, 0);
 	}
@@ -36,15 +36,11 @@ class HitFieldCuboidCase {
 		me.tick();
 		map = [];
 		me.hitTest(function(a:String, b:String):Bool { map.push([a, b]); return false; } );
-		assertMatch([["a", "b"]], map);
+		assertMatch([["a", "b"], ["a", "d"], ["b", "d"], ["c", "d"]], map);
 		me.tick();
 		map = [];
 		me.hitTest(function(a:String, b:String):Bool { map.push([a, b]); return false; } );
 		assertMatch([["a", "b"]], map);
-		me.tick();
-		map = [];
-		me.hitTest(function(a:String, b:String):Bool { map.push([a, b]); return false; } );
-		assertMatch([], map);
 	}
 
 	public function testHitRawTest() {

@@ -21,9 +21,9 @@ class HitFieldSphereCase {
 		c = "c";
 		d = "d";
 		e = "e";
-		me.add(a, 3).setSphere(2, 1, 1, 1);
-		me.add(b, 3).setSphere(1, 3, 1, 1);
-		me.add(c, 3).setSphere(1, 5, 1, 1);
+		me.addEternal(a).setSphere(2, 1, 1, 1);
+		me.addEternal(b).setSphere(1, 3, 1, 1);
+		me.addEternal(c).setSphere(1, 5, 1, 1);
 		me.add(d).setSphere(9, 3, 3, 3);
 		me.add(e).setSphere(0, 0, 0, -200);
 	}
@@ -36,15 +36,11 @@ class HitFieldSphereCase {
 		me.tick();
 		map = [];
 		me.hitTest(function(a:String, b:String):Bool { map.push([a, b]); return false; } );
-		assertMatch([["a", "b"]], map);
+		assertMatch([["a", "b"], ["a", "d"], ["b", "d"], ["c", "d"]], map);
 		me.tick();
 		map = [];
 		me.hitTest(function(a:String, b:String):Bool { map.push([a, b]); return false; } );
 		assertMatch([["a", "b"]], map);
-		me.tick();
-		map = [];
-		me.hitTest(function(a:String, b:String):Bool { map.push([a, b]); return false; } );
-		assertMatch([], map);
 	}
 
 	public function testHitRawTest() {
