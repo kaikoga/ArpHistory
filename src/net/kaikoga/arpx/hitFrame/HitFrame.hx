@@ -18,8 +18,8 @@ class HitFrame implements IArpObject {
 		return source;
 	}
 
-	public function updateHitMortal(field:Field, mortal:Mortal, life:Float):Void {
-		this.exportHitGeneric(mortal.position, field.addHit(mortal, this.hitType, life));
+	public function updateHitMortal(field:Field, mortal:Mortal):Void {
+		this.exportHitGeneric(mortal.position, field.addHit(mortal, this.hitType));
 	}
 
 	public function mapTo(base:ArpPosition, targetBase:ArpPosition, target:HitFrame, input:ArpPosition, output:ArpPosition = null):ArpPosition {

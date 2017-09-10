@@ -58,11 +58,11 @@ class Mortal implements IArpObject
 		return hitMortal;
 	}
 
-	public function tick(field:Field):Void {
+	public function tick(timeslice:Float):Void {
 		if (this.driver != null) {
-			this.driver.tick(field, this);
+			this.driver.tick(this.field, this);
 		} else {
-			updateHitMortals(field, 2.0);
+			refreshHitMortals(this.field);
 		}
 
 		var rr = this.lastReactRecord;
@@ -105,8 +105,8 @@ class Mortal implements IArpObject
 
 	}
 
-	private function updateHitMortals(field:Field, life:Float):Void {
-		for (hitFrame in this.hitFrames) hitFrame.updateHitMortal(field, this, life);
+	private function refreshHitMortals(field:Field):Void {
+		for (hitFrame in this.hitFrames) hitFrame.updateHitMortal(field, this);
 	}
 
 	@:access(net.kaikoga.arpx.field.Field.hitField)
@@ -123,7 +123,7 @@ class Mortal implements IArpObject
 
 		p = this.position.x;
 		this.position.x = x;
-		this.updateHitMortals(field, 2.0);
+		this.refreshHitMortals(field);
 		field.hitRaw(hit, dHitType, function(other:HitMortal):Bool {
 			this.collide(field, other.mortal);
 			this.position.x = p;
@@ -132,7 +132,7 @@ class Mortal implements IArpObject
 
 		p = this.position.y;
 		this.position.y = y;
-		this.updateHitMortals(field, 2.0);
+		this.refreshHitMortals(field);
 		field.hitRaw(hit, dHitType, function(other:HitMortal):Bool {
 			this.collide(field, other.mortal);
 			this.position.y = p;
@@ -141,11 +141,11 @@ class Mortal implements IArpObject
 
 		p = this.position.z;
 		this.position.z = z;
-		this.updateHitMortals(field, 2.0);
+		this.refreshHitMortals(field);
 		field.hitRaw(hit, dHitType, function(other:HitMortal):Bool {
 			this.collide(field, other.mortal);
 			this.position.z = p;
-			this.updateHitMortals(field, 2.0);
+			this.refreshHitMortals(field);
 			return true;
 		});
 	}
@@ -161,7 +161,7 @@ class Mortal implements IArpObject
 	}
 
 	public function stayWithHit(field:Field, dHitType:String):Void {
-		this.updateHitMortals(field, 2.0);
+		this.refreshHitMortals(field);
 	}
 
 	public function complexHitTest(self:HitGeneric, other:HitGeneric):Bool {

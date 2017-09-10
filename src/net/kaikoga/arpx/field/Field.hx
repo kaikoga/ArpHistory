@@ -62,25 +62,25 @@ class Field implements IArpObject
 		return 0;
 	}
 
-	public function addHit(mortal:Mortal, hitType:String, life:Float):HitGeneric {
-		return hitField.add(mortal.asHitType(hitType), life);
+	public function addHit(mortal:Mortal, hitType:String):HitGeneric {
+		return hitField.add(mortal.asHitType(hitType));
 	}
 
 	public function findHit(mortal:Mortal, hitType:String):HitGeneric {
 		return hitField.find(mortal.asHitType(hitType));
 	}
 
-	public function addAnchorHit(anchor:Anchor, life:Float):HitGeneric {
-		return anchorField.add(anchor, life);
+	public function addAnchorHit(anchor:Anchor):HitGeneric {
+		return anchorField.add(anchor);
 	}
 
 	public function reinitMortals():Void {
 		OmapOp.copy(this.initMortals, this.mortals);
 	}
 
-	public function tick():Void {
-		for (mortal in this.mortals) mortal.tick(this);
-		for (anchor in this.anchors) anchor.tick(this);
+	public function tick(timeslice:Float):Void {
+		for (mortal in this.mortals) mortal.tick(timeslice);
+		for (anchor in this.anchors) anchor.refresh(this);
 		this.hitField.tick();
 		this.anchorField.tick();
 		this.hitField.hitTest(function(a:HitMortal, b:HitMortal):Bool {

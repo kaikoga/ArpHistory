@@ -27,10 +27,10 @@ class CompositeMortal extends Mortal {
 
 	override private function get_isComplex():Bool return true;
 
-	override public function tick(field:Field):Void {
-		super.tick(field);
+	override public function tick(timeslice:Float):Void {
+		super.tick(timeslice);
 		for (mortal in this.mortals) {
-			mortal.tick(field);
+			mortal.tick(timeslice);
 		}
 	}
 
