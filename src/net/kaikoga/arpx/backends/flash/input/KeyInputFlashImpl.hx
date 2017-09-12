@@ -48,7 +48,6 @@ class KeyInputFlashImpl extends ArpObjectImplBase implements IInputFlashImpl {
 	}
 
 	public function tick(timeslice:Float):Bool {
-		input.clear();
 		for (keyCode in this.keyStates.keys()) {
 			if (!this.keyStates.get(keyCode)) continue;
 
