@@ -47,7 +47,7 @@ class KeyInputFlashImpl extends ArpObjectImplBase implements IInputFlashImpl {
 		keyStates.set(event.keyCode, false);
 	}
 
-	public function tick(timeslice:Float):Void {
+	public function tick(timeslice:Float):Bool {
 		input.clear();
 		for (keyCode in this.keyStates.keys()) {
 			if (!this.keyStates.get(keyCode)) continue;
@@ -59,6 +59,7 @@ class KeyInputFlashImpl extends ArpObjectImplBase implements IInputFlashImpl {
 			}
 		}
 		for (axis in input.inputAxes) axis.tick(timeslice);
+		return true;
 	}
 
 }

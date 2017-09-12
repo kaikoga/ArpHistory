@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.mortal;
 
+import net.kaikoga.arp.task.ITickable;
 import net.kaikoga.arp.ds.impl.ArraySet;
 import net.kaikoga.arp.ds.ISet;
 import net.kaikoga.arp.hit.structs.HitGeneric;
@@ -19,7 +20,7 @@ import net.kaikoga.arpx.backends.flash.mortal.IMortalFlashImpl;
 #end
 
 @:arpType("mortal", "null")
-class Mortal implements IArpObject
+class Mortal implements IArpObject implements ITickable
 #if (arp_backend_flash || arp_backend_openfl) implements IMortalFlashImpl #end
 {
 
@@ -58,7 +59,7 @@ class Mortal implements IArpObject
 		return hitMortal;
 	}
 
-	public function tick(timeslice:Float):Void {
+	public function tick(timeslice:Float):Bool {
 		if (this.driver != null) {
 			this.driver.tick(this.field, this);
 		} else {
@@ -69,6 +70,7 @@ class Mortal implements IArpObject
 		if (!rr.isEmpty()) rr.clear();
 		this.lastReactRecord = reactRecord;
 		this.reactRecord = rr;
+		return true;
 	}
 
 	public function startAction(actionName:String, restart:Bool = false):Bool {

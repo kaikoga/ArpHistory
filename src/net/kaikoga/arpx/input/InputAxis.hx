@@ -1,6 +1,8 @@
 package net.kaikoga.arpx.input;
 
-class InputAxis {
+import net.kaikoga.arp.task.ITickable;
+
+class InputAxis implements ITickable {
 
 	public var state(default, null):Bool = false;
 	public var value(default, null):Float = 0;
@@ -28,7 +30,7 @@ class InputAxis {
 		return value;
 	}
 
-	public function tick(timeslice:Float):Void {
+	public function tick(timeslice:Float):Bool {
 		var newState:Bool = this.nextValue >= threshold || this.nextValue <= -threshold;
 		if (this.state != newState) {
 			this.duration = 0;
@@ -38,5 +40,6 @@ class InputAxis {
 		}
 		this.value = this.nextValue;
 		this.nextValue = 0;
+		return true;
 	}
 }

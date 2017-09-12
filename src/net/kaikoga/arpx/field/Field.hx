@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.field;
 
+import net.kaikoga.arp.task.ITickable;
 import net.kaikoga.arp.ds.decorators.OmapDecorator;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.ds.lambda.OmapOp;
@@ -18,7 +19,7 @@ import net.kaikoga.arpx.backends.flash.field.FieldFlashImpl;
 #end
 
 @:arpType("field")
-class Field implements IArpObject
+class Field implements IArpObject implements ITickable
 #if (arp_backend_flash || arp_backend_openfl) implements IFieldFlashImpl #end
 {
 
@@ -78,7 +79,7 @@ class Field implements IArpObject
 		OmapOp.copy(this.initMortals, this.mortals);
 	}
 
-	public function tick(timeslice:Float):Void {
+	public function tick(timeslice:Float):Bool {
 		for (mortal in this.mortals) mortal.tick(timeslice);
 		for (anchor in this.anchors) anchor.refresh(this);
 		this.hitField.tick();
@@ -98,6 +99,7 @@ class Field implements IArpObject
 			b.mortal.collide(this, a.mortal);
 			return false;
 		});
+		return true;
 	}
 
 	public function bulkHitRaw(srcHitType:String, hitType:String, callback:HitMortal->HitMortal->Bool):Void {

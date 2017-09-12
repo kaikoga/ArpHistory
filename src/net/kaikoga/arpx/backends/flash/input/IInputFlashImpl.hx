@@ -1,14 +1,14 @@
 package net.kaikoga.arpx.backends.flash.input;
 
 import net.kaikoga.arp.backends.IArpObjectImpl;
+import net.kaikoga.arp.task.ITickable;
 import flash.events.IEventDispatcher;
 
-interface IInputFlashImpl extends IArpObjectImpl {
+interface IInputFlashImpl extends IArpObjectImpl extends ITickable {
 
-	public function listen(target:IEventDispatcher):Void;
+	function listen(target:IEventDispatcher):Void;
 
-	public function purge():Void;
+	function purge():Void;
 
-	public function tick(timeslice:Float):Void;
-
+	function tick(timeslice:Float):Bool;
 }
