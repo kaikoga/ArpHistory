@@ -2,7 +2,7 @@ package net.kaikoga.arp.ds.impl;
 
 import net.kaikoga.arp.ds.access.IMapKnit.IMapKnitPin;
 import net.kaikoga.arp.ds.IMap;
-import net.kaikoga.arp.iter.EmptyIterator;
+import net.kaikoga.arp.iterators.EmptyIterator;
 
 class VoidMap<K, V> implements IMap<K, V> {
 

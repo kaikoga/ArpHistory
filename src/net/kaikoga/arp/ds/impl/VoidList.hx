@@ -2,7 +2,7 @@ package net.kaikoga.arp.ds.impl;
 
 import net.kaikoga.arp.ds.access.IListKnit.IListKnitPin;
 import net.kaikoga.arp.ds.IList;
-import net.kaikoga.arp.iter.EmptyIterator;
+import net.kaikoga.arp.iterators.EmptyIterator;
 
 class VoidList<V> implements IList<V> {
 

@@ -23,7 +23,7 @@ import net.kaikoga.arp.ds.proxy.ProxyCaseUtilCase;
 import net.kaikoga.arp.ds.proxy.SetProxyCase;
 import net.kaikoga.arp.ds.proxy.SetSelfProxyCase;
 import net.kaikoga.arp.events.ArpSignalCase;
-import net.kaikoga.arp.iter.ERegIteratorCase;
+import net.kaikoga.arp.iterators.ERegIteratorCase;
 import net.kaikoga.arp.persistable.PersistIoCase;
 import net.kaikoga.arp.seed.ArpSeedCase;
 import net.kaikoga.arp.seed.ArpSeedEnvCase;

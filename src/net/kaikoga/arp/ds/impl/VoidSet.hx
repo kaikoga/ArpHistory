@@ -2,7 +2,7 @@ package net.kaikoga.arp.ds.impl;
 
 import net.kaikoga.arp.ds.access.ISetKnit.ISetKnitPin;
 import net.kaikoga.arp.ds.ISet;
-import net.kaikoga.arp.iter.EmptyIterator;
+import net.kaikoga.arp.iterators.EmptyIterator;
 
 class VoidSet<V> implements ISet<V> {
 

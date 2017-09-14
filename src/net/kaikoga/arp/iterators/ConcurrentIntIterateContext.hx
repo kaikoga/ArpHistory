@@ -1,4 +1,4 @@
-package net.kaikoga.arp.iter;
+package net.kaikoga.arp.iterators;
 
 class ConcurrentIntIterateContext {
 
