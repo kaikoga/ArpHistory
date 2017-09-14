@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.text;
 
-import net.kaikoga.arp.iter.ERegIterator;
+import net.kaikoga.arp.iterators.ERegIterator;
 
 @:arpType("text", "ptext")
 class ParametrizedTextData extends TextData {

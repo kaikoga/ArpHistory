@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.faceList;
 
-import net.kaikoga.arp.iter.ERegIterator;
+import net.kaikoga.arp.iterators.ERegIterator;
 import net.kaikoga.arp.structs.ArpRange;
 import net.kaikoga.arp.domain.IArpObject;
 
