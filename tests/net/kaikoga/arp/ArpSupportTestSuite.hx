@@ -1,5 +1,7 @@
 package net.kaikoga.arp;
 
+import net.kaikoga.arp.iterators.StepToIteratorCase;
+import net.kaikoga.arp.iterators.StepIteratorCase;
 import net.kaikoga.arp.io.FifoCase;
 import net.kaikoga.arp.io.BytesToolCase;
 import net.kaikoga.arp.io.OutputWrapperCase;
@@ -39,6 +41,8 @@ class ArpSupportTestSuite {
 
 	public static function addTo(r:PicoTestRunner) {
 		r.load(ERegIteratorCase);
+		r.load(StepIteratorCase);
+		r.load(StepToIteratorCase);
 
 		r.load(ArpStringUtilCase);
 
