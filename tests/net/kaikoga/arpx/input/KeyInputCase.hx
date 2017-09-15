@@ -68,8 +68,8 @@ class KeyInputCase {
 		assertFalse(me.axis("a").isTriggerDown);
 		assertFalse(me.axis("a").isUp);
 		assertFalse(me.axis("a").isTriggerUp);
-		assertEquals(1.0, me.axis("a").value);
-		assertEquals(0.8, me.axis("a").duration);
+		assertEquals(0.8, me.axis("a").value);
+		assertEquals(1.0, me.axis("a").duration);
 
 		me.axis("a").nextValue = 0.0;
 		me.tick(1.0);
