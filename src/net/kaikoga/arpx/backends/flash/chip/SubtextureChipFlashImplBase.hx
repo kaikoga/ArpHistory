@@ -52,18 +52,20 @@ class SubtextureChipFlashImplBase<T:SubtextureChip> extends ArpObjectImplBase im
 			return index;
 		}
 
-		var face:String = Std.string(params.get("face"));
-		if (this.indexesByFaces.exists(face)) {
-			index = this.indexesByFaces.get(face);
-		} else {
-			this.chip.arpDomain.log("gridchip", 'SubtextureChipFlashImplBase.getFaceIndex(): Chip name not found in: $this:$params');
+		var face:String = params.getAsString("face");
+		if (face != null) {
+			if (this.indexesByFaces.exists(face)) {
+				index = this.indexesByFaces.get(face);
+			} else {
+				this.chip.arpDomain.log("gridchip", 'SubtextureChipFlashImplBase.getFaceIndex(): Chip name not found in: ${this.chip.arpSlot}:$params');
+			}
 		}
 
 		try {
 			var dIndex:Null<Int> = params.getInt("index");
 			if (dIndex != null) index += dIndex;
 		} catch (d:String) {
-			this.chip.arpDomain.log("gridchip", 'SubtextureChipFlashImplBase.getFaceIndex(): Illegal index: $this:$params');
+			this.chip.arpDomain.log("gridchip", 'SubtextureChipFlashImplBase.getFaceIndex(): Illegal index: ${this.chip.arpSlot}:$params');
 		}
 
 		return index;
