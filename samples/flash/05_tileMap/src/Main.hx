@@ -101,7 +101,7 @@ class Main extends Sprite {
 	}
 
 	private function onTick(value:Float):Void {
-		this.field.tick();
+		this.field.tick(value);
 		this.bitmapData.fillRect(this.bitmapData.rect, 0xffffffff);
 		this.console.display(this.bitmapData);
 	}
