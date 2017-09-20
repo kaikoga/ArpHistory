@@ -90,7 +90,6 @@ class ArpDomainCase {
 		var DUMP:String = '# <<slots>> {
 -   $$0:data [0]
 !   $$null [0]
-!   /name1:mock [0]
 -   /name2:mock [1]
 -   /name3:mock [1]
   }

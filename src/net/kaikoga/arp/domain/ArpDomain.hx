@@ -87,6 +87,10 @@ class ArpDomain {
 		return slot;
 	}
 
+	private function freeSlot(slot:ArpUntypedSlot):Void {
+		this.slots.remove(slot.sid.toString());
+	}
+
 	private function allocDir(did:ArpDid = null):ArpDirectory {
 		if (did == null) did = new ArpDid(_did.next());
 		return new ArpDirectory(this, did);

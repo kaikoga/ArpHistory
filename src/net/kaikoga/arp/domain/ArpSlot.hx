@@ -76,6 +76,7 @@ class ArpUntypedSlot {
 				this._value.arpDispose();
 				this._value = null;
 			}
+			@:privateAccess this._domain.freeSlot(this);
 		}
 		return this;
 	}
