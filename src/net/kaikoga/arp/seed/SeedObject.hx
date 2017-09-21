@@ -95,7 +95,7 @@ class SeedObject implements IArpObject {
 	}
 
 	@:access(net.kaikoga.arp.domain.ArpDomain._did)
-	public function instantiate<T:IArpObject>():T {
-		return loadSeed(this.arpDomain._did.next()).value;
+	public function instantiate<T:IArpObject>(namePrefix:String = null):T {
+		return loadSeed(this.arpDomain._did.next(namePrefix)).value;
 	}
 }
