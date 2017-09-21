@@ -60,8 +60,8 @@ class MacroArpObjectStdMapField extends MacroArpObjectCollectionFieldBase implem
 		heatDownBlock.push(macro @:pos(this.nativePos) { null; });
 	}
 
-	public function buildDisposeBlock(initBlock:Array<Expr>):Void {
-		initBlock.push(macro @:pos(this.nativePos) { null; });
+	public function buildDisposeBlock(disposeBlock:Array<Expr>):Void {
+		disposeBlock.push(macro @:pos(this.nativePos) { for (slot in this.$iNativeName.slots) slot.delReference(); });
 	}
 
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
