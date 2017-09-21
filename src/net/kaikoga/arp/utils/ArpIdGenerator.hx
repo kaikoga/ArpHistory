@@ -12,11 +12,11 @@ abstract ArpIdGenerator(Int) {
 		this = 0;
 	}
 
-	inline public function next():String {
+	inline public function next(prefix:String = null):String {
 		var result = symbols[this];
 		if (result == null) symbols[this] = result = '${AUTO_HEADER}${Std.string(this)}';
 		this++;
-		return result;
+		return (prefix == null) ? result : '$prefix$result';
 	}
 
 	inline public function reset():Void {
