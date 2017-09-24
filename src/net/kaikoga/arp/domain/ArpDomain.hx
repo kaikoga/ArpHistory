@@ -163,8 +163,8 @@ class ArpDomain {
 		return this.addObject(Type.createInstance(klass, args), sid);
 	}
 
-	public function addOrphanObject<T:IArpObject>(arpObj:T, sid:ArpSid = null):T {
-		return this.addObject(arpObj, sid);
+	public function addOrphanObject<T:IArpObject>(arpObj:T):T {
+		return this.addObject(arpObj);
 	}
 
 	private function addObject<T:IArpObject>(arpObj:T, sid:ArpSid = null):T {

@@ -102,8 +102,8 @@ class DataGroup implements IArpObject {
 		return obj;
 	}
 
-	public function addOrphanObject<T:IArpObject>(arpObj:T, sid:ArpSid = null):T {
-		var obj:T = this.arpDomain.addOrphanObject(arpObj, sid);
+	public function addOrphanObject<T:IArpObject>(arpObj:T):T {
+		var obj:T = this.arpDomain.addOrphanObject(arpObj);
 		this.children.push(obj.arpSlot);
 		return obj;
 	}
