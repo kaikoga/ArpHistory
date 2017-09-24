@@ -1,7 +1,7 @@
 package net.kaikoga.arp.domain;
 
 import net.kaikoga.arp.data.DataGroup;
-import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
+import net.kaikoga.arp.domain.ArpSlot;
 import net.kaikoga.arp.domain.core.ArpDid;
 import net.kaikoga.arp.domain.core.ArpSid;
 import net.kaikoga.arp.domain.core.ArpType;
@@ -21,6 +21,8 @@ import net.kaikoga.arp.seed.ArpSeedValueKind;
 import net.kaikoga.arp.seed.SeedObject;
 import net.kaikoga.arp.utils.ArpIdGenerator;
 
+@:allow(net.kaikoga.arp.domain.ArpDirectory)
+@:allow(net.kaikoga.arp.domain.ArpUntypedSlot)
 class ArpDomain {
 
 	public var root(default, null):ArpDirectory;

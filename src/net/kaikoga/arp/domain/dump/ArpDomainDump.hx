@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain.dump;
 
+import net.kaikoga.arp.ds.impl.StdMap;
 import net.kaikoga.arp.ds.Tree;
 import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 import net.kaikoga.arp.domain.core.ArpType;
@@ -35,7 +36,7 @@ class ArpDomainDump {
 	private function _dumpSlotStatusByName(dir:ArpDirectory, hashKey:String, visitedSlotIds:Map<String, Bool>):Tree<ArpDump> {
 		var result:Tree<ArpDump> = ArpDump.ofDir(dir, hashKey);
 
-		var children:Map<String, ArpDirectory> = dir.children;
+		var children:StdMap<String, ArpDirectory> = dir.children;
 		var slotNames:Array<String> = [for (key in children.keys()) key];
 		slotNames.sort(compareString);
 		for (name in slotNames) {

@@ -19,6 +19,8 @@ abstract ArpSlot<T:IArpObject>(ArpUntypedSlot) from ArpUntypedSlot to ArpUntyped
 	inline private function get_value():T return cast this.value; // FIXME
 	inline private function set_value(value:T):T return cast(this.value = cast(value)); // FIXME
 
+	inline private function addDirectory(dir:ArpDirectory):Void return this.addDirectory(dir);
+
 	public var refCount(get, never):Int;
 	inline private function get_refCount():Int return this.refCount;
 
@@ -47,6 +49,7 @@ abstract ArpSlot<T:IArpObject>(ArpUntypedSlot) from ArpUntypedSlot to ArpUntyped
 	}
 }
 
+@:allow(net.kaikoga.arp.domain.ArpSlot)
 class ArpUntypedSlot {
 
 	private var _domain:ArpDomain = null;
@@ -65,6 +68,20 @@ class ArpUntypedSlot {
 		return this._value = value;
 	}
 
+	private var _dir:ArpDirectory;
+	private var _dirs:Array<ArpDirectory>;
+
+	@:allow(net.kaikoga.arp.domain.ArpDirectory)
+	inline private function addDirectory(dir:ArpDirectory):Void {
+		dir.addReference();
+		if (this._dir == null) {
+			this._dir = dir;
+		} else {
+			if (_dirs == null) _dirs = [];
+			_dirs.push(_dir);
+		}
+	}
+
 	private var _refCount:Int = 0;
 	public var refCount(get, never):Int;
 	inline private function get_refCount():Int { return this._refCount; }
@@ -76,7 +93,11 @@ class ArpUntypedSlot {
 				this._value.arpDispose();
 				this._value = null;
 			}
-			@:privateAccess this._domain.freeSlot(this);
+			this._domain.freeSlot(this);
+			if (this._dir != null) this._dir.delReference();
+			if (this._dirs != null) {
+				for (dir in this._dirs) dir.delReference();
+			}
 		}
 		return this;
 	}

@@ -95,9 +95,6 @@ class ArpDomainCase {
   }
 ';
 		var DUMP_BY_NAME:String = '% <<dir>>:  {
-%   name1: /name1 {
-!     <mock>: /name1:mock [0]
-    }
 %   name2: /name2 {
 -     <mock>: /name2:mock [1]
     }
