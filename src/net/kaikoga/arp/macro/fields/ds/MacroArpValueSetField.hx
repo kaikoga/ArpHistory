@@ -54,7 +54,7 @@ class MacroArpValueSetField extends MacroArpValueCollectionFieldBase implements 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
 		fieldBlock.push(macro @:pos(this.nativePos) {
 			collection = input.readEnter(${eFieldName});
-			nameList = collection.readNameList("names");
+			nameList = collection.readNameList("keys");
 			values = input.readEnter("values");
 			for (name in nameList) {
 				this.$iNativeName.add(${this.type.createAsPersistable(this.nativePos, macro name)});
@@ -68,7 +68,7 @@ class MacroArpValueSetField extends MacroArpValueCollectionFieldBase implements 
 		fieldBlock.push(macro @:pos(this.nativePos) {
 			collection = output.writeEnter(${eFieldName});
 			uniqId.reset();
-			collection.writeNameList("names", [for (value in this.$iNativeName) uniqId.next()]);
+			collection.writeNameList("keys", [for (value in this.$iNativeName) uniqId.next()]);
 			values = output.writeEnter("values");
 			uniqId.reset();
 			for (value in this.$iNativeName) {

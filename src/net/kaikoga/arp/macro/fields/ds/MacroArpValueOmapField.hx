@@ -54,7 +54,7 @@ class MacroArpValueOmapField extends MacroArpValueCollectionFieldBase implements
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
 		fieldBlock.push(macro @:pos(this.nativePos) {
 			collection = input.readEnter(${eFieldName});
-			nameList = collection.readNameList("names");
+			nameList = collection.readNameList("keys");
 			values = input.readEnter("values");
 			for (name in nameList) {
 				this.$iNativeName.addPair(name, ${this.type.createAsPersistable(this.nativePos, macro name)});
@@ -67,10 +67,10 @@ class MacroArpValueOmapField extends MacroArpValueCollectionFieldBase implements
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
 		fieldBlock.push(macro @:pos(this.nativePos) {
 			collection = output.writeEnter(${eFieldName});
-			collection.writeNameList("names", [for (key in this.$iNativeName.keys()) key]);
+			collection.writeNameList("keys", [for (key in this.$iNativeName.keys()) key]);
 			values = output.writeEnter("values");
-			for (value in this.$iNativeName.keys()) {
-				${this.type.writeAsPersistable(this.nativePos, macro uniqId.next(), macro this.$iNativeName.get(value))}
+			for (key in this.$iNativeName.keys()) {
+				${this.type.writeAsPersistable(this.nativePos, macro key, macro this.$iNativeName.get(key))}
 			}
 			values.writeExit();
 			collection.writeExit();
