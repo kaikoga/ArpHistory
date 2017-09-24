@@ -79,7 +79,7 @@ class ArpDomainDump {
 			}
 			namesOrphan.sort(compareString);
 			for (name in namesOrphan) {
-				result.children.push(ArpDump.ofSlot(domain.slots.get(name), '<<untyped>>'));
+				result.children.push(ArpDump.ofSlot(domain.slots.get(name), '<<anonymous>>'));
 			}
 		}
 		return result;

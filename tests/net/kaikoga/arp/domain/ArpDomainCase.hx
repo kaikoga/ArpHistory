@@ -46,8 +46,8 @@ class ArpDomainCase {
 %   name3: /name3 {
 -     <mock>: /name3:mock [1]
     }
--   <<untyped>>: $$0:data [0]
-!   <<untyped>>: $$null [0]
+-   <<anonymous>>: $$0:data [0]
+!   <<anonymous>>: $$null [0]
   }
 ';
 		assertEquals(DUMP, domain.dumpEntries());
@@ -101,8 +101,8 @@ class ArpDomainCase {
 %   name3: /name3 {
 -     <mock>: /name3:mock [1]
     }
--   <<untyped>>: $$0:data [0]
-!   <<untyped>>: $$null [0]
+-   <<anonymous>>: $$0:data [0]
+!   <<anonymous>>: $$null [0]
   }
 ';
 		domain.query("name1", new ArpType("mock")).slot().delReference();
