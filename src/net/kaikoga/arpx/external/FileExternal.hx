@@ -1,12 +1,12 @@
 ﻿package net.kaikoga.arpx.external;
 
-import net.kaikoga.arp.seed.ArpSeedEnv;
-import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
-import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arp.data.DataGroup;
 import haxe.io.Bytes;
-import net.kaikoga.arpx.file.File;
+import net.kaikoga.arp.data.DataGroup;
+import net.kaikoga.arp.domain.ArpUntypedSlot;
+import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.seed.ArpSeed;
+import net.kaikoga.arp.seed.ArpSeedEnv;
+import net.kaikoga.arpx.file.File;
 
 @:arpType("external", "file")
 class FileExternal extends External {

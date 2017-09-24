@@ -1,18 +1,18 @@
 package net.kaikoga.arpx.debugger;
 
-import net.kaikoga.arp.domain.dump.ArpDumpAnon;
-import net.kaikoga.arp.domain.core.ArpType;
-import net.kaikoga.arp.domain.core.ArpSid;
-import net.kaikoga.arp.domain.dump.ArpDomainDump;
-import net.kaikoga.arp.persistable.AnonPersistOutput;
-import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arp.persistable.IPersistable;
-import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
-import net.kaikoga.arp.io.BlobInput;
-import net.kaikoga.arp.events.ArpProgressEvent;
-import net.kaikoga.arpx.socketClient.SocketClient;
 import haxe.Json;
+import net.kaikoga.arp.domain.ArpUntypedSlot;
+import net.kaikoga.arp.domain.core.ArpSid;
+import net.kaikoga.arp.domain.core.ArpType;
+import net.kaikoga.arp.domain.dump.ArpDomainDump;
+import net.kaikoga.arp.domain.dump.ArpDumpAnon;
+import net.kaikoga.arp.domain.IArpObject;
+import net.kaikoga.arp.events.ArpProgressEvent;
+import net.kaikoga.arp.io.BlobInput;
+import net.kaikoga.arp.persistable.AnonPersistOutput;
+import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arpx.debugger.DebuggerCommand;
+import net.kaikoga.arpx.socketClient.SocketClient;
 
 @:arpType("debugger", "socketClient")
 class SocketClientDebugger implements IArpObject {
