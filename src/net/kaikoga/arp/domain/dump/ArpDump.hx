@@ -1,7 +1,7 @@
 package net.kaikoga.arp.domain.dump;
 
+import net.kaikoga.arp.domain.ArpUntypedSlot;
 import net.kaikoga.arp.ds.Tree;
-import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 
 class ArpDump {
 

@@ -1,11 +1,11 @@
 package net.kaikoga.arp.domain;
 
+import net.kaikoga.arp.domain.ArpUntypedSlot;
+import net.kaikoga.arp.domain.core.ArpDid;
 import net.kaikoga.arp.domain.core.ArpSid;
+import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.query.ArpDirectoryQuery;
 import net.kaikoga.arp.domain.query.ArpObjectQuery;
-import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
-import net.kaikoga.arp.domain.core.ArpType;
-import net.kaikoga.arp.domain.core.ArpDid;
 import net.kaikoga.arp.ds.impl.StdMap;
 
 class ArpDirectory {

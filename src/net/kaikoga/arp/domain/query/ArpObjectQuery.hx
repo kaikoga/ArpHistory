@@ -1,6 +1,6 @@
 package net.kaikoga.arp.domain.query;
 
-import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
+import net.kaikoga.arp.domain.ArpUntypedSlot;
 import net.kaikoga.arp.domain.core.ArpType;
 
 class ArpObjectQuery<T:IArpObject> extends ArpDirectoryQuery {

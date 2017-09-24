@@ -56,11 +56,11 @@ class MacroArpObjectSkeleton {
 			public var arpType(get, never):net.kaikoga.arp.domain.core.ArpType;
 			@:noDoc @:noCompletion private function get_arpType():net.kaikoga.arp.domain.core.ArpType return _arpTypeInfo.arpType;
 
-			@:noDoc @:noCompletion private var _arpSlot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
-			public var arpSlot(get, never):net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
-			@:noDoc @:noCompletion private function get_arpSlot():net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot return this._arpSlot;
+			@:noDoc @:noCompletion private var _arpSlot:net.kaikoga.arp.domain.ArpUntypedSlot;
+			public var arpSlot(get, never):net.kaikoga.arp.domain.ArpUntypedSlot;
+			@:noDoc @:noCompletion private function get_arpSlot():net.kaikoga.arp.domain.ArpUntypedSlot return this._arpSlot;
 
-			public function arpInit(slot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot, seed:net.kaikoga.arp.seed.ArpSeed = null):net.kaikoga.arp.domain.IArpObject {
+			public function arpInit(slot:net.kaikoga.arp.domain.ArpUntypedSlot, seed:net.kaikoga.arp.seed.ArpSeed = null):net.kaikoga.arp.domain.IArpObject {
 				net.kaikoga.arp.macro.stubs.MacroArpObjectStub.arpInit(
 					$e{ this.buildInitBlock() },
 					$v{ this.classDef.hasImpl }
@@ -134,7 +134,7 @@ class MacroArpObjectSkeleton {
 			override private function get_arpTypeInfo():net.kaikoga.arp.domain.ArpTypeInfo return _arpTypeInfo;
 			@:noDoc @:noCompletion override private function get_arpType():net.kaikoga.arp.domain.core.ArpType return _arpTypeInfo.arpType;
 
-			override public function arpInit(slot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot, seed:net.kaikoga.arp.seed.ArpSeed = null):net.kaikoga.arp.domain.IArpObject {
+			override public function arpInit(slot:net.kaikoga.arp.domain.ArpUntypedSlot, seed:net.kaikoga.arp.seed.ArpSeed = null):net.kaikoga.arp.domain.IArpObject {
 				net.kaikoga.arp.macro.stubs.MacroArpDerivedObjectStub.arpInit(
 					$e{ this.buildInitBlock() }
 				);

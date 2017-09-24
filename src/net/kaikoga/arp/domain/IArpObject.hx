@@ -1,9 +1,9 @@
 package net.kaikoga.arp.domain;
 
+import net.kaikoga.arp.domain.ArpUntypedSlot;
+import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
-import net.kaikoga.arp.domain.core.ArpType;
 
 #if !macro
 @:autoBuild(net.kaikoga.arp.ArpDomainMacros.autoBuildObject())

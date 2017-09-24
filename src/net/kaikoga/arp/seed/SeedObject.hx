@@ -4,6 +4,7 @@ import net.kaikoga.arp.domain.ArpDirectory;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.domain.ArpSlot;
 import net.kaikoga.arp.domain.ArpTypeInfo;
+import net.kaikoga.arp.domain.ArpUntypedSlot;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.persistable.IPersistInput;

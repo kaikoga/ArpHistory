@@ -1,9 +1,9 @@
 package net.kaikoga.arp.domain.dump;
 
+import net.kaikoga.arp.domain.ArpUntypedSlot;
+import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.ds.impl.StdMap;
 import net.kaikoga.arp.ds.Tree;
-import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
-import net.kaikoga.arp.domain.core.ArpType;
 
 @:access(net.kaikoga.arp.domain.ArpDomain)
 class ArpDomainDump {

@@ -62,7 +62,7 @@ class MacroArpObjectStub {
 	}
 
 	macro public static function arpInit(initBlock:Expr, hasImpl:Bool):Expr {
-		@:macroLocal var slot:net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
+		@:macroLocal var slot:net.kaikoga.arp.domain.ArpUntypedSlot;
 		@:macroLocal var seed:net.kaikoga.arp.seed.ArpSeed = null;
 		@:macroReturn net.kaikoga.arp.domain.IArpObject;
 

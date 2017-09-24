@@ -1,11 +1,11 @@
 package net.kaikoga.arp.domain.mocks;
 
+import net.kaikoga.arp.domain.ArpUntypedSlot;
 import net.kaikoga.arp.domain.core.ArpSid;
+import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.persistable.IPersistOutput;
-import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
 
 @:arpNoGen
 class MockDerivedArpObject extends MockArpObject {

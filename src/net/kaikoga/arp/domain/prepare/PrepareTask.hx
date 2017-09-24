@@ -1,8 +1,8 @@
 package net.kaikoga.arp.domain.prepare;
 
-import net.kaikoga.arp.task.TaskStatus;
 import net.kaikoga.arp.domain.ArpDomain;
-import net.kaikoga.arp.domain.ArpSlot.ArpUntypedSlot;
+import net.kaikoga.arp.domain.ArpUntypedSlot;
+import net.kaikoga.arp.task.TaskStatus;
 
 class PrepareTask implements IPrepareTask {
 
