@@ -21,17 +21,20 @@ class ArpUntypedSlot {
 		return this._value = value;
 	}
 
-	private var _dir:ArpDirectory;
+	private var _primaryDir:ArpDirectory;
 	private var _dirs:Array<ArpDirectory>;
+
+	public var primaryDir(get, never):ArpDirectory;
+	inline public function get_primaryDir():ArpDirectory return _primaryDir;
 
 	@:allow(net.kaikoga.arp.domain.ArpDirectory)
 	inline private function addDirectory(dir:ArpDirectory):Void {
 		dir.addReference();
-		if (this._dir == null) {
-			this._dir = dir;
+		if (this._primaryDir == null) {
+			this._primaryDir = dir;
 		} else {
 			if (_dirs == null) _dirs = [];
-			_dirs.push(_dir);
+			_dirs.push(_primaryDir);
 		}
 	}
 
@@ -47,7 +50,7 @@ class ArpUntypedSlot {
 				this._value = null;
 			}
 			this._domain.freeSlot(this);
-			if (this._dir != null) this._dir.delReference();
+			if (this._primaryDir != null) this._primaryDir.delReference();
 			if (this._dirs != null) {
 				for (dir in this._dirs) dir.delReference();
 			}

@@ -19,6 +19,8 @@ abstract ArpSlot<T:IArpObject>(ArpUntypedSlot) from ArpUntypedSlot to ArpUntyped
 	inline private function get_value():T return cast this.value; // FIXME
 	inline private function set_value(value:T):T return cast(this.value = cast(value)); // FIXME
 
+	public var primaryDir(get, never):ArpDirectory;
+	inline private function get_primaryDir():ArpDirectory return this.primaryDir;
 	inline private function addDirectory(dir:ArpDirectory):Void return this.addDirectory(dir);
 
 	public var refCount(get, never):Int;
