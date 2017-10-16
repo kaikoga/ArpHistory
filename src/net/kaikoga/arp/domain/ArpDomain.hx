@@ -26,6 +26,7 @@ import net.kaikoga.arp.utils.ArpIdGenerator;
 class ArpDomain {
 
 	public var root(default, null):ArpDirectory;
+	@:noDoc
 	public var currentDir(default, null):ArpDirectory;
 
 	private var slots:Map<String, ArpUntypedSlot>;
