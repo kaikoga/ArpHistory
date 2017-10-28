@@ -223,9 +223,11 @@ class MacroArpObjectSkeleton {
 		}).fields;
 	}
 
-	private function genImplFields(implTypePath:TypePath):Array<Field> {
+	private function genImplFields(implTypePath:TypePath, concreteTypePath:TypePath):Array<Field> {
 		var implType:ComplexType = ComplexType.TPath(implTypePath);
 		var implClassDef:MacroArpImplClassDefinition = new MacroArpImplClassDefinition(implType);
+		var concreteType:ComplexType = ComplexType.TPath(concreteTypePath);
+		var concreteClassDef:MacroArpImplClassDefinition = new MacroArpImplClassDefinition(concreteType);
 
 		// generate arpImpl
 		var fields:Array<Field> = (macro class Generated {
@@ -234,12 +236,12 @@ class MacroArpObjectSkeleton {
 
 			@:noDoc @:noCompletion
 			private function createImpl():$implType return ${
-				if (implClassDef.isInterface) {
-					// polymorphic impl
+				if (concreteClassDef.isInterface) {
+					// can not instantiate interfaces
 					macro null;
 				} else {
-					// monomorphic impl
-					macro new $implTypePath(this);
+					// can instantiate
+					macro new $concreteTypePath(this);
 				}
 			};
 		}).fields;
@@ -249,11 +251,11 @@ class MacroArpObjectSkeleton {
 		return fields;
 	}
 
-	private function genDerivedImplFields(implTypePath:TypePath):Array<Field> {
-		var implType = ComplexType.TPath(implTypePath);
+	private function genDerivedImplFields(concreteTypePath:TypePath):Array<Field> {
+		var implType = ComplexType.TPath(concreteTypePath);
 		return (macro class Generated {
 			@:noDoc @:noCompletion
-			override private function createImpl() return new $implTypePath(this);
+			override private function createImpl() return new $concreteTypePath(this);
 		}).fields;
 	}
 

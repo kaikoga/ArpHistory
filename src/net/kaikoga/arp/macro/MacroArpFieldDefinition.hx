@@ -39,7 +39,7 @@ class MacroArpFieldDefinition {
 	inline private function set_family(value:MacroArpFieldDefinitionFamily):MacroArpFieldDefinitionFamily {
 		switch (_family) {
 			case MacroArpFieldDefinitionFamily.ImplicitUnmanaged: _family = value;
-			case _: if (!Type.enumEq(value, _family)) Context.error("Cannot mix", this.nativePos);
+			case _: if (!Type.enumEq(value, _family)) Context.error("Cannot mix " + value + " with " + _family, this.nativePos);
 		}
 		return value;
 	}
@@ -72,7 +72,15 @@ class MacroArpFieldDefinition {
 						case ":arpImpl":
 							switch (nativeType) {
 								case ComplexType.TPath(typePath):
-									this.family = MacroArpFieldDefinitionFamily.Impl(typePath);
+									var family = MacroArpFieldDefinitionFamily.Impl(typePath);
+									if (d != null) {
+										switch (d.expr) {
+											case ExprDef.ENew(concreteTypePath, _):
+												family = MacroArpFieldDefinitionFamily.Impl2(typePath, concreteTypePath);
+											case _:
+										}
+									}
+									this.family = family;
 									this.metaArpImpl = true;
 								case _: Context.error("TypePath expected for arpImpl", nativeField.pos);
 							}
@@ -165,6 +173,7 @@ enum MacroArpFieldDefinitionFamily {
 	Unmanaged;
 	ArpField;
 	Impl(typePath:TypePath);
+	Impl2(implTypePath:TypePath, concreteTypePath:TypePath);
 	Constructor(func:Function);
 }
 

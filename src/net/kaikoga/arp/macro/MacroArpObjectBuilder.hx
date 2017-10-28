@@ -54,11 +54,11 @@ class MacroArpObjectBuilder extends MacroArpObjectSkeleton {
 					if (fieldDef.metaArpDispose != null) {
 						outFields = outFields.concat(this.genVoidCallbackField("arpSelfDispose", fieldDef.metaArpDispose));
 					}
-				case MacroArpFieldBuilderResult.Impl(typePath):
+				case MacroArpFieldBuilderResult.Impl(implTypePath, concreteTypePath):
 					if (classDef.isDerived) {
-						outFields = outFields.concat(this.genDerivedImplFields(typePath));
+						outFields = outFields.concat(this.genDerivedImplFields(concreteTypePath));
 					} else {
-						outFields = outFields.concat(this.genImplFields(typePath));
+						outFields = outFields.concat(this.genImplFields(implTypePath, concreteTypePath));
 					}
 					// TODO we also want the class to implement impl interface
 					//throw "not implemented";
