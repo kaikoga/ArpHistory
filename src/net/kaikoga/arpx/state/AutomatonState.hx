@@ -10,7 +10,6 @@ import net.kaikoga.arpx.console.Console;
 class AutomatonState implements IArpObject {
 
 	@:arpField public var label:String;
-	@:arpField public var originalState:AutomatonState;
 	@:arpField("state") public var childState:AutomatonState;
 	@:arpField("transition") public var transitions:IMap<String, AutomatonState>;
 	@:arpField public var automaton:Automaton;
@@ -42,5 +41,4 @@ class AutomatonState implements IArpObject {
 		if (this.automaton == null) return false;
 		return this.automaton.transition(key, payload);
 	}
-
 }

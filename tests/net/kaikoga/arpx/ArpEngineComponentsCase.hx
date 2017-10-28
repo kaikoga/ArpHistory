@@ -1,5 +1,8 @@
 ﻿package net.kaikoga.arpx;
 
+import net.kaikoga.arpx.console.CompositeConsole;
+import net.kaikoga.arpx.console.CameraConsole;
+import net.kaikoga.arpx.console.AutomatonConsole;
 import net.kaikoga.arpx.chip.decorators.DecorateChip;
 import net.kaikoga.arpx.texture.Texture;
 import net.kaikoga.arpx.texture.ResourceTexture;
@@ -54,6 +57,9 @@ class ArpEngineComponentsCase {
 		assertNotNull(new DecorateChip());
 
 		assertNotNull(new Console());
+		assertNotNull(new AutomatonConsole());
+		assertNotNull(new CameraConsole());
+		assertNotNull(new CompositeConsole());
 
 		assertNotNull(new Debugger());
 		assertNotNull(new SocketClientDebugger());

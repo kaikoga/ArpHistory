@@ -1,21 +1,19 @@
 package net.kaikoga.arpx.automaton;
 
-import net.kaikoga.arpx.automaton.events.AutomatonErrorEvent;
-import net.kaikoga.arpx.automaton.events.AutomatonTransitionEvent;
-import net.kaikoga.arp.ds.IList;
-import net.kaikoga.arp.events.IArpSignalOut;
-import net.kaikoga.arp.events.ArpSignal;
 import net.kaikoga.arp.domain.IArpObject;
+import net.kaikoga.arp.ds.IList;
+import net.kaikoga.arp.events.ArpSignal;
+import net.kaikoga.arp.events.IArpSignalOut;
+import net.kaikoga.arpx.automaton.events.AutomatonErrorEvent;
 import net.kaikoga.arpx.automaton.events.AutomatonStateEvent;
+import net.kaikoga.arpx.automaton.events.AutomatonTransitionEvent;
 import net.kaikoga.arpx.state.AutomatonState;
-import net.kaikoga.arpx.console.Console;
 
 @:arpType("automaton", "automaton")
 class Automaton implements IArpObject {
 
 	@:arpField public var stateStack:IList<AutomatonState>;
 	@:arpField public var state:AutomatonState;
-	@:arpField public var console:Console;
 
 	private var _onEnterState:ArpSignal<AutomatonStateEvent>;
 	public var onEnterState(get, never):IArpSignalOut<AutomatonStateEvent>;
@@ -37,28 +35,15 @@ class Automaton implements IArpObject {
 		this._onError = new ArpSignal();
 	}
 
-	/*
-	public function toView(width:Int, height:Int):ArpView {
-		return new ArpView(width, height, this);
-	}
-	*/
-
-	private function pushState(newStateTemplate:AutomatonState, payload:Dynamic = null):AutomatonState {
+	private function pushState(newState:AutomatonState, payload:Dynamic = null):AutomatonState {
 		if (this.state != null) {
 			this.stateStack.push(this.state);
 		}
 
-		//create a clone of the state
-		var newState:AutomatonState = cast newStateTemplate.arpClone();
-		newState.originalState = newStateTemplate;
 		this.state = newState;
 		newState.onEnterState(payload);
 		if (this._onEnterState.willTrigger()) {
 			this._onEnterState.dispatch(new AutomatonStateEvent(AutomatonStateEventKind.Enter, newState, this.stateStack, payload));
-		}
-		var console:Console = newState.toConsole();
-		if (console != null) {
-			this.console = console;
 		}
 		return newState;
 	}
@@ -129,18 +114,4 @@ class Automaton implements IArpObject {
 		}
 		return false;
 	}
-
-	/*
-	public function display(context:DisplayContext):Void {
-		if (this.console) {
-			context.addChild(this.console);
-		}
-	}
-	*/
-
-	public function tick():Void {
-		//this.console.tick();
-	}
 }
-
-

@@ -2,13 +2,13 @@ package net.kaikoga.arpx.backends.flash.console;
 
 import flash.display.BitmapData;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.console.Console;
+import net.kaikoga.arpx.console.CameraConsole;
 
-class ConsoleFlashImpl extends ArpObjectImplBase implements IConsoleFlashImpl {
+class CameraConsoleFlashImpl extends ArpObjectImplBase implements IConsoleFlashImpl {
 
-	private var console:Console;
+	private var console:CameraConsole;
 
-	public function new(console:Console) {
+	public function new(console:CameraConsole) {
 		super();
 		this.console = console;
 	}

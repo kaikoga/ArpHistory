@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.camera;
 
+import net.kaikoga.arp.task.ITickable;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.ds.IList;
 import net.kaikoga.arp.structs.ArpPosition;
@@ -12,9 +13,10 @@ import net.kaikoga.arpx.backends.flash.camera.CameraFlashImpl;
 #end
 
 @:arpType("camera", "camera")
-class Camera implements IArpObject
+class Camera implements IArpObject implements ITickable
 #if (arp_backend_flash || arp_backend_openfl) implements ICameraFlashImpl #end
 {
+	@:arpField public var ticks:Bool = false;
 	@:arpField public var visible:Bool = true;
 	@:arpField public var position:ArpPosition;
 	@:arpField public var field:Field;
@@ -26,5 +28,10 @@ class Camera implements IArpObject
 	@:arpWithoutBackend
 #end
 	public function new() {
+	}
+
+	public function tick(timeslice:Float):Bool {
+		if (ticks) field.tick(timeslice);
+		return true;
 	}
 }
