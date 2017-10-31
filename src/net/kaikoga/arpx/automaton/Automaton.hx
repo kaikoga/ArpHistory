@@ -12,8 +12,10 @@ import net.kaikoga.arpx.state.AutomatonState;
 @:arpType("automaton", "automaton")
 class Automaton implements IArpObject {
 
-	@:arpField public var stateStack:IList<AutomatonState>;
-	@:arpField public var state:AutomatonState;
+	@:arpField("state") public var stateStack:IList<AutomatonState>;
+
+	public var state(get, never):AutomatonState;
+	inline private function get_state():AutomatonState return stateStack.last();
 
 	private var _onEnterState:ArpSignal<AutomatonStateEvent>;
 	public var onEnterState(get, never):IArpSignalOut<AutomatonStateEvent>;
@@ -36,14 +38,10 @@ class Automaton implements IArpObject {
 	}
 
 	private function pushState(newState:AutomatonState, payload:Dynamic = null):AutomatonState {
-		if (this.state != null) {
-			this.stateStack.push(this.state);
-		}
-
-		this.state = newState;
+		this.stateStack.push(newState);
 		newState.onEnterState(payload);
 		if (this._onEnterState.willTrigger()) {
-			this._onEnterState.dispatch(new AutomatonStateEvent(AutomatonStateEventKind.Enter, newState, this.stateStack, payload));
+			this._onEnterState.dispatch(new AutomatonStateEvent(AutomatonStateEventKind.Enter, this.stateStack, payload));
 		}
 		return newState;
 	}
@@ -53,10 +51,9 @@ class Automaton implements IArpObject {
 		if (nowState != null) {
 			nowState.onLeaveState(payload);
 			if (this._onLeaveState.willTrigger()) {
-				this._onLeaveState.dispatch(new AutomatonStateEvent(AutomatonStateEventKind.Leave, nowState, this.stateStack, payload));
+				this._onLeaveState.dispatch(new AutomatonStateEvent(AutomatonStateEventKind.Leave, this.stateStack, payload));
 			}
 			nowState.automaton = null;
-			this.state = this.stateStack.last();
 			this.stateStack.pop();
 		}
 	}
@@ -79,12 +76,12 @@ class Automaton implements IArpObject {
 		this.popState(payload);
 	}
 
-	private function switchState(oldState:AutomatonState, newStateTemplate:AutomatonState, key:String, payload:Dynamic = null):Void {
+	private function switchState(oldState:AutomatonState, newState:AutomatonState, key:String, payload:Dynamic = null):Void {
 		if (this._onTransition.willTrigger()) {
-			this._onTransition.dispatch(new AutomatonTransitionEvent(AutomatonTransitionEventKind.Transition, oldState, newStateTemplate, key, payload));
+			this._onTransition.dispatch(new AutomatonTransitionEvent(AutomatonTransitionEventKind.Transition, this.stateStack, oldState, newState, key, payload));
 		}
 		this.leaveState(oldState, payload);
-		this.enterState(newStateTemplate, payload);
+		this.enterState(newState, payload);
 	}
 
 	public function transition(key:String, payload:Dynamic = null):Bool {
@@ -92,7 +89,7 @@ class Automaton implements IArpObject {
 		var newState:AutomatonState;
 		if (nowState == null) {
 			if (this._onError.willTrigger()) {
-				this._onError.dispatch(new AutomatonErrorEvent(AutomatonErrorEventKind.Inactive, nowState, key, payload));
+				this._onError.dispatch(new AutomatonErrorEvent(AutomatonErrorEventKind.Inactive, this.stateStack, key, payload));
 			}
 			return false;
 		}
@@ -110,7 +107,7 @@ class Automaton implements IArpObject {
 			i--;
 		}
 		if (this._onError.willTrigger()) {
-			this._onError.dispatch(new AutomatonErrorEvent(AutomatonErrorEventKind.TransitionNotFound, nowState, key, payload));
+			this._onError.dispatch(new AutomatonErrorEvent(AutomatonErrorEventKind.TransitionNotFound, this.stateStack, key, payload));
 		}
 		return false;
 	}

@@ -1,16 +1,15 @@
 package net.kaikoga.arpx.automaton.events;
 
+import net.kaikoga.arp.ds.IList;
 import net.kaikoga.arpx.state.AutomatonState;
 
 class AutomatonErrorEvent extends AutomatonEvent<AutomatonErrorEventKind> {
 
-	public var state:AutomatonState;
 	public var key:String;
 	public var payload:Dynamic;
 
-	public function new(kind:AutomatonErrorEventKind, state:AutomatonState, key:String, payload:Dynamic) {
-		super(kind);
-		this.state = state;
+	public function new(kind:AutomatonErrorEventKind, stateStack:IList<AutomatonState>, key:String, payload:Dynamic) {
+		super(kind, stateStack);
 		this.key = key;
 		this.payload = payload;
 	}
@@ -20,7 +19,7 @@ class AutomatonErrorEvent extends AutomatonEvent<AutomatonErrorEventKind> {
 			case AutomatonErrorEventKind.Inactive:
 				return 'Error: Automaton is not active';
 			case AutomatonErrorEventKind.TransitionNotFound:
-				return 'Error: ${state != null ? state.label : null} -> ${key} -> No transition found';
+				return 'Error: ${stateStackLabels.join(", ")} -> ${key} -> No transition found';
 		}
 	}
 }
