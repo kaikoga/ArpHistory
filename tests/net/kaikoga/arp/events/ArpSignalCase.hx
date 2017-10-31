@@ -36,4 +36,16 @@ class ArpSignalCase {
 		assertEquals(v, 37);
 	}
 
+	public function testDispatchLazy():Void {
+		var v:Int = 0;
+		var lazy:Int->Int = function(i:Int):Int { v += i; return i;}
+		var f:Int->Void = function(i:Int):Void { }
+		this.signal.dispatchLazy(function() return lazy(0x1));
+		this.signal.push(f);
+		this.signal.dispatchLazy(function() return lazy(0x10));
+		this.signal.push(f);
+		this.signal.dispatchLazy(function() return lazy(0x100));
+		assertEquals(v, 0x110);
+	}
+
 }
