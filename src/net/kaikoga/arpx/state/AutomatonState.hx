@@ -12,20 +12,18 @@ class AutomatonState implements IArpObject {
 	@:arpField public var label:String;
 	@:arpField("state") public var childState:AutomatonState;
 	@:arpField("transition") public var transitions:IMap<String, AutomatonState>;
-	@:arpField public var automaton:Automaton;
 
-	public function new() {
-	}
+	public function new() return;
 
-	public function getTransition(key:String, payload:Dynamic = null):Null<AutomatonState> {
-		return this.transitions.get(key);
-	}
+	public function getTransition(key:String, payload:Dynamic = null):Null<AutomatonState> return this.transitions.get(key);
 
-	public function onEnterState(payload:Dynamic = null):Void {
-	}
+	@:allow(net.kaikoga.arpx.automaton.Automaton)
+	private function enterState(automaton:Automaton, payload:Dynamic = null):Void onEnterState(automaton, payload);
+	@:allow(net.kaikoga.arpx.automaton.Automaton)
+	private function leaveState(automaton:Automaton, payload:Dynamic = null):Void onLeaveState(automaton, payload);
 
-	public function onLeaveState(payload:Dynamic = null):Void {
-	}
+	public function onEnterState(automaton:Automaton, payload:Dynamic = null):Void return;
+	public function onLeaveState(automaton:Automaton, payload:Dynamic = null):Void return;
 
 	public function toAutomaton():Automaton {
 		var automaton:Automaton = this.arpDomain.allocObject(Automaton);
@@ -33,12 +31,5 @@ class AutomatonState implements IArpObject {
 		return automaton;
 	}
 
-	public function toConsole():Console {
-		return null;
-	}
-
-	public function transition(key:String, payload:Dynamic = null):Bool {
-		if (this.automaton == null) return false;
-		return this.automaton.transition(key, payload);
-	}
+	public function toConsole():Console return null;
 }
