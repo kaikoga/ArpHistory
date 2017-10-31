@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.backends.flash.socketClient;
 
+import flash.errors.SecurityError;
 import flash.events.Event;
 import flash.events.IOErrorEvent;
 import flash.events.ProgressEvent;
@@ -51,7 +52,12 @@ class TcpSocketClientFlashImpl extends SocketClientImplBase {
 		var array:Array<String> = this.socketClient.host.split(":");
 		if (array[0] != null) host = array[0];
 		if (array[1] != null) try { port = Std.parseInt(array[1]); } catch(d:Dynamic) {}
-		this.socket.connect(host, port);
+		try {
+			this.socket.connect(host, port);
+		} catch (e:SecurityError) {
+			this.socketClient.arpDomain.log("socketClient", e.message());
+			onSocketError(null);
+		}
 	}
 
 	private function onSocketConnect(event:Event):Void {
