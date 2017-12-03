@@ -9,11 +9,7 @@ import net.kaikoga.arpx.chip.GridChip;
 import net.kaikoga.arpx.chip.NativeTextChip;
 import net.kaikoga.arpx.chip.RectChip;
 import net.kaikoga.arpx.chip.StringChip;
-import net.kaikoga.arpx.console.AutomatonConsole;
-import net.kaikoga.arpx.console.CameraConsole;
-import net.kaikoga.arpx.console.CompositeConsole;
 import net.kaikoga.arpx.console.Console;
-import net.kaikoga.arpx.console.ScreenConsole;
 import net.kaikoga.arpx.debugger.Debugger;
 import net.kaikoga.arpx.debugger.SocketClientDebugger;
 import net.kaikoga.arpx.faceList.FaceList;
@@ -63,7 +59,6 @@ class ArpEngineComponentsCase {
 		assertNotNull(new DecorateChip());
 
 		assertNotNull(new Console());
-		assertNotNull(new ScreenConsole());
 
 		assertNotNull(new Debugger());
 		assertNotNull(new SocketClientDebugger());
