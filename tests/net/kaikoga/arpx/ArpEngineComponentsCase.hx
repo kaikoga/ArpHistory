@@ -1,41 +1,47 @@
 ﻿package net.kaikoga.arpx;
 
-import net.kaikoga.arpx.console.CompositeConsole;
-import net.kaikoga.arpx.console.CameraConsole;
-import net.kaikoga.arpx.console.AutomatonConsole;
+import net.kaikoga.arpx.anchor.Anchor;
+import net.kaikoga.arpx.automaton.Automaton;
+import net.kaikoga.arpx.camera.Camera;
+import net.kaikoga.arpx.chip.Chip;
 import net.kaikoga.arpx.chip.decorators.DecorateChip;
-import net.kaikoga.arpx.texture.Texture;
-import net.kaikoga.arpx.texture.ResourceTexture;
-import net.kaikoga.arpx.texture.FileTexture;
-import net.kaikoga.arpx.state.AutomatonState;
-import net.kaikoga.arpx.logger.Logger;
+import net.kaikoga.arpx.chip.GridChip;
 import net.kaikoga.arpx.chip.NativeTextChip;
+import net.kaikoga.arpx.chip.RectChip;
 import net.kaikoga.arpx.chip.StringChip;
+import net.kaikoga.arpx.console.AutomatonConsole;
+import net.kaikoga.arpx.console.CameraConsole;
+import net.kaikoga.arpx.console.CompositeConsole;
+import net.kaikoga.arpx.console.Console;
+import net.kaikoga.arpx.console.ScreenConsole;
 import net.kaikoga.arpx.debugger.Debugger;
 import net.kaikoga.arpx.debugger.SocketClientDebugger;
 import net.kaikoga.arpx.faceList.FaceList;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.file.File;
 import net.kaikoga.arpx.file.ResourceFile;
-import net.kaikoga.arpx.socketClient.TcpSocketClient;
-import net.kaikoga.arpx.socketClient.TcpCachedSocketClient;
-import net.kaikoga.arpx.socketClient.SocketClient;
-import net.kaikoga.arpx.logger.TraceLogger;
-import net.kaikoga.arpx.logger.StoreLogger;
+import net.kaikoga.arpx.logger.Logger;
 import net.kaikoga.arpx.logger.SocketClientLogger;
-import net.kaikoga.arpx.automaton.Automaton;
-import net.kaikoga.arpx.anchor.Anchor;
-import net.kaikoga.arpx.chip.GridChip;
-import net.kaikoga.arpx.camera.Camera;
-import net.kaikoga.arpx.chip.Chip;
-import net.kaikoga.arpx.mortal.Mortal;
-import net.kaikoga.arpx.text.TextData;
-import net.kaikoga.arpx.console.Console;
+import net.kaikoga.arpx.logger.StoreLogger;
+import net.kaikoga.arpx.logger.TraceLogger;
 import net.kaikoga.arpx.mortal.ChipMortal;
 import net.kaikoga.arpx.mortal.CompositeMortal;
+import net.kaikoga.arpx.mortal.Mortal;
+import net.kaikoga.arpx.screen.AutomatonScreen;
+import net.kaikoga.arpx.screen.CompositeScreen;
+import net.kaikoga.arpx.screen.FieldScreen;
+import net.kaikoga.arpx.screen.HudScreen;
+import net.kaikoga.arpx.screen.Screen;
+import net.kaikoga.arpx.socketClient.SocketClient;
+import net.kaikoga.arpx.socketClient.TcpCachedSocketClient;
+import net.kaikoga.arpx.socketClient.TcpSocketClient;
+import net.kaikoga.arpx.state.AutomatonState;
 import net.kaikoga.arpx.text.FixedTextData;
 import net.kaikoga.arpx.text.ParametrizedTextData;
-import net.kaikoga.arpx.chip.RectChip;
+import net.kaikoga.arpx.text.TextData;
+import net.kaikoga.arpx.texture.FileTexture;
+import net.kaikoga.arpx.texture.ResourceTexture;
+import net.kaikoga.arpx.texture.Texture;
 
 import picotest.PicoAssert.*;
 
@@ -57,9 +63,7 @@ class ArpEngineComponentsCase {
 		assertNotNull(new DecorateChip());
 
 		assertNotNull(new Console());
-		assertNotNull(new AutomatonConsole());
-		assertNotNull(new CameraConsole());
-		assertNotNull(new CompositeConsole());
+		assertNotNull(new ScreenConsole());
 
 		assertNotNull(new Debugger());
 		assertNotNull(new SocketClientDebugger());
@@ -83,6 +87,12 @@ class ArpEngineComponentsCase {
 		assertNotNull(new SocketClient());
 		assertNotNull(new TcpCachedSocketClient());
 		assertNotNull(new TcpSocketClient());
+
+		assertNotNull(new Screen());
+		assertNotNull(new FieldScreen());
+		assertNotNull(new AutomatonScreen());
+		assertNotNull(new CompositeScreen());
+		assertNotNull(new HudScreen());
 
 		assertNotNull(new AutomatonState());
 

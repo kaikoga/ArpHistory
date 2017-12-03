@@ -3,7 +3,7 @@
 import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arpx.automaton.Automaton;
 import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arpx.console.Console;
+import net.kaikoga.arpx.screen.Screen;
 
 @:access(net.kaikoga.arpx.automaton.Automaton)
 @:arpType("state", "state")
@@ -31,5 +31,5 @@ class AutomatonState implements IArpObject {
 		return automaton;
 	}
 
-	public function toConsole():Console return null;
+	public function toScreen():Screen return null;
 }

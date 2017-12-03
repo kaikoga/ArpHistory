@@ -1,14 +1,14 @@
 ﻿package net.kaikoga.arpx.state;
 
 import net.kaikoga.arpx.automaton.Automaton;
-import net.kaikoga.arpx.console.Console;
+import net.kaikoga.arpx.screen.Screen;
 
 @:access(net.kaikoga.arpx.automaton.Automaton)
 @:arpType("state", "static")
 class AutomatonStaticState extends AutomatonState {
 
 	@:arpField public var automaton:Automaton;
-	@:arpField("console") public var console:Console;
+	@:arpField("screen") public var screen:Screen;
 
 	public function new() super();
 
@@ -23,7 +23,7 @@ class AutomatonStaticState extends AutomatonState {
 		this.automaton = null;
 	}
 
-	override public function toConsole():Console return this.console;
+	override public function toScreen():Screen return this.screen;
 
 	public function transition(key:String, payload:Dynamic = null):Bool {
 		if (this.automaton == null) return false;

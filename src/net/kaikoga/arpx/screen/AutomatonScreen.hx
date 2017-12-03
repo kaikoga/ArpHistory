@@ -1,50 +1,50 @@
-package net.kaikoga.arpx.console;
+package net.kaikoga.arpx.screen;
 
 import net.kaikoga.arpx.automaton.events.AutomatonStateEvent;
 import net.kaikoga.arpx.automaton.Automaton;
 
 #if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.console.AutomatonConsoleFlashImpl;
+import net.kaikoga.arpx.backends.flash.screen.AutomatonScreenFlashImpl;
 #end
 
-@:arpType("console", "automaton")
-class AutomatonConsole extends Console {
+@:arpType("screen", "automaton")
+class AutomatonScreen extends Screen {
 
 	@:arpBarrier @:arpField public var automaton:Automaton;
-	@:arpField(false) private var console:Console;
+	@:arpField(false) private var screen:Screen;
 
 #if (arp_backend_flash || arp_backend_openfl)
-	@:arpImpl private var flashImpl:AutomatonConsoleFlashImpl;
+	@:arpImpl private var flashImpl:AutomatonScreenFlashImpl;
 #else
 	@:arpWithoutBackend
 #end
 	public function new() super();
 
 	@:arpHeatUp private function heatUp():Bool {
-		this.console = this.automaton.state.toConsole();
+		this.screen = this.automaton.state.toScreen();
 		this.automaton.onEnterState.push(this.onEnterState);
 		this.automaton.onLeaveState.push(this.onLeaveState);
 		return true;
 	}
 
 	@:arpHeatDown private function heatUp():Bool {
-		this.console = null;
+		this.screen = null;
 		this.automaton.onEnterState.remove(this.onEnterState);
 		this.automaton.onLeaveState.remove(this.onLeaveState);
 		return true;
 	}
 
 	private function onEnterState(v:AutomatonStateEvent):Void {
-		this.console = v.state.toConsole();
+		this.screen = v.state.toScreen();
 	}
 
 	private function onLeaveState(v:AutomatonStateEvent):Void {
-		this.console = null;
+		this.screen = null;
 	}
 
 	override public function tick(timeslice:Float):Bool {
 		pushStack();
-		this.console.tick(timeslice);
+		this.screen.tick(timeslice);
 		var v:TransitionData = popStack();
 		if (v != null) return this.automaton.transition(v.key, v.payload);
 		return true;
