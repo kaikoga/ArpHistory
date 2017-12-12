@@ -10,7 +10,9 @@ import net.kaikoga.arpx.backends.flash.fieldGizmo.IFieldGizmoFlashImpl;
 class FieldGizmo implements IArpObject
 #if (arp_backend_flash || arp_backend_openfl) implements IFieldGizmoFlashImpl #end
 {
-#if (arp_backend_flash || arp_backend_openfl)
+	@:arpField public var visible:Bool = true;
+
+	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:IFieldGizmoFlashImpl;
 #else
 	@:arpWithoutBackend
