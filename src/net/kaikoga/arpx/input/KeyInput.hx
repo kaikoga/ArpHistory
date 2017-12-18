@@ -5,7 +5,7 @@ import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arpx.backends.flash.input.KeyInputFlashImpl;
 
 @:arpType("input", "key")
-class KeyInput extends Input {
+class KeyInput extends PhysicalInput {
 
 	public var keyBindings:IMap<Int, KeyInputBinding>;
 
