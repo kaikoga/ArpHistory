@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.screen;
 
+import net.kaikoga.arpx.input.Input;
 import net.kaikoga.arpx.automaton.events.AutomatonStateEvent;
 import net.kaikoga.arpx.automaton.Automaton;
 
@@ -48,6 +49,10 @@ class AutomatonScreen extends Screen {
 		var v:TransitionData = popStack();
 		if (v != null) return this.automaton.transition(v.key, v.payload);
 		return true;
+	}
+
+	override public function visitFocus(other:Null<Input>):Null<Input> {
+		return this.screen.visitFocus(other);
 	}
 
 	private static var _transitionStack:TransitionStack;

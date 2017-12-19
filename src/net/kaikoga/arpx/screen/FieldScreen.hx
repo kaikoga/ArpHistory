@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.screen;
 
+import net.kaikoga.arpx.input.Input;
 import net.kaikoga.arpx.fieldGizmo.FieldGizmo;
 import net.kaikoga.arp.ds.IList;
 import net.kaikoga.arpx.camera.Camera;
@@ -14,6 +15,7 @@ class FieldScreen extends Screen {
 	@:arpField public var field:Field;
 	@:arpBarrier @:arpField("fieldGizmo") public var fieldGizmos:IList<FieldGizmo>;
 	@:arpField public var camera:Camera;
+	@:arpField public var input:Input;
 
 	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:FieldScreenFlashImpl;
@@ -27,5 +29,9 @@ class FieldScreen extends Screen {
 	override public function tick(timeslice:Float):Bool {
 		if (ticks) field.tick(timeslice);
 		return true;
+	}
+
+	override public function visitFocus(other:Null<Input>):Null<Input> {
+		return if (this.visible && this.input != null) this.input.visitFocus(other) else other;
 	}
 }

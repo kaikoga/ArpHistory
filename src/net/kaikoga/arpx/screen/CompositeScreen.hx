@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.screen;
 
+import net.kaikoga.arpx.input.Input;
 import net.kaikoga.arp.ds.IOmap;
 
 #if (arp_backend_flash || arp_backend_openfl)
@@ -22,4 +23,8 @@ class CompositeScreen extends Screen {
 		return true;
 	}
 
+	override public function visitFocus(other:Null<Input>):Null<Input> {
+		for (screen in this.screens) other = screen.visitFocus(other);
+		return other;
+	}
 }

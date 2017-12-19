@@ -18,6 +18,9 @@ class Input implements IArpObject
 	public function axis(button:String):InputAxis {
 		return new InputAxis();
 	}
+
+	public function visitFocus(other:Null<Input>):Null<Input> return other;
+	public function setFocus():Void return;
 }
 
 
