@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.text;
 
+import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arp.iterators.ERegIterator;
 
 @:arpType("text", "ptext")
@@ -28,7 +29,7 @@ class ParametrizedTextData extends TextData {
 		return true;
 	}
 
-	override public function publish(params:Map<String, Dynamic> = null):String {
+	override public function publish(params:ArpParams = null):String {
 		if (this._nodes == null) this.heatUp();
 
 		var result:String = "";
@@ -40,7 +41,7 @@ class ParametrizedTextData extends TextData {
 }
 
 private interface INode {
-	function publishSelf(params:Map<String, Dynamic> = null):String;
+	function publishSelf(params:ArpParams = null):String;
 }
 
 private class FixedNode implements INode {
@@ -50,7 +51,7 @@ private class FixedNode implements INode {
 		this.value = value;
 	}
 
-	public function publishSelf(params:Map<String, Dynamic> = null):String{
+	public function publishSelf(params:ArpParams = null):String{
 		return this.value;
 	}
 }
@@ -97,10 +98,10 @@ private class ParametrizedNode implements INode {
 		return ~/./.map(Std.string(value), toZenChar);
 	}
 
-	public function publishSelf(params:Map<String, Dynamic> = null):String {
+	public function publishSelf(params:ArpParams = null):String {
 		if (params == null) return this.value;
 
-		var param:Dynamic = params[this._name];
+		var param:Dynamic = params.getAsString(this._name);
 		var str:String;
 		if (Std.is(param, TextData)) {
 			str = cast (param, TextData).publish();

@@ -1,9 +1,10 @@
 ﻿package net.kaikoga.arpx.text;
 
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
-import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.domain.core.ArpType;
+import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
+import net.kaikoga.arp.seed.ArpSeed;
+import net.kaikoga.arp.structs.ArpParams;
 
 import picotest.PicoAssert.*;
 
@@ -34,10 +35,10 @@ class ParametrizedTextDataCase {
 	}
 
 	public function testComplexPublish() {
-		var map:Map<String, Dynamic> = new Map();
-		map.set("foo", "hoge");
-		map.set("bar", "fuga");
-		assertEquals("hogefuga", me.publish(map));
+		var params:ArpParams = new ArpParams();
+		params.set("foo", "hoge");
+		params.set("bar", "fuga");
+		assertEquals("hogefuga", me.publish(params));
 	}
 
 }
