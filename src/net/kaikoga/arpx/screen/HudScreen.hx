@@ -13,7 +13,6 @@ import net.kaikoga.arpx.backends.flash.screen.HudScreenFlashImpl;
 @:arpType("screen", "hud")
 class HudScreen extends Screen {
 	@:arpBarrier @:arpField("mortal") public var mortals:IList<Mortal>;
-	@:arpBarrier @:arpField("menu") public var menus:IList<Menu>;
 	@:arpField public var camera:Camera;
 	@:arpField public var input:Input;
 

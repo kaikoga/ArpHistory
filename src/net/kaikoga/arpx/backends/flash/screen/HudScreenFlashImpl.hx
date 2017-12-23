@@ -25,7 +25,6 @@ class HudScreenFlashImpl extends ArpObjectImplBase implements IScreenFlashImpl {
 			workPt.x = -pos.x;
 			workPt.y = -pos.y;
 			for (mortal in this.screen.mortals) mortal.copySelf(bitmapData, workPt);
-			for (menu in this.screen.menus) menu.copySelf(bitmapData, workPt);
 		}
 	}
 }

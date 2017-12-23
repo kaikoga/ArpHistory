@@ -1,19 +1,14 @@
 package net.kaikoga.arpx.menu;
 
+import net.kaikoga.arpx.text.TextData;
+import net.kaikoga.arp.ds.IOmap;
 import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arpx.backends.flash.menu.IMenuFlashImpl;
 
-@:arpType("menu", "null")
-class Menu implements IArpObject
-#if (arp_backend_flash || arp_backend_openfl) implements IMenuFlashImpl #end
-{
+@:arpType("menu")
+class Menu implements IArpObject {
 	@:arpField public var visible:Bool = true;
+	@:arpField("text") public var texts:IOmap<String, TextData>;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-	@:arpImpl private var flashImpl:IMenuFlashImpl;
-	#else
-	@:arpWithoutBackend
-	#end
 	public function new() {
 	}
 
