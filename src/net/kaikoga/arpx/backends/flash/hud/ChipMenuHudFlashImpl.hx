@@ -1,32 +1,32 @@
-package net.kaikoga.arpx.backends.flash.mortal;
+package net.kaikoga.arpx.backends.flash.hud;
 
 import flash.display.BitmapData;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.flash.geom.ITransform;
+import net.kaikoga.arpx.hud.ChipMenuHud;
 import net.kaikoga.arpx.menu.Menu;
-import net.kaikoga.arpx.mortal.ChipMenuMortal;
 
-class ChipMenuMortalFlashImpl extends ArpObjectImplBase implements IMortalFlashImpl {
+class ChipMenuHudFlashImpl extends ArpObjectImplBase implements IHudFlashImpl {
 
-	private var mortal:ChipMenuMortal;
+	private var hud:ChipMenuHud;
 
-	public function new(mortal:ChipMenuMortal) {
+	public function new(hud:ChipMenuHud) {
 		super();
-		this.mortal = mortal;
+		this.hud = hud;
 	}
 
 	public function copySelf(bitmapData:BitmapData, transform:ITransform):Void {
-		if (mortal.visible && mortal.chip != null) {
-			var menu:Menu = mortal.menu;
-			var pos:ArpPosition = mortal.position;
-			var dPos:ArpPosition = mortal.dPosition;
+		if (hud.visible && hud.chip != null) {
+			var menu:Menu = hud.menu;
+			var pos:ArpPosition = hud.position;
+			var dPos:ArpPosition = hud.dPosition;
 			transform = transform.concatXY(pos.x, pos.y);
 			var param:ArpParams = new ArpParams();
 			for (text in menu.texts) {
 				param.set("face", text.publish(param));
-				mortal.chip.copyChip(bitmapData, transform, param);
+				hud.chip.copyChip(bitmapData, transform, param);
 				transform._concatXY(dPos.x, dPos.y);
 			}
 		}

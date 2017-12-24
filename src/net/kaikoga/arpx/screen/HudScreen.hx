@@ -1,9 +1,8 @@
 package net.kaikoga.arpx.screen;
 
-import net.kaikoga.arpx.menu.Menu;
+import net.kaikoga.arpx.hud.Hud;
 import net.kaikoga.arpx.input.Input;
 import net.kaikoga.arpx.camera.Camera;
-import net.kaikoga.arpx.mortal.Mortal;
 import net.kaikoga.arp.ds.IList;
 
 #if (arp_backend_flash || arp_backend_openfl)
@@ -12,7 +11,7 @@ import net.kaikoga.arpx.backends.flash.screen.HudScreenFlashImpl;
 
 @:arpType("screen", "hud")
 class HudScreen extends Screen {
-	@:arpBarrier @:arpField("mortal") public var mortals:IList<Mortal>;
+	@:arpBarrier @:arpField("hud") public var huds:IList<Hud>;
 	@:arpField public var camera:Camera;
 	@:arpField public var input:Input;
 

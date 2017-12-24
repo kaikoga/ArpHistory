@@ -24,7 +24,7 @@ class HudScreenFlashImpl extends ArpObjectImplBase implements IScreenFlashImpl {
 			var pos:ArpPosition = (this.screen.camera != null) ? this.screen.camera.position : _workPos;
 			workPt.x = -pos.x;
 			workPt.y = -pos.y;
-			for (mortal in this.screen.mortals) mortal.copySelf(bitmapData, workPt);
+			for (hud in this.screen.huds) hud.copySelf(bitmapData, workPt);
 		}
 	}
 }
