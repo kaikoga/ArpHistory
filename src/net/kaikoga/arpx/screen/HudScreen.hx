@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.screen;
 
+import net.kaikoga.arpx.input.IInputControl;
 import net.kaikoga.arpx.hud.Hud;
 import net.kaikoga.arpx.input.Input;
 import net.kaikoga.arpx.camera.Camera;
@@ -24,6 +25,9 @@ class HudScreen extends Screen {
 	public function new() super();
 
 	override public function tick(timeslice:Float):Bool {
+		var other:Null<IInputControl> = null;
+		for (hud in this.huds) other = hud.visitFocus(other);
+		if (other != null) other.interact(this.input);
 		return true;
 	}
 

@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.hud;
 
+import net.kaikoga.arpx.input.IInputControl;
 import net.kaikoga.arp.ds.IList;
 
 #if (arp_backend_flash || arp_backend_openfl)
@@ -19,6 +20,11 @@ class CompositeHud extends Hud {
 #end
 	public function new() {
 		super();
+	}
+
+	override public function visitFocus(other:Null<IInputControl>):Null<IInputControl> {
+		for (hud in this.huds) other = hud.visitFocus(other);
+		return other;
 	}
 }
 
