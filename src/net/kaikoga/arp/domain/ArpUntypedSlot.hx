@@ -43,7 +43,7 @@ class ArpUntypedSlot {
 	inline private function get_refCount():Int { return this._refCount; }
 
 	inline public function addReference():ArpUntypedSlot { this._refCount++; return this; }
-	inline public function delReference():ArpUntypedSlot {
+	/* inline */ public function delReference():ArpUntypedSlot {
 		if (--this._refCount <= 0) {
 			if (this._value != null) {
 				this._value.arpDispose();
