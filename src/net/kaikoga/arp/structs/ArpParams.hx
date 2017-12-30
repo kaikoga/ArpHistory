@@ -18,16 +18,16 @@ abstract ArpParamsProxy(ArpParams) from ArpParams to ArpParams {
 }
 
 @:build(net.kaikoga.arp.ArpDomainMacros.buildStruct("Params"))
-class ArpParams extends StdMap<String, Dynamic> implements IPersistable {
+class ArpParams extends StdMap<String, Dynamic> implements IPersistable implements IArpParamsRead {
 	public function new() super();
 
-	inline public function getInt(key:String, defaultValue = null):Null<Int> return ArpParamsMacros.getSafe(key, defaultValue);
-	inline public function getFloat(key:String, defaultValue = null):Null<Float> return ArpParamsMacros.getSafe(key, defaultValue);
-	inline public function getString(key:String, defaultValue = null):String return ArpParamsMacros.getSafe(key, defaultValue);
-	inline public function getBool(key:String, defaultValue = null):Null<Bool> return ArpParamsMacros.getSafe(key, defaultValue);
-	inline public function getArpDirection(key:String, defaultValue = null):ArpDirection return ArpParamsMacros.getSafe(key, defaultValue);
+	public function getInt(key:String, defaultValue = null):Null<Int> return ArpParamsMacros.getSafe(key, defaultValue);
+	public function getFloat(key:String, defaultValue = null):Null<Float> return ArpParamsMacros.getSafe(key, defaultValue);
+	public function getString(key:String, defaultValue = null):String return ArpParamsMacros.getSafe(key, defaultValue);
+	public function getBool(key:String, defaultValue = null):Null<Bool> return ArpParamsMacros.getSafe(key, defaultValue);
+	public function getArpDirection(key:String, defaultValue = null):ArpDirection return ArpParamsMacros.getSafe(key, defaultValue);
 
-	inline public function getAsString(key:String, defaultValue = null):String return ArpParamsMacros.getAsString(key, defaultValue);
+	public function getAsString(key:String, defaultValue = null):String return ArpParamsMacros.getAsString(key, defaultValue);
 
 	public function initWithSeed(seed:ArpSeed):ArpParams {
 		if (seed == null) return this;
