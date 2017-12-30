@@ -1,14 +1,14 @@
 package net.kaikoga.arpx.backends.flash.chip;
 
-import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.chip.NativeTextChip;
-import flash.text.TextFormat;
-import flash.text.TextFieldAutoSize;
-import flash.text.TextField;
-import flash.geom.Matrix;
-import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import flash.display.BitmapData;
+import flash.geom.Matrix;
+import flash.text.TextField;
+import flash.text.TextFieldAutoSize;
+import flash.text.TextFormat;
+import net.kaikoga.arp.structs.IArpParamsRead;
+import net.kaikoga.arpx.backends.ArpObjectImplBase;
+import net.kaikoga.arpx.backends.flash.geom.ITransform;
+import net.kaikoga.arpx.chip.NativeTextChip;
 
 class NativeTextChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 
@@ -51,7 +51,7 @@ class NativeTextChipFlashImpl extends ArpObjectImplBase implements IChipFlashImp
 	}
 
 	private static var _workDrawMatrix:Matrix = new Matrix();
-	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:ArpParams = null):Void {
+	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:IArpParamsRead = null):Void {
 		this.arpHeatUp();
 		transform = transform.concatXY(-2, -2 - this.ascent);
 		var text:String = null;

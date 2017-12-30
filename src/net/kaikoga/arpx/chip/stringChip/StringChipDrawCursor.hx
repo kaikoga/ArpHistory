@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.chip.stringChip;
 
+import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arp.structs.ArpParams;
 
 class StringChipDrawCursor {
@@ -12,14 +13,14 @@ class StringChipDrawCursor {
 	private var nextY:Float = 0;
 	private var params:ArpParamsProxy;
 
-	public function new(x:Float, y:Float, params:ArpParams) {
+	public function new(x:Float, y:Float, params:IArpParamsRead) {
 		this.initX = x;
 		this.x = x;
 		this.nextX = x;
 		this.initY = y;
 		this.y = y;
 		this.nextY = y;
-		this.params = params.clone();
+		this.params = new ArpParams().copyFrom(params);
 	}
 
 	public function move(char:String, chip:StringChip, childChip:Chip):ArpParams {

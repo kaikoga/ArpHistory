@@ -1,13 +1,14 @@
 package net.kaikoga.arpx.backends.flash.chip;
 
+import flash.display.BitmapData;
 import flash.display.BlendMode;
 import flash.geom.ColorTransform;
-import flash.display.BitmapData;
 import flash.geom.Matrix;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 import net.kaikoga.arp.domain.ArpHeat;
 import net.kaikoga.arp.structs.ArpParams;
+import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import net.kaikoga.arpx.chip.SubtextureChip;
@@ -44,7 +45,7 @@ class SubtextureChipFlashImplBase<T:SubtextureChip> extends ArpObjectImplBase im
 		this.faces.push(new FaceInfo(source, bound));
 	}
 
-	private function getFaceIndex(params:ArpParams = null):Int {
+	private function getFaceIndex(params:IArpParamsRead = null):Int {
 		var index:Int = 0;
 
 		if (params == null) {
@@ -74,7 +75,7 @@ class SubtextureChipFlashImplBase<T:SubtextureChip> extends ArpObjectImplBase im
 	private var _workRect:Rectangle = new Rectangle();
 	private var _workMatrix:Matrix = new Matrix();
 
-	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:ArpParams = null):Void {
+	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:IArpParamsRead = null):Void {
 		if (this.chip.arpSlot.heat < ArpHeat.Warm) {
 			this.chip.arpDomain.log("gridchip", 'GridChip.copyChip(): Chip not warm: ${this}:$params');
 			this.chip.arpDomain.heatLater(this.chip.arpSlot);

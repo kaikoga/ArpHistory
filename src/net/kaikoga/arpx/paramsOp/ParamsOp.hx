@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.paramsOp;
 
+import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arp.domain.IArpObject;
 
@@ -14,8 +15,8 @@ class ParamsOp implements IArpObject {
 	public function new() {
 	}
 
-	public function filter(source:ArpParams, out:ArpParams = null):ArpParams {
-		if (out == null) out = new ArpParams();
+	public function filter(source:IArpParamsRead):IArpParamsRead {
+		var out:ArpParams = new ArpParams();
 		out.clear();
 		if (this.copy) out.copyFrom(source);
 		for (k in fixedParams.keys()) {

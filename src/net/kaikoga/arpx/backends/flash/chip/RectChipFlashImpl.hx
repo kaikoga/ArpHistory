@@ -1,13 +1,13 @@
 package net.kaikoga.arpx.backends.flash.chip;
 
-import net.kaikoga.arpx.backends.ArpObjectImplBase;
+import flash.display.BitmapData;
 import flash.geom.Matrix;
 import flash.geom.Point;
 import flash.geom.Rectangle;
-import net.kaikoga.arp.structs.ArpParams;
+import net.kaikoga.arp.structs.IArpParamsRead;
+import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import net.kaikoga.arpx.chip.RectChip;
-import flash.display.BitmapData;
 
 class RectChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 
@@ -21,7 +21,7 @@ class RectChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 	private var _workRect:Rectangle = new Rectangle();
 	private var _workMatrix:Matrix = new Matrix();
 
-	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:ArpParams = null):Void {
+	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:IArpParamsRead = null):Void {
 		//TODO optimize
 		var pt:Point = transform.asPoint();
 		if (pt != null) {

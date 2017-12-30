@@ -1,8 +1,8 @@
 package net.kaikoga.arpx.backends.flash.chip;
 
-import net.kaikoga.arp.structs.ArpDirection;
-import net.kaikoga.arp.structs.ArpParams;
 import flash.geom.Rectangle;
+import net.kaikoga.arp.structs.ArpDirection;
+import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.chip.GridChip;
 
 class GridChipFlashImpl extends SubtextureChipFlashImplBase<GridChip> implements IChipFlashImpl {
@@ -48,7 +48,7 @@ class GridChipFlashImpl extends SubtextureChipFlashImplBase<GridChip> implements
 		return true;
 	}
 
-	override private function getFaceIndex(params:ArpParams = null):Int {
+	override private function getFaceIndex(params:IArpParamsRead = null):Int {
 		if (params == null) {
 			// face unset, use chip index = 0 as default
 			return 0;

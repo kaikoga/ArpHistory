@@ -1,8 +1,9 @@
 ﻿package net.kaikoga.arpx.paramsOp;
 
 import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arp.domain.ArpDomain;
+import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
+import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.seed.ArpSeed;
 
 import picotest.PicoAssert.*;
@@ -23,7 +24,7 @@ class ParamsOpCase {
 
 	public function testFilterEmpty():Void {
 		var inParams:ArpParams = new ArpParams();
-		var params:ArpParams = me.filter(inParams);
+		var params:IArpParamsRead = me.filter(inParams);
 		assertMatch('a1', params.get('k1'));
 		assertMatch('a2', params.get('k2'));
 		assertMatch(null, params.get('k3'));
@@ -35,7 +36,7 @@ class ParamsOpCase {
 		inParams.set('k2', 'b2');
 		inParams.set('k3', 'b3');
 		inParams.set('k4', 'b4');
-		var params:ArpParams = me.filter(inParams);
+		var params:IArpParamsRead = me.filter(inParams);
 		assertMatch('a1', params.get('k1'));
 		assertMatch('a2', params.get('k2'));
 		assertMatch('b4', params.get('k3'));

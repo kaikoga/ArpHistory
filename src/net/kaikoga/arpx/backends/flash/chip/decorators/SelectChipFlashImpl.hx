@@ -1,10 +1,10 @@
 package net.kaikoga.arpx.backends.flash.chip.decorators;
 
-import net.kaikoga.arpx.chip.Chip;
 import flash.display.BitmapData;
-import net.kaikoga.arp.structs.ArpParams;
+import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.flash.geom.ITransform;
+import net.kaikoga.arpx.chip.Chip;
 import net.kaikoga.arpx.chip.decorators.SelectChip;
 
 class SelectChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
@@ -16,7 +16,7 @@ class SelectChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 		this.chip = chip;
 	}
 
-	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:ArpParams = null):Void {
+	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:IArpParamsRead = null):Void {
 		var chip:Chip = this.chip.chips.get(params.getAsString(this.chip.selector, this.chip.defaultKey));
 		if (chip != null) chip.copyChip(bitmapData, transform, params);
 	}

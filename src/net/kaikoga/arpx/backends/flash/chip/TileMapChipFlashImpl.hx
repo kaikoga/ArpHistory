@@ -2,7 +2,7 @@ package net.kaikoga.arpx.backends.flash.chip;
 
 import flash.display.BitmapData;
 import flash.geom.Point;
-import net.kaikoga.arp.structs.ArpParams;
+import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import net.kaikoga.arpx.backends.flash.tileMap.legacy.TileMapRenderer;
@@ -19,7 +19,7 @@ class TileMapChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 		this.renderer = new TileMapRenderer(null, null);
 	}
 
-	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:ArpParams = null):Void {
+	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:IArpParamsRead = null):Void {
 		var pt:Point = transform.asPoint();
 		if (pt == null) {
 			//Do nothing. not supported.
