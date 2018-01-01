@@ -15,18 +15,35 @@ class ParamsOp implements IArpObject {
 	public function new() {
 	}
 
-	public function filter(source:IArpParamsRead):IArpParamsRead {
-		var out:ArpParams = new ArpParams();
-		out.clear();
-		if (this.copy) out.copyFrom(source);
-		for (k in fixedParams.keys()) {
-			out.set(k, fixedParams.get(k));
-		}
-		for (k in rewireParams.keys()) {
-			out.set(k, source.get(rewireParams.get(k)));
-		}
-		return out;
-	}
+	public function filter(source:IArpParamsRead):IArpParamsRead return new ParamsOpFilter(this, source);
 }
 
+class ParamsOpFilter extends ArpParamsFilter {
+	private var paramsOp:ParamsOp;
 
+	public function new(paramsOp:ParamsOp, source:IArpParamsRead) {
+		super(source);
+		this.paramsOp = paramsOp;
+	}
+
+	override public function get(key:String):Dynamic {
+		var value:Dynamic;
+		if (this.paramsOp.copy) {
+			value = super.get(key);
+			if (value != null) return value;
+		}
+		value = this.paramsOp.fixedParams.get(key);
+		if (value != null) return value;
+		value = super.get(this.paramsOp.rewireParams.get(key));
+		if (value != null) return value;
+		return null;
+	}
+
+	override public function keys():Iterator<String> {
+		return if (this.paramsOp.copy) {
+			new ArpParams().merge(this.paramsOp.fixedParams).merge(this.paramsOp.rewireParams).keys();
+		} else {
+			new ArpParams().merge(this.params).merge(this.paramsOp.fixedParams).merge(this.paramsOp.rewireParams).keys();
+		}
+	}
+}
