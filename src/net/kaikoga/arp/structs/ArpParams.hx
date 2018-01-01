@@ -18,8 +18,13 @@ abstract ArpParamsProxy(ArpParams) from ArpParams to ArpParams {
 }
 
 @:build(net.kaikoga.arp.ArpDomainMacros.buildStruct("Params"))
-class ArpParams extends StdMap<String, Dynamic> implements IPersistable implements IArpParamsRead {
-	public function new() super();
+class ArpParams implements IPersistable implements IArpParamsRead {
+	private var map:StdMap<String, Dynamic>;
+
+	public function new() this.map = new StdMap<String, Dynamic>();
+
+	inline public function get(key:String):Dynamic return this.map.get(key);
+	inline public function keys():Iterator<String> return this.map.keys();
 
 	public function getInt(key:String, defaultValue = null):Null<Int> return ArpParamsMacros.getSafe(key, defaultValue);
 	public function getFloat(key:String, defaultValue = null):Null<Float> return ArpParamsMacros.getSafe(key, defaultValue);
@@ -28,6 +33,9 @@ class ArpParams extends StdMap<String, Dynamic> implements IPersistable implemen
 	public function getArpDirection(key:String, defaultValue = null):ArpDirection return ArpParamsMacros.getSafe(key, defaultValue);
 
 	public function getAsString(key:String, defaultValue = null):String return ArpParamsMacros.getAsString(key, defaultValue);
+
+	inline public function set(key:String, value:Dynamic):Void return this.map.set(key, value);
+	inline public function clear():Void return this.map.clear();
 
 	public function initWithSeed(seed:ArpSeed):ArpParams {
 		if (seed == null) return this;
@@ -67,7 +75,7 @@ class ArpParams extends StdMap<String, Dynamic> implements IPersistable implemen
 		return result;
 	}
 
-	public function copyFrom(source:ArpParams = null):ArpParams {
+	public function copyFrom(source:IArpParamsRead = null):ArpParams {
 		this.clear();
 		if (source != null) {
 			for (name in source.keys()) {
@@ -77,7 +85,7 @@ class ArpParams extends StdMap<String, Dynamic> implements IPersistable implemen
 		return this;
 	}
 
-	public function merge(source:ArpParams = null):ArpParams {
+	public function merge(source:IArpParamsRead = null):ArpParams {
 		if (source != null) {
 			for (name in source.keys()) {
 				this.set(name, source.get(name));
@@ -86,7 +94,7 @@ class ArpParams extends StdMap<String, Dynamic> implements IPersistable implemen
 		return this;
 	}
 
-	override public function toString():String {
+	public function toString():String {
 		var result:Array<Dynamic> = [];
 		for (name in this.keys()) {
 			var value:Dynamic = this.get(name);

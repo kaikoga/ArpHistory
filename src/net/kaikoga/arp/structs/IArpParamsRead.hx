@@ -10,5 +10,8 @@ interface IArpParamsRead {
 	function getAsString(key:String, defaultValue:String = null):String;
 
 	function get(key:String):Dynamic;
+	function keys():Iterator<String>;
+
+	function toString():String;
 }
 
