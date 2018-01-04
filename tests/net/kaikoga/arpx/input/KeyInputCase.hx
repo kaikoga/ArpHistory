@@ -21,6 +21,7 @@ class KeyInputCase {
 	}
 
 #if flash
+	@:access(net.kaikoga.arpx.input.InputAxis)
 	public function testTick():Void {
 		me.axis("a").threshold = 0.5;
 
@@ -29,7 +30,7 @@ class KeyInputCase {
 		assertTrue(me.axis("a").isUp);
 		assertTrue(me.axis("a").isTriggerUp);
 		assertEquals(0.0, me.axis("a").value);
-		assertEquals(0.0, me.axis("a").duration);
+		assertEquals(0.0, me.axis("a").stateDuration);
 
 		me.axis("a").nextValue = 0.0;
 		me.tick(1.0);
@@ -39,7 +40,7 @@ class KeyInputCase {
 		assertTrue(me.axis("a").isUp);
 		assertFalse(me.axis("a").isTriggerUp);
 		assertEquals(0.0, me.axis("a").value);
-		assertEquals(1.0, me.axis("a").duration);
+		assertEquals(1.0, me.axis("a").stateDuration);
 
 		me.axis("a").nextValue = 0.2;
 		me.tick(2.0);
@@ -49,7 +50,7 @@ class KeyInputCase {
 		assertTrue(me.axis("a").isUp);
 		assertFalse(me.axis("a").isTriggerUp);
 		assertEquals(0.2, me.axis("a").value);
-		assertEquals(3.0, me.axis("a").duration);
+		assertEquals(3.0, me.axis("a").stateDuration);
 
 		me.axis("a").nextValue = 1.0;
 		me.tick(1.0);
@@ -59,7 +60,7 @@ class KeyInputCase {
 		assertFalse(me.axis("a").isUp);
 		assertFalse(me.axis("a").isTriggerUp);
 		assertEquals(1.0, me.axis("a").value);
-		assertEquals(0.0, me.axis("a").duration);
+		assertEquals(0.0, me.axis("a").stateDuration);
 
 		me.axis("a").nextValue = 0.8;
 		me.tick(1.0);
@@ -69,7 +70,7 @@ class KeyInputCase {
 		assertFalse(me.axis("a").isUp);
 		assertFalse(me.axis("a").isTriggerUp);
 		assertEquals(0.8, me.axis("a").value);
-		assertEquals(1.0, me.axis("a").duration);
+		assertEquals(1.0, me.axis("a").stateDuration);
 
 		me.axis("a").nextValue = 0.0;
 		me.tick(1.0);
@@ -79,7 +80,7 @@ class KeyInputCase {
 		assertTrue(me.axis("a").isUp);
 		assertTrue(me.axis("a").isTriggerUp);
 		assertEquals(0.0, me.axis("a").value);
-		assertEquals(0.0, me.axis("a").duration);
+		assertEquals(0.0, me.axis("a").stateDuration);
 	}
 #end
 }

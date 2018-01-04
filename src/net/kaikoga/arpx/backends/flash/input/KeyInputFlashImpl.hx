@@ -1,7 +1,6 @@
 package net.kaikoga.arpx.backends.flash.input;
 
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.input.InputAxis;
 import flash.events.Event;
 import flash.events.KeyboardEvent;
 import flash.events.IEventDispatcher;
@@ -48,14 +47,9 @@ class KeyInputFlashImpl extends ArpObjectImplBase implements IInputFlashImpl {
 	}
 
 	public function tick(timeslice:Float):Bool {
-		for (keyCode in this.keyStates.keys()) {
-			if (!this.keyStates.get(keyCode)) continue;
-
-			var binding:KeyInputBinding = this.input.keyBindings.get(keyCode);
-			if (binding != null) {
-				var axis:InputAxis = this.input.axis(binding.axis);
-				axis.nextValue += binding.factor;
-			}
+		for (binding in this.input.keyBindings) {
+			if (!this.keyStates.get(binding.keyCode)) continue;
+			this.input.axis(binding.axis).nextValue += binding.factor;
 		}
 		for (axis in input.inputAxes) axis.tick(timeslice);
 		return true;
