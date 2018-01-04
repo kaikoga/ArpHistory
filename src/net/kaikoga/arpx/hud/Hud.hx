@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.hud;
 
+import net.kaikoga.arpx.input.Input;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arp.structs.ArpPosition;
@@ -14,7 +15,7 @@ import net.kaikoga.arpx.backends.flash.mortal.IMortalFlashImpl;
 #end
 
 @:arpType("hud", "null")
-class Hud implements IArpObject implements ITickable implements IFocusContainer<IInputControl>
+class Hud implements IArpObject implements ITickable implements IFocusContainer<IInputControl> implements IInputControl
 #if (arp_backend_flash || arp_backend_openfl) implements IMortalFlashImpl #end
 {
 	@:arpBarrier @:arpField public var driver:Driver;
@@ -42,5 +43,13 @@ class Hud implements IArpObject implements ITickable implements IFocusContainer<
 		var menu:Null<IInputControl> = this.visitFocus(null);
 		if (menu != null) menu.setFocus(true);
 		return menu;
+	}
+
+	public function setFocus(value:Bool):Void {
+		return;
+	}
+
+	public function interact(input:Input):Bool {
+		return false;
 	}
 }

@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.hud;
 
+import net.kaikoga.arpx.input.InputAxis;
+import net.kaikoga.arpx.input.Input;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.flash.hud.ChipMenuHudFlashImpl;
 import net.kaikoga.arpx.chip.Chip;
@@ -11,6 +13,7 @@ class ChipMenuHud extends Hud {
 
 	@:arpBarrier @:arpField public var chip:Chip;
 	@:arpField public var dPosition:ArpPosition;
+	@:arpField public var axis:String = "y";
 	@:arpBarrier @:arpField public var menu:Menu;
 
 #if (arp_backend_flash || arp_backend_openfl)
@@ -23,6 +26,18 @@ class ChipMenuHud extends Hud {
 	}
 
 	override public function visitFocus(other:Null<IInputControl>):Null<IInputControl> {
-		return this.menu;
+		return this;
+	}
+
+	override public function interact(input:Input):Bool {
+		var axis:InputAxis = input.axis(this.axis);
+		if (axis.isTrigger) {
+			if (axis.value > 0) {
+				if (++this.menu.value >= this.menu.length) this.menu.value--;
+			} else if (axis.value < 0) {
+				if (--this.menu.value < 0) this.menu.value++;
+			}
+		}
+		return true;
 	}
 }
