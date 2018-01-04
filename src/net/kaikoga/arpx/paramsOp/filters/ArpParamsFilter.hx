@@ -1,4 +1,4 @@
-package net.kaikoga.arpx.paramsOp;
+package net.kaikoga.arpx.paramsOp.filters;
 
 import net.kaikoga.arp.structs.ArpDirection;
 import net.kaikoga.arp.structs.ArpParamsMacros;
