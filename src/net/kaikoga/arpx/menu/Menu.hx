@@ -14,17 +14,21 @@ class Menu implements IArpObject implements IInputControl {
 	public function new() {
 	}
 
-	public var value(get, set):Int;
-	private function get_value():Int return 0;
-	private function set_value(value:Int):Int return value;
-
-	public function selection():String return "";
+	@:arpField public var value:Int;
+	public function selection():String {
+		var t:TextData = this.texts.getAt(this.value);
+		return if (t != null) t.publish() else "";
+	}
 
 	public function visitFocus(other:Null<IInputControl>):Null<IInputControl> return this;
 	public function setFocus(value:Bool):Void return;
 
 	public function interact(input:Input):Bool {
-		this.value = (this.value + 1) & 4;
+		if (input.axis("y").value > 0) {
+			if (++this.value >= this.texts.length) this.value--;
+		} else if (input.axis("y").value < 0) {
+			if (--this.value < 0) this.value++;
+		}
 		return true;
 	}
 }
