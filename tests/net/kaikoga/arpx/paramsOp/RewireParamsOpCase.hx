@@ -8,18 +8,18 @@ import net.kaikoga.arp.seed.ArpSeed;
 
 import picotest.PicoAssert.*;
 
-class ParamsOpCase {
+class RewireParamsOpCase {
 
 	private var domain:ArpDomain;
 	private var me:ParamsOp;
 
 	public function setup() {
-		var xml:Xml = Xml.parse('<paramsOp name="me" fixedParams="k1:a1,k2:a2" rewireParams="k3:k4" />').firstElement();
+		var xml:Xml = Xml.parse('<paramsOp class="rewire" name="me" fixedParams="k1:a1,k2:a2" rewireParams="k3:k4" />').firstElement();
 		var seed:ArpSeed = ArpSeed.fromXml(xml);
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpObjectGenerator(ParamsOp));
+		domain.addGenerator(new ArpObjectGenerator(RewireParamsOp));
 		domain.loadSeed(seed);
-		me = domain.query("me", ParamsOp).value();
+		me = domain.query("me", RewireParamsOp).value();
 	}
 
 	public function testFilterEmpty():Void {

@@ -5,7 +5,7 @@ import net.kaikoga.arpx.backends.flash.geom.AMatrixCase;
 import net.kaikoga.arpx.backends.flash.geom.APointCase;
 import net.kaikoga.arpx.driver.LinearDriverCase;
 import net.kaikoga.arpx.input.KeyInputCase;
-import net.kaikoga.arpx.paramsOp.ParamsOpCase;
+import net.kaikoga.arpx.paramsOp.RewireParamsOpCase;
 import net.kaikoga.arpx.text.ParametrizedTextDataCase;
 import net.kaikoga.arpx.text.TextDataCase;
 import picotest.PicoTestRunner;
@@ -23,7 +23,7 @@ class ArpEngineTestSuite {
 
 		r.load(KeyInputCase);
 
-		r.load(ParamsOpCase);
+		r.load(RewireParamsOpCase);
 
 		r.load(TextDataCase);
 		r.load(ParametrizedTextDataCase);
