@@ -25,8 +25,8 @@ class ChipMenuHudFlashImpl extends ArpObjectImplBase implements IHudFlashImpl {
 			transform = transform.concatXY(pos.x, pos.y);
 			var param:ArpParams = new ArpParams();
 			var index:Int = 0;
-			for (text in menu.texts) {
-				param.set("face", text.publish(param));
+			for (item in menu.menuItems) {
+				param.set("face", item.text.publish(param));
 				param.set("selected", index == hud.menu.value);
 				param.set("index", index++);
 				hud.chip.copyChip(bitmapData, transform, param);
