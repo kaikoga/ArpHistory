@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.hud;
 
+import net.kaikoga.arpx.proc.Proc;
 import net.kaikoga.arpx.input.InputAxis;
 import net.kaikoga.arpx.input.Input;
 import net.kaikoga.arp.structs.ArpPosition;
@@ -14,6 +15,7 @@ class ChipMenuHud extends Hud {
 	@:arpBarrier @:arpField public var chip:Chip;
 	@:arpField public var dPosition:ArpPosition;
 	@:arpField public var axis:String = "y";
+	@:arpField public var execute:String = "s";
 	@:arpBarrier @:arpField public var menu:Menu;
 
 #if (arp_backend_flash || arp_backend_openfl)
@@ -36,6 +38,15 @@ class ChipMenuHud extends Hud {
 				if (++this.menu.value >= this.menu.length) this.menu.value--;
 			} else if (axis.value < 0) {
 				if (--this.menu.value < 0) this.menu.value++;
+			}
+		}
+		var execute:InputAxis = input.axis(this.execute);
+		if (execute.isTriggerDown) {
+			if (this.menu.selection != null) {
+				var proc:Proc = this.menu.selection.proc;
+				if (proc != null) {
+					proc.execute();
+				}
 			}
 		}
 		return true;
