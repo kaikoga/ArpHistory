@@ -87,7 +87,7 @@ class MacroArpObjectRegistry {
 	private static function get_instance():MacroArpObjectRegistry {
 		if (_instance == null) {
 			_instance = new MacroArpObjectRegistry();
-			Context.onMacroContextReused(_instance.onMacroContextReused);
+			// Context.onMacroContextReused(_instance.onMacroContextReused);
 #if arp_doc
 			Context.onAfterGenerate(_instance.onAfterGenerate);
 #end
