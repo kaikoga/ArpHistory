@@ -15,12 +15,12 @@ class ArpGeneratorRegistry {
 		this.defaultGenMap = new ArpGeneratorListMap();
 	}
 
-	public function addGenerator<T:IArpObject>(gen:IArpGenerator<T>) {
+	public function addGenerator<T:IArpObject>(gen:ArpObjectGenerator<T>) {
 		if (gen.className != null) this.genMap.listFor(gen.arpType).push(gen);
 		if (gen.isDefault) this.defaultGenMap.listFor(gen.arpType).push(gen);
 	}
 
-	public function resolve<T:IArpObject>(seed:ArpSeed, type:ArpType):IArpGenerator<T> {
+	public function resolve<T:IArpObject>(seed:ArpSeed, type:ArpType):ArpObjectGenerator<T> {
 		var className = seed.className;
 		if (className == null) className = seed.env.getDefaultClass(type.toString());
 		for (gen in this.genMap.listFor(type)) {
@@ -43,16 +43,16 @@ class ArpGeneratorRegistry {
 
 private class ArpGeneratorListMap {
 
-	private var map:Map<String, Array<IArpGenerator<Dynamic>>>;
+	private var map:Map<String, Array<ArpObjectGenerator<Dynamic>>>;
 
 	public function new() {
 		this.map = new Map();
 	}
 
-	public function listFor(type:ArpType):Array<IArpGenerator<Dynamic>> {
+	public function listFor(type:ArpType):Array<ArpObjectGenerator<Dynamic>> {
 		var t:String = type.toString();
 		if (this.map.exists(t)) return this.map.get(t);
-		var a:Array<IArpGenerator<Dynamic>> = [];
+		var a:Array<ArpObjectGenerator<Dynamic>> = [];
 		this.map.set(t, a);
 		return a;
 	}

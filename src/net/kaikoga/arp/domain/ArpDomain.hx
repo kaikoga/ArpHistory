@@ -9,7 +9,6 @@ import net.kaikoga.arp.domain.dump.ArpDomainDump;
 import net.kaikoga.arp.domain.events.ArpLogEvent;
 import net.kaikoga.arp.domain.gen.ArpGeneratorRegistry;
 import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
-import net.kaikoga.arp.domain.gen.IArpGenerator;
 import net.kaikoga.arp.domain.prepare.IPrepareStatus;
 import net.kaikoga.arp.domain.prepare.PrepareQueue;
 import net.kaikoga.arp.domain.query.ArpObjectQuery;
@@ -120,7 +119,7 @@ class ArpDomain {
 	public var allArpTypes(get, never):Array<ArpType>;
 	public function get_allArpTypes():Array<ArpType> return this.reg.allArpTypes();
 
-	public function addGenerator<T:IArpObject>(gen:IArpGenerator<T>) {
+	public function addGenerator<T:IArpObject>(gen:ArpObjectGenerator<T>) {
 		this.reg.addGenerator(gen);
 	}
 
@@ -145,7 +144,7 @@ class ArpDomain {
 					slot = dir.getOrCreateSlot(type);
 					this.currentDir = dir;
 				}
-				var gen:IArpGenerator<T> = this.reg.resolve(seed, type);
+				var gen:ArpObjectGenerator<T> = this.reg.resolve(seed, type);
 				if (gen == null) throw 'generator not found for <$type>: class=${seed.className}';
 				var arpObj:T = gen.alloc(seed);
 				var init = arpObj.arpInit(slot, seed);
