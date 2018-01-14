@@ -1,10 +1,9 @@
 ﻿package net.kaikoga.arpx.paramsOp;
 
-import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arp.structs.IArpParamsRead;
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.seed.ArpSeed;
+import net.kaikoga.arp.structs.ArpParams;
+import net.kaikoga.arp.structs.IArpParamsRead;
 
 import picotest.PicoAssert.*;
 
@@ -17,7 +16,7 @@ class RewireParamsOpCase {
 		var xml:Xml = Xml.parse('<paramsOp class="rewire" name="me" fixedParams="k1:a1,k2:a2" rewireParams="k3:k4" />').firstElement();
 		var seed:ArpSeed = ArpSeed.fromXml(xml);
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpObjectGenerator(RewireParamsOp));
+		domain.addTemplate(RewireParamsOp);
 		domain.loadSeed(seed);
 		me = domain.query("me", RewireParamsOp).value();
 	}

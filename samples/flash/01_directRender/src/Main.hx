@@ -1,18 +1,17 @@
 package;
 
+import flash.Lib;
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+import flash.display.PixelSnapping;
+import flash.display.Sprite;
+import haxe.Resource;
+import net.kaikoga.arp.domain.ArpDomain;
+import net.kaikoga.arp.seed.ArpSeed;
+import net.kaikoga.arpx.backends.flash.geom.APoint;
+import net.kaikoga.arpx.chip.RectChip;
 import net.kaikoga.arpx.mortal.CompositeMortal;
 import net.kaikoga.arpx.mortal.ChipMortal;
-import haxe.Resource;
-import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
-import flash.Lib;
-import net.kaikoga.arpx.backends.flash.geom.APoint;
-import flash.display.PixelSnapping;
-import flash.display.BitmapData;
-import flash.display.Bitmap;
-import net.kaikoga.arpx.chip.RectChip;
-import net.kaikoga.arp.domain.ArpDomain;
-import flash.display.Sprite;
 
 class Main extends Sprite {
 
@@ -23,9 +22,9 @@ class Main extends Sprite {
 		addChild(bitmap);
 
 		var domain:ArpDomain = new ArpDomain();
-		domain.addGenerator(new ArpObjectGenerator(RectChip));
-		domain.addGenerator(new ArpObjectGenerator(ChipMortal));
-		domain.addGenerator(new ArpObjectGenerator(CompositeMortal));
+		domain.addTemplate(RectChip);
+		domain.addTemplate(ChipMortal);
+		domain.addTemplate(CompositeMortal);
 
 		domain.loadSeed(ArpSeed.fromXmlString(Resource.getString("arpdata")));
 		var rectChip:RectChip = domain.query("rectChip", new RectChip().arpType).value();

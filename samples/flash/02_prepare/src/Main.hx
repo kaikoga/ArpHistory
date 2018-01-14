@@ -1,23 +1,22 @@
 package;
 
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+import flash.display.PixelSnapping;
+import flash.display.Sprite;
+import flash.events.Event;
+import flash.Lib;
+import haxe.Resource;
+import net.kaikoga.arp.domain.ArpDomain;
+import net.kaikoga.arp.seed.ArpSeed;
+import net.kaikoga.arpx.camera.Camera;
+import net.kaikoga.arpx.chip.NativeTextChip;
+import net.kaikoga.arpx.chip.RectChip;
+import net.kaikoga.arpx.chip.StringChip;
+import net.kaikoga.arpx.console.Console;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.mortal.ChipMortal;
 import net.kaikoga.arpx.mortal.CompositeMortal;
-import flash.events.Event;
-import net.kaikoga.arpx.chip.StringChip;
-import net.kaikoga.arpx.chip.NativeTextChip;
-import net.kaikoga.arpx.camera.Camera;
-import net.kaikoga.arpx.console.Console;
-import haxe.Resource;
-import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
-import flash.Lib;
-import flash.display.PixelSnapping;
-import flash.display.BitmapData;
-import flash.display.Bitmap;
-import net.kaikoga.arpx.chip.RectChip;
-import net.kaikoga.arp.domain.ArpDomain;
-import flash.display.Sprite;
 
 class Main extends Sprite {
 
@@ -29,15 +28,15 @@ class Main extends Sprite {
 	public function new() {
 		super();
 		this.domain = new ArpDomain();
-		this.domain.addGenerator(new ArpObjectGenerator(RectChip));
-		this.domain.addGenerator(new ArpObjectGenerator(NativeTextChip));
-		this.domain.addGenerator(new ArpObjectGenerator(StringChip));
-		this.domain.addGenerator(new ArpObjectGenerator(ChipMortal));
-		this.domain.addGenerator(new ArpObjectGenerator(CompositeMortal));
-		this.domain.addGenerator(new ArpObjectGenerator(Console));
-		this.domain.addGenerator(new ArpObjectGenerator(Camera));
-		this.domain.addGenerator(new ArpObjectGenerator(Field));
-		this.domain.addGenerator(new ArpObjectGenerator(DelayLoad));
+		this.domain.addTemplate(RectChip);
+		this.domain.addTemplate(NativeTextChip);
+		this.domain.addTemplate(StringChip);
+		this.domain.addTemplate(ChipMortal);
+		this.domain.addTemplate(CompositeMortal);
+		this.domain.addTemplate(Console);
+		this.domain.addTemplate(Camera);
+		this.domain.addTemplate(Field);
+		this.domain.addTemplate(DelayLoad);
 
 		this.domain.loadSeed(ArpSeed.fromXmlString(Resource.getString("arpdata")));
 		this.domain.tick.push(this.onTick);

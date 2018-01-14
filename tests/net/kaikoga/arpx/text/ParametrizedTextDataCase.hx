@@ -2,7 +2,6 @@
 
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.domain.core.ArpType;
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.structs.ArpParams;
 
@@ -20,8 +19,8 @@ class ParametrizedTextDataCase {
 		').firstElement();
 		var seed:ArpSeed = ArpSeed.fromXml(xml);
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpObjectGenerator(FixedTextData));
-		domain.addGenerator(new ArpObjectGenerator(ParametrizedTextData));
+		domain.addTemplate(FixedTextData);
+		domain.addTemplate(ParametrizedTextData);
 		domain.loadSeed(seed);
 		me = domain.query("name1", new ArpType("text")).value();
 	}

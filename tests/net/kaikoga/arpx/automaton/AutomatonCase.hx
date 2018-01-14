@@ -1,7 +1,6 @@
 package net.kaikoga.arpx.automaton;
 
 import net.kaikoga.arp.domain.ArpDomain;
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arpx.automaton.Automaton;
 import net.kaikoga.arpx.automaton.events.AutomatonEventListener;
@@ -17,8 +16,8 @@ class AutomatonCase {
 	public function setup():Void {
 		var seed:ArpSeed = ArpSeed.fromXml(DEFINITION);
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpObjectGenerator(Automaton));
-		domain.addGenerator(new ArpObjectGenerator(AutomatonState));
+		domain.addTemplate(Automaton);
+		domain.addTemplate(AutomatonState);
 		domain.loadSeed(seed);
 		me = (domain.query("init", AutomatonState).value():AutomatonState).toAutomaton();
 		me.arpSlot.addReference();

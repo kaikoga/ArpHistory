@@ -1,25 +1,24 @@
 package;
 
-import net.kaikoga.arpx.field.Field;
-import net.kaikoga.arpx.mortal.ChipMortal;
-import net.kaikoga.arpx.mortal.CompositeMortal;
-import net.kaikoga.arpx.faceList.FaceList;
-import net.kaikoga.arpx.texture.FileTexture;
-import net.kaikoga.arpx.file.ResourceFile;
-import net.kaikoga.arpx.texture.ResourceTexture;
-import net.kaikoga.arpx.chip.GridChip;
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+import flash.display.PixelSnapping;
+import flash.display.Sprite;
 import flash.events.Event;
+import flash.Lib;
+import haxe.Resource;
+import net.kaikoga.arp.domain.ArpDomain;
+import net.kaikoga.arp.seed.ArpSeed;
+import net.kaikoga.arpx.chip.GridChip;
 import net.kaikoga.arpx.camera.Camera;
 import net.kaikoga.arpx.console.Console;
-import haxe.Resource;
-import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
-import flash.Lib;
-import flash.display.PixelSnapping;
-import flash.display.BitmapData;
-import flash.display.Bitmap;
-import net.kaikoga.arp.domain.ArpDomain;
-import flash.display.Sprite;
+import net.kaikoga.arpx.faceList.FaceList;
+import net.kaikoga.arpx.field.Field;
+import net.kaikoga.arpx.file.ResourceFile;
+import net.kaikoga.arpx.mortal.ChipMortal;
+import net.kaikoga.arpx.mortal.CompositeMortal;
+import net.kaikoga.arpx.texture.FileTexture;
+import net.kaikoga.arpx.texture.ResourceTexture;
 
 class Main extends Sprite {
 
@@ -31,16 +30,16 @@ class Main extends Sprite {
 	public function new() {
 		super();
 		this.domain = new ArpDomain();
-		this.domain.addGenerator(new ArpObjectGenerator(ResourceFile));
-		this.domain.addGenerator(new ArpObjectGenerator(FileTexture));
-		this.domain.addGenerator(new ArpObjectGenerator(ResourceTexture));
-		this.domain.addGenerator(new ArpObjectGenerator(GridChip));
-		this.domain.addGenerator(new ArpObjectGenerator(FaceList));
-		this.domain.addGenerator(new ArpObjectGenerator(ChipMortal));
-		this.domain.addGenerator(new ArpObjectGenerator(CompositeMortal));
-		this.domain.addGenerator(new ArpObjectGenerator(Console));
-		this.domain.addGenerator(new ArpObjectGenerator(Camera));
-		this.domain.addGenerator(new ArpObjectGenerator(Field));
+		this.domain.addTemplate(ResourceFile);
+		this.domain.addTemplate(FileTexture);
+		this.domain.addTemplate(ResourceTexture);
+		this.domain.addTemplate(GridChip);
+		this.domain.addTemplate(FaceList);
+		this.domain.addTemplate(ChipMortal);
+		this.domain.addTemplate(CompositeMortal);
+		this.domain.addTemplate(Console);
+		this.domain.addTemplate(Camera);
+		this.domain.addTemplate(Field);
 
 		this.domain.loadSeed(ArpSeed.fromXmlString(Resource.getString("arpdata")));
 		this.domain.tick.push(this.onTick);

@@ -1,10 +1,9 @@
 ﻿package net.kaikoga.arpx.driver;
 
+import net.kaikoga.arp.domain.ArpDomain;
+import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.structs.ArpDirection;
 import net.kaikoga.arpx.mortal.Mortal;
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
-import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arp.domain.ArpDomain;
 
 import picotest.PicoAssert.*;
 
@@ -18,8 +17,8 @@ class LinearDriverCase {
 		var xml:Xml = Xml.parse('<mortal name="mortal"><driver name="driver" class="linear" /></mortal>').firstElement();
 		var seed:ArpSeed = ArpSeed.fromXml(xml);
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpObjectGenerator(LinearDriver));
-		domain.addGenerator(new ArpObjectGenerator(Mortal, true));
+		domain.addTemplate(LinearDriver);
+		domain.addTemplate(Mortal, true);
 		domain.loadSeed(seed);
 		mortal = domain.query("mortal", Mortal).value();
 		me = domain.query("mortal/driver", LinearDriver).value();

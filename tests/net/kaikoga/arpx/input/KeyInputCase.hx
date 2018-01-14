@@ -1,7 +1,6 @@
 ﻿package net.kaikoga.arpx.input;
 
 import net.kaikoga.arp.domain.ArpDomain;
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.seed.ArpSeed;
 
 import picotest.PicoAssert.*;
@@ -15,7 +14,7 @@ class KeyInputCase {
 		var xml:Xml = Xml.parse('<input name="input" />').firstElement();
 		var seed:ArpSeed = ArpSeed.fromXml(xml);
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpObjectGenerator(KeyInput, true));
+		domain.addTemplate(KeyInput, true);
 		domain.loadSeed(seed);
 		me = domain.query("input", Input).value();
 	}
