@@ -1,12 +1,11 @@
 package net.kaikoga.arp.domain;
 
-import net.kaikoga.arp.tests.ArpDomainTestUtil;
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
+import net.kaikoga.arp.domain.ArpSlot;
+import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.mocks.MockArpObject;
 import net.kaikoga.arp.domain.mocks.MockDerivedArpObject;
 import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arp.domain.core.ArpType;
-import net.kaikoga.arp.domain.ArpSlot;
+import net.kaikoga.arp.tests.ArpDomainTestUtil;
 
 import picotest.PicoAssert.*;
 
@@ -20,7 +19,7 @@ class MockDerivedArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpObjectGenerator(MockDerivedArpObject, true));
+		domain.addTemplate(MockDerivedArpObject, true);
 		xml = Xml.parse('<mock name="name1" intField="42" intField2="168" floatField="3.14" boolField="true" stringField="stringValue" refField="/name1" refField2="/name1" />').firstElement();
 		seed = ArpSeed.fromXml(xml);
 	}

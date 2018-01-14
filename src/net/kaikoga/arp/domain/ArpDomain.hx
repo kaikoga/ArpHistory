@@ -7,8 +7,8 @@ import net.kaikoga.arp.domain.core.ArpSid;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.dump.ArpDomainDump;
 import net.kaikoga.arp.domain.events.ArpLogEvent;
-import net.kaikoga.arp.domain.gen.ArpGeneratorRegistry;
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
+import net.kaikoga.arp.domain.factory.ArpObjectFactory;
+import net.kaikoga.arp.domain.factory.ArpObjectFactoryRegistry;
 import net.kaikoga.arp.domain.prepare.IPrepareStatus;
 import net.kaikoga.arp.domain.prepare.PrepareQueue;
 import net.kaikoga.arp.domain.query.ArpObjectQuery;
@@ -33,7 +33,7 @@ class ArpDomain {
 
 	private var prepareQueue:PrepareQueue;
 
-	private var reg:ArpGeneratorRegistry;
+	private var registry:ArpObjectFactoryRegistry;
 
 	private var _sid:ArpIdGenerator = new ArpIdGenerator();
 	private var _did:ArpIdGenerator = new ArpIdGenerator();
@@ -65,13 +65,13 @@ class ArpDomain {
 		this.currentDir = this.root;
 		this.slots = new Map();
 		this.nullSlot = this.allocSlot(new ArpSid(ArpIdGenerator.AUTO_HEADER + "null"));
-		this.reg = new ArpGeneratorRegistry();
+		this.registry = new ArpObjectFactoryRegistry();
 		this.prepareQueue = new PrepareQueue(this, this._rawTick);
 
 		this._rawTick.push(this.onRawTick);
 
-		this.addGenerator(new ArpObjectGenerator(DataGroup));
-		this.addGenerator(new ArpObjectGenerator(SeedObject));
+		this.addTemplate(DataGroup);
+		this.addTemplate(SeedObject);
 	}
 
 	private function onRawTick(v:Float):Void {
@@ -117,10 +117,10 @@ class ArpDomain {
 	}
 
 	public var allArpTypes(get, never):Array<ArpType>;
-	public function get_allArpTypes():Array<ArpType> return this.reg.allArpTypes();
+	public function get_allArpTypes():Array<ArpType> return this.registry.allArpTypes();
 
-	public function addGenerator<T:IArpObject>(gen:ArpObjectGenerator<T>) {
-		this.reg.addGenerator(gen);
+	public function addTemplate<T:IArpObject>(klass:Class<T>, forceDefault:Null<Bool> = null) {
+		this.registry.addTemplate(klass, forceDefault);
 	}
 
 	public function loadSeed<T:IArpObject>(seed:ArpSeed, lexicalType:ArpType = null):Null<ArpSlot<T>> {
@@ -144,12 +144,9 @@ class ArpDomain {
 					slot = dir.getOrCreateSlot(type);
 					this.currentDir = dir;
 				}
-				var gen:ArpObjectGenerator<T> = this.reg.resolve(seed, type);
-				if (gen == null) throw 'generator not found for <$type>: class=${seed.className}';
-				var arpObj:T = gen.alloc(seed);
-				var init = arpObj.arpInit(slot, seed);
+				var arpObj:T = this.registry.resolve(seed, type).arpInit(slot, seed);
 				this.currentDir = oldDir;
-				if (init != null) {
+				if (arpObj != null) {
 					slot.value = arpObj;
 					switch (ArpHeat.fromName(seed.heat)) {
 						case ArpHeat.Cold:

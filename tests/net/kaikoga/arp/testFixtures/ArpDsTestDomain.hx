@@ -1,10 +1,9 @@
 package net.kaikoga.arp.testFixtures;
 
-import net.kaikoga.arp.testFixtures.ArpSupportFixtures.IArpSupportFixture;
 import net.kaikoga.arp.domain.ArpDomain;
-import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.domain.mocks.MockArpObject;
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
+import net.kaikoga.arp.seed.ArpSeed;
+import net.kaikoga.arp.testFixtures.ArpSupportFixtures.IArpSupportFixture;
 
 class ArpDsTestDomain extends ArpDomain implements IArpSupportFixture<MockArpObject> {
 
@@ -45,7 +44,7 @@ class ArpDsTestDomain extends ArpDomain implements IArpSupportFixture<MockArpObj
 	}
 
 	private function createFixtures():IArpSupportFixture<MockArpObject> {
-		this.addGenerator(new ArpObjectGenerator(MockArpObject, true));
+		this.addTemplate(MockArpObject, true);
 		var xml = Xml.parse('<data>
 		<mock name="name1"/>
 		<mock name="name2"/>

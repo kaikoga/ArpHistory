@@ -1,12 +1,11 @@
 package net.kaikoga.arp.macro;
 
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
-import net.kaikoga.arp.macro.mocks.MockMacroArpObject;
-import net.kaikoga.arp.domain.ArpHeat;
 import net.kaikoga.arp.domain.ArpDomain;
-import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arp.domain.core.ArpType;
+import net.kaikoga.arp.domain.ArpHeat;
 import net.kaikoga.arp.domain.ArpSlot;
+import net.kaikoga.arp.domain.core.ArpType;
+import net.kaikoga.arp.macro.mocks.MockMacroArpObject;
+import net.kaikoga.arp.seed.ArpSeed;
 
 import picotest.PicoAssert.*;
 
@@ -20,7 +19,7 @@ class HeatUpMacroArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpObjectGenerator(MockMacroArpObject, true));
+		domain.addTemplate(MockMacroArpObject, true);
 		xml = Xml.parse('<data>
 		<mock name="name1" intField="42" floatField="3.14" boolField="true" stringField="stringValue" refField="" />
 		<mock name="name2" refField="/name1" />

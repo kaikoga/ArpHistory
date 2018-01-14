@@ -1,13 +1,11 @@
 package net.kaikoga.arp.macro;
 
-import net.kaikoga.arp.tests.ArpDomainTestUtil;
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
-import net.kaikoga.arp.macro.mocks.MockStdDsMacroArpObject;
-import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arp.domain.ArpDomain;
-import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.domain.core.ArpType;
+import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.domain.ArpSlot;
+import net.kaikoga.arp.macro.mocks.MockStdDsMacroArpObject;
+import net.kaikoga.arp.seed.ArpSeed;
+import net.kaikoga.arp.tests.ArpDomainTestUtil;
 
 import picotest.PicoAssert.*;
 using Lambda;
@@ -21,7 +19,7 @@ class StdDsMacroArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpObjectGenerator(MockStdDsMacroArpObject, true));
+		domain.addTemplate(MockStdDsMacroArpObject, true);
 		xml = Xml.parse('
 <mock name="name1">
 	<intStdArray value="112" />

@@ -1,14 +1,12 @@
 package net.kaikoga.arp.macro;
 
-import net.kaikoga.arp.tests.ArpDomainTestUtil;
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
-import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arp.macro.mocks.MockMacroDerivedArpObject;
-import net.kaikoga.arp.macro.mocks.MockMacroArpObject;
 import net.kaikoga.arp.domain.ArpDomain;
-import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.ArpSlot;
+import net.kaikoga.arp.domain.core.ArpType;
+import net.kaikoga.arp.macro.mocks.MockMacroArpObject;
+import net.kaikoga.arp.macro.mocks.MockMacroDerivedArpObject;
+import net.kaikoga.arp.seed.ArpSeed;
+import net.kaikoga.arp.tests.ArpDomainTestUtil;
 
 import picotest.PicoAssert.*;
 
@@ -22,7 +20,7 @@ class MacroDerivedArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpObjectGenerator(MockMacroDerivedArpObject, true));
+		domain.addTemplate(MockMacroDerivedArpObject, true);
 		xml = Xml.parse('<mock name="name1" intField="42" intField2="168" floatField="3.14" boolField="true" stringField="stringValue" refField="/name1" refField2="/name1" />').firstElement();
 		seed = ArpSeed.fromXml(xml);
 	}

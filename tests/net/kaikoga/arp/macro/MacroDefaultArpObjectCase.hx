@@ -3,7 +3,6 @@ package net.kaikoga.arp.macro;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.domain.ArpSlot;
 import net.kaikoga.arp.domain.core.ArpType;
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.macro.mocks.MockDefaultMacroArpObject;
 import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.tests.ArpDomainTestUtil;
@@ -20,7 +19,7 @@ class MacroDefaultArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpObjectGenerator(MockDefaultMacroArpObject, true));
+		domain.addTemplate(MockDefaultMacroArpObject, true);
 		xml = Xml.parse('<mock name="name1" intField="78" floatField="1.41" boolField="false" stringField="stringValue3" refField="/name1" />').firstElement();
 		seed = ArpSeed.fromXml(xml);
 	}

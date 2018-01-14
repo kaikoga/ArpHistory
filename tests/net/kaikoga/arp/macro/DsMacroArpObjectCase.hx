@@ -1,13 +1,8 @@
 package net.kaikoga.arp.macro;
 
-import picotest.matcher.patterns.PicoMatchBasic;
-import picotest.matcher.patterns.standard.PicoMatchStruct;
-import picotest.matcher.patterns.standard.PicoMatchArray;
-import picotest.matcher.patterns.PicoMatchPrimitive;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.domain.ArpSlot;
 import net.kaikoga.arp.domain.core.ArpType;
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.ds.IList;
 import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arp.ds.IOmap;
@@ -19,11 +14,15 @@ import net.kaikoga.arp.ds.lambda.SetOp;
 import net.kaikoga.arp.macro.mocks.MockDsMacroArpObject;
 import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.tests.ArpDomainTestUtil;
+import picotest.matcher.patterns.PicoMatchBasic;
+import picotest.matcher.patterns.PicoMatchPrimitive;
+import picotest.matcher.patterns.standard.PicoMatchArray;
+import picotest.matcher.patterns.standard.PicoMatchCircular;
+import picotest.matcher.patterns.standard.PicoMatchStruct;
 
 import picotest.matcher.PicoMatcher;
-import picotest.matcher.PicoMatchResult;
 import picotest.matcher.PicoMatcherContext;
-import picotest.matcher.patterns.standard.PicoMatchCircular;
+import picotest.matcher.PicoMatchResult;
 
 import picotest.PicoAssert.*;
 
@@ -46,7 +45,7 @@ class DsMacroArpObjectCase {
 		pushMatcher(matcher);
 
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpObjectGenerator(MockDsMacroArpObject, true));
+		domain.addTemplate(MockDsMacroArpObject, true);
 		xml = Xml.parse('
 <mock name="name1">
 	<intSet value="100" />

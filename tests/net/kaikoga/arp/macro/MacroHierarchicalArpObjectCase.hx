@@ -3,7 +3,6 @@ package net.kaikoga.arp.macro;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.domain.ArpSlot;
 import net.kaikoga.arp.domain.core.ArpType;
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
 import net.kaikoga.arp.macro.mocks.MockHierarchicalMacroArpObject;
 import net.kaikoga.arp.seed.ArpSeed;
 
@@ -21,7 +20,7 @@ class MacroHierarchicalArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpObjectGenerator(MockHierarchicalMacroArpObject, true));
+		domain.addTemplate(MockHierarchicalMacroArpObject, true);
 		xml = Xml.parse('<data>
 	<mock name="default" />
 	<mock name="value" />

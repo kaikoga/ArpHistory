@@ -1,13 +1,11 @@
 package net.kaikoga.arp.macro;
 
-import net.kaikoga.arp.macro.mocks.MockEarlyPrepareMacroArpObject;
-import net.kaikoga.arp.domain.ArpHeat;
-import net.kaikoga.arp.domain.gen.ArpObjectGenerator;
-import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.domain.ArpDomain;
-import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arp.domain.core.ArpType;
+import net.kaikoga.arp.domain.ArpHeat;
 import net.kaikoga.arp.domain.ArpSlot;
+import net.kaikoga.arp.domain.core.ArpType;
+import net.kaikoga.arp.macro.mocks.MockEarlyPrepareMacroArpObject;
+import net.kaikoga.arp.seed.ArpSeed;
 
 import picotest.PicoAssert.*;
 
@@ -21,7 +19,7 @@ class EarlyPrepareMacroArpObjectCase {
 
 	public function setup():Void {
 		domain = new ArpDomain();
-		domain.addGenerator(new ArpObjectGenerator(MockEarlyPrepareMacroArpObject, true));
+		domain.addTemplate(MockEarlyPrepareMacroArpObject, true);
 		xml = Xml.parse('<mock name="name1" />').firstElement();
 		seed = ArpSeed.fromXml(xml);
 		slot = domain.loadSeed(seed, new ArpType("mock"));
