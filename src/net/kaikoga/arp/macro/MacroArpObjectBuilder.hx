@@ -2,6 +2,7 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
+import haxe.macro.Type.ClassType;
 import haxe.macro.Compiler;
 import haxe.macro.TypeTools;
 import net.kaikoga.arp.domain.core.ArpType;
@@ -28,7 +29,8 @@ class MacroArpObjectBuilder extends MacroArpObjectSkeleton {
 	public function run(classDef:MacroArpClassDefinition):Array<Field> {
 		if (classDef.metaGen) return null;
 
-		var fqn:String = TypeTools.toString(Context.getLocalType());
+		var fqn:String = MacroArpUtil.getFqnOfType(Context.getLocalType());
+
 		var templateInfo:ArpClassInfo = ArpClassInfo.reference(new ArpType(classDef.arpTypeName), classDef.arpTemplateName, fqn, []);
 		MacroArpObjectRegistry.registerTemplateInfo(fqn, new MacroArpObject(classDef, templateInfo));
 

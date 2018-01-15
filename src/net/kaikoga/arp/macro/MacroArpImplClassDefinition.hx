@@ -58,12 +58,6 @@ class MacroArpImplClassDefinition {
 		}
 	}
 
-	private static function getFqnOfType(intf:BaseType):String {
-		var p = intf.module.split(".");
-		if (p[p.length - 1] != intf.name) p.push(intf.name);
-		return p.join(".");
-	}
-
 	private function recordAllInterfaces(intf:ClassType):Bool {
 		var isArpObjectImpl:Bool = false;
 		for (i in intf.interfaces) {
@@ -76,7 +70,7 @@ class MacroArpImplClassDefinition {
 				this.interfaces.push(intf);
 			}
 			return true;
-		} else if (getFqnOfType(intf) == "net.kaikoga.arp.backends.IArpObjectImpl") {
+		} else if (MacroArpUtil.getFqnOfBaseType(intf) == "net.kaikoga.arp.backends.IArpObjectImpl") {
 			return true;
 		}
 		return false;

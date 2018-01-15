@@ -4,7 +4,7 @@ package net.kaikoga.arp.macro;
 
 import haxe.macro.ComplexTypeTools;
 import haxe.macro.Context;
-import haxe.macro.Expr.ComplexType;
+import haxe.macro.Expr;
 import haxe.macro.TypeTools;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.reflect.ArpClassInfo;
@@ -38,7 +38,7 @@ class MacroArpObjectRegistry {
 	}
 
 	private static function toFqn(complexType:ComplexType):String {
-		return TypeTools.toString(ComplexTypeTools.toType(complexType));
+		return MacroArpUtil.getFqnOfType(ComplexTypeTools.toType(complexType));
 	}
 
 	public static function getTemplateInfo(fqn:String):ArpClassInfo {
@@ -58,7 +58,7 @@ class MacroArpObjectRegistry {
 	}
 
 	public static function getLocalMacroArpObject():MacroArpObject {
-		return getMacroArpObject(TypeTools.toString(Context.getLocalType()));
+		return getMacroArpObject(MacroArpUtil.getFqnOfType(Context.getLocalType()));
 	}
 
 	private function onAfterGenerate():Void {
@@ -75,9 +75,9 @@ class MacroArpObjectRegistry {
 		macroArpObjects = new Map();
 		templateInfos = new Map();
 
-		registerPrimitive(ArpFieldKind.PrimInt, "Int");
-		registerPrimitive(ArpFieldKind.PrimFloat, "Float");
-		registerPrimitive(ArpFieldKind.PrimBool, "Bool");
+		registerPrimitive(ArpFieldKind.PrimInt, "StdTypes.Int");
+		registerPrimitive(ArpFieldKind.PrimFloat, "StdTypes.Float");
+		registerPrimitive(ArpFieldKind.PrimBool, "StdTypes.Bool");
 		registerPrimitive(ArpFieldKind.PrimString, "String");
 		return true;
 	}

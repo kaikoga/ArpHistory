@@ -10,6 +10,7 @@ import haxe.macro.Context;
 
 class MacroArpClassDefinition {
 
+	public var nativePos(default, null):Position;
 	public var metaGen(default, null):Bool = false;
 	public var metaNoGen(default, null):Bool = false;
 	public var arpTypeName(default, null):String;
@@ -22,6 +23,7 @@ class MacroArpClassDefinition {
 	public var mergedBaseFields:Map<String, ClassField>;
 
 	public function new(classType:ClassType) {
+		this.nativePos = classType.pos;
 		this.fieldDefs = [];
 		this.mergedBaseFields = new Map<String, ClassField>();
 

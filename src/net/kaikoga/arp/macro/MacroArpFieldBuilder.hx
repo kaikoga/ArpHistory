@@ -80,10 +80,9 @@ class MacroArpFieldBuilder {
 		}
 	}
 
-	private function baseFqnToNativeFieldType(fqn:Array<String>, type:Type, isImpl:Bool):Null<MacroArpNativeFieldType> {
-		var fqnStr:String = fqn.join(".");
-		this.log("fqn=" + fqnStr);
-		switch (fqnStr) {
+	private function baseFqnToNativeFieldType(fqn:String, type:Type, isImpl:Bool):Null<MacroArpNativeFieldType> {
+		this.log("fqn=" + fqn);
+		switch (fqn) {
 			case "Array":
 				return MacroArpNativeFieldType.NativeStdArray(typeToNativeFieldType(typeParam(type)));
 			case "List":
@@ -99,7 +98,7 @@ class MacroArpFieldBuilder {
 			case "net.kaikoga.arp.ds.IOmap":
 				return MacroArpNativeFieldType.NativeDsIOmap(typeToNativeFieldType(typeParam(type, 1)), isImpl);
 			case _:
-				var templateInfo:ArpClassInfo = MacroArpObjectRegistry.getTemplateInfo(fqnStr);
+				var templateInfo:ArpClassInfo = MacroArpObjectRegistry.getTemplateInfo(fqn);
 				if (templateInfo == null) return null;
 				switch (templateInfo.fieldKind) {
 					case ArpFieldKind.PrimInt:
@@ -120,12 +119,11 @@ class MacroArpFieldBuilder {
 
 	private function baseTypeToNativeFieldType(type:Type, baseType:Type):Null<MacroArpNativeFieldType> {
 		var result:MacroArpNativeFieldType = null;
-		var fqn:Array<String>;
+		var fqn:String;
 		switch (baseType) {
 			case Type.TInst(classRef, params):
 				var classType:ClassType = classRef.get();
-				fqn = classType.pack.copy();
-				fqn.push(classType.name);
+				fqn = MacroArpUtil.getFqnOfBaseType(classType);
 				result = baseFqnToNativeFieldType(fqn, type, !classType.isInterface);
 				if (result != null) return result;
 				// follow super class and interfaces
@@ -143,8 +141,7 @@ class MacroArpFieldBuilder {
 				}
 			case Type.TAbstract(abstractRef, params):
 				var abstractType:AbstractType = abstractRef.get();
-				fqn = abstractType.pack.copy();
-				fqn.push(abstractType.name);
+				fqn = MacroArpUtil.getFqnOfBaseType(abstractType);
 				result = baseFqnToNativeFieldType(fqn, type, true);
 				if (result != null) return result;
 				// follow underlying type
