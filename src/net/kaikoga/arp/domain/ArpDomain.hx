@@ -7,7 +7,6 @@ import net.kaikoga.arp.domain.core.ArpSid;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.dump.ArpDomainDump;
 import net.kaikoga.arp.domain.events.ArpLogEvent;
-import net.kaikoga.arp.domain.factory.ArpObjectFactory;
 import net.kaikoga.arp.domain.factory.ArpObjectFactoryRegistry;
 import net.kaikoga.arp.domain.prepare.IPrepareStatus;
 import net.kaikoga.arp.domain.prepare.PrepareQueue;
@@ -19,6 +18,11 @@ import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.seed.ArpSeedValueKind;
 import net.kaikoga.arp.seed.SeedObject;
 import net.kaikoga.arp.utils.ArpIdGenerator;
+
+#if macro
+import haxe.macro.Expr;
+import net.kaikoga.arp.macro.MacroArpObjectRegistry;
+#end
 
 @:allow(net.kaikoga.arp.domain.ArpDirectory)
 @:allow(net.kaikoga.arp.domain.ArpUntypedSlot)
@@ -119,8 +123,16 @@ class ArpDomain {
 	public var allArpTypes(get, never):Array<ArpType>;
 	public function get_allArpTypes():Array<ArpType> return this.registry.allArpTypes();
 
-	public function addTemplate<T:IArpObject>(klass:Class<T>, forceDefault:Null<Bool> = null) {
+	public function addTemplate<T:IArpObject>(klass:Class<T>, forceDefault:Null<Bool> = null):Void {
 		this.registry.addTemplate(klass, forceDefault);
+	}
+
+	public function autoAddTemplates():Void {
+		return macroAutoAddTemplates();
+	}
+
+	macro private static function macroAutoAddTemplates():Expr {
+		return MacroArpObjectRegistry.toAutoAddTemplates(macro this);
 	}
 
 	public function loadSeed<T:IArpObject>(seed:ArpSeed, lexicalType:ArpType = null):Null<ArpSlot<T>> {

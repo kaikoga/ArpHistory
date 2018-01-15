@@ -61,6 +61,17 @@ class MacroArpObjectRegistry {
 		return getMacroArpObject(MacroArpUtil.getFqnOfType(Context.getLocalType()));
 	}
 
+	public static function toAutoAddTemplates(arpDomain:Expr):Expr {
+		var block:Array<Expr> = [];
+		for (macroArpObject in instance.macroArpObjects) {
+			var klassName:String = macroArpObject.templateInfo.fqn;
+			var klass:Expr = Context.parse(klassName, macroArpObject.classDef.nativePos);
+			block.push(macro ${ arpDomain } .addTemplate(${ klass }));
+			// block.push(macro this.addTemplate(Type.resolveClass($v{klass})));
+		}
+		return macro @mergeBlock $b{ block };
+	}
+
 	private function onAfterGenerate():Void {
 		var writer:ArpHelpWriter = new ArpHelpWriter();
 		var prefix:String = Context.definedValue("arp_doc");
