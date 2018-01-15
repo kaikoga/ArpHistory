@@ -12,23 +12,9 @@ import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arpx.camera.Camera;
 import net.kaikoga.arpx.chip.GridChip;
 import net.kaikoga.arpx.console.Console;
-import net.kaikoga.arpx.debugger.SocketClientDebugger;
 import net.kaikoga.arpx.driver.LinearDriver;
-import net.kaikoga.arpx.driver.MotionDriver;
-import net.kaikoga.arpx.faceList.FaceList;
 import net.kaikoga.arpx.field.Field;
-import net.kaikoga.arpx.file.ResourceFile;
-import net.kaikoga.arpx.hitFrame.CuboidHitFrame;
-import net.kaikoga.arpx.logger.SocketClientLogger;
-import net.kaikoga.arpx.motion.Motion;
-import net.kaikoga.arpx.motionFrame.MotionFrame;
-import net.kaikoga.arpx.motionSet.MotionSet;
-import net.kaikoga.arpx.mortal.ChipMortal;
 import net.kaikoga.arpx.mortal.Mortal;
-import net.kaikoga.arpx.nextMotion.NextMotion;
-import net.kaikoga.arpx.reactFrame.ReactFrame;
-import net.kaikoga.arpx.socketClient.TcpCachedSocketClient;
-import net.kaikoga.arpx.texture.FileTexture;
 
 class Main extends Sprite {
 
@@ -47,25 +33,7 @@ class Main extends Sprite {
 	public function new() {
 		super();
 		this.domain = new ArpDomain();
-		this.domain.addTemplate(ResourceFile);
-		this.domain.addTemplate(FileTexture);
-		this.domain.addTemplate(GridChip);
-		this.domain.addTemplate(FaceList);
-		this.domain.addTemplate(ChipMortal);
-		this.domain.addTemplate(LinearDriver);
-		this.domain.addTemplate(MotionDriver);
-		this.domain.addTemplate(MotionSet);
-		this.domain.addTemplate(Motion);
-		this.domain.addTemplate(NextMotion);
-		this.domain.addTemplate(MotionFrame);
-		this.domain.addTemplate(ReactFrame);
-		this.domain.addTemplate(CuboidHitFrame);
-		this.domain.addTemplate(Field);
-		this.domain.addTemplate(Console);
-		this.domain.addTemplate(Camera);
-		this.domain.addTemplate(SocketClientDebugger);
-		this.domain.addTemplate(SocketClientLogger);
-		this.domain.addTemplate(TcpCachedSocketClient);
+		this.domain.autoAddTemplates();
 
 		this.domain.loadSeed(ArpSeed.fromXmlString(Resource.getString("arpdata")));
 		this.domain.tick.push(this.onTick);
