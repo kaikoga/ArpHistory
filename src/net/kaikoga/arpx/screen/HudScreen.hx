@@ -25,9 +25,14 @@ class HudScreen extends Screen {
 	public function new() super();
 
 	override public function tick(timeslice:Float):Bool {
-		var other:Null<IInputControl> = null;
-		for (hud in this.huds) other = hud.visitFocus(other);
-		if (other != null) other.interact(this.input);
+		if (this.visible) {
+			var other:Null<IInputControl> = null;
+			for (hud in this.huds) other = hud.visitFocus(other);
+			if (other != null) {
+				other.setFocus(true);
+				other.interact(this.input);
+			}
+		}
 		return true;
 	}
 

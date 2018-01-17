@@ -40,9 +40,9 @@ class Hud implements IArpObject implements ITickable implements IFocusContainer<
 	}
 
 	public function updateFocus():Null<IInputControl> {
-		var menu:Null<IInputControl> = this.visitFocus(null);
-		if (menu != null) menu.setFocus(true);
-		return menu;
+		var control:Null<IInputControl> = this.visitFocus(null);
+		if (control != null) control.setFocus(true);
+		return control;
 	}
 
 	public function setFocus(value:Bool):Void {
