@@ -1,6 +1,5 @@
 package net.kaikoga.arpx.hud;
 
-import net.kaikoga.arpx.input.Input;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arp.structs.ArpPosition;
@@ -8,14 +7,14 @@ import net.kaikoga.arp.task.ITickable;
 import net.kaikoga.arpx.backends.flash.hud.IHudFlashImpl;
 import net.kaikoga.arpx.driver.Driver;
 import net.kaikoga.arpx.input.focus.IFocusNode;
-import net.kaikoga.arpx.input.IInputControl;
+import net.kaikoga.arpx.input.Input;
 
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.mortal.IMortalFlashImpl;
 #end
 
 @:arpType("hud", "null")
-class Hud implements IArpObject implements ITickable implements IFocusNode<IInputControl> implements IInputControl
+class Hud implements IArpObject implements ITickable implements IFocusNode<Hud>
 #if (arp_backend_flash || arp_backend_openfl) implements IMortalFlashImpl #end
 {
 	@:arpBarrier @:arpField public var driver:Driver;
@@ -35,11 +34,11 @@ class Hud implements IArpObject implements ITickable implements IFocusNode<IInpu
 		return true;
 	}
 
-	public function findFocus(other:Null<IInputControl>):Null<IInputControl> {
+	public function findFocus(other:Null<Hud>):Null<Hud> {
 		return null;
 	}
 
-	public function updateFocus(target:Null<IInputControl>):Void {
+	public function updateFocus(target:Null<Hud>):Void {
 		return;
 	}
 

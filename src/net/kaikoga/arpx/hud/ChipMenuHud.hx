@@ -6,7 +6,6 @@ import net.kaikoga.arpx.input.Input;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.flash.hud.ChipMenuHudFlashImpl;
 import net.kaikoga.arpx.chip.Chip;
-import net.kaikoga.arpx.input.IInputControl;
 import net.kaikoga.arpx.menu.Menu;
 
 @:arpType("hud", "chipMenu")
@@ -27,7 +26,7 @@ class ChipMenuHud extends Hud {
 		super();
 	}
 
-	override public function findFocus(other:Null<IInputControl>):Null<IInputControl> {
+	override public function findFocus(other:Null<Hud>):Null<Hud> {
 		return this.visible ? this : other;
 	}
 

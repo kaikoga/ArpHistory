@@ -36,6 +36,6 @@ class FieldScreen extends Screen {
 	}
 
 	override public function updateFocus(target:Null<Input>):Void {
-		this.input.updateFocus(target);
+		if (this.visible && this.input != null) this.input.updateFocus(target);
 	}
 }

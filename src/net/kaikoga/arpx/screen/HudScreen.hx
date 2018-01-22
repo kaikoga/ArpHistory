@@ -1,6 +1,5 @@
 package net.kaikoga.arpx.screen;
 
-import net.kaikoga.arpx.input.IInputControl;
 import net.kaikoga.arpx.hud.Hud;
 import net.kaikoga.arpx.input.Input;
 import net.kaikoga.arpx.camera.Camera;
@@ -15,6 +14,7 @@ class HudScreen extends Screen {
 	@:arpBarrier @:arpField("hud") public var huds:IList<Hud>;
 	@:arpField public var camera:Camera;
 	@:arpField public var input:Input;
+	@:arpField public var focus:Hud;
 
 	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:HudScreenFlashImpl;
@@ -26,12 +26,12 @@ class HudScreen extends Screen {
 
 	override public function tick(timeslice:Float):Bool {
 		if (this.visible) {
-			var other:Null<IInputControl> = null;
-			for (hud in this.huds) other = hud.findFocus(other);
-			if (other != null) {
-				for (hud in this.huds) hud.updateFocus(other);
-				other.interact(this.input);
+			var other:Null<Hud> = this.focus;
+			if (other == null) {
+				for (hud in this.huds) other = hud.findFocus(other);
 			}
+			for (hud in this.huds) hud.updateFocus(other);
+			if (other != null && this.input != null) other.interact(this.input);
 		}
 		return true;
 	}
@@ -41,6 +41,6 @@ class HudScreen extends Screen {
 	}
 
 	override public function updateFocus(target:Null<Input>):Void {
-		input.updateFocus(target);
+		if (this.visible && this.input != null) input.updateFocus(target);
 	}
 }
