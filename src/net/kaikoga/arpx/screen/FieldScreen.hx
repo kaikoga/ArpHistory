@@ -31,7 +31,11 @@ class FieldScreen extends Screen {
 		return true;
 	}
 
-	override public function visitFocus(other:Null<Input>):Null<Input> {
-		return if (this.visible && this.input != null) this.input.visitFocus(other) else other;
+	override public function findFocus(other:Null<Input>):Null<Input> {
+		return if (this.visible && this.input != null) this.input.findFocus(other) else other;
+	}
+
+	override public function updateFocus(target:Null<Input>):Void {
+		this.input.updateFocus(target);
 	}
 }

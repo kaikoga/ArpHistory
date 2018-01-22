@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.console;
 
+import net.kaikoga.arpx.input.focus.IFocusNode;
 import net.kaikoga.arpx.input.Input;
-import net.kaikoga.arpx.input.focus.IFocusContainer;
 import net.kaikoga.arp.ds.IOmap;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.task.ITickable;
@@ -13,7 +13,7 @@ import net.kaikoga.arpx.backends.flash.console.IConsoleFlashImpl;
 #end
 
 @:arpType("console", "console")
-class Console implements IArpObject implements ITickable implements IFocusContainer<Input>
+class Console implements IArpObject implements ITickable implements IFocusNode<Input>
 #if (arp_backend_flash || arp_backend_openfl) implements IConsoleFlashImpl #end
 {
 	@:arpField public var width:Int;
@@ -31,18 +31,16 @@ class Console implements IArpObject implements ITickable implements IFocusContai
 
 	public function tick(timeslice:Float):Bool {
 		for (screen in this.screens) screen.tick(timeslice);
-		updateFocus();
+		this.updateFocus(this.findFocus(null));
 		return true;
 	}
 
-	public function visitFocus(other:Null<Input>):Null<Input> {
-		for (screen in this.screens) other = screen.visitFocus(other);
+	public function findFocus(other:Null<Input>):Null<Input> {
+		for (screen in this.screens) other = screen.findFocus(other);
 		return other;
 	}
 
-	public function updateFocus():Null<Input> {
-		var input:Null<Input> = this.visitFocus(null);
-		if (input != null) input.setFocus();
-		return input;
+	public function updateFocus(target:Null<Input>):Void {
+		for (screen in this.screens) screen.updateFocus(target);
 	}
 }

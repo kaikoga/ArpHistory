@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.input;
 
-import net.kaikoga.arpx.input.focus.IFocusable;
+import net.kaikoga.arpx.input.focus.IFocusNode;
 
-interface IInputControl extends IFocusable<IInputControl> {
+interface IInputControl extends IFocusNode<IInputControl> {
 	function interact(input:Input):Bool;
 }

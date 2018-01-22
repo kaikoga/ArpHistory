@@ -23,8 +23,12 @@ class CompositeScreen extends Screen {
 		return true;
 	}
 
-	override public function visitFocus(other:Null<Input>):Null<Input> {
-		for (screen in this.screens) other = screen.visitFocus(other);
+	override public function findFocus(other:Null<Input>):Null<Input> {
+		for (screen in this.screens) other = screen.findFocus(other);
 		return other;
+	}
+
+	override public function updateFocus(target:Null<Input>):Void {
+		for (screen in this.screens) screen.updateFocus(target);
 	}
 }

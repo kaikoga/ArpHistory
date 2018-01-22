@@ -2,5 +2,6 @@ package net.kaikoga.arpx.input.focus;
 
 @:noDoc @:noCompletion
 interface IFocusNode<T> {
-	function visitFocus(other:Null<T>):Null<T>;
+	function findFocus(other:Null<T>):Null<T>;
+	function updateFocus(target:Null<T>):Void;
 }

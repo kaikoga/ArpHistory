@@ -27,7 +27,7 @@ class ChipMenuHud extends Hud {
 		super();
 	}
 
-	override public function visitFocus(other:Null<IInputControl>):Null<IInputControl> {
+	override public function findFocus(other:Null<IInputControl>):Null<IInputControl> {
 		return this.visible ? this : other;
 	}
 

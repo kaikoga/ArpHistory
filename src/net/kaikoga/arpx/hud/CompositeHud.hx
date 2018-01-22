@@ -22,9 +22,13 @@ class CompositeHud extends Hud {
 		super();
 	}
 
-	override public function visitFocus(other:Null<IInputControl>):Null<IInputControl> {
-		if (this.visible) for (hud in this.huds) other = hud.visitFocus(other);
+	override public function findFocus(other:Null<IInputControl>):Null<IInputControl> {
+		if (this.visible) for (hud in this.huds) other = hud.findFocus(other);
 		return other;
+	}
+
+	override public function updateFocus(target:Null<IInputControl>):Void {
+		for (hud in this.huds) hud.updateFocus(target);
 	}
 }
 

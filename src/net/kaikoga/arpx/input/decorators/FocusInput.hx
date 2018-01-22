@@ -20,8 +20,7 @@ class FocusInput extends Input {
 		return this.focused ? this.input.axis(button) : new InputAxis();
 	}
 
-	override public function visitFocus(other:Null<Input>):Null<Input> {
-		this.focused = false;
+	override public function findFocus(other:Null<Input>):Null<Input> {
 		if (other == null) return this;
 		if (Std.is(other, FocusInput)) {
 			if (cast(other, FocusInput).priority < this.priority) return this;
@@ -29,5 +28,5 @@ class FocusInput extends Input {
 		return other;
 	}
 
-	override public function setFocus():Void this.focused = true;
+	override public function updateFocus(target:Null<Input>):Void this.focused = this == target;
 }
