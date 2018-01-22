@@ -182,7 +182,7 @@ class Field implements IArpObject implements ITickable
 }
 
 @:access(net.kaikoga.arpx.field.Field._mortals)
-@:access(net.kaikoga.arpx.mortal.Mortal._field)
+@:access(net.kaikoga.arpx.mortal.Mortal.field)
 class MortalMap extends OmapDecorator<String, Mortal> {
 
 	private var field:Field;
@@ -195,43 +195,43 @@ class MortalMap extends OmapDecorator<String, Mortal> {
 
 	//write
 	override public function addPair(k:String, v:Mortal):Void {
-		if (v._field != null) v._field._mortals.remove(v);
-		v._field = this.field;
+		if (v.field != null) v.field._mortals.remove(v);
+		v.field = this.field;
 		this.omap.addPair(k, v);
 	}
 	override public function insertPairAt(index:Int, k:String, v:Mortal):Void {
-		if (v._field != null) v._field._mortals.remove(v);
-		v._field = this.field;
+		if (v.field != null) v.field._mortals.remove(v);
+		v.field = this.field;
 		this.omap.insertPairAt(index, k, v);
 	}
 
 	// remove
 	override public function remove(v:Mortal):Bool {
-		v._field = null;
+		v.field = null;
 		return this.omap.remove(v);
 	}
 	override public function removeKey(k:String):Bool {
 		if (!this.omap.hasKey(k)) return false;
-		this.omap.get(k)._field = null;
+		this.omap.get(k).field = null;
 		return this.omap.removeKey(k);
 	}
 	override public function removeAt(index:Int):Bool {
 		if (index < 0 || index >= this.omap.length) return false;
-		this.omap.getAt(index)._field = null;
+		this.omap.getAt(index).field = null;
 		return this.omap.removeAt(index);
 	}
 	override public function pop():Null<Mortal> {
 		if (this.omap.isEmpty()) return null;
-		this.omap.last()._field = null;
+		this.omap.last().field = null;
 		return this.omap.pop();
 	}
 	override public function shift():Null<Mortal> {
 		if (this.omap.isEmpty()) return null;
-		this.omap.first()._field = null;
+		this.omap.first().field = null;
 		return this.omap.shift();
 	}
 	override public function clear():Void {
-		for (v in this.omap) v._field = null;
+		for (v in this.omap) v.field = null;
 		this.omap.clear();
 	}
 }
