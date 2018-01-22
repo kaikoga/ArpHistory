@@ -12,7 +12,7 @@ class MockDerivedArpObject extends MockArpObject {
 
 	public var intField2:Int = 0;
 
-	public var refField2Slot:ArpSlot<MockArpObject>;
+	public var refField2Slot(default, null):ArpSlot<MockArpObject>;
 	public var refField2(get, set):MockArpObject;
 	inline private function get_refField2():MockArpObject return refField2Slot.value;
 	inline private function set_refField2(value:MockArpObject):MockArpObject { refField2Slot = value.arpSlot; return value; }

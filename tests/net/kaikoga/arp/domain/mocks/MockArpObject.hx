@@ -16,7 +16,7 @@ class MockArpObject implements IArpObject {
 	public var boolField:Bool = false;
 	public var stringField:String = null;
 
-	public var refFieldSlot:ArpSlot<MockArpObject>;
+	public var refFieldSlot(default, null):ArpSlot<MockArpObject>;
 	public var refField(get, set):MockArpObject;
 	inline private function get_refField():MockArpObject return refFieldSlot.value;
 	inline private function set_refField(value:MockArpObject):MockArpObject { refFieldSlot = value.arpSlot; return value; }
