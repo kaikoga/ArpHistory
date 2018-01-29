@@ -12,4 +12,7 @@ class ArpTypeInfo {
 		this.arpType = arpType;
 	}
 
+	public function toString():String {
+		return '<$arpType class=$name>';
+	}
 }

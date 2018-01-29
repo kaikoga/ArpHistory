@@ -50,7 +50,7 @@ class MacroArpObjectStub {
 		if (getTemplate().classDef.isDerived) {
 			eDefault = macro { super.arpConsumeSeedElement(element); }
 		} else {
-			eDefault = macro if (element.typeName != "value") throw this.arpType + "could not accept <" + element.typeName + ">";
+			eDefault = macro if (element.typeName != "value") throw arpTypeInfo + " could not accept <" + element.typeName + ">";
 		}
 		var expr:Expr = { pos: Context.currentPos(), expr: ExprDef.ESwitch(macro element.typeName, cases, eDefault) }
 

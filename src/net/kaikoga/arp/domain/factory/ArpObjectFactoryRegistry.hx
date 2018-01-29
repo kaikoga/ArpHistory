@@ -31,7 +31,7 @@ class ArpObjectFactoryRegistry {
 			}
 		}
 		if (result == null) {
-			throw 'factory not found for <$type>: class=${seed.className}';
+			throw 'factory not found for <$type class=${seed.className}>';
 		}
 		return cast result;
 	}
