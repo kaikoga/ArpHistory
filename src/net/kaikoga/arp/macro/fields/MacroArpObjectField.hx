@@ -31,10 +31,13 @@ class MacroArpObjectField extends MacroArpFieldBase implements IMacroArpField {
 				return value;
 			}
 		}).fields;
-		this.nativeField.kind = FieldType.FProp("get", "set", nativeType, null);
+		this.nativeField.kind = FieldType.FProp("get", this.fieldDef.metaArpReadOnly ? "never" : "set", nativeType, null);
 		outFields.push(nativeField);
 		generated[0].access = this.nativeField.access;
-		for (g in generated) outFields.push(g);
+		for (g in generated) {
+			if (g.name == iSet_nativeName && this.fieldDef.metaArpReadOnly) continue;
+			outFields.push(g);
+		}
 	}
 
 	public function buildInitBlock(initBlock:Array<Expr>):Void {

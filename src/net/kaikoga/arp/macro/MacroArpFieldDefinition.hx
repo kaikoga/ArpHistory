@@ -20,8 +20,9 @@ class MacroArpFieldDefinition {
 
 	// ArpField family
 	public var metaArpField(default, null):MacroArpMetaArpField = MacroArpMetaArpField.Unmanaged;
-	public var metaArpBarrier(default, null):MacroArpMetaArpBarrier = MacroArpMetaArpBarrier.None;
 	public var metaArpVolatile(default, null):Bool = false;
+	public var metaArpReadOnly(default, null):Bool = false;
+	public var metaArpBarrier(default, null):MacroArpMetaArpBarrier = MacroArpMetaArpBarrier.None;
 	public var metaArpDefault(default, null):MacroArpMetaArpDefault = MacroArpMetaArpDefault.Zero;
 
 	// Impl family
@@ -160,6 +161,8 @@ class MacroArpFieldDefinition {
 					this.metaArpField = MacroArpMetaArpField.Default;
 				case ExprDef.EConst(Constant.CIdent("volatile")):
 					this.metaArpVolatile = true;
+				case ExprDef.EConst(Constant.CIdent("readonly")):
+					this.metaArpReadOnly = true;
 				case _:
 					Context.error("invalid expr", this.nativePos);
 			}
