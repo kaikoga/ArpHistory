@@ -1,8 +1,9 @@
 package net.kaikoga.arpx.backends.flash.texture;
 
+import net.kaikoga.arpx.backends.flash.texture.decorators.TextureFaceInfo;
+import net.kaikoga.arp.structs.IArpParamsRead;
 import flash.geom.Point;
 import flash.geom.Rectangle;
-import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import flash.display.Bitmap;
 import flash.events.IOErrorEvent;
 import flash.events.Event;
@@ -11,16 +12,14 @@ import flash.display.Loader;
 import net.kaikoga.arpx.texture.FileTexture;
 import flash.display.BitmapData;
 
-class FileTextureFlashImpl extends ArpObjectImplBase implements ITextureFlashImpl {
+class FileTextureFlashImpl extends TextureFlashImplBase implements ITextureFlashImpl {
 
 	private var texture:FileTexture;
 	private var loader:Loader;
 	private var value:BitmapData;
 
-	public var width(get, never):Int;
-	private function get_width():Int return this.value.width;
-	public var height(get, never):Int;
-	private function get_height():Int return this.value.height;
+	override private function get_width():Int return this.value.width;
+	override private function get_height():Int return this.value.height;
 
 	public function new(texture:FileTexture) {
 		super();
@@ -65,6 +64,10 @@ class FileTextureFlashImpl extends ArpObjectImplBase implements ITextureFlashImp
 		var result = new BitmapData(Std.int(bound.width), Std.int(bound.height), true, 0x00000000);
 		result.copyPixels(this.bitmapData(), bound, nullPoint);
 		return result;
+	}
+
+	public function getFaceInfo(params:IArpParamsRead = null):TextureFaceInfo {
+		return new TextureFaceInfo(this.texture, null);
 	}
 }
 

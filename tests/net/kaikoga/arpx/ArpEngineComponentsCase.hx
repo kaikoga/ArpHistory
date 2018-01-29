@@ -1,5 +1,8 @@
 ﻿package net.kaikoga.arpx;
 
+import net.kaikoga.arpx.texture.decorators.GridTexture;
+import net.kaikoga.arpx.chip.TextureChip;
+import flash.display3D.textures.Texture;
 import net.kaikoga.arpx.anchor.Anchor;
 import net.kaikoga.arpx.automaton.Automaton;
 import net.kaikoga.arpx.camera.Camera;
@@ -51,6 +54,7 @@ class ArpEngineComponentsCase {
 		assertNotNull(new Camera());
 
 		assertNotNull(new Chip());
+		assertNotNull(new TextureChip());
 		assertNotNull(new GridChip());
 		assertNotNull(new NativeTextChip());
 		assertNotNull(new RectChip());
@@ -98,6 +102,7 @@ class ArpEngineComponentsCase {
 		assertNotNull(new Texture());
 		assertNotNull(new FileTexture());
 		assertNotNull(new ResourceTexture());
+		assertNotNull(new GridTexture());
 	}
 
 }
