@@ -19,10 +19,10 @@ class MacroArpFieldDefinition {
 	inline private function get_nativePos():Position return this.nativeField.pos;
 
 	// ArpField family
-	public var metaArpField:MacroArpMetaArpField = MacroArpMetaArpField.Unmanaged;
-	public var metaArpBarrier:MacroArpMetaArpBarrier = MacroArpMetaArpBarrier.None;
-	public var metaArpVolatile:Bool = false;
-	public var metaArpDefault:MacroArpMetaArpDefault = MacroArpMetaArpDefault.Zero;
+	public var metaArpField(default, null):MacroArpMetaArpField = MacroArpMetaArpField.Unmanaged;
+	public var metaArpBarrier(default, null):MacroArpMetaArpBarrier = MacroArpMetaArpBarrier.None;
+	public var metaArpVolatile(default, null):Bool = false;
+	public var metaArpDefault(default, null):MacroArpMetaArpDefault = MacroArpMetaArpDefault.Zero;
 
 	// Impl family
 	public var metaArpImpl:Bool = false;
@@ -55,13 +55,10 @@ class MacroArpFieldDefinition {
 					switch (meta.name) {
 						case ":arpField":
 							this.family = MacroArpFieldDefinitionFamily.ArpField;
-							this.metaArpField = parseMetaArpField(meta.params[0]);
-						case ":arpVolatile":
-							this.family = MacroArpFieldDefinitionFamily.ArpField;
-							this.metaArpVolatile = true;
+							this.parseMetaArpField(meta.params);
 						case ":arpBarrier":
 							this.family = MacroArpFieldDefinitionFamily.ArpField;
-							this.metaArpBarrier = parseMetaArpBarrier(meta.params[0]);
+							this.parseMetaArpBarrier(meta.params);
 						case ":arpDefault":
 							this.family = MacroArpFieldDefinitionFamily.ArpField;
 							switch (meta.params[0]) {
@@ -148,19 +145,33 @@ class MacroArpFieldDefinition {
 		return true;
 	}
 
-	private function parseMetaArpField(expr:ExprOf<String>):MacroArpMetaArpField {
-		if (expr == null) return MacroArpMetaArpField.Default;
-		return switch (expr.expr) {
-			case ExprDef.EConst(Constant.CString(v)): MacroArpMetaArpField.Name(v);
-			case ExprDef.EConst(Constant.CIdent("false")): MacroArpMetaArpField.Runtime;
-			case ExprDef.EConst(Constant.CIdent("null")): MacroArpMetaArpField.Default;
-			case _: Context.error("invalid expr", this.nativePos);
+	private function parseMetaArpField(params:Array<Expr>):Void {
+		if (params.length == 0) {
+			this.metaArpField = MacroArpMetaArpField.Default;
+			return;
+		}
+		for (param in params) {
+			switch (param.expr) {
+				case ExprDef.EConst(Constant.CString(v)):
+					this.metaArpField = MacroArpMetaArpField.Name(v);
+				case ExprDef.EConst(Constant.CIdent("false")):
+					this.metaArpField = MacroArpMetaArpField.Runtime;
+				case ExprDef.EConst(Constant.CIdent("null")):
+					this.metaArpField = MacroArpMetaArpField.Default;
+				case ExprDef.EConst(Constant.CIdent("volatile")):
+					this.metaArpVolatile = true;
+				case _:
+					Context.error("invalid expr", this.nativePos);
+			}
 		}
 	}
 
-	private function parseMetaArpBarrier(expr:ExprOf<Bool>):MacroArpMetaArpBarrier {
-		if (expr == null) return MacroArpMetaArpBarrier.Optional;
-		return switch (expr.expr) {
+	private function parseMetaArpBarrier(params:Array<Expr>):Void {
+		if (params.length == 0) {
+			this.metaArpBarrier = MacroArpMetaArpBarrier.Optional;
+			return;
+		}
+		this.metaArpBarrier = switch (params[0].expr) {
 			case ExprDef.EConst(Constant.CIdent("true")): MacroArpMetaArpBarrier.Required;
 			case ExprDef.EConst(Constant.CIdent("false")): MacroArpMetaArpBarrier.Optional;
 			case _: Context.error("invalid expr", this.nativePos);
