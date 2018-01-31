@@ -19,12 +19,6 @@ class MacroArpValueStdListField extends MacroArpValueCollectionFieldBase impleme
 		super(fieldDef, type, true);
 	}
 
-	public function buildField(outFields:Array<Field>):Void {
-		var nativeType:ComplexType = this.nativeType;
-		this.nativeField.kind = FieldType.FProp("default", "null", nativeType, this.fieldDef.nativeDefault);
-		outFields.push(nativeField);
-	}
-
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {
 		heatLaterBlock.push(macro @:pos(this.nativePos) { null; });
 	}
@@ -54,7 +48,7 @@ class MacroArpValueStdListField extends MacroArpValueCollectionFieldBase impleme
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
 		// intentionally serialized
 		fieldBlock.push(macro @:pos(this.nativePos) {
-			this.$iNativeName = haxe.Unserializer.run(input.readUtf($v{iNativeName}));
+			this.$i_nativeName = haxe.Unserializer.run(input.readUtf($v{iNativeName}));
 		});
 	}
 
@@ -67,7 +61,7 @@ class MacroArpValueStdListField extends MacroArpValueCollectionFieldBase impleme
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
 		copyFromBlock.push(macro @:pos(this.nativePos) {
-			this.$iNativeName = new List();
+			this.$i_nativeName = new List();
 			for (v in src.$iNativeName) this.$iNativeName.add(v);
 		});
 	}

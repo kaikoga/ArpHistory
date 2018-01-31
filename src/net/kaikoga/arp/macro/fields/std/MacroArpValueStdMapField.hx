@@ -18,12 +18,6 @@ class MacroArpValueStdMapField extends MacroArpValueCollectionFieldBase implemen
 		super(fieldDef, type, concreteDs);
 	}
 
-	public function buildField(outFields:Array<Field>):Void {
-		var nativeType:ComplexType = this.nativeType;
-		this.nativeField.kind = FieldType.FProp("default", "null", nativeType, this.fieldDef.nativeDefault);
-		outFields.push(nativeField);
-	}
-
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {
 		heatLaterBlock.push(macro @:pos(this.nativePos) { null; });
 	}
@@ -53,7 +47,7 @@ class MacroArpValueStdMapField extends MacroArpValueCollectionFieldBase implemen
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
 		// intentionally serialized
 		fieldBlock.push(macro @:pos(this.nativePos) {
-			this.$iNativeName = haxe.Unserializer.run(input.readUtf($v{iNativeName}));
+			this.$i_nativeName = haxe.Unserializer.run(input.readUtf($v{iNativeName}));
 		});
 	}
 
@@ -67,7 +61,7 @@ class MacroArpValueStdMapField extends MacroArpValueCollectionFieldBase implemen
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
 		copyFromBlock.push(macro @:pos(this.nativePos) {
 			this.$iNativeName = new Map();
-			for (k in src.$iNativeName.keys()) this.$iNativeName.set(k, src.$iNativeName.get(k));
+			for (k in src.$iNativeName.keys()) this.$i_nativeName.set(k, src.$iNativeName.get(k));
 		});
 	}
 }

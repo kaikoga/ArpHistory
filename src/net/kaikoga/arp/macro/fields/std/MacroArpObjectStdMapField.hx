@@ -40,15 +40,9 @@ class MacroArpObjectStdMapField extends MacroArpObjectCollectionFieldBase implem
 		_nativeType = coerce(super.nativeType);
 	}
 
-	public function buildField(outFields:Array<Field>):Void {
-		this.nativeField.kind = FieldType.FProp("default", "null", this.nativeType, null);
-		outFields.push(nativeField);
-	}
-
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {
 		if (!this.arpHasBarrier) return;
 		heatLaterBlock.push(macro @:pos(this.nativePos) { for (slot in this.$iNativeName.slots) this._arpDomain.heatLater(slot, $v{arpBarrierRequired}); });
-
 	}
 
 	public function buildHeatUpBlock(heatUpBlock:Array<Expr>):Void {

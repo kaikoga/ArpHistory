@@ -19,12 +19,6 @@ class MacroArpValueSetField extends MacroArpValueCollectionFieldBase implements 
 		super(fieldDef, type, concreteDs);
 	}
 
-	public function buildField(outFields:Array<Field>):Void {
-		var nativeType:ComplexType = this.nativeType;
-		this.nativeField.kind = FieldType.FProp("default", "null", nativeType, this.fieldDef.nativeDefault);
-		outFields.push(nativeField);
-	}
-
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {
 		heatLaterBlock.push(macro @:pos(this.nativePos) { null; });
 	}

@@ -2,6 +2,8 @@ package net.kaikoga.arp.macro.fields.base;
 
 #if macro
 
+import haxe.macro.Expr;
+
 import net.kaikoga.arp.domain.reflect.ArpFieldKind;
 import net.kaikoga.arp.macro.IMacroArpValueType;
 
@@ -17,6 +19,22 @@ class MacroArpValueCollectionFieldBase extends MacroArpCollectionFieldBase {
 		this.type = type;
 	}
 
+	public function buildField(outFields:Array<Field>):Void {
+		var generated:Array<Field> = (macro class Generated {
+			@:pos(this.nativePos)
+			private var $i_nativeName:$nativeType = ${this.fieldDef.nativeDefault};
+			@:pos(this.nativePos) @:noDoc @:noCompletion
+			private function $iGet_nativeName():$nativeType return this.$i_nativeName;
+			@:pos(this.nativePos) @:noDoc @:noCompletion
+			private function $iSet_nativeName(value:$nativeType):$nativeType return this.$i_nativeName = value;
+		}).fields;
+		this.nativeField.kind = FieldType.FProp("get", this.fieldDef.metaArpReadOnly ? "never" : "set", nativeType, null);
+		outFields.push(this.nativeField);
+		for (g in generated) {
+			if (g.name == iSet_nativeName && this.fieldDef.metaArpReadOnly) continue;
+			outFields.push(g);
+		}
+	}
 }
 
 #end
