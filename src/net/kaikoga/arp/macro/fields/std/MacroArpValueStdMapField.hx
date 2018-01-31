@@ -41,27 +41,27 @@ class MacroArpValueStdMapField extends MacroArpValueCollectionFieldBase implemen
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iNativeName.set(element.key, ${this.type.createSeedElement(this.nativePos)}); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$i_nativeName.set(element.key, ${this.type.createSeedElement(this.nativePos)}); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
 		// intentionally serialized
 		fieldBlock.push(macro @:pos(this.nativePos) {
-			this.$i_nativeName = haxe.Unserializer.run(input.readUtf($v{iNativeName}));
+			this.$i_nativeName = haxe.Unserializer.run(input.readUtf($v{i_nativeName}));
 		});
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
 		// intentionally serialized
 		fieldBlock.push(macro @:pos(this.nativePos) {
-			output.writeUtf($v{iNativeName}, haxe.Serializer.run(this.$iNativeName));
+			output.writeUtf($v{i_nativeName}, haxe.Serializer.run(this.$i_nativeName));
 		});
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
 		copyFromBlock.push(macro @:pos(this.nativePos) {
-			this.$iNativeName = new Map();
-			for (k in src.$iNativeName.keys()) this.$i_nativeName.set(k, src.$iNativeName.get(k));
+			this.$i_nativeName = new Map();
+			for (k in src.$i_nativeName.keys()) this.$i_nativeName.set(k, src.$i_nativeName.get(k));
 		});
 	}
 }

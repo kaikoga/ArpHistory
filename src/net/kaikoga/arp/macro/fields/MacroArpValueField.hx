@@ -38,10 +38,10 @@ class MacroArpValueField extends MacroArpFieldBase implements IMacroArpField {
 		switch (this.fieldDef.metaArpDefault) {
 			case MacroArpMetaArpDefault.Zero:
 				if (this.fieldDef.nativeDefault == null) {
-					initBlock.push(macro @:pos(this.nativePos) { this.$iNativeName = ${this.type.createEmptyVo(this.nativePos)}; });
+					initBlock.push(macro @:pos(this.nativePos) { this.$i_nativeName = ${this.type.createEmptyVo(this.nativePos)}; });
 				}
 			case MacroArpMetaArpDefault.Simple(s):
-				initBlock.push(macro @:pos(this.nativePos) { this.$iNativeName = ${this.type.createWithString(this.nativePos, s)}; });
+				initBlock.push(macro @:pos(this.nativePos) { this.$i_nativeName = ${this.type.createWithString(this.nativePos, s)}; });
 		}
 	}
 
@@ -62,28 +62,26 @@ class MacroArpValueField extends MacroArpFieldBase implements IMacroArpField {
 	}
 
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
-		var iNativeName:String = this.iNativeName;
-
 		var caseBlock:Array<Expr> = [];
 		cases.push({
 			values: [this.eFieldName],
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { ${this.type.readSeedElement(this.nativePos, this.iNativeName)}; });
+		caseBlock.push(macro @:pos(this.nativePos) { ${this.type.readSeedElement(this.nativePos, this.i_nativeName)}; });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
-		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.readAsPersistable(this.nativePos, this.eFieldName, this.iNativeName)}; });
+		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.readAsPersistable(this.nativePos, this.eFieldName, this.i_nativeName)}; });
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
-		var eField:Expr = macro @:pos(this.nativePos) this.$iNativeName;
+		var eField:Expr = macro @:pos(this.nativePos) this.$i_nativeName;
 		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.writeAsPersistable(this.nativePos, this.eFieldName, eField)}; });
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
-		copyFromBlock.push(macro @:pos(this.nativePos) { ${this.type.copyFrom(this.nativePos, this.iNativeName)}; });
+		copyFromBlock.push(macro @:pos(this.nativePos) { ${this.type.copyFrom(this.nativePos, this.i_nativeName)}; });
 	}
 }
 

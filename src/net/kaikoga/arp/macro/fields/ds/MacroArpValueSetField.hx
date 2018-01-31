@@ -42,7 +42,7 @@ class MacroArpValueSetField extends MacroArpValueCollectionFieldBase implements 
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iNativeName.add(${this.type.createSeedElement(this.nativePos)}); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$i_nativeName.add(${this.type.createSeedElement(this.nativePos)}); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
@@ -51,7 +51,7 @@ class MacroArpValueSetField extends MacroArpValueCollectionFieldBase implements 
 			nameList = collection.readNameList("keys");
 			values = input.readEnter("values");
 			for (name in nameList) {
-				this.$iNativeName.add(${this.type.createAsPersistable(this.nativePos, macro name)});
+				this.$i_nativeName.add(${this.type.createAsPersistable(this.nativePos, macro name)});
 			}
 			values.readExit();
 			collection.readExit();
@@ -62,10 +62,10 @@ class MacroArpValueSetField extends MacroArpValueCollectionFieldBase implements 
 		fieldBlock.push(macro @:pos(this.nativePos) {
 			collection = output.writeEnter(${eFieldName});
 			uniqId.reset();
-			collection.writeNameList("keys", [for (value in this.$iNativeName) uniqId.next()]);
+			collection.writeNameList("keys", [for (value in this.$i_nativeName) uniqId.next()]);
 			values = output.writeEnter("values");
 			uniqId.reset();
-			for (value in this.$iNativeName) {
+			for (value in this.$i_nativeName) {
 				${this.type.writeAsPersistable(this.nativePos, macro uniqId.next(), macro value)}
 			}
 			values.writeExit();
@@ -75,8 +75,8 @@ class MacroArpValueSetField extends MacroArpValueCollectionFieldBase implements 
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
 		copyFromBlock.push(macro @:pos(this.nativePos) {
-			this.$iNativeName.clear();
-			for (v in src.$iNativeName) this.$iNativeName.add(v);
+			this.$i_nativeName.clear();
+			for (v in src.$i_nativeName) this.$i_nativeName.add(v);
 		});
 	}
 }

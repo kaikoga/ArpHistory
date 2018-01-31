@@ -39,12 +39,12 @@ class MacroArpObjectSetField extends MacroArpObjectCollectionFieldBase implement
 
 	public function buildHeatLaterBlock(heatLaterBlock:Array<Expr>):Void {
 		if (!this.arpHasBarrier) return;
-		heatLaterBlock.push(macro @:pos(this.nativePos) { for (slot in this.$iNativeName.slotSet) this._arpDomain.heatLater(slot, $v{arpBarrierRequired}); });
+		heatLaterBlock.push(macro @:pos(this.nativePos) { for (slot in this.$i_nativeName.slotSet) this._arpDomain.heatLater(slot, $v{arpBarrierRequired}); });
 	}
 
 	public function buildHeatUpBlock(heatUpBlock:Array<Expr>):Void {
 		if (!this.arpHasBarrier) return;
-		heatUpBlock.push(macro @:pos(this.nativePos) { if (this.$iNativeName.heat != net.kaikoga.arp.domain.ArpHeat.Warm) return false; });
+		heatUpBlock.push(macro @:pos(this.nativePos) { if (this.$i_nativeName.heat != net.kaikoga.arp.domain.ArpHeat.Warm) return false; });
 	}
 
 	public function buildHeatDownBlock(heatDownBlock:Array<Expr>):Void {
@@ -52,7 +52,7 @@ class MacroArpObjectSetField extends MacroArpObjectCollectionFieldBase implement
 	}
 
 	public function buildDisposeBlock(disposeBlock:Array<Expr>):Void {
-		disposeBlock.push(macro @:pos(this.nativePos) { for (slot in this.$iNativeName.slotSet) slot.delReference(); });
+		disposeBlock.push(macro @:pos(this.nativePos) { for (slot in this.$i_nativeName.slotSet) slot.delReference(); });
 	}
 
 	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
@@ -62,25 +62,25 @@ class MacroArpObjectSetField extends MacroArpObjectCollectionFieldBase implement
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iNativeName.slotSet.add(this._arpDomain.loadSeed(element, ${this.eArpType}).addReference()); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$i_nativeName.slotSet.add(this._arpDomain.loadSeed(element, ${this.eArpType}).addReference()); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
 		fieldBlock.push(macro @:pos(this.nativePos) {
-			input.readPersistable(${this.eFieldName}, this.$iNativeName);
+			input.readPersistable(${this.eFieldName}, this.$i_nativeName);
 		});
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
 		fieldBlock.push(macro @:pos(this.nativePos) {
-			output.writePersistable(${this.eFieldName}, this.$iNativeName);
+			output.writePersistable(${this.eFieldName}, this.$i_nativeName);
 		});
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
 		copyFromBlock.push(macro @:pos(this.nativePos) {
-			this.$iNativeName.clear();
-			for (v in src.$iNativeName) this.$iNativeName.add(v);
+			this.$i_nativeName.clear();
+			for (v in src.$i_nativeName) this.$i_nativeName.add(v);
 		});
 	}
 }

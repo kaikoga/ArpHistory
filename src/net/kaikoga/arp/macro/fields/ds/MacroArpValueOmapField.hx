@@ -42,7 +42,7 @@ class MacroArpValueOmapField extends MacroArpValueCollectionFieldBase implements
 			expr: { pos: this.nativePos, expr: ExprDef.EBlock(caseBlock)}
 		});
 
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iNativeName.addPair(element.key, ${this.type.createSeedElement(this.nativePos)}); });
+		caseBlock.push(macro @:pos(this.nativePos) { this.$i_nativeName.addPair(element.key, ${this.type.createSeedElement(this.nativePos)}); });
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
@@ -51,7 +51,7 @@ class MacroArpValueOmapField extends MacroArpValueCollectionFieldBase implements
 			nameList = collection.readNameList("keys");
 			values = input.readEnter("values");
 			for (name in nameList) {
-				this.$iNativeName.addPair(name, ${this.type.createAsPersistable(this.nativePos, macro name)});
+				this.$i_nativeName.addPair(name, ${this.type.createAsPersistable(this.nativePos, macro name)});
 			}
 			values.readExit();
 			collection.readExit();
@@ -61,10 +61,10 @@ class MacroArpValueOmapField extends MacroArpValueCollectionFieldBase implements
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
 		fieldBlock.push(macro @:pos(this.nativePos) {
 			collection = output.writeEnter(${eFieldName});
-			collection.writeNameList("keys", [for (key in this.$iNativeName.keys()) key]);
+			collection.writeNameList("keys", [for (key in this.$i_nativeName.keys()) key]);
 			values = output.writeEnter("values");
-			for (key in this.$iNativeName.keys()) {
-				${this.type.writeAsPersistable(this.nativePos, macro key, macro this.$iNativeName.get(key))}
+			for (key in this.$i_nativeName.keys()) {
+				${this.type.writeAsPersistable(this.nativePos, macro key, macro this.$i_nativeName.get(key))}
 			}
 			values.writeExit();
 			collection.writeExit();
@@ -73,8 +73,8 @@ class MacroArpValueOmapField extends MacroArpValueCollectionFieldBase implements
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {
 		copyFromBlock.push(macro @:pos(this.nativePos) {
-			this.$iNativeName.clear();
-			for (k in src.$iNativeName.keys()) this.$iNativeName.addPair(k, src.$iNativeName.get(k));
+			this.$i_nativeName.clear();
+			for (k in src.$i_nativeName.keys()) this.$i_nativeName.addPair(k, src.$i_nativeName.get(k));
 		});
 	}
 }
