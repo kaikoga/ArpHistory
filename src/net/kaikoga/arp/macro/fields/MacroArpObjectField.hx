@@ -24,16 +24,19 @@ class MacroArpObjectField extends MacroArpFieldBase implements IMacroArpField {
 
 	public function buildField(outFields:Array<Field>):Void {
 		var generated:Array<Field> = (macro class Generated {
+			@:pos(this.nativePos)
 			public var $iNativeSlot(default, null):$nativeSlotType;
-			/* inline */ private function $iGet_nativeName():$nativeType return this.$iNativeSlot.value;
-			/* inline */ private function $iSet_nativeName(value:$nativeType):$nativeType {
+			@:pos(this.nativePos) @:noDoc @:noCompletion
+			private function $iGet_nativeName():$nativeType return this.$iNativeSlot.value;
+			@:pos(this.nativePos) @:noDoc @:noCompletion
+			private function $iSet_nativeName(value:$nativeType):$nativeType {
 				this.$iNativeSlot = net.kaikoga.arp.domain.ArpSlot.of(value, this._arpDomain).takeReference(this.$iNativeSlot);
 				return value;
 			}
 		}).fields;
+		generated[0].access = this.nativeField.access;
 		this.nativeField.kind = FieldType.FProp("get", this.fieldDef.metaArpReadOnly ? "never" : "set", nativeType, null);
 		outFields.push(nativeField);
-		generated[0].access = this.nativeField.access;
 		for (g in generated) {
 			if (g.name == iSet_nativeName && this.fieldDef.metaArpReadOnly) continue;
 			outFields.push(g);
