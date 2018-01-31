@@ -147,10 +147,8 @@ class MacroArpFieldDefinition {
 	}
 
 	private function parseMetaArpField(params:Array<Expr>):Void {
-		if (params.length == 0) {
-			this.metaArpField = MacroArpMetaArpField.Default;
-			return;
-		}
+		this.metaArpField = MacroArpMetaArpField.Default;
+		if (params.length == 0) return;
 		for (param in params) {
 			switch (param.expr) {
 				case ExprDef.EConst(Constant.CString(v)):
@@ -170,10 +168,8 @@ class MacroArpFieldDefinition {
 	}
 
 	private function parseMetaArpBarrier(params:Array<Expr>):Void {
-		if (params.length == 0) {
-			this.metaArpBarrier = MacroArpMetaArpBarrier.Optional;
-			return;
-		}
+		this.metaArpBarrier = MacroArpMetaArpBarrier.Optional;
+		if (params.length == 0) return;
 		this.metaArpBarrier = switch (params[0].expr) {
 			case ExprDef.EConst(Constant.CIdent("true")): MacroArpMetaArpBarrier.Required;
 			case ExprDef.EConst(Constant.CIdent("false")): MacroArpMetaArpBarrier.Optional;
