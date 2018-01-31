@@ -6,12 +6,10 @@ import net.kaikoga.arpx.backends.ArpObjectImplBase;
 
 class TextureFlashImplBase extends ArpObjectImplBase implements ITextureImpl {
 
-	public var width(get, set):Int;
+	public var width(get, never):Int;
 	private function get_width():Int return 0;
-	private function set_width(value:Int):Int return value; // FIXME
-	public var height(get, set):Int;
+	public var height(get, never):Int;
 	private function get_height():Int return 0;
-	private function set_height(value:Int):Int return value; // FIXME
 
 	public function widthOf(index:Int):Int return this.width;
 	public function heightOf(index:Int):Int return this.height;

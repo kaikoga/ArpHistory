@@ -6,8 +6,8 @@ import net.kaikoga.arpx.backends.flash.texture.decorators.GridTextureFlashImpl;
 @:arpType("texture", "grid")
 class GridTexture extends MultiTexture {
 
-	@:arpField public var width:Int;
-	@:arpField public var height:Int;
+	@:arpField(readonly) public var width:Int;
+	@:arpField(readonly) public var height:Int;
 
 	@:arpBarrier(true) @:arpField public var faceList:FaceList;
 	@:arpField public var dirs:Int = 1;
