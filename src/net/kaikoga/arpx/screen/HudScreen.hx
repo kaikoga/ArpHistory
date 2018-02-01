@@ -22,6 +22,11 @@ class HudScreen extends Screen {
 	@:arpWithoutBackend
 	#end
 
+	override public function set_visible(value:Bool):Bool {
+		if (super.visible && !value) this.input.updateFocus(null);
+		return super.set_visible(value);
+	}
+
 	public function new() super();
 
 	override public function tick(timeslice:Float):Bool {
@@ -41,7 +46,6 @@ class HudScreen extends Screen {
 	}
 
 	override public function updateFocus(target:Null<Input>):Void {
-		if (!this.visible) this.input.updateFocus(null); // FIXME this could be called on set_visible(false)
-		else if (this.visible && this.input != null) input.updateFocus(target);
+		if (this.visible && this.input != null) input.updateFocus(target);
 	}
 }
