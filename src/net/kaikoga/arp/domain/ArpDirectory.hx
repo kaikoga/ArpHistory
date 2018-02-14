@@ -6,6 +6,7 @@ import net.kaikoga.arp.domain.core.ArpSid;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.query.ArpDirectoryQuery;
 import net.kaikoga.arp.domain.query.ArpObjectQuery;
+import net.kaikoga.arp.errors.ArpError;
 import net.kaikoga.arp.ds.impl.StdMap;
 
 class ArpDirectory {
@@ -84,7 +85,7 @@ class ArpDirectory {
 	}
 
 	public function linkTo(dir:ArpDirectory):Void {
-		if (this.linkDir != null) throw "this ArpDirectory is already linked";
+		if (this.linkDir != null) throw new ArpError("this ArpDirectory is already linked");
 		this.linkDir = dir.addReference();
 	}
 

@@ -1,10 +1,10 @@
 package net.kaikoga.arp.macro.stubs;
 
-import net.kaikoga.arp.macro.MacroArpObjectRegistry;
 import haxe.macro.Context;
 import haxe.macro.Expr;
 import haxe.macro.Type;
 import haxe.macro.TypeTools;
+import net.kaikoga.arp.macro.MacroArpObjectRegistry;
 
 @:noDoc @:noCompletion
 class MacroArpObjectStub {
@@ -50,7 +50,7 @@ class MacroArpObjectStub {
 		if (getTemplate().classDef.isDerived) {
 			eDefault = macro { super.arpConsumeSeedElement(element); }
 		} else {
-			eDefault = macro if (element.typeName != "value") throw arpTypeInfo + " could not accept <" + element.typeName + ">";
+			eDefault = macro if (element.typeName != "value") throw new net.kaikoga.arp.errors.ArpLoadError(arpTypeInfo + " could not accept <" + element.typeName + ">");
 		}
 		var expr:Expr = { pos: Context.currentPos(), expr: ExprDef.ESwitch(macro element.typeName, cases, eDefault) }
 
@@ -71,7 +71,7 @@ class MacroArpObjectStub {
 
 		return macro @:mergeBlock {
 #if arp_debug
-			if (this._arpSlot != null) throw("ArpObject " + this.arpType + this._arpSlot + " is initialized");
+			if (this._arpSlot != null) throw new net.kaikoga.arp.errors.ArpError("ArpObject " + this.arpType + this._arpSlot + " is initialized");
 #end
 			this._arpDomain = slot.domain;
 			this._arpSlot = slot;
@@ -93,7 +93,7 @@ class MacroArpObjectStub {
 		@:macroReturn Bool;
 		return macro @:mergeBlock {
 #if arp_debug
-			if (this._arpSlot == null) throw("ArpObject is not initialized");
+			if (this._arpSlot == null) throw new net.kaikoga.arp.errors.ArpError("ArpObject is not initialized");
 #end
 			$e{ heatLaterBlock }
 		}
@@ -103,7 +103,7 @@ class MacroArpObjectStub {
 		@:macroReturn Bool;
 		return macro @:mergeBlock {
 #if arp_debug
-			if (this._arpSlot == null) throw("ArpObject is not initialized");
+			if (this._arpSlot == null) throw new net.kaikoga.arp.errors.ArpError("ArpObject is not initialized");
 #end
 			$e{ heatUpBlock }
 			var isSync:Bool = true;
@@ -111,7 +111,7 @@ class MacroArpObjectStub {
 			$e{
 				if (hasImpl) {
 					macro {
-						if (this.arpImpl == null) throw $v{"@:arpImpl could not find backend for " + TypeTools.toString(Context.getLocalType())};
+						if (this.arpImpl == null) throw new net.kaikoga.arp.errors.ArpTemplateError($v{"@:arpImpl could not find backend for " + TypeTools.toString(Context.getLocalType())});
 						if (!this.arpImpl.arpHeatUp()) isSync = false;
 					}
 				} else {
@@ -132,7 +132,7 @@ class MacroArpObjectStub {
 		@:macroReturn Bool;
 		return macro @:mergeBlock {
 #if arp_debug
-			if (this._arpSlot == null) throw("ArpObject is not initialized");
+			if (this._arpSlot == null) throw new net.kaikoga.arp.errors.ArpError("ArpObject is not initialized");
 #end
 			var isSync:Bool = true;
 			$e{
@@ -151,7 +151,7 @@ class MacroArpObjectStub {
 	macro public static function arpDispose(disposeBlock:Expr, hasImpl:Bool):Expr {
 		return macro @:mergeBlock {
 #if arp_debug
-			if (this._arpSlot == null) throw("ArpObject is not initialized");
+			if (this._arpSlot == null) throw new net.kaikoga.arp.errors.ArpError("ArpObject is not initialized");
 #end
 			this.arpHeatDown();
 			$e{

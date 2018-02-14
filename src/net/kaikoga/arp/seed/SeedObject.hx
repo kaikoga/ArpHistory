@@ -7,6 +7,7 @@ import net.kaikoga.arp.domain.ArpTypeInfo;
 import net.kaikoga.arp.domain.ArpUntypedSlot;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.IArpObject;
+import net.kaikoga.arp.errors.ArpError;
 import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.seed.ArpSeed;
@@ -75,11 +76,11 @@ class SeedObject implements IArpObject {
 	}
 
 	public function arpClone():IArpObject {
-		throw "not supported";
+		throw new ArpError("not supported");
 	}
 
 	public function arpCopyFrom(source:IArpObject):IArpObject {
-		throw "not supported";
+		throw new ArpError("not supported");
 	}
 
 	@:access(net.kaikoga.arp.domain.ArpDomain.currentDir)

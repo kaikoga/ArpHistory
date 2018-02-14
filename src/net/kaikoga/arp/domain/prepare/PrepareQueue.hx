@@ -1,5 +1,6 @@
 package net.kaikoga.arp.domain.prepare;
 
+import net.kaikoga.arp.errors.ArpError;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.domain.ArpUntypedSlot;
 import net.kaikoga.arp.domain.IArpObject;
@@ -108,7 +109,7 @@ class PrepareQueue implements IPrepareStatus {
 
 	public function prepareChildLater(slot:ArpUntypedSlot, name:String, childSlot:ArpUntypedSlot):Void {
 		if (this.tasksBySlots.exists(slot)) return;
-		throw "PrepareQueue.prepareChildLater()";// TODO
+		throw new ArpError("PrepareQueue.prepareChildLater() will not be implemented"); // TODO delete this!
 		// var task:IPrepareTask = new PrepareChildTask(this.domain, slot, name, childSlot);
 		// this.tasksBySlots.set(slot, task);
 		// this.taskRunner.append(task);

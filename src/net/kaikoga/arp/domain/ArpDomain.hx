@@ -11,6 +11,7 @@ import net.kaikoga.arp.domain.factory.ArpObjectFactoryRegistry;
 import net.kaikoga.arp.domain.prepare.IPrepareStatus;
 import net.kaikoga.arp.domain.prepare.PrepareQueue;
 import net.kaikoga.arp.domain.query.ArpObjectQuery;
+import net.kaikoga.arp.errors.ArpError;
 import net.kaikoga.arp.events.ArpSignal;
 import net.kaikoga.arp.events.IArpSignalIn;
 import net.kaikoga.arp.events.IArpSignalOut;
@@ -186,11 +187,11 @@ class ArpDomain {
 	}
 
 	public function flush():Void {
-		throw "ArpDomain.flush()";
+		throw new ArpError("ArpDomain.flush() is not implemented");
 	}
 
 	public function gc():Void {
-		throw "ArpDomain.gc()";
+		throw new ArpError("ArpDomain.gc() is not implemented");
 	}
 
 	public function log(category:String, message:String):Void {

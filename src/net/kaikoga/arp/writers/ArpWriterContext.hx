@@ -1,6 +1,7 @@
 package net.kaikoga.arp.writers;
 
 import haxe.io.BytesBuffer;
+import net.kaikoga.arp.errors.ArpError;
 
 #if sys
 import sys.FileSystem;
@@ -40,7 +41,7 @@ class ArpWriterContext {
 			out.close();
 		}
 #else
-		throw "ArpWriterContext.writeAll(): not supported";
+		throw new ArpError("ArpWriterContext.writeAll(): not supported");
 #end
 	}
 

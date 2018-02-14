@@ -7,6 +7,7 @@ import net.kaikoga.arp.domain.ArpUntypedSlot;
 import net.kaikoga.arp.domain.core.ArpSid;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.IArpObject;
+import net.kaikoga.arp.errors.ArpError;
 import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.seed.ArpSeed;
@@ -86,11 +87,11 @@ class DataGroup implements IArpObject {
 	}
 
 	public function arpClone():IArpObject {
-		throw "not supported";
+		throw new ArpError("not supported");
 	}
 
 	public function arpCopyFrom(source:IArpObject):IArpObject {
-		throw "not supported";
+		throw new ArpError("not supported");
 	}
 
 	public function add(slot:ArpUntypedSlot):Void {
