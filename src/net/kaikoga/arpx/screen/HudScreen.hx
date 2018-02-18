@@ -32,7 +32,7 @@ class HudScreen extends Screen {
 	override public function tick(timeslice:Float):Bool {
 		if (this.visible) {
 			var other:Null<Hud> = this.focus;
-			if (other == null) {
+			if (other == null && this.input != null) {
 				for (hud in this.huds) other = hud.findFocus(other);
 			}
 			for (hud in this.huds) hud.updateFocus(other);
