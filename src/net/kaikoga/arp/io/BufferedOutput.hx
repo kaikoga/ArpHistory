@@ -54,5 +54,6 @@ class BufferedOutput implements IBufferedOutput {
 
 	public function writeBlob(value:Bytes):Void this.fifo.writeBlob(value);
 	public function writeUtfBlob(value:String):Void this.fifo.writeUtfBlob(value);
+	public function writeUtfString(value:Null<String>):Void this.fifo.writeUtfString(value);
 }
 

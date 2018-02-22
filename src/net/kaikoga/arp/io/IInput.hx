@@ -24,6 +24,8 @@ interface IInput {
 	function readBlob():Bytes;
 	function readUtfBlob():String;
 
+	function readUtfString():Null<String>;
+
 	function nextBytes(limit:Int = 0):Bytes;
 }
 

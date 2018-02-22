@@ -48,6 +48,11 @@ class InputWrapperBase<T:Input> implements IInput {
 		return this.input.readString(length);
 	}
 
+	public function readUtfString():Null<String> {
+		var length:Int = this.input.readInt32();
+		return length < 0 ? null : this.input.readString(length);
+	}
+
 	public function nextBytes(limit:Int = 0):Bytes {
 		var bytes:Bytes = Bytes.alloc(limit);
 		var len:Int = try this.input.readBytes(bytes, 0, limit) catch (e:Eof) 0;

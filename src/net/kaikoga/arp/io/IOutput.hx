@@ -23,5 +23,7 @@ interface IOutput {
 
 	function writeBlob(value:Bytes):Void;
 	function writeUtfBlob(value:String):Void;
+
+	function writeUtfString(value:Null<String>):Void;
 }
 

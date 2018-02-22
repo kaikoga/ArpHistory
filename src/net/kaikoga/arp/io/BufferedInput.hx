@@ -100,6 +100,10 @@ class BufferedInput implements IBufferedInput {
 		drain();
 		return this.fifo.readUtfBlob();
 	}
+	public function readUtfString():Null<String> {
+		drain();
+		return this.fifo.readUtfString();
+	}
 
 	public function nextBytes(limit:Int = 0):Bytes {
 		drain();

@@ -161,6 +161,11 @@ class Fifo implements IBufferedInput implements IOutput implements IBlobInput im
 		this.writeBlob(Bytes.ofString(value));
 	}
 
+	public function writeUtfString(value:String):Void {
+		if (value == null) return this.writeInt32(-1);
+		this.writeBlob(Bytes.ofString(value));
+	}
+
 	//IDataInput
 	public function readBool():Bool {
 		this.readMode(1);
@@ -246,17 +251,34 @@ class Fifo implements IBufferedInput implements IOutput implements IBlobInput im
 	}
 
 	public function readBlob():Bytes {
-		this.readMode(4);
-		var len:Int = if (this._bigEndian) this.bytes.getInt32BE(this.readPosition) else this.bytes.getInt32(this.readPosition);
-		this.readMode(4 + len);
-		var bytes:Bytes = Bytes.alloc(len);
-		bytes.blit(0, this.bytes, this.readPosition + 4, len);
-		this.readPosition += len + 4;
+		var bytes:Bytes = this.peekBlob();
+		if (bytes == null) throw "Invalid blob length";
+		this.readPosition += bytes.length + 4;
 		return bytes;
 	}
 
 	public function readUtfBlob():String {
 		return this.readBlob().toString();
+	}
+
+	public function readUtfString():Null<String> {
+		var bytes:Bytes = this.peekBlob();
+		if (bytes == null) {
+			this.readPosition += 4;
+			return null;
+		}
+		this.readPosition += bytes.length + 4;
+		return bytes.toString();
+	}
+
+	private function peekBlob():Bytes {
+		this.readMode(4);
+		var len:Int = if (this._bigEndian) this.bytes.getInt32BE(this.readPosition) else this.bytes.getInt32(this.readPosition);
+		if (len < 0) return null;
+		this.readMode(4 + len);
+		var bytes:Bytes = Bytes.alloc(len);
+		bytes.blit(0, this.bytes, this.readPosition + 4, len);
+		return bytes;
 	}
 
 	public function nextBytes(limit:Int = 0):Bytes {

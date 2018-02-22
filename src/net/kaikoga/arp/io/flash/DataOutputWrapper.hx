@@ -47,6 +47,11 @@ class DataOutputWrapper implements IOutput
 	public function writeUtfBlob(value:String):Void {
 		this.writeBlob(Bytes.ofString(value));
 	}
+
+	public function writeUtfString(value:Null<String>):Void {
+		if (value == null) return this.output.writeInt(-1);
+		this.writeBlob(Bytes.ofString(value));
+	}
 }
 
 #end

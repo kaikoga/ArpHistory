@@ -51,6 +51,11 @@ class DataInputWrapper implements IInput {
 		return this.input.readUTFBytes(length);
 	}
 
+	public function readUtfString():Null<String> {
+		var length:Int = this.input.readInt();
+		return length < 0 ? null : this.input.readUTFBytes(length);
+	}
+
 	public function nextBytes(limit:Int = 0):Bytes {
 		var len:Int = this.input.bytesAvailable;
 		if (len > limit) len = limit;
