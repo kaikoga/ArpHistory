@@ -126,6 +126,7 @@ class TcpCachedSocketClientFlashImpl extends ArpObjectImplBase implements ISocke
 	inline public function readUtfBytes(length:UInt):String return input.readUtfBytes(length);
 	inline public function readBlob():Bytes return input.readBlob();
 	inline public function readUtfBlob():String return input.readUtfBlob();
+	inline public function readUtfString():Null<String> return input.readUtfString();
 	inline public function nextBytes(limit:Int = 0):Bytes return input.nextBytes(limit);
 
 	inline public function writeBool(value:Bool):Void { output.writeBool(value); output.flush(); }
@@ -140,7 +141,8 @@ class TcpCachedSocketClientFlashImpl extends ArpObjectImplBase implements ISocke
 	inline public function writeBytes(bytes:Bytes, offset:UInt = 0, length:UInt = 0):Void { output.writeBytes(bytes, offset, length); output.flush(); }
 	inline public function writeUtfBytes(value:String):Void { output.writeUtfBytes(value); output.flush(); }
 	inline public function writeBlob(bytes:Bytes):Void { output.writeBlob(bytes); output.flush(); }
-	inline public function writeUtfBlob(value:String):Void { output.writeUtfBlob(value); output.flush(); }
+	inline public function writeUtfBlob(value:String):Void { output.writeUtfString(value); output.flush(); }
+	inline public function writeUtfString(value:Null<String>):Void { output.writeUtfBlob(value); output.flush(); }
 
 }
 

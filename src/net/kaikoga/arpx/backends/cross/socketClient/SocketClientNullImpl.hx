@@ -26,6 +26,7 @@ class SocketClientNullImpl extends ArpObjectImplBase implements ISocketClientImp
 	inline public function readUtfBytes(length:UInt):String throw "EOF";
 	inline public function readBlob():Bytes throw "EOF";
 	inline public function readUtfBlob():String throw "EOF";
+	inline public function readUtfString():Null<String> throw "EOF";
 	inline public function nextBytes(limit:Int = 0):Bytes throw "EOF";
 
 	inline public function writeBool(value:Bool):Void throw "closed";
@@ -41,6 +42,7 @@ class SocketClientNullImpl extends ArpObjectImplBase implements ISocketClientImp
 	inline public function writeUtfBytes(value:String):Void throw "closed";
 	inline public function writeBlob(bytes:Bytes):Void throw "closed";
 	inline public function writeUtfBlob(value:String):Void throw "closed";
+	inline public function writeUtfString(value:Null<String>):Void throw "closed";
 
 }
 

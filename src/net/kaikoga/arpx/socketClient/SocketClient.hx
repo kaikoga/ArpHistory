@@ -46,6 +46,7 @@ class SocketClient implements IArpObject implements ISocketClientImpl {
 	inline public function readUtfBytes(length:UInt):String return arpImpl.readUtfBytes(length);
 	inline public function readBlob():Bytes return arpImpl.readBlob();
 	inline public function readUtfBlob():String return arpImpl.readUtfBlob();
+	inline public function readUtfString():Null<String> return arpImpl.readUtfString();
 	inline public function nextBytes(limit:Int = 0):Bytes return arpImpl.nextBytes(limit);
 
 	inline public function writeBool(value:Bool):Void arpImpl.writeBool(value);
@@ -61,6 +62,7 @@ class SocketClient implements IArpObject implements ISocketClientImpl {
 	inline public function writeUtfBytes(value:String):Void arpImpl.writeUtfBytes(value);
 	inline public function writeBlob(bytes:Bytes):Void arpImpl.writeBlob(bytes);
 	inline public function writeUtfBlob(value:String):Void arpImpl.writeUtfBlob(value);
+	inline public function writeUtfString(value:Null<String>):Void arpImpl.writeUtfString(value);
 }
 
 

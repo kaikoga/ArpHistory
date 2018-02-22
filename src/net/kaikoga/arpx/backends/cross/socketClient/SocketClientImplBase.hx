@@ -31,6 +31,7 @@ class SocketClientImplBase extends ArpObjectImplBase implements ISocketClientImp
 	inline public function readUtfBytes(length:UInt):String if (input != null) return input.readUtfBytes(length) else throw "EOF";
 	inline public function readBlob():Bytes if (input != null) return input.readBlob() else throw "EOF";
 	inline public function readUtfBlob():String if (input != null) return input.readUtfBlob() else throw "EOF";
+	inline public function readUtfString():Null<String> if (input != null) return input.readUtfString() else throw "EOF";
 	inline public function nextBytes(limit:Int = 0):Bytes if (input != null) return input.nextBytes(limit) else throw "EOF";
 
 	inline public function writeBool(value:Bool):Void if (output != null) output.writeBool(value) else throw "closed";
@@ -46,6 +47,7 @@ class SocketClientImplBase extends ArpObjectImplBase implements ISocketClientImp
 	inline public function writeUtfBytes(value:String):Void if (output != null) output.writeUtfBytes(value) else throw "closed";
 	inline public function writeBlob(bytes:Bytes):Void if (output != null) output.writeBlob(bytes) else throw "closed";
 	inline public function writeUtfBlob(value:String):Void if (output != null) output.writeUtfBlob(value) else throw "closed";
+	inline public function writeUtfString(value:Null<String>):Void if (output != null) output.writeUtfString(value) else throw "closed";
 
 }
 
