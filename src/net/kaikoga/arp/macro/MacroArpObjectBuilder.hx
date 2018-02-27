@@ -2,14 +2,13 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
-import haxe.macro.Type.ClassType;
 import haxe.macro.Compiler;
-import haxe.macro.TypeTools;
+import haxe.macro.Context;
+import haxe.macro.Expr;
+
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.reflect.ArpClassInfo;
 import net.kaikoga.arp.macro.MacroArpFieldBuilder;
-import haxe.macro.Context;
-import haxe.macro.Expr;
 
 class MacroArpObjectBuilder extends MacroArpObjectSkeleton {
 
@@ -70,6 +69,9 @@ class MacroArpObjectBuilder extends MacroArpObjectSkeleton {
 				case MacroArpFieldBuilderResult.Constructor(func):
 					outFields = outFields.concat(this.genConstructorField(fieldDef.nativeField, func));
 			}
+		}
+		if (classDef.metaHasImpl && !classDef.hasImpl) {
+			Context.warning('Not supported in this backend', classDef.nativePos);
 		}
 
 		if (classDef.isDerived) {

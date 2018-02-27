@@ -13,6 +13,7 @@ class MacroArpClassDefinition {
 	public var nativePos(default, null):Position;
 	public var metaGen(default, null):Bool = false;
 	public var metaNoGen(default, null):Bool = false;
+	public var metaHasImpl(default, null):Bool = false;
 	public var arpTypeName(default, null):String;
 	public var arpTemplateName(default, null):String;
 
@@ -50,9 +51,9 @@ class MacroArpClassDefinition {
 			var templateMeta:Expr = metaArpType.params[1];
 			this.arpTypeName = typeMeta != null ? ExprTools.getValue(typeMeta) : null;
 			this.arpTemplateName = templateMeta != null ? ExprTools.getValue(templateMeta) : null;
-		}
-		if (this.arpTemplateName == null) {
-			this.arpTemplateName = this.arpTypeName;
+			if (this.arpTemplateName == null) {
+				this.arpTemplateName = this.arpTypeName;
+			}
 		}
 	}
 
@@ -73,8 +74,15 @@ class MacroArpClassDefinition {
 				var intf:ClassType = intfRef.t.get();
 				if (intf.pack.join(".") + "." + intf.name == "net.kaikoga.arp.domain.IArpObject") {
 					this.isDerived = true;
+				} else {
+					var metaImpl:MetadataEntry = classType.meta.extract(":arpImpl")[0];
+					if (metaImpl != null) {
+						this.metaHasImpl = true;
+					}
 				}
 			}
+
+
 			for (field in classType.fields.get()) {
 				if (!this.mergedBaseFields.exists(field.name)) {
 					this.mergedBaseFields.set(field.name, field);
