@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.backends.flash.file;
 
-#if (arp_backend_flash || arp_backend_openfl)
+#if (flash || arp_backend_flash || arp_backend_openfl)
 
 import haxe.io.Bytes;
 import net.kaikoga.arp.backends.IArpObjectImpl;
