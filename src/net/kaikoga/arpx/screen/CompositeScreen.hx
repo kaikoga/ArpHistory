@@ -13,9 +13,8 @@ class CompositeScreen extends Screen {
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:CompositeScreenFlashImpl;
-#else
-	@:arpWithoutBackend
 #end
+
 	public function new() super();
 
 	override public function tick(timeslice:Float):Bool {

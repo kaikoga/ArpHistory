@@ -11,9 +11,8 @@ class FocusInput extends Input {
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:FocusInputFlashImpl;
-#else
-	@:arpWithoutBackend
 #end
+
 	public function new () super();
 
 	override public function axis(button:String):InputAxis {

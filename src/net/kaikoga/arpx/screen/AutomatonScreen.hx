@@ -16,9 +16,8 @@ class AutomatonScreen extends Screen {
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:AutomatonScreenFlashImpl;
-#else
-	@:arpWithoutBackend
 #end
+
 	public function new() super();
 
 	@:arpHeatUp private function heatUp():Bool {

@@ -11,9 +11,8 @@ class TcpCachedSocketClient extends SocketClient {
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:TcpCachedSocketClientFlashImpl;
-#else
-	@:arpWithoutBackend
 #end
+
 	public function new () {
 		super();
 	}

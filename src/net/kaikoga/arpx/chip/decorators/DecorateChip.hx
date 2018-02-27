@@ -20,8 +20,7 @@ class DecorateChip extends Chip {
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:DecorateChipFlashImpl;
-#else
-	@:arpWithoutBackend
 #end
+
 	public function new() super();
 }

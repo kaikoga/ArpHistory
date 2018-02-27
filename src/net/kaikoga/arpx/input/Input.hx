@@ -10,9 +10,8 @@ class Input implements IArpObject implements IFocusNode<Input>
 {
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:IInputFlashImpl;
-#else
-	@:arpWithoutBackend
 #end
+
 	public function new () {
 	}
 

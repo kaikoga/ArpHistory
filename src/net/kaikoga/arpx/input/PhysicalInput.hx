@@ -8,7 +8,6 @@ class PhysicalInput extends Input
 {
 	public var inputAxes:IMap<String, InputAxis>;
 
-	@:arpWithoutBackend
 	public function new () {
 		super();
 		this.inputAxes = new StdMap<String, InputAxis>();

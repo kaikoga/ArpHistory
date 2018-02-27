@@ -9,9 +9,8 @@ class ResourceTexture extends Texture
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var impl:ResourceTextureFlashImpl;
-#else
-	@:arpWithoutBackend
 #end
+
 	public function new () {
 		super();
 	}

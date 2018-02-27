@@ -18,9 +18,8 @@ class CompositeMortal extends Mortal {
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:CompositeMortalFlashImpl;
-#else
-	@:arpWithoutBackend
 #end
+
 	public function new() {
 		super();
 	}

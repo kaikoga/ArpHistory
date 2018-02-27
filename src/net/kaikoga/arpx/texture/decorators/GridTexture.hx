@@ -13,11 +13,10 @@ class GridTexture extends MultiTexture {
 	@:arpField public var dirs:Int = 1;
 	@:arpField public var offset:Int = 0;
 
-	#if (arp_backend_flash || arp_backend_openfl)
+#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var impl:GridTextureFlashImpl;
-#else
-	@:arpWithoutBackend
 #end
+
 	public function new () {
 		super();
 	}

@@ -38,9 +38,8 @@ class Mortal implements IArpObject implements ITickable
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:IMortalFlashImpl;
-#else
-	@:arpWithoutBackend
 #end
+
 	public function new () {
 		hitMortals = new Map<String, HitMortal>();
 		reactRecord = new ArraySet<String>();

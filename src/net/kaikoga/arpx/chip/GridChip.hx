@@ -34,9 +34,8 @@ class GridChip extends SubtextureChip {
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl
 	private var flashImpl:GridChipFlashImpl;
-#else
-	@:arpWithoutBackend
 #end
+
 	public function new () {
 		super();
 	}

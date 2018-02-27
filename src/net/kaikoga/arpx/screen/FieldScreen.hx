@@ -17,11 +17,10 @@ class FieldScreen extends Screen {
 	@:arpField public var camera:Camera;
 	@:arpField public var input:Input;
 
-	#if (arp_backend_flash || arp_backend_openfl)
+#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:FieldScreenFlashImpl;
-	#else
-	@:arpWithoutBackend
-	#end
+#end
+
 	public function new() {
 		super();
 	}

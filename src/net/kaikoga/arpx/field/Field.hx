@@ -37,9 +37,8 @@ class Field implements IArpObject implements ITickable
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:FieldFlashImpl;
-#else
-	@:arpWithoutBackend
 #end
+
 	public function new() {
 	}
 

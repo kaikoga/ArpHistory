@@ -16,11 +16,9 @@ class HudScreen extends Screen {
 	@:arpField public var input:Input;
 	@:arpField public var focus:Hud;
 
-	#if (arp_backend_flash || arp_backend_openfl)
+#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:HudScreenFlashImpl;
-	#else
-	@:arpWithoutBackend
-	#end
+#end
 
 	override public function set_visible(value:Bool):Bool {
 		if (super.visible && !value) this.input.updateFocus(null);

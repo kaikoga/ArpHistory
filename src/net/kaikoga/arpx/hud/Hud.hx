@@ -24,9 +24,8 @@ class Hud implements IArpObject implements ITickable implements IFocusNode<Hud>
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:IHudFlashImpl;
-#else
-	@:arpWithoutBackend
 #end
+
 	public function new () {
 	}
 

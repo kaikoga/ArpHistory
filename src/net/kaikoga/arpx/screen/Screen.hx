@@ -16,11 +16,10 @@ class Screen implements IArpObject implements ITickable implements IFocusNode<In
 	@:arpField public var ticks:Bool = false;
 	@:arpField public var visible:Bool = true;
 
-	#if (arp_backend_flash || arp_backend_openfl)
+#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:IScreenFlashImpl;
-	#else
-	@:arpWithoutBackend
-	#end
+#end
+
 	public function new() {
 	}
 

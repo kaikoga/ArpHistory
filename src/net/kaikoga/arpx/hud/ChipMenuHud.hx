@@ -19,9 +19,8 @@ class ChipMenuHud extends Hud {
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:ChipMenuHudFlashImpl;
-#else
-	@:arpWithoutBackend
 #end
+
 	public function new() {
 		super();
 	}

@@ -10,9 +10,8 @@ class KeyInput extends PhysicalInput {
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:KeyInputFlashImpl;
-#else
-	@:arpWithoutBackend
 #end
+
 	public function new() {
 		super();
 		this.keyBindings = new ArrayList<KeyInputBinding>();

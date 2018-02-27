@@ -23,9 +23,8 @@ class Console implements IArpObject implements ITickable implements IFocusNode<I
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:ConsoleFlashImpl;
-#else
-	@:arpWithoutBackend
 #end
+
 	public function new() {
 	}
 

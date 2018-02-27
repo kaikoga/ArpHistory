@@ -12,11 +12,10 @@ class FieldGizmo implements IArpObject
 {
 	@:arpField public var visible:Bool = true;
 
-	#if (arp_backend_flash || arp_backend_openfl)
+#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:IFieldGizmoFlashImpl;
-#else
-	@:arpWithoutBackend
 #end
+
 	public function new () {
 	}
 
