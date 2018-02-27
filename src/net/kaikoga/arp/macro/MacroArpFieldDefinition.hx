@@ -104,8 +104,6 @@ class MacroArpFieldDefinition {
 							this.metaArpHeatDown = nativeField.name;
 						case ":arpDispose":
 							this.metaArpDispose = nativeField.name;
-						case ":arpWithoutBackend":
-							Context.warning('Not supported in this backend', nativeField.pos);
 						case m:
 							assertNotInvalidArpMeta(m);
 					}
