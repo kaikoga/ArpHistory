@@ -74,9 +74,9 @@ class MacroArpClassDefinition {
 				var intf:ClassType = intfRef.t.get();
 				if (intf.pack.join(".") + "." + intf.name == "net.kaikoga.arp.domain.IArpObject") {
 					this.isDerived = true;
-				} else {
-					var metaImpl:MetadataEntry = classType.meta.extract(":arpImpl")[0];
-					if (metaImpl != null) {
+				} else if (intf.superClass != null) {
+					intf = intf.superClass.t.get();
+					if (intf.pack.join(".") + "." + intf.name == "net.kaikoga.arp.backends.IArpObjectImpl") {
 						this.metaHasImpl = true;
 					}
 				}
