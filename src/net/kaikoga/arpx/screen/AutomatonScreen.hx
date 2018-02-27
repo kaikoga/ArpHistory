@@ -8,15 +8,23 @@ import net.kaikoga.arpx.automaton.Automaton;
 import net.kaikoga.arpx.backends.flash.screen.AutomatonScreenFlashImpl;
 #end
 
+#if arp_backend_kha
+import net.kaikoga.arpx.backends.kha.screen.AutomatonScreenKhaImpl;
+#end
+
 @:arpType("screen", "automaton")
 class AutomatonScreen extends Screen {
 
 	@:arpBarrier @:arpField public var automaton:Automaton;
 	@:arpField(false) private var screen:Screen;
 
-#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:AutomatonScreenFlashImpl;
-#end
+	#end
+
+	#if arp_backend_kha
+	@:arpImpl private var khaImpl:AutomatonScreenKhaImpl;
+	#end
 
 	public function new() super();
 

@@ -1,6 +1,12 @@
 package net.kaikoga.arpx.input.decorators;
 
+#if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.input.decorators.PassiveInputFlashImpl;
+#end
+
+#if arp_backend_kha
+import net.kaikoga.arpx.backends.kha.input.decorators.PassiveInputKhaImpl;
+#end
 
 @:arpType("input", "passive")
 class PassiveInput extends Input {
@@ -8,9 +14,13 @@ class PassiveInput extends Input {
 	@:arpField private var input:Input;
 	@:arpField public var enabled:Bool = true;
 
-#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:PassiveInputFlashImpl;
-#end
+	#end
+
+	#if arp_backend_kha
+	@:arpImpl private var khaImpl:PassiveInputKhaImpl;
+	#end
 
 	public function new() super();
 

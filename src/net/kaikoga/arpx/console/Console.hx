@@ -12,21 +12,30 @@ import net.kaikoga.arpx.backends.flash.console.ConsoleFlashImpl;
 import net.kaikoga.arpx.backends.flash.console.IConsoleFlashImpl;
 #end
 
+#if arp_backend_kha
+import net.kaikoga.arpx.backends.kha.console.ConsoleKhaImpl;
+import net.kaikoga.arpx.backends.kha.console.IConsoleKhaImpl;
+#end
+
 @:arpType("console", "console")
 class Console implements IArpObject implements ITickable implements IFocusNode<Input>
-#if (arp_backend_flash || arp_backend_openfl) implements IConsoleFlashImpl #end
+	#if (arp_backend_flash || arp_backend_openfl) implements IConsoleFlashImpl #end
+	#if arp_backend_kha implements IConsoleKhaImpl #end
 {
 	@:arpField public var width:Int;
 	@:arpField public var height:Int;
 
 	@:arpField("screen") public var screens:IOmap<String, Screen>;
 
-#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:ConsoleFlashImpl;
-#end
+	#end
 
-	public function new() {
-	}
+	#if arp_backend_kha
+	@:arpImpl private var khaImpl:ConsoleKhaImpl;
+	#end
+
+	public function new() return;
 
 	public function tick(timeslice:Float):Bool {
 		for (screen in this.screens) screen.tick(timeslice);

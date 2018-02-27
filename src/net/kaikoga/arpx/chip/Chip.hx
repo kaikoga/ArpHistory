@@ -6,10 +6,14 @@ import net.kaikoga.arp.structs.ArpParams;
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
 #end
+#if (arp_backend_kha)
+import net.kaikoga.arpx.backends.kha.chip.IChipKhaImpl;
+#end
 
 @:arpType("chip", "null")
 class Chip implements IArpObject
-#if (arp_backend_flash || arp_backend_openfl) implements IChipFlashImpl #end
+	#if (arp_backend_flash || arp_backend_openfl) implements IChipFlashImpl #end
+	#if arp_backend_kha implements IChipKhaImpl #end
 {
 
 	public var baseX(get, set):Int;
@@ -32,9 +36,12 @@ class Chip implements IArpObject
 	//TODO hasChipName must distinguish explicit and implicit existence
 	public function hasFace(face:String):Bool return false;
 
-#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:IChipFlashImpl;
-#end
+	#end
+	#if (arp_backend_kha)
+	@:arpImpl private var khaImpl:IChipKhaImpl;
+	#end
 
 	public function new () {
 	}

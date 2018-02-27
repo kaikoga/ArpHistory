@@ -17,23 +17,13 @@ class RectChip extends Chip {
 	@:arpField public var color(get, set):ArpColor;
 	@:arpField public var border(get, set):ArpColor;
 
-	override public function chipWidthOf(params:ArpParams):Int {
-		return this.chipWidth;
-	}
-
-	override public function chipHeightOf(params:ArpParams):Int {
-		return this.chipHeight;
-	}
-
-	override public function hasFace(face:String):Bool {
-		return true;
-	}
+	override public function chipWidthOf(params:ArpParams):Int return this.chipWidth;
+	override public function chipHeightOf(params:ArpParams):Int return this.chipHeight;
+	override public function hasFace(face:String):Bool return true;
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:RectChipFlashImpl;
 #end
 
-	public function new () {
-		super();
-	}
+	public function new () super();
 }

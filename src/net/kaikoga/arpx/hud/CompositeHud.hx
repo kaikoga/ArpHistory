@@ -6,19 +6,25 @@ import net.kaikoga.arp.ds.IList;
 import net.kaikoga.arpx.backends.flash.hud.CompositeHudFlashImpl;
 #end
 
+#if arp_backend_kha
+import net.kaikoga.arpx.backends.kha.hud.CompositeHudKhaImpl;
+#end
+
 @:arpType("hud", "composite")
 class CompositeHud extends Hud {
 
 	@:arpField public var sort:String;
 	@:arpField("hud") @:arpBarrier public var huds:IList<Hud>;
 
-#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:CompositeHudFlashImpl;
-#end
+	#end
 
-	public function new() {
-		super();
-	}
+	#if arp_backend_kha
+	@:arpImpl private var khaImpl:CompositeHudKhaImpl;
+	#end
+
+	public function new() super();
 
 	override public function findFocus(other:Null<Hud>):Null<Hud> {
 		if (this.visible) for (hud in this.huds) other = hud.findFocus(other);

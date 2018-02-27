@@ -10,6 +10,10 @@ import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.backends.flash.screen.FieldScreenFlashImpl;
 #end
 
+#if arp_backend_kha
+import net.kaikoga.arpx.backends.kha.screen.FieldScreenKhaImpl;
+#end
+
 @:arpType("screen", "screen")
 class FieldScreen extends Screen {
 	@:arpField public var field:Field;
@@ -17,13 +21,15 @@ class FieldScreen extends Screen {
 	@:arpField public var camera:Camera;
 	@:arpField public var input:Input;
 
-#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:FieldScreenFlashImpl;
-#end
+	#end
 
-	public function new() {
-		super();
-	}
+	#if arp_backend_kha
+	@:arpImpl private var khaImpl:FieldScreenKhaImpl;
+	#end
+
+	public function new() super();
 
 	override public function tick(timeslice:Float):Bool {
 		if (ticks) field.tick(timeslice);

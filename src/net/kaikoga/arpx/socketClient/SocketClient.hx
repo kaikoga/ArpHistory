@@ -1,8 +1,9 @@
 package net.kaikoga.arpx.socketClient;
 
+import haxe.io.Bytes;
+
 import net.kaikoga.arp.events.ArpProgressEvent;
 import net.kaikoga.arp.events.ArpSignal;
-import haxe.io.Bytes;
 import net.kaikoga.arp.events.IArpSignalOut;
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arpx.backends.cross.socketClient.ISocketClientImpl;

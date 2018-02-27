@@ -19,9 +19,14 @@ import net.kaikoga.arpx.reactFrame.ReactFrame;
 import net.kaikoga.arpx.backends.flash.mortal.IMortalFlashImpl;
 #end
 
+#if arp_backend_kha
+import net.kaikoga.arpx.backends.kha.mortal.IMortalKhaImpl;
+#end
+
 @:arpType("mortal", "null")
 class Mortal implements IArpObject implements ITickable
 #if (arp_backend_flash || arp_backend_openfl) implements IMortalFlashImpl #end
+#if arp_backend_kha implements IMortalKhaImpl #end
 {
 
 	@:arpBarrier @:arpField public var driver:Driver;
@@ -36,11 +41,15 @@ class Mortal implements IArpObject implements ITickable
 	private var reactRecord:ISet<String>;
 	private var lastReactRecord:ISet<String>;
 
-#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:IMortalFlashImpl;
-#end
+	#end
 
-	public function new () {
+	#if arp_backend_kha
+	@:arpImpl private var khaImpl:IMortalKhaImpl;
+	#end
+
+	public function new() {
 		hitMortals = new Map<String, HitMortal>();
 		reactRecord = new ArraySet<String>();
 		lastReactRecord = new ArraySet<String>();

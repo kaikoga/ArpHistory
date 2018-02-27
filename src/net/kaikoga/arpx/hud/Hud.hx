@@ -4,30 +4,37 @@ import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arp.task.ITickable;
-import net.kaikoga.arpx.backends.flash.hud.IHudFlashImpl;
 import net.kaikoga.arpx.driver.Driver;
 import net.kaikoga.arpx.input.focus.IFocusNode;
 import net.kaikoga.arpx.input.Input;
 
 #if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.mortal.IMortalFlashImpl;
+import net.kaikoga.arpx.backends.flash.hud.IHudFlashImpl;
+#end
+
+#if arp_backend_kha
+import net.kaikoga.arpx.backends.kha.hud.IHudKhaImpl;
 #end
 
 @:arpType("hud", "null")
 class Hud implements IArpObject implements ITickable implements IFocusNode<Hud>
-#if (arp_backend_flash || arp_backend_openfl) implements IMortalFlashImpl #end
+	#if (arp_backend_flash || arp_backend_openfl) implements IHudFlashImpl #end
+	#if arp_backend_kha implements IHudKhaImpl #end
 {
 	@:arpBarrier @:arpField public var driver:Driver;
 	@:arpField public var position:ArpPosition;
 	@:arpField public var visible:Bool = true;
 	@:arpField public var params:ArpParams;
 
-#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:IHudFlashImpl;
-#end
+	#end
 
-	public function new () {
-	}
+	#if arp_backend_kha
+	@:arpImpl private var khaImpl:IHudKhaImpl;
+	#end
+
+	public function new() return;
 
 	public function tick(timeslice:Float):Bool {
 		return true;

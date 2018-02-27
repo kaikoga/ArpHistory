@@ -7,6 +7,10 @@ import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.backends.flash.chip.GridChipFlashImpl;
 #end
 
+#if arp_backend_kha
+import net.kaikoga.arpx.backends.kha.chip.GridChipKhaImpl;
+#end
+
 @:arpType("chip", "grid")
 class GridChip extends SubtextureChip {
 
@@ -27,18 +31,17 @@ class GridChip extends SubtextureChip {
 		return (params != null) ? this.hasFace(params.get("face")) ? this.chipHeight : 0 : this.chipHeight;
 	}
 
-	override public function hasFace(face:String):Bool {
-		return true;
-	}
+	override public function hasFace(face:String):Bool return true;
 
-#if (arp_backend_flash || arp_backend_openfl)
-	@:arpImpl
-	private var flashImpl:GridChipFlashImpl;
-#end
+	#if (arp_backend_flash || arp_backend_openfl)
+	@:arpImpl private var flashImpl:GridChipFlashImpl;
+	#end
 
-	public function new () {
-		super();
-	}
+	#if arp_backend_kha
+	@:arpImpl private var khaImpl:GridChipKhaImpl;
+	#end
+
+	public function new() super();
 }
 
 

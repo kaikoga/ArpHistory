@@ -7,13 +7,21 @@ import net.kaikoga.arp.ds.IOmap;
 import net.kaikoga.arpx.backends.flash.screen.CompositeScreenFlashImpl;
 #end
 
+#if arp_backend_kha
+import net.kaikoga.arpx.backends.kha.screen.CompositeScreenKhaImpl;
+#end
+
 @:arpType("screen", "composite")
 class CompositeScreen extends Screen {
 	@:arpBarrier @:arpField("screen") public var screens:IOmap<String, Screen>;
 
-#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:CompositeScreenFlashImpl;
-#end
+	#end
+
+	#if arp_backend_kha
+	@:arpImpl private var khaImpl:CompositeScreenKhaImpl;
+	#end
 
 	public function new() super();
 

@@ -10,9 +10,7 @@ class SubtextureChip extends Chip {
 
 	@:arpBarrier(true) @:arpField public var texture:Texture;
 
-	public function new () {
-		super();
-	}
+	public function new () super();
 }
 
 

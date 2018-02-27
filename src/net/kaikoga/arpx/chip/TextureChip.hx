@@ -1,10 +1,14 @@
 package net.kaikoga.arpx.chip;
 
-import net.kaikoga.arpx.texture.Texture;
 import net.kaikoga.arp.structs.ArpParams;
+import net.kaikoga.arpx.texture.Texture;
 
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.chip.TextureChipFlashImpl;
+#end
+
+#if arp_backend_kha
+import net.kaikoga.arpx.backends.kha.chip.TextureChipKhaImpl;
 #end
 
 @:arpType("chip", "texture")
@@ -25,17 +29,17 @@ class TextureChip extends Chip {
 		return (params != null) ? this.hasFace(params.get("face")) ? this.chipHeight : 0 : this.chipHeight;
 	}
 
-	override public function hasFace(face:String):Bool {
-		return true;
-	}
+	override public function hasFace(face:String):Bool return true;
 
-#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:TextureChipFlashImpl;
-#end
+	#end
 
-	public function new() {
-		super();
-	}
+	#if arp_backend_kha
+	@:arpImpl private var khaImpl:TextureChipKhaImpl;
+	#end
+
+	public function new() super();
 }
 
 

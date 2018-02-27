@@ -18,9 +18,15 @@ import net.kaikoga.arpx.backends.flash.field.IFieldFlashImpl;
 import net.kaikoga.arpx.backends.flash.field.FieldFlashImpl;
 #end
 
+#if arp_backend_kha
+import net.kaikoga.arpx.backends.kha.field.IFieldKhaImpl;
+import net.kaikoga.arpx.backends.kha.field.FieldKhaImpl;
+#end
+
 @:arpType("field")
 class Field implements IArpObject implements ITickable
-#if (arp_backend_flash || arp_backend_openfl) implements IFieldFlashImpl #end
+	#if (arp_backend_flash || arp_backend_openfl) implements IFieldFlashImpl #end
+	#if arp_backend_kha implements IFieldKhaImpl #end
 {
 
 	@:arpBarrier @:arpField("mortal") public var initMortals:IOmap<String, Mortal>;
@@ -35,12 +41,15 @@ class Field implements IArpObject implements ITickable
 	private var hitField:HitObjectField<HitGeneric, HitMortal>;
 	private var anchorField:HitField<HitGeneric, Anchor>;
 
-#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:FieldFlashImpl;
-#end
+	#end
 
-	public function new() {
-	}
+	#if arp_backend_kha
+	@:arpImpl private var khaImpl:FieldKhaImpl;
+	#end
+
+	public function new() return;
 
 	@:arpHeatUp private function heatUp():Bool {
 		if (this.mortals == null) this.mortals = new MortalMap(this);

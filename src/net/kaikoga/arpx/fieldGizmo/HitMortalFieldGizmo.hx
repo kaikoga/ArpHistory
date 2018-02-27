@@ -8,6 +8,10 @@ import net.kaikoga.arp.structs.ArpColor;
 import net.kaikoga.arpx.backends.flash.fieldGizmo.HitMortalFieldGizmoFlashImpl;
 #end
 
+#if arp_backend_kha
+import net.kaikoga.arpx.backends.kha.fieldGizmo.HitMortalFieldGizmoKhaImpl;
+#end
+
 @:arpType("fieldGizmo", "hitMortal")
 class HitMortalFieldGizmo extends FieldGizmo
 {
@@ -17,13 +21,15 @@ class HitMortalFieldGizmo extends FieldGizmo
 	@:arpField public var simpleHitType:IMap<String, ArpColor>;
 	@:arpField public var complexHitType:IMap<String, ArpColor>;
 
-#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:HitMortalFieldGizmoFlashImpl;
-#end
+	#end
 
-	public function new () {
-		super();
-	}
+	#if arp_backend_kha
+	@:arpImpl private var khaImpl:HitMortalFieldGizmoKhaImpl;
+	#end
+
+	public function new() super();
 
 	public function hitColorFor(hitMortal:HitMortal):ArpColor {
 		return if (hitMortal.isComplex) {

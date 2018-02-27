@@ -6,6 +6,10 @@ import net.kaikoga.arpx.paramsOp.ParamsOp;
 import net.kaikoga.arpx.backends.flash.chip.decorators.DecorateChipFlashImpl;
 #end
 
+#if arp_backend_kha
+import net.kaikoga.arpx.backends.kha.chip.decorators.DecorateChipKhaImpl;
+#end
+
 @:arpType("chip", "decorate")
 class DecorateChip extends Chip {
 
@@ -18,9 +22,13 @@ class DecorateChip extends Chip {
 	@:arpField public var x:Float = 0;
 	@:arpField public var y:Float = 0;
 
-#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:DecorateChipFlashImpl;
-#end
+	#end
+
+	#if arp_backend_kha
+	@:arpImpl private var khaImpl:DecorateChipKhaImpl;
+	#end
 
 	public function new() super();
 }

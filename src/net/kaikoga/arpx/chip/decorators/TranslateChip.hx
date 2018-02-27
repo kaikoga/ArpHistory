@@ -4,6 +4,10 @@ package net.kaikoga.arpx.chip.decorators;
 import net.kaikoga.arpx.backends.flash.chip.decorators.TranslateChipFlashImpl;
 #end
 
+#if arp_backend_kha
+import net.kaikoga.arpx.backends.kha.chip.decorators.TranslateChipKhaImpl;
+#end
+
 @:arpType("chip", "translate")
 class TranslateChip extends Chip {
 
@@ -15,9 +19,13 @@ class TranslateChip extends Chip {
 	@:arpField public var x:Float = 0;
 	@:arpField public var y:Float = 0;
 
-#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:TranslateChipFlashImpl;
-#end
+	#end
+
+	#if arp_backend_kha
+	@:arpImpl private var khaImpl:TranslateChipKhaImpl;
+	#end
 
 	public function new() super();
 }

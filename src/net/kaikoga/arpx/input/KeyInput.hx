@@ -1,16 +1,27 @@
 package net.kaikoga.arpx.input;
 
 import net.kaikoga.arp.ds.impl.ArrayList;
+
+#if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.input.KeyInputFlashImpl;
+#end
+
+#if arp_backend_kha
+import net.kaikoga.arpx.backends.kha.input.KeyInputKhaImpl;
+#end
 
 @:arpType("input", "key")
 class KeyInput extends PhysicalInput {
 
 	public var keyBindings:ArrayList<KeyInputBinding>;
 
-#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:KeyInputFlashImpl;
-#end
+	#end
+
+	#if arp_backend_kha
+	@:arpImpl private var khaImpl:KeyInputKhaImpl;
+	#end
 
 	public function new() {
 		super();

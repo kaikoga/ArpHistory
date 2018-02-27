@@ -59,17 +59,13 @@ class StringChip extends Chip {
 		return result;
 	}
 
-	override public function hasFace(face:String):Bool {
-		return true;
-	}
+	override public function hasFace(face:String):Bool return true;
 
 #if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var arpImpl:StringChipFlashImpl;
 #end
 
-	public function new () {
-		super();
-	}
+	public function new () super();
 }
 
 

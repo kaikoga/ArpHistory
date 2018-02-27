@@ -9,19 +9,27 @@ import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arpx.backends.flash.screen.IScreenFlashImpl;
 #end
 
+#if arp_backend_kha
+import net.kaikoga.arpx.backends.kha.screen.IScreenKhaImpl;
+#end
+
 @:arpType("screen", "null")
 class Screen implements IArpObject implements ITickable implements IFocusNode<Input>
 #if (arp_backend_flash || arp_backend_openfl) implements IScreenFlashImpl #end
+#if arp_backend_kha implements IScreenKhaImpl #end
 {
 	@:arpField public var ticks:Bool = false;
 	@:arpField public var visible:Bool = true;
 
-#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:IScreenFlashImpl;
-#end
+	#end
 
-	public function new() {
-	}
+	#if arp_backend_kha
+	@:arpImpl private var khaImpl:IScreenKhaImpl;
+	#end
+
+	public function new() return;
 
 	public function tick(timeslice:Float):Bool {
 		return true;

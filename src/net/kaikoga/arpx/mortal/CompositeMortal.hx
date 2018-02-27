@@ -1,14 +1,18 @@
 package net.kaikoga.arpx.mortal;
 
+import net.kaikoga.arp.ds.IList;
+import net.kaikoga.arp.structs.ArpParams;
+import net.kaikoga.arpx.field.Field;
+import net.kaikoga.arpx.mortal.Mortal;
+import net.kaikoga.arpx.reactFrame.ReactFrame;
+
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.mortal.CompositeMortalFlashImpl;
 #end
 
-import net.kaikoga.arpx.reactFrame.ReactFrame;
-import net.kaikoga.arp.ds.IList;
-import net.kaikoga.arpx.mortal.Mortal;
-import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arpx.field.Field;
+#if arp_backend_kha
+import net.kaikoga.arpx.backends.kha.mortal.CompositeMortalKhaImpl;
+#end
 
 @:arpType("mortal", "composite")
 class CompositeMortal extends Mortal {
@@ -16,13 +20,15 @@ class CompositeMortal extends Mortal {
 	@:arpField public var sort:String;
 	@:arpField("mortal") @:arpBarrier public var mortals:IList<Mortal>;
 
-#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:CompositeMortalFlashImpl;
-#end
+	#end
 
-	public function new() {
-		super();
-	}
+	#if arp_backend_kha
+	@:arpImpl private var khaImpl:CompositeMortalKhaImpl;
+	#end
+
+	public function new() super();
 
 	override private function get_isComplex():Bool return true;
 
