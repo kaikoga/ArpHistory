@@ -2,12 +2,10 @@ package net.kaikoga.arpx.backends.kha.math;
 
 #if arp_backend_kha
 
-import flash.display.DisplayObject;
-import flash.geom.Matrix3D;
-import flash.geom.Matrix;
-import flash.geom.Point;
+import kha.math.Matrix3;
+import kha.math.Vector2;
 
-class APoint extends Point implements ITransform {
+class APoint extends Vector2 implements ITransform {
 
 	public function toCopy():ITransform {
 		return APoint.fromTransform(this);
@@ -18,51 +16,40 @@ class APoint extends Point implements ITransform {
 	}
 
 	public static function fromTransform(transform:ITransform):APoint {
-		var result:APoint = new APoint();
-		result.copyFrom(transform.toPoint());
+		var result:APoint = new APoint(); 
+		result._setPoint(transform.toPoint());
 		return result;
 	}
 
-	public function asPoint():Point {
+	public function asPoint():Vector2 {
 		return this;
 	}
 
-	public function asMatrix():Matrix {
-		return new Matrix(1, 0, 0, 1, this.x, this.y);
+	public function asMatrix():Matrix3 {
+		return new Matrix3(1, 0, this.x, 0, 1, this.y, 0, 0, 1);
 	}
 
-	public function asMatrix3D():Matrix3D {
-		return new Matrix3D();
-	}
-
-	public function toPoint():Point {
+	public function toPoint():Vector2 {
 		return this;
 	}
 
-	public function toMatrix():Matrix {
-		return new Matrix(1, 0, 0, 1, this.x, this.y);
+	public function toMatrix():Matrix3 {
+		return new Matrix3(1, 0, this.x, 0, 1, this.y, 0, 0, 1);
 	}
 
-	public function toMatrix3D():Matrix3D {
-		return new Matrix3D();
-	}
-
-	public function applyTo(target:DisplayObject):Void {
-		target.x = this.x;
-		target.y = this.y;
-	}
-
-	public function _setMatrix(matrix:Matrix):ITransform {
+	public function _setMatrix(matrix:Matrix3):ITransform {
 		return AMatrix.fromTransform(this)._setMatrix(matrix);
 	}
 
-	public function _setPoint(pt:Point):ITransform {
-		this.copyFrom(pt);
+	public function _setPoint(pt:Vector2):ITransform {
+		this.x = pt.x;
+		this.y = pt.y;
 		return this;
 	}
 
 	public function _setXY(x:Float, y:Float):ITransform {
-		this.setTo(x, y);
+		this.x = x;
+		this.y = y;
 		return this;
 	}
 
@@ -74,25 +61,27 @@ class APoint extends Point implements ITransform {
 		}
 	}
 
-	public function _concatMatrix(matrix:Matrix):ITransform {
+	public function _concatMatrix(matrix:Matrix3):ITransform {
 		return AMatrix.fromTransform(this)._concatMatrix(matrix);
 	}
 
-	public function _concatPoint(pt:Point):ITransform {
-		this.add(pt);
+	public function _concatPoint(pt:Vector2):ITransform {
+		this.x += pt.x;
+		this.y += pt.y;
 		return this;
 	}
 
 	public function _concatXY(x:Float, y:Float):ITransform {
-		this.offset(x, y);
+		this.x += x;
+		this.y += y;
 		return this;
 	}
 
-	public function setMatrix(matrix:Matrix):ITransform {
+	public function setMatrix(matrix:Matrix3):ITransform {
 		return AMatrix.fromTransform(this)._setMatrix(matrix);
 	}
 
-	public function setPoint(pt:Point):ITransform {
+	public function setPoint(pt:Vector2):ITransform {
 		return APoint.fromTransform(this)._setPoint(pt);
 	}
 
@@ -104,11 +93,11 @@ class APoint extends Point implements ITransform {
 		return AMatrix.fromTransform(this)._concatTransform(transform);
 	}
 
-	public function concatMatrix(matrix:Matrix):ITransform {
+	public function concatMatrix(matrix:Matrix3):ITransform {
 		return AMatrix.fromTransform(this)._concatMatrix(matrix);
 	}
 
-	public function concatPoint(pt:Point):ITransform {
+	public function concatPoint(pt:Vector2):ITransform {
 		return APoint.fromTransform(this)._concatPoint(pt);
 	}
 
