@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.backends.flash.chip;
 
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.display.BitmapData;
 import net.kaikoga.arp.backends.IArpObjectImpl;
 import net.kaikoga.arp.structs.IArpParamsRead;
@@ -12,3 +14,5 @@ interface IChipFlashImpl extends IArpObjectImpl {
 	//function exportChipSprite(params : ArpParams = null) : AChipSprite;
 
 }
+
+#end

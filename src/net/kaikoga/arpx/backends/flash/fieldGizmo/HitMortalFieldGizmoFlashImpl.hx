@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.backends.flash.fieldGizmo;
 
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
@@ -49,4 +51,4 @@ class HitMortalFieldGizmoFlashImpl extends ArpObjectImplBase implements IFieldGi
 	}
 }
 
-
+#end

@@ -1,12 +1,13 @@
 package net.kaikoga.arpx.backends.flash.mortal;
 
-import net.kaikoga.arpx.backends.flash.field.FieldFlashImpl;
-import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import flash.display.BitmapData;
+#if (arp_backend_flash || arp_backend_openfl)
 
+import flash.display.BitmapData;
+import net.kaikoga.arp.structs.ArpPosition;
+import net.kaikoga.arpx.backends.ArpObjectImplBase;
+import net.kaikoga.arpx.backends.flash.field.FieldFlashImpl;
 import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import net.kaikoga.arpx.mortal.CompositeMortal;
-import net.kaikoga.arp.structs.ArpPosition;
 
 class CompositeMortalFlashImpl extends ArpObjectImplBase implements IMortalFlashImpl {
 
@@ -27,4 +28,4 @@ class CompositeMortalFlashImpl extends ArpObjectImplBase implements IMortalFlash
 
 }
 
-
+#end

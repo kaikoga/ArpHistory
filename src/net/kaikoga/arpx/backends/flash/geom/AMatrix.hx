@@ -1,8 +1,10 @@
 package net.kaikoga.arpx.backends.flash.geom;
 
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.display.DisplayObject;
-import flash.geom.Matrix;
 import flash.geom.Matrix3D;
+import flash.geom.Matrix;
 import flash.geom.Point;
 
 class AMatrix extends Matrix implements ITransform {
@@ -128,3 +130,4 @@ class AMatrix extends Matrix implements ITransform {
 	}
 }
 
+#end

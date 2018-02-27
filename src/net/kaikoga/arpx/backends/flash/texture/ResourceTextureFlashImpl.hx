@@ -1,17 +1,19 @@
 package net.kaikoga.arpx.backends.flash.texture;
 
+#if (arp_backend_flash || arp_backend_openfl)
+
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+import flash.display.Loader;
+import flash.events.Event;
+import flash.events.IOErrorEvent;
+import flash.geom.Point;
+import flash.geom.Rectangle;
+import haxe.io.Bytes;
+import haxe.Resource;
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.flash.texture.decorators.TextureFaceInfo;
-import flash.geom.Rectangle;
-import flash.geom.Point;
-import flash.display.Bitmap;
-import flash.events.IOErrorEvent;
-import flash.events.Event;
-import haxe.io.Bytes;
-import flash.display.Loader;
-import haxe.Resource;
 import net.kaikoga.arpx.texture.ResourceTexture;
-import flash.display.BitmapData;
 
 class ResourceTextureFlashImpl extends TextureFlashImplBase implements ITextureFlashImpl {
 
@@ -72,4 +74,4 @@ class ResourceTextureFlashImpl extends TextureFlashImplBase implements ITextureF
 	}
 }
 
-
+#end

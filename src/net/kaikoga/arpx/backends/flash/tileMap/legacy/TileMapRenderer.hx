@@ -1,11 +1,12 @@
 package net.kaikoga.arpx.backends.flash.tileMap.legacy;
 
-import net.kaikoga.arpx.backends.flash.geom.APoint;
-import net.kaikoga.arpx.tileMap.TileMap;
-import flash.display.BitmapData;
+#if (arp_backend_flash || arp_backend_openfl)
 
+import flash.display.BitmapData;
 import net.kaikoga.arp.structs.ArpParams;
+import net.kaikoga.arpx.backends.flash.geom.APoint;
 import net.kaikoga.arpx.chip.Chip;
+import net.kaikoga.arpx.tileMap.TileMap;
 
 class TileMapRenderer {
 
@@ -49,3 +50,5 @@ class TileMapRenderer {
 		}
 	}
 }
+
+#end

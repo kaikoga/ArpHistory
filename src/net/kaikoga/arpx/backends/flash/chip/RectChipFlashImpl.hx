@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.backends.flash.chip;
 
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.display.BitmapData;
 import flash.geom.Matrix;
 import flash.geom.Point;
@@ -49,3 +51,5 @@ class RectChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 	*/
 
 }
+
+#end

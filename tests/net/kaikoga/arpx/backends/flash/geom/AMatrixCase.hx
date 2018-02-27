@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.backends.flash.geom;
 
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.geom.Matrix;
 import flash.geom.Point;
 
@@ -43,3 +45,5 @@ class AMatrixCase {
 		assertEquals(6.0, matrix.ty);
 	}
 }
+
+#end

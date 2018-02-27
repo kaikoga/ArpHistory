@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.backends.flash.input.decorators;
 
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.events.IEventDispatcher;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.input.decorators.FocusInput;
@@ -20,3 +22,5 @@ class FocusInputFlashImpl extends ArpObjectImplBase implements IInputFlashImpl {
 		return true;
 	}
 }
+
+#end

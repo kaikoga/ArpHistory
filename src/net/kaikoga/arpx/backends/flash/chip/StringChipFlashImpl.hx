@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.backends.flash.chip;
 
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.display.BitmapData;
 import flash.geom.Point;
 import net.kaikoga.arp.structs.IArpParamsRead;
@@ -42,3 +44,4 @@ class StringChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 
 }
 
+#end

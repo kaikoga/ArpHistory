@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.backends.flash.chip;
 
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.display.BlendMode;
 import flash.geom.ColorTransform;
 import flash.geom.Point;
@@ -63,3 +65,5 @@ class TextureChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 		}
 	}
 }
+
+#end

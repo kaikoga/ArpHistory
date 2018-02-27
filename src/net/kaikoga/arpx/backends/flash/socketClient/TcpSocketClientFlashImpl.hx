@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.backends.flash.socketClient;
 
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.errors.SecurityError;
 import flash.events.Event;
 import flash.events.IOErrorEvent;
@@ -91,4 +93,4 @@ class TcpSocketClientFlashImpl extends SocketClientImplBase {
 
 }
 
-
+#end

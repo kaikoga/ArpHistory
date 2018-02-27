@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.backends.flash.texture.decorators;
 
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.display.BitmapData;
 import flash.geom.Rectangle;
 import net.kaikoga.arpx.texture.Texture;
@@ -27,3 +29,5 @@ class TextureFaceInfo {
 
 	public function dispose():Void this.data.dispose();
 }
+
+#end

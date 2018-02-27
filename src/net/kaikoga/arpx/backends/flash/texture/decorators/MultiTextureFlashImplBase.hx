@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.backends.flash.texture.decorators;
 
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.geom.Rectangle;
 import net.kaikoga.arp.structs.IArpParamsRead;
 import flash.display.BitmapData;
@@ -70,3 +72,4 @@ class MultiTextureFlashImplBase<T:MultiTexture> extends TextureFlashImplBase imp
 	}
 }
 
+#end

@@ -1,8 +1,11 @@
 package net.kaikoga.arpx;
 
-import net.kaikoga.arpx.automaton.AutomatonCase;
+#if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.geom.AMatrixCase;
 import net.kaikoga.arpx.backends.flash.geom.APointCase;
+#end
+
+import net.kaikoga.arpx.automaton.AutomatonCase;
 import net.kaikoga.arpx.driver.LinearDriverCase;
 import net.kaikoga.arpx.input.KeyInputCase;
 import net.kaikoga.arpx.paramsOp.RewireParamsOpCase;
@@ -12,8 +15,11 @@ import picotest.PicoTestRunner;
 
 class ArpEngineTestSuite {
 	public static function addTo(r:PicoTestRunner) {
+
+#if (arp_backend_flash || arp_backend_openfl)
 		r.load(AMatrixCase);
 		r.load(APointCase);
+#end
 
 		r.load(ArpEngineComponentsCase);
 

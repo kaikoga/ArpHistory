@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.backends.flash.chip;
 
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.display.BitmapData;
 import flash.geom.Point;
 import net.kaikoga.arp.structs.IArpParamsRead;
@@ -36,3 +38,5 @@ class TileMapChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 		this.renderer.copyArea(bitmapData, gridX, gridY, gridWidth, gridHeight, Std.int(pt.x), Std.int(pt.y));
 	}
 }
+
+#end

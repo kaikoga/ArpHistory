@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.backends.flash.hud;
 
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.display.BitmapData;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arp.structs.ArpPosition;
@@ -36,4 +38,4 @@ class ChipMenuHudFlashImpl extends ArpObjectImplBase implements IHudFlashImpl {
 	}
 }
 
-
+#end

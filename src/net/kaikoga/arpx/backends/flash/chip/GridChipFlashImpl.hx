@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.backends.flash.chip;
 
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.geom.Rectangle;
 import net.kaikoga.arp.structs.ArpDirection;
 import net.kaikoga.arp.structs.IArpParamsRead;
@@ -64,3 +66,5 @@ class GridChipFlashImpl extends SubtextureChipFlashImplBase<GridChip> implements
 	}
 
 }
+
+#end

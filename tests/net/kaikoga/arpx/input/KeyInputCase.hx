@@ -19,7 +19,7 @@ class KeyInputCase {
 		me = domain.query("input", Input).value();
 	}
 
-#if flash
+#if (arp_backend_flash || arp_backend_openfl)
 	@:access(net.kaikoga.arpx.input.InputAxis)
 	public function testTick():Void {
 		me.axis("a").threshold = 0.5;

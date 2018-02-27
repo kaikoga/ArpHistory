@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.backends.flash.chip;
 
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.display.BitmapData;
 import flash.geom.Matrix;
 import flash.text.TextField;
@@ -71,3 +73,5 @@ class NativeTextChipFlashImpl extends ArpObjectImplBase implements IChipFlashImp
 	}
 	*/
 }
+
+#end

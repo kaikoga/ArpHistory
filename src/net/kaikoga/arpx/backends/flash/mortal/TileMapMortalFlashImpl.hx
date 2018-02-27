@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.backends.flash.mortal;
 
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.display.BitmapData;
 import flash.geom.Point;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
@@ -38,4 +40,4 @@ class TileMapMortalFlashImpl extends ArpObjectImplBase implements IMortalFlashIm
 	}
 }
 
-
+#end

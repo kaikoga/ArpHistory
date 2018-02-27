@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.backends.flash.hud;
 
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.display.BitmapData;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
@@ -24,4 +26,4 @@ class CompositeHudFlashImpl extends ArpObjectImplBase implements IHudFlashImpl {
 	}
 }
 
-
+#end

@@ -1,7 +1,9 @@
 package net.kaikoga.arpx.backends.flash.screen;
 
-import net.kaikoga.arp.structs.ArpPosition;
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.display.BitmapData;
+import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.flash.geom.APoint;
 import net.kaikoga.arpx.screen.HudScreen;
@@ -29,4 +31,4 @@ class HudScreenFlashImpl extends ArpObjectImplBase implements IScreenFlashImpl {
 	}
 }
 
-
+#end

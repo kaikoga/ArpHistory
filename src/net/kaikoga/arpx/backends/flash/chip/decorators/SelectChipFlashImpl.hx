@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.backends.flash.chip.decorators;
 
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.display.BitmapData;
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
@@ -21,3 +23,5 @@ class SelectChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 		if (chip != null) chip.copyChip(bitmapData, transform, params);
 	}
 }
+
+#end

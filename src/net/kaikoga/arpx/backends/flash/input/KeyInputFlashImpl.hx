@@ -1,10 +1,11 @@
 package net.kaikoga.arpx.backends.flash.input;
 
-import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import flash.events.Event;
-import flash.events.KeyboardEvent;
-import flash.events.IEventDispatcher;
+#if (arp_backend_flash || arp_backend_openfl)
 
+import flash.events.Event;
+import flash.events.IEventDispatcher;
+import flash.events.KeyboardEvent;
+import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.input.KeyInput;
 
 class KeyInputFlashImpl extends ArpObjectImplBase implements IInputFlashImpl {
@@ -56,3 +57,5 @@ class KeyInputFlashImpl extends ArpObjectImplBase implements IInputFlashImpl {
 	}
 
 }
+
+#end

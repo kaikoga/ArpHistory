@@ -1,11 +1,12 @@
 package net.kaikoga.arpx.backends.flash.tileMap.legacy;
 
-import net.kaikoga.arpx.tileMap.TileMap;
+#if (arp_backend_flash || arp_backend_openfl)
+
 import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
-
 import net.kaikoga.arpx.chip.Chip;
+import net.kaikoga.arpx.tileMap.TileMap;
 
 class TileMapView {
 
@@ -104,3 +105,5 @@ class TileMapView {
 		this.scrollTo(this._scrollX, this._scrollY, true);
 	}
 }
+
+#end
