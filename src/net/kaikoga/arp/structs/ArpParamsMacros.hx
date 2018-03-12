@@ -7,14 +7,14 @@ import haxe.macro.TypeTools;
 class ArpParamsMacros {
 
 	@:allow(net.kaikoga.arp.structs.ArpParams)
-	macro private static function getSafe(key:Expr, defaultValue:Expr):Expr {
+	macro private static function getSafe(key:Expr, defaultValue:Expr, classExpr:Expr):Expr {
 		var safeCast:Expr = {
 			pos: Context.currentPos(),
 			expr: ExprDef.ECast(macro d, TypeTools.toComplexType(Context.getExpectedType()))
 		};
 		return macro @:mergeBlock {
 			var d:Dynamic = this.get($e{ key });
-			var v = if (d == null) $e{ defaultValue } else $e{ safeCast };
+			var v = if (d == null) $e{ defaultValue } else if (!Std.is(d, $e{classExpr})) throw "Wrong type in ArpParams" else $e{ safeCast };
 			return v;
 		}
 	}

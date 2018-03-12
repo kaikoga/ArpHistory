@@ -26,11 +26,11 @@ class ArpParams implements IPersistable implements IArpParamsRead {
 	inline public function get(key:String):Dynamic return this.map.get(key);
 	inline public function keys():Iterator<String> return this.map.keys();
 
-	public function getInt(key:String, defaultValue = null):Null<Int> return ArpParamsMacros.getSafe(key, defaultValue);
-	public function getFloat(key:String, defaultValue = null):Null<Float> return ArpParamsMacros.getSafe(key, defaultValue);
-	public function getString(key:String, defaultValue = null):String return ArpParamsMacros.getSafe(key, defaultValue);
-	public function getBool(key:String, defaultValue = null):Null<Bool> return ArpParamsMacros.getSafe(key, defaultValue);
-	public function getArpDirection(key:String, defaultValue = null):ArpDirection return ArpParamsMacros.getSafe(key, defaultValue);
+	public function getInt(key:String, defaultValue = null):Null<Int> return ArpParamsMacros.getSafe(key, defaultValue, Int);
+	public function getFloat(key:String, defaultValue = null):Null<Float> return ArpParamsMacros.getSafe(key, defaultValue, Float);
+	public function getString(key:String, defaultValue = null):String return ArpParamsMacros.getSafe(key, defaultValue, String);
+	public function getBool(key:String, defaultValue = null):Null<Bool> return ArpParamsMacros.getSafe(key, defaultValue, Bool);
+	public function getArpDirection(key:String, defaultValue = null):ArpDirection return ArpParamsMacros.getSafe(key, defaultValue, ArpDirection);
 
 	public function getAsString(key:String, defaultValue = null):String return ArpParamsMacros.getAsString(key, defaultValue);
 

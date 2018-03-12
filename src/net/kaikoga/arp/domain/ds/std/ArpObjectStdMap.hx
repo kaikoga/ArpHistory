@@ -53,6 +53,12 @@ class ArpObjectStdMap<V:IArpObject> implements IMap<String, V> implements IPersi
 		return new ArpObjectStdMapIterator(this.slots);
 	}
 
+	public function copy():IMap<String, V> {
+		var result = new ArpObjectStdMap<V>(this.domain);
+		for (k in this.keys()) result.set(k, this.get(k));
+		return result;
+	}
+
 	public function toString():String {
 		return this.slots.toString();
 	}
