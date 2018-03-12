@@ -40,7 +40,7 @@ class StdMap<K, V> implements IMap<K, V> {
 		return if (k != null) this.value.remove(k) else false;
 	}
 	public function removeKey(k:K):Bool return this.value.remove(k);
-	public function clear():Void this.value = new Map<K, V>();
+	public function clear():Void this.value = Type.createInstance(Type.getClass(this.value), []); // new Map<K, V>();
 
 	// knit
 	public function knit():Iterator<IMapKnitPin<K, V>> return CollectionTools.mapKnitImpl(this);
