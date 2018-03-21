@@ -101,7 +101,7 @@ class Field implements IArpObject implements ITickable
 		return true;
 	}
 
-	public function bulkHitRaw(srcHitType:String, hitType:String, callback:HitMortal->HitMortal->Bool):Void {
+	public function bulkHitRaw(srcHitType:String, hitType:String, callback:(a:HitMortal, b:HitMortal)->Bool):Void {
 		// TODO seriously use layer
 		this.hitField.hitTest(function(a:HitMortal, b:HitMortal):Bool {
 			if (a.hitType != srcHitType) return false;
