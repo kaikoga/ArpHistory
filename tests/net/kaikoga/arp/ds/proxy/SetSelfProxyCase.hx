@@ -14,7 +14,7 @@ class SetSelfProxyCase {
 
 	private function values():Array<Int> {
 		var a:Array<Int> = [for (v in me) v];
-		a.sort(function(a:Int, b:Int) return a - b);
+		a.sort((a:Int, b:Int) -> a - b);
 		return a;
 	}
 
