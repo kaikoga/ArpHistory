@@ -75,7 +75,7 @@ class HitObjectField<Hit, T:HitObject<Hit>> implements IHitField<Hit, T> {
 		return doAdd(owner, HitGeneration.Eternal);
 	}
 
-	public function hitTest(callback:T->T->Bool):Void {
+	public function hitTest(callback:(a:T, b:T)->Bool):Void {
 		for (i in 0...(this.hitObjectsLength - 1)) {
 			var obj:T = this.hitObjects[i];
 			for (j in (i + 1)...hitObjectsLength) {

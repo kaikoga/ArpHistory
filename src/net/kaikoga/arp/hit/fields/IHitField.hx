@@ -9,6 +9,6 @@ interface IHitField<Hit, T> {
 	public function add(owner:T):Hit;
 	public function addEternal(owner:T):Hit;
 
-	public function hitTest(callback:T->T->Bool):Void;
+	public function hitTest(callback:(a:T, b:T)->Bool):Void;
 	public function hitRaw(hit:Hit, callback:T->Bool):Void;
 }
