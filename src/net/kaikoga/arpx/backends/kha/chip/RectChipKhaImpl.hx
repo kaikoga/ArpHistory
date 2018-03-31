@@ -2,10 +2,9 @@ package net.kaikoga.arpx.backends.kha.chip;
 
 #if arp_backend_kha
 
-import flash.display.BitmapData;
-import flash.geom.Matrix;
-import flash.geom.Point;
-import flash.geom.Rectangle;
+import kha.Color;
+import kha.math.Vector2;
+import kha.graphics2.Graphics;
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.kha.math.ITransform;
@@ -20,18 +19,15 @@ class RectChipKhaImpl extends ArpObjectImplBase implements IChipKhaImpl {
 		this.chip = chip;
 	}
 
-	private var _workRect:Rectangle = new Rectangle();
-	private var _workMatrix:Matrix = new Matrix();
-
-	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:IArpParamsRead = null):Void {
+	public function copyChip(g2:Graphics, transform:ITransform, params:IArpParamsRead = null):Void {
 		//TODO optimize
-		var pt:Point = transform.asPoint();
+		var pt:Vector2 = transform.asPoint();
 		if (pt != null) {
-			var workRect:Rectangle = _workRect;
-			workRect.setTo(pt.x - chip.baseX, pt.y - chip.baseY, chip.chipWidth, chip.chipHeight);
-			bitmapData.fillRect(workRect, chip.border.value32);
-			workRect.inflate(-1, -1);
-			bitmapData.fillRect(workRect, chip.color.value32);
+			g2.color = chip.border.value32;
+			g2.fillRect(pt.x - chip.baseX, pt.y - chip.baseY, chip.chipWidth, chip.chipHeight);
+			g2.color = chip.color.value32;
+			g2.fillRect(pt.x - chip.baseX + 1, pt.y - chip.baseY + 1, chip.chipWidth - 2, chip.chipHeight - 2);
+			g2.color = Color.White;
 		} else {
 			/*
 			var workMatrix:Matrix = _workMatrix;
@@ -41,15 +37,6 @@ class RectChipKhaImpl extends ArpObjectImplBase implements IChipKhaImpl {
 			*/
 		}
 	}
-
-	/*
-	public function exportChipSprite(params:ArpParams = null):AChipSprite {
-		var result:RectChipSprite = new RectChipSprite(this);
-		result.refresh(params);
-		return result;
-	}
-	*/
-
 }
 
 #end

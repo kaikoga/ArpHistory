@@ -2,7 +2,8 @@ package net.kaikoga.arpx.backends.kha.chip.decorators;
 
 #if arp_backend_kha
 
-import flash.display.BitmapData;
+import kha.graphics2.Graphics;
+
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.kha.math.AMatrix;
@@ -18,12 +19,10 @@ class TranslateChipKhaImpl extends ArpObjectImplBase implements IChipKhaImpl {
 		this.chip = chip;
 	}
 
-	private static var workMatrix:AMatrix = new AMatrix();
-	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:IArpParamsRead = null):Void {
-		var aMatrix:AMatrix = workMatrix;
-		aMatrix.setTo(chip.a, chip.b, chip.c, chip.d, chip.x, chip.y);
+	public function copyChip(g2:Graphics, transform:ITransform, params:IArpParamsRead = null):Void {
+		var aMatrix:AMatrix = new AMatrix(chip.a, chip.b, chip.c, chip.d, chip.x, chip.y);
 		aMatrix._concatTransform(transform);
-		this.chip.chip.copyChip(bitmapData, aMatrix, params);
+		this.chip.chip.copyChip(g2, aMatrix, params);
 	}
 }
 

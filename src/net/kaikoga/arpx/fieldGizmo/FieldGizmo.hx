@@ -13,7 +13,7 @@ import net.kaikoga.arpx.backends.kha.fieldGizmo.IFieldGizmoKhaImpl;
 @:arpType("fieldGizmo")
 class FieldGizmo implements IArpObject
 	#if (arp_backend_flash || arp_backend_openfl) implements IFieldGizmoFlashImpl #end
-	#if (arp_backend_flash || arp_backend_openfl) implements IFieldGizmoKhaImpl #end
+	#if arp_backend_kha implements IFieldGizmoKhaImpl #end
 {
 	@:arpField public var visible:Bool = true;
 

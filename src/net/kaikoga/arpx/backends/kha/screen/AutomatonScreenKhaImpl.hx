@@ -2,7 +2,8 @@ package net.kaikoga.arpx.backends.kha.screen;
 
 #if arp_backend_kha
 
-import flash.display.BitmapData;
+import kha.graphics2.Graphics;
+
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.screen.AutomatonScreen;
 
@@ -16,9 +17,9 @@ class AutomatonScreenKhaImpl extends ArpObjectImplBase implements IScreenKhaImpl
 		this.screen = screen;
 	}
 
-	public function display(bitmapData:BitmapData):Void {
+	public function display(g2:Graphics):Void {
 		var c:IScreenKhaImpl = screen.screen;
-		if (c != null) c.display(bitmapData);
+		if (c != null) c.display(g2);
 	}
 }
 

@@ -2,7 +2,6 @@ package net.kaikoga.arpx.backends.kha.chip;
 
 #if arp_backend_kha
 
-import flash.geom.Rectangle;
 import net.kaikoga.arp.structs.ArpDirection;
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.chip.GridChip;
@@ -31,7 +30,7 @@ class GridChipKhaImpl extends SubtextureChipKhaImplBase<GridChip> implements ICh
 		for (face in this.chip.faceList.toArray()) {
 			this.nextFaceName(face);
 			for (dir in 0...this.chip.dirs) {
-				this.pushFaceInfo(this.chip.texture, new Rectangle(x, y, chipWidth, chipHeight));
+				this.pushFaceInfo(this.chip.texture, x, y, chipWidth, chipHeight);
 				if (isVertical) {
 					y += chipHeight;
 					if (y >= chipTextureHeight) {

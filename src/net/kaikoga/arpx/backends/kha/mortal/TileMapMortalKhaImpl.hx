@@ -2,8 +2,9 @@ package net.kaikoga.arpx.backends.kha.mortal;
 
 #if arp_backend_kha
 
-import flash.display.BitmapData;
-import flash.geom.Point;
+import kha.math.Vector2;
+import kha.graphics2.Graphics;
+
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.kha.math.ITransform;
 import net.kaikoga.arpx.backends.kha.tileMap.legacy.TileMapRenderer;
@@ -20,9 +21,9 @@ class TileMapMortalKhaImpl extends ArpObjectImplBase implements IMortalKhaImpl {
 		this.renderer = new TileMapRenderer(null, null);
 	}
 
-	public function copySelf(bitmapData:BitmapData, transform:ITransform):Void {
+	public function copySelf(g2:Graphics, transform:ITransform):Void {
 		if (this.mortal.visible) {
-			var pt:Point = transform.asPoint();
+			var pt:Vector2 = transform.asPoint();
 			if (pt == null) {
 				//Do nothing. not supported.
 				throw "TileMapMortalKhaImpl.copySelf(): scaling TileMap is currently not supported";
@@ -33,9 +34,10 @@ class TileMapMortalKhaImpl extends ArpObjectImplBase implements IMortalKhaImpl {
 			var chipHeight:Int = this.renderer.chip.chipHeight;
 			var gridX:Int = Math.floor(-pt.x / chipWidth);
 			var gridY:Int = Math.floor(-pt.y / chipHeight);
-			var gridWidth:Int = Math.ceil((-pt.x - gridX * chipWidth + bitmapData.width) / chipWidth);
-			var gridHeight:Int = Math.ceil((-pt.y - gridY * chipHeight + bitmapData.height) / chipHeight);
-			this.renderer.copyArea(bitmapData, gridX, gridY, gridWidth, gridHeight, Std.int(this.mortal.position.x + pt.x), Std.int(this.mortal.position.y + pt.y));
+			// FIXME
+			var gridWidth:Int = 8; // Math.ceil((-pt.x - gridX * chipWidth + g2.width) / chipWidth);
+			var gridHeight:Int = 8; // Math.ceil((-pt.y - gridY * chipHeight + g2.height) / chipHeight);
+			this.renderer.copyArea(g2, gridX, gridY, gridWidth, gridHeight, Std.int(this.mortal.position.x + pt.x), Std.int(this.mortal.position.y + pt.y));
 		}
 	}
 }

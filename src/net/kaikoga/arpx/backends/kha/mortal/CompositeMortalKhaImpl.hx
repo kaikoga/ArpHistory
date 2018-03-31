@@ -2,7 +2,8 @@ package net.kaikoga.arpx.backends.kha.mortal;
 
 #if arp_backend_kha
 
-import flash.display.BitmapData;
+import kha.graphics2.Graphics;
+
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.kha.field.FieldKhaImpl;
@@ -18,11 +19,11 @@ class CompositeMortalKhaImpl extends ArpObjectImplBase implements IMortalKhaImpl
 		this.mortal = mortal;
 	}
 
-	public function copySelf(bitmapData:BitmapData, transform:ITransform):Void {
+	public function copySelf(g2:Graphics, transform:ITransform):Void {
 		if (mortal.visible) {
 			var pos:ArpPosition = mortal.position;
 			transform = transform.concatXY(pos.x, pos.y);
-			FieldKhaImpl.copySortedMortals(mortal.mortals, bitmapData, transform);
+			FieldKhaImpl.copySortedMortals(mortal.mortals, g2, transform);
 		}
 	}
 

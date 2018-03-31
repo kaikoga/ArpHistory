@@ -2,7 +2,8 @@ package net.kaikoga.arpx.backends.kha.chip.decorators;
 
 #if arp_backend_kha
 
-import flash.display.BitmapData;
+import kha.graphics2.Graphics;
+
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.kha.math.ITransform;
@@ -25,12 +26,12 @@ class FilterChipKhaImpl extends ArpObjectImplBase implements IChipKhaImpl {
 		return true;
 	}
 
-	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:IArpParamsRead = null):Void {
+	public function copyChip(g2:Graphics, transform:ITransform, params:IArpParamsRead = null):Void {
 		var p:IArpParamsRead = params;
 		if (this.chip.paramsOp != null) {
 			p = this.chip.paramsOp.filter(p);
 		}
-		this.chip.chip.copyChip(bitmapData, transform, p);
+		this.chip.chip.copyChip(g2, transform, p);
 	}
 }
 

@@ -2,9 +2,9 @@ package net.kaikoga.arpx.backends.kha.input;
 
 #if arp_backend_kha
 
-import flash.events.Event;
-import flash.events.IEventDispatcher;
-import flash.events.KeyboardEvent;
+import kha.input.KeyCode;
+import kha.input.Keyboard;
+
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.input.KeyInput;
 
@@ -12,7 +12,8 @@ class KeyInputKhaImpl extends ArpObjectImplBase implements IInputKhaImpl {
 
 	private var input:KeyInput;
 
-	private var target:IEventDispatcher;
+	private var target:Keyboard;
+
 	private var keyStates:Map<Int, Bool>;
 
 	public function new(input:KeyInput) {
@@ -21,30 +22,22 @@ class KeyInputKhaImpl extends ArpObjectImplBase implements IInputKhaImpl {
 		this.keyStates = new Map<Int, Bool>();
 	}
 
-	public function listen(target:IEventDispatcher):Void {
+	public function listen(target:Keyboard):Void {
 		this.target = target;
-		this.target.addEventListener(Event.DEACTIVATE, this.onDeactivate);
-		this.target.addEventListener(KeyboardEvent.KEY_DOWN, this.onKeyDown);
-		this.target.addEventListener(KeyboardEvent.KEY_UP, this.onKeyUp);
+		this.target.notify(this.onKeyDown, this.onKeyUp, null);
 	}
 
 	public function purge():Void {
-		this.target.removeEventListener(Event.DEACTIVATE, this.onDeactivate);
-		this.target.removeEventListener(KeyboardEvent.KEY_DOWN, this.onKeyDown);
-		this.target.removeEventListener(KeyboardEvent.KEY_UP, this.onKeyUp);
+		this.target.remove(this.onKeyDown, this.onKeyUp, null);
 		this.target = null;
 	}
 
-	private function onDeactivate(event:Event):Void {
-		this.input.clear();
+	private function onKeyDown(keyCode:KeyCode):Void {
+		keyStates.set(cast keyCode, true);
 	}
 
-	private function onKeyDown(event:KeyboardEvent):Void {
-		keyStates.set(event.keyCode, true);
-	}
-
-	private function onKeyUp(event:KeyboardEvent):Void {
-		keyStates.set(event.keyCode, false);
+	private function onKeyUp(keyCode:KeyCode):Void {
+		keyStates.set(cast keyCode, false);
 	}
 
 	public function tick(timeslice:Float):Bool {

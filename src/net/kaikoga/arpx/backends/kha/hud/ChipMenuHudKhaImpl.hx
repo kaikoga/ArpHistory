@@ -2,7 +2,8 @@ package net.kaikoga.arpx.backends.kha.hud;
 
 #if arp_backend_kha
 
-import flash.display.BitmapData;
+import kha.graphics2.Graphics;
+
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
@@ -19,7 +20,7 @@ class ChipMenuHudKhaImpl extends ArpObjectImplBase implements IHudKhaImpl {
 		this.hud = hud;
 	}
 
-	public function copySelf(bitmapData:BitmapData, transform:ITransform):Void {
+	public function copySelf(g2:Graphics, transform:ITransform):Void {
 		if (hud.visible && hud.chip != null) {
 			var menu:Menu = hud.menu;
 			var pos:ArpPosition = hud.position;
@@ -31,7 +32,7 @@ class ChipMenuHudKhaImpl extends ArpObjectImplBase implements IHudKhaImpl {
 				param.set("face", item.text.publish(param));
 				param.set("selected", index == hud.menu.value);
 				param.set("index", index++);
-				hud.chip.copyChip(bitmapData, transform, param);
+				hud.chip.copyChip(g2, transform, param);
 				transform._concatXY(dPos.x, dPos.y);
 			}
 		}

@@ -2,15 +2,9 @@ package net.kaikoga.arpx.backends.kha.texture;
 
 #if arp_backend_kha
 
-import flash.display.Bitmap;
-import flash.display.BitmapData;
-import flash.display.Loader;
-import flash.events.Event;
-import flash.events.IOErrorEvent;
-import flash.geom.Point;
-import flash.geom.Rectangle;
-import haxe.io.Bytes;
-import haxe.Resource;
+import kha.Assets;
+import kha.FastFloat;
+import kha.Image;
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.kha.texture.decorators.TextureFaceInfo;
 import net.kaikoga.arpx.texture.ResourceTexture;
@@ -18,8 +12,7 @@ import net.kaikoga.arpx.texture.ResourceTexture;
 class ResourceTextureKhaImpl extends TextureKhaImplBase implements ITextureKhaImpl {
 
 	private var texture:ResourceTexture;
-	private var loader:Loader;
-	private var value:BitmapData;
+	private var value:Image;
 
 	override private function get_width():Int return this.value.width;
 	override private function get_height():Int return this.value.height;
@@ -32,45 +25,33 @@ class ResourceTextureKhaImpl extends TextureKhaImplBase implements ITextureKhaIm
 	override public function arpHeatUp():Bool {
 		if (this.value != null) return true;
 
-		if (this.loader == null) {
-			var bytes:Bytes = Resource.getBytes(texture.src);
-			this.loader = new Loader();
-			this.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, this.onLoadComplete);
-			this.loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, this.onLoadError);
-			this.loader.loadBytes(bytes.getData());
-		}
+		Assets.loadImageFromPath(texture.src, false, onLoadComplete);
 		this.texture.arpDomain.waitFor(this.texture);
 		return false;
 	}
 
-	private function onLoadError(event:IOErrorEvent):Void {
-		this.texture.arpDomain.notifyFor(this.texture);
-	}
-
-	private function onLoadComplete(event:Event):Void {
-		this.value = cast(this.loader.content, Bitmap).bitmapData;
+	private function onLoadComplete(image:Image):Void {
+		this.value = image;
 		this.texture.arpDomain.notifyFor(this.texture);
 	}
 
 	override public function arpHeatDown():Bool {
-		this.loader = null;
 		this.value = null;
 		return true;
 	}
 
-	public function bitmapData():BitmapData {
+	public function image():Image {
 		return this.value;
 	}
 
-	private static var nullPoint:Point = new Point(0, 0);
-	public function trim(bound:Rectangle):BitmapData {
-		var result = new BitmapData(Std.int(bound.width), Std.int(bound.height), true, 0x00000000);
-		result.copyPixels(this.bitmapData(), bound, nullPoint);
+	public function trim(sx:FastFloat, sy:FastFloat, sw:FastFloat, sh:FastFloat):Image {
+		var result = Image.create(Std.int(sw), Std.int(sh));
+		result.g2.drawImage(this.value, -sx, -sy);
 		return result;
 	}
 
 	public function getFaceInfo(params:IArpParamsRead = null):TextureFaceInfo {
-		return new TextureFaceInfo(this.texture, null);
+		return new TextureFaceInfo(this.texture, 0, 0, this.texture.width, this.texture.height);
 	}
 }
 

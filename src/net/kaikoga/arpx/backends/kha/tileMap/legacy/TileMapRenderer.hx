@@ -2,7 +2,8 @@ package net.kaikoga.arpx.backends.kha.tileMap.legacy;
 
 #if arp_backend_kha
 
-import flash.display.BitmapData;
+import kha.graphics2.Graphics;
+
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.backends.kha.math.APoint;
 import net.kaikoga.arpx.chip.Chip;
@@ -21,7 +22,7 @@ class TileMapRenderer {
 	private static var _workPt:APoint = new APoint();
 	private static var _workParams:ArpParams = new ArpParams();
 
-	public function copyArea(bitmapData:BitmapData, gridX:Int, gridY:Int, gridWidth:Int, gridHeight:Int, offsetX:Int, offsetY:Int):Void {
+	public function copyArea(g2:Graphics, gridX:Int, gridY:Int, gridWidth:Int, gridHeight:Int, offsetX:Int, offsetY:Int):Void {
 		var chipWidth:Int = this.chip.chipWidth;
 		var chipHeight:Int = this.chip.chipHeight;
 		var pt:APoint = _workPt;
@@ -43,7 +44,7 @@ class TileMapRenderer {
 			pt.y = destTop;
 			for (j in gridY...gridBottom) {
 				params.set("index", this.tileMap.getTileIndexAtGrid(i, j));
-				this.chip.copyChip(bitmapData, pt, params);
+				this.chip.copyChip(g2, pt, params);
 				pt.y += chipHeight;
 			}
 			pt.x += chipWidth;

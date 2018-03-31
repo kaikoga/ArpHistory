@@ -2,7 +2,8 @@ package net.kaikoga.arpx.backends.kha.console;
 
 #if arp_backend_kha
 
-import flash.display.BitmapData;
+import kha.graphics2.Graphics;
+
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.console.Console;
 
@@ -15,8 +16,8 @@ class ConsoleKhaImpl extends ArpObjectImplBase implements IConsoleKhaImpl {
 		this.console = console;
 	}
 
-	public function display(bitmapData:BitmapData):Void {
-		for (screen in this.console.screens) screen.display(bitmapData);
+	public function display(g2:Graphics):Void {
+		for (screen in this.console.screens) screen.display(g2);
 	}
 }
 

@@ -2,7 +2,8 @@ package net.kaikoga.arpx.backends.kha.hud;
 
 #if arp_backend_kha
 
-import flash.display.BitmapData;
+import kha.graphics2.Graphics;
+
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.kha.math.ITransform;
@@ -17,12 +18,12 @@ class ChipHudKhaImpl extends ArpObjectImplBase implements IHudKhaImpl {
 		this.hud = hud;
 	}
 
-	public function copySelf(bitmapData:BitmapData, transform:ITransform):Void {
+	public function copySelf(g2:Graphics, transform:ITransform):Void {
 		if (hud.visible && hud.chip != null) {
 			var pos:ArpPosition = hud.position;
 			transform = transform.concatXY(pos.x, pos.y);
 			// TODO hud.params.dir = pos.dir;
-			hud.chip.copyChip(bitmapData, transform, hud.params);
+			hud.chip.copyChip(g2, transform, hud.params);
 		}
 	}
 

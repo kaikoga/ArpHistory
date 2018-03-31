@@ -2,7 +2,8 @@ package net.kaikoga.arpx.backends.kha.screen;
 
 #if arp_backend_kha
 
-import flash.display.BitmapData;
+import kha.graphics2.Graphics;
+
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.kha.math.APoint;
@@ -20,7 +21,7 @@ class FieldScreenKhaImpl extends ArpObjectImplBase implements IScreenKhaImpl {
 	private static var _workPt:APoint = new APoint();
 	private static var _workPos:ArpPosition = new ArpPosition();
 
-	public function display(bitmapData:BitmapData):Void {
+	public function display(g2:Graphics):Void {
 		if (this.screen.field == null) return;
 
 		var workPt:APoint = _workPt;
@@ -28,11 +29,11 @@ class FieldScreenKhaImpl extends ArpObjectImplBase implements IScreenKhaImpl {
 		workPt.x = -pos.x;
 		workPt.y = -pos.y;
 		if (this.screen.visible) {
-			this.screen.field.copySelf(bitmapData, workPt);
+			this.screen.field.copySelf(g2, workPt);
 		}
 
 		for (fieldGizmo in this.screen.fieldGizmos) {
-			fieldGizmo.render(this.screen.field, bitmapData, workPt);
+			fieldGizmo.render(this.screen.field, g2, workPt);
 		}
 	}
 }

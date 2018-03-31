@@ -29,7 +29,7 @@ class GridTextureKhaImpl extends MultiTextureKhaImplBase<GridTexture> {
 		for (face in this.texture.faceList.toArray()) {
 			this.nextFaceName(face);
 			for (dir in 0...this.texture.dirs) {
-				this.pushFaceInfo(new Rectangle(x, y, faceWidth, faceHeight));
+				this.pushFaceInfo(x, y, faceWidth, faceHeight);
 				if (isVertical) {
 					y += faceHeight;
 					if (y >= sourceHeight) {

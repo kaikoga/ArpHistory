@@ -2,12 +2,10 @@ package net.kaikoga.arpx.backends.kha.chip;
 
 #if arp_backend_kha
 
-import flash.display.BitmapData;
-import flash.display.BlendMode;
-import flash.geom.ColorTransform;
-import flash.geom.Matrix;
-import flash.geom.Point;
-import flash.geom.Rectangle;
+import kha.math.FastMatrix3;
+import kha.math.Vector2;
+import kha.graphics2.Graphics;
+
 import net.kaikoga.arp.domain.ArpHeat;
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.kha.math.ITransform;
@@ -23,10 +21,7 @@ class TextureChipKhaImpl extends ArpObjectImplBase implements IChipKhaImpl {
 		this.chip = chip;
 	}
 
-	private var _workRect:Rectangle = new Rectangle();
-	private var _workMatrix:Matrix = new Matrix();
-
-	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:IArpParamsRead = null):Void {
+	public function copyChip(g2:Graphics, transform:ITransform, params:IArpParamsRead = null):Void {
 		if (this.chip.arpSlot.heat < ArpHeat.Warm) {
 			this.chip.arpDomain.log("gridchip", 'GridChip.copyChip(): Chip not warm: ${this}:$params');
 			this.chip.arpDomain.heatLater(this.chip.arpSlot);
@@ -44,10 +39,11 @@ class TextureChipKhaImpl extends ArpObjectImplBase implements IChipKhaImpl {
 			return;
 		}
 
-		var pt:Point = transform.asPoint();
+		var pt:Vector2 = transform.asPoint();
 		if (pt != null) {
-			bitmapData.copyPixels(this.chip.texture.bitmapData(), faceInfo.bound, pt, null, null, this.chip.texture.hasAlpha);
+			g2.drawSubImage(this.chip.texture.image(), pt.x, pt.y, faceInfo.sx, faceInfo.sy, faceInfo.sw, faceInfo.sh);
 		} else {
+			/*
 			var colorTransform:ColorTransform = null;
 			if (params.getBool("tint")) {
 				var ra:Null<Float> = params.getFloat("redMultiplier", 1.0);
@@ -61,7 +57,10 @@ class TextureChipKhaImpl extends ArpObjectImplBase implements IChipKhaImpl {
 				colorTransform = new ColorTransform(ra, ga, ba, aa, rb, gb, bb, ab);
 			}
 			var blendMode:BlendMode = cast params.getAsString("blendMode");
-			bitmapData.draw(faceInfo.data, transform.toMatrix(), colorTransform, blendMode);
+			*/
+			g2.pushTransformation(FastMatrix3.fromMatrix3(transform.asMatrix()));
+			g2.drawSubImage(this.chip.texture.image(), 0, 0, faceInfo.sx, faceInfo.sy, faceInfo.sw, faceInfo.sh);
+			g2.popTransformation();
 		}
 	}
 }

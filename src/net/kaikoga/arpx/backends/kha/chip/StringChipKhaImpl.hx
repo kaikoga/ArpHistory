@@ -2,8 +2,9 @@ package net.kaikoga.arpx.backends.kha.chip;
 
 #if arp_backend_kha
 
-import flash.display.BitmapData;
-import flash.geom.Point;
+import kha.math.Vector2;
+import kha.graphics2.Graphics;
+
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.kha.math.ITransform;
@@ -20,28 +21,17 @@ class StringChipKhaImpl extends ArpObjectImplBase implements IChipKhaImpl {
 		this.chip = chip;
 	}
 
-	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:IArpParamsRead = null):Void {
-		var pt:Point = transform.toPoint();
+	public function copyChip(g2:Graphics, transform:ITransform, params:IArpParamsRead = null):Void {
+		var pt:Vector2 = transform.toPoint();
 		var cursor:StringChipDrawCursor = new StringChipDrawCursor(pt.x, pt.y, params);
 		transform = transform.toCopy();
 		for (char in new StringChipStringIterator(params.get("face"))) {
 			params = cursor.move(char, this.chip, this.chip.chip);
 			if (params != null) {
-				this.chip.chip.copyChip(bitmapData, transform._setXY(cursor.x, cursor.y), params);
+				this.chip.chip.copyChip(g2, transform._setXY(cursor.x, cursor.y), params);
 			}
 		}
 	}
-
-	/*
-	public function exportChipSprite(params:ArpParams = null):AChipSprite {
-		var result:StringChipSprite = new StringChipSprite(this, this.chipWidth);
-		if (params != null) {
-			result.refresh(params);
-		}
-		return result;
-	}
-	*/
-
 }
 
 #end

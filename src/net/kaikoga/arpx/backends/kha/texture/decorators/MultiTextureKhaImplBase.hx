@@ -2,6 +2,8 @@ package net.kaikoga.arpx.backends.kha.texture.decorators;
 
 #if arp_backend_kha
 
+import kha.Image;
+import kha.FastFloat;
 import flash.display.BitmapData;
 import flash.geom.Rectangle;
 import net.kaikoga.arp.structs.IArpParamsRead;
@@ -33,8 +35,8 @@ class MultiTextureKhaImplBase<T:MultiTexture> extends TextureKhaImplBase impleme
 		this.indexesByFaces[face] = this.faces.length;
 	}
 
-	inline private function pushFaceInfo(bound:Rectangle):Void {
-		this.faces.push(new TextureFaceInfo(this.texture, bound));
+	inline private function pushFaceInfo(sx:FastFloat, sy:FastFloat, sw:FastFloat, sh:FastFloat):Void {
+		this.faces.push(new TextureFaceInfo(this.texture, sx, sy, sw, sh));
 	}
 
 	override public function getFaceIndex(params:IArpParamsRead = null):Int {
@@ -64,8 +66,8 @@ class MultiTextureKhaImplBase<T:MultiTexture> extends TextureKhaImplBase impleme
 		return index;
 	}
 
-	public function bitmapData():BitmapData return this.texture.texture.bitmapData();
-	public function trim(bound:Rectangle):BitmapData return this.texture.texture.trim(bound);
+	public function image():Image return this.texture.texture.image();
+	public function trim(sx:FastFloat, sy:FastFloat, sw:FastFloat, sh:FastFloat):Image return this.texture.texture.trim(sx, sy, sw, sh);
 
 	public function getFaceInfo(params:IArpParamsRead = null):TextureFaceInfo {
 		return this.faces[this.getFaceIndex(params)];
