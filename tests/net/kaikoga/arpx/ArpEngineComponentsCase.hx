@@ -8,7 +8,6 @@ import net.kaikoga.arpx.automaton.Automaton;
 import net.kaikoga.arpx.camera.Camera;
 import net.kaikoga.arpx.chip.Chip;
 import net.kaikoga.arpx.chip.decorators.DecorateChip;
-import net.kaikoga.arpx.chip.GridChip;
 import net.kaikoga.arpx.chip.NativeTextChip;
 import net.kaikoga.arpx.chip.RectChip;
 import net.kaikoga.arpx.chip.StringChip;
@@ -55,7 +54,6 @@ class ArpEngineComponentsCase {
 
 		assertNotNull(new Chip());
 		assertNotNull(new TextureChip());
-		assertNotNull(new GridChip());
 		assertNotNull(new NativeTextChip());
 		assertNotNull(new RectChip());
 		assertNotNull(new StringChip());
