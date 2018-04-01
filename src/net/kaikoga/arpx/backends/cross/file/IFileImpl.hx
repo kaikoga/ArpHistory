@@ -1,15 +1,11 @@
-package net.kaikoga.arpx.backends.flash.file;
-
-#if (flash || arp_backend_flash || arp_backend_openfl)
+package net.kaikoga.arpx.backends.cross.file;
 
 import haxe.io.Bytes;
 import net.kaikoga.arp.backends.IArpObjectImpl;
 import net.kaikoga.arp.io.IInput;
 
-interface IFileFlashImpl extends IArpObjectImpl {
+interface IFileImpl extends IArpObjectImpl {
 	var exists(get, never):Bool;
 	function bytes():Bytes;
 	function read():IInput;
 }
-
-#end

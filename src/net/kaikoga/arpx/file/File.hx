@@ -1,19 +1,12 @@
 package net.kaikoga.arpx.file;
 
+import net.kaikoga.arpx.backends.cross.file.IFileImpl;
 import net.kaikoga.arp.domain.IArpObject;
 
-#if (flash || arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.file.IFileFlashImpl;
-#end
-
 @:arpType("file", "null")
-class File
-#if (flash || arp_backend_flash || arp_backend_openfl) implements IFileFlashImpl #end
-implements IArpObject {
+class File implements IFileImpl implements IArpObject {
 
-#if (flash || arp_backend_flash || arp_backend_openfl)
-	@:arpImpl private var flashImpl:IFileFlashImpl;
-#end
+	@:arpImpl private var flashImpl:IFileImpl;
 
 	public function new () {
 	}
