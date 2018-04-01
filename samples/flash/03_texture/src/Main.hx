@@ -1,5 +1,8 @@
 package;
 
+import net.kaikoga.arpx.screen.FieldScreen;
+import net.kaikoga.arpx.texture.decorators.GridTexture;
+import net.kaikoga.arpx.chip.TextureChip;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.PixelSnapping;
@@ -9,7 +12,6 @@ import flash.Lib;
 import haxe.Resource;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arpx.chip.GridChip;
 import net.kaikoga.arpx.camera.Camera;
 import net.kaikoga.arpx.console.Console;
 import net.kaikoga.arpx.faceList.FaceList;
@@ -33,13 +35,15 @@ class Main extends Sprite {
 		this.domain.addTemplate(ResourceFile);
 		this.domain.addTemplate(FileTexture);
 		this.domain.addTemplate(ResourceTexture);
-		this.domain.addTemplate(GridChip);
+		this.domain.addTemplate(TextureChip);
+		this.domain.addTemplate(GridTexture);
 		this.domain.addTemplate(FaceList);
 		this.domain.addTemplate(ChipMortal);
 		this.domain.addTemplate(CompositeMortal);
 		this.domain.addTemplate(Console);
 		this.domain.addTemplate(Camera);
 		this.domain.addTemplate(Field);
+		this.domain.addTemplate(FieldScreen);
 
 		this.domain.loadSeed(ArpSeed.fromXmlString(Resource.getString("arpdata")));
 		this.domain.tick.push(this.onTick);
@@ -49,7 +53,7 @@ class Main extends Sprite {
 
 		this.console = this.domain.query("console", Console).value();
 		Lib.current.stage.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
-		this.domain.heatLater(this.domain.query("gridChip", GridChip).slot());
+		this.domain.heatLater(this.domain.query("gridChip", TextureChip).slot());
 	}
 
 	private function onEnterFrame(event:Event):Void {

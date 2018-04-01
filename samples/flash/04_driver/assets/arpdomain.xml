@@ -1,39 +1,41 @@
 <data>
-	<chip name="gridChip" class="grid" chipWidth="32" chipHeight="32" baseX="16" baseY="16" dirs="4">
-		<faceList name="fl">0,1,2,3,4,5,6,7</faceList>
-		<texture class="file">
-			<file class="resource" src="a" />
+	<chip name="gridChip" class="texture" baseX="16" baseY="16">
+		<texture class="grid" width="32" height="32" dirs="4">
+			<faceList name="fl">0,1,2,3,4,5,6,7</faceList>
+			<texture class="file">
+				<file class="resource" src="a" />
+			</texture>
 		</texture>
 	</chip>
 	<hitFrame class="cuboid" name="hit" hitCuboid="0,0,0,8,8,8" hitType="solid" />
 	<field name="root" heat="warm">
-		<mortal name="mortal1" class="chip" position="16,16">
+		<mortal name="/mortal1" class="chip" position="16,16">
 			<chip ref="gridChip" />
 		</mortal>
-		<mortal name="mortal21" class="chip" position="48,16" params="2">
-			<chip ref="gridChip" />
-			<driver class="linear" target="128,128" period="60" dHitType="solid" />
-			<hitFrame ref="hit" />
-		</mortal>
-		<mortal name="mortal22" class="chip" position="48,16" params="2">
+		<mortal name="/mortal21" class="chip" position="48,16" params="2">
 			<chip ref="gridChip" />
 			<driver class="linear" target="128,128" period="60" dHitType="solid" />
 			<hitFrame ref="hit" />
 		</mortal>
-		<mortal name="mortal23" class="chip" position="48,16" params="2">
+		<mortal name="/mortal22" class="chip" position="48,16" params="2">
 			<chip ref="gridChip" />
 			<driver class="linear" target="128,128" period="60" dHitType="solid" />
 			<hitFrame ref="hit" />
 		</mortal>
-		<mortal name="mortal3" class="chip" position="80,16" params="4">
+		<mortal name="/mortal23" class="chip" position="48,16" params="2">
 			<chip ref="gridChip" />
 			<driver class="linear" target="128,128" period="60" dHitType="solid" />
 			<hitFrame ref="hit" />
 		</mortal>
-		<mortal name="mortal4" class="chip" position="80,32" params="6">
+		<mortal name="/mortal3" class="chip" position="80,16" params="4">
+			<chip ref="gridChip" />
+			<driver class="linear" target="128,128" period="60" dHitType="solid" />
+			<hitFrame ref="hit" />
+		</mortal>
+		<mortal name="/mortal4" class="chip" position="80,32" params="6">
 			<chip ref="gridChip" />
 			<driver class="motion" dHitType="solid" willReact="true" >
-				<motionSet initMotion="init">
+				<motionSet initMotion="@init">
 					<motion name="init" key="init" time="32" loopAction="loop">
 						<motionFrame time="0" params="dir:right:dir" dY="-4" hitFrame="hit" />
 						<motionFrame time="4" params="dir:down:dir" dY="-3" hitFrame="hit" />
@@ -60,7 +62,9 @@
 		</mortal>
 	</field>
 	<console name="console">
-		<camera key="main" field="/root" position="0,0" />
+		<screen class="field" field="/root">
+			<camera name="main" position="0,0" />
+		</screen>
 	</console>
 	<logger class="socketClient" heat="warm" category="*">
 		<socketClient class="tcpCached" host="localhost:57771" />

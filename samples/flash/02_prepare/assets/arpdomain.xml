@@ -12,7 +12,9 @@
 		</mortal>
 		</field>
 	<console name="console">
-		<camera field="/root" position="0,0" />
+		<screen class="field" field="/root">
+			<camera position="0,0" />
+		</screen>
 	</console>
 	<delay name="delay" delayMs="3000" />
 </data>

@@ -10,7 +10,7 @@ import flash.Lib;
 import haxe.Resource;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arpx.chip.GridChip;
+import net.kaikoga.arpx.chip.Chip;
 import net.kaikoga.arpx.console.Console;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.input.KeyInput;
@@ -53,7 +53,7 @@ class Main extends Sprite {
 		input.bindAxis(Keyboard.UP, "y", -1);
 		input.bindAxis(Keyboard.DOWN, "y", 1);
 
-		this.domain.heatLater(this.domain.query("gridChip", GridChip).slot());
+		this.domain.heatLater(this.domain.query("gridChip", Chip).slot());
 		this.domain.tick.push(this.onTick);
 	}
 

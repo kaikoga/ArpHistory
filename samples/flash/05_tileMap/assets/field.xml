@@ -5,16 +5,18 @@
 	<input class="key" name="input" />
 	<faceList name="fl">0,1,2,3,4,5,6,7,a,b,c,d,e,f,g,h</faceList>
 	<tileInfo name="ti" enterableRange="0..7" />
-	<chip name="obj.gridChip" class="grid" chipWidth="32" chipHeight="32" baseX="16" baseY="16" dirs="4">
-		<faceList ref="fl" />
-		<texture>
-			<file class="resource" src="a" />
+	<chip name="obj.gridChip" class="texture" baseX="16" baseY="16">
+		<texture class="grid" width="32" height="32" dirs="4" faceList="fl">
+			<texture>
+				<file class="resource" src="a" />
+			</texture>
 		</texture>
 	</chip>
-	<chip name="bg.gridChip" class="grid" chipWidth="32" chipHeight="32" dirs="4">
-		<faceList ref="fl" />
-		<texture>
-			<file class="resource" src="a" />
+	<chip name="bg.gridChip" class="texture">
+		<texture class="grid" width="32" height="32" dirs="4" faceList="fl">
+			<texture>
+				<file class="resource" src="a" />
+			</texture>
 		</texture>
 	</chip>
 	<driver class="inputLinear" name="inputLinear" input="input" speed="4" />
@@ -70,6 +72,8 @@
 		</mortal>
 	</field>
 	<console name="console">
-		<camera key="main" field="/root" position="0,0" />
+		<screen class="field" field="/root">
+			<camera key="main" position="0,0" />
+		</screen>
 	</console>
 </data>

@@ -1,5 +1,6 @@
 package;
 
+import net.kaikoga.arpx.chip.TextureChip;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.PixelSnapping;
@@ -10,7 +11,6 @@ import haxe.Resource;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arpx.camera.Camera;
-import net.kaikoga.arpx.chip.GridChip;
 import net.kaikoga.arpx.console.Console;
 import net.kaikoga.arpx.driver.LinearDriver;
 import net.kaikoga.arpx.field.Field;
@@ -42,7 +42,7 @@ class Main extends Sprite {
 		addChild(new Bitmap(this.bitmapData, PixelSnapping.NEVER, false));
 
 		this.console = this.domain.query("console", Console).value();
-		this.camera = this.console.cameras.get("main");
+		this.camera = this.domain.query("main", Camera).value();
 		this.field = this.domain.query("root", Field).value();
 		this.mortal1 = this.domain.query("mortal1", Mortal).value();
 		this.mortal21 = this.domain.query("mortal21", Mortal).value();
@@ -50,7 +50,7 @@ class Main extends Sprite {
 		this.mortal23 = this.domain.query("mortal23", Mortal).value();
 		this.mortal3 = this.domain.query("mortal3", Mortal).value();
 		Lib.current.stage.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
-		this.domain.heatLater(this.domain.query("gridChip", GridChip).slot());
+		this.domain.heatLater(this.domain.query("gridChip", TextureChip).slot());
 	}
 
 	private function onEnterFrame(event:Event):Void {
@@ -61,7 +61,7 @@ class Main extends Sprite {
 		this.bitmapData.fillRect(this.bitmapData.rect, 0xffffffff);
 		this.console.display(this.bitmapData);
 		this.mortal1.position.x = (this.mortal1.position.x + 1) % 128;
-		this.field.tick();
+		this.field.tick(value);
 		if (Math.random() < 0.05) {
 			cast(this.mortal21.driver, LinearDriver).toward(30, Math.random() * 256, Math.random() * 256);
 		}

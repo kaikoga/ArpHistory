@@ -1,5 +1,6 @@
 package;
 
+import net.kaikoga.arpx.screen.FieldScreen;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.PixelSnapping;
@@ -35,6 +36,7 @@ class Main extends Sprite {
 		this.domain.addTemplate(CompositeMortal);
 		this.domain.addTemplate(Console);
 		this.domain.addTemplate(Camera);
+		this.domain.addTemplate(FieldScreen);
 		this.domain.addTemplate(Field);
 		this.domain.addTemplate(DelayLoad);
 
