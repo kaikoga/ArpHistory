@@ -117,6 +117,10 @@ class ArpDomain {
 		return this.root.dir(path);
 	}
 
+	inline public function obj<T:IArpObject>(path:String, type:Class<T>):T {
+		return this.root.obj(path, type);
+	}
+
 	inline public function query<T:IArpObject>(path:String = null, type:ArpType = null):ArpObjectQuery<T> {
 		return this.root.query(path, type);
 	}

@@ -105,6 +105,10 @@ class ArpDirectory {
 		return new ArpDirectoryQuery(this, path).directory();
 	}
 
+	inline public function obj<T:IArpObject>(path:String, type:Class<T>):T {
+		return new ArpObjectQuery<T>(this, path, type).obj();
+	}
+
 	inline public function query<T:IArpObject>(path:String = null, type:ArpType = null):ArpObjectQuery<T> {
 		return new ArpObjectQuery(this, path, type);
 	}

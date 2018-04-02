@@ -1,7 +1,7 @@
 package net.kaikoga.arp.domain.query;
 
-import net.kaikoga.arp.domain.ArpUntypedSlot;
 import net.kaikoga.arp.domain.core.ArpType;
+import net.kaikoga.arp.errors.ArpVoidReferenceError;
 
 class ArpObjectQuery<T:IArpObject> extends ArpDirectoryQuery {
 
@@ -20,6 +20,11 @@ class ArpObjectQuery<T:IArpObject> extends ArpDirectoryQuery {
 	inline public function setSlot(value:ArpSlot<T>):ArpSlot<T> {
 		var target:ArpDirectory = this.directory();
 		return target.setSlot(this.type, value);
+	}
+
+	inline public function obj():T {
+		var value = this.slot().value;
+		return if (value != null) value else throw new ArpVoidReferenceError('Could not resolve $path of type $type from ArpDirectory ${root.did}.');
 	}
 
 	inline public function value():T {
