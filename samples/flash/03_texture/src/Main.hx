@@ -51,7 +51,7 @@ class Main extends Sprite {
 		this.bitmapData = new BitmapData(256, 256, true, 0xffffffff);
 		addChild(new Bitmap(this.bitmapData, PixelSnapping.NEVER, false));
 
-		this.console = this.domain.query("console", Console).value();
+		this.console = this.domain.obj("console", Console);
 		Lib.current.stage.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
 		this.domain.heatLater(this.domain.query("gridChip", TextureChip).slot());
 	}

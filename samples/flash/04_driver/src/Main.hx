@@ -41,14 +41,14 @@ class Main extends Sprite {
 		this.bitmapData = new BitmapData(256, 256, true, 0xffffffff);
 		addChild(new Bitmap(this.bitmapData, PixelSnapping.NEVER, false));
 
-		this.console = this.domain.query("console", Console).value();
-		this.camera = this.domain.query("main", Camera).value();
-		this.field = this.domain.query("root", Field).value();
-		this.mortal1 = this.domain.query("mortal1", Mortal).value();
-		this.mortal21 = this.domain.query("mortal21", Mortal).value();
-		this.mortal22 = this.domain.query("mortal22", Mortal).value();
-		this.mortal23 = this.domain.query("mortal23", Mortal).value();
-		this.mortal3 = this.domain.query("mortal3", Mortal).value();
+		this.console = this.domain.obj("console", Console);
+		this.camera = this.domain.obj("main", Camera);
+		this.field = this.domain.obj("root", Field);
+		this.mortal1 = this.domain.obj("mortal1", Mortal);
+		this.mortal21 = this.domain.obj("mortal21", Mortal);
+		this.mortal22 = this.domain.obj("mortal22", Mortal);
+		this.mortal23 = this.domain.obj("mortal23", Mortal);
+		this.mortal3 = this.domain.obj("mortal3", Mortal);
 		Lib.current.stage.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
 		this.domain.heatLater(this.domain.query("gridChip", TextureChip).slot());
 	}

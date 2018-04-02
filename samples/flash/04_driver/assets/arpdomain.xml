@@ -63,7 +63,7 @@
 	</field>
 	<console name="console">
 		<screen class="field" field="/root">
-			<camera name="main" position="0,0" />
+			<camera name="/main" position="0,0" />
 		</screen>
 	</console>
 	<logger class="socketClient" heat="warm" category="*">

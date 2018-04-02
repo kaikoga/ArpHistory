@@ -43,10 +43,10 @@ class Main extends Sprite {
 
 	private function onFirstTick(value:Float):Void {
 		this.domain.tick.remove(this.onFirstTick);
-		this.console = this.domain.query("console", Console).value();
-		this.field = this.domain.query("root", Field).value();
+		this.console = this.domain.obj("console", Console);
+		this.field = this.domain.obj("root", Field);
 
-		var input:KeyInput = this.domain.query("input", KeyInput).value();
+		var input:KeyInput = this.domain.obj("input", KeyInput);
 		input.listen(Lib.current.stage);
 		input.bindAxis(Keyboard.LEFT, "x", -1);
 		input.bindAxis(Keyboard.RIGHT, "x", 1);

@@ -16,7 +16,7 @@ class KeyInputCase {
 		domain = new ArpDomain();
 		domain.addTemplate(KeyInput, true);
 		domain.loadSeed(seed);
-		me = domain.query("input", Input).value();
+		me = domain.obj("input", Input);
 	}
 
 #if (arp_backend_flash || arp_backend_openfl)

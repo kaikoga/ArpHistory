@@ -46,7 +46,7 @@ class Main extends Sprite {
 		this.bitmapData = new BitmapData(256, 256, true, 0xffffffff);
 		addChild(new Bitmap(this.bitmapData, PixelSnapping.NEVER, false));
 
-		this.console = this.domain.query("console", Console).value();
+		this.console = this.domain.obj("console", Console);
 		Lib.current.stage.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
 		this.domain.heatLater(this.domain.query("delay", DelayLoad).slot());
 		this.domain.heatLater(this.domain.query("root", Field).slot());
@@ -59,7 +59,7 @@ class Main extends Sprite {
 	}
 
 	private function onTick(value:Float):Void {
-		var mortal:ChipMortal = this.domain.query("/loader", ChipMortal).value();
+		var mortal:ChipMortal = this.domain.obj("/loader", ChipMortal);
 		if (!this.domain.isPending) mortal.params.set("face", "ok");
 	}
 
