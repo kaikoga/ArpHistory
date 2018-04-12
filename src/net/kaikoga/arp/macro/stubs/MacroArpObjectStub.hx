@@ -111,7 +111,7 @@ class MacroArpObjectStub {
 			$e{
 				if (hasImpl) {
 					macro {
-						if (this.arpImpl == null) throw new net.kaikoga.arp.errors.ArpTemplateError($v{"@:arpImpl could not find backend for " + TypeTools.toString(Context.getLocalType())});
+						if (this.arpImpl == null) throw new net.kaikoga.arp.errors.ArpTemplateError($v{"@:arpImpl could not find backend for "} + Type.getClassName(Type.getClass(this)));
 						if (!this.arpImpl.arpHeatUp()) isSync = false;
 					}
 				} else {
