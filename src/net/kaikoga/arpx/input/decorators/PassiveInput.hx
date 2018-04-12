@@ -8,6 +8,10 @@ import net.kaikoga.arpx.backends.flash.input.decorators.PassiveInputFlashImpl;
 import net.kaikoga.arpx.backends.kha.input.decorators.PassiveInputKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.input.decorators.PassiveInputHeapsImpl;
+#end
+
 @:arpType("input", "passive")
 class PassiveInput extends Input {
 
@@ -20,6 +24,10 @@ class PassiveInput extends Input {
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:PassiveInputKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:PassiveInputHeapsImpl;
 	#end
 
 	public function new() super();

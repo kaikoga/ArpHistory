@@ -8,6 +8,10 @@ import net.kaikoga.arpx.backends.flash.chip.decorators.TranslateChipFlashImpl;
 import net.kaikoga.arpx.backends.kha.chip.decorators.TranslateChipKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.chip.decorators.TranslateChipHeapsImpl;
+#end
+
 @:arpType("chip", "translate")
 class TranslateChip extends Chip {
 
@@ -25,6 +29,10 @@ class TranslateChip extends Chip {
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:TranslateChipKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:TranslateChipHeapsImpl;
 	#end
 
 	public function new() super();

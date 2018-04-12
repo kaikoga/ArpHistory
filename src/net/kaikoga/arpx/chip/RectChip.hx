@@ -7,6 +7,10 @@ import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.backends.flash.chip.RectChipFlashImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.chip.RectChipHeapsImpl;
+#end
+
 @:arpType("chip", "rect")
 class RectChip extends Chip {
 
@@ -21,9 +25,13 @@ class RectChip extends Chip {
 	override public function chipHeightOf(params:ArpParams):Int return this.chipHeight;
 	override public function hasFace(face:String):Bool return true;
 
-#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:RectChipFlashImpl;
-#end
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:RectChipHeapsImpl;
+	#end
 
 	public function new () super();
 }

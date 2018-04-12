@@ -10,6 +10,10 @@ import net.kaikoga.arpx.backends.flash.mortal.ChipMortalFlashImpl;
 import net.kaikoga.arpx.backends.kha.mortal.ChipMortalKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.mortal.ChipMortalHeapsImpl;
+#end
+
 @:arpType("mortal", "chip")
 class ChipMortal extends Mortal {
 
@@ -21,6 +25,10 @@ class ChipMortal extends Mortal {
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:ChipMortalKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:ChipMortalHeapsImpl;
 	#end
 
 	public function new() super();

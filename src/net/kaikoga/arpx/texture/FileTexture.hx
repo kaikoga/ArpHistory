@@ -10,6 +10,10 @@ import net.kaikoga.arpx.backends.flash.texture.FileTextureFlashImpl;
 import net.kaikoga.arpx.backends.kha.texture.FileTextureKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.texture.FileTextureHeapsImpl;
+#end
+
 @:arpType("texture", "file")
 class FileTexture extends Texture
 {
@@ -21,6 +25,10 @@ class FileTexture extends Texture
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:FileTextureKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:FileTextureHeapsImpl;
 	#end
 
 	public function new() super();

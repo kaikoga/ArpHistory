@@ -10,6 +10,10 @@ import net.kaikoga.arpx.backends.flash.chip.decorators.FilterChipFlashImpl;
 import net.kaikoga.arpx.backends.kha.chip.decorators.FilterChipKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.chip.decorators.FilterChipHeapsImpl;
+#end
+
 @:arpType("chip", "filter")
 class FilterChip extends Chip {
 
@@ -22,6 +26,10 @@ class FilterChip extends Chip {
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:FilterChipKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:FilterChipHeapsImpl;
 	#end
 
 	public function new() super();

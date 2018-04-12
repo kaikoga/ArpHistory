@@ -17,10 +17,16 @@ import net.kaikoga.arpx.backends.kha.console.ConsoleKhaImpl;
 import net.kaikoga.arpx.backends.kha.console.IConsoleKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.console.ConsoleHeapsImpl;
+import net.kaikoga.arpx.backends.heaps.console.IConsoleHeapsImpl;
+#end
+
 @:arpType("console", "console")
 class Console implements IArpObject implements ITickable implements IFocusNode<Input>
 	#if (arp_backend_flash || arp_backend_openfl) implements IConsoleFlashImpl #end
 	#if arp_backend_kha implements IConsoleKhaImpl #end
+	#if arp_backend_heaps implements IConsoleHeapsImpl #end
 {
 	@:arpField public var width:Int;
 	@:arpField public var height:Int;
@@ -33,6 +39,10 @@ class Console implements IArpObject implements ITickable implements IFocusNode<I
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:ConsoleKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:ConsoleHeapsImpl;
 	#end
 
 	public function new() return;

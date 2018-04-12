@@ -14,6 +14,10 @@ import net.kaikoga.arpx.backends.flash.mortal.CompositeMortalFlashImpl;
 import net.kaikoga.arpx.backends.kha.mortal.CompositeMortalKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.mortal.CompositeMortalHeapsImpl;
+#end
+
 @:arpType("mortal", "composite")
 class CompositeMortal extends Mortal {
 
@@ -26,6 +30,10 @@ class CompositeMortal extends Mortal {
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:CompositeMortalKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:CompositeMortalHeapsImpl;
 	#end
 
 	public function new() super();

@@ -12,6 +12,10 @@ import net.kaikoga.arpx.backends.flash.fieldGizmo.HitMortalFieldGizmoFlashImpl;
 import net.kaikoga.arpx.backends.kha.fieldGizmo.HitMortalFieldGizmoKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.fieldGizmo.HitMortalFieldGizmoHeapsImpl;
+#end
+
 @:arpType("fieldGizmo", "hitMortal")
 class HitMortalFieldGizmo extends FieldGizmo
 {
@@ -27,6 +31,10 @@ class HitMortalFieldGizmo extends FieldGizmo
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:HitMortalFieldGizmoKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:HitMortalFieldGizmoHeapsImpl;
 	#end
 
 	public function new() super();

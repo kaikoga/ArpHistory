@@ -10,6 +10,10 @@ import net.kaikoga.arpx.backends.flash.input.KeyInputFlashImpl;
 import net.kaikoga.arpx.backends.kha.input.KeyInputKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.input.KeyInputHeapsImpl;
+#end
+
 @:arpType("input", "key")
 class KeyInput extends PhysicalInput {
 
@@ -21,6 +25,10 @@ class KeyInput extends PhysicalInput {
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:KeyInputKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:KeyInputHeapsImpl;
 	#end
 
 	public function new() {

@@ -11,6 +11,10 @@ import net.kaikoga.arpx.backends.flash.chip.TextureChipFlashImpl;
 import net.kaikoga.arpx.backends.kha.chip.TextureChipKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.chip.TextureChipHeapsImpl;
+#end
+
 @:arpType("chip", "texture")
 class TextureChip extends Chip {
 
@@ -37,6 +41,10 @@ class TextureChip extends Chip {
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:TextureChipKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:TextureChipHeapsImpl;
 	#end
 
 	public function new() super();

@@ -8,6 +8,10 @@ import net.kaikoga.arpx.backends.flash.texture.ResourceTextureFlashImpl;
 import net.kaikoga.arpx.backends.kha.texture.ResourceTextureKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.texture.ResourceTextureHeapsImpl;
+#end
+
 @:arpType("texture", "resource")
 class ResourceTexture extends Texture
 {
@@ -19,6 +23,10 @@ class ResourceTexture extends Texture
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:ResourceTextureKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:ResourceTextureHeapsImpl;
 	#end
 
 	public function new() super();

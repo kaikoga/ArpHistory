@@ -1,7 +1,6 @@
 package net.kaikoga.arpx.mortal;
 
 import net.kaikoga.arp.hit.structs.HitGeneric;
-import net.kaikoga.arpx.mortal.Mortal.HitMortal;
 import net.kaikoga.arpx.tileMap.TileMap;
 import net.kaikoga.arpx.chip.Chip;
 
@@ -11,6 +10,10 @@ import net.kaikoga.arpx.backends.flash.mortal.TileMapMortalFlashImpl;
 
 #if arp_backend_kha
 import net.kaikoga.arpx.backends.kha.mortal.TileMapMortalKhaImpl;
+#end
+
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.mortal.TileMapMortalHeapsImpl;
 #end
 
 @:arpType("mortal", "tileMap")
@@ -25,6 +28,10 @@ class TileMapMortal extends Mortal {
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:TileMapMortalKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:TileMapMortalHeapsImpl;
 	#end
 
 	public function new() super();

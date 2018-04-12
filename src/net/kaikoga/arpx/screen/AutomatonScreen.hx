@@ -12,6 +12,10 @@ import net.kaikoga.arpx.backends.flash.screen.AutomatonScreenFlashImpl;
 import net.kaikoga.arpx.backends.kha.screen.AutomatonScreenKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.screen.AutomatonScreenHeapsImpl;
+#end
+
 @:arpType("screen", "automaton")
 class AutomatonScreen extends Screen {
 
@@ -24,6 +28,10 @@ class AutomatonScreen extends Screen {
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:AutomatonScreenKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:AutomatonScreenHeapsImpl;
 	#end
 
 	public function new() super();

@@ -10,6 +10,10 @@ import net.kaikoga.arpx.backends.flash.hud.CompositeHudFlashImpl;
 import net.kaikoga.arpx.backends.kha.hud.CompositeHudKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.hud.CompositeHudHeapsImpl;
+#end
+
 @:arpType("hud", "composite")
 class CompositeHud extends Hud {
 
@@ -22,6 +26,10 @@ class CompositeHud extends Hud {
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:CompositeHudKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:CompositeHudHeapsImpl;
 	#end
 
 	public function new() super();

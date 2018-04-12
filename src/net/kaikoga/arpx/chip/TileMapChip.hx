@@ -10,6 +10,10 @@ import net.kaikoga.arpx.backends.flash.chip.TileMapChipFlashImpl;
 import net.kaikoga.arpx.backends.kha.chip.TileMapChipKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.chip.TileMapChipHeapsImpl;
+#end
+
 @:arpType("chip", "tileMap")
 class TileMapChip extends Chip {
 
@@ -22,6 +26,10 @@ class TileMapChip extends Chip {
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:TileMapChipKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:TileMapChipHeapsImpl;
 	#end
 
 	public function new () {

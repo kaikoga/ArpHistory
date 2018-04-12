@@ -9,6 +9,10 @@
 		<set name="arp_backend" value="openfl" />
 	</section>
 
+	<section if="arp_backend_heaps">
+		<set name="arp_backend" value="heaps" />
+	</section>
+
 	<section if="arp_backend_kha">
 		<set name="arp_backend" value="kha" />
 	</section>

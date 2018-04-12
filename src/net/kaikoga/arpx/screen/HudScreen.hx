@@ -13,6 +13,10 @@ import net.kaikoga.arpx.backends.flash.screen.HudScreenFlashImpl;
 import net.kaikoga.arpx.backends.kha.screen.HudScreenKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.screen.HudScreenHeapsImpl;
+#end
+
 @:arpType("screen", "hud")
 class HudScreen extends Screen {
 	@:arpBarrier @:arpField("hud") public var huds:IList<Hud>;
@@ -26,6 +30,10 @@ class HudScreen extends Screen {
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:HudScreenKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:HudScreenHeapsImpl;
 	#end
 
 	override public function set_visible(value:Bool):Bool {

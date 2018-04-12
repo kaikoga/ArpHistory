@@ -10,6 +10,10 @@ import net.kaikoga.arpx.backends.flash.chip.decorators.CompositeChipFlashImpl;
 import net.kaikoga.arpx.backends.kha.chip.decorators.CompositeChipKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.chip.decorators.CompositeChipHeapsImpl;
+#end
+
 @:arpType("chip", "composite")
 class CompositeChip extends Chip {
 
@@ -21,6 +25,10 @@ class CompositeChip extends Chip {
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:CompositeChipKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:CompositeChipHeapsImpl;
 	#end
 
 	public function new() super();

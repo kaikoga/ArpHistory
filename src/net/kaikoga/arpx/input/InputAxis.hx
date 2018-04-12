@@ -6,8 +6,10 @@ class InputAxis implements ITickable {
 
 	public var value(default, null):Float = 0;
 
+	// FIXME
 	@:allow(net.kaikoga.arpx.backends.flash.input.IInputFlashImpl)
 	@:allow(net.kaikoga.arpx.backends.kha.input.IInputKhaImpl)
+	@:allow(net.kaikoga.arpx.backends.heaps.input.IInputHeapsImpl)
 	private var nextValue(default, default):Float = 0;
 
 	private var state(default, null):Bool = false;

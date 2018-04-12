@@ -8,6 +8,10 @@ import net.kaikoga.arpx.backends.flash.socketClient.TcpSocketClientFlashImpl;
 import net.kaikoga.arpx.backends.kha.socketClient.TcpSocketClientKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.socketClient.TcpSocketClientHeapsImpl;
+#end
+
 @:arpType("socketClient", "tcp")
 class TcpSocketClient extends SocketClient {
 
@@ -19,6 +23,10 @@ class TcpSocketClient extends SocketClient {
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:TcpSocketClientKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:TcpSocketClientHeapsImpl;
 	#end
 
 	public function new() super();

@@ -10,10 +10,15 @@ import net.kaikoga.arpx.backends.flash.fieldGizmo.IFieldGizmoFlashImpl;
 import net.kaikoga.arpx.backends.kha.fieldGizmo.IFieldGizmoKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.fieldGizmo.IFieldGizmoHeapsImpl;
+#end
+
 @:arpType("fieldGizmo")
 class FieldGizmo implements IArpObject
 	#if (arp_backend_flash || arp_backend_openfl) implements IFieldGizmoFlashImpl #end
 	#if arp_backend_kha implements IFieldGizmoKhaImpl #end
+	#if arp_backend_heaps implements IFieldGizmoHeapsImpl #end
 {
 	@:arpField public var visible:Bool = true;
 
@@ -23,6 +28,10 @@ class FieldGizmo implements IArpObject
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:IFieldGizmoKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:IFieldGizmoHeapsImpl;
 	#end
 
 	public function new() return;

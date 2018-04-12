@@ -8,6 +8,10 @@ import net.kaikoga.arpx.backends.flash.input.decorators.FocusInputFlashImpl;
 import net.kaikoga.arpx.backends.kha.input.decorators.FocusInputKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.input.decorators.FocusInputHeapsImpl;
+#end
+
 @:arpType("input", "focus")
 class FocusInput extends Input {
 
@@ -21,6 +25,10 @@ class FocusInput extends Input {
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:FocusInputKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:FocusInputHeapsImpl;
 	#end
 
 	public function new() super();

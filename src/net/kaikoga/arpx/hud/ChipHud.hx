@@ -10,6 +10,10 @@ import net.kaikoga.arpx.backends.flash.hud.ChipHudFlashImpl;
 import net.kaikoga.arpx.backends.kha.hud.ChipHudKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.hud.ChipHudHeapsImpl;
+#end
+
 @:arpType("hud", "chip")
 class ChipHud extends Hud {
 
@@ -21,6 +25,10 @@ class ChipHud extends Hud {
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:ChipHudKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:ChipHudHeapsImpl;
 	#end
 
 	public function new() super();

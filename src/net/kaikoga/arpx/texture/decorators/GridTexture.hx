@@ -10,6 +10,10 @@ import net.kaikoga.arpx.backends.flash.texture.decorators.GridTextureFlashImpl;
 import net.kaikoga.arpx.backends.kha.texture.decorators.GridTextureKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.texture.decorators.GridTextureHeapsImpl;
+#end
+
 @:arpType("texture", "grid")
 class GridTexture extends MultiTexture {
 
@@ -26,6 +30,10 @@ class GridTexture extends MultiTexture {
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:GridTextureKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:GridTextureHeapsImpl;
 	#end
 
 	public function new() super();

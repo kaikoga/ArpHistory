@@ -15,6 +15,10 @@ import net.kaikoga.arpx.backends.flash.hud.ChipMenuHudFlashImpl;
 import net.kaikoga.arpx.backends.kha.hud.ChipMenuHudKhaImpl;
 #end
 
+#if arp_backend_heaps
+import net.kaikoga.arpx.backends.heaps.hud.ChipMenuHudHeapsImpl;
+#end
+
 @:arpType("hud", "chipMenu")
 class ChipMenuHud extends Hud {
 
@@ -30,6 +34,10 @@ class ChipMenuHud extends Hud {
 
 	#if arp_backend_kha
 	@:arpImpl private var khaImpl:ChipMenuHudKhaImpl;
+	#end
+
+	#if arp_backend_heaps
+	@:arpImpl private var heapsImpl:ChipMenuHudHeapsImpl;
 	#end
 
 	public function new() {
