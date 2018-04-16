@@ -6,7 +6,7 @@ import h2d.Sprite;
 import haxe.ds.ArraySort;
 
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.heaps.math.ITransform;
+import net.kaikoga.arpx.backends.heaps.geom.ITransform;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.mortal.Mortal;
 

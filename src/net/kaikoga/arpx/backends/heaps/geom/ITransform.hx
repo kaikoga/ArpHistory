@@ -1,4 +1,4 @@
-package net.kaikoga.arpx.backends.heaps.math;
+package net.kaikoga.arpx.backends.heaps.geom;
 
 #if arp_backend_heaps
 

@@ -9,7 +9,7 @@ import h3d.col.Point;
 
 import net.kaikoga.arp.domain.ArpHeat;
 import net.kaikoga.arp.structs.IArpParamsRead;
-import net.kaikoga.arpx.backends.heaps.math.ITransform;
+import net.kaikoga.arpx.backends.heaps.geom.ITransform;
 import net.kaikoga.arpx.chip.TextureChip;
 
 class TextureChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImpl {

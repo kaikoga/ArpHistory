@@ -5,7 +5,7 @@ package net.kaikoga.arpx.backends.heaps.hud;
 import h2d.Sprite;
 
 import net.kaikoga.arp.backends.IArpObjectImpl;
-import net.kaikoga.arpx.backends.heaps.math.ITransform;
+import net.kaikoga.arpx.backends.heaps.geom.ITransform;
 
 interface IHudHeapsImpl extends IArpObjectImpl {
 	function copySelf(buf:Sprite, transform:ITransform):Void;

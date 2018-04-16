@@ -1,4 +1,4 @@
-package net.kaikoga.arpx.backends.heaps.math;
+package net.kaikoga.arpx.backends.heaps.geom;
 
 #if arp_backend_heaps
 
@@ -16,7 +16,7 @@ class APoint extends Point implements ITransform {
 	}
 
 	public static function fromTransform(transform:ITransform):APoint {
-		var result:APoint = new APoint(); 
+		var result:APoint = new APoint();
 		result._setPoint(transform.toPoint());
 		return result;
 	}
@@ -26,7 +26,7 @@ class APoint extends Point implements ITransform {
 	}
 
 	public function asMatrix():Matrix {
-		return new AMatrix(1, 0, this.x, 0, 1, this.y);
+		return new AMatrix(1, 0, 0, 1, this.x, this.y);
 	}
 
 	public function toPoint():Point {
@@ -34,7 +34,7 @@ class APoint extends Point implements ITransform {
 	}
 
 	public function toMatrix():Matrix {
-		return new AMatrix(1, 0, this.x, 0, 1, this.y);
+		return new AMatrix(1, 0, 0, 1, this.x, this.y);
 	}
 
 	public function _setMatrix(matrix:Matrix):ITransform {

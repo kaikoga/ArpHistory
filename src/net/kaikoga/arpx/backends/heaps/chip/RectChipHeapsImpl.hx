@@ -7,7 +7,7 @@ import h3d.col.Point;
 
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.heaps.math.ITransform;
+import net.kaikoga.arpx.backends.heaps.geom.ITransform;
 import net.kaikoga.arpx.chip.RectChip;
 
 class RectChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImpl {

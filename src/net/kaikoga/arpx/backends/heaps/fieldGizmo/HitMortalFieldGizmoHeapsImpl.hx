@@ -8,7 +8,7 @@ import h2d.Sprite;
 import h3d.col.Point;
 
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.heaps.math.ITransform;
+import net.kaikoga.arpx.backends.heaps.geom.ITransform;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.fieldGizmo.HitMortalFieldGizmo;
 import net.kaikoga.arpx.mortal.Mortal.HitMortal;

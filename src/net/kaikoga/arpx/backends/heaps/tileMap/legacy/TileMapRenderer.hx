@@ -5,7 +5,7 @@ package net.kaikoga.arpx.backends.heaps.tileMap.legacy;
 import h2d.Sprite;
 
 import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arpx.backends.heaps.math.APoint;
+import net.kaikoga.arpx.backends.heaps.geom.APoint;
 import net.kaikoga.arpx.chip.Chip;
 import net.kaikoga.arpx.tileMap.TileMap;
 

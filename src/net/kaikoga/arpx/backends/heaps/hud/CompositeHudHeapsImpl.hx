@@ -6,7 +6,7 @@ import h2d.Sprite;
 
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.heaps.math.ITransform;
+import net.kaikoga.arpx.backends.heaps.geom.ITransform;
 import net.kaikoga.arpx.hud.CompositeHud;
 
 class CompositeHudHeapsImpl extends ArpObjectImplBase implements IHudHeapsImpl {

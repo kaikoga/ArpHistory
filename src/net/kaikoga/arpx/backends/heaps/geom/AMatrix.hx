@@ -1,4 +1,4 @@
-package net.kaikoga.arpx.backends.heaps.math;
+package net.kaikoga.arpx.backends.heaps.geom;
 
 #if arp_backend_heaps
 
@@ -15,10 +15,19 @@ class AMatrix extends Matrix implements ITransform {
 		super();
 		_11 = a;
 		_12 = b;
+		_13 = 0;
 		_14 = tx;
 		_21 = c;
 		_22 = d;
+		_23 = 0;
 		_24 = ty;
+		_31 = 0;
+		_32 = 0;
+		_33 = 0;
+		_34 = 0;
+		_41 = 0;
+		_42 = 0;
+		_43 = 0;
 		_44 = 1;
 	}
 

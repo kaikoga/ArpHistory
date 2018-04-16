@@ -6,7 +6,7 @@ import h2d.Sprite;
 
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.heaps.math.APoint;
+import net.kaikoga.arpx.backends.heaps.geom.APoint;
 import net.kaikoga.arpx.screen.FieldScreen;
 
 class FieldScreenHeapsImpl extends ArpObjectImplBase implements IScreenHeapsImpl {

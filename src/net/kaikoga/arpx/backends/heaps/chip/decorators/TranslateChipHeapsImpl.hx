@@ -6,8 +6,8 @@ import h2d.Sprite;
 
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.heaps.math.AMatrix;
-import net.kaikoga.arpx.backends.heaps.math.ITransform;
+import net.kaikoga.arpx.backends.heaps.geom.AMatrix;
+import net.kaikoga.arpx.backends.heaps.geom.ITransform;
 import net.kaikoga.arpx.chip.decorators.TranslateChip;
 
 class TranslateChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImpl {
