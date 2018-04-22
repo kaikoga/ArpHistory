@@ -4,6 +4,7 @@ package net.kaikoga.arpx.backends.heaps.console;
 
 import h2d.Sprite;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
+import net.kaikoga.arpx.backends.heaps.display.DisplayContext;
 import net.kaikoga.arpx.console.Console;
 
 class ConsoleHeapsImpl extends ArpObjectImplBase implements IConsoleHeapsImpl {
@@ -15,8 +16,9 @@ class ConsoleHeapsImpl extends ArpObjectImplBase implements IConsoleHeapsImpl {
 		this.console = console;
 	}
 
-	public function display(buf:Sprite):Void {
-		for (screen in this.console.screens) screen.display(buf);
+	public function display(sprite:Sprite):Void {
+		var context:DisplayContext = new DisplayContext(sprite, console.width, console.height);
+		for (screen in this.console.screens) screen.display(context);
 	}
 }
 

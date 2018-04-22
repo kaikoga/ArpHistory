@@ -2,6 +2,7 @@ package net.kaikoga.arpx.backends.heaps.chip;
 
 #if arp_backend_heaps
 
+import net.kaikoga.arpx.backends.heaps.display.DisplayContext;
 import h2d.Sprite;
 import h3d.col.Point;
 
@@ -19,9 +20,9 @@ class RectChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImpl {
 		this.chip = chip;
 	}
 
-	public function copyChip(buf:Sprite, transform:ITransform, params:IArpParamsRead = null):Void {
+	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
 		//TODO optimize
-		var pt:Point = transform.asPoint();
+		var pt:Point = context.transform.asPoint();
 		if (pt != null) {
 			/*
 			g2.color = chip.border.value32;

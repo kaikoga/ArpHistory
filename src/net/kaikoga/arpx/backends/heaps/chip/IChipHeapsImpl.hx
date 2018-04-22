@@ -2,15 +2,13 @@ package net.kaikoga.arpx.backends.heaps.chip;
 
 #if arp_backend_heaps
 
-import h2d.Sprite;
-
 import net.kaikoga.arp.backends.IArpObjectImpl;
 import net.kaikoga.arp.structs.IArpParamsRead;
-import net.kaikoga.arpx.backends.heaps.geom.ITransform;
+import net.kaikoga.arpx.backends.heaps.display.DisplayContext;
 
 interface IChipHeapsImpl extends IArpObjectImpl {
 
-	function copyChip(buf:Sprite, transform:ITransform, params:IArpParamsRead = null):Void;
+	function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void;
 
 }
 

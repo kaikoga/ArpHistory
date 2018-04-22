@@ -2,12 +2,10 @@ package net.kaikoga.arpx.backends.heaps.chip.decorators;
 
 #if arp_backend_heaps
 
-import h2d.Sprite;
-
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
+import net.kaikoga.arpx.backends.heaps.display.DisplayContext;
 import net.kaikoga.arpx.backends.heaps.geom.AMatrix;
-import net.kaikoga.arpx.backends.heaps.geom.ITransform;
 import net.kaikoga.arpx.chip.decorators.TranslateChip;
 
 class TranslateChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImpl {
@@ -19,10 +17,12 @@ class TranslateChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImpl
 		this.chip = chip;
 	}
 
-	public function copyChip(buf:Sprite, transform:ITransform, params:IArpParamsRead = null):Void {
+	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
 		var aMatrix:AMatrix = new AMatrix(chip.a, chip.b, chip.c, chip.d, chip.x, chip.y);
-		aMatrix._concatTransform(transform);
-		this.chip.chip.copyChip(buf, aMatrix, params);
+		aMatrix._concatTransform(context.transform);
+		context.pushTransform(aMatrix);
+		this.chip.chip.copyChip(context, params);
+		context.popTransform();
 	}
 }
 

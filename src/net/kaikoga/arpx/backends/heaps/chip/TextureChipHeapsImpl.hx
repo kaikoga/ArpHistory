@@ -2,13 +2,13 @@ package net.kaikoga.arpx.backends.heaps.chip;
 
 #if arp_backend_heaps
 
-import h2d.Tile;
 import h2d.Bitmap;
-import h2d.Sprite;
+import h2d.Tile;
 import h3d.col.Point;
 
 import net.kaikoga.arp.domain.ArpHeat;
 import net.kaikoga.arp.structs.IArpParamsRead;
+import net.kaikoga.arpx.backends.heaps.display.DisplayContext;
 import net.kaikoga.arpx.backends.heaps.geom.ITransform;
 import net.kaikoga.arpx.chip.TextureChip;
 
@@ -21,13 +21,14 @@ class TextureChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImpl {
 		this.chip = chip;
 	}
 
-	public function copyChip(buf:Sprite, transform:ITransform, params:IArpParamsRead = null):Void {
+	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
 		if (this.chip.arpSlot.heat < ArpHeat.Warm) {
 			this.chip.arpDomain.log("gridchip", 'GridChip.copyChip(): Chip not warm: ${this}:$params');
 			this.chip.arpDomain.heatLater(this.chip.arpSlot);
 			return;
 		}
 
+		var transform:ITransform = context.transform;
 		if (this.chip.baseX | this.chip.baseY != 0) {
 			transform = transform.concatXY(-this.chip.baseX, -this.chip.baseY);
 		}
@@ -41,7 +42,7 @@ class TextureChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImpl {
 
 		var pt:Point = transform.asPoint();
 		if (pt != null) {
-			var bitmap:Bitmap = new Bitmap(tile, buf);
+			var bitmap:Bitmap = new Bitmap(tile, context.buf);
 			bitmap.x = pt.x;
 			bitmap.y = pt.y;
 		} else {

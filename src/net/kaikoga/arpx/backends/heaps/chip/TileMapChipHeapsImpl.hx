@@ -2,6 +2,7 @@ package net.kaikoga.arpx.backends.heaps.chip;
 
 #if arp_backend_heaps
 
+import net.kaikoga.arpx.backends.heaps.display.DisplayContext;
 import h2d.Sprite;
 import h3d.col.Point;
 
@@ -22,8 +23,8 @@ class TileMapChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImpl {
 		this.renderer = new TileMapRenderer(null, null);
 	}
 
-	public function copyChip(buf:Sprite, transform:ITransform, params:IArpParamsRead = null):Void {
-		var pt:Point = transform.asPoint();
+	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
+		var pt:Point = context.transform.asPoint();
 		if (pt == null) {
 			//Do nothing. not supported.
 			throw "TileMapChipHeapsImpl.copySelf(): scaling TileMap is currently not supported";
@@ -34,10 +35,9 @@ class TileMapChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImpl {
 		var chipHeight:Int = this.renderer.chip.chipHeight;
 		var gridX:Int = Math.floor(-pt.x / chipWidth);
 		var gridY:Int = Math.floor(-pt.y / chipHeight);
-		// FIXME
-		var gridWidth:Int = 8; // Math.ceil((-pt.x - gridX * chipWidth + bitmapData.width) / chipWidth);
-		var gridHeight:Int = 8; // Math.ceil((-pt.y - gridY * chipHeight + bitmapData.height) / chipHeight);
-		this.renderer.copyArea(buf, gridX, gridY, gridWidth, gridHeight, Std.int(pt.x), Std.int(pt.y));
+		var gridWidth:Int = Math.ceil((-pt.x - gridX * chipWidth + context.width) / chipWidth);
+		var gridHeight:Int = Math.ceil((-pt.y - gridY * chipHeight + context.height) / chipHeight);
+		this.renderer.copyArea(context.buf, gridX, gridY, gridWidth, gridHeight, Std.int(pt.x), Std.int(pt.y));
 	}
 }
 

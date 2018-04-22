@@ -2,6 +2,7 @@ package net.kaikoga.arpx.backends.heaps.tileMap.legacy;
 
 #if arp_backend_heaps
 
+import net.kaikoga.arpx.backends.heaps.display.DisplayContext;
 import h2d.Sprite;
 
 import net.kaikoga.arp.structs.ArpParams;
@@ -40,11 +41,12 @@ class TileMapRenderer {
 		var destLeft:Int = offsetX + chipWidth * gridX;
 		var destTop:Int = offsetY + chipHeight * gridY;
 		pt.x = destLeft;
+		var context:DisplayContext = new DisplayContext(buf, 0, 0, pt);
 		for (i in gridX...gridRight) {
 			pt.y = destTop;
 			for (j in gridY...gridBottom) {
 				params.set("index", this.tileMap.getTileIndexAtGrid(i, j));
-				this.chip.copyChip(buf, pt, params);
+				this.chip.copyChip(context, params);
 				pt.y += chipHeight;
 			}
 			pt.x += chipWidth;
