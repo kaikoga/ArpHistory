@@ -16,6 +16,7 @@ import net.kaikoga.arpx.chip.NativeTextChip;
 class NativeTextChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImpl {
 
 	private var chip:NativeTextChip;
+	private var charset:String;
 	private var font:Font;
 
 	public function new(chip:NativeTextChip) {
@@ -24,13 +25,7 @@ class NativeTextChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImp
 	}
 
 	override public function arpHeatUp():Bool {
-		if (this.font == null) {
-			font = FontBuilder.getFont(this.chip.font, this.chip.fontSize, {
-				antiAliasing: false,
-				chars: Charset.DEFAULT_CHARS,
-				kerning: true,
-			});
-		}
+		this.charset = Charset.DEFAULT_CHARS;
 		return true;
 	}
 
@@ -43,14 +38,32 @@ class NativeTextChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImp
 	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
 		var text:String = null;
 		if (params != null) text = params.get("face");
-		// if (text == null) text = "null";
+		if (text == null) text = "null";
+
+		for (i in 0...text.length) {
+			var char:String = text.charAt(i);
+			if (this.charset.indexOf(char) < 0) {
+				this.charset += char;
+				if (this.font != null) this.font.dispose();
+				this.font = null;
+			}
+		}
+
+		if (this.font == null) {
+			this.font = @:privateAccess new FontBuilder(this.chip.font, this.chip.fontSize, {
+				antiAliasing: false,
+				chars: charset,
+				kerning: true
+			}).build();
+		}
 
 		var t:Text = new Text(this.font, context.buf);
+		t.maxWidth = this.chip.chipWidth;
 		t.text = text;
 		t.textColor = this.chip.color.value32;
 		var pt:Point = context.transform.toPoint();
 		t.x = pt.x;
-		t.y = pt.y;
+		t.y = pt.y - this.chip.fontSize + 2;
 	}
 }
 
