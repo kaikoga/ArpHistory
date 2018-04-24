@@ -19,7 +19,7 @@ class MacroArpImplClassDefinition {
 		this.fields = [];
 
 		var classType:ClassType = null;
-		switch (Context.resolveType(implType, Context.currentPos())) {
+		switch (Context.follow(Context.resolveType(implType, Context.currentPos()), false)) {
 			case Type.TInst(classRef, params):
 				classType = classRef.get();
 			case _:
