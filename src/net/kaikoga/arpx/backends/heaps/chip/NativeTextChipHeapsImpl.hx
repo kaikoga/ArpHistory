@@ -16,7 +16,7 @@ import net.kaikoga.arpx.chip.NativeTextChip;
 class NativeTextChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImpl {
 
 	private var chip:NativeTextChip;
-	private var charset:String;
+	private var chars:String;
 	private var font:Font;
 
 	public function new(chip:NativeTextChip) {
@@ -25,7 +25,7 @@ class NativeTextChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImp
 	}
 
 	override public function arpHeatUp():Bool {
-		this.charset = Charset.DEFAULT_CHARS;
+		this.chars = Charset.DEFAULT_CHARS;
 		return true;
 	}
 
@@ -42,8 +42,8 @@ class NativeTextChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImp
 
 		for (i in 0...text.length) {
 			var char:String = text.charAt(i);
-			if (this.charset.indexOf(char) < 0) {
-				this.charset += char;
+			if (this.chars.indexOf(char) < 0) {
+				this.chars += char;
 				if (this.font != null) this.font.dispose();
 				this.font = null;
 			}
@@ -52,9 +52,10 @@ class NativeTextChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImp
 		if (this.font == null) {
 			this.font = @:privateAccess new FontBuilder(this.chip.font, this.chip.fontSize, {
 				antiAliasing: false,
-				chars: charset,
+				chars: chars,
 				kerning: true
 			}).build();
+			this.font.charset = CharsetCjk.instance;
 		}
 
 		var t:Text = new Text(this.font, context.buf);
@@ -67,4 +68,15 @@ class NativeTextChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImp
 	}
 }
 
+private class CharsetCjk extends Charset {
+	override public function isCJK(code) {
+		if (code >= 0x2E80 && code <= 0x9FFF) return true;
+		if (code >= 0xAC00 && code <= 0xFAFF) return true;
+		if (code >= 0x1F000) return true;
+		return false;
+	}
+
+	@:isVar public static var instance(get, null):Charset;
+	private static function get_instance():Charset return if (instance != null) instance else instance = new CharsetCjk();
+}
 #end
