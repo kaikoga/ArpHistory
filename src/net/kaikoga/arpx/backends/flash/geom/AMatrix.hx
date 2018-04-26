@@ -32,22 +32,22 @@ class AMatrix extends Matrix implements ITransform {
 		return result;
 	}
 
-	public function asPoint():Point {
+	public function asPoint():APoint {
 		if (this.a == 1 && this.b == 0 && this.c == 0 && this.d == 1) {
-			return new Point(this.tx, this.ty);
+			return new APoint(this.tx, this.ty);
 		}
 		return null;
 	}
 
-	public function asMatrix():Matrix {
+	public function asMatrix():AMatrix {
 		return this;
 	}
 
-	public function toPoint():Point {
-		return new Point(this.tx, this.ty);
+	public function toPoint():APoint {
+		return new APoint(this.tx, this.ty);
 	}
 
-	public function toMatrix():Matrix {
+	public function toMatrix():AMatrix {
 		return this;
 	}
 

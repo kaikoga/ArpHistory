@@ -21,20 +21,20 @@ class APoint extends Point implements ITransform {
 		return result;
 	}
 
-	public function asPoint():Point {
+	public function asPoint():APoint {
 		return this;
 	}
 
-	public function asMatrix():Matrix {
-		return new Matrix(1, 0, 0, 1, this.x, this.y);
+	public function asMatrix():AMatrix {
+		return new AMatrix(1, 0, 0, 1, this.x, this.y);
 	}
 
-	public function toPoint():Point {
+	public function toPoint():APoint {
 		return this;
 	}
 
-	public function toMatrix():Matrix {
-		return new Matrix(1, 0, 0, 1, this.x, this.y);
+	public function toMatrix():AMatrix {
+		return new AMatrix(1, 0, 0, 1, this.x, this.y);
 	}
 
 	public function _setXY(x:Float, y:Float):ITransform {

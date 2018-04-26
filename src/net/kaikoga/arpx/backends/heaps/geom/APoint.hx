@@ -3,7 +3,6 @@ package net.kaikoga.arpx.backends.heaps.geom;
 #if arp_backend_heaps
 
 import h3d.col.Point;
-import h3d.Matrix;
 
 class APoint extends Point implements ITransform {
 
@@ -17,34 +16,24 @@ class APoint extends Point implements ITransform {
 
 	public static function fromTransform(transform:ITransform):APoint {
 		var result:APoint = new APoint();
-		result._setPoint(transform.toPoint());
+		result.load(transform.toPoint());
 		return result;
 	}
 
-	public function asPoint():Point {
+	public function asPoint():APoint {
 		return this;
 	}
 
-	public function asMatrix():Matrix {
+	public function asMatrix():AMatrix {
 		return new AMatrix(1, 0, 0, 1, this.x, this.y);
 	}
 
-	public function toPoint():Point {
+	public function toPoint():APoint {
 		return this;
 	}
 
-	public function toMatrix():Matrix {
+	public function toMatrix():AMatrix {
 		return new AMatrix(1, 0, 0, 1, this.x, this.y);
-	}
-
-	public function _setMatrix(matrix:Matrix):ITransform {
-		return AMatrix.fromTransform(this)._setMatrix(matrix);
-	}
-
-	public function _setPoint(pt:Point):ITransform {
-		this.x = pt.x;
-		this.y = pt.y;
-		return this;
 	}
 
 	public function _setXY(x:Float, y:Float):ITransform {
@@ -55,20 +44,11 @@ class APoint extends Point implements ITransform {
 
 	public function _concatTransform(transform:ITransform):ITransform {
 		if (Std.is(transform, APoint)) {
-			return this._concatPoint(cast transform);
+			this.add(cast transform);
+			return this;
 		} else {
 			return AMatrix.fromPoint(this)._concatTransform(transform);
 		}
-	}
-
-	public function _concatMatrix(matrix:Matrix):ITransform {
-		return AMatrix.fromTransform(this)._concatMatrix(matrix);
-	}
-
-	public function _concatPoint(pt:Point):ITransform {
-		this.x += pt.x;
-		this.y += pt.y;
-		return this;
 	}
 
 	public function _concatXY(x:Float, y:Float):ITransform {
@@ -77,28 +57,12 @@ class APoint extends Point implements ITransform {
 		return this;
 	}
 
-	public function setMatrix(matrix:Matrix):ITransform {
-		return AMatrix.fromTransform(this)._setMatrix(matrix);
-	}
-
-	public function setPoint(pt:Point):ITransform {
-		return APoint.fromTransform(this)._setPoint(pt);
-	}
-
 	public function setXY(x:Float, y:Float):ITransform {
 		return APoint.fromTransform(this)._setXY(x, y);
 	}
 
 	public function concatTransform(transform:ITransform):ITransform {
 		return AMatrix.fromTransform(this)._concatTransform(transform);
-	}
-
-	public function concatMatrix(matrix:Matrix):ITransform {
-		return AMatrix.fromTransform(this)._concatMatrix(matrix);
-	}
-
-	public function concatPoint(pt:Point):ITransform {
-		return APoint.fromTransform(this)._concatPoint(pt);
 	}
 
 	public function concatXY(x:Float, y:Float):ITransform {

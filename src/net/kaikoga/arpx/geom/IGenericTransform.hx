@@ -1,6 +1,4 @@
-package net.kaikoga.arpx.backends.flash.geom;
-
-#if (arp_backend_flash || arp_backend_openfl)
+package net.kaikoga.arpx.geom;
 
 interface IGenericTransform {
 
@@ -18,5 +16,3 @@ interface IGenericTransform {
 	function concatTransform(transform:ITransform):ITransform;
 	function concatXY(x:Float, y:Float):ITransform;
 }
-
-#end

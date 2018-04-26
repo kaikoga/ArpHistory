@@ -22,51 +22,32 @@ class AMatrix extends Matrix3 implements ITransform {
 
 	public static function fromMatrix(matrix:Matrix3):AMatrix {
 		var result:AMatrix = new AMatrix();
-		result._setMatrix(matrix);
+		result.setFrom(matrix);
 		return result;
 	}
 
 	public static function fromTransform(transform:ITransform):AMatrix {
 		var result:AMatrix = new AMatrix();
-		result._setMatrix(transform.toMatrix());
+		result.setFrom(transform.toMatrix());
 		return result;
 	}
 
-	public function asPoint():Vector2 {
+	public function asPoint():APoint {
 		if (this._00 == 1 && this._10 == 0 && this._01 == 0 && this._11 == 1) {
-			return new Vector2(this._20, this._21);
+			return new APoint(this._20, this._21);
 		}
 		return null;
 	}
 
-	public function asMatrix():Matrix3 {
+	public function asMatrix():AMatrix {
 		return this;
 	}
 
-	public function toPoint():Vector2 {
-		return new Vector2(this._20, this._21);
+	public function toPoint():APoint {
+		return new APoint(this._20, this._21);
 	}
 
-	public function toMatrix():Matrix3 {
-		return this;
-	}
-
-	public function _setMatrix(matrix:Matrix3):ITransform {
-		this._00 = matrix._00;
-		this._10 = matrix._10;
-		this._20 = matrix._20;
-		this._01 = matrix._01;
-		this._11 = matrix._11;
-		this._21 = matrix._21;
-		this._02 = matrix._02;
-		this._12 = matrix._12;
-		this._22 = matrix._22;
-		return this;
-	}
-
-	public function _setPoint(pt:Vector2):ITransform {
-		this._20 = pt.x;
-		this._21 = pt.y;
+	public function toMatrix():AMatrix {
 		return this;
 	}
 
@@ -81,12 +62,7 @@ class AMatrix extends Matrix3 implements ITransform {
 	}
 
 	public function _concatMatrix(matrix:Matrix3):ITransform {
-		return this._setMatrix(this.multmat(matrix));
-	}
-
-	public function _concatPoint(pt:Vector2):ITransform {
-		this._20 += pt.x;
-		this._21 += pt.y;
+		this.setFrom(this.multmat(matrix));
 		return this;
 	}
 
@@ -96,28 +72,12 @@ class AMatrix extends Matrix3 implements ITransform {
 		return this;
 	}
 
-	public function setMatrix(matrix:Matrix3):ITransform {
-		return AMatrix.fromTransform(this)._setMatrix(matrix);
-	}
-
-	public function setPoint(pt:Vector2):ITransform {
-		return AMatrix.fromTransform(this)._setPoint(pt);
-	}
-
 	public function setXY(x:Float, y:Float):ITransform {
 		return AMatrix.fromTransform(this)._setXY(x, y);
 	}
 
 	public function concatTransform(transform:ITransform):ITransform {
 		return AMatrix.fromTransform(this)._concatTransform(transform);
-	}
-
-	public function concatMatrix(matrix:Matrix3):ITransform {
-		return AMatrix.fromTransform(this)._concatMatrix(matrix);
-	}
-
-	public function concatPoint(pt:Vector2):ITransform {
-		return AMatrix.fromTransform(this)._concatPoint(pt);
 	}
 
 	public function concatXY(x:Float, y:Float):ITransform {
