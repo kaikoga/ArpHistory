@@ -4,7 +4,7 @@ package net.kaikoga.arpx.backends.flash.mortal;
 
 import flash.display.BitmapData;
 import net.kaikoga.arp.backends.IArpObjectImpl;
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
+import net.kaikoga.arpx.geom.ITransform;
 
 interface IMortalFlashImpl extends IArpObjectImpl {
 

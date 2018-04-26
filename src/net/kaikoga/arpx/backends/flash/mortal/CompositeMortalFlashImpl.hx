@@ -6,7 +6,7 @@ import flash.display.BitmapData;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.flash.field.FieldFlashImpl;
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
+import net.kaikoga.arpx.geom.ITransform;
 import net.kaikoga.arpx.mortal.CompositeMortal;
 
 class CompositeMortalFlashImpl extends ArpObjectImplBase implements IMortalFlashImpl {

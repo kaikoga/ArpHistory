@@ -3,12 +3,10 @@ package net.kaikoga.arpx.backends.kha.field;
 #if arp_backend_kha
 
 import haxe.ds.ArraySort;
-
 import kha.graphics2.Graphics;
-
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.kha.math.ITransform;
 import net.kaikoga.arpx.field.Field;
+import net.kaikoga.arpx.geom.ITransform;
 import net.kaikoga.arpx.mortal.Mortal;
 
 class FieldKhaImpl extends ArpObjectImplBase implements IFieldKhaImpl {

@@ -3,6 +3,7 @@ package net.kaikoga.arpx.backends.heaps.geom;
 #if arp_backend_heaps
 
 import h3d.col.Point;
+import net.kaikoga.arpx.geom.ITransform;
 
 class APoint extends Point implements ITransform {
 

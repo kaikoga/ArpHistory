@@ -9,8 +9,8 @@ import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import net.kaikoga.arpx.chip.NativeTextChip;
+import net.kaikoga.arpx.geom.ITransform;
 
 class NativeTextChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 

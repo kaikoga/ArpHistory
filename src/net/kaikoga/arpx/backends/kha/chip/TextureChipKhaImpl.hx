@@ -2,15 +2,14 @@ package net.kaikoga.arpx.backends.kha.chip;
 
 #if arp_backend_kha
 
+import kha.graphics2.Graphics;
 import kha.math.FastMatrix3;
 import kha.math.Vector2;
-import kha.graphics2.Graphics;
-
 import net.kaikoga.arp.domain.ArpHeat;
 import net.kaikoga.arp.structs.IArpParamsRead;
-import net.kaikoga.arpx.backends.kha.math.ITransform;
 import net.kaikoga.arpx.backends.kha.texture.decorators.TextureFaceInfo;
 import net.kaikoga.arpx.chip.TextureChip;
+import net.kaikoga.arpx.geom.ITransform;
 
 class TextureChipKhaImpl extends ArpObjectImplBase implements IChipKhaImpl {
 

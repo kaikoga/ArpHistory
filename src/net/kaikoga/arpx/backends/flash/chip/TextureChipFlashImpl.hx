@@ -2,17 +2,17 @@ package net.kaikoga.arpx.backends.flash.chip;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
+import flash.display.BitmapData;
 import flash.display.BlendMode;
 import flash.geom.ColorTransform;
-import flash.geom.Point;
-import net.kaikoga.arpx.backends.flash.texture.decorators.TextureFaceInfo;
-import net.kaikoga.arp.domain.ArpHeat;
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
-import flash.display.BitmapData;
 import flash.geom.Matrix;
+import flash.geom.Point;
 import flash.geom.Rectangle;
+import net.kaikoga.arp.domain.ArpHeat;
 import net.kaikoga.arp.structs.IArpParamsRead;
+import net.kaikoga.arpx.backends.flash.texture.decorators.TextureFaceInfo;
 import net.kaikoga.arpx.chip.TextureChip;
+import net.kaikoga.arpx.geom.ITransform;
 
 class TextureChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 

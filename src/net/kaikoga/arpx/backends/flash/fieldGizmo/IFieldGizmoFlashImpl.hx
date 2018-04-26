@@ -4,8 +4,8 @@ package net.kaikoga.arpx.backends.flash.fieldGizmo;
 
 import flash.display.BitmapData;
 import net.kaikoga.arp.backends.IArpObjectImpl;
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import net.kaikoga.arpx.field.Field;
+import net.kaikoga.arpx.geom.ITransform;
 
 interface IFieldGizmoFlashImpl extends IArpObjectImpl {
 

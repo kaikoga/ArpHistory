@@ -6,9 +6,9 @@ import flash.display.BitmapData;
 import flash.geom.Point;
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import net.kaikoga.arpx.backends.flash.tileMap.legacy.TileMapRenderer;
 import net.kaikoga.arpx.chip.TileMapChip;
+import net.kaikoga.arpx.geom.ITransform;
 
 class TileMapChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 

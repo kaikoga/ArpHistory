@@ -5,8 +5,8 @@ package net.kaikoga.arpx.backends.flash.field;
 import flash.display.BitmapData;
 import haxe.ds.ArraySort;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import net.kaikoga.arpx.field.Field;
+import net.kaikoga.arpx.geom.ITransform;
 import net.kaikoga.arpx.mortal.Mortal;
 
 class FieldFlashImpl extends ArpObjectImplBase implements IFieldFlashImpl {

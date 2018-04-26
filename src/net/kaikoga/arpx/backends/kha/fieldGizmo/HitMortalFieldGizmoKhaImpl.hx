@@ -2,16 +2,12 @@ package net.kaikoga.arpx.backends.kha.fieldGizmo;
 
 #if arp_backend_kha
 
-import kha.math.Vector2;
-import kha.graphics2.Graphics;
 import kha.Color;
-
+import kha.graphics2.Graphics;
+import kha.math.Vector2;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.kha.math.ITransform;
-import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.fieldGizmo.HitMortalFieldGizmo;
-import net.kaikoga.arpx.mortal.Mortal.HitMortal;
-import net.kaikoga.arpx.mortal.Mortal;
+import net.kaikoga.arpx.geom.ITransform;
 
 class HitMortalFieldGizmoKhaImpl extends ArpObjectImplBase implements IFieldGizmoKhaImpl {
 

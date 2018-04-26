@@ -2,12 +2,11 @@ package net.kaikoga.arpx.backends.kha.mortal;
 
 #if arp_backend_kha
 
-import kha.math.Vector2;
 import kha.graphics2.Graphics;
-
+import kha.math.Vector2;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.kha.math.ITransform;
 import net.kaikoga.arpx.backends.kha.tileMap.legacy.TileMapRenderer;
+import net.kaikoga.arpx.geom.ITransform;
 import net.kaikoga.arpx.mortal.TileMapMortal;
 
 class TileMapMortalKhaImpl extends ArpObjectImplBase implements IMortalKhaImpl {

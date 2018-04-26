@@ -3,11 +3,10 @@ package net.kaikoga.arpx.backends.kha.hud;
 #if arp_backend_kha
 
 import kha.graphics2.Graphics;
-
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.kha.math.ITransform;
+import net.kaikoga.arpx.geom.ITransform;
 import net.kaikoga.arpx.hud.ChipMenuHud;
 import net.kaikoga.arpx.menu.Menu;
 

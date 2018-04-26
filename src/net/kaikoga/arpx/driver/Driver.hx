@@ -1,8 +1,8 @@
 package net.kaikoga.arpx.driver;
 
+import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.mortal.Mortal;
-import net.kaikoga.arp.domain.IArpObject;
 
 @:arpType("driver", "null")
 class Driver implements IArpObject {

@@ -3,11 +3,10 @@ package net.kaikoga.arpx.backends.kha.mortal;
 #if arp_backend_kha
 
 import kha.graphics2.Graphics;
-
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.kha.field.FieldKhaImpl;
-import net.kaikoga.arpx.backends.kha.math.ITransform;
+import net.kaikoga.arpx.geom.ITransform;
 import net.kaikoga.arpx.mortal.CompositeMortal;
 
 class CompositeMortalKhaImpl extends ArpObjectImplBase implements IMortalKhaImpl {

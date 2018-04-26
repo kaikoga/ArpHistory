@@ -2,8 +2,8 @@ package net.kaikoga.arpx.backends.flash.geom;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import flash.geom.Matrix;
 import flash.geom.Point;
+import net.kaikoga.arpx.geom.ITransform;
 
 class APoint extends Point implements ITransform {
 

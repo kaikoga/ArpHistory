@@ -2,14 +2,13 @@ package net.kaikoga.arpx.backends.kha.chip;
 
 #if arp_backend_kha
 
-import kha.math.Vector2;
 import kha.graphics2.Graphics;
-
+import kha.math.Vector2;
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.kha.math.ITransform;
 import net.kaikoga.arpx.backends.kha.tileMap.legacy.TileMapRenderer;
 import net.kaikoga.arpx.chip.TileMapChip;
+import net.kaikoga.arpx.geom.ITransform;
 
 class TileMapChipKhaImpl extends ArpObjectImplBase implements IChipKhaImpl {
 

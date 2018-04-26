@@ -8,8 +8,8 @@ import flash.geom.Point;
 import flash.geom.Rectangle;
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import net.kaikoga.arpx.chip.RectChip;
+import net.kaikoga.arpx.geom.ITransform;
 
 class RectChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 

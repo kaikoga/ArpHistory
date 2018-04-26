@@ -3,11 +3,10 @@ package net.kaikoga.arpx.backends.kha.chip.decorators;
 #if arp_backend_kha
 
 import kha.graphics2.Graphics;
-
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.kha.math.ITransform;
 import net.kaikoga.arpx.chip.decorators.CompositeChip;
+import net.kaikoga.arpx.geom.ITransform;
 
 class CompositeChipKhaImpl extends ArpObjectImplBase implements IChipKhaImpl {
 

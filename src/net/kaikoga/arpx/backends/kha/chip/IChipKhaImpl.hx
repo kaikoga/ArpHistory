@@ -5,7 +5,7 @@ package net.kaikoga.arpx.backends.kha.chip;
 import kha.graphics2.Graphics;
 import net.kaikoga.arp.backends.IArpObjectImpl;
 import net.kaikoga.arp.structs.IArpParamsRead;
-import net.kaikoga.arpx.backends.kha.math.ITransform;
+import net.kaikoga.arpx.geom.ITransform;
 
 interface IChipKhaImpl extends IArpObjectImpl {
 

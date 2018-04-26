@@ -4,7 +4,7 @@ package net.kaikoga.arpx.backends.flash.field;
 
 import flash.display.BitmapData;
 import net.kaikoga.arp.backends.IArpObjectImpl;
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
+import net.kaikoga.arpx.geom.ITransform;
 
 interface IFieldFlashImpl extends IArpObjectImpl {
 

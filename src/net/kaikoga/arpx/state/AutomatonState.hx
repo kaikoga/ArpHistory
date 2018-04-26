@@ -1,8 +1,8 @@
 ﻿package net.kaikoga.arpx.state;
 
+import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arpx.automaton.Automaton;
-import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arpx.screen.Screen;
 
 @:access(net.kaikoga.arpx.automaton.Automaton)

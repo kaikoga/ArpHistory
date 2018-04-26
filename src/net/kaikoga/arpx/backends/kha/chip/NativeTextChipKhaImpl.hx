@@ -4,11 +4,10 @@ package net.kaikoga.arpx.backends.kha.chip;
 
 import kha.graphics2.Graphics;
 import kha.math.Vector2;
-
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.kha.math.ITransform;
 import net.kaikoga.arpx.chip.NativeTextChip;
+import net.kaikoga.arpx.geom.ITransform;
 
 class NativeTextChipKhaImpl extends ArpObjectImplBase implements IChipKhaImpl {
 

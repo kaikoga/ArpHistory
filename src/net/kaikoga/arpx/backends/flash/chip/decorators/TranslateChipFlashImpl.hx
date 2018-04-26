@@ -6,8 +6,8 @@ import flash.display.BitmapData;
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.flash.geom.AMatrix;
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import net.kaikoga.arpx.chip.decorators.TranslateChip;
+import net.kaikoga.arpx.geom.ITransform;
 
 class TranslateChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 

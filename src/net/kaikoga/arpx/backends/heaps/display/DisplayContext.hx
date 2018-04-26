@@ -3,9 +3,8 @@ package net.kaikoga.arpx.backends.heaps.display;
 #if arp_backend_heaps
 
 import h2d.Sprite;
-
-import net.kaikoga.arpx.backends.heaps.geom.APoint;
-import net.kaikoga.arpx.backends.heaps.geom.ITransform;
+import net.kaikoga.arpx.geom.APoint;
+import net.kaikoga.arpx.geom.ITransform;
 
 class DisplayContext {
 

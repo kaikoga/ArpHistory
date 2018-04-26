@@ -4,6 +4,7 @@ package net.kaikoga.arpx.backends.heaps.geom;
 
 import h3d.col.Point;
 import h3d.Matrix;
+import net.kaikoga.arpx.geom.ITransform;
 
 class AMatrix extends Matrix implements ITransform {
 
@@ -74,7 +75,7 @@ class AMatrix extends Matrix implements ITransform {
 	}
 
 	public function _concatTransform(transform:ITransform):ITransform {
-		this.multiply(transform.toMatrix());
+		this.multiply(this, transform.toMatrix());
 		return this;
 	}
 

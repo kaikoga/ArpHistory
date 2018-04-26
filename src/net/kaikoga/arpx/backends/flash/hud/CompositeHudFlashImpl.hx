@@ -5,7 +5,7 @@ package net.kaikoga.arpx.backends.flash.hud;
 import flash.display.BitmapData;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
+import net.kaikoga.arpx.geom.ITransform;
 import net.kaikoga.arpx.hud.CompositeHud;
 
 class CompositeHudFlashImpl extends ArpObjectImplBase implements IHudFlashImpl {

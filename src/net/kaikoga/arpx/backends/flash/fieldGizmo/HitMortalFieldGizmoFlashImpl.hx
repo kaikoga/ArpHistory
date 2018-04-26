@@ -6,11 +6,9 @@ import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.flash.geom.ITransform;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.fieldGizmo.HitMortalFieldGizmo;
-import net.kaikoga.arpx.mortal.Mortal.HitMortal;
-import net.kaikoga.arpx.mortal.Mortal;
+import net.kaikoga.arpx.geom.ITransform;
 
 class HitMortalFieldGizmoFlashImpl extends ArpObjectImplBase implements IFieldGizmoFlashImpl {
 

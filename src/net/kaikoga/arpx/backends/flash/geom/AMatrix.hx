@@ -4,6 +4,7 @@ package net.kaikoga.arpx.backends.flash.geom;
 
 import flash.geom.Matrix;
 import flash.geom.Point;
+import net.kaikoga.arpx.geom.ITransform;
 
 class AMatrix extends Matrix implements ITransform {
 
