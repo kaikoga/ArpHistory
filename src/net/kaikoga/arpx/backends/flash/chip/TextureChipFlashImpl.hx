@@ -2,7 +2,6 @@ package net.kaikoga.arpx.backends.flash.chip;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import flash.display.BitmapData;
 import flash.display.BlendMode;
 import flash.geom.ColorTransform;
 import flash.geom.Matrix;
@@ -10,6 +9,7 @@ import flash.geom.Point;
 import flash.geom.Rectangle;
 import net.kaikoga.arp.domain.ArpHeat;
 import net.kaikoga.arp.structs.IArpParamsRead;
+import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import net.kaikoga.arpx.backends.flash.texture.decorators.TextureFaceInfo;
 import net.kaikoga.arpx.chip.TextureChip;
 import net.kaikoga.arpx.geom.ITransform;
@@ -26,13 +26,14 @@ class TextureChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 	private var _workRect:Rectangle = new Rectangle();
 	private var _workMatrix:Matrix = new Matrix();
 
-	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:IArpParamsRead = null):Void {
+	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
 		if (this.chip.arpSlot.heat < ArpHeat.Warm) {
 			this.chip.arpDomain.log("gridchip", 'GridChip.copyChip(): Chip not warm: ${this}:$params');
 			this.chip.arpDomain.heatLater(this.chip.arpSlot);
 			return;
 		}
 
+		var transform:ITransform = context.transform;
 		if (this.chip.baseX | this.chip.baseY != 0) {
 			transform = transform.concatXY(-this.chip.baseX, -this.chip.baseY);
 		}
@@ -46,7 +47,7 @@ class TextureChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 
 		var pt:Point = transform.asPoint();
 		if (pt != null) {
-			bitmapData.copyPixels(this.chip.texture.bitmapData(), faceInfo.bound, pt, null, null, this.chip.texture.hasAlpha);
+			context.bitmapData.copyPixels(this.chip.texture.bitmapData(), faceInfo.bound, pt, null, null, this.chip.texture.hasAlpha);
 		} else {
 			var colorTransform:ColorTransform = null;
 			if (params.getBool("tint")) {
@@ -61,7 +62,7 @@ class TextureChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 				colorTransform = new ColorTransform(ra, ga, ba, aa, rb, gb, bb, ab);
 			}
 			var blendMode:BlendMode = cast params.getAsString("blendMode");
-			bitmapData.draw(faceInfo.data, transform.toMatrix(), colorTransform, blendMode);
+			context.bitmapData.draw(faceInfo.data, transform.toMatrix(), colorTransform, blendMode);
 		}
 	}
 }

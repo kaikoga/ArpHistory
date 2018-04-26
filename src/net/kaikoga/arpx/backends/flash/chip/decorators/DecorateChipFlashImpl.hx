@@ -2,12 +2,11 @@ package net.kaikoga.arpx.backends.flash.chip.decorators;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import flash.display.BitmapData;
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
+import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import net.kaikoga.arpx.backends.flash.geom.AMatrix;
 import net.kaikoga.arpx.chip.decorators.DecorateChip;
-import net.kaikoga.arpx.geom.ITransform;
 
 class DecorateChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 
@@ -27,15 +26,17 @@ class DecorateChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl 
 	}
 
 	private static var workMatrix:AMatrix = new AMatrix();
-	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:IArpParamsRead = null):Void {
+	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
 		var aMatrix:AMatrix = workMatrix;
 		aMatrix.setTo(chip.a, chip.b, chip.c, chip.d, chip.x, chip.y);
-		aMatrix._concatTransform(transform);
+		aMatrix._concatTransform(context.transform);
 		var p:IArpParamsRead = params;
 		if (this.chip.paramsOp != null) {
 			p = this.chip.paramsOp.filter(p);
 		}
-		this.chip.chip.copyChip(bitmapData, aMatrix, p);
+		context.pushTransform(aMatrix);
+		this.chip.chip.copyChip(context, p);
+		context.popTransform();
 	}
 }
 

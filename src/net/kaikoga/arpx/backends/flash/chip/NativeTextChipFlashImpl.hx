@@ -2,7 +2,7 @@ package net.kaikoga.arpx.backends.flash.chip;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import flash.display.BitmapData;
+import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import flash.geom.Matrix;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
@@ -53,14 +53,14 @@ class NativeTextChipFlashImpl extends ArpObjectImplBase implements IChipFlashImp
 	}
 
 	private static var _workDrawMatrix:Matrix = new Matrix();
-	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:IArpParamsRead = null):Void {
+	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
 		this.arpHeatUp();
-		transform = transform.concatXY(-2, -2 - this.ascent);
+		var transform:ITransform = context.transform.concatXY(-2, -2 - this.ascent);
 		var text:String = null;
 		if (params != null) text = params.get("face");
 		if (text == null) text = "null";
 		this.visual.text = text;
-		bitmapData.draw(this.visual, transform.toMatrix());
+		context.bitmapData.draw(this.visual, transform.toMatrix());
 	}
 
 	/*

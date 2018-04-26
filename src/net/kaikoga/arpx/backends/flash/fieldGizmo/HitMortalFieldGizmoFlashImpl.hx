@@ -2,13 +2,13 @@ package net.kaikoga.arpx.backends.flash.fieldGizmo;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
+import net.kaikoga.arpx.field.Field;
 import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.field.Field;
+import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import net.kaikoga.arpx.fieldGizmo.HitMortalFieldGizmo;
-import net.kaikoga.arpx.geom.ITransform;
 
 class HitMortalFieldGizmoFlashImpl extends ArpObjectImplBase implements IFieldGizmoFlashImpl {
 
@@ -21,9 +21,10 @@ class HitMortalFieldGizmoFlashImpl extends ArpObjectImplBase implements IFieldGi
 
 	@:access(net.kaikoga.arpx.mortal.Mortal.hitMortals)
 	@:access(net.kaikoga.arpx.field.Field.hitField)
-	public function render(field:Field, bitmapData:BitmapData, transform:ITransform):Void {
+	public function render(field:Field, context:DisplayContext):Void {
 		if (this.fieldGizmo.visible) {
-			var pt:Point = transform.toPoint();
+			var pt:Point = context.transform.toPoint();
+			var bitmapData:BitmapData = context.bitmapData;
 			var rect:Rectangle = new Rectangle(0, 0, field.hitField.size, 16);
 
 			bitmapData.fillRect(rect, 0xffffffff);

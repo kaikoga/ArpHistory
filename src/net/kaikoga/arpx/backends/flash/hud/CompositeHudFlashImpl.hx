@@ -2,10 +2,9 @@ package net.kaikoga.arpx.backends.flash.hud;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import flash.display.BitmapData;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.geom.ITransform;
+import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import net.kaikoga.arpx.hud.CompositeHud;
 
 class CompositeHudFlashImpl extends ArpObjectImplBase implements IHudFlashImpl {
@@ -17,11 +16,12 @@ class CompositeHudFlashImpl extends ArpObjectImplBase implements IHudFlashImpl {
 		this.hud = hud;
 	}
 
-	public function copySelf(bitmapData:BitmapData, transform:ITransform):Void {
+	public function copySelf(context:DisplayContext):Void {
 		if (hud.visible) {
 			var pos:ArpPosition = hud.position;
-			transform = transform.concatXY(pos.x, pos.y);
-			for (h in hud.huds) h.copySelf(bitmapData, transform);
+			context.pushTransform(context.transform.concatXY(pos.x, pos.y));
+			for (h in hud.huds) h.copySelf(context);
+			context.popTransform();
 		}
 	}
 }

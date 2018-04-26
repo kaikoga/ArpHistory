@@ -2,11 +2,10 @@ package net.kaikoga.arpx.backends.flash.mortal;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import flash.display.BitmapData;
+import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.flash.field.FieldFlashImpl;
-import net.kaikoga.arpx.geom.ITransform;
 import net.kaikoga.arpx.mortal.CompositeMortal;
 
 class CompositeMortalFlashImpl extends ArpObjectImplBase implements IMortalFlashImpl {
@@ -18,11 +17,12 @@ class CompositeMortalFlashImpl extends ArpObjectImplBase implements IMortalFlash
 		this.mortal = mortal;
 	}
 
-	public function copySelf(bitmapData:BitmapData, transform:ITransform):Void {
+	public function copySelf(context:DisplayContext):Void {
 		if (mortal.visible) {
 			var pos:ArpPosition = mortal.position;
-			transform = transform.concatXY(pos.x, pos.y);
-			FieldFlashImpl.copySortedMortals(mortal.mortals, bitmapData, transform);
+			context.pushTransform(context.transform.concatXY(pos.x, pos.y));
+			FieldFlashImpl.copySortedMortals(mortal.mortals, context);
+			context.popTransform();
 		}
 	}
 

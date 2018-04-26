@@ -2,14 +2,13 @@ package net.kaikoga.arpx.backends.flash.chip;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import flash.display.BitmapData;
 import flash.geom.Matrix;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 import net.kaikoga.arp.structs.IArpParamsRead;
+import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.chip.RectChip;
-import net.kaikoga.arpx.geom.ITransform;
 
 class RectChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 
@@ -23,15 +22,15 @@ class RectChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
 	private var _workRect:Rectangle = new Rectangle();
 	private var _workMatrix:Matrix = new Matrix();
 
-	public function copyChip(bitmapData:BitmapData, transform:ITransform, params:IArpParamsRead = null):Void {
+	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
 		//TODO optimize
-		var pt:Point = transform.asPoint();
+		var pt:Point = context.transform.asPoint();
 		if (pt != null) {
 			var workRect:Rectangle = _workRect;
 			workRect.setTo(pt.x - chip.baseX, pt.y - chip.baseY, chip.chipWidth, chip.chipHeight);
-			bitmapData.fillRect(workRect, chip.border.value32);
+			context.bitmapData.fillRect(workRect, chip.border.value32);
 			workRect.inflate(-1, -1);
-			bitmapData.fillRect(workRect, chip.color.value32);
+			context.bitmapData.fillRect(workRect, chip.color.value32);
 		} else {
 			/*
 			var workMatrix:Matrix = _workMatrix;

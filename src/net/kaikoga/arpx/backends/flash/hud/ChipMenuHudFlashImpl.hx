@@ -2,11 +2,10 @@ package net.kaikoga.arpx.backends.flash.hud;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import flash.display.BitmapData;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.geom.ITransform;
+import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import net.kaikoga.arpx.hud.ChipMenuHud;
 import net.kaikoga.arpx.menu.Menu;
 
@@ -19,20 +18,21 @@ class ChipMenuHudFlashImpl extends ArpObjectImplBase implements IHudFlashImpl {
 		this.hud = hud;
 	}
 
-	public function copySelf(bitmapData:BitmapData, transform:ITransform):Void {
+	public function copySelf(context:DisplayContext):Void {
 		if (hud.visible && hud.chip != null) {
 			var menu:Menu = hud.menu;
 			var pos:ArpPosition = hud.position;
 			var dPos:ArpPosition = hud.dPosition;
-			transform = transform.concatXY(pos.x, pos.y);
+			context = new DisplayContext(context.bitmapData, context.transform);
+			context.transform._concatXY(pos.x, pos.y);
 			var param:ArpParams = new ArpParams();
 			var index:Int = 0;
 			for (item in menu.menuItems) {
 				param.set("face", item.text.publish(param));
 				param.set("selected", index == hud.menu.value);
 				param.set("index", index++);
-				hud.chip.copyChip(bitmapData, transform, param);
-				transform._concatXY(dPos.x, dPos.y);
+				hud.chip.copyChip(context, param);
+				context.transform._concatXY(dPos.x, dPos.y);
 			}
 		}
 	}

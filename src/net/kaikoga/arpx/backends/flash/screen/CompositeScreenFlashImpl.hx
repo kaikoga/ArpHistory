@@ -2,8 +2,8 @@ package net.kaikoga.arpx.backends.flash.screen;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import flash.display.BitmapData;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
+import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import net.kaikoga.arpx.screen.CompositeScreen;
 
 class CompositeScreenFlashImpl extends ArpObjectImplBase implements IScreenFlashImpl {
@@ -15,8 +15,8 @@ class CompositeScreenFlashImpl extends ArpObjectImplBase implements IScreenFlash
 		this.screen = screen;
 	}
 
-	public function display(bitmapData:BitmapData):Void {
-		for (screen in this.screen.screens) screen.display(bitmapData);
+	public function display(context:DisplayContext):Void {
+		for (screen in this.screen.screens) screen.display(context);
 	}
 }
 

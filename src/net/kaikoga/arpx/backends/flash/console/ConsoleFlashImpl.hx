@@ -3,6 +3,7 @@ package net.kaikoga.arpx.backends.flash.console;
 #if (arp_backend_flash || arp_backend_openfl)
 
 import flash.display.BitmapData;
+import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.console.Console;
 
@@ -16,7 +17,8 @@ class ConsoleFlashImpl extends ArpObjectImplBase implements IConsoleFlashImpl {
 	}
 
 	public function display(bitmapData:BitmapData):Void {
-		for (screen in this.console.screens) screen.display(bitmapData);
+		var context:DisplayContext = new DisplayContext(bitmapData);
+		for (screen in this.console.screens) screen.display(context);
 	}
 }
 

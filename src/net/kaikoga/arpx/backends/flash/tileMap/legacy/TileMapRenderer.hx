@@ -2,6 +2,7 @@ package net.kaikoga.arpx.backends.flash.tileMap.legacy;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
+import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import flash.display.BitmapData;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.backends.flash.geom.APoint;
@@ -39,11 +40,12 @@ class TileMapRenderer {
 		var destLeft:Int = offsetX + chipWidth * gridX;
 		var destTop:Int = offsetY + chipHeight * gridY;
 		pt.x = destLeft;
+		var context:DisplayContext = new DisplayContext(bitmapData, pt);
 		for (i in gridX...gridRight) {
 			pt.y = destTop;
 			for (j in gridY...gridBottom) {
 				params.set("index", this.tileMap.getTileIndexAtGrid(i, j));
-				this.chip.copyChip(bitmapData, pt, params);
+				this.chip.copyChip(context, params);
 				pt.y += chipHeight;
 			}
 			pt.x += chipWidth;
