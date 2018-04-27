@@ -6,13 +6,7 @@ import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import net.kaikoga.arp.backends.IArpObjectImpl;
 
 interface IMortalFlashImpl extends IArpObjectImpl {
-
 	function copySelf(context:DisplayContext):Void;
-
-	// function export():DisplayObject;
-
-	// function frameMove():Void;
-
 }
 
 #end

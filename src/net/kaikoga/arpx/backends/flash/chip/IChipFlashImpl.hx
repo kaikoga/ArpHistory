@@ -7,11 +7,7 @@ import net.kaikoga.arp.backends.IArpObjectImpl;
 import net.kaikoga.arp.structs.IArpParamsRead;
 
 interface IChipFlashImpl extends IArpObjectImpl {
-
 	function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void;
-
-	//function exportChipSprite(params : ArpParams = null) : AChipSprite;
-
 }
 
 #end

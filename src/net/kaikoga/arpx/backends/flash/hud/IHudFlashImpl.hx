@@ -6,13 +6,7 @@ import net.kaikoga.arp.backends.IArpObjectImpl;
 import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 
 interface IHudFlashImpl extends IArpObjectImpl {
-
 	function copySelf(context:DisplayContext):Void;
-
-	// function export():DisplayObject;
-
-	// function frameMove():Void;
-
 }
 
 #end

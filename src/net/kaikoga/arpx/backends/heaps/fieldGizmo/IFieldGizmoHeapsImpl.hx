@@ -7,9 +7,7 @@ import net.kaikoga.arpx.backends.heaps.display.DisplayContext;
 import net.kaikoga.arpx.field.Field;
 
 interface IFieldGizmoHeapsImpl extends IArpObjectImpl {
-
 	function render(field:Field, context:DisplayContext):Void;
-
 }
 
 #end

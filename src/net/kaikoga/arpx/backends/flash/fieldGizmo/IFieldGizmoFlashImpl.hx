@@ -7,9 +7,7 @@ import net.kaikoga.arp.backends.IArpObjectImpl;
 import net.kaikoga.arpx.field.Field;
 
 interface IFieldGizmoFlashImpl extends IArpObjectImpl {
-
 	function render(field:Field, context:DisplayContext):Void;
-
 }
 
 #end
