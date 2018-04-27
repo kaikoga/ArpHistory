@@ -1,15 +1,8 @@
 package net.kaikoga.arpx.chip;
 
-import net.kaikoga.arpx.chip.stringChip.StringChipStringIterator;
 import net.kaikoga.arp.structs.ArpParams;
-
-#if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.chip.StringChipFlashImpl;
-#end
-
-#if arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.chip.StringChipHeapsImpl;
-#end
+import net.kaikoga.arpx.backends.cross.chip.StringChipImpl;
+import net.kaikoga.arpx.chip.stringChip.StringChipStringIterator;
 
 @:arpType("chip", "string")
 class StringChip extends Chip {
@@ -65,13 +58,7 @@ class StringChip extends Chip {
 
 	override public function hasFace(face:String):Bool return true;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-	@:arpImpl private var flashImpl:StringChipFlashImpl;
-	#end
-
-	#if arp_backend_heaps
-	@:arpImpl private var heapsImpl:StringChipHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:StringChipImpl;
 
 	public function new () super();
 }

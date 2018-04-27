@@ -1,9 +1,9 @@
 package net.kaikoga.arpx.backends.cross.socketClient;
 
-import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arp.io.IOutput;
-import net.kaikoga.arp.io.IInput;
 import haxe.io.Bytes;
+import net.kaikoga.arp.io.IInput;
+import net.kaikoga.arp.io.IOutput;
+import net.kaikoga.arpx.backends.ArpObjectImplBase;
 
 class SocketClientImplBase extends ArpObjectImplBase implements ISocketClientImpl {
 

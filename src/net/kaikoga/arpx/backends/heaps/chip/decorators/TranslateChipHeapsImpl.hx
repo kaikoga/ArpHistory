@@ -4,11 +4,12 @@ package net.kaikoga.arpx.backends.heaps.chip.decorators;
 
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
+import net.kaikoga.arpx.backends.cross.chip.IChipImpl;
 import net.kaikoga.arpx.backends.heaps.display.DisplayContext;
 import net.kaikoga.arpx.backends.heaps.geom.AMatrix;
 import net.kaikoga.arpx.chip.decorators.TranslateChip;
 
-class TranslateChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImpl {
+class TranslateChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 
 	private var chip:TranslateChip;
 

@@ -5,11 +5,12 @@ package net.kaikoga.arpx.backends.flash.hud;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
+import net.kaikoga.arpx.backends.cross.hud.IHudImpl;
 import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import net.kaikoga.arpx.hud.ChipMenuHud;
 import net.kaikoga.arpx.menu.Menu;
 
-class ChipMenuHudFlashImpl extends ArpObjectImplBase implements IHudFlashImpl {
+class ChipMenuHudFlashImpl extends ArpObjectImplBase implements IHudImpl {
 
 	private var hud:ChipMenuHud;
 

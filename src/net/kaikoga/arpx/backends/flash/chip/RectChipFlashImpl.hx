@@ -6,11 +6,12 @@ import flash.geom.Matrix;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 import net.kaikoga.arp.structs.IArpParamsRead;
-import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
+import net.kaikoga.arpx.backends.cross.chip.IChipImpl;
+import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import net.kaikoga.arpx.chip.RectChip;
 
-class RectChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
+class RectChipFlashImpl extends ArpObjectImplBase implements IChipImpl {
 
 	private var chip:RectChip;
 

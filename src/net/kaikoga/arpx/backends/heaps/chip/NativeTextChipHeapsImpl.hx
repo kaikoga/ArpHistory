@@ -7,13 +7,13 @@ import h2d.Text;
 import h3d.col.Point;
 import hxd.Charset;
 import hxd.res.FontBuilder;
-
 import net.kaikoga.arp.structs.IArpParamsRead;
-import net.kaikoga.arpx.backends.heaps.display.DisplayContext;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
+import net.kaikoga.arpx.backends.cross.chip.IChipImpl;
+import net.kaikoga.arpx.backends.heaps.display.DisplayContext;
 import net.kaikoga.arpx.chip.NativeTextChip;
 
-class NativeTextChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImpl {
+class NativeTextChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 
 	private var chip:NativeTextChip;
 	private var chars:String;

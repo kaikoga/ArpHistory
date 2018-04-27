@@ -2,15 +2,10 @@ package net.kaikoga.arpx.mortal;
 
 import net.kaikoga.arp.ds.IList;
 import net.kaikoga.arp.structs.ArpParams;
+import net.kaikoga.arpx.backends.cross.mortal.CompositeMortalImpl;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.mortal.Mortal;
 import net.kaikoga.arpx.reactFrame.ReactFrame;
-
-#if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.mortal.CompositeMortalFlashImpl;
-#elseif arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.mortal.CompositeMortalHeapsImpl;
-#end
 
 @:arpType("mortal", "composite")
 class CompositeMortal extends Mortal {
@@ -18,11 +13,7 @@ class CompositeMortal extends Mortal {
 	@:arpField public var sort:String;
 	@:arpField("mortal") @:arpBarrier public var mortals:IList<Mortal>;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-	@:arpImpl private var flashImpl:CompositeMortalFlashImpl;
-	#elseif arp_backend_heaps
-	@:arpImpl private var heapsImpl:CompositeMortalHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:CompositeMortalImpl;
 
 	public function new() super();
 

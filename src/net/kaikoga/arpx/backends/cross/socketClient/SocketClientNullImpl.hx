@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.backends.cross.socketClient;
 
-import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import haxe.io.Bytes;
+import net.kaikoga.arpx.backends.ArpObjectImplBase;
 
 class SocketClientNullImpl extends ArpObjectImplBase implements ISocketClientImpl {
 

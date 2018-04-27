@@ -4,11 +4,12 @@ package net.kaikoga.arpx.backends.heaps.chip.decorators;
 
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
+import net.kaikoga.arpx.backends.cross.chip.IChipImpl;
 import net.kaikoga.arpx.backends.heaps.display.DisplayContext;
 import net.kaikoga.arpx.backends.heaps.geom.AMatrix;
 import net.kaikoga.arpx.chip.decorators.DecorateChip;
 
-class DecorateChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImpl {
+class DecorateChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 
 	private var chip:DecorateChip;
 

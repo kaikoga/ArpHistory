@@ -2,8 +2,8 @@ package net.kaikoga.arpx.backends.flash.texture.decorators;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import net.kaikoga.arpx.texture.decorators.GridTexture;
 import flash.geom.Rectangle;
+import net.kaikoga.arpx.texture.decorators.GridTexture;
 
 class GridTextureFlashImpl extends MultiTextureFlashImplBase<GridTexture> {
 

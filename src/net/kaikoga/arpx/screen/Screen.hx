@@ -5,26 +5,14 @@ import net.kaikoga.arpx.input.Input;
 import net.kaikoga.arp.task.ITickable;
 import net.kaikoga.arp.domain.IArpObject;
 
-#if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.screen.IScreenFlashImpl;
-#elseif arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.screen.IScreenHeapsImpl;
-#end
+import net.kaikoga.arpx.backends.cross.screen.IScreenImpl;
 
 @:arpType("screen", "null")
-class Screen implements IArpObject implements ITickable implements IFocusNode<Input>
-#if (arp_backend_flash || arp_backend_openfl) implements IScreenFlashImpl
-#elseif arp_backend_heaps implements IScreenHeapsImpl
-#end
-{
+class Screen implements IArpObject implements ITickable implements IFocusNode<Input> implements IScreenImpl {
 	@:arpField public var ticks:Bool = false;
 	@:arpField public var visible:Bool = true;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-	@:arpImpl private var flashImpl:IScreenFlashImpl;
-	#elseif arp_backend_heaps
-	@:arpImpl private var heapsImpl:IScreenHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:IScreenImpl;
 
 	public function new() return;
 

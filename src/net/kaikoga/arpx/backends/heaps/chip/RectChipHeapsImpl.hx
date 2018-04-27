@@ -5,10 +5,11 @@ package net.kaikoga.arpx.backends.heaps.chip;
 import h3d.col.Point;
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
+import net.kaikoga.arpx.backends.cross.chip.IChipImpl;
 import net.kaikoga.arpx.backends.heaps.display.DisplayContext;
 import net.kaikoga.arpx.chip.RectChip;
 
-class RectChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImpl {
+class RectChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 
 	private var chip:RectChip;
 

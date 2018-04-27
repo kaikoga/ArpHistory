@@ -4,11 +4,12 @@ package net.kaikoga.arpx.backends.flash.chip.decorators;
 
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
+import net.kaikoga.arpx.backends.cross.chip.IChipImpl;
 import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import net.kaikoga.arpx.backends.flash.geom.AMatrix;
 import net.kaikoga.arpx.chip.decorators.DecorateChip;
 
-class DecorateChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
+class DecorateChipFlashImpl extends ArpObjectImplBase implements IChipImpl {
 
 	private var chip:DecorateChip;
 

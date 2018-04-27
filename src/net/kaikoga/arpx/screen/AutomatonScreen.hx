@@ -1,14 +1,9 @@
 package net.kaikoga.arpx.screen;
 
-import net.kaikoga.arpx.input.Input;
-import net.kaikoga.arpx.automaton.events.AutomatonStateEvent;
 import net.kaikoga.arpx.automaton.Automaton;
-
-#if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.screen.AutomatonScreenFlashImpl;
-#elseif arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.screen.AutomatonScreenHeapsImpl;
-#end
+import net.kaikoga.arpx.automaton.events.AutomatonStateEvent;
+import net.kaikoga.arpx.backends.cross.screen.AutomatonScreenImpl;
+import net.kaikoga.arpx.input.Input;
 
 @:arpType("screen", "automaton")
 class AutomatonScreen extends Screen {
@@ -16,11 +11,7 @@ class AutomatonScreen extends Screen {
 	@:arpBarrier @:arpField public var automaton:Automaton;
 	@:arpField(false) private var screen:Screen;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-	@:arpImpl private var flashImpl:AutomatonScreenFlashImpl;
-	#elseif arp_backend_heaps
-	@:arpImpl private var heapsImpl:AutomatonScreenHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:AutomatonScreenImpl;
 
 	public function new() super();
 

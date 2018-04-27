@@ -10,23 +10,14 @@ import net.kaikoga.arp.hit.strategies.HitWithCuboid;
 import net.kaikoga.arp.hit.structs.HitGeneric;
 import net.kaikoga.arp.hit.fields.HitField;
 import net.kaikoga.arpx.anchor.Anchor;
+import net.kaikoga.arpx.backends.cross.field.IFieldImpl;
+import net.kaikoga.arpx.backends.cross.field.FieldImpl;
 import net.kaikoga.arpx.mortal.Mortal;
 import net.kaikoga.arpx.reactFrame.ReactFrame;
 
-#if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.field.IFieldFlashImpl;
-import net.kaikoga.arpx.backends.flash.field.FieldFlashImpl;
-#elseif arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.field.IFieldHeapsImpl;
-import net.kaikoga.arpx.backends.heaps.field.FieldHeapsImpl;
-#end
 
 @:arpType("field")
-class Field implements IArpObject implements ITickable
-	#if (arp_backend_flash || arp_backend_openfl) implements IFieldFlashImpl
-	#elseif arp_backend_heaps implements IFieldHeapsImpl
-	#end
-{
+class Field implements IArpObject implements ITickable implements IFieldImpl {
 
 	@:arpBarrier @:arpField("mortal") public var initMortals:IOmap<String, Mortal>;
 	@:arpBarrier @:arpField(false) private var _mortals:IOmap<String, Mortal>;
@@ -40,11 +31,7 @@ class Field implements IArpObject implements ITickable
 	private var hitField:HitObjectField<HitGeneric, HitMortal>;
 	private var anchorField:HitField<HitGeneric, Anchor>;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-	@:arpImpl private var flashImpl:FieldFlashImpl;
-	#elseif arp_backend_heaps
-	@:arpImpl private var heapsImpl:FieldHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:FieldImpl;
 
 	public function new() return;
 

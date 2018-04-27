@@ -1,32 +1,23 @@
 package net.kaikoga.arpx.mortal;
 
-import net.kaikoga.arp.task.ITickable;
-import net.kaikoga.arp.ds.impl.ArraySet;
-import net.kaikoga.arp.ds.ISet;
-import net.kaikoga.arp.hit.structs.HitGeneric;
-import net.kaikoga.arp.hit.fields.HitObject;
-import net.kaikoga.arpx.motion.Motion;
-import net.kaikoga.arpx.driver.Driver;
 import net.kaikoga.arp.domain.ArpDirectory;
 import net.kaikoga.arp.domain.IArpObject;
+import net.kaikoga.arp.ds.impl.ArraySet;
+import net.kaikoga.arp.ds.ISet;
+import net.kaikoga.arp.hit.fields.HitObject;
+import net.kaikoga.arp.hit.structs.HitGeneric;
 import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arpx.hitFrame.HitFrame;
 import net.kaikoga.arp.structs.ArpPosition;
+import net.kaikoga.arp.task.ITickable;
+import net.kaikoga.arpx.backends.cross.mortal.IMortalImpl;
+import net.kaikoga.arpx.driver.Driver;
 import net.kaikoga.arpx.field.Field;
+import net.kaikoga.arpx.hitFrame.HitFrame;
+import net.kaikoga.arpx.motion.Motion;
 import net.kaikoga.arpx.reactFrame.ReactFrame;
 
-#if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.mortal.IMortalFlashImpl;
-#elseif arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.mortal.IMortalHeapsImpl;
-#end
-
 @:arpType("mortal", "null")
-class Mortal implements IArpObject implements ITickable
-#if (arp_backend_flash || arp_backend_openfl) implements IMortalFlashImpl
-#elseif arp_backend_heaps implements IMortalHeapsImpl
-#end
-{
+class Mortal implements IArpObject implements ITickable implements IMortalImpl {
 
 	@:arpBarrier @:arpField public var driver:Driver;
 	@:arpField public var position:ArpPosition;
@@ -40,11 +31,7 @@ class Mortal implements IArpObject implements ITickable
 	private var reactRecord:ISet<String>;
 	private var lastReactRecord:ISet<String>;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-	@:arpImpl private var flashImpl:IMortalFlashImpl;
-	#elseif arp_backend_heaps
-	@:arpImpl private var heapsImpl:IMortalHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:IMortalImpl;
 
 	public function new() {
 		hitMortals = new Map<String, HitMortal>();

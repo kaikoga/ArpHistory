@@ -1,16 +1,12 @@
 package net.kaikoga.arpx.screen;
 
-import net.kaikoga.arpx.input.Input;
-import net.kaikoga.arpx.fieldGizmo.FieldGizmo;
 import net.kaikoga.arp.ds.IList;
+import net.kaikoga.arpx.backends.cross.screen.FieldScreenImpl;
 import net.kaikoga.arpx.camera.Camera;
 import net.kaikoga.arpx.field.Field;
+import net.kaikoga.arpx.fieldGizmo.FieldGizmo;
+import net.kaikoga.arpx.input.Input;
 
-#if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.screen.FieldScreenFlashImpl;
-#elseif arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.screen.FieldScreenHeapsImpl;
-#end
 
 @:arpType("screen", "screen")
 class FieldScreen extends Screen {
@@ -19,11 +15,7 @@ class FieldScreen extends Screen {
 	@:arpField public var camera:Camera;
 	@:arpField public var input:Input;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-	@:arpImpl private var flashImpl:FieldScreenFlashImpl;
-	#elseif arp_backend_heaps
-	@:arpImpl private var heapsImpl:FieldScreenHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:FieldScreenImpl;
 
 	public function new() super();
 

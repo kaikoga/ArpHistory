@@ -9,5 +9,6 @@ interface IInputHeapsImpl extends IArpObjectImpl extends ITickable {
 	function listen():Void;
 	function purge():Void;
 	function tick(timeslice:Float):Bool;
+}
 
 #end

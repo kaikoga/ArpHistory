@@ -5,11 +5,12 @@ package net.kaikoga.arpx.backends.flash.chip;
 import flash.geom.Point;
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
+import net.kaikoga.arpx.backends.cross.chip.IChipImpl;
 import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import net.kaikoga.arpx.backends.flash.tileMap.legacy.TileMapRenderer;
 import net.kaikoga.arpx.chip.TileMapChip;
 
-class TileMapChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
+class TileMapChipFlashImpl extends ArpObjectImplBase implements IChipImpl {
 
 	private var chip:TileMapChip;
 	private var renderer:TileMapRenderer;

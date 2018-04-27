@@ -2,13 +2,14 @@ package net.kaikoga.arpx.backends.flash.mortal;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import flash.geom.Point;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
+import net.kaikoga.arpx.backends.cross.mortal.IMortalImpl;
+import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import net.kaikoga.arpx.backends.flash.tileMap.legacy.TileMapRenderer;
 import net.kaikoga.arpx.mortal.TileMapMortal;
 
-class TileMapMortalFlashImpl extends ArpObjectImplBase implements IMortalFlashImpl {
+class TileMapMortalFlashImpl extends ArpObjectImplBase implements IMortalImpl {
 
 	private var mortal:TileMapMortal;
 	private var renderer:TileMapRenderer;

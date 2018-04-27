@@ -2,17 +2,18 @@ package net.kaikoga.arpx.backends.flash.chip;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import flash.geom.Matrix;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
+import net.kaikoga.arpx.backends.cross.chip.IChipImpl;
+import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import net.kaikoga.arpx.chip.NativeTextChip;
 import net.kaikoga.arpx.geom.ITransform;
 
-class NativeTextChipFlashImpl extends ArpObjectImplBase implements IChipFlashImpl {
+class NativeTextChipFlashImpl extends ArpObjectImplBase implements IChipImpl {
 
 	private var chip:NativeTextChip;
 

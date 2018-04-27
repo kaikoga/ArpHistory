@@ -1,15 +1,10 @@
 package net.kaikoga.arpx.screen;
 
+import net.kaikoga.arp.ds.IList;
+import net.kaikoga.arpx.backends.cross.screen.HudScreenImpl;
 import net.kaikoga.arpx.hud.Hud;
 import net.kaikoga.arpx.input.Input;
 import net.kaikoga.arpx.camera.Camera;
-import net.kaikoga.arp.ds.IList;
-
-#if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.screen.HudScreenFlashImpl;
-#elseif arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.screen.HudScreenHeapsImpl;
-#end
 
 @:arpType("screen", "hud")
 class HudScreen extends Screen {
@@ -18,11 +13,7 @@ class HudScreen extends Screen {
 	@:arpField public var input:Input;
 	@:arpField public var focus:Hud;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-	@:arpImpl private var flashImpl:HudScreenFlashImpl;
-	#elseif arp_backend_heaps
-	@:arpImpl private var heapsImpl:HudScreenHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:HudScreenImpl;
 
 	override public function set_visible(value:Bool):Bool {
 		if (super.visible && !value) this.input.updateFocus(null);

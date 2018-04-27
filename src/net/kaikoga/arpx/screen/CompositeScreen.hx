@@ -1,23 +1,14 @@
 package net.kaikoga.arpx.screen;
 
-import net.kaikoga.arpx.input.Input;
 import net.kaikoga.arp.ds.IOmap;
-
-#if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.screen.CompositeScreenFlashImpl;
-#elseif arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.screen.CompositeScreenHeapsImpl;
-#end
+import net.kaikoga.arpx.backends.cross.screen.CompositeScreenImpl;
+import net.kaikoga.arpx.input.Input;
 
 @:arpType("screen", "composite")
 class CompositeScreen extends Screen {
 	@:arpBarrier @:arpField("screen") public var screens:IOmap<String, Screen>;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-	@:arpImpl private var flashImpl:CompositeScreenFlashImpl;
-	#elseif arp_backend_heaps
-	@:arpImpl private var heapsImpl:CompositeScreenHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:CompositeScreenImpl;
 
 	public function new() super();
 

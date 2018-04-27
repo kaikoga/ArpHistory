@@ -2,19 +2,10 @@ package net.kaikoga.arpx.chip;
 
 import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.structs.ArpParams;
-
-#if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
-#elseif arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.chip.IChipHeapsImpl;
-#end
+import net.kaikoga.arpx.backends.cross.chip.IChipImpl;
 
 @:arpType("chip", "null")
-class Chip implements IArpObject
-	#if (arp_backend_flash || arp_backend_openfl) implements IChipFlashImpl
-	#elseif arp_backend_heaps implements IChipHeapsImpl
-	#end
-{
+class Chip implements IArpObject implements IChipImpl {
 
 	public var baseX(get, set):Int;
 	private function get_baseX():Int return 0;
@@ -36,13 +27,7 @@ class Chip implements IArpObject
 	//TODO hasChipName must distinguish explicit and implicit existence
 	public function hasFace(face:String):Bool return false;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-	@:arpImpl private var flashImpl:IChipFlashImpl;
-	#elseif arp_backend_heaps
-	@:arpImpl private var heapsImpl:IChipHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:IChipImpl;
 
-	public function new() {
-	}
-
+	public function new() return;
 }

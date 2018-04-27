@@ -2,9 +2,9 @@ package net.kaikoga.arpx.backends.flash.tileMap.legacy;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import flash.display.BitmapData;
 import net.kaikoga.arp.structs.ArpParams;
+import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import net.kaikoga.arpx.backends.flash.geom.APoint;
 import net.kaikoga.arpx.chip.Chip;
 import net.kaikoga.arpx.tileMap.TileMap;

@@ -2,15 +2,16 @@ package net.kaikoga.arpx.backends.flash.fieldGizmo;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import net.kaikoga.arpx.field.Field;
 import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
-import net.kaikoga.arpx.backends.flash.display.DisplayContext;
+import net.kaikoga.arpx.backends.cross.fieldGizmo.IFieldGizmoImpl;
+import net.kaikoga.arpx.display.DisplayContext;
+import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.fieldGizmo.HitMortalFieldGizmo;
 
-class HitMortalFieldGizmoFlashImpl extends ArpObjectImplBase implements IFieldGizmoFlashImpl {
+class HitMortalFieldGizmoFlashImpl extends ArpObjectImplBase implements IFieldGizmoImpl {
 
 	private var fieldGizmo:HitMortalFieldGizmo;
 
@@ -19,18 +20,16 @@ class HitMortalFieldGizmoFlashImpl extends ArpObjectImplBase implements IFieldGi
 		this.fieldGizmo = fieldGizmo;
 	}
 
-	@:access(net.kaikoga.arpx.mortal.Mortal.hitMortals)
-	@:access(net.kaikoga.arpx.field.Field.hitField)
 	public function render(field:Field, context:DisplayContext):Void {
 		if (this.fieldGizmo.visible) {
 			var pt:Point = context.transform.toPoint();
 			var bitmapData:BitmapData = context.bitmapData;
-			var rect:Rectangle = new Rectangle(0, 0, field.hitField.size, 16);
+			var rect:Rectangle = new Rectangle(0, 0, @:privateAccess field.hitField.size, 16);
 
 			bitmapData.fillRect(rect, 0xffffffff);
 
 			for (mortal in field.mortals) {
-				for (hitMortal in mortal.hitMortals) {
+				for (hitMortal in @:privateAccess mortal.hitMortals) {
 					var color = fieldGizmo.hitColorFor(hitMortal).value32;
 					var x:Float = hitMortal.hit.x + pt.x;
 					var y:Float = hitMortal.hit.y + pt.y;

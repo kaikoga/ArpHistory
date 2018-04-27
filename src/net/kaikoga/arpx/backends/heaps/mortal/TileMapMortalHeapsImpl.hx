@@ -3,13 +3,13 @@ package net.kaikoga.arpx.backends.heaps.mortal;
 #if arp_backend_heaps
 
 import h3d.col.Point;
-
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
+import net.kaikoga.arpx.backends.cross.mortal.IMortalImpl;
 import net.kaikoga.arpx.backends.heaps.display.DisplayContext;
 import net.kaikoga.arpx.backends.heaps.tileMap.legacy.TileMapRenderer;
 import net.kaikoga.arpx.mortal.TileMapMortal;
 
-class TileMapMortalHeapsImpl extends ArpObjectImplBase implements IMortalHeapsImpl {
+class TileMapMortalHeapsImpl extends ArpObjectImplBase implements IMortalImpl {
 
 	private var mortal:TileMapMortal;
 	private var renderer:TileMapRenderer;

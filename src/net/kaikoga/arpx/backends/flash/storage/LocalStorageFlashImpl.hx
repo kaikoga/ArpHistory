@@ -2,8 +2,8 @@ package net.kaikoga.arpx.backends.flash.storage;
 
 #if (flash || arp_backend_flash || arp_backend_openfl)
 
-import flash.utils.ByteArray;
 import flash.net.SharedObject;
+import flash.utils.ByteArray;
 import haxe.io.Bytes;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.cross.storage.IStorageImpl;

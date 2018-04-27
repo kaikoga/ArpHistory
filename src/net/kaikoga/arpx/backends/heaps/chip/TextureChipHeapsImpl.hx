@@ -7,11 +7,12 @@ import h2d.Tile;
 import h3d.col.Point;
 import net.kaikoga.arp.domain.ArpHeat;
 import net.kaikoga.arp.structs.IArpParamsRead;
+import net.kaikoga.arpx.backends.cross.chip.IChipImpl;
 import net.kaikoga.arpx.backends.heaps.display.DisplayContext;
 import net.kaikoga.arpx.chip.TextureChip;
 import net.kaikoga.arpx.geom.ITransform;
 
-class TextureChipHeapsImpl extends ArpObjectImplBase implements IChipHeapsImpl {
+class TextureChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 
 	private var chip:TextureChip;
 

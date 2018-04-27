@@ -2,14 +2,12 @@ package net.kaikoga.arpx.backends.heaps.texture;
 
 #if arp_backend_heaps
 
+import h2d.Tile;
 import haxe.io.Bytes;
 import haxe.Resource;
-
-import h2d.Tile;
-import hxd.fs.FileEntry;
 import hxd.fs.BytesFileSystem.BytesFileEntry;
+import hxd.fs.FileEntry;
 import hxd.res.Image;
-
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.texture.ResourceTexture;
 
