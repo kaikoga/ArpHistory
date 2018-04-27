@@ -27,7 +27,7 @@ class HudScreenFlashImpl extends ArpObjectImplBase implements IScreenFlashImpl {
 			workPt.x = -pos.x;
 			workPt.y = -pos.y;
 			context.pushTransform(workPt);
-			for (hud in this.screen.huds) hud.copySelf(context);
+			for (hud in this.screen.huds) hud.render(context);
 			context.popTransform();
 		}
 	}

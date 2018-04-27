@@ -32,7 +32,7 @@ class FieldScreenHeapsImpl extends ArpObjectImplBase implements IScreenHeapsImpl
 
 		context.pushTransform(workPt);
 		if (this.screen.visible) {
-			this.screen.field.copySelf(context);
+			this.screen.field.render(context);
 		}
 
 		for (fieldGizmo in this.screen.fieldGizmos) {

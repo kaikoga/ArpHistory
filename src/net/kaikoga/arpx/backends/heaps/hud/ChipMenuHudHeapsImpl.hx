@@ -18,7 +18,7 @@ class ChipMenuHudHeapsImpl extends ArpObjectImplBase implements IHudHeapsImpl {
 		this.hud = hud;
 	}
 
-	public function copySelf(context:DisplayContext):Void {
+	public function render(context:DisplayContext):Void {
 		if (hud.visible && hud.chip != null) {
 			var menu:Menu = hud.menu;
 			var pos:ArpPosition = hud.position;

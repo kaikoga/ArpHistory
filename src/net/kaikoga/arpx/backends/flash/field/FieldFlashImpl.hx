@@ -17,7 +17,7 @@ class FieldFlashImpl extends ArpObjectImplBase implements IFieldFlashImpl {
 		this.field = field;
 	}
 
-	public function copySelf(context:DisplayContext):Void {
+	public function render(context:DisplayContext):Void {
 		copySortedMortals(field.mortals, context);
 	}
 
@@ -25,7 +25,7 @@ class FieldFlashImpl extends ArpObjectImplBase implements IFieldFlashImpl {
 		var temp:Array<Mortal> = [for (m in mortals) m];
 		ArraySort.sort(temp, (a:Mortal, b:Mortal) -> Reflect.compare(a.position.y + a.position.z, b.position.y + b.position.z));
 		for (m in temp) {
-			m.copySelf(context);
+			m.render(context);
 		}
 	}
 }

@@ -16,11 +16,11 @@ class CompositeHudFlashImpl extends ArpObjectImplBase implements IHudFlashImpl {
 		this.hud = hud;
 	}
 
-	public function copySelf(context:DisplayContext):Void {
+	public function render(context:DisplayContext):Void {
 		if (hud.visible) {
 			var pos:ArpPosition = hud.position;
 			context.pushTransform(context.transform.concatXY(pos.x, pos.y));
-			for (h in hud.huds) h.copySelf(context);
+			for (h in hud.huds) h.render(context);
 			context.popTransform();
 		}
 	}

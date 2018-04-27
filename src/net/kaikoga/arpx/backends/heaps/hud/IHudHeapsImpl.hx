@@ -6,7 +6,7 @@ import net.kaikoga.arp.backends.IArpObjectImpl;
 import net.kaikoga.arpx.backends.heaps.display.DisplayContext;
 
 interface IHudHeapsImpl extends IArpObjectImpl {
-	function copySelf(context:DisplayContext):Void;
+	function render(context:DisplayContext):Void;
 }
 
 #end

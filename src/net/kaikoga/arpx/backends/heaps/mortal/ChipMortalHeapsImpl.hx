@@ -17,7 +17,7 @@ class ChipMortalHeapsImpl extends ArpObjectImplBase implements IMortalHeapsImpl 
 		this.mortal = mortal;
 	}
 
-	public function copySelf(context:DisplayContext):Void {
+	public function render(context:DisplayContext):Void {
 		if (mortal.visible && mortal.chip != null) {
 			var pos:ArpPosition = mortal.position;
 			context.pushTransform(context.transform.concatXY(pos.x, pos.y));

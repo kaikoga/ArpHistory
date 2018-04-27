@@ -19,12 +19,12 @@ class TileMapMortalFlashImpl extends ArpObjectImplBase implements IMortalFlashIm
 		this.renderer = new TileMapRenderer(null, null);
 	}
 
-	public function copySelf(context:DisplayContext):Void {
+	public function render(context:DisplayContext):Void {
 		if (this.mortal.visible) {
 			var pt:Point = context.transform.asPoint();
 			if (pt == null) {
 				//Do nothing. not supported.
-				throw "TileMapMortalFlashImpl.copySelf(): scaling TileMap is currently not supported";
+				throw "TileMapMortalFlashImpl.render(): scaling TileMap is currently not supported";
 			}
 			this.renderer.tileMap = this.mortal.tileMap;
 			this.renderer.chip = this.mortal.chip;

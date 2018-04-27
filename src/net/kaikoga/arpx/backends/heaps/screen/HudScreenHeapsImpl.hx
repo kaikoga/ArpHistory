@@ -27,7 +27,7 @@ class HudScreenHeapsImpl extends ArpObjectImplBase implements IScreenHeapsImpl {
 			workPt.x = -pos.x;
 			workPt.y = -pos.y;
 			context.pushTransform(workPt);
-			for (hud in this.screen.huds) hud.copySelf(context);
+			for (hud in this.screen.huds) hud.render(context);
 			context.popTransform();
 		}
 	}

@@ -16,7 +16,7 @@ class ChipHudFlashImpl extends ArpObjectImplBase implements IHudFlashImpl {
 		this.hud = hud;
 	}
 
-	public function copySelf(context:DisplayContext):Void {
+	public function render(context:DisplayContext):Void {
 		if (hud.visible && hud.chip != null) {
 			var pos:ArpPosition = hud.position;
 			context.pushTransform(context.transform.concatXY(pos.x, pos.y));
