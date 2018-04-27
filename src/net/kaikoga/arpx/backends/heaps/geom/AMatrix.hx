@@ -85,10 +85,6 @@ class AMatrix extends Matrix implements ITransform {
 		return this;
 	}
 
-	public function setXY(x:Float, y:Float):ITransform {
-		return AMatrix.fromTransform(this)._setXY(x, y);
-	}
-
 	public function concatTransform(transform:ITransform):ITransform {
 		return AMatrix.fromTransform(this)._concatTransform(transform);
 	}

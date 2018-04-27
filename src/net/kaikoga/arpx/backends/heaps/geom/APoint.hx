@@ -58,10 +58,6 @@ class APoint extends Point implements ITransform {
 		return this;
 	}
 
-	public function setXY(x:Float, y:Float):ITransform {
-		return APoint.fromTransform(this)._setXY(x, y);
-	}
-
 	public function concatTransform(transform:ITransform):ITransform {
 		return AMatrix.fromTransform(this)._concatTransform(transform);
 	}

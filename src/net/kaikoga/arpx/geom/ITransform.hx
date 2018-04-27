@@ -19,7 +19,6 @@ interface ITransform {
 	function _concatXY(x:Float, y:Float):ITransform;
 
 	// prefixless functions always create a new instance.
-	function setXY(x:Float, y:Float):ITransform;
 	function concatTransform(transform:ITransform):ITransform;
 	function concatXY(x:Float, y:Float):ITransform;
 }
