@@ -8,13 +8,7 @@ import net.kaikoga.arpx.field.Field;
 
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.screen.FieldScreenFlashImpl;
-#end
-
-#if arp_backend_kha
-import net.kaikoga.arpx.backends.kha.screen.FieldScreenKhaImpl;
-#end
-
-#if arp_backend_heaps
+#elseif arp_backend_heaps
 import net.kaikoga.arpx.backends.heaps.screen.FieldScreenHeapsImpl;
 #end
 
@@ -27,13 +21,7 @@ class FieldScreen extends Screen {
 
 	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:FieldScreenFlashImpl;
-	#end
-
-	#if arp_backend_kha
-	@:arpImpl private var khaImpl:FieldScreenKhaImpl;
-	#end
-
-	#if arp_backend_heaps
+	#elseif arp_backend_heaps
 	@:arpImpl private var heapsImpl:FieldScreenHeapsImpl;
 	#end
 

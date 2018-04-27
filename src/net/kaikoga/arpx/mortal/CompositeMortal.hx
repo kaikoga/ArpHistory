@@ -8,13 +8,7 @@ import net.kaikoga.arpx.reactFrame.ReactFrame;
 
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.mortal.CompositeMortalFlashImpl;
-#end
-
-#if arp_backend_kha
-import net.kaikoga.arpx.backends.kha.mortal.CompositeMortalKhaImpl;
-#end
-
-#if arp_backend_heaps
+#elseif arp_backend_heaps
 import net.kaikoga.arpx.backends.heaps.mortal.CompositeMortalHeapsImpl;
 #end
 
@@ -26,13 +20,7 @@ class CompositeMortal extends Mortal {
 
 	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:CompositeMortalFlashImpl;
-	#end
-
-	#if arp_backend_kha
-	@:arpImpl private var khaImpl:CompositeMortalKhaImpl;
-	#end
-
-	#if arp_backend_heaps
+	#elseif arp_backend_heaps
 	@:arpImpl private var heapsImpl:CompositeMortalHeapsImpl;
 	#end
 

@@ -4,13 +4,7 @@ import net.kaikoga.arpx.faceList.FaceList;
 
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.texture.decorators.GridTextureFlashImpl;
-#end
-
-#if arp_backend_kha
-import net.kaikoga.arpx.backends.kha.texture.decorators.GridTextureKhaImpl;
-#end
-
-#if arp_backend_heaps
+#elseif arp_backend_heaps
 import net.kaikoga.arpx.backends.heaps.texture.decorators.GridTextureHeapsImpl;
 #end
 
@@ -26,13 +20,7 @@ class GridTexture extends MultiTexture {
 
 	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:GridTextureFlashImpl;
-	#end
-
-	#if arp_backend_kha
-	@:arpImpl private var khaImpl:GridTextureKhaImpl;
-	#end
-
-	#if arp_backend_heaps
+	#elseif arp_backend_heaps
 	@:arpImpl private var heapsImpl:GridTextureHeapsImpl;
 	#end
 

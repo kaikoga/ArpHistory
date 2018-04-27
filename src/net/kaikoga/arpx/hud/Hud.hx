@@ -10,21 +10,15 @@ import net.kaikoga.arpx.input.Input;
 
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.hud.IHudFlashImpl;
-#end
-
-#if arp_backend_kha
-import net.kaikoga.arpx.backends.kha.hud.IHudKhaImpl;
-#end
-
-#if arp_backend_heaps
+#elseif arp_backend_heaps
 import net.kaikoga.arpx.backends.heaps.hud.IHudHeapsImpl;
 #end
 
 @:arpType("hud", "null")
 class Hud implements IArpObject implements ITickable implements IFocusNode<Hud>
-	#if (arp_backend_flash || arp_backend_openfl) implements IHudFlashImpl #end
-	#if arp_backend_kha implements IHudKhaImpl #end
-	#if arp_backend_heaps implements IHudHeapsImpl #end
+	#if (arp_backend_flash || arp_backend_openfl) implements IHudFlashImpl
+	#elseif arp_backend_heaps implements IHudHeapsImpl
+	#end
 {
 	@:arpBarrier @:arpField public var driver:Driver;
 	@:arpField public var position:ArpPosition;
@@ -33,13 +27,7 @@ class Hud implements IArpObject implements ITickable implements IFocusNode<Hud>
 
 	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:IHudFlashImpl;
-	#end
-
-	#if arp_backend_kha
-	@:arpImpl private var khaImpl:IHudKhaImpl;
-	#end
-
-	#if arp_backend_heaps
+	#elseif arp_backend_heaps
 	@:arpImpl private var heapsImpl:IHudHeapsImpl;
 	#end
 

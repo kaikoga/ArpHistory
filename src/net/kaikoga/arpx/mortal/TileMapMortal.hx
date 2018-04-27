@@ -6,13 +6,7 @@ import net.kaikoga.arpx.chip.Chip;
 
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.mortal.TileMapMortalFlashImpl;
-#end
-
-#if arp_backend_kha
-import net.kaikoga.arpx.backends.kha.mortal.TileMapMortalKhaImpl;
-#end
-
-#if arp_backend_heaps
+#elseif arp_backend_heaps
 import net.kaikoga.arpx.backends.heaps.mortal.TileMapMortalHeapsImpl;
 #end
 
@@ -24,13 +18,7 @@ class TileMapMortal extends Mortal {
 
 	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:TileMapMortalFlashImpl;
-	#end
-
-	#if arp_backend_kha
-	@:arpImpl private var khaImpl:TileMapMortalKhaImpl;
-	#end
-
-	#if arp_backend_heaps
+	#elseif arp_backend_heaps
 	@:arpImpl private var heapsImpl:TileMapMortalHeapsImpl;
 	#end
 

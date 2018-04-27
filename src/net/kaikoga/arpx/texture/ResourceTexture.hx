@@ -2,13 +2,7 @@ package net.kaikoga.arpx.texture;
 
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.texture.ResourceTextureFlashImpl;
-#end
-
-#if arp_backend_kha
-import net.kaikoga.arpx.backends.kha.texture.ResourceTextureKhaImpl;
-#end
-
-#if arp_backend_heaps
+#elseif arp_backend_heaps
 import net.kaikoga.arpx.backends.heaps.texture.ResourceTextureHeapsImpl;
 #end
 
@@ -19,13 +13,7 @@ class ResourceTexture extends Texture
 
 	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:ResourceTextureFlashImpl;
-	#end
-
-	#if arp_backend_kha
-	@:arpImpl private var khaImpl:ResourceTextureKhaImpl;
-	#end
-
-	#if arp_backend_heaps
+	#elseif arp_backend_heaps
 	@:arpImpl private var heapsImpl:ResourceTextureHeapsImpl;
 	#end
 

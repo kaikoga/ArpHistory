@@ -16,23 +16,16 @@ import net.kaikoga.arpx.reactFrame.ReactFrame;
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.field.IFieldFlashImpl;
 import net.kaikoga.arpx.backends.flash.field.FieldFlashImpl;
-#end
-
-#if arp_backend_kha
-import net.kaikoga.arpx.backends.kha.field.IFieldKhaImpl;
-import net.kaikoga.arpx.backends.kha.field.FieldKhaImpl;
-#end
-
-#if arp_backend_heaps
+#elseif arp_backend_heaps
 import net.kaikoga.arpx.backends.heaps.field.IFieldHeapsImpl;
 import net.kaikoga.arpx.backends.heaps.field.FieldHeapsImpl;
 #end
 
 @:arpType("field")
 class Field implements IArpObject implements ITickable
-	#if (arp_backend_flash || arp_backend_openfl) implements IFieldFlashImpl #end
-	#if arp_backend_kha implements IFieldKhaImpl #end
-	#if arp_backend_heaps implements IFieldHeapsImpl #end
+	#if (arp_backend_flash || arp_backend_openfl) implements IFieldFlashImpl
+	#elseif arp_backend_heaps implements IFieldHeapsImpl
+	#end
 {
 
 	@:arpBarrier @:arpField("mortal") public var initMortals:IOmap<String, Mortal>;
@@ -49,13 +42,7 @@ class Field implements IArpObject implements ITickable
 
 	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:FieldFlashImpl;
-	#end
-
-	#if arp_backend_kha
-	@:arpImpl private var khaImpl:FieldKhaImpl;
-	#end
-
-	#if arp_backend_heaps
+	#elseif arp_backend_heaps
 	@:arpImpl private var heapsImpl:FieldHeapsImpl;
 	#end
 

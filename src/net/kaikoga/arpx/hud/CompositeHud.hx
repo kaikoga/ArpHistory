@@ -4,13 +4,7 @@ import net.kaikoga.arp.ds.IList;
 
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.hud.CompositeHudFlashImpl;
-#end
-
-#if arp_backend_kha
-import net.kaikoga.arpx.backends.kha.hud.CompositeHudKhaImpl;
-#end
-
-#if arp_backend_heaps
+#elseif arp_backend_heaps
 import net.kaikoga.arpx.backends.heaps.hud.CompositeHudHeapsImpl;
 #end
 
@@ -22,13 +16,7 @@ class CompositeHud extends Hud {
 
 	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:CompositeHudFlashImpl;
-	#end
-
-	#if arp_backend_kha
-	@:arpImpl private var khaImpl:CompositeHudKhaImpl;
-	#end
-
-	#if arp_backend_heaps
+	#elseif arp_backend_heaps
 	@:arpImpl private var heapsImpl:CompositeHudHeapsImpl;
 	#end
 

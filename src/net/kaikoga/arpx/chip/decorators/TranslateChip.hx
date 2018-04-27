@@ -2,13 +2,7 @@ package net.kaikoga.arpx.chip.decorators;
 
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.chip.decorators.TranslateChipFlashImpl;
-#end
-
-#if arp_backend_kha
-import net.kaikoga.arpx.backends.kha.chip.decorators.TranslateChipKhaImpl;
-#end
-
-#if arp_backend_heaps
+#elseif arp_backend_heaps
 import net.kaikoga.arpx.backends.heaps.chip.decorators.TranslateChipHeapsImpl;
 #end
 
@@ -25,13 +19,7 @@ class TranslateChip extends Chip {
 
 	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:TranslateChipFlashImpl;
-	#end
-
-	#if arp_backend_kha
-	@:arpImpl private var khaImpl:TranslateChipKhaImpl;
-	#end
-
-	#if arp_backend_heaps
+	#elseif arp_backend_heaps
 	@:arpImpl private var heapsImpl:TranslateChipHeapsImpl;
 	#end
 

@@ -13,15 +13,11 @@
 		<set name="arp_backend" value="heaps" />
 	</section>
 
-	<section if="arp_backend_kha">
-		<set name="arp_backend" value="kha" />
-	</section>
-
 	<section unless="arp_backend">
 		<section if="flash">
 			<set name="arp_backend_flash" value="1" />
 		</section>
-	
+
 		<section unless="flash">
 			<set name="arp_backend_openfl" value="1" />
 		</section>

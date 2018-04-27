@@ -5,21 +5,15 @@ import net.kaikoga.arp.structs.ArpParams;
 
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.chip.IChipFlashImpl;
-#end
-
-#if arp_backend_kha
-import net.kaikoga.arpx.backends.kha.chip.IChipKhaImpl;
-#end
-
-#if arp_backend_heaps
+#elseif arp_backend_heaps
 import net.kaikoga.arpx.backends.heaps.chip.IChipHeapsImpl;
 #end
 
 @:arpType("chip", "null")
 class Chip implements IArpObject
-	#if (arp_backend_flash || arp_backend_openfl) implements IChipFlashImpl #end
-	#if arp_backend_kha implements IChipKhaImpl #end
-	#if arp_backend_heaps implements IChipHeapsImpl #end
+	#if (arp_backend_flash || arp_backend_openfl) implements IChipFlashImpl
+	#elseif arp_backend_heaps implements IChipHeapsImpl
+	#end
 {
 
 	public var baseX(get, set):Int;
@@ -44,15 +38,11 @@ class Chip implements IArpObject
 
 	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:IChipFlashImpl;
-	#end
-	#if (arp_backend_kha)
-	@:arpImpl private var khaImpl:IChipKhaImpl;
-	#end
-	#if (arp_backend_heaps)
+	#elseif arp_backend_heaps
 	@:arpImpl private var heapsImpl:IChipHeapsImpl;
 	#end
 
-	public function new () {
+	public function new() {
 	}
 
 }

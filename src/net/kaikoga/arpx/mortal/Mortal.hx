@@ -17,21 +17,15 @@ import net.kaikoga.arpx.reactFrame.ReactFrame;
 
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.mortal.IMortalFlashImpl;
-#end
-
-#if arp_backend_kha
-import net.kaikoga.arpx.backends.kha.mortal.IMortalKhaImpl;
-#end
-
-#if arp_backend_heaps
+#elseif arp_backend_heaps
 import net.kaikoga.arpx.backends.heaps.mortal.IMortalHeapsImpl;
 #end
 
 @:arpType("mortal", "null")
 class Mortal implements IArpObject implements ITickable
-#if (arp_backend_flash || arp_backend_openfl) implements IMortalFlashImpl #end
-#if arp_backend_kha implements IMortalKhaImpl #end
-#if arp_backend_heaps implements IMortalHeapsImpl #end
+#if (arp_backend_flash || arp_backend_openfl) implements IMortalFlashImpl
+#elseif arp_backend_heaps implements IMortalHeapsImpl
+#end
 {
 
 	@:arpBarrier @:arpField public var driver:Driver;
@@ -48,13 +42,7 @@ class Mortal implements IArpObject implements ITickable
 
 	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:IMortalFlashImpl;
-	#end
-
-	#if arp_backend_kha
-	@:arpImpl private var khaImpl:IMortalKhaImpl;
-	#end
-
-	#if arp_backend_heaps
+	#elseif arp_backend_heaps
 	@:arpImpl private var heapsImpl:IMortalHeapsImpl;
 	#end
 

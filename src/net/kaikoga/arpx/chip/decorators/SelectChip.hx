@@ -4,13 +4,7 @@ import net.kaikoga.arp.ds.IMap;
 
 #if (arp_backend_flash || arp_backend_openfl)
 import net.kaikoga.arpx.backends.flash.chip.decorators.SelectChipFlashImpl;
-#end
-
-#if arp_backend_kha
-import net.kaikoga.arpx.backends.kha.chip.decorators.SelectChipKhaImpl;
-#end
-
-#if arp_backend_heaps
+#elseif arp_backend_heaps
 import net.kaikoga.arpx.backends.heaps.chip.decorators.SelectChipHeapsImpl;
 #end
 
@@ -23,13 +17,7 @@ class SelectChip extends Chip {
 
 	#if (arp_backend_flash || arp_backend_openfl)
 	@:arpImpl private var flashImpl:SelectChipFlashImpl;
-	#end
-
-	#if arp_backend_kha
-	@:arpImpl private var khaImpl:SelectChipKhaImpl;
-	#end
-
-	#if arp_backend_heaps
+	#elseif arp_backend_heaps
 	@:arpImpl private var heapsImpl:SelectChipHeapsImpl;
 	#end
 
