@@ -1,12 +1,9 @@
-package net.kaikoga.arpx.backends.flash.tileMap.legacy;
+package net.kaikoga.arpx.backends.cross.tilemap.legacy;
 
-#if (arp_backend_flash || arp_backend_openfl)
-
-import flash.display.BitmapData;
 import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arpx.backends.flash.display.DisplayContext;
-import net.kaikoga.arpx.backends.flash.geom.APoint;
 import net.kaikoga.arpx.chip.Chip;
+import net.kaikoga.arpx.display.DisplayContext;
+import net.kaikoga.arpx.geom.APoint;
 import net.kaikoga.arpx.tileMap.TileMap;
 
 class TileMapRenderer {
@@ -22,7 +19,7 @@ class TileMapRenderer {
 	private static var _workPt:APoint = new APoint();
 	private static var _workParams:ArpParams = new ArpParams();
 
-	public function copyArea(bitmapData:BitmapData, gridX:Int, gridY:Int, gridWidth:Int, gridHeight:Int, offsetX:Int, offsetY:Int):Void {
+	public function copyArea(context:DisplayContext, gridX:Int, gridY:Int, gridWidth:Int, gridHeight:Int, offsetX:Int, offsetY:Int):Void {
 		var chipWidth:Int = this.chip.chipWidth;
 		var chipHeight:Int = this.chip.chipHeight;
 		var pt:APoint = _workPt;
@@ -40,7 +37,7 @@ class TileMapRenderer {
 		var destLeft:Int = offsetX + chipWidth * gridX;
 		var destTop:Int = offsetY + chipHeight * gridY;
 		pt.x = destLeft;
-		var context:DisplayContext = new DisplayContext(bitmapData, pt);
+		context.pushTransform(pt);
 		for (i in gridX...gridRight) {
 			pt.y = destTop;
 			for (j in gridY...gridBottom) {
@@ -50,7 +47,6 @@ class TileMapRenderer {
 			}
 			pt.x += chipWidth;
 		}
+		context.popTransform();
 	}
 }
-
-#end

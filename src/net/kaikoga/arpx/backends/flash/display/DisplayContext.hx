@@ -9,6 +9,12 @@ import net.kaikoga.arpx.geom.ITransform;
 class DisplayContext {
 
 	public var bitmapData:BitmapData;
+
+	public var width(get, never):Int;
+	public function get_width():Int return bitmapData.width;
+	public var height(get, never):Int;
+	public function get_height():Int return bitmapData.height;
+
 	public var transform(get, never):ITransform;
 	public var transforms:Array<ITransform>;
 

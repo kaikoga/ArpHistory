@@ -1,15 +1,13 @@
-package net.kaikoga.arpx.backends.heaps.mortal;
+package net.kaikoga.arpx.backends.cross.mortal;
 
-#if arp_backend_heaps
-
-import h3d.col.Point;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.cross.mortal.IMortalImpl;
-import net.kaikoga.arpx.backends.heaps.display.DisplayContext;
-import net.kaikoga.arpx.backends.heaps.tileMap.legacy.TileMapRenderer;
+import net.kaikoga.arpx.backends.cross.tilemap.legacy.TileMapRenderer;
+import net.kaikoga.arpx.backends.flash.display.DisplayContext;
+import net.kaikoga.arpx.geom.APoint;
 import net.kaikoga.arpx.mortal.TileMapMortal;
 
-class TileMapMortalHeapsImpl extends ArpObjectImplBase implements IMortalImpl {
+class TileMapMortalImpl extends ArpObjectImplBase implements IMortalImpl {
 
 	private var mortal:TileMapMortal;
 	private var renderer:TileMapRenderer;
@@ -22,10 +20,10 @@ class TileMapMortalHeapsImpl extends ArpObjectImplBase implements IMortalImpl {
 
 	public function render(context:DisplayContext):Void {
 		if (this.mortal.visible) {
-			var pt:Point = context.transform.asPoint();
+			var pt:APoint = context.transform.asPoint();
 			if (pt == null) {
 				//Do nothing. not supported.
-				throw "TileMapMortalHeapsImpl.render(): scaling TileMap is currently not supported";
+				throw "TileMapMortalFlashImpl.render(): scaling TileMap is currently not supported";
 			}
 			this.renderer.tileMap = this.mortal.tileMap;
 			this.renderer.chip = this.mortal.chip;
@@ -35,9 +33,7 @@ class TileMapMortalHeapsImpl extends ArpObjectImplBase implements IMortalImpl {
 			var gridY:Int = Math.floor(-pt.y / chipHeight);
 			var gridWidth:Int = Math.ceil((-pt.x - gridX * chipWidth + context.width) / chipWidth);
 			var gridHeight:Int = Math.ceil((-pt.y - gridY * chipHeight + context.height) / chipHeight);
-			this.renderer.copyArea(context.buf, gridX, gridY, gridWidth, gridHeight, Std.int(this.mortal.position.x + pt.x), Std.int(this.mortal.position.y + pt.y));
+			this.renderer.copyArea(context, gridX, gridY, gridWidth, gridHeight, Std.int(this.mortal.position.x + pt.x), Std.int(this.mortal.position.y + pt.y));
 		}
 	}
 }
-
-#end
