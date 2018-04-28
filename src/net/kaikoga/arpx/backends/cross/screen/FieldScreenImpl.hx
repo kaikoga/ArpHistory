@@ -23,7 +23,7 @@ class FieldScreenImpl extends ArpObjectImplBase implements IScreenImpl {
 
 		var workPt:APoint = _workPt;
 		var pos:ArpPosition = (this.screen.camera != null) ? this.screen.camera.position : _workPos;
-		workPt._setXY(-pos.x, -pos.y);
+		workPt.setXY(-pos.x, -pos.y);
 		context.pushTransform(workPt);
 		if (this.screen.visible) this.screen.field.render(context);
 		for (fieldGizmo in this.screen.fieldGizmos) fieldGizmo.render(this.screen.field, context);

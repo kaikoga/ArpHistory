@@ -25,7 +25,7 @@ class StringChipImpl extends ArpObjectImplBase implements IChipImpl {
 		for (char in new StringChipStringIterator(params.get("face"))) {
 			params = cursor.move(char, this.chip, this.chip.chip);
 			if (params != null) {
-				context.pushTransform(transform._setXY(cursor.x, cursor.y));
+				context.pushTransform(transform.setXY(cursor.x, cursor.y));
 				this.chip.chip.copyChip(context, params);
 				context.popTransform();
 			}

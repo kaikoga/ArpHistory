@@ -1,24 +1,25 @@
 package net.kaikoga.arpx.geom;
 
 interface ITransform {
-	// returns null if some transformation cannot be preserved.
+	// trys to convert to concrete representations, but returns null if some transformation cannot be preserved.
 	function asPoint():APoint;
 	function asMatrix():AMatrix;
 
-	// drops some information.
+	// converts to concrete representations, may drop some information.
 	function toPoint():APoint;
 	function toMatrix():AMatrix;
 
+	// creates an exact copy, includes actual concrete representation used.
 	function toCopy():ITransform;
 
-	// _ prefixed functions modify the instance (or creates a new instance if unable to modify self).
-	// overwrites transform.
-	function _setXY(x:Float, y:Float):ITransform;
-	// appends transform.
-	function _concatTransform(transform:ITransform):ITransform;
-	function _concatXY(x:Float, y:Float):ITransform;
+	// overwrites transform. Creates a new instance if some information may drop.
+	function setXY(x:Float, y:Float):ITransform;
 
-	// prefixless functions always create a new instance.
+	// modifies transform. Creates a new instance if some information may drop.
+	function appendTransform(transform:ITransform):ITransform;
+	function appendXY(x:Float, y:Float):ITransform;
+
+	// creates a modified instance.
 	function concatTransform(transform:ITransform):ITransform;
 	function concatXY(x:Float, y:Float):ITransform;
 }

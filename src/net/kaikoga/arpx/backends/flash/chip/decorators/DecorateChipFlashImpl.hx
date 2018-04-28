@@ -30,7 +30,7 @@ class DecorateChipFlashImpl extends ArpObjectImplBase implements IChipImpl {
 	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
 		var aMatrix:AMatrix = workMatrix;
 		aMatrix.setTo(chip.a, chip.b, chip.c, chip.d, chip.x, chip.y);
-		aMatrix._concatTransform(context.transform);
+		aMatrix.appendTransform(context.transform);
 		var p:IArpParamsRead = params;
 		if (this.chip.paramsOp != null) {
 			p = this.chip.paramsOp.filter(p);

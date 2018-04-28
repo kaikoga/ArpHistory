@@ -15,6 +15,11 @@ class APoint extends Point implements ITransform {
 		super(x, y);
 	}
 
+	inline public function reset(x:Float, y:Float):APoint {
+		this.set(x, y, 0);
+		return this;
+	}
+
 	public static function fromTransform(transform:ITransform):APoint {
 		var result:APoint = new APoint();
 		result.load(transform.toPoint());
@@ -37,33 +42,32 @@ class APoint extends Point implements ITransform {
 		return new AMatrix(1, 0, 0, 1, this.x, this.y);
 	}
 
-	public function _setXY(x:Float, y:Float):ITransform {
-		this.x = x;
-		this.y = y;
+	public function setXY(x:Float, y:Float):ITransform {
+		this.set(x, y, 0);
 		return this;
 	}
 
-	public function _concatTransform(transform:ITransform):ITransform {
+	public function appendTransform(transform:ITransform):ITransform {
 		if (Std.is(transform, APoint)) {
 			this.add(cast transform);
 			return this;
 		} else {
-			return AMatrix.fromPoint(this)._concatTransform(transform);
+			return AMatrix.fromPoint(this).appendTransform(transform);
 		}
 	}
 
-	public function _concatXY(x:Float, y:Float):ITransform {
+	public function appendXY(x:Float, y:Float):ITransform {
 		this.x += x;
 		this.y += y;
 		return this;
 	}
 
 	public function concatTransform(transform:ITransform):ITransform {
-		return AMatrix.fromTransform(this)._concatTransform(transform);
+		return AMatrix.fromTransform(this).appendTransform(transform);
 	}
 
 	public function concatXY(x:Float, y:Float):ITransform {
-		return APoint.fromTransform(this)._concatXY(x, y);
+		return APoint.fromTransform(this).appendXY(x, y);
 	}
 }
 

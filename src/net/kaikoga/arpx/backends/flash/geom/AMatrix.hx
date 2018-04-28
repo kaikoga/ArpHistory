@@ -16,6 +16,11 @@ class AMatrix extends Matrix implements ITransform {
 		super(a, b, c, d, tx, ty);
 	}
 
+	public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):AMatrix {
+		this.setTo(a, b, c, d, tx, ty);
+		return this;
+	}
+
 	public static function fromPoint(pt:Point):AMatrix {
 		var result:AMatrix = new AMatrix(1, 0, 0, 1, pt.x, pt.y);
 		return result;
@@ -52,28 +57,28 @@ class AMatrix extends Matrix implements ITransform {
 		return this;
 	}
 
-	public function _setXY(x:Float, y:Float):ITransform {
+	public function setXY(x:Float, y:Float):ITransform {
 		this.tx = x;
 		this.ty = y;
 		return this;
 	}
 
-	public function _concatTransform(transform:ITransform):ITransform {
+	public function appendTransform(transform:ITransform):ITransform {
 		this.concat(transform.toMatrix());
 		return this;
 	}
 
-	public function _concatXY(x:Float, y:Float):ITransform {
+	public function appendXY(x:Float, y:Float):ITransform {
 		this.translate(x, y);
 		return this;
 	}
 
 	public function concatTransform(transform:ITransform):ITransform {
-		return AMatrix.fromTransform(this)._concatTransform(transform);
+		return AMatrix.fromTransform(this).appendTransform(transform);
 	}
 
 	public function concatXY(x:Float, y:Float):ITransform {
-		return AMatrix.fromTransform(this)._concatXY(x, y);
+		return AMatrix.fromTransform(this).appendXY(x, y);
 	}
 }
 

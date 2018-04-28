@@ -22,7 +22,7 @@ class TranslateChipFlashImpl extends ArpObjectImplBase implements IChipImpl {
 	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
 		var aMatrix:AMatrix = workMatrix;
 		aMatrix.setTo(chip.a, chip.b, chip.c, chip.d, chip.x, chip.y);
-		aMatrix._concatTransform(context.transform);
+		aMatrix.appendTransform(context.transform);
 		context.pushTransform(aMatrix);
 		this.chip.chip.copyChip(context, params);
 		context.popTransform();

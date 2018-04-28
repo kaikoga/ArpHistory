@@ -25,7 +25,7 @@ class ChipMenuHudFlashImpl extends ArpObjectImplBase implements IHudImpl {
 			var pos:ArpPosition = hud.position;
 			var dPos:ArpPosition = hud.dPosition;
 			context = new DisplayContext(context.bitmapData, context.transform);
-			context.transform._concatXY(pos.x, pos.y);
+			context.transform.appendXY(pos.x, pos.y);
 			var param:ArpParams = new ArpParams();
 			var index:Int = 0;
 			for (item in menu.menuItems) {
@@ -33,7 +33,7 @@ class ChipMenuHudFlashImpl extends ArpObjectImplBase implements IHudImpl {
 				param.set("selected", index == hud.menu.value);
 				param.set("index", index++);
 				hud.chip.copyChip(context, param);
-				context.transform._concatXY(dPos.x, dPos.y);
+				context.transform.appendXY(dPos.x, dPos.y);
 			}
 		}
 	}
