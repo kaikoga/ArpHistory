@@ -8,7 +8,7 @@ import flash.display.Sprite;
 import haxe.Resource;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arpx.backends.flash.geom.APoint;
+import net.kaikoga.arpx.geom.APoint;
 import net.kaikoga.arpx.chip.RectChip;
 import net.kaikoga.arpx.mortal.CompositeMortal;
 import net.kaikoga.arpx.mortal.ChipMortal;

@@ -1,7 +1,7 @@
 require "rake"
 require "rake/clean"
 
-FLASH_HXML = FileList.new("flash/*/swf.hxml")
+FLASH_HXML = FileList.new("vanilla/*/swf.hxml")
 
 FLASH = FLASH_HXML.each_with_index.map do |flash_hxml, index|
   dir = File.dirname(flash_hxml)
