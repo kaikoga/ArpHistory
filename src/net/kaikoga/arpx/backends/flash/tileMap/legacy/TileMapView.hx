@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.backends.flash.tileMap.legacy;
 
-#if (arp_backend_flash || arp_backend_openfl)
+#if false
 
 import flash.display.BitmapData;
 import flash.geom.Point;
