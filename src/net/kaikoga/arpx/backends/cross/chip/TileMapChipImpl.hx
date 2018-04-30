@@ -4,7 +4,7 @@ import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.cross.chip.IChipImpl;
 import net.kaikoga.arpx.backends.cross.tilemap.legacy.TileMapRenderer;
-import net.kaikoga.arpx.backends.flash.display.DisplayContext;
+import net.kaikoga.arpx.display.DisplayContext;
 import net.kaikoga.arpx.chip.TileMapChip;
 import net.kaikoga.arpx.geom.APoint;
 

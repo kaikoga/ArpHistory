@@ -3,7 +3,7 @@ package net.kaikoga.arpx.backends.cross.mortal;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.cross.mortal.IMortalImpl;
 import net.kaikoga.arpx.backends.cross.tilemap.legacy.TileMapRenderer;
-import net.kaikoga.arpx.backends.flash.display.DisplayContext;
+import net.kaikoga.arpx.display.DisplayContext;
 import net.kaikoga.arpx.geom.APoint;
 import net.kaikoga.arpx.mortal.TileMapMortal;
 
