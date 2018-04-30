@@ -50,7 +50,9 @@ class NativeTextChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 		}
 
 		if (this.font == null) {
-			this.font = @:privateAccess new FontBuilder(this.chip.font, this.chip.fontSize, {
+			var fontName:String = this.chip.font;
+			if (fontName == null) fontName = "_sans";
+			this.font = @:privateAccess new FontBuilder(fontName, this.chip.fontSize, {
 				antiAliasing: false,
 				chars: chars,
 				kerning: true
@@ -60,6 +62,7 @@ class NativeTextChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 
 		var t:Text = new Text(this.font, context.buf);
 		t.maxWidth = this.chip.chipWidth;
+		t.letterSpacing = 0;
 		t.text = text;
 		t.textColor = this.chip.color.value32;
 		var pt:Point = context.transform.toPoint();
