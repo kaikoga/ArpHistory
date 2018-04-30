@@ -8,7 +8,7 @@
 			<mortal class="chip" chip="rectChip" position="32,0" />
 			<mortal class="chip" chip="text" position="64,0" params="face:hello" />
 			<mortal class="chip" chip="rectChip" position="96,0" />
-			<mortal name="loader" class="chip" chip="string" position="128,0" params="world" />
+			<mortal name="/loader" class="chip" chip="string" position="128,0" params="world" />
 		</mortal>
 		</field>
 	<console name="console">

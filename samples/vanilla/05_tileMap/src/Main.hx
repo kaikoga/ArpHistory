@@ -1,70 +1,77 @@
 package;
 
-import flash.display.PixelSnapping;
-import flash.display.BitmapData;
-import flash.display.Bitmap;
-import flash.display.Sprite;
-import flash.events.Event;
-import flash.ui.Keyboard;
-import flash.Lib;
 import haxe.Resource;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.seed.ArpSeed;
+import net.kaikoga.arpx.ArpEngine;
 import net.kaikoga.arpx.chip.Chip;
 import net.kaikoga.arpx.console.Console;
+import net.kaikoga.arpx.display.DisplayContext;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.input.KeyInput;
 
-class Main extends Sprite {
+#if arp_backend_flash
+import flash.Lib;
+import flash.ui.Keyboard;
+#elseif arp_backend_heaps
+import hxd.Key;
+#end
 
-	private var domain:ArpDomain;
+class Main extends ArpEngine {
 
-	private var bitmapData:BitmapData;
 	private var console:Console;
 	private var field:Field;
+	private var input:KeyInput;
+	private var context:DisplayContext;
 
-	public function new() {
-		super();
-		this.domain = new ArpDomain();
-		this.domain.autoAddTemplates();
+	public function new() super({
+		domain: createDomain(),
+		width: 256,
+		height: 256,
+		clearColor: 0xffffff,
+		start: start,
+		rawTick: null,
+		firstTick: onFirstTick,
+		tick: onTick
+	});
 
-		this.domain.loadSeed(ArpSeed.fromXmlString(Resource.getString("arpdata")));
-		this.domain.tick.push(this.onFirstTick);
+	private function createDomain():ArpDomain {
+		var domain:ArpDomain = new ArpDomain();
+		domain.autoAddTemplates();
 
-		this.bitmapData = new BitmapData(256, 256, true, 0xffffffff);
-		addChild(new Bitmap(this.bitmapData, PixelSnapping.NEVER, false));
-
-		Lib.current.stage.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
+		domain.loadSeed(ArpSeed.fromXmlString(Resource.getString("arpdata")));
+		return domain;
 	}
 
-	private function onEnterFrame(event:Event):Void {
-		this.domain.rawTick.dispatch(1.0);
+	private function start():Void {
+		this.context = createDisplayContext();
 	}
-
 	private function onFirstTick(value:Float):Void {
-		this.domain.tick.remove(this.onFirstTick);
 		this.console = this.domain.obj("console", Console);
 		this.field = this.domain.obj("root", Field);
 
-		var input:KeyInput = this.domain.obj("input", KeyInput);
-		input.listen(Lib.current.stage);
-		input.bindAxis(Keyboard.LEFT, "x", -1);
-		input.bindAxis(Keyboard.RIGHT, "x", 1);
-		input.bindAxis(Keyboard.UP, "y", -1);
-		input.bindAxis(Keyboard.DOWN, "y", 1);
-
+		this.input = this.domain.obj("input", KeyInput);
+#if arp_backend_flash
+		this.input.listen(Lib.current.stage);
+		this.input.bindAxis(Keyboard.LEFT, "x", -1);
+		this.input.bindAxis(Keyboard.RIGHT, "x", 1);
+		this.input.bindAxis(Keyboard.UP, "y", -1);
+		this.input.bindAxis(Keyboard.DOWN, "y", 1);
+#elseif arp_backend_heaps
+		this.input.listen();
+		this.input.bindAxis(Key.LEFT, "x", -1);
+		this.input.bindAxis(Key.RIGHT, "x", 1);
+		this.input.bindAxis(Key.UP, "y", -1);
+		this.input.bindAxis(Key.DOWN, "y", 1);
+#end
 		this.domain.heatLater(this.domain.query("gridChip", Chip).slot());
-		this.domain.tick.push(this.onTick);
 	}
 
 	private function onTick(value:Float):Void {
 		this.field.tick(value);
-		this.bitmapData.fillRect(this.bitmapData.rect, 0xffffffff);
-		this.console.display(this.bitmapData);
+		this.context.clear();
+		this.console.render(this.context);
 	}
 
-	public static function main():Void {
-		Lib.current.addChild(new Main());
-	}
-
+	public static function main():Void new Main();
 }

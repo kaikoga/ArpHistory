@@ -1,12 +1,8 @@
 package;
 
+import net.kaikoga.arpx.ArpEngine;
+import net.kaikoga.arpx.display.DisplayContext;
 import net.kaikoga.arpx.screen.FieldScreen;
-import flash.display.Bitmap;
-import flash.display.BitmapData;
-import flash.display.PixelSnapping;
-import flash.display.Sprite;
-import flash.events.Event;
-import flash.Lib;
 import haxe.Resource;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.seed.ArpSeed;
@@ -19,52 +15,58 @@ import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.mortal.ChipMortal;
 import net.kaikoga.arpx.mortal.CompositeMortal;
 
-class Main extends Sprite {
+class Main extends ArpEngine {
 
-	private var domain:ArpDomain;
-
-	private var bitmapData:BitmapData;
 	private var console:Console;
+	private var context:DisplayContext;
 
-	public function new() {
-		super();
-		this.domain = new ArpDomain();
-		this.domain.addTemplate(RectChip);
-		this.domain.addTemplate(NativeTextChip);
-		this.domain.addTemplate(StringChip);
-		this.domain.addTemplate(ChipMortal);
-		this.domain.addTemplate(CompositeMortal);
-		this.domain.addTemplate(Console);
-		this.domain.addTemplate(Camera);
-		this.domain.addTemplate(FieldScreen);
-		this.domain.addTemplate(Field);
-		this.domain.addTemplate(DelayLoad);
+	public function new() super({
+		domain: createDomain(),
+		width: 256,
+		height: 256,
+		clearColor: 0xffffff,
+		start: start,
+		rawTick: onRawTick,
+		firstTick: onFirstTick,
+		tick: onTick
+	});
 
-		this.domain.loadSeed(ArpSeed.fromXmlString(Resource.getString("arpdata")));
-		this.domain.tick.push(this.onTick);
+	private function createDomain() {
+		var domain:ArpDomain = new ArpDomain();
+		domain.addTemplate(RectChip);
+		domain.addTemplate(NativeTextChip);
+		domain.addTemplate(StringChip);
+		domain.addTemplate(ChipMortal);
+		domain.addTemplate(CompositeMortal);
+		domain.addTemplate(Console);
+		domain.addTemplate(Camera);
+		domain.addTemplate(FieldScreen);
+		domain.addTemplate(Field);
+		domain.addTemplate(DelayLoad);
 
-		this.bitmapData = new BitmapData(256, 256, true, 0xffffffff);
-		addChild(new Bitmap(this.bitmapData, PixelSnapping.NEVER, false));
-
-		this.console = this.domain.obj("console", Console);
-		Lib.current.stage.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
-		this.domain.heatLater(this.domain.query("delay", DelayLoad).slot());
-		this.domain.heatLater(this.domain.query("root", Field).slot());
+		domain.loadSeed(ArpSeed.fromXmlString(Resource.getString("arpdata")));
+		return domain;
 	}
 
-	private function onEnterFrame(event:Event):Void {
-		this.domain.rawTick.dispatch(1.0);
-		this.bitmapData.fillRect(this.bitmapData.rect, 0xffffffff);
-		this.console.display(this.bitmapData);
+	private function start():Void {
+		this.context = createDisplayContext();
 	}
 
-	private function onTick(value:Float):Void {
-		var mortal:ChipMortal = this.domain.obj("/loader", ChipMortal);
-		if (!this.domain.isPending) mortal.params.set("face", "ok");
+	private function onFirstTick(timeslice:Float):Void {
+		this.console = domain.obj("console", Console);
+		domain.heatLater(domain.query("delay", DelayLoad).slot());
+		domain.heatLater(domain.query("root", Field).slot());
 	}
 
-	public static function main():Void {
-		Lib.current.addChild(new Main());
+	private function onRawTick(timeslice:Float):Void {
+		this.context.clear();
+		this.console.render(context);
 	}
 
+	private function onTick(timeslice:Float):Void {
+		var mortal:ChipMortal = domain.obj("/loader", ChipMortal);
+		if (!domain.isPending) mortal.params.set("face", "ok");
+	}
+
+	public static function main():Void new Main();
 }

@@ -2,6 +2,8 @@ package net.kaikoga.arpx.backends.heaps.chip;
 
 #if arp_backend_heaps
 
+import h2d.Bitmap;
+import h2d.Tile;
 import h3d.col.Point;
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
@@ -22,13 +24,19 @@ class RectChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 		//TODO optimize
 		var pt:Point = context.transform.asPoint();
 		if (pt != null) {
-			/*
-			g2.color = chip.border.value32;
-			g2.fillRect(pt.x - chip.baseX, pt.y - chip.baseY, chip.chipWidth, chip.chipHeight);
-			g2.color = chip.color.value32;
-			g2.fillRect(pt.x - chip.baseX + 1, pt.y - chip.baseY + 1, chip.chipWidth - 2, chip.chipHeight - 2);
-			g2.color = Color.White;
-			*/
+			var tile:Tile = Tile.fromColor(chip.border.value32);
+			var bitmap:Bitmap = new Bitmap(tile, context.buf);
+			bitmap.x = pt.x - chip.baseX;
+			bitmap.y = pt.y - chip.baseY;
+			bitmap.scaleX = chip.chipWidth;
+			bitmap.scaleY = chip.chipHeight;
+
+			var tile:Tile = Tile.fromColor(chip.color.value32);
+			var bitmap:Bitmap = new Bitmap(tile, context.buf);
+			bitmap.x = pt.x - chip.baseX + 1;
+			bitmap.y = pt.y - chip.baseY + 1;
+			bitmap.scaleX = chip.chipWidth - 2;
+			bitmap.scaleY = chip.chipHeight - 2;
 		} else {
 			/*
 			var workMatrix:Matrix = _workMatrix;
