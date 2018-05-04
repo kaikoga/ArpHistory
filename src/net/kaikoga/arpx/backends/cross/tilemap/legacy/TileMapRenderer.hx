@@ -42,7 +42,7 @@ class TileMapRenderer {
 			pt.y = destTop;
 			for (j in gridY...gridBottom) {
 				params.set("index", this.tileMap.getTileIndexAtGrid(i, j));
-				this.chip.copyChip(context, params);
+				this.chip.render(context, params);
 				pt.y += chipHeight;
 			}
 			pt.x += chipWidth;

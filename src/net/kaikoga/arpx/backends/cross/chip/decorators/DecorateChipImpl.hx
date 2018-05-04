@@ -25,7 +25,7 @@ class DecorateChipImpl extends ArpObjectImplBase implements IChipImpl {
 	}
 
 	private static var workMatrix:AMatrix = new AMatrix();
-	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
+	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
 		var aMatrix:AMatrix = workMatrix;
 		aMatrix.reset(chip.a, chip.b, chip.c, chip.d, chip.x, chip.y);
 		aMatrix.appendTransform(context.transform);
@@ -34,7 +34,7 @@ class DecorateChipImpl extends ArpObjectImplBase implements IChipImpl {
 			p = this.chip.paramsOp.filter(p);
 		}
 		context.pushTransform(aMatrix);
-		this.chip.chip.copyChip(context, p);
+		this.chip.chip.render(context, p);
 		context.popTransform();
 	}
 }

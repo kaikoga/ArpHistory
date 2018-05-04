@@ -36,7 +36,7 @@ class Main extends ArpEngine {
 
 		var rectChip:RectChip = domain.query("rectChip", new RectChip().arpType).value();
 		context.pushTransform(new APoint(32, 32));
-		rectChip.copyChip(context);
+		rectChip.render(context);
 		context.popTransform();
 		var mortal:ChipMortal = domain.query("chipMortal", new ChipMortal().arpType).value();
 		mortal.render(context);

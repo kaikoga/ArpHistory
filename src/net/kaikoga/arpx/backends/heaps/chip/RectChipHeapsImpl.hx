@@ -20,7 +20,7 @@ class RectChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 		this.chip = chip;
 	}
 
-	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
+	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
 		//TODO optimize
 		var pt:Point = context.transform.asPoint();
 		if (pt != null) {

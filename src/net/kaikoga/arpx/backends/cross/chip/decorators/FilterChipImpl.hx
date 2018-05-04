@@ -22,11 +22,11 @@ class FilterChipImpl extends ArpObjectImplBase implements IChipImpl {
 		return true;
 	}
 
-	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
+	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
 		var p:IArpParamsRead = params;
 		if (this.chip.paramsOp != null) {
 			p = this.chip.paramsOp.filter(p);
 		}
-		this.chip.chip.copyChip(context, p);
+		this.chip.chip.render(context, p);
 	}
 }

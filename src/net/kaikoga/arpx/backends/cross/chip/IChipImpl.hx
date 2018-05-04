@@ -5,5 +5,5 @@ import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.display.DisplayContext;
 
 interface IChipImpl extends IArpObjectImpl {
-	function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void;
+	function render(context:DisplayContext, params:IArpParamsRead = null):Void;
 }

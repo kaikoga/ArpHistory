@@ -19,7 +19,7 @@ class ChipMortalImpl extends ArpObjectImplBase implements IMortalImpl {
 			var pos:ArpPosition = mortal.position;
 			context.pushTransform(context.transform.concatXY(pos.x, pos.y));
 			// TODO mortal.params.dir = pos.dir;
-			mortal.chip.copyChip(context, mortal.params);
+			mortal.chip.render(context, mortal.params);
 			context.popTransform();
 		}
 	}

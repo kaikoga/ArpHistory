@@ -23,7 +23,7 @@ class RectChipFlashImpl extends ArpObjectImplBase implements IChipImpl {
 	private var _workRect:Rectangle = new Rectangle();
 	private var _workMatrix:Matrix = new Matrix();
 
-	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
+	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
 		//TODO optimize
 		var pt:Point = context.transform.asPoint();
 		if (pt != null) {

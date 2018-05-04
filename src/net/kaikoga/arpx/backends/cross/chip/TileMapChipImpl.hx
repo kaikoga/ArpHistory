@@ -19,7 +19,7 @@ class TileMapChipImpl extends ArpObjectImplBase implements IChipImpl {
 		this.renderer = new TileMapRenderer(null, null);
 	}
 
-	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
+	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
 		var pt:APoint = context.transform.asPoint();
 		if (pt == null) {
 			//Do nothing. not supported.

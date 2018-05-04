@@ -17,12 +17,12 @@ class TranslateChipImpl extends ArpObjectImplBase implements IChipImpl {
 	}
 
 	private static var workMatrix:AMatrix = new AMatrix();
-	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
+	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
 		var aMatrix:AMatrix = workMatrix;
 		aMatrix.reset(chip.a, chip.b, chip.c, chip.d, chip.x, chip.y);
 		aMatrix.appendTransform(context.transform);
 		context.pushTransform(aMatrix);
-		this.chip.chip.copyChip(context, params);
+		this.chip.chip.render(context, params);
 		context.popTransform();
 	}
 }

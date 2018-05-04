@@ -19,7 +19,7 @@ class ChipHudImpl extends ArpObjectImplBase implements IHudImpl {
 			var pos:ArpPosition = hud.position;
 			context.pushTransform(context.transform.concatXY(pos.x, pos.y));
 			// TODO hud.params.dir = pos.dir;
-			hud.chip.copyChip(context, hud.params);
+			hud.chip.render(context, hud.params);
 			context.popTransform();
 		}
 	}

@@ -27,7 +27,7 @@ class TextureChipFlashImpl extends ArpObjectImplBase implements IChipImpl {
 	private var _workRect:Rectangle = new Rectangle();
 	private var _workMatrix:Matrix = new Matrix();
 
-	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
+	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
 		if (this.chip.arpSlot.heat < ArpHeat.Warm) {
 			this.chip.arpDomain.log("gridchip", 'GridChip.copyChip(): Chip not warm: ${this}:$params');
 			this.chip.arpDomain.heatLater(this.chip.arpSlot);

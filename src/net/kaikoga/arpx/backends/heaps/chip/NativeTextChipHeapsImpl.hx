@@ -35,7 +35,7 @@ class NativeTextChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 		return true;
 	}
 
-	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
+	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
 		var text:String = null;
 		if (params != null) text = params.get("face");
 		if (text == null) text = "null";

@@ -14,7 +14,7 @@ class CompositeChipImpl extends ArpObjectImplBase implements IChipImpl {
 		this.chip = chip;
 	}
 
-	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
-		for (c in this.chip.chips) c.copyChip(context, params);
+	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
+		for (c in this.chip.chips) c.render(context, params);
 	}
 }

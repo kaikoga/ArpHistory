@@ -21,7 +21,7 @@ class TextureChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 		this.chip = chip;
 	}
 
-	public function copyChip(context:DisplayContext, params:IArpParamsRead = null):Void {
+	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
 		if (this.chip.arpSlot.heat < ArpHeat.Warm) {
 			this.chip.arpDomain.log("gridchip", 'GridChip.copyChip(): Chip not warm: ${this}:$params');
 			this.chip.arpDomain.heatLater(this.chip.arpSlot);
