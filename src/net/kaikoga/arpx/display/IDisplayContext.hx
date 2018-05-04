@@ -11,7 +11,9 @@ interface IDisplayContext {
 
 	public function start():Void;
 	public function display():Void;
+
 	public function pushTransform(transform:ITransform):Void;
 	public function popTransform():ITransform;
 
+	public function fillRect(l:Int, t:Int, w:Int, h:Int, color:UInt):Void;
 }

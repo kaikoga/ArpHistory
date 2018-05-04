@@ -1,17 +1,13 @@
-package net.kaikoga.arpx.backends.flash.chip;
+package net.kaikoga.arpx.backends.cross.chip;
 
-#if (arp_backend_flash || arp_backend_openfl)
-
-import flash.geom.Matrix;
-import flash.geom.Point;
-import flash.geom.Rectangle;
+import net.kaikoga.arpx.geom.APoint;
+import net.kaikoga.arpx.display.DisplayContext;
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.cross.chip.IChipImpl;
-import net.kaikoga.arpx.backends.flash.display.DisplayContext;
 import net.kaikoga.arpx.chip.RectChip;
 
-class RectChipFlashImpl extends ArpObjectImplBase implements IChipImpl {
+class RectChipImpl extends ArpObjectImplBase implements IChipImpl {
 
 	private var chip:RectChip;
 
@@ -20,18 +16,22 @@ class RectChipFlashImpl extends ArpObjectImplBase implements IChipImpl {
 		this.chip = chip;
 	}
 
-	private var _workRect:Rectangle = new Rectangle();
-	private var _workMatrix:Matrix = new Matrix();
 
 	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
-		//TODO optimize
-		var pt:Point = context.transform.asPoint();
+		var pt:APoint = context.transform.asPoint();
 		if (pt != null) {
-			var workRect:Rectangle = _workRect;
-			workRect.setTo(pt.x - chip.baseX, pt.y - chip.baseY, chip.chipWidth, chip.chipHeight);
-			context.bitmapData.fillRect(workRect, chip.border.value32);
-			workRect.inflate(-1, -1);
-			context.bitmapData.fillRect(workRect, chip.color.value32);
+			var l:Int = -chip.baseX;
+			var t:Int = -chip.baseY;
+			var w:Int = chip.chipWidth;
+			var h:Int = chip.chipHeight;
+			var c:Int = chip.border.value32;
+			context.fillRect(l, t, w, 1, c);
+			context.fillRect(l, t + h - 1, w, 1, c);
+			t++;
+			h -= 2;
+			context.fillRect(l, t, 1, h, c);
+			context.fillRect(l + w - 1, t, 1, h, c);
+			context.fillRect(++l, t, w - 2, h, chip.color.value32);
 		} else {
 			/*
 			var workMatrix:Matrix = _workMatrix;
@@ -51,5 +51,3 @@ class RectChipFlashImpl extends ArpObjectImplBase implements IChipImpl {
 	*/
 
 }
-
-#end

@@ -4,11 +4,7 @@ import net.kaikoga.arpx.mortal.Mortal.HitMortal;
 import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arp.structs.ArpColor;
 
-#if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.fieldGizmo.HitMortalFieldGizmoFlashImpl;
-#elseif arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.fieldGizmo.HitMortalFieldGizmoHeapsImpl;
-#end
+import net.kaikoga.arpx.backends.cross.fieldGizmo.HitMortalFieldGizmoImpl;
 
 @:arpType("fieldGizmo", "hitMortal")
 class HitMortalFieldGizmo extends FieldGizmo
@@ -19,11 +15,7 @@ class HitMortalFieldGizmo extends FieldGizmo
 	@:arpField public var simpleHitType:IMap<String, ArpColor>;
 	@:arpField public var complexHitType:IMap<String, ArpColor>;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-	@:arpImpl private var flashImpl:HitMortalFieldGizmoFlashImpl;
-	#elseif arp_backend_heaps
-	@:arpImpl private var heapsImpl:HitMortalFieldGizmoHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:HitMortalFieldGizmoImpl;
 
 	public function new() super();
 
