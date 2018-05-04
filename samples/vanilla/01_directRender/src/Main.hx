@@ -33,6 +33,7 @@ class Main extends ArpEngine {
 
 	private function onFirstTick(timeslice:Float):Void {
 		var context = this.createDisplayContext();
+		context.start();
 
 		var rectChip:RectChip = domain.query("rectChip", new RectChip().arpType).value();
 		context.pushTransform(new APoint(32, 32));
@@ -42,6 +43,8 @@ class Main extends ArpEngine {
 		mortal.render(context);
 		var mortal2:CompositeMortal = domain.query("compositeMortal", new CompositeMortal().arpType).value();
 		mortal2.render(context);
+
+		context.display();
 	}
 
 	public static function main():Void new Main();

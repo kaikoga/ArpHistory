@@ -17,7 +17,10 @@ class ConsoleHeapsImpl extends ArpObjectImplBase implements IConsoleHeapsImpl {
 	}
 
 	public function display(sprite:Sprite):Void {
-		this.render(new DisplayContext(sprite, console.width, console.height));
+		var context:DisplayContext = new DisplayContext(sprite, console.width, console.height);
+		context.start();
+		this.render(context);
+		context.display();
 	}
 
 	public function render(context:DisplayContext):Void {

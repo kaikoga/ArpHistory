@@ -20,7 +20,8 @@ class DisplayContext extends DisplayContextBase implements IDisplayContext {
 		this.height = height;
 	}
 
-	public function clear():Void this.buf.removeChildren();
+	public function start():Void this.buf.removeChildren();
+	public function display():Void return;
 }
 
 #end

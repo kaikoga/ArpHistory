@@ -17,7 +17,10 @@ class ConsoleFlashImpl extends ArpObjectImplBase implements IConsoleFlashImpl {
 	}
 
 	public function display(bitmapData:BitmapData):Void {
-		this.render(new DisplayContext(bitmapData));
+		var context:DisplayContext = new DisplayContext(bitmapData);
+		context.start();
+		this.render(context);
+		context.display();
 	}
 
 	public function render(context:DisplayContext):Void {

@@ -69,8 +69,9 @@ class Main extends ArpEngine {
 
 	private function onTick(value:Float):Void {
 		this.field.tick(value);
-		this.context.clear();
+		this.context.start();
 		this.console.render(this.context);
+		this.context.display();
 	}
 
 	public static function main():Void new Main();

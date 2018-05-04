@@ -16,13 +16,13 @@ class DisplayContext extends DisplayContextBase implements IDisplayContext {
 	public var height(get, never):Int;
 	private function get_height():Int return bitmapData.height;
 
-	public function clear():Void this.bitmapData.fillRect(this.bitmapData.rect, clearColor);
-
 	public function new(bitmapData:BitmapData, transform:ITransform = null, clearColor:UInt = 0xff000000) {
 		super(transform, clearColor);
 		this.bitmapData = bitmapData;
 	}
 
+	public function start():Void this.bitmapData.fillRect(this.bitmapData.rect, clearColor);
+	public function display():Void return;
 }
 
 #end

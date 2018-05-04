@@ -59,8 +59,9 @@ class Main extends ArpEngine {
 	}
 
 	private function onRawTick(timeslice:Float):Void {
-		this.context.clear();
-		this.console.render(context);
+		this.context.start();
+		this.console.render(this.context);
+		this.context.display();
 	}
 
 	private function onTick(timeslice:Float):Void {

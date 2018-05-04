@@ -61,8 +61,6 @@ class Main extends ArpEngine {
 	}
 
 	private function onTick(value:Float):Void {
-		this.context.clear();
-		this.console.render(this.context);
 		this.mortal1.position.x = (this.mortal1.position.x + 1) % 128;
 		this.field.tick(value);
 		if (Math.random() < 0.05) {
@@ -74,6 +72,9 @@ class Main extends ArpEngine {
 		if (Math.random() < 0.05) {
 			cast(this.mortal23.driver, LinearDriver).toward(30, Math.random() * 256, Math.random() * 256);
 		}
+		this.context.start();
+		this.console.render(this.context);
+		this.context.display();
 	}
 
 	public static function main():Void new Main();

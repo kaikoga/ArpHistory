@@ -64,8 +64,9 @@ class Main extends ArpEngine {
 
 	private function onTick(timeslice:Float):Void {
 		if (this.domain.isPending) return;
-		this.context.clear();
+		this.context.start();
 		this.console.render(this.context);
+		this.context.display();
 	}
 
 	public static function main():Void new Main();

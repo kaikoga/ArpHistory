@@ -9,7 +9,8 @@ interface IDisplayContext {
 
 	var transform(get, never):ITransform;
 
-	public function clear():Void;
+	public function start():Void;
+	public function display():Void;
 	public function pushTransform(transform:ITransform):Void;
 	public function popTransform():ITransform;
 
