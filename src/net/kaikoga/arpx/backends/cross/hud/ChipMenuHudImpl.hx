@@ -1,16 +1,15 @@
-package net.kaikoga.arpx.backends.flash.hud;
-
-#if (arp_backend_flash || arp_backend_openfl)
+package net.kaikoga.arpx.backends.cross.hud;
 
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.backends.ArpObjectImplBase;
 import net.kaikoga.arpx.backends.cross.hud.IHudImpl;
-import net.kaikoga.arpx.backends.flash.display.DisplayContext;
+import net.kaikoga.arpx.display.DisplayContext;
+import net.kaikoga.arpx.geom.APoint;
 import net.kaikoga.arpx.hud.ChipMenuHud;
 import net.kaikoga.arpx.menu.Menu;
 
-class ChipMenuHudFlashImpl extends ArpObjectImplBase implements IHudImpl {
+class ChipMenuHudImpl extends ArpObjectImplBase implements IHudImpl {
 
 	private var hud:ChipMenuHud;
 
@@ -24,8 +23,9 @@ class ChipMenuHudFlashImpl extends ArpObjectImplBase implements IHudImpl {
 			var menu:Menu = hud.menu;
 			var pos:ArpPosition = hud.position;
 			var dPos:ArpPosition = hud.dPosition;
-			context = new DisplayContext(context.bitmapData, context.transform);
-			context.transform.appendXY(pos.x, pos.y);
+			var pt:APoint = context.transform.toPoint();
+			pt.appendXY(pos.x, pos.y);
+			context.pushTransform(pt);
 			var param:ArpParams = new ArpParams();
 			var index:Int = 0;
 			for (item in menu.menuItems) {
@@ -33,10 +33,9 @@ class ChipMenuHudFlashImpl extends ArpObjectImplBase implements IHudImpl {
 				param.set("selected", index == hud.menu.value);
 				param.set("index", index++);
 				hud.chip.render(context, param);
-				context.transform.appendXY(dPos.x, dPos.y);
+				pt.appendXY(dPos.x, dPos.y);
 			}
+			context.popTransform();
 		}
 	}
 }
-
-#end

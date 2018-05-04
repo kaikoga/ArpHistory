@@ -1,17 +1,12 @@
 package net.kaikoga.arpx.hud;
 
 import net.kaikoga.arp.structs.ArpPosition;
+import net.kaikoga.arpx.backends.cross.hud.ChipMenuHudImpl;
 import net.kaikoga.arpx.chip.Chip;
 import net.kaikoga.arpx.input.Input;
 import net.kaikoga.arpx.input.InputAxis;
 import net.kaikoga.arpx.menu.Menu;
 import net.kaikoga.arpx.proc.Proc;
-
-#if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.hud.ChipMenuHudFlashImpl;
-#elseif arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.hud.ChipMenuHudHeapsImpl;
-#end
 
 @:arpType("hud", "chipMenu")
 class ChipMenuHud extends Hud {
@@ -22,11 +17,7 @@ class ChipMenuHud extends Hud {
 	@:arpField public var execute:String = "s";
 	@:arpBarrier @:arpField public var menu:Menu;
 
-	#if (arp_backend_flash || arp_backend_openfl)
-	@:arpImpl private var flashImpl:ChipMenuHudFlashImpl;
-	#elseif arp_backend_heaps
-	@:arpImpl private var heapsImpl:ChipMenuHudHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:ChipMenuHudImpl;
 
 	public function new() {
 		super();
