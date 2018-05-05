@@ -14,16 +14,6 @@ import flash.events.Event;
 import hxd.App;
 #end
 
-typedef ArpEngineParams = {
-	var domain:ArpDomain;
-	var width:Int;
-	var height:Int;
-	var clearColor:UInt;
-	@:optional var start:Void->Void;
-	@:optional var rawTick:Float->Void;
-	@:optional var firstTick:Float->Void;
-	@:optional var tick:Float->Void;
-}
 
 class ArpEngine
 	#if arp_backend_heaps extends App #end
@@ -60,6 +50,11 @@ class ArpEngine
 #elseif arp_backend_heaps
 	override function init() this._start();
 	override function update(dt:Float):Void this.domainRawTick(dt * 60);
+
+	override public function render(e:h3d.Engine):Void {
+		s3d.render(e);
+		s2d.render(e);
+	}
 #end
 
 	private function domainRawTick(timeslice:Float):Void {
