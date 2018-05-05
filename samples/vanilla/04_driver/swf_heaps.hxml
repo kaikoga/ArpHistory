@@ -13,6 +13,7 @@
 -swf bin/main_heaps.swf
 -swf-version 11.7
 -D fdb
+-D advanced-telemetry
 -D arp_doc
 -D arp_backend_heaps
 #-D no_inline
