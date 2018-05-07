@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.backends;
 
-import net.kaikoga.arp.backends.IArpObjectImpl;
+import net.kaikoga.arp.impl.IArpObjectImpl;
 
 class ArpObjectImplBase implements IArpObjectImpl {
 	public function new() return;

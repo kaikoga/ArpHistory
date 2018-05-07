@@ -4,7 +4,7 @@ package net.kaikoga.arpx.backends.flash.console;
 
 import flash.display.BitmapData;
 import net.kaikoga.arpx.display.DisplayContext;
-import net.kaikoga.arp.backends.IArpObjectImpl;
+import net.kaikoga.arp.impl.IArpObjectImpl;
 
 interface IConsoleFlashImpl extends IArpObjectImpl {
 	function display(bitmapData:BitmapData):Void;

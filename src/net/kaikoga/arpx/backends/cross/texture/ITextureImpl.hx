@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.backends.cross.texture;
 
-import net.kaikoga.arp.backends.IArpObjectImpl;
+import net.kaikoga.arp.impl.IArpObjectImpl;
 import net.kaikoga.arp.structs.IArpParamsRead;
 
 interface ITextureImpl extends IArpObjectImpl {

@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.backends.cross.fieldGizmo;
 
-import net.kaikoga.arp.backends.IArpObjectImpl;
+import net.kaikoga.arp.impl.IArpObjectImpl;
 import net.kaikoga.arpx.display.DisplayContext;
 import net.kaikoga.arpx.field.Field;
 

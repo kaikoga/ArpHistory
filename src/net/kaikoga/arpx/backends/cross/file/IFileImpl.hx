@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.backends.cross.file;
 
 import haxe.io.Bytes;
-import net.kaikoga.arp.backends.IArpObjectImpl;
+import net.kaikoga.arp.impl.IArpObjectImpl;
 import net.kaikoga.arp.io.IInput;
 
 interface IFileImpl extends IArpObjectImpl {
