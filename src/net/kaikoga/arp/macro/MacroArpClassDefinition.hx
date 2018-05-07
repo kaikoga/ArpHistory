@@ -72,11 +72,11 @@ class MacroArpClassDefinition {
 			classType = superClass.t.get();
 			for (intfRef in classType.interfaces) {
 				var intf:ClassType = intfRef.t.get();
-				if (intf.pack.join(".") + "." + intf.name == "net.kaikoga.arp.domain.IArpObject") {
+				if (intf.pack.join(".") + "." + intf.name == MacroArpUtil.IArpObject) {
 					this.isDerived = true;
 				} else if (intf.superClass != null) {
 					intf = intf.superClass.t.get();
-					if (intf.pack.join(".") + "." + intf.name == "net.kaikoga.arp.backends.IArpObjectImpl") {
+					if (intf.pack.join(".") + "." + intf.name == MacroArpUtil.IArpObjectImpl) {
 						this.metaHasImpl = true;
 					}
 				}

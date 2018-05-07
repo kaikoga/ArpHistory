@@ -70,7 +70,7 @@ class MacroArpImplClassDefinition {
 				this.interfaces.push(intf);
 			}
 			return true;
-		} else if (MacroArpUtil.getFqnOfBaseType(intf) == "net.kaikoga.arp.backends.IArpObjectImpl") {
+		} else if (MacroArpUtil.getFqnOfBaseType(intf) == MacroArpUtil.IArpObjectImpl) {
 			return true;
 		}
 		return false;

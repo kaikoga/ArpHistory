@@ -1,4 +1,4 @@
-package net.kaikoga.arp.backends;
+package net.kaikoga.arp.impl;
 
 interface IArpObjectImpl {
 	function arpHeatUp():Bool;

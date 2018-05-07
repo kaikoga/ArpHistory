@@ -9,6 +9,9 @@ import haxe.macro.TypeTools;
 
 class MacroArpUtil {
 
+	inline public static var IArpObject = "net.kaikoga.arp.domain.IArpObject";
+	inline public static var IArpObjectImpl = "net.kaikoga.arp.impl.IArpObjectImpl";
+
 	public static function error(message:String, pos:Position):Void {
 		Context.error(message, pos);
 #if arp_macro_debug
