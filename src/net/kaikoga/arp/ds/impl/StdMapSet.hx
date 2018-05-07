@@ -19,7 +19,7 @@ class StdMapSet<V> implements ISet<V> {
 	//read
 	public function isEmpty():Bool return !this.value.iterator().hasNext();
 	public function hasValue(v:V):Bool return this.value.exists(v);
-	public function iterator():Iterator<V> return this.value.keys();
+	inline public function iterator():Iterator<V> return this.value.keys();
 	public function toString():String return CollectionTools.setToStringImpl(this);
 
 	//write

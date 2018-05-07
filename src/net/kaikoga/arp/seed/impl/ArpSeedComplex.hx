@@ -1,5 +1,6 @@
 package net.kaikoga.arp.seed.impl;
 
+import net.kaikoga.arp.iterators.SimpleArrayIterator;
 import net.kaikoga.arp.seed.ArpSeedValueKind;
 
 class ArpSeedComplex extends ArpSeed {
@@ -22,5 +23,5 @@ class ArpSeedComplex extends ArpSeed {
 	override private function get_valueKind():ArpSeedValueKind return ArpSeedValueKind.None;
 	override private function get_isSimple():Bool return false;
 
-	override public function iterator():Iterator<ArpSeed> return this.children.iterator();
+	override public function iterator():Iterator<ArpSeed> return new SimpleArrayIterator(this.children);
 }

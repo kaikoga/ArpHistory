@@ -1,5 +1,7 @@
 package net.kaikoga.arp.ds.impl;
 
+import net.kaikoga.arp.iterators.SimpleArrayIterator;
+import net.kaikoga.arp.iterators.SimpleArrayIterator;
 import net.kaikoga.arp.ds.access.IOmapKnit.IOmapKnitPin;
 import net.kaikoga.arp.ds.IOmap;
 import net.kaikoga.arp.ds.lambda.CollectionTools;
@@ -23,11 +25,11 @@ class StdOmap<K, V> implements IOmap<K, V> {
 	//read
 	public function isEmpty():Bool return !this.value.iterator().hasNext();
 	public function hasValue(v:V):Bool { for (x in this.value) if (x == v) return true; return false; }
-	public function iterator():Iterator<V> return new StdOmapValueIterator(this._keys, this.value);
+	inline public function iterator():Iterator<V> return new StdOmapValueIterator(this._keys, this.value);
 	public function toString():String return CollectionTools.omapToStringImpl(this);
 	public function get(k:K):Null<V> return this.value.get(k);
 	public function hasKey(k:K):Bool return this.value.exists(k);
-	public function keys():Iterator<K> return this._keys.iterator();
+	inline public function keys():Iterator<K> return new SimpleArrayIterator(this._keys);
 	public var length(get, null):Int;
 	public function get_length():Int return this._keys.length;
 	public function first():Null<V> return this.get(this._keys[0]);
@@ -94,16 +96,16 @@ private class StdOmapValueIterator<K, V> {
 	private var iterator:Iterator<K>;
 	private var value:Map<K, V>;
 
-	public function new(keys:Array<K>, value:Map<K, V>) {
-		this.iterator = keys.iterator();
+	inline public function new(keys:Array<K>, value:Map<K, V>) {
+		this.iterator = new SimpleArrayIterator(keys);
 		this.value = value;
 	}
 
-	public function hasNext():Bool {
+	inline public function hasNext():Bool {
 		return this.iterator.hasNext();
 	}
 
-	public function next():Null<V> {
+	inline public function next():Null<V> {
 		return this.value.get(this.iterator.next());
 	}
 }

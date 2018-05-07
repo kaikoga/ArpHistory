@@ -14,16 +14,16 @@ class StdMap<K, V> implements IMap<K, V> {
 
 	private var value:Map<K, V>;
 
-	public function new() this.value = new Map<K, V>();
+	public function new() this.value = new Map();
 
 	//read
 	public function isEmpty():Bool return !this.value.iterator().hasNext();
 	public function hasValue(v:V):Bool { for (x in this.value) if (x == v) return true; return false; }
-	public function iterator():Iterator<V> return this.value.iterator();
+	inline public function iterator():Iterator<V> return this.value.iterator();
 	public function toString():String return CollectionTools.mapToStringImpl(this);
 	public function get(k:K):Null<V> return this.value.get(k);
 	public function hasKey(k:K):Bool return this.value.exists(k);
-	public function keys():Iterator<K> return this.value.keys();
+	inline public function keys():Iterator<K> return this.value.keys();
 
 	//resolve
 	public function resolveName(v:V):Null<K> {

@@ -1,5 +1,6 @@
 package net.kaikoga.arp.ds.impl;
 
+import net.kaikoga.arp.iterators.SimpleArrayIterator;
 import net.kaikoga.arp.ds.access.ISetKnit.ISetKnitPin;
 import net.kaikoga.arp.ds.ISet;
 import net.kaikoga.arp.ds.lambda.CollectionTools;
@@ -18,7 +19,7 @@ class ArraySet<V> implements ISet<V> {
 	//read
 	public function isEmpty():Bool return this.value.length == 0;
 	public function hasValue(v:V):Bool return this.value.indexOf(v) >= 0;
-	public function iterator():Iterator<V> return this.value.iterator();
+	inline public function iterator():Iterator<V> return new SimpleArrayIterator(this.value);
 	public function toString():String return CollectionTools.setToStringImpl(this);
 
 	//write
