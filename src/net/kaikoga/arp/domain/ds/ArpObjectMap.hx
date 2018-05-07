@@ -16,7 +16,7 @@ class ArpObjectMap<K, V:IArpObject> implements IMap<K, V> implements IPersistabl
 	private var domain:ArpDomain;
 	inline private function slotOf(v:V):ArpSlot<V> return ArpSlot.of(v, domain);
 
-	public var slotMap(default, null):IMap<K, ArpSlot<V>>;
+	public var slotMap(default, null):StdMap<K, ArpSlot<V>>;
 
 	public var heat(get, never):ArpHeat;
 	private function get_heat():ArpHeat {
@@ -41,11 +41,11 @@ class ArpObjectMap<K, V:IArpObject> implements IMap<K, V> implements IPersistabl
 	//read
 	public function isEmpty():Bool return this.slotMap.isEmpty();
 	public function hasValue(v:V):Bool return this.slotMap.hasValue(slotOf(v));
-	public function iterator():Iterator<V> return new ArpObjectIterator(this.slotMap.iterator());
+	inline public function iterator():Iterator<V> return new ArpObjectIterator(this.slotMap.iterator());
 	public function toString():String return CollectionTools.mapToStringImpl(this);
 	public function get(k:K):Null<V> return this.slotMap.hasKey(k) ? this.slotMap.get(k).value : null;
 	public function hasKey(k:K):Bool return this.slotMap.hasKey(k);
-	public function keys():Iterator<K> return this.slotMap.keys();
+	inline public function keys():Iterator<K> return this.slotMap.keys();
 
 	//resolve
 	public function resolveName(v:V):Null<K> return this.slotMap.resolveName(slotOf(v));

@@ -14,7 +14,7 @@ class ArpObjectList<V:IArpObject> implements IList<V> implements IPersistable {
 	private var domain:ArpDomain;
 	inline private function slotOf(v:V):ArpSlot<V> return ArpSlot.of(v, domain);
 
-	public var slotList(default, null):IList<ArpSlot<V>>;
+	public var slotList(default, null):ArrayList<ArpSlot<V>>;
 
 	public var heat(get, never):ArpHeat;
 	private function get_heat():ArpHeat {
@@ -37,7 +37,7 @@ class ArpObjectList<V:IArpObject> implements IList<V> implements IPersistable {
 	//read
 	public function isEmpty():Bool return this.slotList.isEmpty();
 	public function hasValue(v:V):Bool return this.slotList.hasValue(slotOf(v));
-	public function iterator():Iterator<V> return new ArpObjectIterator(this.slotList.iterator());
+	inline public function iterator():Iterator<V> return new ArpObjectIterator(this.slotList.iterator());
 	public function toString():String return CollectionTools.listToStringImpl(this);
 	public var length(get, null):Int;
 	public function get_length():Int return this.slotList.length;

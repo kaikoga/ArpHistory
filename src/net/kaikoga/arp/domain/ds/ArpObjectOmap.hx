@@ -15,7 +15,7 @@ class ArpObjectOmap<K, V:IArpObject> implements IOmap<K, V> implements IPersista
 	private var domain:ArpDomain;
 	inline private function slotOf(v:V):ArpSlot<V> return ArpSlot.of(v, domain);
 
-	public var slotOmap(default, null):IOmap<K, ArpSlot<V>>;
+	public var slotOmap(default, null):StdOmap<K, ArpSlot<V>>;
 
 	public var heat(get, never):ArpHeat;
 	private function get_heat():ArpHeat {
@@ -40,11 +40,11 @@ class ArpObjectOmap<K, V:IArpObject> implements IOmap<K, V> implements IPersista
 	//read
 	public function isEmpty():Bool return this.slotOmap.isEmpty();
 	public function hasValue(v:V):Bool return this.slotOmap.hasValue(slotOf(v));
-	public function iterator():Iterator<V> return new ArpObjectIterator(this.slotOmap.iterator());
+	inline public function iterator():Iterator<V> return new ArpObjectIterator(this.slotOmap.iterator());
 	public function toString():String return CollectionTools.omapToStringImpl(this);
 	public function get(k:K):Null<V> return this.slotOmap.hasKey(k) ? this.slotOmap.get(k).value : null;
 	public function hasKey(k:K):Bool return this.slotOmap.hasKey(k);
-	public function keys():Iterator<K> return this.slotOmap.keys();
+	inline public function keys():Iterator<K> return this.slotOmap.keys();
 	public var length(get, null):Int;
 	public function get_length():Int return this.slotOmap.length;
 	public function first():Null<V> return this.slotOmap.isEmpty() ? null : this.slotOmap.first().value;
