@@ -11,4 +11,5 @@ typedef ArpEngineParams = {
 	@:optional var rawTick:Float->Void;
 	@:optional var firstTick:Float->Void;
 	@:optional var tick:Float->Void;
+	@:optional var render:Void->Void;
 }

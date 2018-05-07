@@ -26,6 +26,7 @@ class ArpEngine
 	private dynamic function _rawTick(timeslice:Float):Void return;
 	private dynamic function _firstTick(timeslice:Float):Void return;
 	private dynamic function _tick(timeslice:Float):Void return;
+	private dynamic function _render():Void return;
 
 	public function new(params:ArpEngineParams) {
 		this.domain = params.domain;
@@ -37,6 +38,7 @@ class ArpEngine
 		if (params.rawTick != null) this._rawTick = params.rawTick;
 		if (params.firstTick != null) this._firstTick = params.firstTick;
 		if (params.tick != null) this._tick = params.tick;
+		if (params.render != null) this._render = params.render;
 #if arp_backend_flash
 		Lib.current.stage.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
 		this._start();
@@ -53,6 +55,7 @@ class ArpEngine
 
 	override public function render(e:h3d.Engine):Void {
 		s3d.render(e);
+		_render();
 		s2d.render(e);
 	}
 #end
@@ -72,14 +75,18 @@ class ArpEngine
 		this._tick(timeslice);
 	}
 
+	private var _displayContext:DisplayContext;
+
 	public function createDisplayContext():DisplayContext {
+		if (this._displayContext != null) return this._displayContext;
 #if arp_backend_flash
 		var bitmapData:BitmapData = new BitmapData(this.width, this.height, true, this.clearColor);
 		var bitmap:Bitmap = new Bitmap(bitmapData, PixelSnapping.NEVER, false);
 		Lib.current.addChild(bitmap);
-		return new DisplayContext(bitmapData, new APoint(), this.clearColor);
+		this._displayContext = new DisplayContext(bitmapData, new APoint(), this.clearColor);
 #elseif arp_backend_heaps
-		return new DisplayContext(this.s2d, this.width, this.height, new APoint());
+		this._displayContext = new DisplayContext(this.s2d, this.width, this.height, new APoint());
 #end
+		return this._displayContext;
 	}
 }
