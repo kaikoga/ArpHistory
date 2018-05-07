@@ -10,8 +10,8 @@ import net.kaikoga.arp.hit.strategies.HitWithCuboid;
 import net.kaikoga.arp.hit.structs.HitGeneric;
 import net.kaikoga.arp.hit.fields.HitField;
 import net.kaikoga.arpx.anchor.Anchor;
-import net.kaikoga.arpx.backends.cross.field.IFieldImpl;
-import net.kaikoga.arpx.backends.cross.field.FieldImpl;
+import net.kaikoga.arpx.impl.cross.field.IFieldImpl;
+import net.kaikoga.arpx.impl.cross.field.FieldImpl;
 import net.kaikoga.arpx.mortal.Mortal;
 import net.kaikoga.arpx.reactFrame.ReactFrame;
 

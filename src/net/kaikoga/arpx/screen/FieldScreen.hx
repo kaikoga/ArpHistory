@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.screen;
 
 import net.kaikoga.arp.ds.IList;
-import net.kaikoga.arpx.backends.cross.screen.FieldScreenImpl;
+import net.kaikoga.arpx.impl.cross.screen.FieldScreenImpl;
 import net.kaikoga.arpx.camera.Camera;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.fieldGizmo.FieldGizmo;

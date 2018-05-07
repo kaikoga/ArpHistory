@@ -6,19 +6,17 @@ import net.kaikoga.arp.events.ArpProgressEvent;
 import net.kaikoga.arp.events.ArpSignal;
 import net.kaikoga.arp.events.IArpSignalOut;
 import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arpx.backends.cross.socketClient.ISocketClientImpl;
+import net.kaikoga.arpx.impl.cross.socketClient.ISocketClientImpl;
 
 @:arpType("socketClient", "null")
 class SocketClient implements IArpObject implements ISocketClientImpl {
 
 	@:arpImpl private var arpImpl:ISocketClientImpl;
 
-	@:allow(net.kaikoga.arpx.backends.cross.socketClient.ISocketClientImpl)
 	private var _onData:ArpSignal<ArpProgressEvent>;
 	public var onData(get, never):IArpSignalOut<ArpProgressEvent>;
 	private function get_onData():IArpSignalOut<ArpProgressEvent> return this._onData;
 
-	@:allow(net.kaikoga.arpx.backends.cross.socketClient.ISocketClientImpl)
 	private var _onClose:ArpSignal<Any>;
 	public var onClose(get, never):IArpSignalOut<Any>;
 	private function get_onClose():IArpSignalOut<Any> return this._onClose;

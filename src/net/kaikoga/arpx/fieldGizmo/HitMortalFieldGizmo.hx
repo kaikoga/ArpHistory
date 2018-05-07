@@ -4,7 +4,7 @@ import net.kaikoga.arpx.mortal.Mortal.HitMortal;
 import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arp.structs.ArpColor;
 
-import net.kaikoga.arpx.backends.cross.fieldGizmo.HitMortalFieldGizmoImpl;
+import net.kaikoga.arpx.impl.cross.fieldGizmo.HitMortalFieldGizmoImpl;
 
 @:arpType("fieldGizmo", "hitMortal")
 class HitMortalFieldGizmo extends FieldGizmo

@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.hud;
 
 import net.kaikoga.arp.structs.ArpPosition;
-import net.kaikoga.arpx.backends.cross.hud.ChipMenuHudImpl;
+import net.kaikoga.arpx.impl.cross.hud.ChipMenuHudImpl;
 import net.kaikoga.arpx.chip.Chip;
 import net.kaikoga.arpx.input.Input;
 import net.kaikoga.arpx.input.InputAxis;

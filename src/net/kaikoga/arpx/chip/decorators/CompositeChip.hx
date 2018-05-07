@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.chip.decorators;
 
 import net.kaikoga.arp.ds.IList;
-import net.kaikoga.arpx.backends.cross.chip.decorators.CompositeChipImpl;
+import net.kaikoga.arpx.impl.cross.chip.decorators.CompositeChipImpl;
 
 @:arpType("chip", "composite")
 class CompositeChip extends Chip {

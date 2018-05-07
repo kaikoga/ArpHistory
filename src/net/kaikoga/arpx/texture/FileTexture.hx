@@ -3,9 +3,9 @@ package net.kaikoga.arpx.texture;
 import net.kaikoga.arpx.file.File;
 
 #if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.texture.FileTextureFlashImpl;
+import net.kaikoga.arpx.impl.backends.flash.texture.FileTextureFlashImpl;
 #elseif arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.texture.FileTextureHeapsImpl;
+import net.kaikoga.arpx.impl.backends.heaps.texture.FileTextureHeapsImpl;
 #end
 
 @:arpType("texture", "file")

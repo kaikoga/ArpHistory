@@ -4,9 +4,9 @@ import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.texture.Texture;
 
 #if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.chip.TextureChipFlashImpl;
+import net.kaikoga.arpx.impl.backends.flash.chip.TextureChipFlashImpl;
 #elseif arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.chip.TextureChipHeapsImpl;
+import net.kaikoga.arpx.impl.backends.heaps.chip.TextureChipHeapsImpl;
 #end
 
 @:arpType("chip", "texture")

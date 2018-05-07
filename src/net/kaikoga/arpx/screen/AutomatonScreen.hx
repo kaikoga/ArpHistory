@@ -2,7 +2,7 @@ package net.kaikoga.arpx.screen;
 
 import net.kaikoga.arpx.automaton.Automaton;
 import net.kaikoga.arpx.automaton.events.AutomatonStateEvent;
-import net.kaikoga.arpx.backends.cross.screen.AutomatonScreenImpl;
+import net.kaikoga.arpx.impl.cross.screen.AutomatonScreenImpl;
 import net.kaikoga.arpx.input.Input;
 
 @:arpType("screen", "automaton")

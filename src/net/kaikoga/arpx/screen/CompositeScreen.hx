@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.screen;
 
 import net.kaikoga.arp.ds.IOmap;
-import net.kaikoga.arpx.backends.cross.screen.CompositeScreenImpl;
+import net.kaikoga.arpx.impl.cross.screen.CompositeScreenImpl;
 import net.kaikoga.arpx.input.Input;
 
 @:arpType("screen", "composite")

@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.chip.decorators;
 
-import net.kaikoga.arpx.backends.cross.chip.decorators.FilterChipImpl;
+import net.kaikoga.arpx.impl.cross.chip.decorators.FilterChipImpl;
 import net.kaikoga.arpx.paramsOp.ParamsOp;
 
 @:arpType("chip", "filter")

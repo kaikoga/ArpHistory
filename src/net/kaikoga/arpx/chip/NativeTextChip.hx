@@ -4,9 +4,9 @@ import net.kaikoga.arp.structs.ArpColor;
 import net.kaikoga.arp.structs.ArpParams;
 
 #if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.chip.NativeTextChipFlashImpl;
+import net.kaikoga.arpx.impl.backends.flash.chip.NativeTextChipFlashImpl;
 #elseif arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.chip.NativeTextChipHeapsImpl;
+import net.kaikoga.arpx.impl.backends.heaps.chip.NativeTextChipHeapsImpl;
 #end
 
 @:arpType("chip", "nativeText")

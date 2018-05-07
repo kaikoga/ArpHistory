@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.screen;
 
 import net.kaikoga.arp.ds.IList;
-import net.kaikoga.arpx.backends.cross.screen.HudScreenImpl;
+import net.kaikoga.arpx.impl.cross.screen.HudScreenImpl;
 import net.kaikoga.arpx.hud.Hud;
 import net.kaikoga.arpx.input.Input;
 import net.kaikoga.arpx.camera.Camera;

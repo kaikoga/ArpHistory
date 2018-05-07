@@ -4,7 +4,7 @@ import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arp.task.ITickable;
-import net.kaikoga.arpx.backends.cross.hud.IHudImpl;
+import net.kaikoga.arpx.impl.cross.hud.IHudImpl;
 import net.kaikoga.arpx.driver.Driver;
 import net.kaikoga.arpx.input.focus.IFocusNode;
 import net.kaikoga.arpx.input.Input;

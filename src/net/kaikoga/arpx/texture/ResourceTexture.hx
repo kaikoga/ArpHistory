@@ -1,9 +1,9 @@
 package net.kaikoga.arpx.texture;
 
 #if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.texture.ResourceTextureFlashImpl;
+import net.kaikoga.arpx.impl.backends.flash.texture.ResourceTextureFlashImpl;
 #elseif arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.texture.ResourceTextureHeapsImpl;
+import net.kaikoga.arpx.impl.backends.heaps.texture.ResourceTextureHeapsImpl;
 #end
 
 @:arpType("texture", "resource")

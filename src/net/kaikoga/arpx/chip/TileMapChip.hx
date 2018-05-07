@@ -2,7 +2,7 @@ package net.kaikoga.arpx.chip;
 
 import net.kaikoga.arpx.tileMap.TileMap;
 
-import net.kaikoga.arpx.backends.cross.chip.TileMapChipImpl;
+import net.kaikoga.arpx.impl.cross.chip.TileMapChipImpl;
 
 @:arpType("chip", "tileMap")
 class TileMapChip extends Chip {

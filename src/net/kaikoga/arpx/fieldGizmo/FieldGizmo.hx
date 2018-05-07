@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.fieldGizmo;
 
 import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arpx.backends.cross.fieldGizmo.IFieldGizmoImpl;
+import net.kaikoga.arpx.impl.cross.fieldGizmo.IFieldGizmoImpl;
 
 @:arpType("fieldGizmo")
 class FieldGizmo implements IArpObject implements IFieldGizmoImpl {

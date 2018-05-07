@@ -3,9 +3,9 @@ package net.kaikoga.arpx.texture.decorators;
 import net.kaikoga.arpx.faceList.FaceList;
 
 #if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.texture.decorators.GridTextureFlashImpl;
+import net.kaikoga.arpx.impl.backends.flash.texture.decorators.GridTextureFlashImpl;
 #elseif arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.texture.decorators.GridTextureHeapsImpl;
+import net.kaikoga.arpx.impl.backends.heaps.texture.decorators.GridTextureHeapsImpl;
 #end
 
 @:arpType("texture", "grid")

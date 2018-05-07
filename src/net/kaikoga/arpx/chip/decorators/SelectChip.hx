@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.chip.decorators;
 
 import net.kaikoga.arp.ds.IMap;
-import net.kaikoga.arpx.backends.cross.chip.decorators.SelectChipImpl;
+import net.kaikoga.arpx.impl.cross.chip.decorators.SelectChipImpl;
 
 @:arpType("chip", "select")
 class SelectChip extends Chip {

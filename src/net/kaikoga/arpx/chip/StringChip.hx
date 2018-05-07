@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.chip;
 
 import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arpx.backends.cross.chip.StringChipImpl;
+import net.kaikoga.arpx.impl.cross.chip.StringChipImpl;
 import net.kaikoga.arpx.chip.stringChip.StringChipStringIterator;
 
 @:arpType("chip", "string")

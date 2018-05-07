@@ -3,9 +3,9 @@ package net.kaikoga.arpx.input;
 import net.kaikoga.arp.ds.impl.ArrayList;
 
 #if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.input.KeyInputFlashImpl;
+import net.kaikoga.arpx.impl.backends.flash.input.KeyInputFlashImpl;
 #elseif arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.input.KeyInputHeapsImpl;
+import net.kaikoga.arpx.impl.backends.heaps.input.KeyInputHeapsImpl;
 #end
 
 @:arpType("input", "key")

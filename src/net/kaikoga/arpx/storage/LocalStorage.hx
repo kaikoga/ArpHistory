@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.storage;
 
 #if (flash || arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.storage.LocalStorageFlashImpl;
+import net.kaikoga.arpx.impl.targets.flash.storage.LocalStorageFlashImpl;
 #end
 
 @:arpType("storage", "local")

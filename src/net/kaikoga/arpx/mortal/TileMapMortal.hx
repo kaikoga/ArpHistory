@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.mortal;
 
 import net.kaikoga.arp.hit.structs.HitGeneric;
-import net.kaikoga.arpx.backends.cross.mortal.TileMapMortalImpl;
+import net.kaikoga.arpx.impl.cross.mortal.TileMapMortalImpl;
 import net.kaikoga.arpx.chip.Chip;
 import net.kaikoga.arpx.tileMap.TileMap;
 

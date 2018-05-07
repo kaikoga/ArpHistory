@@ -1,8 +1,8 @@
 package net.kaikoga.arpx;
 
 #if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.geom.AMatrixCase;
-import net.kaikoga.arpx.backends.flash.geom.APointCase;
+import net.kaikoga.arpx.impl.backends.flash.geom.AMatrixCase;
+import net.kaikoga.arpx.impl.backends.flash.geom.APointCase;
 #end
 
 import net.kaikoga.arpx.automaton.AutomatonCase;

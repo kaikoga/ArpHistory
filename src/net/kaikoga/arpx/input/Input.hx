@@ -4,9 +4,9 @@ import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arpx.input.focus.IFocusNode;
 
 #if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.input.IInputFlashImpl;
+import net.kaikoga.arpx.impl.backends.flash.input.IInputFlashImpl;
 #elseif arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.input.IInputHeapsImpl;
+import net.kaikoga.arpx.impl.backends.heaps.input.IInputHeapsImpl;
 #end
 
 @:arpType("input", "null")

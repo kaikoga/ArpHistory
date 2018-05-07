@@ -1,17 +1,13 @@
 package net.kaikoga.arpx.file;
 
-#if (flash || arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.file.ResourceFileFlashImpl;
-#end
+import net.kaikoga.arpx.impl.cross.file.ResourceFileImpl;
 
 @:arpType("file", "resource")
 class ResourceFile extends File {
 
 	@:arpField public var src:String;
 
-#if (flash || arp_backend_flash || arp_backend_openfl)
-	@:arpImpl private var flashImpl:ResourceFileFlashImpl;
-#end
+	@:arpImpl private var flashImpl:ResourceFileImpl;
 
 	public function new () {
 		super();

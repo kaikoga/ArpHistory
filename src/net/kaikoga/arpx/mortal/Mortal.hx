@@ -9,7 +9,7 @@ import net.kaikoga.arp.hit.structs.HitGeneric;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arp.task.ITickable;
-import net.kaikoga.arpx.backends.cross.mortal.IMortalImpl;
+import net.kaikoga.arpx.impl.cross.mortal.IMortalImpl;
 import net.kaikoga.arpx.driver.Driver;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.hitFrame.HitFrame;

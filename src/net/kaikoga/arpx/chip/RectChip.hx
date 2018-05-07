@@ -2,7 +2,7 @@ package net.kaikoga.arpx.chip;
 
 import net.kaikoga.arp.structs.ArpColor;
 import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arpx.backends.cross.chip.RectChipImpl;
+import net.kaikoga.arpx.impl.cross.chip.RectChipImpl;
 
 @:arpType("chip", "rect")
 class RectChip extends Chip {

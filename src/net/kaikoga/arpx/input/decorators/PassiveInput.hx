@@ -1,9 +1,9 @@
 package net.kaikoga.arpx.input.decorators;
 
 #if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.backends.flash.input.decorators.PassiveInputFlashImpl;
+import net.kaikoga.arpx.impl.backends.flash.input.decorators.PassiveInputFlashImpl;
 #elseif arp_backend_heaps
-import net.kaikoga.arpx.backends.heaps.input.decorators.PassiveInputHeapsImpl;
+import net.kaikoga.arpx.impl.backends.heaps.input.decorators.PassiveInputHeapsImpl;
 #end
 
 @:arpType("input", "passive")

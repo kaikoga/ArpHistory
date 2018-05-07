@@ -2,7 +2,7 @@ package net.kaikoga.arpx.hud;
 
 import net.kaikoga.arp.ds.IList;
 
-import net.kaikoga.arpx.backends.cross.hud.CompositeHudImpl;
+import net.kaikoga.arpx.impl.cross.hud.CompositeHudImpl;
 
 @:arpType("hud", "composite")
 class CompositeHud extends Hud {

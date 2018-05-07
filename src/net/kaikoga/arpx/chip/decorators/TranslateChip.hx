@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.chip.decorators;
 
-import net.kaikoga.arpx.backends.cross.chip.decorators.TranslateChipImpl;
+import net.kaikoga.arpx.impl.cross.chip.decorators.TranslateChipImpl;
 
 @:arpType("chip", "translate")
 class TranslateChip extends Chip {
