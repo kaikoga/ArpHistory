@@ -1,7 +1,5 @@
 package net.kaikoga.arpx.impl.targets.flash.socketClient;
 
-#if (arp_backend_flash || arp_backend_openfl)
-
 import flash.errors.SecurityError;
 import flash.events.Event;
 import flash.events.IOErrorEvent;
@@ -24,8 +22,8 @@ class TcpSocketClientFlashImpl extends SocketClientImplBase {
 	public function new(socketClient:TcpSocketClient) {
 		super();
 		this.socketClient = socketClient;
-		this.onData = socketClient._onData;
-		this.onClose = socketClient._onClose;
+		this.onData = @:privateAccess socketClient._onData;
+		this.onClose = @:privateAccess socketClient._onClose;
 	}
 
 	private var socket:Socket;
@@ -92,5 +90,3 @@ class TcpSocketClientFlashImpl extends SocketClientImplBase {
 	}
 
 }
-
-#end
