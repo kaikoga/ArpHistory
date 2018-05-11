@@ -33,7 +33,8 @@ class Main extends ArpEngine {
 		start: start,
 		rawTick: null,
 		firstTick: onFirstTick,
-		tick: onTick
+		tick: onTick,
+		render: onRender
 	});
 
 	private function createDomain() {
@@ -72,8 +73,12 @@ class Main extends ArpEngine {
 		if (Math.random() < 0.05) {
 			cast(this.mortal23.driver, LinearDriver).toward(30, Math.random() * 256, Math.random() * 256);
 		}
+	}
+
+	private function onRender():Void {
+		if (this.domain.isPending) return;
 		this.context.start();
-		this.console.render(this.context);
+		if (this.console != null) this.console.render(this.context);
 		this.context.display();
 	}
 

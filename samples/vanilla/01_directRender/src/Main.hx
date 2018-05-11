@@ -19,7 +19,8 @@ class Main extends ArpEngine {
 		start: null,
 		rawTick: null,
 		firstTick: onFirstTick,
-		tick: null
+		tick: null,
+		render: onRender
 	});
 
 	private function createDomain():ArpDomain {
@@ -32,6 +33,14 @@ class Main extends ArpEngine {
 	}
 
 	private function onFirstTick(timeslice:Float):Void {
+		#if (arp_backend_flash || arp_backend_openfl) doRender(); #end
+	}
+
+	private function onRender():Void {
+		#if arp_backend_heaps doRender(); #end
+	}
+
+	private function doRender():Void {
 		var context = this.createDisplayContext();
 		context.start();
 
@@ -46,6 +55,5 @@ class Main extends ArpEngine {
 
 		context.display();
 	}
-
 	public static function main():Void new Main();
 }

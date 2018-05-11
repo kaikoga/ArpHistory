@@ -31,7 +31,8 @@ class Main extends ArpEngine {
 		start: start,
 		rawTick: null,
 		firstTick: onFirstTick,
-		tick: onTick
+		tick: onTick,
+		render: onRender
 	});
 
 	private function createDomain():ArpDomain {
@@ -63,9 +64,12 @@ class Main extends ArpEngine {
 	}
 
 	private function onTick(timeslice:Float):Void {
+	}
+
+	private function onRender():Void {
 		if (this.domain.isPending) return;
 		this.context.start();
-		this.console.render(this.context);
+		if (this.console != null) this.console.render(this.context);
 		this.context.display();
 	}
 

@@ -28,7 +28,8 @@ class Main extends ArpEngine {
 		start: start,
 		rawTick: onRawTick,
 		firstTick: onFirstTick,
-		tick: onTick
+		tick: onTick,
+		render: onRender
 	});
 
 	private function createDomain() {
@@ -69,5 +70,11 @@ class Main extends ArpEngine {
 		if (!domain.isPending) mortal.params.set("face", "ok");
 	}
 
+	private function onRender():Void {
+		this.context.start();
+		this.console.render(this.context);
+		this.context.display();
+	}
+	
 	public static function main():Void new Main();
 }
