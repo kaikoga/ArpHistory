@@ -58,7 +58,7 @@ class AMatrix extends Matrix implements ITransform {
 
 	public function asPoint():PointImpl {
 		if (this._11 == 1 && this._12 == 0 && this._21 == 0 && this._22 == 1) {
-			return new APoint(this._41, this._42);
+			return new PointImpl(this._41, this._42);
 		}
 		return null;
 	}
@@ -68,7 +68,7 @@ class AMatrix extends Matrix implements ITransform {
 	}
 
 	public function toPoint():PointImpl {
-		return new APoint(this._41, this._42);
+		return new PointImpl(this._41, this._42);
 	}
 
 	public function toMatrix():MatrixImpl {
