@@ -1,13 +1,13 @@
 package;
 
-import net.kaikoga.arpx.ArpEngine;
 import haxe.Resource;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.seed.ArpSeed;
+import net.kaikoga.arpx.ArpEngine;
 import net.kaikoga.arpx.chip.RectChip;
-import net.kaikoga.arpx.geom.APoint;
-import net.kaikoga.arpx.mortal.CompositeMortal;
+import net.kaikoga.arpx.geom.AMatrix;
 import net.kaikoga.arpx.mortal.ChipMortal;
+import net.kaikoga.arpx.mortal.CompositeMortal;
 
 class Main extends ArpEngine {
 
@@ -45,7 +45,7 @@ class Main extends ArpEngine {
 		context.start();
 
 		var rectChip:RectChip = domain.query("rectChip", new RectChip().arpType).value();
-		context.pushTransform(new APoint(32, 32));
+		context.pushTransform(new AMatrix(1, 0, 0, 1, 32, 32));
 		rectChip.render(context);
 		context.popTransform();
 		var mortal:ChipMortal = domain.query("chipMortal", new ChipMortal().arpType).value();

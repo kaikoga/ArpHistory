@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.display;
 
-import net.kaikoga.arpx.geom.APoint;
+import net.kaikoga.arpx.geom.AMatrix;
 import net.kaikoga.arpx.geom.ITransform;
 
 class DisplayContextBase {
@@ -15,7 +15,7 @@ class DisplayContextBase {
 	public function popTransform():ITransform return if (this.transforms.length > 0) this.transforms.pop() else null;
 
 	public function new(transform:ITransform = null, clearColor:UInt = 0xff000000) {
-		this.transforms = [(transform == null) ? new APoint() : transform];
+		this.transforms = [(transform == null) ? new AMatrix() : transform];
 		this.clearColor = clearColor;
 	}
 }
