@@ -21,7 +21,7 @@ class DisplayContext extends DisplayContextBase implements IDisplayContext {
 	private function get_height():Int return _height;
 
 	private var renderContext:RenderContext;
-	
+
 	public function new(buf:Sprite, width:Int, height:Int, transform:ITransform = null, clearColor:UInt = 0) {
 		super(transform, clearColor);
 		this.buf = buf;
@@ -36,14 +36,25 @@ class DisplayContext extends DisplayContextBase implements IDisplayContext {
 	}
 	public function display():Void this.renderContext.display();
 
+	private var _workMatrix:AMatrix = new AMatrix();
 	public function fillRect(l:Int, t:Int, w:Int, h:Int, color:UInt):Void {
-		var matrix:AMatrix = transform.concatTransform(new AMatrix(w, 0, 0, h, l, t)).asMatrix();
+		var workMatrix:AMatrix = _workMatrix;
+		workMatrix._11 = w;
+		workMatrix._22 = h;
+		workMatrix._14 = l;
+		workMatrix._24 = t;
+		var matrix:AMatrix = transform.concatTransform(workMatrix).asMatrix();
 		var tile:Tile = Tile.fromColor(color);
 		this.renderContext.renderTile(matrix, tile);
 	}
 
 	public function drawTile(tile:Tile):Void {
-		var matrix:AMatrix = transform.concatTransform(new AMatrix(tile.width, 0, 0, tile.height, 0, 0)).asMatrix();
+		var workMatrix:AMatrix = _workMatrix;
+		workMatrix._11 = tile.width;
+		workMatrix._22 = tile.height;
+		workMatrix._14 = 0;
+		workMatrix._24 = 0;
+		var matrix:AMatrix = transform.concatTransform(workMatrix).asMatrix();
 		this.renderContext.renderTile(matrix, tile);
 	}
 
