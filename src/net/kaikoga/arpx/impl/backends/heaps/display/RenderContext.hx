@@ -31,7 +31,7 @@ class RenderContext {
 
 	public function new(engine:Engine) {
 		this.engine = engine;
-		
+
 		manager = new ShaderManager();
 		pass = new Pass("", null);
 		pass.depth(true, Compare.LessEqual);
@@ -86,8 +86,8 @@ class RenderContext {
 	}
 
 	public function renderTile(matrix:AMatrix, tile:Tile):Void {
-		baseShader.absoluteMatrixA.set(matrix._11, matrix._12, matrix._14, 1);
-		baseShader.absoluteMatrixB.set(matrix._21, matrix._22, matrix._24, 1);
+		baseShader.absoluteMatrixA.set(matrix._11, matrix._21, matrix._41, 1);
+		baseShader.absoluteMatrixB.set(matrix._12, matrix._22, matrix._42, 1);
 		@:privateAccess baseShader.uvPos.set(tile.u, tile.v, tile.u2 - tile.u, tile.v2 - tile.v);
 		baseShader.texture = tile.getTexture();
 		manager.fillParams(buffers, runtimeShader, baseShaderList);

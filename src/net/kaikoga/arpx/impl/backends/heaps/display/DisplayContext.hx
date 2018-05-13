@@ -41,8 +41,8 @@ class DisplayContext extends DisplayContextBase implements IDisplayContext {
 		var workMatrix:AMatrix = _workMatrix;
 		workMatrix._11 = w;
 		workMatrix._22 = h;
-		workMatrix._14 = l;
-		workMatrix._24 = t;
+		workMatrix._41 = l;
+		workMatrix._42 = t;
 		var matrix:AMatrix = transform.concatTransform(workMatrix).asMatrix();
 		var tile:Tile = Tile.fromColor(color);
 		this.renderContext.renderTile(matrix, tile);
@@ -52,8 +52,8 @@ class DisplayContext extends DisplayContextBase implements IDisplayContext {
 		var workMatrix:AMatrix = _workMatrix;
 		workMatrix._11 = tile.width;
 		workMatrix._22 = tile.height;
-		workMatrix._14 = 0;
-		workMatrix._24 = 0;
+		workMatrix._41 = 0;
+		workMatrix._42 = 0;
 		var matrix:AMatrix = transform.concatTransform(workMatrix).asMatrix();
 		this.renderContext.renderTile(matrix, tile);
 	}

@@ -19,19 +19,19 @@ class AMatrix extends Matrix implements ITransform {
 
 	inline public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):AMatrix {
 		_11 = a;
-		_12 = b;
+		_12 = c;
 		_13 = 0;
-		_14 = tx;
-		_21 = c;
+		_14 = 0;
+		_21 = b;
 		_22 = d;
 		_23 = 0;
-		_24 = ty;
+		_24 = 0;
 		_31 = 0;
 		_32 = 0;
 		_33 = 0;
 		_34 = 0;
-		_41 = 0;
-		_42 = 0;
+		_41 = tx;
+		_42 = ty;
 		_43 = 0;
 		_44 = 1;
 		return this;
@@ -56,7 +56,7 @@ class AMatrix extends Matrix implements ITransform {
 
 	public function asPoint():APoint {
 		if (this._11 == 1 && this._12 == 0 && this._21 == 0 && this._22 == 1) {
-			return new APoint(this._14, this._24);
+			return new APoint(this._41, this._42);
 		}
 		return null;
 	}
@@ -66,7 +66,7 @@ class AMatrix extends Matrix implements ITransform {
 	}
 
 	public function toPoint():APoint {
-		return new APoint(this._14, this._24);
+		return new APoint(this._41, this._42);
 	}
 
 	public function toMatrix():AMatrix {
@@ -74,19 +74,20 @@ class AMatrix extends Matrix implements ITransform {
 	}
 
 	public function setXY(x:Float, y:Float):ITransform {
-		this._14 = x;
-		this._24 = y;
+		this._41 = x;
+		this._42 = y;
 		return this;
 	}
 
 	public function appendTransform(transform:ITransform):ITransform {
-		this.multiply(this, transform.toMatrix());
+		this.multiply(transform.toMatrix(), this);
 		return this;
 	}
 
 	public function appendXY(x:Float, y:Float):ITransform {
-		this._14 += x;
-		this._24 += y;
+		// this.translate(x, y);
+		this._41 += x;
+		this._42 += y;
 		return this;
 	}
 
