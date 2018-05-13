@@ -2,6 +2,8 @@ package net.kaikoga.arpx.impl.backends.heaps.geom;
 
 #if arp_backend_heaps
 
+import net.kaikoga.arpx.geom.MatrixImpl;
+import net.kaikoga.arpx.geom.PointImpl;
 import h3d.col.Point;
 import h3d.Matrix;
 import net.kaikoga.arpx.geom.ITransform;
@@ -54,22 +56,22 @@ class AMatrix extends Matrix implements ITransform {
 		return result;
 	}
 
-	public function asPoint():APoint {
+	public function asPoint():PointImpl {
 		if (this._11 == 1 && this._12 == 0 && this._21 == 0 && this._22 == 1) {
 			return new APoint(this._41, this._42);
 		}
 		return null;
 	}
 
-	public function asMatrix():AMatrix {
+	public function asMatrix():MatrixImpl {
 		return this;
 	}
 
-	public function toPoint():APoint {
+	public function toPoint():PointImpl {
 		return new APoint(this._41, this._42);
 	}
 
-	public function toMatrix():AMatrix {
+	public function toMatrix():MatrixImpl {
 		return this;
 	}
 

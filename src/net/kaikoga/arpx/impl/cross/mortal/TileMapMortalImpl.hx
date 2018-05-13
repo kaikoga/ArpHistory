@@ -1,10 +1,10 @@
 package net.kaikoga.arpx.impl.cross.mortal;
 
+import net.kaikoga.arpx.display.DisplayContext;
+import net.kaikoga.arpx.geom.PointImpl;
 import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.impl.cross.mortal.IMortalImpl;
 import net.kaikoga.arpx.impl.cross.tilemap.legacy.TileMapRenderer;
-import net.kaikoga.arpx.display.DisplayContext;
-import net.kaikoga.arpx.geom.APoint;
 import net.kaikoga.arpx.mortal.TileMapMortal;
 
 class TileMapMortalImpl extends ArpObjectImplBase implements IMortalImpl {
@@ -20,7 +20,7 @@ class TileMapMortalImpl extends ArpObjectImplBase implements IMortalImpl {
 
 	public function render(context:DisplayContext):Void {
 		if (this.mortal.visible) {
-			var pt:APoint = context.transform.asPoint();
+			var pt:PointImpl = context.transform.asPoint();
 			if (pt == null) {
 				//Do nothing. not supported.
 				throw "TileMapMortalFlashImpl.render(): scaling TileMap is currently not supported";

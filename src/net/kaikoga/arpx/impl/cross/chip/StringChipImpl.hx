@@ -1,13 +1,13 @@
 package net.kaikoga.arpx.impl.cross.chip;
 
 import net.kaikoga.arp.structs.IArpParamsRead;
-import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.chip.stringChip.StringChipDrawCursor;
 import net.kaikoga.arpx.chip.stringChip.StringChipStringIterator;
 import net.kaikoga.arpx.chip.StringChip;
 import net.kaikoga.arpx.display.DisplayContext;
-import net.kaikoga.arpx.geom.APoint;
 import net.kaikoga.arpx.geom.ITransform;
+import net.kaikoga.arpx.geom.PointImpl;
+import net.kaikoga.arpx.impl.ArpObjectImplBase;
 
 class StringChipImpl extends ArpObjectImplBase implements IChipImpl {
 
@@ -19,7 +19,7 @@ class StringChipImpl extends ArpObjectImplBase implements IChipImpl {
 	}
 
 	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
-		var pt:APoint = context.transform.toPoint();
+		var pt:PointImpl = context.transform.toPoint();
 		var cursor:StringChipDrawCursor = new StringChipDrawCursor(pt.x, pt.y, params); // FIXME
 		var transform:ITransform = context.transform.toCopy();
 		for (char in new StringChipStringIterator(params.get("face"))) {

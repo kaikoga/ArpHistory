@@ -1,11 +1,11 @@
 package net.kaikoga.arpx.impl.cross.chip;
 
-import net.kaikoga.arpx.geom.APoint;
-import net.kaikoga.arpx.display.DisplayContext;
 import net.kaikoga.arp.structs.IArpParamsRead;
+import net.kaikoga.arpx.chip.RectChip;
+import net.kaikoga.arpx.display.DisplayContext;
+import net.kaikoga.arpx.geom.PointImpl;
 import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.impl.cross.chip.IChipImpl;
-import net.kaikoga.arpx.chip.RectChip;
 
 class RectChipImpl extends ArpObjectImplBase implements IChipImpl {
 
@@ -18,7 +18,7 @@ class RectChipImpl extends ArpObjectImplBase implements IChipImpl {
 
 
 	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
-		var pt:APoint = context.transform.asPoint();
+		var pt:PointImpl = context.transform.asPoint();
 		if (pt != null) {
 			var l:Int = -chip.baseX;
 			var t:Int = -chip.baseY;

@@ -2,6 +2,8 @@ package net.kaikoga.arpx.impl.backends.flash.geom;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
+import net.kaikoga.arpx.geom.MatrixImpl;
+import net.kaikoga.arpx.geom.PointImpl;
 import flash.geom.Point;
 import net.kaikoga.arpx.geom.ITransform;
 
@@ -26,19 +28,19 @@ class APoint extends Point implements ITransform {
 		return result;
 	}
 
-	public function asPoint():APoint {
+	public function asPoint():PointImpl {
 		return this;
 	}
 
-	public function asMatrix():AMatrix {
+	public function asMatrix():MatrixImpl {
 		return new AMatrix(1, 0, 0, 1, this.x, this.y);
 	}
 
-	public function toPoint():APoint {
+	public function toPoint():PointImpl {
 		return this;
 	}
 
-	public function toMatrix():AMatrix {
+	public function toMatrix():MatrixImpl {
 		return new AMatrix(1, 0, 0, 1, this.x, this.y);
 	}
 

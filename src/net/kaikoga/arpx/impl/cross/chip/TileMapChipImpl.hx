@@ -1,12 +1,12 @@
 package net.kaikoga.arpx.impl.cross.chip;
 
 import net.kaikoga.arp.structs.IArpParamsRead;
+import net.kaikoga.arpx.chip.TileMapChip;
+import net.kaikoga.arpx.display.DisplayContext;
+import net.kaikoga.arpx.geom.PointImpl;
 import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.impl.cross.chip.IChipImpl;
 import net.kaikoga.arpx.impl.cross.tilemap.legacy.TileMapRenderer;
-import net.kaikoga.arpx.display.DisplayContext;
-import net.kaikoga.arpx.chip.TileMapChip;
-import net.kaikoga.arpx.geom.APoint;
 
 class TileMapChipImpl extends ArpObjectImplBase implements IChipImpl {
 
@@ -20,7 +20,7 @@ class TileMapChipImpl extends ArpObjectImplBase implements IChipImpl {
 	}
 
 	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
-		var pt:APoint = context.transform.asPoint();
+		var pt:PointImpl = context.transform.asPoint();
 		if (pt == null) {
 			//Do nothing. not supported.
 			throw "TileMapChipFlashImpl.render(): scaling TileMap is currently not supported";

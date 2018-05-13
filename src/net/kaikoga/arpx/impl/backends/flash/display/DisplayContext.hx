@@ -2,12 +2,12 @@ package net.kaikoga.arpx.impl.backends.flash.display;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import flash.geom.Rectangle;
 import flash.display.BitmapData;
-import net.kaikoga.arpx.geom.APoint;
+import flash.geom.Rectangle;
 import net.kaikoga.arpx.display.DisplayContextBase;
 import net.kaikoga.arpx.display.IDisplayContext;
 import net.kaikoga.arpx.geom.ITransform;
+import net.kaikoga.arpx.geom.PointImpl;
 
 class DisplayContext extends DisplayContextBase implements IDisplayContext {
 
@@ -29,7 +29,7 @@ class DisplayContext extends DisplayContextBase implements IDisplayContext {
 
 	private var _workRect:Rectangle = new Rectangle();
 	inline public function fillRect(l:Int, t:Int, w:Int, h:Int, color:UInt):Void {
-		var pt:APoint = this.transform.asPoint();
+		var pt:PointImpl = this.transform.asPoint();
 		var workRect:Rectangle = this._workRect;
 		workRect.setTo(pt.x + l, pt.y + t, w, h);
 		this.bitmapData.fillRect(workRect, color);

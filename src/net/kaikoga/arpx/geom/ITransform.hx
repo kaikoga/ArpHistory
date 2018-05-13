@@ -2,12 +2,12 @@ package net.kaikoga.arpx.geom;
 
 interface ITransform {
 	// trys to convert to concrete representations, but returns null if some transformation cannot be preserved.
-	function asPoint():APoint;
-	function asMatrix():AMatrix;
+	function asPoint():PointImpl;
+	function asMatrix():MatrixImpl;
 
 	// converts to concrete representations, may drop some information.
-	function toPoint():APoint;
-	function toMatrix():AMatrix;
+	function toPoint():PointImpl;
+	function toMatrix():MatrixImpl;
 
 	// creates an exact copy, includes actual concrete representation used.
 	function toCopy():ITransform;

@@ -2,11 +2,11 @@ package net.kaikoga.arpx.impl.cross.hud;
 
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arp.structs.ArpPosition;
+import net.kaikoga.arpx.display.DisplayContext;
+import net.kaikoga.arpx.geom.ITransform;
+import net.kaikoga.arpx.hud.ChipMenuHud;
 import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.impl.cross.hud.IHudImpl;
-import net.kaikoga.arpx.display.DisplayContext;
-import net.kaikoga.arpx.geom.APoint;
-import net.kaikoga.arpx.hud.ChipMenuHud;
 import net.kaikoga.arpx.menu.Menu;
 
 class ChipMenuHudImpl extends ArpObjectImplBase implements IHudImpl {
@@ -23,9 +23,8 @@ class ChipMenuHudImpl extends ArpObjectImplBase implements IHudImpl {
 			var menu:Menu = hud.menu;
 			var pos:ArpPosition = hud.position;
 			var dPos:ArpPosition = hud.dPosition;
-			var pt:APoint = context.transform.toPoint();
-			pt.appendXY(pos.x, pos.y);
-			context.pushTransform(pt);
+			var transform:ITransform = context.transform.concatXY(pos.x, pos.y);
+			context.pushTransform(transform);
 			var param:ArpParams = new ArpParams();
 			var index:Int = 0;
 			for (item in menu.menuItems) {
@@ -33,7 +32,7 @@ class ChipMenuHudImpl extends ArpObjectImplBase implements IHudImpl {
 				param.set("selected", index == hud.menu.value);
 				param.set("index", index++);
 				hud.chip.render(context, param);
-				pt.appendXY(dPos.x, dPos.y);
+				transform = transform.appendXY(dPos.x, dPos.y);
 			}
 			context.popTransform();
 		}

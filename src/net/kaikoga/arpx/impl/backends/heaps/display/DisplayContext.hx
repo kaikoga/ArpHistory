@@ -2,6 +2,7 @@ package net.kaikoga.arpx.impl.backends.heaps.display;
 
 #if arp_backend_heaps
 
+import net.kaikoga.arpx.geom.MatrixImpl;
 import h2d.Tile;
 import h2d.Sprite;
 import h3d.Engine;
@@ -43,7 +44,7 @@ class DisplayContext extends DisplayContextBase implements IDisplayContext {
 		workMatrix._22 = h;
 		workMatrix._41 = l;
 		workMatrix._42 = t;
-		var matrix:AMatrix = transform.concatTransform(workMatrix).asMatrix();
+		var matrix:MatrixImpl = transform.concatTransform(workMatrix).asMatrix();
 		var tile:Tile = Tile.fromColor(color);
 		this.renderContext.renderTile(matrix, tile);
 	}
@@ -54,7 +55,7 @@ class DisplayContext extends DisplayContextBase implements IDisplayContext {
 		workMatrix._22 = tile.height;
 		workMatrix._41 = 0;
 		workMatrix._42 = 0;
-		var matrix:AMatrix = transform.concatTransform(workMatrix).asMatrix();
+		var matrix:MatrixImpl = transform.concatTransform(workMatrix).asMatrix();
 		this.renderContext.renderTile(matrix, tile);
 	}
 
