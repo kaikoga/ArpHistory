@@ -18,8 +18,9 @@ class StringChipImpl extends ArpObjectImplBase implements IChipImpl {
 		this.chip = chip;
 	}
 
+	private var _workPt:PointImpl = new PointImpl();
 	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
-		var pt:PointImpl = context.transform.toPoint();
+		var pt:PointImpl = context.transform.toPoint(_workPt);
 		var cursor:StringChipDrawCursor = new StringChipDrawCursor(pt.x, pt.y, params); // FIXME
 		var transform:Transform = context.dupTransform();
 		for (char in new StringChipStringIterator(params.get("face"))) {

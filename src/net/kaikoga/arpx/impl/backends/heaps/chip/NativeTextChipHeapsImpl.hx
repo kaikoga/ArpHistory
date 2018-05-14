@@ -35,6 +35,7 @@ class NativeTextChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 		return true;
 	}
 
+	private var _workPt:PointImpl = new PointImpl();
 	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
 		var text:String = null;
 		if (params != null) text = params.get("face");
@@ -65,7 +66,7 @@ class NativeTextChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 		t.letterSpacing = 0;
 		t.text = text;
 		t.textColor = this.chip.color.value32;
-		var pt:PointImpl = context.transform.toPoint();
+		var pt:PointImpl = context.transform.toPoint(_workPt);
 		t.x = pt.x;
 		t.y = pt.y - this.chip.fontSize + 2;
 	}

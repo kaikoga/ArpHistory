@@ -11,12 +11,10 @@ interface ITransform {
 	function readMatrix(matrix:MatrixImpl):Transform;
 
 	// trys to convert to impl representations, but returns null if some transformation cannot be preserved.
-	function asPoint():PointImpl;
-	function asMatrix():MatrixImpl;
+	function asPoint(pt:PointImpl = null):PointImpl;
 
 	// converts to impl representations, may drop some information.
-	function toPoint():PointImpl;
-	function toMatrix():MatrixImpl;
+	function toPoint(pt:PointImpl = null):PointImpl;
 
 	// overwrites transform.
 	function setXY(x:Float, y:Float):Transform;

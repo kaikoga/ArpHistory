@@ -19,8 +19,9 @@ class TileMapChipImpl extends ArpObjectImplBase implements IChipImpl {
 		this.renderer = new TileMapRenderer(null, null);
 	}
 
+	private var _workPt:PointImpl = new PointImpl();
 	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
-		var pt:PointImpl = context.transform.asPoint();
+		var pt:PointImpl = context.transform.asPoint(_workPt);
 		if (pt == null) {
 			//Do nothing. not supported.
 			throw "TileMapChipFlashImpl.render(): scaling TileMap is currently not supported";

@@ -25,18 +25,8 @@ class TransformCase {
 		assertEquals(6.0, pt.y);
 	}
 
-	public function testAsMatrix():Void {
-		var matrix:Matrix = me.asMatrix();
-		assertEquals(1.0, matrix.a);
-		assertEquals(2.0, matrix.b);
-		assertEquals(3.0, matrix.c);
-		assertEquals(4.0, matrix.d);
-		assertEquals(5.0, matrix.tx);
-		assertEquals(6.0, matrix.ty);
-	}
-
-	public function testToMatrix():Void {
-		var matrix:Matrix = me.toMatrix();
+	public function testRaw():Void {
+		var matrix:Matrix = me.raw;
 		assertEquals(1.0, matrix.a);
 		assertEquals(2.0, matrix.b);
 		assertEquals(3.0, matrix.c);

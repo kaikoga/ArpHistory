@@ -36,23 +36,21 @@ class Transform implements ITransform {
 		return this;
 	}
 
-	public function asPoint():PointImpl {
+	inline private function setOrAllocPointImpl(x:Float, y:Float, pt:PointImpl = null) {
+		if (pt == null) return new PointImpl(x, y);
+		pt.setTo(x, y);
+		return pt;
+	}
+
+	public function asPoint(pt:PointImpl = null):PointImpl {
 		if (this.raw.a == 1 && this.raw.b == 0 && this.raw.c == 0 && this.raw.d == 1) {
-			return new PointImpl(this.raw.tx, this.raw.ty);
+			return setOrAllocPointImpl(this.raw.tx, this.raw.ty, pt);
 		}
 		return null;
 	}
 
-	public function asMatrix():MatrixImpl {
-		return this.raw;
-	}
-
-	public function toPoint():PointImpl {
-		return new PointImpl(this.raw.tx, this.raw.ty);
-	}
-
-	public function toMatrix():MatrixImpl {
-		return this.raw;
+	public function toPoint(pt:PointImpl = null):PointImpl {
+		return setOrAllocPointImpl(this.raw.tx, this.raw.ty, pt);
 	}
 
 	public function setXY(x:Float, y:Float):Transform {
@@ -62,7 +60,7 @@ class Transform implements ITransform {
 	}
 
 	public function appendTransform(transform:Transform):Transform {
-		this.raw.concat(transform.toMatrix());
+		this.raw.concat(transform.raw);
 		return this;
 	}
 

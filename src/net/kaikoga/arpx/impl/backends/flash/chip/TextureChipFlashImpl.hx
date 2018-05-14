@@ -2,10 +2,10 @@ package net.kaikoga.arpx.impl.backends.flash.chip;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
+import net.kaikoga.arpx.geom.PointImpl;
 import flash.display.BlendMode;
 import flash.geom.ColorTransform;
 import flash.geom.Matrix;
-import flash.geom.Point;
 import flash.geom.Rectangle;
 import net.kaikoga.arp.domain.ArpHeat;
 import net.kaikoga.arp.structs.IArpParamsRead;
@@ -24,9 +24,9 @@ class TextureChipFlashImpl extends ArpObjectImplBase implements IChipImpl {
 		this.chip = chip;
 	}
 
+	private var _workPt:PointImpl = new PointImpl();
 	private var _workRect:Rectangle = new Rectangle();
 	private var _workMatrix:Matrix = new Matrix();
-
 	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
 		if (this.chip.arpSlot.heat < ArpHeat.Warm) {
 			this.chip.arpDomain.log("gridchip", 'GridChip.copyChip(): Chip not warm: ${this}:$params');
@@ -47,7 +47,7 @@ class TextureChipFlashImpl extends ArpObjectImplBase implements IChipImpl {
 			return;
 		}
 
-		var pt:Point = transform.asPoint();
+		var pt:PointImpl = transform.asPoint(_workPt);
 		if (pt != null) {
 			context.bitmapData.copyPixels(this.chip.texture.bitmapData(), faceInfo.bound, pt, null, null, this.chip.texture.hasAlpha);
 		} else {
@@ -64,7 +64,7 @@ class TextureChipFlashImpl extends ArpObjectImplBase implements IChipImpl {
 				colorTransform = new ColorTransform(ra, ga, ba, aa, rb, gb, bb, ab);
 			}
 			var blendMode:BlendMode = cast params.getAsString("blendMode");
-			context.bitmapData.draw(faceInfo.data, transform.toMatrix(), colorTransform, blendMode);
+			context.bitmapData.draw(faceInfo.data, transform.raw, colorTransform, blendMode);
 		}
 		context.popTransform();
 	}
