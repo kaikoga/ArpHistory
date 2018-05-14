@@ -7,18 +7,20 @@ import net.kaikoga.arpx.geom.ITransform;
 import net.kaikoga.arpx.geom.PointImpl;
 import net.kaikoga.arpx.geom.MatrixImpl;
 
-class Transform extends Matrix implements ITransform {
+class Transform implements ITransform {
+
+	public var raw(default, null):MatrixImpl;
 
 	public function toCopy():Transform {
 		return Transform.fromTransform(this);
 	}
 
 	public function new(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0) {
-		super(a, b, c, d, tx, ty);
+		raw = new Matrix(a, b, c, d, tx, ty);
 	}
 
 	public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):Transform {
-		this.setTo(a, b, c, d, tx, ty);
+		this.raw.setTo(a, b, c, d, tx, ty);
 		return this;
 	}
 
@@ -29,48 +31,48 @@ class Transform extends Matrix implements ITransform {
 
 	public static function fromMatrix(matrix:MatrixImpl):Transform {
 		var result:Transform = new Transform();
-		result.copyFrom(matrix);
+		result.raw.copyFrom(matrix);
 		return result;
 	}
 
 	public static function fromTransform(transform:Transform):Transform {
 		var result:Transform = new Transform();
-		result.copyFrom(transform.toMatrix());
+		result.raw.copyFrom(transform.toMatrix());
 		return result;
 	}
 
 	public function asPoint():PointImpl {
-		if (this.a == 1 && this.b == 0 && this.c == 0 && this.d == 1) {
-			return new PointImpl(this.tx, this.ty);
+		if (this.raw.a == 1 && this.raw.b == 0 && this.raw.c == 0 && this.raw.d == 1) {
+			return new PointImpl(this.raw.tx, this.raw.ty);
 		}
 		return null;
 	}
 
 	public function asMatrix():MatrixImpl {
-		return this;
+		return this.raw;
 	}
 
 	public function toPoint():PointImpl {
-		return new PointImpl(this.tx, this.ty);
+		return new PointImpl(this.raw.tx, this.raw.ty);
 	}
 
 	public function toMatrix():MatrixImpl {
-		return this;
+		return this.raw;
 	}
 
 	public function setXY(x:Float, y:Float):Transform {
-		this.tx = x;
-		this.ty = y;
+		this.raw.tx = x;
+		this.raw.ty = y;
 		return this;
 	}
 
 	public function appendTransform(transform:Transform):Transform {
-		this.concat(transform.toMatrix());
+		this.raw.concat(transform.toMatrix());
 		return this;
 	}
 
 	public function appendXY(x:Float, y:Float):Transform {
-		this.translate(x, y);
+		this.raw.translate(x, y);
 		return this;
 	}
 }

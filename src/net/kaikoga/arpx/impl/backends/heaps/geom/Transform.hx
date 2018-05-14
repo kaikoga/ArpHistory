@@ -7,34 +7,37 @@ import net.kaikoga.arpx.geom.ITransform;
 import net.kaikoga.arpx.geom.PointImpl;
 import net.kaikoga.arpx.geom.MatrixImpl;
 
-class Transform extends Matrix implements ITransform {
+class Transform implements ITransform {
+
+	public var raw(default, null):MatrixImpl;
 
 	public function toCopy():Transform {
 		return Transform.fromTransform(this);
 	}
 
 	public function new(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0) {
-		super();
+		this.raw = new Matrix();
 		this.reset(a, b, c, d, tx, ty);
 	}
 
 	inline public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):Transform {
-		_11 = a;
-		_12 = c;
-		_13 = 0;
-		_14 = 0;
-		_21 = b;
-		_22 = d;
-		_23 = 0;
-		_24 = 0;
-		_31 = 0;
-		_32 = 0;
-		_33 = 0;
-		_34 = 0;
-		_41 = tx;
-		_42 = ty;
-		_43 = 0;
-		_44 = 1;
+		var v:MatrixImpl = this.raw;
+		v._11 = a;
+		v._12 = c;
+		v._13 = 0;
+		v._14 = 0;
+		v._21 = b;
+		v._22 = d;
+		v._23 = 0;
+		v._24 = 0;
+		v._31 = 0;
+		v._32 = 0;
+		v._33 = 0;
+		v._34 = 0;
+		v._41 = tx;
+		v._42 = ty;
+		v._43 = 0;
+		v._44 = 1;
 		return this;
 	}
 
@@ -45,50 +48,50 @@ class Transform extends Matrix implements ITransform {
 
 	public static function fromMatrix(matrix:MatrixImpl):Transform {
 		var result:Transform = new Transform();
-		result.load(matrix);
+		result.raw.load(matrix);
 		return result;
 	}
 
 	public static function fromTransform(transform:Transform):Transform {
 		var result:Transform = new Transform();
-		result.load(transform.toMatrix());
+		result.raw.load(transform.toMatrix());
 		return result;
 	}
 
 	public function asPoint():PointImpl {
-		if (this._11 == 1 && this._12 == 0 && this._21 == 0 && this._22 == 1) {
-			return new PointImpl(this._41, this._42);
+		if (this.raw._11 == 1 && this.raw._12 == 0 && this.raw._21 == 0 && this.raw._22 == 1) {
+			return new PointImpl(this.raw._41, this.raw._42);
 		}
 		return null;
 	}
 
 	public function asMatrix():MatrixImpl {
-		return this;
+		return this.raw;
 	}
 
 	public function toPoint():PointImpl {
-		return new PointImpl(this._41, this._42);
+		return new PointImpl(this.raw._41, this.raw._42);
 	}
 
 	public function toMatrix():MatrixImpl {
-		return this;
+		return this.raw;
 	}
 
 	public function setXY(x:Float, y:Float):Transform {
-		this._41 = x;
-		this._42 = y;
+		this.raw._41 = x;
+		this.raw._42 = y;
 		return this;
 	}
 
 	public function appendTransform(transform:Transform):Transform {
-		this.multiply(transform.toMatrix(), this);
+		this.raw.multiply(transform.toMatrix(), this.raw);
 		return this;
 	}
 
 	public function appendXY(x:Float, y:Float):Transform {
-		// this.translate(x, y);
-		this._41 += x;
-		this._42 += y;
+		// this.value.translate(x, y);
+		this.raw._41 += x;
+		this.raw._42 += y;
 		return this;
 	}
 }

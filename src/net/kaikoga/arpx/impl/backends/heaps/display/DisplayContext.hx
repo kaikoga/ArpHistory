@@ -39,10 +39,10 @@ class DisplayContext extends DisplayContextBase implements IDisplayContext {
 	private var _workMatrix:Transform = new Transform();
 	public function fillRect(l:Int, t:Int, w:Int, h:Int, color:UInt):Void {
 		var workMatrix:Transform = _workMatrix;
-		workMatrix._11 = w;
-		workMatrix._22 = h;
-		workMatrix._41 = l;
-		workMatrix._42 = t;
+		workMatrix.raw._11 = w;
+		workMatrix.raw._22 = h;
+		workMatrix.raw._41 = l;
+		workMatrix.raw._42 = t;
 		var matrix:Matrix = dupTransform().appendTransform(workMatrix).asMatrix();
 		var tile:Tile = Tile.fromColor(color);
 		this.renderContext.renderTile(matrix, tile);
@@ -51,10 +51,10 @@ class DisplayContext extends DisplayContextBase implements IDisplayContext {
 
 	public function drawTile(tile:Tile):Void {
 		var workMatrix:Transform = _workMatrix;
-		workMatrix._11 = tile.width;
-		workMatrix._22 = tile.height;
-		workMatrix._41 = 0;
-		workMatrix._42 = 0;
+		workMatrix.raw._11 = tile.width;
+		workMatrix.raw._22 = tile.height;
+		workMatrix.raw._41 = 0;
+		workMatrix.raw._42 = 0;
 		var matrix:Matrix = dupTransform().appendTransform(workMatrix).asMatrix();
 		this.renderContext.renderTile(matrix, tile);
 		popTransform();
