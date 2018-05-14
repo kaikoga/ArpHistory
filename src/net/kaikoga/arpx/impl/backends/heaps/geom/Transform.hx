@@ -10,7 +10,10 @@ class Transform implements ITransform {
 
 	public var raw(default, null):MatrixImpl;
 
-	public function new() this.raw = new MatrixImpl();
+	public function new() {
+		this.raw = new MatrixImpl();
+		this.raw.identity();
+	}
 
 	inline public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):Transform {
 		var v:MatrixImpl = this.raw;

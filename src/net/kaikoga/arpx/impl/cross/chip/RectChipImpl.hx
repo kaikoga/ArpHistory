@@ -34,10 +34,10 @@ class RectChipImpl extends ArpObjectImplBase implements IChipImpl {
 			context.fillRect(++l, t, w - 2, h, chip.color.value32);
 		} else {
 			/*
-			var workMatrix:Matrix = _workMatrix;
-			workMatrix.setTo(1, 0, 0, 1, -this.baseX, -this.baseY);
-			workMatrix.concat(transform.toMatrix());
-			bitmapData.draw(this.exportChipSprite(params), workMatrix, transform.colorTransform, transform.blendMode);
+			var _workTransform:Matrix = _workMatrix;
+			_workTransform.setTo(1, 0, 0, 1, -this.baseX, -this.baseY);
+			_workTransform.concat(transform.toMatrix());
+			bitmapData.draw(this.exportChipSprite(params), _workTransform, transform.colorTransform, transform.blendMode);
 			*/
 		}
 	}

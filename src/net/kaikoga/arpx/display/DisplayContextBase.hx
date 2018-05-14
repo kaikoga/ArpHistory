@@ -15,7 +15,6 @@ class DisplayContextBase {
 		this.transforms.push(transform);
 		return transform;
 	}
-	public function pushTransform(transform:Transform):Void this.transforms.push(transform);
 	public function popTransform():Transform return if (this.transforms.length > 0) this.transforms.pop() else null;
 
 	public function new(transform:Transform = null, clearColor:UInt = 0xff000000) {

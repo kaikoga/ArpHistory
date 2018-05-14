@@ -31,7 +31,7 @@ class ChipMenuHudImpl extends ArpObjectImplBase implements IHudImpl {
 				param.set("selected", index == hud.menu.value);
 				param.set("index", index++);
 				hud.chip.render(context, param);
-				transform = transform.appendXY(dPos.x, dPos.y);
+				transform.appendXY(dPos.x, dPos.y);
 			}
 			context.popTransform();
 		}

@@ -21,14 +21,14 @@ class StringChipImpl extends ArpObjectImplBase implements IChipImpl {
 	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
 		var pt:PointImpl = context.transform.toPoint();
 		var cursor:StringChipDrawCursor = new StringChipDrawCursor(pt.x, pt.y, params); // FIXME
-		var transform:Transform = context.transform.clone();
+		var transform:Transform = context.dupTransform();
 		for (char in new StringChipStringIterator(params.get("face"))) {
 			params = cursor.move(char, this.chip, this.chip.chip);
 			if (params != null) {
-				context.pushTransform(transform.setXY(cursor.x, cursor.y));
+				transform.setXY(cursor.x, cursor.y);
 				this.chip.chip.render(context, params);
-				context.popTransform();
 			}
 		}
+		context.popTransform();
 	}
 }

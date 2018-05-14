@@ -16,13 +16,10 @@ class TileMapRenderer {
 		this.chip = chip;
 	}
 
-	private static var _workTransform:Transform = new Transform();
 	private static var _workParams:ArpParams = new ArpParams();
-
 	public function copyArea(context:DisplayContext, gridX:Int, gridY:Int, gridWidth:Int, gridHeight:Int, offsetX:Int, offsetY:Int):Void {
 		var chipWidth:Int = this.chip.chipWidth;
 		var chipHeight:Int = this.chip.chipHeight;
-		var transform:Transform = _workTransform;
 		var params:ArpParams = _workParams;
 		var gridRight:Int = gridX + gridWidth;
 		var gridBottom:Int = gridY + gridHeight;
@@ -36,8 +33,8 @@ class TileMapRenderer {
 		}
 		var destLeft:Int = offsetX + chipWidth * gridX;
 		var destTop:Int = offsetY + chipHeight * gridY;
+		var transform:Transform = context.dupTransform();
 		transform.setXY(destLeft, destTop);
-		context.pushTransform(transform);
 		for (i in gridX...gridRight) {
 			transform.setXY(destLeft, destTop);
 			for (j in gridY...gridBottom) {
