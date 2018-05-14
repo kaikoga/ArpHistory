@@ -18,7 +18,7 @@ class CompositeMortalImpl extends ArpObjectImplBase implements IMortalImpl {
 	public function render(context:DisplayContext):Void {
 		if (mortal.visible) {
 			var pos:ArpPosition = mortal.position;
-			context.pushTransform(context.transform.concatXY(pos.x, pos.y));
+			context.dupTransform().appendXY(pos.x, pos.y);
 			FieldImpl.copySortedMortals(mortal.mortals, context);
 			context.popTransform();
 		}

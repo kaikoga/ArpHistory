@@ -11,6 +11,11 @@ class DisplayContextBase {
 	private var transforms:Array<ITransform>;
 
 	private function get_transform():ITransform return this.transforms[this.transforms.length - 1];
+	public function dupTransform():ITransform {
+		var transform:ITransform = this.transform.toCopy();
+		this.transforms.push(transform);
+		return transform;
+	}
 	public function pushTransform(transform:ITransform):Void this.transforms.push(transform);
 	public function popTransform():ITransform return if (this.transforms.length > 0) this.transforms.pop() else null;
 

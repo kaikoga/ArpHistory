@@ -28,19 +28,19 @@ class TextureChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 			return;
 		}
 
-		var transform:ITransform = context.transform;
+		var transform:ITransform = context.dupTransform();
 		if (this.chip.baseX | this.chip.baseY != 0) {
-			transform = transform.concatXY(-this.chip.baseX, -this.chip.baseY);
+			transform.appendXY(-this.chip.baseX, -this.chip.baseY);
 		}
 
 		var tile:Tile = this.chip.texture.getTile(params);
 		if (tile == null) {
 			var index:Int = this.chip.texture.getFaceIndex(params);
 			this.chip.arpDomain.log("gridchip", 'GridChip.getTrimmedBitmap(): Chip index out of range: ${this}:$index');
+			context.popTransform();
 			return;
 		}
 
-		context.pushTransform(transform);
 		context.drawTile(tile);
 		context.popTransform();
 		/*

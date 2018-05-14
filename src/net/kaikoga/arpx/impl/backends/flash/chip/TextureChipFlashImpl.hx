@@ -34,15 +34,16 @@ class TextureChipFlashImpl extends ArpObjectImplBase implements IChipImpl {
 			return;
 		}
 
-		var transform:ITransform = context.transform;
+		var transform:ITransform = context.dupTransform();
 		if (this.chip.baseX | this.chip.baseY != 0) {
-			transform = transform.concatXY(-this.chip.baseX, -this.chip.baseY);
+			transform.appendXY(-this.chip.baseX, -this.chip.baseY);
 		}
 
 		var faceInfo:TextureFaceInfo = this.chip.texture.getFaceInfo(params);
 		if (faceInfo == null) {
 			var index:Int = this.chip.texture.getFaceIndex(params);
 			this.chip.arpDomain.log("gridchip", 'GridChip.getTrimmedBitmap(): Chip index out of range: ${this}:$index');
+			context.popTransform();
 			return;
 		}
 
@@ -65,6 +66,7 @@ class TextureChipFlashImpl extends ArpObjectImplBase implements IChipImpl {
 			var blendMode:BlendMode = cast params.getAsString("blendMode");
 			context.bitmapData.draw(faceInfo.data, transform.toMatrix(), colorTransform, blendMode);
 		}
+		context.popTransform();
 	}
 }
 

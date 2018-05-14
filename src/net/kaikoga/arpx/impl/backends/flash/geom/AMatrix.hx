@@ -74,14 +74,6 @@ class AMatrix extends Matrix implements ITransform {
 		this.translate(x, y);
 		return this;
 	}
-
-	public function concatTransform(transform:ITransform):ITransform {
-		return AMatrix.fromTransform(this).appendTransform(transform);
-	}
-
-	public function concatXY(x:Float, y:Float):ITransform {
-		return AMatrix.fromTransform(this).appendXY(x, y);
-	}
 }
 
 #end
