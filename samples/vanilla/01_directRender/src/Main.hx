@@ -5,7 +5,6 @@ import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arpx.ArpEngine;
 import net.kaikoga.arpx.chip.RectChip;
-import net.kaikoga.arpx.geom.Transform;
 import net.kaikoga.arpx.mortal.ChipMortal;
 import net.kaikoga.arpx.mortal.CompositeMortal;
 
@@ -45,7 +44,7 @@ class Main extends ArpEngine {
 		context.start();
 
 		var rectChip:RectChip = domain.query("rectChip", new RectChip().arpType).value();
-		context.pushTransform(new Transform(1, 0, 0, 1, 32, 32));
+		context.dupTransform().appendXY(32, 32);
 		rectChip.render(context);
 		context.popTransform();
 		var mortal:ChipMortal = domain.query("chipMortal", new ChipMortal().arpType).value();

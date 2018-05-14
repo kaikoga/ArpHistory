@@ -2,7 +2,6 @@ package net.kaikoga.arpx.impl.backends.flash.geom;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import flash.geom.Matrix;
 import net.kaikoga.arpx.geom.ITransform;
 import net.kaikoga.arpx.geom.PointImpl;
 import net.kaikoga.arpx.geom.MatrixImpl;
@@ -11,9 +10,7 @@ class Transform implements ITransform {
 
 	public var raw(default, null):MatrixImpl;
 
-	public function new(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0) {
-		raw = new Matrix(a, b, c, d, tx, ty);
-	}
+	public function new() raw = new MatrixImpl();
 
 	public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):Transform {
 		this.raw.setTo(a, b, c, d, tx, ty);

@@ -2,7 +2,6 @@ package net.kaikoga.arpx.impl.backends.heaps.geom;
 
 #if arp_backend_heaps
 
-import h3d.Matrix;
 import net.kaikoga.arpx.geom.ITransform;
 import net.kaikoga.arpx.geom.PointImpl;
 import net.kaikoga.arpx.geom.MatrixImpl;
@@ -11,10 +10,7 @@ class Transform implements ITransform {
 
 	public var raw(default, null):MatrixImpl;
 
-	public function new(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0) {
-		this.raw = new Matrix();
-		this.reset(a, b, c, d, tx, ty);
-	}
+	public function new() this.raw = new MatrixImpl();
 
 	inline public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):Transform {
 		var v:MatrixImpl = this.raw;
