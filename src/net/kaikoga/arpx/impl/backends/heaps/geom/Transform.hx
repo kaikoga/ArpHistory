@@ -11,10 +11,6 @@ class Transform implements ITransform {
 
 	public var raw(default, null):MatrixImpl;
 
-	public function toCopy():Transform {
-		return Transform.fromTransform(this);
-	}
-
 	public function new(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0) {
 		this.raw = new Matrix();
 		this.reset(a, b, c, d, tx, ty);
@@ -41,21 +37,23 @@ class Transform implements ITransform {
 		return this;
 	}
 
-	public static function fromPoint(pt:PointImpl):Transform {
-		var result:Transform = new Transform(1, 0, 0, 1, pt.x, pt.y);
-		return result;
+	public function clone():Transform {
+		return new Transform().copyFrom(this);
 	}
 
-	public static function fromMatrix(matrix:MatrixImpl):Transform {
-		var result:Transform = new Transform();
-		result.raw.load(matrix);
-		return result;
+	public function copyFrom(source:Transform):Transform {
+		this.raw.load(source.raw);
+		return this;
 	}
 
-	public static function fromTransform(transform:Transform):Transform {
-		var result:Transform = new Transform();
-		result.raw.load(transform.toMatrix());
-		return result;
+	public function readPoint(pt:PointImpl):Transform {
+		this.reset(1, 0, 0, 1, pt.x, pt.y);
+		return this;
+	}
+
+	public function readMatrix(matrix:MatrixImpl):Transform {
+		this.raw.load(matrix);
+		return this;
 	}
 
 	public function asPoint():PointImpl {

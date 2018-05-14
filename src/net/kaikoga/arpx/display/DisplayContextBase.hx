@@ -11,7 +11,7 @@ class DisplayContextBase {
 
 	private function get_transform():Transform return this.transforms[this.transforms.length - 1];
 	public function dupTransform():Transform {
-		var transform:Transform = this.transform.toCopy();
+		var transform:Transform = this.transform.clone();
 		this.transforms.push(transform);
 		return transform;
 	}
