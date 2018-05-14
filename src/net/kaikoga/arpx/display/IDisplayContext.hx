@@ -13,7 +13,7 @@ interface IDisplayContext {
 	public function display():Void;
 
 	public function dupTransform():Transform;
-	public function popTransform():Transform;
+	public function popTransform():Void;
 
 	public function fillRect(l:Int, t:Int, w:Int, h:Int, color:UInt):Void;
 }
