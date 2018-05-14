@@ -2,9 +2,9 @@ package net.kaikoga.arpx.impl.backends.heaps.chip;
 
 #if arp_backend_heaps
 
+import net.kaikoga.arpx.geom.PointImpl;
 import h2d.Font;
 import h2d.Text;
-import h3d.col.Point;
 import hxd.Charset;
 import hxd.res.FontBuilder;
 import net.kaikoga.arp.structs.IArpParamsRead;
@@ -65,7 +65,7 @@ class NativeTextChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 		t.letterSpacing = 0;
 		t.text = text;
 		t.textColor = this.chip.color.value32;
-		var pt:Point = context.transform.toPoint();
+		var pt:PointImpl = context.transform.toPoint();
 		t.x = pt.x;
 		t.y = pt.y - this.chip.fontSize + 2;
 	}

@@ -1,7 +1,7 @@
 package net.kaikoga.arpx;
 
 #if (arp_backend_flash || arp_backend_openfl)
-import net.kaikoga.arpx.impl.backends.flash.geom.AMatrixCase;
+import net.kaikoga.arpx.impl.backends.flash.geom.TransformCase;
 #end
 
 import net.kaikoga.arpx.automaton.AutomatonCase;
@@ -16,7 +16,7 @@ class ArpEngineTestSuite {
 	public static function addTo(r:PicoTestRunner) {
 
 #if (arp_backend_flash || arp_backend_openfl)
-		r.load(AMatrixCase);
+		r.load(TransformCase);
 #end
 
 		r.load(ArpEngineComponentsCase);

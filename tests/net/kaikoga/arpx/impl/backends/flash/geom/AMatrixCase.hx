@@ -7,9 +7,9 @@ import flash.geom.Point;
 
 import picotest.PicoAssert.*;
 
-class AMatrixCase {
+class TransformCase {
 
-	var me:AMatrix = new AMatrix(1.0, 2.0, 3.0, 4.0, 5.0, 6.0);
+	var me:Transform = new Transform(1.0, 2.0, 3.0, 4.0, 5.0, 6.0);
 
 	public function setup() {
 	}

@@ -1,11 +1,11 @@
 package net.kaikoga.arpx.impl.cross.chip.decorators;
 
 import net.kaikoga.arp.structs.IArpParamsRead;
-import net.kaikoga.arpx.impl.ArpObjectImplBase;
-import net.kaikoga.arpx.impl.cross.chip.IChipImpl;
 import net.kaikoga.arpx.chip.decorators.DecorateChip;
 import net.kaikoga.arpx.display.DisplayContext;
-import net.kaikoga.arpx.geom.AMatrix;
+import net.kaikoga.arpx.geom.Transform;
+import net.kaikoga.arpx.impl.ArpObjectImplBase;
+import net.kaikoga.arpx.impl.cross.chip.IChipImpl;
 
 class DecorateChipImpl extends ArpObjectImplBase implements IChipImpl {
 
@@ -24,9 +24,9 @@ class DecorateChipImpl extends ArpObjectImplBase implements IChipImpl {
 		return true;
 	}
 
-	private static var workMatrix:AMatrix = new AMatrix();
+	private static var workMatrix:Transform = new Transform();
 	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
-		var aMatrix:AMatrix = workMatrix;
+		var aMatrix:Transform = workMatrix;
 		aMatrix.reset(chip.a, chip.b, chip.c, chip.d, chip.x, chip.y);
 		aMatrix.appendTransform(context.transform);
 		var p:IArpParamsRead = params;

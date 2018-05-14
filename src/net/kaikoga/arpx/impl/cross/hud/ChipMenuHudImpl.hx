@@ -3,7 +3,7 @@ package net.kaikoga.arpx.impl.cross.hud;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.display.DisplayContext;
-import net.kaikoga.arpx.geom.ITransform;
+import net.kaikoga.arpx.geom.Transform;
 import net.kaikoga.arpx.hud.ChipMenuHud;
 import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.impl.cross.hud.IHudImpl;
@@ -23,7 +23,7 @@ class ChipMenuHudImpl extends ArpObjectImplBase implements IHudImpl {
 			var menu:Menu = hud.menu;
 			var pos:ArpPosition = hud.position;
 			var dPos:ArpPosition = hud.dPosition;
-			var transform:ITransform = context.dupTransform().appendXY(pos.x, pos.y);
+			var transform:Transform = context.dupTransform().appendXY(pos.x, pos.y);
 			var param:ArpParams = new ArpParams();
 			var index:Int = 0;
 			for (item in menu.menuItems) {

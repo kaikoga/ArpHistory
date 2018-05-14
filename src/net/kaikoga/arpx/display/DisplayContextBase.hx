@@ -1,26 +1,25 @@
 package net.kaikoga.arpx.display;
 
-import net.kaikoga.arpx.geom.AMatrix;
-import net.kaikoga.arpx.geom.ITransform;
+import net.kaikoga.arpx.geom.Transform;
 
 class DisplayContextBase {
 
 	public var clearColor(default, null):UInt;
 
-	public var transform(get, never):ITransform;
-	private var transforms:Array<ITransform>;
+	public var transform(get, never):Transform;
+	private var transforms:Array<Transform>;
 
-	private function get_transform():ITransform return this.transforms[this.transforms.length - 1];
-	public function dupTransform():ITransform {
-		var transform:ITransform = this.transform.toCopy();
+	private function get_transform():Transform return this.transforms[this.transforms.length - 1];
+	public function dupTransform():Transform {
+		var transform:Transform = this.transform.toCopy();
 		this.transforms.push(transform);
 		return transform;
 	}
-	public function pushTransform(transform:ITransform):Void this.transforms.push(transform);
-	public function popTransform():ITransform return if (this.transforms.length > 0) this.transforms.pop() else null;
+	public function pushTransform(transform:Transform):Void this.transforms.push(transform);
+	public function popTransform():Transform return if (this.transforms.length > 0) this.transforms.pop() else null;
 
-	public function new(transform:ITransform = null, clearColor:UInt = 0xff000000) {
-		this.transforms = [(transform == null) ? new AMatrix() : transform];
+	public function new(transform:Transform = null, clearColor:UInt = 0xff000000) {
+		this.transforms = [(transform == null) ? new Transform() : transform];
 		this.clearColor = clearColor;
 	}
 }

@@ -2,7 +2,7 @@ package net.kaikoga.arpx;
 
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arpx.display.DisplayContext;
-import net.kaikoga.arpx.geom.AMatrix;
+import net.kaikoga.arpx.geom.Transform;
 
 #if arp_backend_flash
 import flash.Lib;
@@ -83,9 +83,9 @@ class ArpEngine
 		var bitmapData:BitmapData = new BitmapData(this.width, this.height, true, this.clearColor);
 		var bitmap:Bitmap = new Bitmap(bitmapData, PixelSnapping.NEVER, false);
 		Lib.current.addChild(bitmap);
-		this._displayContext = new DisplayContext(bitmapData, new AMatrix(), this.clearColor);
+		this._displayContext = new DisplayContext(bitmapData, new Transform(), this.clearColor);
 #elseif arp_backend_heaps
-		this._displayContext = new DisplayContext(this.s2d, this.width, this.height, new AMatrix());
+		this._displayContext = new DisplayContext(this.s2d, this.width, this.height, new Transform());
 #end
 		return this._displayContext;
 	}

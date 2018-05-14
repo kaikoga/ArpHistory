@@ -3,7 +3,7 @@ package net.kaikoga.arpx.impl.cross.tilemap.legacy;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.chip.Chip;
 import net.kaikoga.arpx.display.DisplayContext;
-import net.kaikoga.arpx.geom.AMatrix;
+import net.kaikoga.arpx.geom.Transform;
 import net.kaikoga.arpx.tileMap.TileMap;
 
 class TileMapRenderer {
@@ -16,13 +16,13 @@ class TileMapRenderer {
 		this.chip = chip;
 	}
 
-	private static var _workTransform:AMatrix = new AMatrix();
+	private static var _workTransform:Transform = new Transform();
 	private static var _workParams:ArpParams = new ArpParams();
 
 	public function copyArea(context:DisplayContext, gridX:Int, gridY:Int, gridWidth:Int, gridHeight:Int, offsetX:Int, offsetY:Int):Void {
 		var chipWidth:Int = this.chip.chipWidth;
 		var chipHeight:Int = this.chip.chipHeight;
-		var transform:AMatrix = _workTransform;
+		var transform:Transform = _workTransform;
 		var params:ArpParams = _workParams;
 		var gridRight:Int = gridX + gridWidth;
 		var gridBottom:Int = gridY + gridHeight;

@@ -10,7 +10,7 @@ import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.impl.cross.chip.IChipImpl;
 import net.kaikoga.arpx.impl.backends.heaps.display.DisplayContext;
 import net.kaikoga.arpx.chip.TextureChip;
-import net.kaikoga.arpx.geom.ITransform;
+import net.kaikoga.arpx.geom.Transform;
 
 class TextureChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 
@@ -28,7 +28,7 @@ class TextureChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 			return;
 		}
 
-		var transform:ITransform = context.dupTransform();
+		var transform:Transform = context.dupTransform();
 		if (this.chip.baseX | this.chip.baseY != 0) {
 			transform.appendXY(-this.chip.baseX, -this.chip.baseY);
 		}

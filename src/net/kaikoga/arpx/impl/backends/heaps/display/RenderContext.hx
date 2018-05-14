@@ -8,12 +8,12 @@ import h3d.Engine;
 import h3d.mat.BlendMode;
 import h3d.mat.Data;
 import h3d.mat.Pass;
+import h3d.Matrix;
 import h3d.pass.ShaderManager;
 import h3d.shader.Base2d;
 import hxsl.Globals;
 import hxsl.RuntimeShader;
 import hxsl.ShaderList;
-import net.kaikoga.arpx.geom.MatrixImpl;
 
 class RenderContext {
 
@@ -84,7 +84,7 @@ class RenderContext {
 	public function display():Void {
 	}
 
-	public function renderTile(matrix:MatrixImpl, tile:Tile):Void {
+	public function renderTile(matrix:Matrix, tile:Tile):Void {
 		baseShader.absoluteMatrixA.set(matrix._11, matrix._21, matrix._41, 1);
 		baseShader.absoluteMatrixB.set(matrix._12, matrix._22, matrix._42, 1);
 		@:privateAccess baseShader.uvPos.set(tile.u, tile.v, tile.u2 - tile.u, tile.v2 - tile.v);

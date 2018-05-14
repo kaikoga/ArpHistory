@@ -10,12 +10,12 @@ interface ITransform {
 	function toMatrix():MatrixImpl;
 
 	// creates an exact copy, includes actual concrete representation used.
-	function toCopy():ITransform;
+	function toCopy():Transform;
 
 	// overwrites transform.
-	function setXY(x:Float, y:Float):ITransform;
+	function setXY(x:Float, y:Float):Transform;
 
 	// modifies transform.
-	function appendTransform(transform:ITransform):ITransform;
-	function appendXY(x:Float, y:Float):ITransform;
+	function appendTransform(transform:Transform):Transform;
+	function appendXY(x:Float, y:Float):Transform;
 }
