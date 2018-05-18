@@ -4,10 +4,10 @@ package net.kaikoga.arpx.impl.backends.flash.texture;
 
 import flash.display.BitmapData;
 import flash.geom.Rectangle;
-import flash.text.TextField;
 import flash.text.TextFormat;
 import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.impl.backends.flash.texture.decorators.MultiTextureFlashImplBase;
+import net.kaikoga.arpx.impl.targets.flash.display.BitmapFont;
 import net.kaikoga.arpx.texture.NativeTextTexture;
 
 class NativeTextTextureFlashImpl extends MultiTextureFlashImplBase<NativeTextTexture> {
@@ -24,24 +24,29 @@ class NativeTextTextureFlashImpl extends MultiTextureFlashImplBase<NativeTextTex
 	override public function arpHeatUp():Bool {
 		if (this.faces.length > 0) return true;
 
-		var textField:TextField = new TextField();
-		textField.x = -2;
-		textField.y = -2;
-		textField.width = 24;
-		textField.height = 24;
-		textField.textColor = this.texture.color.value32;
-		textField.defaultTextFormat = new TextFormat(this.texture.font, this.texture.fontSize);
-		textField.text = "ス";
-		this._bitmapData = new BitmapData(2048, 2048, true, 0); // FIXME
-		this._bitmapData.draw(textField);
+		var textFormat:TextFormat = new TextFormat(this.texture.font, this.texture.fontSize);
+		var bitmapFont:BitmapFont = new BitmapFont(textFormat, 0, 0, false);
+		this._bitmapData = new BitmapData(32, 32, true, 0); // FIXME
+		bitmapFont.drawChar(this._bitmapData, "ス".code, 0, 0);
+		bitmapFont.drawChar(this._bitmapData, "タ".code, 0, 16);
+		bitmapFont.drawChar(this._bitmapData, "ー".code, 16, 0);
+		this.nextFaceName("ス");
+		this.pushFaceInfo(new Rectangle(0, 0, 16, 16));
+		this.nextFaceName("タ");
+		this.pushFaceInfo(new Rectangle(0, 16, 16, 16));
+		this.nextFaceName("ー");
+		this.pushFaceInfo(new Rectangle(16, 0, 16, 16));
+		/*
 		for (char in this.texture.faceList.toArray()) {
+			var charCode:Int = char.charCodeAt(0);
 			this.nextFaceName(char);
-			this.pushFaceInfo(new Rectangle(0, 0, 16, 16));
+			this.pushFaceInfo(bitmapFont.getBounds(charCode));
 		}
+		*/
 		return true;
 	}
 
-	override public function getFaceIndex(params:IArpParamsRead = null):Int return 0;
+	override public function getFaceIndex(params:IArpParamsRead = null):Int return try super.getFaceIndex(params) catch (e:Dynamic) 0;
 
 	override public function arpHeatDown():Bool {
 		this._bitmapData.dispose();

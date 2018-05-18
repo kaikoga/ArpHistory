@@ -17,7 +17,7 @@ class StringChip extends Chip {
 	@:arpField public var isProportional:Bool;
 	@:arpField public var orientation:Int;
 
-	@:arpField public var chip:Chip;
+	@:arpBarrier @:arpField public var chip:Chip;
 
 	override public function chipWidthOf(params:ArpParams):Int {
 		if (params == null) {
