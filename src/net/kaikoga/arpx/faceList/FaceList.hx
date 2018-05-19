@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.faceList;
 
+import net.kaikoga.arp.iterators.EmptyIterator;
 import net.kaikoga.arp.domain.IArpObject;
 
 @:arpType("faceList", "null")
@@ -13,5 +14,5 @@ class FaceList implements IArpObject {
 	private function get_length():Int return 0;
 	public function indexOf(name:String):Int return -1;
 	public function get(index:Int):String return null;
-	public function toArray():Array<String> return [];
+	public function iterator():Iterator<String> return new EmptyIterator();
 }

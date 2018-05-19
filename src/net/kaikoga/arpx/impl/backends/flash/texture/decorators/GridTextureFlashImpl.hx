@@ -26,7 +26,7 @@ class GridTextureFlashImpl extends MultiTextureFlashImplBase<GridTexture> {
 		var isVertical:Bool = this.texture.faceList.isVertical;
 		var x:Int = 0;
 		var y:Int = 0;
-		for (face in this.texture.faceList.toArray()) {
+		for (face in this.texture.faceList) {
 			this.nextFaceName(face);
 			for (dir in 0...this.texture.dirs) {
 				this.pushFaceInfo(new Rectangle(x, y, faceWidth, faceHeight));

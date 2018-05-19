@@ -14,8 +14,7 @@ class GenericFaceList extends FaceList {
 
 	private var arrayValue:Array<String>;
 
-	public function GenericFaceList() {
-	}
+	public function GenericFaceList() super();
 
 	@:arpHeatUp
 	private function heatUp():Bool {
@@ -24,6 +23,7 @@ class GenericFaceList extends FaceList {
 		if (this.range.hasValue) result = result.concat(this.range.split());
 		if (this.csvFaces != null) result = result.concat(~/\s/g.replace(this.csvFaces, "").split(","));
 		if (this.extraFaces != null) result = result.concat(this.extraFaces);
+		if (result.length == 0) result.push("");
 		this.arrayValue = result;
 		return true;
 	}
@@ -49,9 +49,8 @@ class GenericFaceList extends FaceList {
 		return this.arrayValue[index];
 	}
 
-	override public function toArray():Array<String> {
-		var result = this.arrayValue.copy();
-		if (result.length == 0) result.push("");
-		return result;
+	override public function iterator():Iterator<String> {
+		if (this.arrayValue == null) this.heatUp();
+		return this.arrayValue.iterator();
 	}
 }
