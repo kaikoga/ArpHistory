@@ -1,59 +1,17 @@
 package net.kaikoga.arpx.faceList;
 
-import net.kaikoga.arp.iterators.ERegIterator;
-import net.kaikoga.arp.structs.ArpRange;
 import net.kaikoga.arp.domain.IArpObject;
 
-@:arpType("faceList", "faceList")
+@:arpType("faceList", "null")
 class FaceList implements IArpObject {
 
-	@:arpField public var isVertical:Bool;
-	@:arpField public var extraFaces:Array<String>;
-	@:arpField public var chars:String;
-	@:arpField public var range:ArpRange;
-	@:arpField("value") public var csvFaces:String;
+	public function new() return;
 
-	private var arrayValue:Array<String>;
-
-	public function new() {
-	}
-
-	@:arpHeatUp
-	private function heatUp():Bool {
-		var result:Array<String> = [];
-		if (this.chars != null) for (char in new ERegIterator(~/[^\n\r\t\/ ]|\/[^\/]*\//, this.chars)) result.push(char);
-		if (this.range.hasValue) result = result.concat(this.range.split());
-		if (this.csvFaces != null) result = result.concat(~/\s/g.replace(this.csvFaces, "").split(","));
-		if (this.extraFaces != null) result = result.concat(this.extraFaces);
-		this.arrayValue = result;
-		return true;
-	}
-
-	@:arpHeatDown
-	private function heatDown():Bool {
-		this.arrayValue = null;
-		return true;
-	}
-
+	public var isVertical(get, never):Bool;
+	private function get_isVertical():Bool return false;
 	public var length(get, never):Int;
-	public function get_length():Int {
-		if (this.arrayValue == null) this.heatUp();
-		return this.arrayValue.length;
-	}
-
-	public function indexOf(name:String):Int {
-		if (this.arrayValue == null) this.heatUp();
-		return this.arrayValue.indexOf(name);
-	}
-
-	public function get(index:Int):String {
-		if (this.arrayValue == null) this.heatUp();
-		return this.arrayValue[index];
-	}
-
-	public function toArray():Array<String> {
-		var result = this.arrayValue.copy();
-		if (result.length == 0) result.push("");
-		return result;
-	}
+	private function get_length():Int return 0;
+	public function indexOf(name:String):Int return -1;
+	public function get(index:Int):String return null;
+	public function toArray():Array<String> return [];
 }
