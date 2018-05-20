@@ -14,7 +14,7 @@ class GenericFaceList extends FaceList {
 
 	private var arrayValue:Array<String>;
 
-	public function GenericFaceList() super();
+	public function new() super();
 
 	@:arpHeatUp
 	private function heatUp():Bool {
