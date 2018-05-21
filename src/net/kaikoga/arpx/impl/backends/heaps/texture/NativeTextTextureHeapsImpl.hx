@@ -2,12 +2,17 @@ package net.kaikoga.arpx.impl.backends.heaps.texture;
 
 #if arp_backend_heaps
 
-import flash.display.BitmapData;
-import flash.text.TextField;
-import flash.text.TextFormat;
+import net.kaikoga.arpx.impl.targets.flash.display.BitmapFontDrawCursor;
+import hxd.Pixels.Flags;
+import flash.geom.Rectangle;
+import h3d.mat.Texture;
 import h2d.Tile;
-import net.kaikoga.arp.structs.IArpParamsRead;
+import flash.display.BitmapData;
+import flash.text.TextFormat;
+import hxd.impl.Memory.MemoryReader;
+import hxd.PixelFormat;
 import net.kaikoga.arpx.impl.backends.heaps.texture.decorators.MultiTextureHeapsImplBase;
+import net.kaikoga.arpx.impl.targets.flash.display.BitmapFont;
 import net.kaikoga.arpx.texture.NativeTextTexture;
 
 class NativeTextTextureHeapsImpl extends MultiTextureHeapsImplBase<NativeTextTexture> {
@@ -23,23 +28,31 @@ class NativeTextTextureHeapsImpl extends MultiTextureHeapsImplBase<NativeTextTex
 
 	override public function arpHeatUp():Bool {
 		if (this.tile != null) return true;
+
 		#if flash
-		var textField:TextField = new TextField();
-		textField.x = -2;
-		textField.y = -2;
-		textField.width = 24;
-		textField.height = 24;
-		textField.textColor = this.texture.color.value32 | 0xff000000;
-		textField.defaultTextFormat = new TextFormat(this.texture.font, this.texture.fontSize);
-		textField.text = "ス";
-		var bitmapData:BitmapData = new BitmapData(32, 32, true, 0); // FIXME
-		bitmapData.draw(textField);
-		this.tile = Tile.fromBitmap(hxd.BitmapData.fromNative(bitmapData));
-		#end
-		for (char in this.texture.faceList.toArray()) {
+
+		var textFormat:TextFormat = new TextFormat(this.texture.font, this.texture.fontSize);
+		var bitmapFont:BitmapFont = new BitmapFont(textFormat, 0, 0, false);
+		var bitmapData:BitmapData = new BitmapData(2048, 2048, true, 0); // FIXME
+		this.tile = @:privateAccess new Tile(null, 0, 0, bitmapData.width, bitmapData.height);
+		var cursor:BitmapFontDrawCursor = new BitmapFontDrawCursor(bitmapFont, bitmapData.width, bitmapData.height);
+		for (char in this.texture.faceList) {
 			this.nextFaceName(char);
-			this.pushFaceInfo(this.tile, 0, 0, 16, 16);
+			var charCode:Int = char.charCodeAt(0);
+			cursor.move(charCode);
+			bitmapFont.drawChar(bitmapData, charCode, cursor.x, cursor.y);
+			var bounds:Rectangle = bitmapFont.getBounds(charCode);
+			this.pushFaceInfo(this.tile, cursor.x, cursor.y, bounds.width, bounds.height);
 		}
+
+		bitmapFont.dispose();
+		this.tile = tileFromPremult(bitmapData);
+		this.tile.getTexture().realloc = () -> { this.tile = null; this.arpHeatUp(); }
+
+		for (face in this.faces) @:privateAccess face.setTexture(this.tile.innerTex);
+
+		#end
+
 		return true;
 	}
 
@@ -49,7 +62,16 @@ class NativeTextTextureHeapsImpl extends MultiTextureHeapsImplBase<NativeTextTex
 		return true;
 	}
 
-	override public function getFaceIndex(params:IArpParamsRead = null):Int return 0;
+	private static function tileFromPremult(bitmapData:BitmapData):Tile {
+		var pixels = hxd.BitmapData.fromNative(bitmapData).getPixels();
+		bitmapData.dispose();
+
+		pixels.flags.set(Flags.AlphaPremultiplied);
+
+		var tile:Tile = Tile.fromPixels(pixels);
+		pixels.dispose();
+		return tile;
+	}
 }
 
 #end

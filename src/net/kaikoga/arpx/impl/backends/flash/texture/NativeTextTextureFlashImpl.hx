@@ -2,6 +2,7 @@ package net.kaikoga.arpx.impl.backends.flash.texture;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
+import net.kaikoga.arpx.impl.targets.flash.display.BitmapFontDrawCursor;
 import flash.display.BitmapData;
 import flash.geom.Rectangle;
 import flash.text.TextFormat;
@@ -26,23 +27,20 @@ class NativeTextTextureFlashImpl extends MultiTextureFlashImplBase<NativeTextTex
 
 		var textFormat:TextFormat = new TextFormat(this.texture.font, this.texture.fontSize);
 		var bitmapFont:BitmapFont = new BitmapFont(textFormat, 0, 0, false);
-		this._bitmapData = new BitmapData(32, 32, true, 0); // FIXME
-		bitmapFont.drawChar(this._bitmapData, "ス".code, 0, 0);
-		bitmapFont.drawChar(this._bitmapData, "タ".code, 0, 16);
-		bitmapFont.drawChar(this._bitmapData, "ー".code, 16, 0);
-		this.nextFaceName("ス");
-		this.pushFaceInfo(new Rectangle(0, 0, 16, 16));
-		this.nextFaceName("タ");
-		this.pushFaceInfo(new Rectangle(0, 16, 16, 16));
-		this.nextFaceName("ー");
-		this.pushFaceInfo(new Rectangle(16, 0, 16, 16));
-		/*
-		for (char in this.texture.faceList.toArray()) {
-			var charCode:Int = char.charCodeAt(0);
+		this._bitmapData = new BitmapData(2048, 2048, true, 0xffff00ff); // FIXME
+
+		var cursor:BitmapFontDrawCursor = new BitmapFontDrawCursor(bitmapFont, this._bitmapData.width, this._bitmapData.height);
+		for (char in this.texture.faceList) {
 			this.nextFaceName(char);
-			this.pushFaceInfo(bitmapFont.getBounds(charCode));
+			var charCode:Int = char.charCodeAt(0);
+			cursor.move(charCode);
+			bitmapFont.drawChar(this._bitmapData, charCode, cursor.x, cursor.y);
+			var bounds:Rectangle = bitmapFont.getBounds(charCode).clone();
+			bounds.x = cursor.x;
+			bounds.y = cursor.y;
+			this.pushFaceInfo(bounds);
 		}
-		*/
+		bitmapFont.dispose();
 		return true;
 	}
 

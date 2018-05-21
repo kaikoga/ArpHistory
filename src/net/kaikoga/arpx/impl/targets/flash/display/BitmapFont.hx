@@ -29,12 +29,12 @@ class BitmapFont {
 		this.minHeight = minheight;
 		this.charWidth = charwidth;
 		this.fixWidth = fixwidth;
-		this.disposeBitmaps();
+		this.dispose();
 
 		this._workTextField = new TextField();
 		this._workTextField.autoSize = TextFieldAutoSize.LEFT;
-		this._workTextField.textColor = 0xffffff;
-		textFormat.color = 0xffffff;
+		this._workTextField.textColor = 0xffffffff;
+		textFormat.color = 0xffffffff;
 		this._workTextField.setTextFormat(textFormat);
 		this._workTextField.defaultTextFormat = textFormat;
 		var metrics:TextLineMetrics = this._workTextField.getLineMetrics(0);
@@ -43,7 +43,7 @@ class BitmapFont {
 		this._workRect.height = this.charHeight;
 	}
 
-	public function disposeBitmaps():Void {
+	public function dispose():Void {
 		if (this.bitmapDataByCharCode != null) for (bitmapData in this.bitmapDataByCharCode) bitmapData.dispose();
 		this.bitmapDataByCharCode = new Map();
 		this.boundsByCharCode = new Map();

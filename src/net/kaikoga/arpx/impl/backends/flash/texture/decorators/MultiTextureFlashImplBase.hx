@@ -2,6 +2,7 @@ package net.kaikoga.arpx.impl.backends.flash.texture.decorators;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
+import flash.geom.Point;
 import flash.display.BitmapData;
 import flash.geom.Rectangle;
 import net.kaikoga.arp.structs.IArpParamsRead;
@@ -65,7 +66,13 @@ class MultiTextureFlashImplBase<T:MultiTexture> extends TextureFlashImplBase imp
 	}
 
 	public function bitmapData():BitmapData return this.texture.texture.bitmapData();
-	public function trim(bound:Rectangle):BitmapData return this.texture.texture.trim(bound);
+
+	private static var nullPoint:Point = new Point(0, 0);
+	public function trim(bound:Rectangle):BitmapData {
+		var result = new BitmapData(Std.int(bound.width), Std.int(bound.height), true, 0x00000000);
+		result.copyPixels(this.bitmapData(), bound, nullPoint);
+		return result;
+	}
 
 	public function getFaceInfo(params:IArpParamsRead = null):TextureFaceInfo {
 		return this.faces[this.getFaceIndex(params)];
