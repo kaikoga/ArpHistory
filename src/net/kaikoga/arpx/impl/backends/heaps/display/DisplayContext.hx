@@ -49,14 +49,14 @@ class DisplayContext extends DisplayContextBase implements IDisplayContext {
 		popTransform();
 	}
 
-	public function drawTile(tile:Tile):Void {
+	public function drawTile(tile:Tile, r:Float = 1., g:Float = 1., b:Float = 1., a:Float = 1.):Void {
 		var _workTransform:Transform = _workMatrix;
 		_workTransform.raw._11 = tile.width;
 		_workTransform.raw._22 = tile.height;
 		_workTransform.raw._41 = 0;
 		_workTransform.raw._42 = 0;
 		var matrix:Matrix = dupTransform().appendTransform(_workTransform).raw;
-		this.renderContext.renderTile(matrix, tile);
+		this.renderContext.renderTile(matrix, tile, r, g, b, a);
 		popTransform();
 	}
 

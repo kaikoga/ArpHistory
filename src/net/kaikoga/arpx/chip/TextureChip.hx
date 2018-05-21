@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.chip;
 
+import net.kaikoga.arp.structs.ArpColor;
 import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.texture.Texture;
 
@@ -13,6 +14,7 @@ import net.kaikoga.arpx.impl.backends.heaps.chip.TextureChipHeapsImpl;
 class TextureChip extends Chip {
 
 	@:arpBarrier(true) @:arpField public var texture:Texture;
+	@:arpField public var color:ArpColor = new ArpColor(0xffffffff);
 	@:arpField public var baseX:Int;
 	@:arpField public var baseY:Int;
 

@@ -84,9 +84,10 @@ class RenderContext {
 	public function display():Void {
 	}
 
-	public function renderTile(matrix:Matrix, tile:Tile):Void {
+	public function renderTile(matrix:Matrix, tile:Tile, r:Float = 1., g:Float = 1., b:Float = 1., a:Float = 1.):Void {
 		baseShader.absoluteMatrixA.set(matrix._11, matrix._21, matrix._41, 1);
 		baseShader.absoluteMatrixB.set(matrix._12, matrix._22, matrix._42, 1);
+		baseShader.color.set(r, g, b, a);
 		@:privateAccess baseShader.uvPos.set(tile.u, tile.v, tile.u2 - tile.u, tile.v2 - tile.v);
 		baseShader.texture = tile.getTexture();
 		manager.fillParams(buffers, runtimeShader, baseShaderList);

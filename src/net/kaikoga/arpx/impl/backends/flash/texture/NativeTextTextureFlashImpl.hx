@@ -53,7 +53,6 @@ class NativeTextTextureFlashImpl extends MultiTextureFlashImplBase<NativeTextTex
 	}
 
 	override public function bitmapData():BitmapData return this._bitmapData;
-	override public function trim(bound:Rectangle):BitmapData return this._bitmapData;
 }
 
 #end

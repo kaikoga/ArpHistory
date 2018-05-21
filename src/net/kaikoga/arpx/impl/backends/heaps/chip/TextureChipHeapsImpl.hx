@@ -2,15 +2,14 @@ package net.kaikoga.arpx.impl.backends.heaps.chip;
 
 #if arp_backend_heaps
 
-import h2d.Bitmap;
 import h2d.Tile;
-import h3d.col.Point;
 import net.kaikoga.arp.domain.ArpHeat;
+import net.kaikoga.arp.structs.ArpColor;
 import net.kaikoga.arp.structs.IArpParamsRead;
-import net.kaikoga.arpx.impl.cross.chip.IChipImpl;
-import net.kaikoga.arpx.impl.backends.heaps.display.DisplayContext;
 import net.kaikoga.arpx.chip.TextureChip;
 import net.kaikoga.arpx.geom.Transform;
+import net.kaikoga.arpx.impl.backends.heaps.display.DisplayContext;
+import net.kaikoga.arpx.impl.cross.chip.IChipImpl;
 
 class TextureChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 
@@ -41,23 +40,15 @@ class TextureChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 			return;
 		}
 
-		context.drawTile(tile);
+		var color:ArpColor = this.chip.color;
+		context.drawTile(
+			tile,
+			((color.value32 >> 16) & 0xff) / 0xff,
+			((color.value32 >> 8) & 0xff) / 0xff,
+			((color.value32 >> 0) & 0xff) / 0xff,
+			((color.value32 >> 24) & 0xff) / 0xff
+		);
 		context.popTransform();
-		/*
-		var colorTransform:ColorTransform = null;
-		if (params.getBool("tint")) {
-			var ra:Null<Float> = params.getFloat("redMultiplier", 1.0);
-			var ga:Null<Float> = params.getFloat("greenMultiplier", 1.0);
-			var ba:Null<Float> = params.getFloat("blueMultiplier", 1.0);
-			var aa:Null<Float> = params.getFloat("alphaMultiplier", 1.0);
-			var rb:Null<Float> = params.getFloat("redOffset", 0.0);
-			var gb:Null<Float> = params.getFloat("greenOffset", 0.0);
-			var bb:Null<Float> = params.getFloat("blueOffset", 0.0);
-			var ab:Null<Float> = params.getFloat("alphaOffset", 0.0);
-			colorTransform = new ColorTransform(ra, ga, ba, aa, rb, gb, bb, ab);
-		}
-		var blendMode:BlendMode = cast params.getAsString("blendMode");
-		*/
 	}
 }
 
