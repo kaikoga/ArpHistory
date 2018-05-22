@@ -2,8 +2,8 @@
 
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arp.structs.IArpParamsRead;
+import net.kaikoga.arpx.structs.ArpParams;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 
 import picotest.PicoAssert.*;
 

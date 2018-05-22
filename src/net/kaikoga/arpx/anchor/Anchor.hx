@@ -1,9 +1,9 @@
 package net.kaikoga.arpx.anchor;
 
 import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.hitFrame.HitFrame;
+import net.kaikoga.arpx.structs.ArpPosition;
 
 @:arpType("anchor")
 class Anchor implements IArpObject {

@@ -8,7 +8,7 @@ import haxe.Resource;
 import hxd.fs.BytesFileSystem.BytesFileEntry;
 import hxd.fs.FileEntry;
 import hxd.res.Image;
-import net.kaikoga.arp.structs.IArpParamsRead;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 import net.kaikoga.arpx.texture.ResourceTexture;
 
 class ResourceTextureHeapsImpl extends TextureHeapsImplBase implements ITextureHeapsImpl {

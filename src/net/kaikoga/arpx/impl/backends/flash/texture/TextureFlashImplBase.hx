@@ -2,9 +2,9 @@ package net.kaikoga.arpx.impl.backends.flash.texture;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.impl.cross.texture.ITextureImpl;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 
 class TextureFlashImplBase extends ArpObjectImplBase implements ITextureImpl {
 

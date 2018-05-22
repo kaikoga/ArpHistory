@@ -1,8 +1,8 @@
 package net.kaikoga.arpx.tileMap;
 
+import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arpx.faceList.FaceList;
 import net.kaikoga.arpx.tileInfo.TileInfo;
-import net.kaikoga.arp.domain.IArpObject;
 
 @:arpType("tileMap", "null")
 class TileMap implements IArpObject {

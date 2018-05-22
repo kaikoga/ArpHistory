@@ -5,11 +5,11 @@ package net.kaikoga.arpx.impl.backends.flash.chip;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
-import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.chip.NativeTextChip;
 import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.impl.backends.flash.display.DisplayContext;
 import net.kaikoga.arpx.impl.cross.chip.IChipImpl;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 
 class NativeTextChipFlashImpl extends ArpObjectImplBase implements IChipImpl {
 

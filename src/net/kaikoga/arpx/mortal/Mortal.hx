@@ -6,15 +6,15 @@ import net.kaikoga.arp.ds.impl.ArraySet;
 import net.kaikoga.arp.ds.ISet;
 import net.kaikoga.arp.hit.fields.HitObject;
 import net.kaikoga.arp.hit.structs.HitGeneric;
-import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arp.task.ITickable;
-import net.kaikoga.arpx.impl.cross.mortal.IMortalImpl;
 import net.kaikoga.arpx.driver.Driver;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.hitFrame.HitFrame;
+import net.kaikoga.arpx.impl.cross.mortal.IMortalImpl;
 import net.kaikoga.arpx.motion.Motion;
 import net.kaikoga.arpx.reactFrame.ReactFrame;
+import net.kaikoga.arpx.structs.ArpParams;
+import net.kaikoga.arpx.structs.ArpPosition;
 
 @:arpType("mortal", "null")
 class Mortal implements IArpObject implements ITickable implements IMortalImpl {
@@ -101,7 +101,6 @@ class Mortal implements IArpObject implements ITickable implements IMortalImpl {
 		for (hitFrame in this.hitFrames) hitFrame.updateHitMortal(field, this);
 	}
 
-	@:access(net.kaikoga.arpx.field.Field.hitField)
 	public function moveWithHit(field:Field, x:Float, y:Float, z:Float, dHitType:String):Void {
 		if (dHitType == null) {
 			this.position.x = x;

@@ -4,8 +4,8 @@ package net.kaikoga.arpx.impl.backends.heaps.chip;
 
 import h2d.Tile;
 import net.kaikoga.arp.domain.ArpHeat;
-import net.kaikoga.arp.structs.ArpColor;
-import net.kaikoga.arp.structs.IArpParamsRead;
+import net.kaikoga.arpx.structs.ArpColor;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 import net.kaikoga.arpx.chip.TextureChip;
 import net.kaikoga.arpx.geom.Transform;
 import net.kaikoga.arpx.impl.backends.heaps.display.DisplayContext;

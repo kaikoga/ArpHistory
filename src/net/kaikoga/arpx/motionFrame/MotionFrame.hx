@@ -1,12 +1,12 @@
 package net.kaikoga.arpx.motionFrame;
 
-import net.kaikoga.arp.ds.ISet;
 import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arpx.hitFrame.HitFrame;
-import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arp.structs.ArpPosition;
+import net.kaikoga.arp.ds.ISet;
 import net.kaikoga.arpx.field.Field;
+import net.kaikoga.arpx.hitFrame.HitFrame;
 import net.kaikoga.arpx.mortal.Mortal;
+import net.kaikoga.arpx.structs.ArpParams;
+import net.kaikoga.arpx.structs.ArpPosition;
 
 @:arpType("motionFrame", "motionFrame")
 class MotionFrame implements IArpObject {

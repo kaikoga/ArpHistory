@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.menuItem;
 
-import net.kaikoga.arpx.proc.Proc;
 import net.kaikoga.arp.domain.IArpObject;
+import net.kaikoga.arpx.proc.Proc;
 import net.kaikoga.arpx.text.TextData;
 
 @:arpType("menuItem")

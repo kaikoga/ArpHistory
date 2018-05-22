@@ -2,7 +2,7 @@ package net.kaikoga.arpx.impl.backends.heaps.texture;
 
 #if arp_backend_heaps
 
-import net.kaikoga.arp.structs.IArpParamsRead;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.impl.cross.texture.ITextureImpl;
 

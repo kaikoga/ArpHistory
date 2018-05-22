@@ -1,10 +1,10 @@
 package net.kaikoga.arpx.impl.cross.fieldGizmo;
 
-import net.kaikoga.arpx.impl.ArpObjectImplBase;
-import net.kaikoga.arpx.impl.cross.fieldGizmo.IFieldGizmoImpl;
 import net.kaikoga.arpx.display.DisplayContext;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.fieldGizmo.HitMortalFieldGizmo;
+import net.kaikoga.arpx.impl.ArpObjectImplBase;
+import net.kaikoga.arpx.impl.cross.fieldGizmo.IFieldGizmoImpl;
 
 class HitMortalFieldGizmoImpl extends ArpObjectImplBase implements IFieldGizmoImpl {
 

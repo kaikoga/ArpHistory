@@ -9,7 +9,7 @@ import picotest.PicoAssert.*;
 
 class TransformCase {
 
-	var me:Transform = new Transform(1.0, 2.0, 3.0, 4.0, 5.0, 6.0);
+	var me:Transform = new Transform().reset(1.0, 2.0, 3.0, 4.0, 5.0, 6.0);
 
 	public function setup() {
 	}

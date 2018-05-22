@@ -1,11 +1,10 @@
 package net.kaikoga.arpx.socketClient;
 
 import haxe.io.Bytes;
-
+import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.events.ArpProgressEvent;
 import net.kaikoga.arp.events.ArpSignal;
 import net.kaikoga.arp.events.IArpSignalOut;
-import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arpx.impl.cross.socketClient.ISocketClientImpl;
 
 @:arpType("socketClient", "null")

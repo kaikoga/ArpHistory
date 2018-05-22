@@ -1,8 +1,8 @@
 package net.kaikoga.arpx.paramsOp;
 
-import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.paramsOp.filters.RewireParamsOpFilter;
+import net.kaikoga.arpx.structs.ArpParams;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 
 @:arpType("paramsOp", "rewire")
 class RewireParamsOp extends ParamsOp {

@@ -1,12 +1,12 @@
 package net.kaikoga.arpx.impl.cross.chip;
 
-import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.chip.TileMapChip;
 import net.kaikoga.arpx.display.DisplayContext;
 import net.kaikoga.arpx.geom.PointImpl;
 import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.impl.cross.chip.IChipImpl;
 import net.kaikoga.arpx.impl.cross.tilemap.legacy.TileMapRenderer;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 
 class TileMapChipImpl extends ArpObjectImplBase implements IChipImpl {
 

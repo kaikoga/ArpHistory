@@ -1,10 +1,10 @@
 package net.kaikoga.arpx.motionSet;
 
-import net.kaikoga.arp.ds.IList;
-import net.kaikoga.arpx.nextMotion.NextMotion;
-import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arp.domain.IArpObject;
+import net.kaikoga.arp.ds.IList;
+import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arpx.motion.Motion;
+import net.kaikoga.arpx.nextMotion.NextMotion;
 
 @:arpType("motionSet", "motionSet")
 class MotionSet implements IArpObject {

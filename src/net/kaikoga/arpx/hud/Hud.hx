@@ -1,13 +1,13 @@
 package net.kaikoga.arpx.hud;
 
 import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arp.task.ITickable;
-import net.kaikoga.arpx.impl.cross.hud.IHudImpl;
 import net.kaikoga.arpx.driver.Driver;
+import net.kaikoga.arpx.impl.cross.hud.IHudImpl;
 import net.kaikoga.arpx.input.focus.IFocusNode;
 import net.kaikoga.arpx.input.Input;
+import net.kaikoga.arpx.structs.ArpParams;
+import net.kaikoga.arpx.structs.ArpPosition;
 
 
 @:arpType("hud", "null")

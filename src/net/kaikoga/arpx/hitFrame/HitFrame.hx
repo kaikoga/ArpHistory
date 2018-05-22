@@ -1,10 +1,10 @@
 package net.kaikoga.arpx.hitFrame;
 
-import net.kaikoga.arpx.mortal.Mortal;
-import net.kaikoga.arpx.field.Field;
-import net.kaikoga.arp.hit.structs.HitGeneric;
 import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arp.structs.ArpPosition;
+import net.kaikoga.arp.hit.structs.HitGeneric;
+import net.kaikoga.arpx.field.Field;
+import net.kaikoga.arpx.mortal.Mortal;
+import net.kaikoga.arpx.structs.ArpPosition;
 
 @:arpType("hitFrame", "null")
 class HitFrame implements IArpObject {

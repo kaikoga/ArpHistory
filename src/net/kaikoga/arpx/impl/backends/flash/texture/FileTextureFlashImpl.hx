@@ -10,8 +10,8 @@ import flash.events.IOErrorEvent;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 import haxe.io.Bytes;
-import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.impl.backends.flash.texture.decorators.TextureFaceInfo;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 import net.kaikoga.arpx.texture.FileTexture;
 
 class FileTextureFlashImpl extends TextureFlashImplBase implements ITextureFlashImpl {

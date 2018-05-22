@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.automaton.events;
 
-import net.kaikoga.arp.events.IArpSignalOut;
 import net.kaikoga.arp.events.ArpSignal;
+import net.kaikoga.arp.events.IArpSignalOut;
 
 class AutomatonEventListener {
 

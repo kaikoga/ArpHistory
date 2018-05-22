@@ -4,9 +4,9 @@ package net.kaikoga.arpx.impl.backends.flash.texture;
 
 import flash.display.BitmapData;
 import flash.geom.Rectangle;
-import net.kaikoga.arp.structs.IArpParamsRead;
-import net.kaikoga.arpx.impl.cross.texture.ITextureImpl;
 import net.kaikoga.arpx.impl.backends.flash.texture.decorators.TextureFaceInfo;
+import net.kaikoga.arpx.impl.cross.texture.ITextureImpl;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 
 interface ITextureFlashImpl extends ITextureImpl {
 	function bitmapData():BitmapData;

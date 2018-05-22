@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.tileInfo;
 
 import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arp.structs.ArpRange;
+import net.kaikoga.arpx.structs.ArpRange;
 
 @:arpType("tileInfo")
 class TileInfo implements IArpObject {

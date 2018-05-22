@@ -1,8 +1,8 @@
 package net.kaikoga.arpx.automaton.procs;
 
-import net.kaikoga.arpx.proc.Proc;
-import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.automaton.Automaton;
+import net.kaikoga.arpx.proc.Proc;
+import net.kaikoga.arpx.structs.ArpParams;
 
 @:arpType("proc", "automaton.transition")
 class ProcAutomatonTransition extends Proc {

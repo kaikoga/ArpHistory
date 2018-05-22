@@ -1,12 +1,12 @@
 package net.kaikoga.arpx.hud;
 
-import net.kaikoga.arp.structs.ArpPosition;
-import net.kaikoga.arpx.impl.cross.hud.ChipMenuHudImpl;
 import net.kaikoga.arpx.chip.Chip;
+import net.kaikoga.arpx.impl.cross.hud.ChipMenuHudImpl;
 import net.kaikoga.arpx.input.Input;
 import net.kaikoga.arpx.input.InputAxis;
 import net.kaikoga.arpx.menu.Menu;
 import net.kaikoga.arpx.proc.Proc;
+import net.kaikoga.arpx.structs.ArpPosition;
 
 @:arpType("hud", "chipMenu")
 class ChipMenuHud extends Hud {

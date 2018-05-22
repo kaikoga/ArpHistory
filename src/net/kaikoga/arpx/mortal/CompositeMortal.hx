@@ -1,11 +1,11 @@
 package net.kaikoga.arpx.mortal;
 
 import net.kaikoga.arp.ds.IList;
-import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arpx.impl.cross.mortal.CompositeMortalImpl;
 import net.kaikoga.arpx.field.Field;
+import net.kaikoga.arpx.impl.cross.mortal.CompositeMortalImpl;
 import net.kaikoga.arpx.mortal.Mortal;
 import net.kaikoga.arpx.reactFrame.ReactFrame;
+import net.kaikoga.arpx.structs.ArpParams;
 
 @:arpType("mortal", "composite")
 class CompositeMortal extends Mortal {

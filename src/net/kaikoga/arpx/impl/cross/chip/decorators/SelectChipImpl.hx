@@ -1,10 +1,10 @@
 package net.kaikoga.arpx.impl.cross.chip.decorators;
 
-import net.kaikoga.arp.structs.IArpParamsRead;
-import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.chip.Chip;
 import net.kaikoga.arpx.chip.decorators.SelectChip;
 import net.kaikoga.arpx.display.DisplayContext;
+import net.kaikoga.arpx.impl.ArpObjectImplBase;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 
 class SelectChipImpl extends ArpObjectImplBase implements IChipImpl {
 

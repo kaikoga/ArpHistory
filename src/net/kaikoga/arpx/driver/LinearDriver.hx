@@ -1,8 +1,8 @@
 package net.kaikoga.arpx.driver;
 
-import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.field.Field;
 import net.kaikoga.arpx.mortal.Mortal;
+import net.kaikoga.arpx.structs.ArpPosition;
 
 @:arpType("driver", "linear")
 class LinearDriver extends Driver {

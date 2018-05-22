@@ -3,7 +3,7 @@
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arp.structs.ArpParams;
+import net.kaikoga.arpx.structs.ArpParams;
 
 import picotest.PicoAssert.*;
 

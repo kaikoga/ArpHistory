@@ -1,11 +1,11 @@
 package net.kaikoga.arpx.motion;
 
-import net.kaikoga.arpx.reactFrame.ReactFrame;
-import net.kaikoga.arpx.motionFrame.MotionFrame;
+import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.ds.IList;
 import net.kaikoga.arp.ds.IMap;
+import net.kaikoga.arpx.motionFrame.MotionFrame;
 import net.kaikoga.arpx.nextMotion.NextMotion;
-import net.kaikoga.arp.domain.IArpObject;
+import net.kaikoga.arpx.reactFrame.ReactFrame;
 
 @:arpType("motion", "motion")
 class Motion implements IArpObject {

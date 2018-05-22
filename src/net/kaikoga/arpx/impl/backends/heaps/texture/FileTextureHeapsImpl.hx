@@ -6,7 +6,7 @@ import h2d.Tile;
 import hxd.fs.BytesFileSystem.BytesFileEntry;
 import hxd.fs.FileEntry;
 import hxd.res.Image;
-import net.kaikoga.arp.structs.IArpParamsRead;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 import net.kaikoga.arpx.texture.FileTexture;
 
 class FileTextureHeapsImpl extends TextureHeapsImplBase implements ITextureHeapsImpl {

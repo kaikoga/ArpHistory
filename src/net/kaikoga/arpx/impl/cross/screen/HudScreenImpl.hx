@@ -1,9 +1,9 @@
 package net.kaikoga.arpx.impl.cross.screen;
 
-import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.display.DisplayContext;
 import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.screen.HudScreen;
+import net.kaikoga.arpx.structs.ArpPosition;
 
 class HudScreenImpl extends ArpObjectImplBase implements IScreenImpl {
 

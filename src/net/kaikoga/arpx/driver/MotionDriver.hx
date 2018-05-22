@@ -2,8 +2,8 @@ package net.kaikoga.arpx.driver;
 
 import net.kaikoga.arp.ds.impl.VoidSet;
 import net.kaikoga.arp.ds.ISet;
-import net.kaikoga.arpx.hitFrame.HitFrame;
 import net.kaikoga.arpx.field.Field;
+import net.kaikoga.arpx.hitFrame.HitFrame;
 import net.kaikoga.arpx.mortal.Mortal;
 import net.kaikoga.arpx.motion.Motion;
 import net.kaikoga.arpx.motionFrame.MotionFrame;
@@ -70,7 +70,6 @@ class MotionDriver extends Driver {
 		return true;
 	}
 
-	@:access(net.kaikoga.arpx.field.Field.hitField)
 	override public function tick(field:Field, mortal:Mortal):Void {
 		var nowMotion:Motion = this.nowMotion;
 		if (nowMotion != null) {

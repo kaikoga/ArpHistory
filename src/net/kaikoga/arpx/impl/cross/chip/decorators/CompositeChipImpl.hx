@@ -1,9 +1,9 @@
 package net.kaikoga.arpx.impl.cross.chip.decorators;
 
-import net.kaikoga.arp.structs.IArpParamsRead;
-import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.chip.decorators.CompositeChip;
 import net.kaikoga.arpx.display.DisplayContext;
+import net.kaikoga.arpx.impl.ArpObjectImplBase;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 
 class CompositeChipImpl extends ArpObjectImplBase implements IChipImpl {
 

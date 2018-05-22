@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.chip.decorators;
 
-import net.kaikoga.arpx.paramsOp.ParamsOp;
 import net.kaikoga.arpx.impl.cross.chip.decorators.DecorateChipImpl;
+import net.kaikoga.arpx.paramsOp.ParamsOp;
 
 @:arpType("chip", "decorate")
 class DecorateChip extends Chip {

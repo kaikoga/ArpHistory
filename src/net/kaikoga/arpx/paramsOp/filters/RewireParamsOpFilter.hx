@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.paramsOp.filters;
 
-import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arp.structs.IArpParamsRead;
+import net.kaikoga.arpx.structs.ArpParams;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 
 class RewireParamsOpFilter extends ArpParamsFilter {
 	private var paramsOp:RewireParamsOp;

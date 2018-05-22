@@ -1,8 +1,8 @@
 package net.kaikoga.arpx.hitFrame;
 
 import net.kaikoga.arp.hit.structs.HitGeneric;
-import net.kaikoga.arp.structs.ArpHitCuboid;
-import net.kaikoga.arp.structs.ArpPosition;
+import net.kaikoga.arpx.structs.ArpHitCuboid;
+import net.kaikoga.arpx.structs.ArpPosition;
 
 @:arpType("hitFrame", "cuboid")
 class CuboidHitFrame extends HitFrame {

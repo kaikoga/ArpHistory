@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.paramsOp.decorators;
 
 import net.kaikoga.arp.ds.IOmap;
-import net.kaikoga.arp.structs.IArpParamsRead;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 
 @:arpType("paramsOp", "select")
 class SelectParamsOp extends ParamsOp {

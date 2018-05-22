@@ -1,10 +1,10 @@
 package net.kaikoga.arpx.impl.cross.mortal;
 
-import net.kaikoga.arp.structs.ArpPosition;
+import net.kaikoga.arpx.display.DisplayContext;
 import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.impl.cross.field.FieldImpl;
-import net.kaikoga.arpx.display.DisplayContext;
 import net.kaikoga.arpx.mortal.CompositeMortal;
+import net.kaikoga.arpx.structs.ArpPosition;
 
 class CompositeMortalImpl extends ArpObjectImplBase implements IMortalImpl {
 

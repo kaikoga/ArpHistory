@@ -7,13 +7,13 @@ import flash.geom.ColorTransform;
 import flash.geom.Matrix;
 import flash.geom.Rectangle;
 import net.kaikoga.arp.domain.ArpHeat;
-import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.chip.TextureChip;
 import net.kaikoga.arpx.geom.PointImpl;
 import net.kaikoga.arpx.geom.Transform;
 import net.kaikoga.arpx.impl.backends.flash.display.DisplayContext;
 import net.kaikoga.arpx.impl.backends.flash.texture.decorators.TextureFaceInfo;
 import net.kaikoga.arpx.impl.cross.chip.IChipImpl;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 
 class TextureChipFlashImpl extends ArpObjectImplBase implements IChipImpl {
 

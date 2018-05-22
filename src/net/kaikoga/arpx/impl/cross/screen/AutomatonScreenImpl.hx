@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.impl.cross.screen;
 
-import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.display.DisplayContext;
+import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.screen.AutomatonScreen;
 
 class AutomatonScreenImpl extends ArpObjectImplBase implements IScreenImpl {

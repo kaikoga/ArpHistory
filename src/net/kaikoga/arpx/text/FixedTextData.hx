@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.text;
 
-import net.kaikoga.arp.structs.ArpParams;
+import net.kaikoga.arpx.structs.ArpParams;
 
 @:arpType("text")
 class FixedTextData extends TextData {

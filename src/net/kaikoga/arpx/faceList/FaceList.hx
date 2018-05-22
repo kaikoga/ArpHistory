@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.faceList;
 
-import net.kaikoga.arp.iterators.EmptyIterator;
 import net.kaikoga.arp.domain.IArpObject;
+import net.kaikoga.arp.iterators.EmptyIterator;
 
 @:arpType("faceList", "null")
 class FaceList implements IArpObject {

@@ -3,7 +3,6 @@
 import net.kaikoga.arpx.automaton.Automaton;
 import net.kaikoga.arpx.screen.Screen;
 
-@:access(net.kaikoga.arpx.automaton.Automaton)
 @:arpType("state", "static")
 class AutomatonStaticState extends AutomatonState {
 
@@ -27,6 +26,6 @@ class AutomatonStaticState extends AutomatonState {
 
 	public function transition(key:String, payload:Dynamic = null):Bool {
 		if (this.automaton == null) return false;
-		return this.automaton.transition(key, payload);
+		return @:privateAccess this.automaton.transition(key, payload);
 	}
 }

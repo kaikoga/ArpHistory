@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.chip.stringChip;
 
-import net.kaikoga.arp.structs.IArpParamsRead;
-import net.kaikoga.arp.structs.ArpParams;
+import net.kaikoga.arpx.structs.ArpParams;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 
 class StringChipDrawCursor {
 

@@ -1,8 +1,8 @@
 package net.kaikoga.arpx.chip;
 
 import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.impl.cross.chip.IChipImpl;
+import net.kaikoga.arpx.structs.ArpParams;
 
 @:arpType("chip", "null")
 class Chip implements IArpObject implements IChipImpl {

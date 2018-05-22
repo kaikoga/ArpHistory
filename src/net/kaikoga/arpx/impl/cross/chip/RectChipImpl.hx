@@ -1,11 +1,11 @@
 package net.kaikoga.arpx.impl.cross.chip;
 
-import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.chip.RectChip;
 import net.kaikoga.arpx.display.DisplayContext;
 import net.kaikoga.arpx.geom.PointImpl;
 import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.impl.cross.chip.IChipImpl;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 
 class RectChipImpl extends ArpObjectImplBase implements IChipImpl {
 

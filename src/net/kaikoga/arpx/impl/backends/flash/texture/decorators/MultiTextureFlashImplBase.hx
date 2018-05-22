@@ -2,10 +2,10 @@ package net.kaikoga.arpx.impl.backends.flash.texture.decorators;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import flash.geom.Point;
 import flash.display.BitmapData;
+import flash.geom.Point;
 import flash.geom.Rectangle;
-import net.kaikoga.arp.structs.IArpParamsRead;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 import net.kaikoga.arpx.texture.decorators.MultiTexture;
 
 class MultiTextureFlashImplBase<T:MultiTexture> extends TextureFlashImplBase implements ITextureFlashImpl {

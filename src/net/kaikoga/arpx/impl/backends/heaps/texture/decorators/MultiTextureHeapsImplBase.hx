@@ -3,7 +3,7 @@ package net.kaikoga.arpx.impl.backends.heaps.texture.decorators;
 #if arp_backend_heaps
 
 import h2d.Tile;
-import net.kaikoga.arp.structs.IArpParamsRead;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 import net.kaikoga.arpx.texture.decorators.MultiTexture;
 
 class MultiTextureHeapsImplBase<T:MultiTexture> extends TextureHeapsImplBase implements ITextureHeapsImpl {

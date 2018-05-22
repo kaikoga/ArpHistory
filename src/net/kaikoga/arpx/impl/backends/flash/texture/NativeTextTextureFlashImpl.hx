@@ -2,13 +2,13 @@ package net.kaikoga.arpx.impl.backends.flash.texture;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import net.kaikoga.arpx.impl.targets.flash.display.BitmapFontDrawCursor;
 import flash.display.BitmapData;
 import flash.geom.Rectangle;
 import flash.text.TextFormat;
-import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.impl.backends.flash.texture.decorators.MultiTextureFlashImplBase;
 import net.kaikoga.arpx.impl.targets.flash.display.BitmapFont;
+import net.kaikoga.arpx.impl.targets.flash.display.BitmapFontDrawCursor;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 import net.kaikoga.arpx.texture.NativeTextTexture;
 
 class NativeTextTextureFlashImpl extends MultiTextureFlashImplBase<NativeTextTexture> {

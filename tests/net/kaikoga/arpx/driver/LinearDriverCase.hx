@@ -2,7 +2,7 @@
 
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arp.structs.ArpDirection;
+import net.kaikoga.arpx.structs.ArpDirection;
 import net.kaikoga.arpx.mortal.Mortal;
 
 import picotest.PicoAssert.*;

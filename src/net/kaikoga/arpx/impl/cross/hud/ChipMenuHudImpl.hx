@@ -1,13 +1,13 @@
 package net.kaikoga.arpx.impl.cross.hud;
 
-import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arp.structs.ArpPosition;
 import net.kaikoga.arpx.display.DisplayContext;
 import net.kaikoga.arpx.geom.Transform;
 import net.kaikoga.arpx.hud.ChipMenuHud;
 import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.impl.cross.hud.IHudImpl;
 import net.kaikoga.arpx.menu.Menu;
+import net.kaikoga.arpx.structs.ArpParams;
+import net.kaikoga.arpx.structs.ArpPosition;
 
 class ChipMenuHudImpl extends ArpObjectImplBase implements IHudImpl {
 

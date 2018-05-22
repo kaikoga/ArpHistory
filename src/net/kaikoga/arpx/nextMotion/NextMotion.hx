@@ -1,8 +1,8 @@
 package net.kaikoga.arpx.nextMotion;
 
-import net.kaikoga.arpx.motion.Motion;
-import net.kaikoga.arp.structs.ArpRange;
 import net.kaikoga.arp.domain.IArpObject;
+import net.kaikoga.arpx.motion.Motion;
+import net.kaikoga.arpx.structs.ArpRange;
 
 @:arpType("nextMotion", "nextMotion")
 class NextMotion implements IArpObject {

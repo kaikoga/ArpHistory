@@ -1,10 +1,10 @@
 ﻿package net.kaikoga.arpx.reactFrame;
 
-import net.kaikoga.arp.hit.structs.HitGeneric;
-import net.kaikoga.arp.structs.ArpHitCuboid;
 import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arp.structs.ArpPosition;
+import net.kaikoga.arp.hit.structs.HitGeneric;
+import net.kaikoga.arpx.structs.ArpHitCuboid;
+import net.kaikoga.arpx.structs.ArpParams;
+import net.kaikoga.arpx.structs.ArpPosition;
 
 @:arpType("reactFrame")
 class ReactFrame implements IArpObject {

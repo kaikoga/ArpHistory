@@ -1,11 +1,10 @@
 package net.kaikoga.arpx.screen;
 
+import net.kaikoga.arp.domain.IArpObject;
+import net.kaikoga.arp.task.ITickable;
+import net.kaikoga.arpx.impl.cross.screen.IScreenImpl;
 import net.kaikoga.arpx.input.focus.IFocusNode;
 import net.kaikoga.arpx.input.Input;
-import net.kaikoga.arp.task.ITickable;
-import net.kaikoga.arp.domain.IArpObject;
-
-import net.kaikoga.arpx.impl.cross.screen.IScreenImpl;
 
 @:arpType("screen", "null")
 class Screen implements IArpObject implements ITickable implements IFocusNode<Input> implements IScreenImpl {

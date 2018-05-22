@@ -1,9 +1,9 @@
 package net.kaikoga.arpx.impl.cross.hud;
 
-import net.kaikoga.arp.structs.ArpPosition;
-import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.display.DisplayContext;
 import net.kaikoga.arpx.hud.CompositeHud;
+import net.kaikoga.arpx.impl.ArpObjectImplBase;
+import net.kaikoga.arpx.structs.ArpPosition;
 
 class CompositeHudImpl extends ArpObjectImplBase implements IHudImpl {
 

@@ -1,7 +1,7 @@
 package net.kaikoga.arpx.text;
 
 import haxe.Resource;
-import net.kaikoga.arp.structs.ArpParams;
+import net.kaikoga.arpx.structs.ArpParams;
 
 @:arpType("text", "resource")
 class ResourceTextData extends TextData {

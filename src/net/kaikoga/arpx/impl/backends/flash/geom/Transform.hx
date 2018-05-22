@@ -3,8 +3,8 @@ package net.kaikoga.arpx.impl.backends.flash.geom;
 #if (arp_backend_flash || arp_backend_openfl)
 
 import net.kaikoga.arpx.geom.ITransform;
-import net.kaikoga.arpx.geom.PointImpl;
 import net.kaikoga.arpx.geom.MatrixImpl;
+import net.kaikoga.arpx.geom.PointImpl;
 
 class Transform implements ITransform {
 

@@ -7,7 +7,7 @@ import h2d.Font;
 import h2d.Text;
 import hxd.Charset;
 import hxd.res.FontBuilder;
-import net.kaikoga.arp.structs.IArpParamsRead;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.impl.cross.chip.IChipImpl;
 import net.kaikoga.arpx.impl.backends.heaps.display.DisplayContext;

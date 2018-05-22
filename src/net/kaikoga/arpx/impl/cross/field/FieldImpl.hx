@@ -1,9 +1,9 @@
 package net.kaikoga.arpx.impl.cross.field;
 
 import haxe.ds.ArraySort;
-import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.display.DisplayContext;
 import net.kaikoga.arpx.field.Field;
+import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.mortal.Mortal;
 
 class FieldImpl extends ArpObjectImplBase implements IFieldImpl {

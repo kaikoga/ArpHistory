@@ -5,9 +5,9 @@ import haxe.io.BytesInput;
 import haxe.Resource;
 import net.kaikoga.arp.io.IInput;
 import net.kaikoga.arp.io.InputWrapper;
+import net.kaikoga.arpx.file.ResourceFile;
 import net.kaikoga.arpx.impl.ArpObjectImplBase;
 import net.kaikoga.arpx.impl.cross.file.IFileImpl;
-import net.kaikoga.arpx.file.ResourceFile;
 
 class ResourceFileImpl extends ArpObjectImplBase implements IFileImpl {
 

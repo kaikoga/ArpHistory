@@ -1,20 +1,19 @@
 package net.kaikoga.arpx.field;
 
-import net.kaikoga.arp.task.ITickable;
-import net.kaikoga.arp.ds.decorators.OmapDecorator;
 import net.kaikoga.arp.domain.IArpObject;
-import net.kaikoga.arp.ds.lambda.OmapOp;
+import net.kaikoga.arp.ds.decorators.OmapDecorator;
 import net.kaikoga.arp.ds.IOmap;
+import net.kaikoga.arp.ds.lambda.OmapOp;
+import net.kaikoga.arp.hit.fields.HitField;
 import net.kaikoga.arp.hit.fields.HitObjectField;
 import net.kaikoga.arp.hit.strategies.HitWithCuboid;
 import net.kaikoga.arp.hit.structs.HitGeneric;
-import net.kaikoga.arp.hit.fields.HitField;
+import net.kaikoga.arp.task.ITickable;
 import net.kaikoga.arpx.anchor.Anchor;
-import net.kaikoga.arpx.impl.cross.field.IFieldImpl;
 import net.kaikoga.arpx.impl.cross.field.FieldImpl;
+import net.kaikoga.arpx.impl.cross.field.IFieldImpl;
 import net.kaikoga.arpx.mortal.Mortal;
 import net.kaikoga.arpx.reactFrame.ReactFrame;
-
 
 @:arpType("field")
 class Field implements IArpObject implements ITickable implements IFieldImpl {
@@ -36,7 +35,7 @@ class Field implements IArpObject implements ITickable implements IFieldImpl {
 	public function new() return;
 
 	@:arpHeatUp private function heatUp():Bool {
-		if (this.mortals == null) this.mortals = new MortalMap(this);
+		if (this.mortals == null) this.mortals = @:privateAccess new MortalMap(this);
 		if (this.hitField == null) this.hitField = new HitObjectField<HitGeneric, HitMortal>(new HitWithCuboid());
 		if (this.anchorField == null) this.anchorField = new HitField<HitGeneric, Anchor>(new HitWithCuboid());
 		this.reinitMortals();
@@ -173,57 +172,54 @@ class Field implements IArpObject implements ITickable implements IFieldImpl {
 	}
 }
 
-@:access(net.kaikoga.arpx.field.Field._mortals)
-@:access(net.kaikoga.arpx.mortal.Mortal.field)
 class MortalMap extends OmapDecorator<String, Mortal> {
 
 	private var field:Field;
 
-	@:allow(net.kaikoga.arpx.field.Field.heatUp)
 	private function new(field:Field) {
-		super(field._mortals);
+		super(@:privateAccess field._mortals);
 		this.field = field;
 	}
 
 	//write
 	override public function addPair(k:String, v:Mortal):Void {
-		if (v.field != null) v.field._mortals.remove(v);
-		v.field = this.field;
+		if (@:privateAccess v.field != null) @:privateAccess v.field._mortals.remove(v);
+		@:privateAccess v.field = this.field;
 		this.omap.addPair(k, v);
 	}
 	override public function insertPairAt(index:Int, k:String, v:Mortal):Void {
-		if (v.field != null) v.field._mortals.remove(v);
-		v.field = this.field;
+		if (@:privateAccess v.field != null) @:privateAccess v.field._mortals.remove(v);
+		@:privateAccess v.field = this.field;
 		this.omap.insertPairAt(index, k, v);
 	}
 
 	// remove
 	override public function remove(v:Mortal):Bool {
-		v.field = null;
+		@:privateAccess v.field = null;
 		return this.omap.remove(v);
 	}
 	override public function removeKey(k:String):Bool {
 		if (!this.omap.hasKey(k)) return false;
-		this.omap.get(k).field = null;
+		@:privateAccess this.omap.get(k).field = null;
 		return this.omap.removeKey(k);
 	}
 	override public function removeAt(index:Int):Bool {
 		if (index < 0 || index >= this.omap.length) return false;
-		this.omap.getAt(index).field = null;
+		@:privateAccess this.omap.getAt(index).field = null;
 		return this.omap.removeAt(index);
 	}
 	override public function pop():Null<Mortal> {
 		if (this.omap.isEmpty()) return null;
-		this.omap.last().field = null;
+		@:privateAccess this.omap.last().field = null;
 		return this.omap.pop();
 	}
 	override public function shift():Null<Mortal> {
 		if (this.omap.isEmpty()) return null;
-		this.omap.first().field = null;
+		@:privateAccess this.omap.first().field = null;
 		return this.omap.shift();
 	}
 	override public function clear():Void {
-		for (v in this.omap) v.field = null;
+		@:privateAccess for (v in this.omap) v.field = null;
 		this.omap.clear();
 	}
 }

@@ -1,8 +1,8 @@
 package net.kaikoga.arpx.chip;
 
-import net.kaikoga.arp.structs.ArpParams;
-import net.kaikoga.arpx.impl.cross.chip.StringChipImpl;
 import net.kaikoga.arpx.chip.stringChip.StringChipStringIterator;
+import net.kaikoga.arpx.impl.cross.chip.StringChipImpl;
+import net.kaikoga.arpx.structs.ArpParams;
 
 @:arpType("chip", "string")
 class StringChip extends Chip {

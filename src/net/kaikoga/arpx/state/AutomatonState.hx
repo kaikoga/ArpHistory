@@ -5,7 +5,6 @@ import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arpx.automaton.Automaton;
 import net.kaikoga.arpx.screen.Screen;
 
-@:access(net.kaikoga.arpx.automaton.Automaton)
 @:arpType("state", "state")
 class AutomatonState implements IArpObject {
 
@@ -17,9 +16,7 @@ class AutomatonState implements IArpObject {
 
 	public function getTransition(key:String, payload:Dynamic = null):Null<AutomatonState> return this.transitions.get(key);
 
-	@:allow(net.kaikoga.arpx.automaton.Automaton)
 	private function enterState(automaton:Automaton, payload:Dynamic = null):Void onEnterState(automaton, payload);
-	@:allow(net.kaikoga.arpx.automaton.Automaton)
 	private function leaveState(automaton:Automaton, payload:Dynamic = null):Void onLeaveState(automaton, payload);
 
 	public function onEnterState(automaton:Automaton, payload:Dynamic = null):Void return;
@@ -27,7 +24,7 @@ class AutomatonState implements IArpObject {
 
 	public function toAutomaton():Automaton {
 		var automaton:Automaton = this.arpDomain.allocObject(Automaton);
-		automaton.enterState(this);
+		@:privateAccess automaton.enterState(this);
 		return automaton;
 	}
 

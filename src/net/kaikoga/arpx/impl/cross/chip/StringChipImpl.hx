@@ -1,13 +1,13 @@
 package net.kaikoga.arpx.impl.cross.chip;
 
-import net.kaikoga.arpx.geom.PointImpl;
-import net.kaikoga.arp.structs.IArpParamsRead;
 import net.kaikoga.arpx.chip.stringChip.StringChipDrawCursor;
 import net.kaikoga.arpx.chip.stringChip.StringChipStringIterator;
 import net.kaikoga.arpx.chip.StringChip;
 import net.kaikoga.arpx.display.DisplayContext;
+import net.kaikoga.arpx.geom.PointImpl;
 import net.kaikoga.arpx.geom.Transform;
 import net.kaikoga.arpx.impl.ArpObjectImplBase;
+import net.kaikoga.arpx.structs.IArpParamsRead;
 
 class StringChipImpl extends ArpObjectImplBase implements IChipImpl {
 

@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.texture;
 
-import net.kaikoga.arp.structs.ArpColor;
+import net.kaikoga.arpx.structs.ArpColor;
 import net.kaikoga.arpx.texture.decorators.MultiTexture;
 import net.kaikoga.arpx.faceList.FaceList;
 

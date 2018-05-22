@@ -1,9 +1,9 @@
 package net.kaikoga.arpx.impl.cross.tilemap.legacy;
 
-import net.kaikoga.arp.structs.ArpParams;
 import net.kaikoga.arpx.chip.Chip;
 import net.kaikoga.arpx.display.DisplayContext;
 import net.kaikoga.arpx.geom.Transform;
+import net.kaikoga.arpx.structs.ArpParams;
 import net.kaikoga.arpx.tileMap.TileMap;
 
 class TileMapRenderer {
