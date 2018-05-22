@@ -2,8 +2,8 @@ package net.kaikoga.arp.macro.fields.base;
 
 #if macro
 
-import haxe.macro.Printer;
 import haxe.macro.Expr;
+import haxe.macro.Printer;
 
 class MacroArpCollectionFieldBase extends MacroArpFieldBase {
 

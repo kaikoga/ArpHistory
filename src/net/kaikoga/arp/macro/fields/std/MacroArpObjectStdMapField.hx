@@ -2,9 +2,9 @@ package net.kaikoga.arp.macro.fields.std;
 
 #if macro
 
+import haxe.macro.Expr;
 import net.kaikoga.arp.domain.reflect.ArpFieldDs;
 import net.kaikoga.arp.macro.fields.base.MacroArpObjectCollectionFieldBase;
-import haxe.macro.Expr;
 
 class MacroArpObjectStdMapField extends MacroArpObjectCollectionFieldBase implements IMacroArpField {
 

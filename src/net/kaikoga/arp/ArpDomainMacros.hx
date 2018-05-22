@@ -8,8 +8,8 @@ import haxe.macro.Type.ClassType;
 import haxe.macro.Type.Ref;
 import haxe.macro.TypeTools;
 import net.kaikoga.arp.macro.MacroArpClassDefinition;
-import net.kaikoga.arp.macro.MacroArpObjectRegistry;
 import net.kaikoga.arp.macro.MacroArpObjectBuilder;
+import net.kaikoga.arp.macro.MacroArpObjectRegistry;
 
 class ArpDomainMacros {
 

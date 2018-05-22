@@ -2,9 +2,9 @@ package net.kaikoga.arp.macro.fields;
 
 #if macro
 
-import net.kaikoga.arp.macro.MacroArpFieldDefinition.MacroArpMetaArpDefault;
-import net.kaikoga.arp.macro.fields.base.MacroArpFieldBase;
 import haxe.macro.Expr;
+import net.kaikoga.arp.macro.fields.base.MacroArpFieldBase;
+import net.kaikoga.arp.macro.MacroArpFieldDefinition.MacroArpMetaArpDefault;
 
 class MacroArpObjectField extends MacroArpFieldBase implements IMacroArpField {
 

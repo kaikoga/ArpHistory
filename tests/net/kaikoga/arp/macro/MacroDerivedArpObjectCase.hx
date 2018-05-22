@@ -7,7 +7,6 @@ import net.kaikoga.arp.macro.mocks.MockMacroArpObject;
 import net.kaikoga.arp.macro.mocks.MockMacroDerivedArpObject;
 import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.tests.ArpDomainTestUtil;
-
 import picotest.PicoAssert.*;
 
 class MacroDerivedArpObjectCase {

@@ -3,7 +3,6 @@ package net.kaikoga.arp.macro.fields.base;
 #if macro
 
 import haxe.macro.Expr;
-
 import net.kaikoga.arp.domain.reflect.ArpFieldKind;
 import net.kaikoga.arp.macro.IMacroArpValueType;
 

@@ -1,14 +1,11 @@
 package net.kaikoga.arp;
 
-import net.kaikoga.arp.macro.MacroConcreteImplArpObjectCase;
-import net.kaikoga.arp.macro.MacroImplArpObjectCase;
+import net.kaikoga.arp.domain.ArpDirectoryCase;
 import net.kaikoga.arp.domain.ArpDomainCase;
 import net.kaikoga.arp.domain.MockArpObjectCase;
 import net.kaikoga.arp.domain.MockDerivedArpObjectCase;
-import net.kaikoga.arp.domain.ArpDirectoryCase;
 import net.kaikoga.arp.domain.query.ArpDirectoryQueryCase;
 import net.kaikoga.arp.domain.query.ArpObjectQueryCase;
-import net.kaikoga.arp.macro.ArpStructsMacroArpObjectCase;
 import net.kaikoga.arp.macro.DsMacroArpObjectCase;
 import net.kaikoga.arp.macro.EarlyPrepareMacroArpObjectCase;
 import net.kaikoga.arp.macro.HeatUpMacroArpObjectCase;
@@ -16,21 +13,13 @@ import net.kaikoga.arp.macro.HookMacroArpObjectCase;
 import net.kaikoga.arp.macro.LatePrepareMacroArpObjectCase;
 import net.kaikoga.arp.macro.MacroArpObjectCase;
 import net.kaikoga.arp.macro.MacroColumnArpObjectCase;
+import net.kaikoga.arp.macro.MacroConcreteImplArpObjectCase;
 import net.kaikoga.arp.macro.MacroDefaultArpObjectCase;
 import net.kaikoga.arp.macro.MacroDerivedArpObjectCase;
 import net.kaikoga.arp.macro.MacroHierarchicalArpObjectCase;
+import net.kaikoga.arp.macro.MacroImplArpObjectCase;
 import net.kaikoga.arp.macro.StdDsMacroArpObjectCase;
-import net.kaikoga.arp.structs.ArpColorCase;
-import net.kaikoga.arp.structs.ArpColorFlashCase;
-import net.kaikoga.arp.structs.ArpDirectionCase;
-import net.kaikoga.arp.structs.ArpParamsCase;
-import net.kaikoga.arp.structs.ArpPositionCase;
-import net.kaikoga.arp.structs.ArpRangeCase;
-
 import net.kaikoga.arp.tests.ArpDomainTestUtilCase;
-
-import net.kaikoga.arp.testParams.PersistIoProviders.*;
-
 import picotest.PicoTestRunner;
 
 class ArpDomainTestSuite {
@@ -49,7 +38,6 @@ class ArpDomainTestSuite {
 		r.load(MacroHierarchicalArpObjectCase);
 		r.load(MacroColumnArpObjectCase);
 		r.load(MacroDerivedArpObjectCase);
-		r.load(ArpStructsMacroArpObjectCase);
 		r.load(StdDsMacroArpObjectCase);
 		r.load(DsMacroArpObjectCase);
 		r.load(HookMacroArpObjectCase);
@@ -61,17 +49,6 @@ class ArpDomainTestSuite {
 
 		r.load(ArpDomainCase);
 
-		r.load(ArpColorCase, persistIoProvider());
-		r.load(ArpDirectionCase, persistIoProvider());
-		r.load(ArpParamsCase, persistIoProvider());
-		r.load(ArpPositionCase, persistIoProvider());
-		r.load(ArpRangeCase, persistIoProvider());
-
 		ArpDomainDsCompatTestSuite.addTo(r);
-
-		#if (flash || openfl)
-		r.load(ArpColorFlashCase);
-		#end
-
 	}
 }

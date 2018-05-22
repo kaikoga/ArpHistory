@@ -3,7 +3,6 @@ package net.kaikoga.arp.macro.stubs;
 import haxe.macro.Context;
 import haxe.macro.Expr;
 import haxe.macro.Type;
-import haxe.macro.TypeTools;
 import net.kaikoga.arp.macro.MacroArpObjectRegistry;
 
 @:noDoc @:noCompletion

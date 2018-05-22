@@ -1,12 +1,11 @@
 package net.kaikoga.arp.macro;
 
-import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.domain.ArpSlot;
+import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.macro.mocks.MockStdDsMacroArpObject;
 import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.tests.ArpDomainTestUtil;
-
 import picotest.PicoAssert.*;
 using Lambda;
 class StdDsMacroArpObjectCase {

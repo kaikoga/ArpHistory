@@ -6,7 +6,6 @@ import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.macro.mocks.MockColumnMacroArpObject;
 import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.tests.ArpDomainTestUtil;
-
 import picotest.PicoAssert.*;
 
 class MacroColumnArpObjectCase {

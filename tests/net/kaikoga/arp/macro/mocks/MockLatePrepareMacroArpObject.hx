@@ -1,7 +1,6 @@
 package net.kaikoga.arp.macro.mocks;
 
 import net.kaikoga.arp.domain.IArpObject;
-
 import picotest.PicoTestAsync.*;
 
 @:arpType("mock", "latePrepare")

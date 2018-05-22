@@ -1,9 +1,8 @@
 package net.kaikoga.arp.domain;
 
-import net.kaikoga.arp.domain.mocks.MockArpObject;
-import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.ArpSlot;
-
+import net.kaikoga.arp.domain.core.ArpType;
+import net.kaikoga.arp.domain.mocks.MockArpObject;
 import picotest.PicoAssert.*;
 
 class ArpDirectoryCase {

@@ -1,10 +1,10 @@
 package net.kaikoga.arp.domain.ds.std;
 
+import Map.IMap;
 import net.kaikoga.arp.domain.core.ArpSid;
+import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.persistable.IPersistOutput;
-import net.kaikoga.arp.persistable.IPersistable;
-import Map.IMap;
 
 @:access(net.kaikoga.arp.domain.ArpDomain)
 class ArpObjectStdMap<V:IArpObject> implements IMap<String, V> implements IPersistable {

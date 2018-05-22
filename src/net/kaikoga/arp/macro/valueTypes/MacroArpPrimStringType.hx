@@ -2,9 +2,9 @@ package net.kaikoga.arp.macro.valueTypes;
 
 #if macro
 
+import haxe.macro.Expr;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.reflect.ArpFieldKind;
-import haxe.macro.Expr;
 class MacroArpPrimStringType implements IMacroArpValueType {
 
 	public function new() {

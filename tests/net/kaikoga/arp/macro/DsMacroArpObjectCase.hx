@@ -19,11 +19,9 @@ import picotest.matcher.patterns.PicoMatchPrimitive;
 import picotest.matcher.patterns.standard.PicoMatchArray;
 import picotest.matcher.patterns.standard.PicoMatchCircular;
 import picotest.matcher.patterns.standard.PicoMatchStruct;
-
 import picotest.matcher.PicoMatcher;
 import picotest.matcher.PicoMatcherContext;
 import picotest.matcher.PicoMatchResult;
-
 import picotest.PicoAssert.*;
 
 class DsMacroArpObjectCase {

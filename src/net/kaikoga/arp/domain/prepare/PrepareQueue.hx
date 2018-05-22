@@ -1,9 +1,9 @@
 package net.kaikoga.arp.domain.prepare;
 
-import net.kaikoga.arp.errors.ArpError;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.domain.ArpUntypedSlot;
 import net.kaikoga.arp.domain.IArpObject;
+import net.kaikoga.arp.errors.ArpError;
 import net.kaikoga.arp.events.ArpProgressEvent;
 import net.kaikoga.arp.events.ArpSignal;
 import net.kaikoga.arp.events.IArpSignalOut;

@@ -2,33 +2,33 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
-import net.kaikoga.arp.macro.MacroArpFieldDefinition.MacroArpFieldDefinitionFamily;
-import net.kaikoga.arp.macro.valueTypes.MacroArpStructType;
-import net.kaikoga.arp.domain.reflect.ArpFieldKind;
-import net.kaikoga.arp.domain.reflect.ArpClassInfo;
-import net.kaikoga.arp.macro.fields.ds.MacroArpObjectSetField;
-import net.kaikoga.arp.macro.fields.ds.MacroArpObjectListField;
-import net.kaikoga.arp.macro.fields.ds.MacroArpObjectOmapField;
-import net.kaikoga.arp.macro.fields.ds.MacroArpObjectMapField;
-import net.kaikoga.arp.macro.fields.ds.MacroArpValueOmapField;
-import net.kaikoga.arp.macro.fields.ds.MacroArpValueMapField;
-import net.kaikoga.arp.macro.fields.ds.MacroArpValueListField;
-import net.kaikoga.arp.macro.fields.ds.MacroArpValueSetField;
-import net.kaikoga.arp.macro.valueTypes.MacroArpPrimIntType;
-import net.kaikoga.arp.macro.valueTypes.MacroArpPrimFloatType;
-import net.kaikoga.arp.macro.valueTypes.MacroArpPrimBoolType;
-import net.kaikoga.arp.macro.valueTypes.MacroArpPrimStringType;
-import net.kaikoga.arp.macro.fields.std.MacroArpObjectStdMapField;
-import net.kaikoga.arp.macro.fields.std.MacroArpValueStdListField;
-import net.kaikoga.arp.macro.fields.std.MacroArpValueStdMapField;
-import net.kaikoga.arp.macro.fields.std.MacroArpValueStdArrayField;
-import net.kaikoga.arp.macro.fields.MacroArpValueField;
-import net.kaikoga.arp.macro.fields.MacroArpObjectField;
 import haxe.macro.Context;
 import haxe.macro.Expr;
+import haxe.macro.Printer;
 import haxe.macro.Type;
 import haxe.macro.TypeTools;
-import haxe.macro.Printer;
+import net.kaikoga.arp.domain.reflect.ArpClassInfo;
+import net.kaikoga.arp.domain.reflect.ArpFieldKind;
+import net.kaikoga.arp.macro.fields.ds.MacroArpObjectListField;
+import net.kaikoga.arp.macro.fields.ds.MacroArpObjectMapField;
+import net.kaikoga.arp.macro.fields.ds.MacroArpObjectOmapField;
+import net.kaikoga.arp.macro.fields.ds.MacroArpObjectSetField;
+import net.kaikoga.arp.macro.fields.ds.MacroArpValueListField;
+import net.kaikoga.arp.macro.fields.ds.MacroArpValueMapField;
+import net.kaikoga.arp.macro.fields.ds.MacroArpValueOmapField;
+import net.kaikoga.arp.macro.fields.ds.MacroArpValueSetField;
+import net.kaikoga.arp.macro.fields.MacroArpObjectField;
+import net.kaikoga.arp.macro.fields.MacroArpValueField;
+import net.kaikoga.arp.macro.fields.std.MacroArpObjectStdMapField;
+import net.kaikoga.arp.macro.fields.std.MacroArpValueStdArrayField;
+import net.kaikoga.arp.macro.fields.std.MacroArpValueStdListField;
+import net.kaikoga.arp.macro.fields.std.MacroArpValueStdMapField;
+import net.kaikoga.arp.macro.MacroArpFieldDefinition.MacroArpFieldDefinitionFamily;
+import net.kaikoga.arp.macro.valueTypes.MacroArpPrimBoolType;
+import net.kaikoga.arp.macro.valueTypes.MacroArpPrimFloatType;
+import net.kaikoga.arp.macro.valueTypes.MacroArpPrimIntType;
+import net.kaikoga.arp.macro.valueTypes.MacroArpPrimStringType;
+import net.kaikoga.arp.macro.valueTypes.MacroArpStructType;
 
 using haxe.macro.ComplexTypeTools;
 

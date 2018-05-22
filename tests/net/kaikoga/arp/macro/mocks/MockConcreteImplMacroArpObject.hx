@@ -1,8 +1,8 @@
 package net.kaikoga.arp.macro.mocks;
 
-import net.kaikoga.arp.impl.IArpObjectImpl;
 import net.kaikoga.arp.domain.ArpHeat;
 import net.kaikoga.arp.domain.IArpObject;
+import net.kaikoga.arp.impl.IArpObjectImpl;
 
 @:arpType("mock", "concreteImpl")
 class MockConcreteImplMacroArpObject implements IArpObject {

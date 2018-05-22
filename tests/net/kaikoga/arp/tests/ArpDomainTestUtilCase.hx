@@ -1,7 +1,6 @@
 package net.kaikoga.arp.tests;
 
 import net.kaikoga.arp.tests.ArpDomainTestUtil;
-
 import picotest.PicoAssert.*;
 
 class ArpDomainTestUtilCase {

@@ -1,13 +1,13 @@
 package net.kaikoga.arp.domain.ds;
 
-import net.kaikoga.arp.ds.access.ISetKnit.ISetKnitPin;
-import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.domain.core.ArpSid;
-import net.kaikoga.arp.persistable.IPersistOutput;
-import net.kaikoga.arp.persistable.IPersistInput;
+import net.kaikoga.arp.ds.access.ISetKnit.ISetKnitPin;
 import net.kaikoga.arp.ds.impl.ArraySet;
-import net.kaikoga.arp.ds.lambda.CollectionTools;
 import net.kaikoga.arp.ds.ISet;
+import net.kaikoga.arp.ds.lambda.CollectionTools;
+import net.kaikoga.arp.persistable.IPersistable;
+import net.kaikoga.arp.persistable.IPersistInput;
+import net.kaikoga.arp.persistable.IPersistOutput;
 
 class ArpObjectSet<V:IArpObject> implements ISet<V> implements IPersistable {
 

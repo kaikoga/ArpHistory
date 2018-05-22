@@ -1,8 +1,8 @@
 package net.kaikoga.arp.domain.dump;
 
-import net.kaikoga.arp.ds.Tree;
-import net.kaikoga.arp.ds.tree.ITreePrinter;
 import net.kaikoga.arp.domain.dump.ArpDumpAnon;
+import net.kaikoga.arp.ds.tree.ITreePrinter;
+import net.kaikoga.arp.ds.Tree;
 
 class ArpDumpAnonPrinter implements ITreePrinter<ArpDump, ArpDumpAnon> {
 

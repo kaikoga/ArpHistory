@@ -1,10 +1,9 @@
 package net.kaikoga.arp.domain;
 
+import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.events.ArpLogEvent;
 import net.kaikoga.arp.domain.mocks.MockArpObject;
 import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arp.domain.core.ArpType;
-
 import picotest.PicoAssert.*;
 
 class ArpDomainCase {

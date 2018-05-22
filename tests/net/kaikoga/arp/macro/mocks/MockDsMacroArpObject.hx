@@ -1,11 +1,11 @@
 package net.kaikoga.arp.macro.mocks;
 
-import net.kaikoga.arp.ds.ISet;
-import net.kaikoga.arp.ds.impl.ArraySet;
+import net.kaikoga.arp.domain.IArpObject;
 import net.kaikoga.arp.ds.IList;
 import net.kaikoga.arp.ds.IMap;
+import net.kaikoga.arp.ds.impl.ArraySet;
 import net.kaikoga.arp.ds.IOmap;
-import net.kaikoga.arp.domain.IArpObject;
+import net.kaikoga.arp.ds.ISet;
 
 @:arpType("mock", "stdMacro")
 class MockDsMacroArpObject implements IArpObject {

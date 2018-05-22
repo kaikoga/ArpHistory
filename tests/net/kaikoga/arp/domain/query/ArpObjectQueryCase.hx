@@ -2,7 +2,6 @@ package net.kaikoga.arp.domain.query;
 
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.mocks.MockArpObject;
-
 import picotest.PicoAssert.*;
 
 class ArpObjectQueryCase {

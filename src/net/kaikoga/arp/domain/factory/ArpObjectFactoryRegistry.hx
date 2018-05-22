@@ -1,10 +1,10 @@
 package net.kaikoga.arp.domain.factory;
 
-import net.kaikoga.arp.ds.lambda.SetOp;
+import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.ds.impl.ArraySet;
+import net.kaikoga.arp.ds.lambda.SetOp;
 import net.kaikoga.arp.errors.ArpLoadError;
 import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arp.domain.core.ArpType;
 
 class ArpObjectFactoryRegistry {
 

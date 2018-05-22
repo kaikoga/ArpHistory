@@ -6,8 +6,8 @@ import net.kaikoga.arp.domain.core.ArpSid;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.query.ArpDirectoryQuery;
 import net.kaikoga.arp.domain.query.ArpObjectQuery;
-import net.kaikoga.arp.errors.ArpError;
 import net.kaikoga.arp.ds.impl.StdMap;
+import net.kaikoga.arp.errors.ArpError;
 
 class ArpDirectory {
 

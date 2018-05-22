@@ -2,8 +2,8 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
-import net.kaikoga.arp.domain.reflect.ArpFieldInfo;
 import haxe.macro.Expr;
+import net.kaikoga.arp.domain.reflect.ArpFieldInfo;
 
 interface IMacroArpField {
 	public var isSeedable(get, never):Bool;

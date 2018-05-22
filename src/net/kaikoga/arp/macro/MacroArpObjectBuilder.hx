@@ -5,7 +5,6 @@ package net.kaikoga.arp.macro;
 import haxe.macro.Compiler;
 import haxe.macro.Context;
 import haxe.macro.Expr;
-
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.domain.reflect.ArpClassInfo;
 import net.kaikoga.arp.macro.MacroArpFieldBuilder;

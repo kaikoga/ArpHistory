@@ -6,7 +6,6 @@ import net.kaikoga.arp.domain.ArpSlot;
 import net.kaikoga.arp.domain.core.ArpType;
 import net.kaikoga.arp.macro.mocks.MockLatePrepareMacroArpObject;
 import net.kaikoga.arp.seed.ArpSeed;
-
 import picotest.PicoAssert.*;
 import picotest.PicoTestAsync.*;
 

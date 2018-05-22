@@ -1,9 +1,9 @@
 ﻿package net.kaikoga.arp.writers.help;
 
-import net.kaikoga.arp.domain.reflect.ArpFieldDs;
-import net.kaikoga.arp.domain.reflect.ArpFieldKind;
-import net.kaikoga.arp.domain.reflect.ArpFieldInfo;
 import net.kaikoga.arp.domain.reflect.ArpClassInfo;
+import net.kaikoga.arp.domain.reflect.ArpFieldDs;
+import net.kaikoga.arp.domain.reflect.ArpFieldInfo;
+import net.kaikoga.arp.domain.reflect.ArpFieldKind;
 
 class ArpClassHelpPrinter {
 

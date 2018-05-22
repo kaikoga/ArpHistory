@@ -2,9 +2,7 @@ package net.kaikoga.arp.macro;
 
 #if macro
 
-import haxe.macro.Context;
 import haxe.macro.Expr;
-import net.kaikoga.arp.macro.stubs.MacroArpObjectStub;
 
 class MacroArpObjectSkeleton {
 

@@ -1,6 +1,5 @@
 package net.kaikoga.arp.domain.core;
 
-import net.kaikoga.arp.utils.ArpIdGenerator;
 abstract ArpDid(String) {
 	inline public function new(value:String) {
 		this = value;
