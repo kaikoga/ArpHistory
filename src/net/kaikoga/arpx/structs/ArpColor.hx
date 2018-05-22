@@ -1,5 +1,6 @@
 package net.kaikoga.arpx.structs;
 
+import haxe.macro.Expr;
 import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.persistable.IPersistInput;
@@ -15,31 +16,78 @@ import flash.geom.ColorTransform;
 /**
 	handled as mutable
 */
-@:build(net.kaikoga.arp.ArpDomainMacros.buildStruct("Color"))
+#if (!macro) @:build(net.kaikoga.arp.ArpDomainMacros.buildStruct("Color")) #end
 class ArpColor implements IPersistable {
 
 	public var value32:Int;
 
 	public var value(get, set):Int;
-	private function get_value():Int {
-		return this.value32 & 0xffffff;
+	inline private function get_value():Int return this.value32 & 0xffffff;
+	inline private function set_value(value:Int):Int {
+		this.value32 = (value & 0x00ffffff) | (this.value32 & 0xff000000);
+		return value;
 	}
-	private function set_value(value:Int):Int {
-		this.value32 = (value32 & 0xff000000) | (value & 0xffffff);
+
+	macro private static function clamped(value:Expr):Expr return macro if ($e{value} < 0) 0 else if ($e{value} > 255) 255 else $e{value};
+
+	public var red(get, set):Int;
+	inline private function get_red():Int return ((this.value32 >> 16) & 0xff);
+	inline private function set_red(value:Int):Int {
+		this.value32 = (clamped(value) << 16) | (this.value32 & 0xff00ffff);
+		return value;
+	}
+
+	public var green(get, set):Int;
+	inline private function get_green():Int return ((this.value32 >> 8) & 0xff);
+	inline private function set_green(value:Int):Int {
+		this.value32 = (clamped(value) << 8) | (this.value32 & 0xffff00ff);
+		return value;
+	}
+
+	public var blue(get, set):Int;
+	inline private function get_blue():Int return ((this.value32 >> 0) & 0xff);
+	inline private function set_blue(value:Int):Int {
+		this.value32 = (clamped(value) << 0) | (this.value32 & 0xffffff00);
 		return value;
 	}
 
 	public var alpha(get, set):Int;
-	private function get_alpha():Int {
-		return value32 >> 24;
-	}
+	private function get_alpha():Int return ((this.value32 >> 24) & 0xff);
 	private function set_alpha(value:Int):Int {
-		this.value32 = (value << 24) | (value32 & 0xffffff);
+		this.value32 = (clamped(value) << 24) | (this.value32 & 0x00ffffff);
 		return value;
 	}
 
-	public function new(value:Int = 0x000000) {
-		this.value32 = value | 0xff000000;
+	public var fred(get, set):Float;
+	inline private function get_fred():Float return this.red / 0xff;
+	inline private function set_fred(value:Float):Float {
+		this.red = Math.round(value * 0xff);
+		return value;
+	}
+
+	public var fgreen(get, set):Float;
+	inline private function get_fgreen():Float return this.green / 0xff;
+	inline private function set_fgreen(value:Float):Float {
+		this.green = Math.round(value * 0xff);
+		return value;
+	}
+
+	public var fblue(get, set):Float;
+	inline private function get_fblue():Float return this.blue / 0xff;
+	inline private function set_fblue(value:Float):Float {
+		this.blue = Math.round(value * 0xff);
+		return value;
+	}
+
+	public var falpha(get, set):Float;
+	private function get_falpha():Float return this.alpha / 0xff;
+	private function set_falpha(value:Float):Float {
+		this.alpha = Math.round(value * 0xff);
+		return value;
+	}
+
+	public function new(value:Int = 0xff000000) {
+		this.value32 = value;
 	}
 
 	public function initWithSeed(seed:ArpSeed):ArpColor {
@@ -52,7 +100,7 @@ class ArpColor implements IPersistable {
 		var array:Array<String> = definition.split("@");
 		var value:Int = ArpStringUtil.parseHex(array[0].substring(1));
 		var alpha:Int = (array[1] != null) ? ArpStringUtil.parseHex(array[1]) : 0xff;
-		this.value32 = (alpha << 24) | value;
+		this.value32 = (clamped(alpha) << 24) | value;
 		return this;
 	}
 
@@ -72,40 +120,17 @@ class ArpColor implements IPersistable {
 	#if (flash || openfl)
 
 	public function toMultiplier():ColorTransform {
-		return new ColorTransform(
-			((this.value32 >> 16) & 0xff) / 0xff,
-			((this.value32 >> 8) & 0xff) / 0xff,
-			((this.value32 >> 0) & 0xff) / 0xff,
-			((this.value32 >> 24) & 0xff) / 0xff
-		);
+		return new ColorTransform(this.fred, this.fgreen, this.fblue, this.falpha);
 	}
 
 	public function toOffset():ColorTransform {
-		return new ColorTransform(
-			0,
-			0,
-			0,
-			0,
-			((this.value32 >> 16) & 0xff),
-			((this.value32 >> 8) & 0xff),
-			((this.value32 >> 0) & 0xff),
-			((this.value32 >> 24) & 0xff)
-		);
+		return new ColorTransform(0, 0, 0, 0, this.red, this.green, this.blue, this.alpha);
 	}
 
 	public function toColorize():ColorTransform {
-		var a:Float = ((this.value32 >> 24) & 0xff) / 0xff;
+		var a:Float = this.falpha;
 		var b:Float = 1 - a;
-		return new ColorTransform(
-			b,
-			b,
-			b,
-			1,
-			((this.value32 >> 16) & 0xff) * a,
-			((this.value32 >> 8) & 0xff) * a,
-			((this.value32 >> 0) & 0xff) * a,
-			0
-		);
+		return new ColorTransform(b, b, b, 1, this.red * a, this.green * a, this.blue * a, 0);
 	}
 
 	#end

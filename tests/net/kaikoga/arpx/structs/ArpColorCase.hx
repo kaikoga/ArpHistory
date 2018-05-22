@@ -43,4 +43,39 @@ class ArpColorCase {
 		assertEquals(color.value32, color2.value32);
 	}
 
+	public function testGetters():Void {
+		var ERR:Float = 0.01;
+		var color:ArpColor = new ArpColor(0xcc336699);
+		assertMatch(0x33, color.red);
+		assertMatch(0x66, color.green);
+		assertMatch(0x99, color.blue);
+		assertMatch(0xcc, color.alpha);
+		assertMatch(Matchers.closeTo(0x33 / 0xff, ERR), color.fred);
+		assertMatch(Matchers.closeTo(0x66 / 0xff, ERR), color.fgreen);
+		assertMatch(Matchers.closeTo(0x99 / 0xff, ERR), color.fblue);
+		assertMatch(Matchers.closeTo(0xcc / 0xff, ERR), color.falpha);
+	}
+
+	public function testSetters():Void {
+		var ERR:Float = 0.01;
+		var color:ArpColor = new ArpColor();
+		color.red = 0x33;
+		color.green = 0x33;
+		color.blue = 0x33;
+		color.alpha = 0x33;
+		assertMatch(0x33, color.red);
+		assertMatch(0x66, color.green);
+		assertMatch(0x99, color.blue);
+		assertMatch(0xcc, color.alpha);
+		color.value32 = 0;
+		color.fred = 0x33 / 0xff;
+		color.fgreen = 0x66 / 0xff;
+		color.fblue = 0x99 / 0xff;
+		color.falpha = 0xcc / 0xff;
+		assertMatch(Matchers.closeTo(0x33 / 0xff, ERR), color.fred);
+		assertMatch(Matchers.closeTo(0x66 / 0xff, ERR), color.fgreen);
+		assertMatch(Matchers.closeTo(0x99 / 0xff, ERR), color.fblue);
+		assertMatch(Matchers.closeTo(0xcc / 0xff, ERR), color.falpha);
+	}
+
 }

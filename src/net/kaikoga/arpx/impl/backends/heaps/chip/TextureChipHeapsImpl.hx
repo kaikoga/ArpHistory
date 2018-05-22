@@ -41,13 +41,7 @@ class TextureChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 		}
 
 		var color:ArpColor = this.chip.color;
-		context.drawTile(
-			tile,
-			((color.value32 >> 16) & 0xff) / 0xff,
-			((color.value32 >> 8) & 0xff) / 0xff,
-			((color.value32 >> 0) & 0xff) / 0xff,
-			((color.value32 >> 24) & 0xff) / 0xff
-		);
+		context.drawTile(tile, color.fred, color.fgreen, color.fblue, color.falpha);
 		context.popTransform();
 	}
 }
