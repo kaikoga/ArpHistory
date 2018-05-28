@@ -34,11 +34,4 @@ class ArpDirectoryQuery {
 		for (element in this.pathArray) slot = slot.child(element);
 		return slot;
 	}
-
-	public function link(dir:ArpDirectory):ArpDirectory {
-		var target:ArpDirectory = this.directory();
-		target.linkTo(dir);
-		return dir;
-	}
-
 }
