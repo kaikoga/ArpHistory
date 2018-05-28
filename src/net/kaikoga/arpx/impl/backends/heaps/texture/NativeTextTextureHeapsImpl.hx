@@ -2,17 +2,17 @@ package net.kaikoga.arpx.impl.backends.heaps.texture;
 
 #if arp_backend_heaps
 
-import net.kaikoga.arpx.impl.targets.flash.display.BitmapFontDrawCursor;
-import hxd.Pixels.Flags;
-import flash.geom.Rectangle;
-import h3d.mat.Texture;
-import h2d.Tile;
+#if flash
 import flash.display.BitmapData;
+import flash.geom.Rectangle;
 import flash.text.TextFormat;
-import hxd.impl.Memory.MemoryReader;
-import hxd.PixelFormat;
-import net.kaikoga.arpx.impl.backends.heaps.texture.decorators.MultiTextureHeapsImplBase;
 import net.kaikoga.arpx.impl.targets.flash.display.BitmapFont;
+import net.kaikoga.arpx.impl.targets.flash.display.BitmapFontDrawCursor;
+#end
+
+import h2d.Tile;
+import hxd.Pixels.Flags;
+import net.kaikoga.arpx.impl.backends.heaps.texture.decorators.MultiTextureHeapsImplBase;
 import net.kaikoga.arpx.texture.NativeTextTexture;
 
 class NativeTextTextureHeapsImpl extends MultiTextureHeapsImplBase<NativeTextTexture> {
@@ -62,6 +62,7 @@ class NativeTextTextureHeapsImpl extends MultiTextureHeapsImplBase<NativeTextTex
 		return true;
 	}
 
+	#if flash
 	private static function tileFromPremult(bitmapData:BitmapData):Tile {
 		var pixels = hxd.BitmapData.fromNative(bitmapData).getPixels();
 		bitmapData.dispose();
@@ -72,6 +73,7 @@ class NativeTextTextureHeapsImpl extends MultiTextureHeapsImplBase<NativeTextTex
 		pixels.dispose();
 		return tile;
 	}
+	#end
 }
 
 #end

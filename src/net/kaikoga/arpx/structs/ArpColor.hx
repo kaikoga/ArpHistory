@@ -7,10 +7,10 @@ import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.utils.ArpStringUtil;
 
-#if openfl
-import openfl.geom.ColorTransform;
-#elseif flash
+#if flash
 import flash.geom.ColorTransform;
+#elseif openfl
+import openfl.geom.ColorTransform;
 #end
 
 /**

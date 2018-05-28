@@ -2,7 +2,6 @@
 
 import net.kaikoga.arpx.texture.decorators.GridTexture;
 import net.kaikoga.arpx.chip.TextureChip;
-import flash.display3D.textures.Texture;
 import net.kaikoga.arpx.anchor.Anchor;
 import net.kaikoga.arpx.automaton.Automaton;
 import net.kaikoga.arpx.camera.Camera;

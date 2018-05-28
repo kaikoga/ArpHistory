@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.impl.targets.flash.display;
 
+#if flash
+
 import flash.geom.Rectangle;
 
 class BitmapFontDrawCursor {
@@ -33,3 +35,4 @@ class BitmapFontDrawCursor {
 	}
 }
 
+#end

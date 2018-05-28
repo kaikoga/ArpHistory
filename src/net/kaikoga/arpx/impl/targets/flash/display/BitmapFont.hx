@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.impl.targets.flash.display;
 
+#if flash
+
 import flash.display.BitmapData;
 import flash.geom.ColorTransform;
 import flash.geom.Matrix;
@@ -106,3 +108,5 @@ class BitmapFont {
 	}
 
 }
+
+#end

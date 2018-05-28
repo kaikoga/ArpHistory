@@ -1,5 +1,7 @@
 package net.kaikoga.arpx.impl.targets.flash.socketClient;
 
+#if flash
+
 import flash.errors.SecurityError;
 import flash.events.Event;
 import flash.events.IOErrorEvent;
@@ -90,3 +92,5 @@ class TcpSocketClientFlashImpl extends SocketClientImplBase {
 	}
 
 }
+
+#end
