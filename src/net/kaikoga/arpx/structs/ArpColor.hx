@@ -1,11 +1,12 @@
 package net.kaikoga.arpx.structs;
 
-import haxe.macro.Expr;
 import net.kaikoga.arp.persistable.IPersistable;
 import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.utils.ArpStringUtil;
+
+import net.kaikoga.arpx.structs.ArpColorMacros.clamped;
 
 #if flash
 import flash.geom.ColorTransform;
@@ -16,7 +17,7 @@ import openfl.geom.ColorTransform;
 /**
 	handled as mutable
 */
-#if (!macro) @:build(net.kaikoga.arp.ArpDomainMacros.buildStruct("Color")) #end
+@:build(net.kaikoga.arp.ArpDomainMacros.buildStruct("Color"))
 class ArpColor implements IPersistable {
 
 	public var value32:Int;
@@ -27,8 +28,6 @@ class ArpColor implements IPersistable {
 		this.value32 = (value & 0x00ffffff) | (this.value32 & 0xff000000);
 		return value;
 	}
-
-	macro private static function clamped(value:Expr):Expr return macro if ($e{value} < 0) 0 else if ($e{value} > 255) 255 else $e{value};
 
 	public var red(get, set):Int;
 	inline private function get_red():Int return ((this.value32 >> 16) & 0xff);

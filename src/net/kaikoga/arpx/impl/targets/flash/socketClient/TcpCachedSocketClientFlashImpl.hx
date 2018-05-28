@@ -71,7 +71,7 @@ class TcpCachedSocketClientFlashImpl extends ArpObjectImplBase implements ISocke
 		try {
 			this.socket.connect(host, port);
 		} catch (e:SecurityError) {
-			this.socketClient.arpDomain.log("socketClient", e.message());
+			this.socketClient.arpDomain.log("socketClient", e.message);
 			onSocketError(null);
 		}
 	}

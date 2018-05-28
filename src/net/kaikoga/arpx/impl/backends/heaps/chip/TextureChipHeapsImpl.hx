@@ -22,7 +22,7 @@ class TextureChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 
 	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
 		if (this.chip.arpSlot.heat < ArpHeat.Warm) {
-			this.chip.arpDomain.log("gridchip", 'GridChip.copyChip(): Chip not warm: ${this}:$params');
+			this.chip.arpDomain.log("gridchip", 'GridChip.copyChip(): Chip not warm: ${chip.arpSlot.sid}:$params');
 			this.chip.arpDomain.heatLater(this.chip.arpSlot);
 			return;
 		}
@@ -35,7 +35,7 @@ class TextureChipHeapsImpl extends ArpObjectImplBase implements IChipImpl {
 		var tile:Tile = this.chip.texture.getTile(params);
 		if (tile == null) {
 			var index:Int = this.chip.texture.getFaceIndex(params);
-			this.chip.arpDomain.log("gridchip", 'GridChip.getTrimmedBitmap(): Chip index out of range: ${this}:$index');
+			this.chip.arpDomain.log("gridchip", 'GridChip.getTrimmedBitmap(): Chip index out of range: ${chip.arpSlot.sid}:$index');
 			context.popTransform();
 			return;
 		}
