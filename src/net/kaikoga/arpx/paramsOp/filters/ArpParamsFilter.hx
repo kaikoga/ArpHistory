@@ -1,8 +1,8 @@
 package net.kaikoga.arpx.paramsOp.filters;
 
 import net.kaikoga.arpx.structs.ArpDirection;
-import net.kaikoga.arpx.structs.ArpParamsMacros;
 import net.kaikoga.arpx.structs.IArpParamsRead;
+import net.kaikoga.arpx.structs.macro.ArpParamsMacros;
 
 class ArpParamsFilter implements IArpParamsRead {
 	private var params:IArpParamsRead;

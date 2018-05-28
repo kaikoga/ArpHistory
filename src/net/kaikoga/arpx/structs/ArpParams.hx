@@ -7,6 +7,7 @@ import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.utils.ArpStringUtil;
 import net.kaikoga.arpx.structs.ArpDirection;
+import net.kaikoga.arpx.structs.macro.ArpParamsMacros;
 
 @:forward
 abstract ArpParamsProxy(ArpParams) from ArpParams to ArpParams {

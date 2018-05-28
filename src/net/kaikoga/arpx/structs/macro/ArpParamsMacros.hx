@@ -1,4 +1,4 @@
-package net.kaikoga.arpx.structs;
+package net.kaikoga.arpx.structs.macro;
 
 import haxe.macro.Context;
 import haxe.macro.Expr;

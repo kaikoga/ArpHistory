@@ -6,7 +6,7 @@ import net.kaikoga.arp.persistable.IPersistInput;
 import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.utils.ArpStringUtil;
 
-import net.kaikoga.arpx.structs.ArpColorMacros.clamped;
+import net.kaikoga.arpx.structs.macro.ArpColorMacros.clamped;
 
 #if flash
 import flash.geom.ColorTransform;
