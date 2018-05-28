@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.socketClient;
 
-#if flash
+#if (flash || openfl)
 import net.kaikoga.arpx.impl.targets.flash.socketClient.TcpCachedSocketClientFlashImpl;
 #end
 
@@ -9,7 +9,7 @@ class TcpCachedSocketClient extends SocketClient {
 
 	@:arpField public var host:String;
 
-	#if flash
+	#if (flash || openfl)
 	@:arpImpl private var flashImpl:TcpCachedSocketClientFlashImpl;
 	#end
 

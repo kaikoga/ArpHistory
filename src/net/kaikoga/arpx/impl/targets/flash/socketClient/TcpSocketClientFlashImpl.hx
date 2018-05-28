@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.impl.targets.flash.socketClient;
 
-#if flash
+#if (flash || openfl)
 
 import flash.errors.SecurityError;
 import flash.events.Event;

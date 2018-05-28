@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.impl.targets.flash.storage;
 
-#if (flash || arp_backend_flash || arp_backend_openfl)
+#if (flash || openfl)
 
 import flash.net.SharedObject;
 import flash.utils.ByteArray;

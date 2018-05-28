@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.impl.targets.flash.display;
 
-#if flash
+#if (flash || openfl)
 
 import flash.display.BitmapData;
 import flash.geom.ColorTransform;

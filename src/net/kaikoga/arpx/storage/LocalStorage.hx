@@ -1,6 +1,6 @@
 package net.kaikoga.arpx.storage;
 
-#if (flash || arp_backend_flash || arp_backend_openfl)
+#if (flash || openfl)
 import net.kaikoga.arpx.impl.targets.flash.storage.LocalStorageFlashImpl;
 #end
 
@@ -9,11 +9,9 @@ class LocalStorage extends Storage {
 
 	@:arpField public var src:String;
 
-#if (flash || arp_backend_flash || arp_backend_openfl)
+#if (flash || openfl)
 	@:arpImpl private var flashImpl:LocalStorageFlashImpl;
 #end
 
-	public function new () {
-		super();
-	}
+	public function new() super();
 }
