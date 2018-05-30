@@ -104,8 +104,8 @@ class BytesToolCase {
 		output.writeInt32(0xfedcba8);
 		output.writeInt32(0x76543210);
 		var bytes:Bytes = output.getBytes();
-		assertMatch(Int64.make(0x1234567, 0x89abcdef), BytesTool.getInt64BE(bytes, 0));
-		assertMatch(Int64.make(0xfedcba8, 0x76543210), BytesTool.getInt64BE(bytes, 8));
+		assertMatch(Std.string(Int64.make(0x1234567, 0x89abcdef)), Std.string(BytesTool.getInt64BE(bytes, 0)));
+		assertMatch(Std.string(Int64.make(0xfedcba8, 0x76543210)), Std.string(BytesTool.getInt64BE(bytes, 8)));
 	}
 
 	public function testSetInt32BE():Void {
