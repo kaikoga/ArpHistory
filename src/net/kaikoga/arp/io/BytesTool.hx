@@ -53,7 +53,7 @@ class BytesTool {
 	}
 
 	inline public static function getInt64BE(bytes:Bytes, pos:Int):Int64 {
-		return haxe.Int64.make(getInt32BE(bytes, pos + 4), getInt32BE(bytes, pos));
+		return haxe.Int64.make(getInt32BE(bytes, pos), getInt32BE(bytes, pos + 4));
 	}
 
 	inline public static function setInt32BE(bytes:Bytes, pos:Int, v:Int):Void {
