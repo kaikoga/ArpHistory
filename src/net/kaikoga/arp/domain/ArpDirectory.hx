@@ -102,4 +102,6 @@ class ArpDirectory {
 	inline public function query<T:IArpObject>(path:String = null, type:ArpType = null):ArpObjectQuery<T> {
 		return new ArpObjectQuery(this, path, type);
 	}
+
+	inline public function toString():String return '[${this.did}]';
 }

@@ -42,7 +42,7 @@ class ArpObjectMap<K, V:IArpObject> implements IMap<K, V> implements IPersistabl
 	public function isEmpty():Bool return this.slotMap.isEmpty();
 	public function hasValue(v:V):Bool return this.slotMap.hasValue(slotOf(v));
 	inline public function iterator():Iterator<V> return new ArpObjectIterator(this.slotMap.iterator());
-	public function toString():String return CollectionTools.mapToStringImpl(this);
+	public function toString():String return CollectionTools.mapToStringImpl(this.slotMap);
 	public function get(k:K):Null<V> return this.slotMap.hasKey(k) ? this.slotMap.get(k).value : null;
 	public function hasKey(k:K):Bool return this.slotMap.hasKey(k);
 	inline public function keys():Iterator<K> return this.slotMap.keys();

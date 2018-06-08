@@ -38,7 +38,7 @@ class ArpObjectSet<V:IArpObject> implements ISet<V> implements IPersistable {
 	public function isEmpty():Bool return this.slotSet.isEmpty();
 	public function hasValue(v:V):Bool return this.slotSet.hasValue(slotOf(v));
 	inline public function iterator():Iterator<V> return new ArpObjectIterator(this.slotSet.iterator());
-	public function toString():String return CollectionTools.setToStringImpl(this);
+	public function toString():String return CollectionTools.setToStringImpl(this.slotSet);
 
 	// write
 	public function add(v:V):Void this.slotSet.add(slotOf(v).addReference());

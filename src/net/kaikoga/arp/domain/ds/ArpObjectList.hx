@@ -38,7 +38,7 @@ class ArpObjectList<V:IArpObject> implements IList<V> implements IPersistable {
 	public function isEmpty():Bool return this.slotList.isEmpty();
 	public function hasValue(v:V):Bool return this.slotList.hasValue(slotOf(v));
 	inline public function iterator():Iterator<V> return new ArpObjectIterator(this.slotList.iterator());
-	public function toString():String return CollectionTools.listToStringImpl(this);
+	public function toString():String return CollectionTools.listToStringImpl(this.slotList);
 	public var length(get, null):Int;
 	public function get_length():Int return this.slotList.length;
 	public function first():Null<V> return this.slotList.isEmpty() ? null : this.slotList.first().value;

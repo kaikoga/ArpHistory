@@ -41,7 +41,7 @@ class ArpObjectOmap<K, V:IArpObject> implements IOmap<K, V> implements IPersista
 	public function isEmpty():Bool return this.slotOmap.isEmpty();
 	public function hasValue(v:V):Bool return this.slotOmap.hasValue(slotOf(v));
 	inline public function iterator():Iterator<V> return new ArpObjectIterator(this.slotOmap.iterator());
-	public function toString():String return CollectionTools.omapToStringImpl(this);
+	public function toString():String return CollectionTools.omapToStringImpl(this.slotOmap);
 	public function get(k:K):Null<V> return this.slotOmap.hasKey(k) ? this.slotOmap.get(k).value : null;
 	public function hasKey(k:K):Bool return this.slotOmap.hasKey(k);
 	inline public function keys():Iterator<K> return this.slotOmap.keys();

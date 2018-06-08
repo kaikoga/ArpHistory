@@ -129,4 +129,6 @@ class MockArpObject implements IArpObject {
 		this.refField = src.refField;
 		return this;
 	}
+	
+	public function toString() return '[mock ${this.arpSlot.sid}]';
 }

@@ -3,6 +3,10 @@ package net.kaikoga.arp.macro;
 import net.kaikoga.arp.domain.ArpDomain;
 import net.kaikoga.arp.domain.ArpSlot;
 import net.kaikoga.arp.domain.core.ArpType;
+import net.kaikoga.arp.domain.ds.ArpObjectList;
+import net.kaikoga.arp.domain.ds.ArpObjectMap;
+import net.kaikoga.arp.domain.ds.ArpObjectOmap;
+import net.kaikoga.arp.domain.ds.ArpObjectSet;
 import net.kaikoga.arp.ds.IList;
 import net.kaikoga.arp.ds.IMap;
 import net.kaikoga.arp.ds.IOmap;
@@ -99,16 +103,20 @@ class DsMacroArpObjectCase {
 
 	private static function matchArpDs(context:PicoMatcherContext, expected:Dynamic, actual:Dynamic):PicoMatchResult {
 		if (Std.is(expected, ISet) && Std.is(actual, ISet)) {
-			return context.match(SetOp.toArray(expected), SetOp.toArray(actual));
+			return context.match(expected.toString(), actual.toString());
+			// return context.match(SetOp.toArray(expected), SetOp.toArray(actual));
 		}
 		if (Std.is(expected, IList) && Std.is(actual, IList)) {
-			return context.match(ListOp.toArray(expected), ListOp.toArray(actual));
+			return context.match(expected.toString(), actual.toString());
+			// return context.match(ListOp.toArray(expected), ListOp.toArray(actual));
 		}
 		if (Std.is(expected, IMap) && Std.is(actual, IMap)) {
-			return context.match(MapOp.toAnon(expected), MapOp.toAnon(actual));
+			return context.match(expected.toString(), actual.toString());
+			// return context.match(MapOp.toAnon(expected), MapOp.toAnon(actual));
 		}
 		if (Std.is(expected, IOmap) && Std.is(actual, IOmap)) {
-			return context.match(OmapOp.toArray(expected), OmapOp.toArray(actual));
+			return context.match(expected.toString(), actual.toString());
+			// return context.match(OmapOp.toArray(expected), OmapOp.toArray(actual));
 		}
 		return PicoMatchResult.Unknown;
 	}
