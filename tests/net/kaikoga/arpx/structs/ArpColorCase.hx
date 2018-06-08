@@ -60,9 +60,9 @@ class ArpColorCase {
 		var ERR:Float = 0.01;
 		var color:ArpColor = new ArpColor();
 		color.red = 0x33;
-		color.green = 0x33;
-		color.blue = 0x33;
-		color.alpha = 0x33;
+		color.green = 0x66;
+		color.blue = 0x99;
+		color.alpha = 0xcc;
 		assertMatch(0x33, color.red);
 		assertMatch(0x66, color.green);
 		assertMatch(0x99, color.blue);

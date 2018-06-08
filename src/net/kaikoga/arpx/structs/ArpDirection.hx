@@ -6,6 +6,8 @@ import net.kaikoga.arp.persistable.IPersistOutput;
 import net.kaikoga.arp.seed.ArpSeed;
 import net.kaikoga.arp.utils.ArpStringUtil;
 
+typedef ArpDirectionValue = #if flash UInt #else Int #end ;
+
 /**
 	handled as mutable
 */
@@ -46,7 +48,7 @@ class ArpDirection implements IPersistable {
 	inline private static function get_NORTH():ArpDirection {return new ArpDirection(0xC0000000);}
 	inline private static function get_NORTH_EAST():ArpDirection {return new ArpDirection(0xE0000000);}
 
-	private static var VALS_BY_NAMES:Map<String, UInt> = [
+	private static var VALS_BY_NAMES:Map<String, ArpDirectionValue> = [
 		"right" => 0x00000000,
 		"rightdown" => 0x20000000,
 		"down" => 0x40000000,
@@ -76,7 +78,7 @@ class ArpDirection implements IPersistable {
 	inline private static var REV_TO_VAL:Float = INT_MAX * 2;
 	inline private static var VAL_TO_REV:Float = 0.5 / INT_MAX;
 
-	public var value:UInt;
+	public var value:ArpDirectionValue;
 
 	public var valueRadian(get, set):Float;
 	private function get_valueRadian():Float {
@@ -109,7 +111,7 @@ class ArpDirection implements IPersistable {
 		return Math.round(this.value * VAL_TO_REV * dirs) % dirs;
 	}
 
-	public function new(value:UInt = 0) {
+	public function new(value:ArpDirectionValue = 0) {
 		this.value = value;
 	}
 

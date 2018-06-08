@@ -36,12 +36,16 @@ class ArpParamsCase {
 		params["c"] = 10;
 		assertMatch(Matchers.containsInAnyOrder("a:b", "c:10"), Std.string(params).split(","));
 		params["d"] = ArpDirection.LEFT;
+		#if flash
 		assertMatch(Matchers.containsInAnyOrder("a:b", "c:10", "d:2147483648:idir"), Std.string(params).split(","));
+		#else
+		assertMatch(Matchers.containsInAnyOrder("a:b", "c:10", "d:-2147483648:idir"), Std.string(params).split(","));
+		#end
 	}
 
 	public function initWithSeedTest():Void {
 		var params:ArpParamsProxy = new ArpParams();
-		params.initWithSeed(ArpSeed.fromXmlString("<params>a:b,c:10,d:2147483648:idir,faceValue</params>"));
+		params.initWithSeed(ArpSeed.fromXmlString("<params>a:b,c:10,d:-2147483648:idir,faceValue</params>"));
 		assertEquals("b", params["a"]);
 		assertEquals(10, params["c"]);
 		assertEquals(ArpDirection.LEFT.value, params["d"].value);
