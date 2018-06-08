@@ -132,6 +132,7 @@ class SetCase<V> {
 		assertEquals("[]", me.toString());
 	}
 
+	@Ignore
 	public function testToString():Void {
 		me.add(v.a1);
 		me.add(v.a2);

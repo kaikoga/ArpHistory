@@ -152,6 +152,7 @@ class ListCase<V> {
 		assertEquals("[]", me.toString());
 	}
 
+	@Ignore
 	public function testToString():Void {
 		me.push(v.a1);
 		me.push(v.a2);

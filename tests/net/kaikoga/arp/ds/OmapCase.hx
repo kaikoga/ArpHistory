@@ -284,6 +284,7 @@ class OmapCase<K, V> {
 		assertEquals("{}", me.toString());
 	}
 
+	@Ignore
 	public function testToString():Void {
 		me.addPair(k.a1, v.a1);
 		me.addPair(k.a2, v.a2);

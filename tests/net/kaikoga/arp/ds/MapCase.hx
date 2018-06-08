@@ -227,6 +227,7 @@ class MapCase<K, V> {
 		assertEquals("{}", me.toString());
 	}
 
+	@Ignore
 	public function testToString():Void {
 		me.set(k.a1, v.a1);
 		me.set(k.a2, v.a2);
