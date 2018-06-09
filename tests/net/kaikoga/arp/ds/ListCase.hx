@@ -18,11 +18,13 @@ class ListCase<V> {
 
 	private var me:IList<V>;
 	private var v:IArpSupportFixture<V>;
+	private var isStrictToString:Bool;
 
 	@Parameter
 	public function setup(provider:IDsImplProvider<IList<V>>, valueFixture:IArpSupportFixture<V>):Void {
 		me = provider.create();
 		v = valueFixture.create();
+		isStrictToString = provider.isStrictToString();
 	}
 
 	public function testEmpty():Void {
@@ -152,7 +154,6 @@ class ListCase<V> {
 		assertEquals("[]", me.toString());
 	}
 
-	@Ignore
 	public function testToString():Void {
 		me.push(v.a1);
 		me.push(v.a2);
@@ -161,6 +162,11 @@ class ListCase<V> {
 		me.shift();
 		me.unshift(v.a5);
 		me.remove(v.a3);
-		assertEquals('[${v.a5}; ${v.a2}; ${v.a4}]', me.toString());
+		var string:String = me.toString();
+		if (isStrictToString) {
+			assertEquals('[${v.a5}; ${v.a2}; ${v.a4}]', string);
+		} else {
+			assertNotNull(string);
+		}
 	}
 }

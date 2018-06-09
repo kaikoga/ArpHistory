@@ -18,11 +18,13 @@ class SetCase<V> {
 
 	private var me:ISet<V>;
 	private var v:IArpSupportFixture<V>;
+	private var isStrictToString:Bool;
 
 	@Parameter
 	public function setup(provider:IDsImplProvider<ISet<V>>, valueFixture:IArpSupportFixture<V>):Void {
 		me = provider.create();
 		v = valueFixture.create();
+		isStrictToString = provider.isStrictToString();
 	}
 
 	public function testEmpty():Void {
@@ -132,7 +134,6 @@ class SetCase<V> {
 		assertEquals("[]", me.toString());
 	}
 
-	@Ignore
 	public function testToString():Void {
 		me.add(v.a1);
 		me.add(v.a2);
@@ -141,8 +142,12 @@ class SetCase<V> {
 		me.add(v.a5);
 		me.remove(v.a3);
 		var string:String = me.toString();
-		string = string.substr(1, string.length - 2);
-		assertMatch(containsInAnyOrder('${v.a1}', '${v.a2}', '${v.a4}', '${v.a5}'), string.split(", "));
+		if (isStrictToString) {
+			string = string.substr(1, string.length - 2);
+			assertMatch(containsInAnyOrder('${v.a1}', '${v.a2}', '${v.a4}', '${v.a5}'), string.split(", "));
+		} else {
+			assertNotNull(string);
+		}
 	}
 
 }

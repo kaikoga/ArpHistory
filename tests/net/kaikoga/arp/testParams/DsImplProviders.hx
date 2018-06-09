@@ -113,42 +113,49 @@ class DsImplProviders {
 
 typedef IDsImplProvider<T> = {
 	function create():T;
+	function isStrictToString():Bool;
 }
 
 @:generic @:remove
 class ArraySetProvider<V> {
 	public function new() {}
 	public function create():ISet<V> return new ArraySet<V>();
+	public function isStrictToString():Bool return true;
 }
 
 @:generic @:remove
 class StdMapSetProvider<V> {
 	public function new() {}
 	public function create():ISet<V> return new StdMapSet<V>();
+	public function isStrictToString():Bool return true;
 }
 
 @:generic @:remove
 class ArrayListProvider<V> {
 	public function new() {}
 	public function create():IList<V> return new ArrayList<V>();
+	public function isStrictToString():Bool return true;
 }
 
 @:generic @:remove
 class StdMapProvider<K, V> {
 	public function new() {}
 	public function create():IMap<K, V> return new StdMap<K, V>();
+	public function isStrictToString():Bool return true;
 }
 
 @:generic @:remove
 class StdOmapProvider<K, V> {
 	public function new() {}
 	public function create():IOmap<K, V> return new StdOmap<K, V>();
+	public function isStrictToString():Bool return true;
 }
 
 @:generic @:remove
 class SetOfListProvider<V> {
 	public function new() {}
 	public function create():ISet<V> return new SetOfList(new ArrayList<V>());
+	public function isStrictToString():Bool return true;
 }
 
 @:generic @:remove
@@ -156,6 +163,7 @@ class SetOfMapKeyProvider<K, V> {
 	private var valueFunc:K->V;
 	public function new(valueFunc:K->V) { this.valueFunc = valueFunc; }
 	public function create():ISet<K> return new SetOfMapKey(new StdMap<K, V>(), valueFunc);
+	public function isStrictToString():Bool return true;
 }
 
 @:generic @:remove
@@ -163,6 +171,7 @@ class SetOfMapValueProvider<K, V> {
 	private var keyFunc:V->K;
 	public function new(keyFunc:V->K) { this.keyFunc = keyFunc; }
 	public function create():ISet<V> return new SetOfMapValue(new StdMap<K, V>(), keyFunc);
+	public function isStrictToString():Bool return true;
 }
 
 @:generic @:remove
@@ -170,6 +179,7 @@ class SetOfOmapKeyProvider<K, V> {
 	private var valueFunc:K->V;
 	public function new(valueFunc:K->V) { this.valueFunc = valueFunc; }
 	public function create():ISet<K> return new SetOfOmapKey(new StdOmap<K, V>(), valueFunc);
+	public function isStrictToString():Bool return true;
 }
 
 @:generic @:remove
@@ -177,6 +187,7 @@ class SetOfOmapValueProvider<K, V> {
 	private var keyFunc:V->K;
 	public function new(keyFunc:V->K) { this.keyFunc = keyFunc; }
 	public function create():ISet<V> return new SetOfOmapValue(new StdOmap<K, V>(), keyFunc);
+	public function isStrictToString():Bool return true;
 }
 
 @:generic @:remove
@@ -184,6 +195,7 @@ class ListOfOmapKeyProvider<K, V> {
 	private var valueFunc:K->V;
 	public function new(valueFunc:K->V) { this.valueFunc = valueFunc; }
 	public function create():IList<K> return new ListOfOmapKey(new StdOmap<K, V>(), valueFunc);
+	public function isStrictToString():Bool return true;
 }
 
 @:generic @:remove
@@ -191,12 +203,14 @@ class ListOfOmapValueProvider<K, V> {
 	private var keyFunc:V->K;
 	public function new(keyFunc:V->K) { this.keyFunc = keyFunc; }
 	public function create():IList<V> return new ListOfOmapValue(new StdOmap<K, V>(), keyFunc);
+	public function isStrictToString():Bool return true;
 }
 
 @:generic @:remove
 class MapOfOmapProvider<K, V> {
 	public function new() {}
 	public function create():IMap<K, V> return new MapOfOmap(new StdOmap<K, V>());
+	public function isStrictToString():Bool return true;
 }
 
 class ProxySetProvider {
@@ -204,6 +218,7 @@ class ProxySetProvider {
 	public function create():ISet<Int> {
 		return new SetProxy(new ArraySet<String>(), ProxyCaseUtil.proxyString, ProxyCaseUtil.unproxyString);
 	}
+	public function isStrictToString():Bool return true;
 }
 
 class ProxyListProvider {
@@ -211,6 +226,7 @@ class ProxyListProvider {
 	public function create():IList<Int> {
 		return new ListProxy(new ArrayList<String>(), ProxyCaseUtil.proxyString, ProxyCaseUtil.unproxyString);
 	}
+	public function isStrictToString():Bool return true;
 }
 
 class ProxyMapProvider {
@@ -218,6 +234,7 @@ class ProxyMapProvider {
 	public function create():IMap<String, Int> {
 		return new MapProxy(new StdMap<Int, String>(), ProxyCaseUtil.proxyInt, ProxyCaseUtil.unproxyInt, ProxyCaseUtil.proxyString, ProxyCaseUtil.unproxyString);
 	}
+	public function isStrictToString():Bool return true;
 }
 
 class ProxyOmapProvider {
@@ -225,6 +242,7 @@ class ProxyOmapProvider {
 	public function create():IOmap<String, Int> {
 		return new OmapProxy(new StdOmap<Int, String>(), ProxyCaseUtil.proxyInt, ProxyCaseUtil.unproxyInt, ProxyCaseUtil.proxyString, ProxyCaseUtil.unproxyString);
 	}
+	public function isStrictToString():Bool return true;
 }
 
 class SelfProxySetProvider {
@@ -232,6 +250,7 @@ class SelfProxySetProvider {
 	public function create():ISet<Int> {
 		return new SetProxy(new ArraySet<Int>(), ProxyCaseUtil.selfProxyInt, ProxyCaseUtil.selfUnproxyInt);
 	}
+	public function isStrictToString():Bool return true;
 }
 
 class SelfProxyListProvider {
@@ -239,6 +258,7 @@ class SelfProxyListProvider {
 	public function create():IList<Int> {
 		return new ListProxy(new ArrayList<Int>(), ProxyCaseUtil.selfProxyInt, ProxyCaseUtil.selfUnproxyInt);
 	}
+	public function isStrictToString():Bool return true;
 }
 
 class SelfProxyMapProvider {
@@ -246,6 +266,7 @@ class SelfProxyMapProvider {
 	public function create():IMap<String, Int> {
 		return new MapProxy(new StdMap<String, Int>(), ProxyCaseUtil.selfProxyString, ProxyCaseUtil.selfUnproxyString, ProxyCaseUtil.selfProxyInt, ProxyCaseUtil.selfUnproxyInt);
 	}
+	public function isStrictToString():Bool return true;
 }
 
 class SelfProxyOmapProvider {
@@ -253,4 +274,5 @@ class SelfProxyOmapProvider {
 	public function create():IOmap<String, Int> {
 		return new OmapProxy(new StdOmap<String, Int>(), ProxyCaseUtil.selfProxyString, ProxyCaseUtil.selfUnproxyString, ProxyCaseUtil.selfProxyInt, ProxyCaseUtil.selfUnproxyInt);
 	}
+	public function isStrictToString():Bool return true;
 }

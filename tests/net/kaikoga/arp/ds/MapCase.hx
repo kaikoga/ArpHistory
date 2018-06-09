@@ -19,12 +19,14 @@ class MapCase<K, V> {
 	private var me:IMap<K, V>;
 	private var k:IArpSupportFixture<K>;
 	private var v:IArpSupportFixture<V>;
+	private var isStrictToString:Bool;
 
 	@Parameter
 	public function setup(provider:IDsImplProvider<IMap<K, V>>, keyFixture:IArpSupportFixture<K>, valueFixture:IArpSupportFixture<V>):Void {
 		me = provider.create();
 		k = keyFixture.create();
 		v = valueFixture.create();
+		isStrictToString = provider.isStrictToString();
 	}
 
 	public function testEmpty():Void {
@@ -227,7 +229,6 @@ class MapCase<K, V> {
 		assertEquals("{}", me.toString());
 	}
 
-	@Ignore
 	public function testToString():Void {
 		me.set(k.a1, v.a1);
 		me.set(k.a2, v.a2);
@@ -237,7 +238,11 @@ class MapCase<K, V> {
 		me.removeKey(k.a2);
 		me.remove(v.a4);
 		var string:String = me.toString();
-		string = string.substr(1, string.length - 2);
-		assertMatch(containsInAnyOrder('${k.a1} => ${v.a1}', '${k.a3} => ${v.a3}', '${k.a5} => ${v.a5}'), string.split(", "));
+		if (isStrictToString) {
+			string = string.substr(1, string.length - 2);
+			assertMatch(containsInAnyOrder('${k.a1} => ${v.a1}', '${k.a3} => ${v.a3}', '${k.a5} => ${v.a5}'), string.split(", "));
+		} else {
+			assertNotNull(string);
+		}
 	}
 }

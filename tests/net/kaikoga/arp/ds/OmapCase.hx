@@ -19,12 +19,14 @@ class OmapCase<K, V> {
 	private var me:IOmap<K, V>;
 	private var k:IArpSupportFixture<K>;
 	private var v:IArpSupportFixture<V>;
+	private var isStrictToString:Bool;
 
 	@Parameter
 	public function setup(provider:IDsImplProvider<IOmap<K, V>>, keyFixture:IArpSupportFixture<K>, valueFixture:IArpSupportFixture<V>):Void {
 		me = provider.create();
 		k = keyFixture.create();
 		v = valueFixture.create();
+		isStrictToString = provider.isStrictToString();
 	}
 
 	public function testEmpty():Void {
@@ -284,7 +286,6 @@ class OmapCase<K, V> {
 		assertEquals("{}", me.toString());
 	}
 
-	@Ignore
 	public function testToString():Void {
 		me.addPair(k.a1, v.a1);
 		me.addPair(k.a2, v.a2);
@@ -294,6 +295,11 @@ class OmapCase<K, V> {
 		me.removeKey(k.a2);
 		me.remove(v.a4);
 		me.removeAt(1);
-		assertEquals('{${k.a5} => ${v.a5}; ${k.a3} => ${v.a3}}', me.toString());
+		var string:String = me.toString();
+		if (isStrictToString) {
+			assertEquals('{${k.a5} => ${v.a5}; ${k.a3} => ${v.a3}}', string);
+		} else {
+			assertNotNull(string);
+		}
 	}
 }
