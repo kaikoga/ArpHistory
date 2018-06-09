@@ -62,6 +62,7 @@ class ArpObjectSetProvider<V:IArpObject> {
 	private var domain:ArpDomain;
 	public function new(domain:ArpDomain) this.domain = domain;
 	public function create():ISet<V> return new ArpObjectSet<V>(this.domain);
+	public function isStrictToString():Bool return false;
 }
 
 @:generic @:remove
@@ -69,6 +70,7 @@ class ArpObjectListProvider<V:IArpObject> {
 	private var domain:ArpDomain;
 	public function new(domain:ArpDomain) this.domain = domain;
 	public function create():IList<V> return new ArpObjectList<V>(this.domain);
+	public function isStrictToString():Bool return false;
 }
 
 @:generic @:remove
@@ -76,6 +78,7 @@ class ArpObjectMapProvider<K, V:IArpObject> {
 	private var domain:ArpDomain;
 	public function new(domain:ArpDomain) this.domain = domain;
 	public function create():IMap<K, V> return new ArpObjectMap<K, V>(this.domain);
+	public function isStrictToString():Bool return false;
 }
 
 @:generic @:remove
@@ -83,4 +86,5 @@ class ArpObjectOmapProvider<K, V:IArpObject> {
 	private var domain:ArpDomain;
 	public function new(domain:ArpDomain) this.domain = domain;
 	public function create():IOmap<K, V> return new ArpObjectOmap<K, V>(this.domain);
+	public function isStrictToString():Bool return false;
 }
