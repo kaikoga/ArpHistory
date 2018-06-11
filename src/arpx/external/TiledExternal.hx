@@ -1,21 +1,21 @@
-﻿package net.kaikoga.arpx.external;
+﻿package arpx.external;
 
 #if flash
 
-import net.kaikoga.arp.data.DataGroup;
+import arp.data.DataGroup;
 import flash.utils.CompressionAlgorithm;
-import net.kaikoga.arpx.chip.Chip;
-import net.kaikoga.arpx.tileInfo.TileInfo;
-import net.kaikoga.arpx.mortal.TileMapMortal;
-import net.kaikoga.arpx.hitFrame.CuboidHitFrame;
-import net.kaikoga.arpx.hitFrame.HitFrame;
-import net.kaikoga.arp.seed.ArpSeed;
+import arpx.chip.Chip;
+import arpx.tileInfo.TileInfo;
+import arpx.mortal.TileMapMortal;
+import arpx.hitFrame.CuboidHitFrame;
+import arpx.hitFrame.HitFrame;
+import arp.seed.ArpSeed;
 import haxe.crypto.Base64;
-import net.kaikoga.arpx.mortal.Mortal;
-import net.kaikoga.arpx.anchor.Anchor;
-import net.kaikoga.arpx.tileMap.ArrayTileMap;
-import net.kaikoga.arpx.field.Field;
-import net.kaikoga.arpx.file.File;
+import arpx.mortal.Mortal;
+import arpx.anchor.Anchor;
+import arpx.tileMap.ArrayTileMap;
+import arpx.field.Field;
+import arpx.file.File;
 import flash.utils.ByteArray;
 import flash.utils.Endian;
 

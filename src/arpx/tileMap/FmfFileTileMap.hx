@@ -1,7 +1,7 @@
-package net.kaikoga.arpx.tileMap;
+package arpx.tileMap;
 
-import net.kaikoga.arp.io.IInput;
-import net.kaikoga.arpx.file.File;
+import arp.io.IInput;
+import arpx.file.File;
 
 @:arpType("tileMap", "fmfFile")
 class FmfFileTileMap extends ArrayTileMap {

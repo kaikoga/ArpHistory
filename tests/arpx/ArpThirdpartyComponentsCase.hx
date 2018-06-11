@@ -1,6 +1,6 @@
-﻿package net.kaikoga.arpx;
+﻿package arpx;
 
-import net.kaikoga.arpx.tileMap.FmfFileTileMap;
+import arpx.tileMap.FmfFileTileMap;
 
 import picotest.PicoAssert.*;
 

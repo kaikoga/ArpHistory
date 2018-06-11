@@ -1,4 +1,4 @@
-package net.kaikoga.arpx;
+package arpx;
 
 import picotest.PicoTestRunner;
 

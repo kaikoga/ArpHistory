@@ -1,7 +1,7 @@
-﻿package net.kaikoga.arpx;
+﻿package arpx;
 
 #if flash
-import net.kaikoga.arpx.external.TiledExternal;
+import arpx.external.TiledExternal;
 
 import picotest.PicoAssert.*;
 
