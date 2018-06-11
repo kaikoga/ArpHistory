@@ -1,7 +1,7 @@
 package;
 
 import haxe.Timer;
-import net.kaikoga.arp.domain.IArpObject;
+import arp.domain.IArpObject;
 
 @:arpType("delay", "delay")
 class DelayLoad implements IArpObject {

@@ -1,22 +1,22 @@
 package;
 
 import haxe.Resource;
-import net.kaikoga.arp.domain.ArpDomain;
-import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arpx.ArpEngine;
-import net.kaikoga.arpx.camera.Camera;
-import net.kaikoga.arpx.chip.TextureChip;
-import net.kaikoga.arpx.console.Console;
-import net.kaikoga.arpx.display.DisplayContext;
-import net.kaikoga.arpx.faceList.FaceList;
-import net.kaikoga.arpx.field.Field;
-import net.kaikoga.arpx.file.ResourceFile;
-import net.kaikoga.arpx.mortal.ChipMortal;
-import net.kaikoga.arpx.mortal.CompositeMortal;
-import net.kaikoga.arpx.screen.FieldScreen;
-import net.kaikoga.arpx.texture.decorators.GridTexture;
-import net.kaikoga.arpx.texture.FileTexture;
-import net.kaikoga.arpx.texture.ResourceTexture;
+import arp.domain.ArpDomain;
+import arp.seed.ArpSeed;
+import arpx.ArpEngine;
+import arpx.camera.Camera;
+import arpx.chip.TextureChip;
+import arpx.console.Console;
+import arpx.display.DisplayContext;
+import arpx.faceList.FaceList;
+import arpx.field.Field;
+import arpx.file.ResourceFile;
+import arpx.mortal.ChipMortal;
+import arpx.mortal.CompositeMortal;
+import arpx.screen.FieldScreen;
+import arpx.texture.decorators.GridTexture;
+import arpx.texture.FileTexture;
+import arpx.texture.ResourceTexture;
 
 class Main extends ArpEngine {
 

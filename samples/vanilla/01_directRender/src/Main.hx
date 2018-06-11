@@ -1,12 +1,12 @@
 package;
 
 import haxe.Resource;
-import net.kaikoga.arp.domain.ArpDomain;
-import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arpx.ArpEngine;
-import net.kaikoga.arpx.chip.RectChip;
-import net.kaikoga.arpx.mortal.ChipMortal;
-import net.kaikoga.arpx.mortal.CompositeMortal;
+import arp.domain.ArpDomain;
+import arp.seed.ArpSeed;
+import arpx.ArpEngine;
+import arpx.chip.RectChip;
+import arpx.mortal.ChipMortal;
+import arpx.mortal.CompositeMortal;
 
 class Main extends ArpEngine {
 

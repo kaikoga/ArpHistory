@@ -1,19 +1,19 @@
 package;
 
-import net.kaikoga.arpx.ArpEngine;
-import net.kaikoga.arpx.display.DisplayContext;
-import net.kaikoga.arpx.screen.FieldScreen;
+import arpx.ArpEngine;
+import arpx.display.DisplayContext;
+import arpx.screen.FieldScreen;
 import haxe.Resource;
-import net.kaikoga.arp.domain.ArpDomain;
-import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arpx.camera.Camera;
-import net.kaikoga.arpx.chip.NativeTextChip;
-import net.kaikoga.arpx.chip.RectChip;
-import net.kaikoga.arpx.chip.StringChip;
-import net.kaikoga.arpx.console.Console;
-import net.kaikoga.arpx.field.Field;
-import net.kaikoga.arpx.mortal.ChipMortal;
-import net.kaikoga.arpx.mortal.CompositeMortal;
+import arp.domain.ArpDomain;
+import arp.seed.ArpSeed;
+import arpx.camera.Camera;
+import arpx.chip.NativeTextChip;
+import arpx.chip.RectChip;
+import arpx.chip.StringChip;
+import arpx.console.Console;
+import arpx.field.Field;
+import arpx.mortal.ChipMortal;
+import arpx.mortal.CompositeMortal;
 
 class Main extends ArpEngine {
 

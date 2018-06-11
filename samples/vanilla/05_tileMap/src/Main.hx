@@ -1,14 +1,14 @@
 package;
 
 import haxe.Resource;
-import net.kaikoga.arp.domain.ArpDomain;
-import net.kaikoga.arp.seed.ArpSeed;
-import net.kaikoga.arpx.ArpEngine;
-import net.kaikoga.arpx.chip.Chip;
-import net.kaikoga.arpx.console.Console;
-import net.kaikoga.arpx.display.DisplayContext;
-import net.kaikoga.arpx.field.Field;
-import net.kaikoga.arpx.input.KeyInput;
+import arp.domain.ArpDomain;
+import arp.seed.ArpSeed;
+import arpx.ArpEngine;
+import arpx.chip.Chip;
+import arpx.console.Console;
+import arpx.display.DisplayContext;
+import arpx.field.Field;
+import arpx.input.KeyInput;
 
 #if arp_backend_flash
 import flash.Lib;

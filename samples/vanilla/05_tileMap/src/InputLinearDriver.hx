@@ -1,10 +1,10 @@
 package;
 
-import net.kaikoga.arpx.input.InputAxis;
-import net.kaikoga.arpx.input.Input;
-import net.kaikoga.arpx.driver.Driver;
-import net.kaikoga.arpx.mortal.Mortal;
-import net.kaikoga.arpx.field.Field;
+import arpx.input.InputAxis;
+import arpx.input.Input;
+import arpx.driver.Driver;
+import arpx.mortal.Mortal;
+import arpx.field.Field;
 
 @:arpType("driver", "inputLinear")
 class InputLinearDriver extends Driver {
