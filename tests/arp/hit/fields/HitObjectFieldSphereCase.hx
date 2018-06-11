@@ -1,7 +1,7 @@
-package net.kaikoga.arp.hit.fields;
+package arp.hit.fields;
 
-import net.kaikoga.arp.hit.strategies.HitWithSphere;
-import net.kaikoga.arp.hit.structs.HitSphere;
+import arp.hit.strategies.HitWithSphere;
+import arp.hit.structs.HitSphere;
 
 import picotest.PicoAssert.*;
 

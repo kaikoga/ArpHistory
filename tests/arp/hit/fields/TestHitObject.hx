@@ -1,6 +1,6 @@
-package net.kaikoga.arp.hit.fields;
+package arp.hit.fields;
 
-import net.kaikoga.arp.hit.fields.HitObject;
+import arp.hit.fields.HitObject;
 
 class TestHitObject<Hit> extends HitObject<Hit> {
 

@@ -1,4 +1,4 @@
-package net.kaikoga.arp.hit.strategies;
+package arp.hit.strategies;
 
 //@:generic
 interface IHitTester<Hit> {

@@ -1,13 +1,13 @@
-package net.kaikoga.arp.hit.fields;
+package arp.hit.fields;
 
-import net.kaikoga.arp.hit.strategies.HitWithCuboid;
-import net.kaikoga.arp.hit.structs.HitGeneric;
+import arp.hit.strategies.HitWithSphere;
+import arp.hit.structs.HitSphere;
 
 import picotest.PicoAssert.*;
 
-class HitFieldCuboidCase {
+class HitFieldSphereCase {
 
-	private var me:HitField<HitGeneric, String>;
+	private var me:HitField<HitSphere, String>;
 	private var a:String;
 	private var b:String;
 	private var c:String;
@@ -15,20 +15,20 @@ class HitFieldCuboidCase {
 	private var e:String;
 
 	public function setup() {
-		me = new HitField<HitGeneric, String>(new HitWithCuboid());
+		me = new HitField<HitSphere, String>(new HitWithSphere());
 		a = "a";
 		b = "b";
 		c = "c";
 		d = "d";
 		e = "e";
-		me.addEternal(a).setCuboid(1, 1, 1, 2, 2, 2);
-		me.addEternal(b).setCuboid(3, 1, 1, 1, 1, 1);
-		me.addEternal(c).setCuboid(5, 1, 1, 1, 1, 1);
-		me.add(d).setCuboid(3, 3, 3, 9, 9, 9);
-		me.add(e).setCuboid(-200, -200, -200, 0, 0, 0);
+		me.addEternal(a).setSphere(2, 1, 1, 1);
+		me.addEternal(b).setSphere(1, 3, 1, 1);
+		me.addEternal(c).setSphere(1, 5, 1, 1);
+		me.add(d).setSphere(9, 3, 3, 3);
+		me.add(e).setSphere(0, 0, 0, -200);
 	}
 
-	public function testHitTest() {
+	public function testCollides() {
 		var map:Array<Array<String>>;
 		map = [];
 		me.hitTest(function(a:String, b:String):Bool { map.push([a, b]); return false; } );
@@ -46,15 +46,15 @@ class HitFieldCuboidCase {
 	public function testHitRawTest() {
 		var list:Array<String>;
 		list = [];
-		var hitA = new HitGeneric().setCuboid(1, 1, 1, 2, 2, 2);
+		var hitA = new HitSphere().setSphere(2, 1, 1, 1);
 		me.hitRaw(hitA, function(other:String):Bool { list.push(other); return false; } );
 		assertMatch(["a", "b", "d"], list);
 		list = [];
-		var hitB = new HitGeneric().setCuboid(3, 1, 1, 1, 1, 1);
+		var hitB = new HitSphere().setSphere(1, 3, 1, 1);
 		me.hitRaw(hitB, function(other:String):Bool { list.push(other); return false; } );
 		assertMatch(["a", "b", "d"], list);
 		list = [];
-		var hitD = new HitGeneric().setCuboid(3, 3, 3, 9, 9, 9);
+		var hitD = new HitSphere().setSphere(9, 3, 3, 3);
 		me.hitRaw(hitD, function(other:String):Bool { list.push(other); return false; } );
 		assertMatch(["a", "b", "c", "d"], list);
 	}

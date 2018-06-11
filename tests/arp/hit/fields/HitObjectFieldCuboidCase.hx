@@ -1,7 +1,7 @@
-package net.kaikoga.arp.hit.fields;
+package arp.hit.fields;
 
-import net.kaikoga.arp.hit.strategies.HitWithCuboid;
-import net.kaikoga.arp.hit.structs.HitGeneric;
+import arp.hit.strategies.HitWithCuboid;
+import arp.hit.structs.HitGeneric;
 
 import picotest.PicoAssert.*;
 

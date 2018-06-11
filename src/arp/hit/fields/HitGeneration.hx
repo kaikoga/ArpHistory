@@ -1,4 +1,4 @@
-package net.kaikoga.arp.hit.fields;
+package arp.hit.fields;
 
 @:enum
 abstract HitGeneration(Int) {

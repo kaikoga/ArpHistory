@@ -1,9 +1,9 @@
-package net.kaikoga.arp.hit.fields;
+package arp.hit.fields;
 
 // HitObject is direct owner of hit
 class HitObject<Hit> {
 
-	@:allow(net.kaikoga.arp.hit.fields.HitObjectField)
+	@:allow(arp.hit.fields.HitObjectField)
 	private var generation:HitGeneration;
 
 	public var hit:Hit;

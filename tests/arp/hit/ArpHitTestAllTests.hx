@@ -1,4 +1,4 @@
-package net.kaikoga.arp.hit;
+package arp.hit;
 
 import picotest.PicoTest;
 

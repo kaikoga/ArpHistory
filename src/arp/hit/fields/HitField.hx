@@ -1,6 +1,6 @@
-package net.kaikoga.arp.hit.fields;
+package arp.hit.fields;
 
-import net.kaikoga.arp.hit.strategies.IHitTester;
+import arp.hit.strategies.IHitTester;
 
 // very naive implementation of IHitField, which can handle arbitrary object
 class HitField<Hit, T> implements IHitField<Hit, T> {
@@ -103,7 +103,7 @@ private class HitItem<Hit, T> {
 	public var owner:T;
 	public var hit:Hit;
 
-	@:allow(net.kaikoga.arp.hit.fields.HitField)
+	@:allow(arp.hit.fields.HitField)
 	private var generation:HitGeneration;
 
 	public function new(owner:T, generation:HitGeneration, hit:Hit) {

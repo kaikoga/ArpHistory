@@ -1,6 +1,6 @@
-package net.kaikoga.arp.hit.strategies;
+package arp.hit.strategies;
 
-import net.kaikoga.arp.hit.structs.HitSphere;
+import arp.hit.structs.HitSphere;
 
 class HitWithSphere implements IHitTester<HitSphere> {
 

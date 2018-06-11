@@ -1,6 +1,6 @@
-package net.kaikoga.arp.hit.fields;
+package arp.hit.fields;
 
-import net.kaikoga.arp.hit.strategies.IHitTester;
+import arp.hit.strategies.IHitTester;
 
 // very naive implementation of IHitField, which handles HitObjects
 class HitObjectField<Hit, T:HitObject<Hit>> implements IHitField<Hit, T> {

@@ -1,4 +1,4 @@
-package net.kaikoga.arp.hit.fields;
+package arp.hit.fields;
 
 
 import picotest.PicoAssert.*;

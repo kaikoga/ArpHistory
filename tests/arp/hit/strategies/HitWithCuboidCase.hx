@@ -1,6 +1,6 @@
-package net.kaikoga.arp.hit.strategies;
+package arp.hit.strategies;
 
-import net.kaikoga.arp.hit.structs.HitGeneric;
+import arp.hit.structs.HitGeneric;
 
 import picotest.PicoAssert.*;
 

@@ -1,4 +1,4 @@
-package net.kaikoga.arp.hit.structs;
+package arp.hit.structs;
 
 /**
 * handled as mutable
