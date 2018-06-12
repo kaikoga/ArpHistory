@@ -1,6 +1,6 @@
 package arpx.structs;
 
-import arp.persistable.IPersistable;
+import arp.domain.IArpStruct;
 import arp.persistable.IPersistOutput;
 import arp.persistable.IPersistInput;
 import arp.seed.ArpSeed;
@@ -17,8 +17,8 @@ import openfl.geom.ColorTransform;
 /**
 	handled as mutable
 */
-@:build(arp.ArpDomainMacros.buildStruct("Color"))
-class ArpColor implements IPersistable {
+@:arpStruct("Color")
+class ArpColor implements IArpStruct {
 
 	public var value32:Int;
 

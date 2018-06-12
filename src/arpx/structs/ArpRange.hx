@@ -1,12 +1,12 @@
 package arpx.structs;
 
-import arp.persistable.IPersistable;
+import arp.domain.IArpStruct;
 import arp.persistable.IPersistInput;
 import arp.persistable.IPersistOutput;
 import arp.seed.ArpSeed;
 
-@:build(arp.ArpDomainMacros.buildStruct("Range"))
-class ArpRange implements IPersistable {
+@:arpStruct("Range")
+class ArpRange implements IArpStruct {
 
 	//TODO assure min < max
 	public var minValue:Float;

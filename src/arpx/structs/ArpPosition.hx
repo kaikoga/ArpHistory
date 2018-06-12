@@ -1,6 +1,6 @@
 package arpx.structs;
 
-import arp.persistable.IPersistable;
+import arp.domain.IArpStruct;
 import arp.persistable.IPersistInput;
 import arp.persistable.IPersistOutput;
 import arp.seed.ArpSeed;
@@ -10,8 +10,8 @@ import arpx.structs.ArpDirection;
 /**
 	handled as mutable
 */
-@:build(arp.ArpDomainMacros.buildStruct("Position"))
-class ArpPosition implements IPersistable {
+@:arpStruct("Position")
+class ArpPosition implements IArpStruct {
 
 	public var x:Float = 0;
 	public var y:Float = 0;

@@ -1,6 +1,6 @@
 ﻿package arpx.structs;
 
-import arp.persistable.IPersistable;
+import arp.domain.IArpStruct;
 import arp.persistable.IPersistInput;
 import arp.persistable.IPersistOutput;
 import arp.seed.ArpSeed;
@@ -11,8 +11,8 @@ typedef ArpDirectionValue = #if flash UInt #else Int #end ;
 /**
 	handled as mutable
 */
-@:build(arp.ArpDomainMacros.buildStruct("Direction"))
-class ArpDirection implements IPersistable {
+@:arpStruct("Direction")
+class ArpDirection implements IArpStruct {
 
 	public static var RIGHT(get, never):ArpDirection;
 	public static var RIGHT_DOWN(get, never):ArpDirection;

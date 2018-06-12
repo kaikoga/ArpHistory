@@ -1,6 +1,6 @@
 package arpx.structs;
 
-import arp.persistable.IPersistable;
+import arp.domain.IArpStruct;
 import arp.persistable.IPersistInput;
 import arp.persistable.IPersistOutput;
 import arp.seed.ArpSeed;
@@ -9,8 +9,8 @@ import arp.seed.ArpSeed;
 	* handled as immutable
 	* @author kaikoga
 */
-@:build(arp.ArpDomainMacros.buildStruct("HitCuboid"))
-class ArpHitCuboid implements IPersistable {
+@:arpStruct("HitCuboid")
+class ArpHitCuboid implements IArpStruct {
 
 	public var dX:Float = 0;
 	public var dY:Float = 0;

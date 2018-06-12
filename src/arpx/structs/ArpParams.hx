@@ -1,7 +1,7 @@
 package arpx.structs;
 
+import arp.domain.IArpStruct;
 import arp.ds.impl.StdMap;
-import arp.persistable.IPersistable;
 import arp.persistable.IPersistInput;
 import arp.persistable.IPersistOutput;
 import arp.seed.ArpSeed;
@@ -18,8 +18,8 @@ abstract ArpParamsProxy(ArpParams) from ArpParams to ArpParams {
 	@:arrayAccess inline private function arraySet(k:String, v:Dynamic):Dynamic { this.set(k, v); return v; }
 }
 
-@:build(arp.ArpDomainMacros.buildStruct("Params"))
-class ArpParams implements IPersistable implements IArpParamsRead {
+@:arpStruct("Params")
+class ArpParams implements IArpStruct implements IArpParamsRead {
 	private var map:StdMap<String, Dynamic>;
 
 	public function new() this.map = new StdMap<String, Dynamic>();
