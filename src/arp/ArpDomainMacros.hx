@@ -2,23 +2,22 @@ package arp;
 
 #if macro
 
-import haxe.macro.Context;
-import haxe.macro.Expr.Field;
-import haxe.macro.Type.ClassType;
-import haxe.macro.Type.Ref;
-import haxe.macro.TypeTools;
 import arp.macro.MacroArpClassDefinition;
 import arp.macro.MacroArpObjectBuilder;
 import arp.macro.MacroArpObjectRegistry;
+import arp.macro.MacroArpUtil;
+import haxe.macro.Expr.Field;
+import haxe.macro.Expr.MetadataEntry;
+import haxe.macro.ExprTools;
+import haxe.macro.Type.ClassType;
 
 class ArpDomainMacros {
 
 	public static function autoBuildObject():Array<Field> {
-		var localClass:Null<Ref<ClassType>> = Context.getLocalClass();
+		var localClass:ClassType = MacroArpUtil.getLocalClass();
 		if (localClass == null) return null;
 
-		var classDef:MacroArpClassDefinition = new MacroArpClassDefinition(localClass.get());
-
+		var classDef:MacroArpClassDefinition = new MacroArpClassDefinition(localClass);
 		var builder:MacroArpObjectBuilder = new MacroArpObjectBuilder();
 #if arp_macro_debug
 		var arpTypeName:String = classDef.arpTypeName;
@@ -34,8 +33,19 @@ class ArpDomainMacros {
 		return fields;
 	}
 
-	public static function buildStruct(arpTypeName:String):Array<Field> {
-		MacroArpObjectRegistry.registerStructInfo(arpTypeName, TypeTools.toString(Context.getLocalType()));
+	public static function autoBuildStruct():Array<Field> {
+		var localClass:ClassType = MacroArpUtil.getLocalClass();
+		if (localClass == null) return null;
+
+		var metaArpStruct:MetadataEntry = localClass.meta.extract(":arpStruct")[0];
+
+		var arpTypeName:String = null;
+		if (metaArpStruct != null) {
+			arpTypeName = ExprTools.getValue(metaArpStruct.params[0]);
+		}
+
+		var fqn:String = MacroArpUtil.getFqnOfBaseType(localClass);
+		MacroArpObjectRegistry.registerStructInfo(arpTypeName, fqn);
 		return null;
 	}
 }

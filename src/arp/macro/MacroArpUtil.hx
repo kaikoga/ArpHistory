@@ -25,6 +25,12 @@ class MacroArpUtil {
 		return null;
 	}
 
+	public static function getLocalClass():ClassType {
+		var localClass:Null<Ref<ClassType>> = Context.getLocalClass();
+		if (localClass == null) return null;
+		return localClass.get();
+	}
+
 	public static function getFqnOfType(type:Type):String {
 		switch (TypeTools.follow(type)) {
 			case Type.TInst(c, _): return getFqnOfBaseType(c.get());
