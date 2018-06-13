@@ -18,6 +18,7 @@
 -D arp_doc
 -D arp_backend_heaps
 #-D no_inline
---macro "include('arpx', true)"
+--macro arpx.ArpEngineMacros.init()
+--macro "include('arpx', true, ['arpx.impl'])"
 InputLinearDriver
 
