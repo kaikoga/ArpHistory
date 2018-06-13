@@ -1,8 +1,8 @@
 package arpx;
 
 import arp.domain.ArpDomain;
-import arpx.display.DisplayContext;
-import arpx.geom.Transform;
+import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.geom.Transform;
 
 #if arp_backend_flash
 import flash.Lib;

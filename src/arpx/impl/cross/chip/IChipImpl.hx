@@ -1,7 +1,7 @@
 package arpx.impl.cross.chip;
 
 import arp.impl.IArpObjectImpl;
-import arpx.display.DisplayContext;
+import arpx.impl.cross.display.DisplayContext;
 import arpx.structs.IArpParamsRead;
 
 interface IChipImpl extends IArpObjectImpl {

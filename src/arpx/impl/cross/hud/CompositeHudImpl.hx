@@ -1,6 +1,6 @@
 package arpx.impl.cross.hud;
 
-import arpx.display.DisplayContext;
+import arpx.impl.cross.display.DisplayContext;
 import arpx.hud.CompositeHud;
 import arpx.impl.ArpObjectImplBase;
 import arpx.structs.ArpPosition;

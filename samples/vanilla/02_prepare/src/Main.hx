@@ -1,7 +1,7 @@
 package;
 
 import arpx.ArpEngine;
-import arpx.display.DisplayContext;
+import arpx.impl.cross.display.DisplayContext;
 import arpx.screen.FieldScreen;
 import haxe.Resource;
 import arp.domain.ArpDomain;
@@ -75,6 +75,6 @@ class Main extends ArpEngine {
 		this.console.render(this.context);
 		this.context.display();
 	}
-	
+
 	public static function main():Void new Main();
 }

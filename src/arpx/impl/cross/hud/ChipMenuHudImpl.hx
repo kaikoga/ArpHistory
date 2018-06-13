@@ -1,7 +1,7 @@
 package arpx.impl.cross.hud;
 
-import arpx.display.DisplayContext;
-import arpx.geom.Transform;
+import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.geom.Transform;
 import arpx.hud.ChipMenuHud;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.hud.IHudImpl;

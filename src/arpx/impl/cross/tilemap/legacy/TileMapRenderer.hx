@@ -1,8 +1,8 @@
 package arpx.impl.cross.tilemap.legacy;
 
 import arpx.chip.Chip;
-import arpx.display.DisplayContext;
-import arpx.geom.Transform;
+import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.geom.Transform;
 import arpx.structs.ArpParams;
 import arpx.tileMap.TileMap;
 

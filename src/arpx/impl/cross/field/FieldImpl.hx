@@ -1,7 +1,7 @@
 package arpx.impl.cross.field;
 
 import haxe.ds.ArraySort;
-import arpx.display.DisplayContext;
+import arpx.impl.cross.display.DisplayContext;
 import arpx.field.Field;
 import arpx.impl.ArpObjectImplBase;
 import arpx.mortal.Mortal;

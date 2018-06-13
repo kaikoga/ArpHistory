@@ -4,7 +4,7 @@ package arpx.impl.backends.heaps.console;
 
 import h2d.Sprite;
 import arp.impl.IArpObjectImpl;
-import arpx.display.DisplayContext;
+import arpx.impl.cross.display.DisplayContext;
 
 interface IConsoleHeapsImpl extends IArpObjectImpl {
 	function display(sprite:Sprite):Void;

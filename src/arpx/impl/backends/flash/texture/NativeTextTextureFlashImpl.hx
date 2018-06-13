@@ -6,8 +6,8 @@ import flash.display.BitmapData;
 import flash.geom.Rectangle;
 import flash.text.TextFormat;
 import arpx.impl.backends.flash.texture.decorators.MultiTextureFlashImplBase;
-import arpx.impl.targets.flash.display.BitmapFont;
-import arpx.impl.targets.flash.display.BitmapFontDrawCursor;
+import arpx.impl.backends.flash.display.BitmapFont;
+import arpx.impl.backends.flash.display.BitmapFontDrawCursor;
 import arpx.structs.IArpParamsRead;
 import arpx.texture.NativeTextTexture;
 

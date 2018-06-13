@@ -2,9 +2,9 @@ package arpx.impl.backends.flash.geom;
 
 #if (arp_display_backend_flash || arp_display_backend_openfl)
 
-import arpx.geom.ITransform;
-import arpx.geom.MatrixImpl;
-import arpx.geom.PointImpl;
+import arpx.impl.cross.geom.ITransform;
+import arpx.impl.cross.geom.MatrixImpl;
+import arpx.impl.cross.geom.PointImpl;
 
 class Transform implements ITransform {
 

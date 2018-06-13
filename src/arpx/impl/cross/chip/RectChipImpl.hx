@@ -1,8 +1,8 @@
 package arpx.impl.cross.chip;
 
 import arpx.chip.RectChip;
-import arpx.display.DisplayContext;
-import arpx.geom.PointImpl;
+import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.geom.PointImpl;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.chip.IChipImpl;
 import arpx.structs.IArpParamsRead;

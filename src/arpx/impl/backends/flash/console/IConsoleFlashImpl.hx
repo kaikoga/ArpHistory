@@ -4,7 +4,7 @@ package arpx.impl.backends.flash.console;
 
 import flash.display.BitmapData;
 import arp.impl.IArpObjectImpl;
-import arpx.display.DisplayContext;
+import arpx.impl.cross.display.DisplayContext;
 
 interface IConsoleFlashImpl extends IArpObjectImpl {
 	function display(bitmapData:BitmapData):Void;

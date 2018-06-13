@@ -1,4 +1,4 @@
-package arpx.impl.targets.flash.display;
+package arpx.impl.backends.flash.display;
 
 #if (flash || openfl)
 

@@ -1,4 +1,4 @@
-package arpx.geom;
+package arpx.impl.cross.geom;
 
 #if (arp_display_backend_flash || arp_display_backend_openfl)
 typedef MatrixImpl = flash.geom.Matrix;

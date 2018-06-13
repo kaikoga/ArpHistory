@@ -1,7 +1,7 @@
 package arpx.impl.cross.chip.decorators;
 
 import arpx.chip.decorators.CompositeChip;
-import arpx.display.DisplayContext;
+import arpx.impl.cross.display.DisplayContext;
 import arpx.impl.ArpObjectImplBase;
 import arpx.structs.IArpParamsRead;
 

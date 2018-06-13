@@ -6,8 +6,8 @@ package arpx.impl.backends.heaps.texture;
 import flash.display.BitmapData;
 import flash.geom.Rectangle;
 import flash.text.TextFormat;
-import arpx.impl.targets.flash.display.BitmapFont;
-import arpx.impl.targets.flash.display.BitmapFontDrawCursor;
+import arpx.impl.backends.flash.display.BitmapFont;
+import arpx.impl.backends.flash.display.BitmapFontDrawCursor;
 #end
 
 import h2d.Tile;

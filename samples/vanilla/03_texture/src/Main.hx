@@ -7,7 +7,7 @@ import arpx.ArpEngine;
 import arpx.camera.Camera;
 import arpx.chip.TextureChip;
 import arpx.console.Console;
-import arpx.display.DisplayContext;
+import arpx.impl.cross.display.DisplayContext;
 import arpx.faceList.FaceList;
 import arpx.field.Field;
 import arpx.file.ResourceFile;

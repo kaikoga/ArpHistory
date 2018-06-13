@@ -1,6 +1,6 @@
 package arpx.impl.cross.screen;
 
-import arpx.display.DisplayContext;
+import arpx.impl.cross.display.DisplayContext;
 import arpx.impl.ArpObjectImplBase;
 import arpx.screen.CompositeScreen;
 

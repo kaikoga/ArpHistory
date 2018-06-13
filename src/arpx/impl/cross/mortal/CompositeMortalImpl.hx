@@ -1,6 +1,6 @@
 package arpx.impl.cross.mortal;
 
-import arpx.display.DisplayContext;
+import arpx.impl.cross.display.DisplayContext;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.field.FieldImpl;
 import arpx.mortal.CompositeMortal;

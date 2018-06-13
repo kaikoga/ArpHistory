@@ -1,4 +1,4 @@
-package arpx.geom;
+package arpx.impl.cross.geom;
 
 interface ITransform {
 	// creates an exact copy, includes actual concrete representation used.

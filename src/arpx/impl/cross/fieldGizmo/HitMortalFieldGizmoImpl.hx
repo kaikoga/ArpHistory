@@ -1,6 +1,6 @@
 package arpx.impl.cross.fieldGizmo;
 
-import arpx.display.DisplayContext;
+import arpx.impl.cross.display.DisplayContext;
 import arpx.field.Field;
 import arpx.fieldGizmo.HitMortalFieldGizmo;
 import arpx.impl.ArpObjectImplBase;

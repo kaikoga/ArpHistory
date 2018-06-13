@@ -1,4 +1,4 @@
-package arpx.impl.targets.flash.storage;
+package arpx.impl.backends.flash.storage;
 
 #if (arp_storage_backend_flash || arp_storage_backend_openfl)
 

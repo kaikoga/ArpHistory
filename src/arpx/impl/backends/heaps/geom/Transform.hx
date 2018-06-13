@@ -2,9 +2,9 @@ package arpx.impl.backends.heaps.geom;
 
 #if arp_display_backend_heaps
 
-import arpx.geom.ITransform;
-import arpx.geom.PointImpl;
-import arpx.geom.MatrixImpl;
+import arpx.impl.cross.geom.ITransform;
+import arpx.impl.cross.geom.PointImpl;
+import arpx.impl.cross.geom.MatrixImpl;
 
 class Transform implements ITransform {
 

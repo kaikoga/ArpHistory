@@ -6,7 +6,7 @@ import arp.seed.ArpSeed;
 import arpx.ArpEngine;
 import arpx.chip.Chip;
 import arpx.console.Console;
-import arpx.display.DisplayContext;
+import arpx.impl.cross.display.DisplayContext;
 import arpx.field.Field;
 import arpx.input.KeyInput;
 

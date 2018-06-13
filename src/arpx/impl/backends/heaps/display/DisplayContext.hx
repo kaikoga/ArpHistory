@@ -6,9 +6,9 @@ import h2d.Sprite;
 import h2d.Tile;
 import h3d.Engine;
 import h3d.Matrix;
-import arpx.display.DisplayContextBase;
-import arpx.display.IDisplayContext;
-import arpx.geom.Transform;
+import arpx.impl.cross.display.DisplayContextBase;
+import arpx.impl.cross.display.IDisplayContext;
+import arpx.impl.cross.geom.Transform;
 
 class DisplayContext extends DisplayContextBase implements IDisplayContext {
 

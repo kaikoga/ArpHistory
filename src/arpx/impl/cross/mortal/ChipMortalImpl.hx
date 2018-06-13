@@ -1,6 +1,6 @@
 package arpx.impl.cross.mortal;
 
-import arpx.display.DisplayContext;
+import arpx.impl.cross.display.DisplayContext;
 import arpx.impl.ArpObjectImplBase;
 import arpx.mortal.ChipMortal;
 import arpx.structs.ArpPosition;

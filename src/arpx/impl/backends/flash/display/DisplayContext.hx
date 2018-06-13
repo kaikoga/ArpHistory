@@ -4,9 +4,9 @@ package arpx.impl.backends.flash.display;
 
 import flash.display.BitmapData;
 import flash.geom.Rectangle;
-import arpx.display.DisplayContextBase;
-import arpx.display.IDisplayContext;
-import arpx.geom.Transform;
+import arpx.impl.cross.display.DisplayContextBase;
+import arpx.impl.cross.display.IDisplayContext;
+import arpx.impl.cross.geom.Transform;
 
 class DisplayContext extends DisplayContextBase implements IDisplayContext {
 

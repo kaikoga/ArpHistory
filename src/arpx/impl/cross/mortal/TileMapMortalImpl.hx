@@ -1,7 +1,7 @@
 package arpx.impl.cross.mortal;
 
-import arpx.display.DisplayContext;
-import arpx.geom.PointImpl;
+import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.geom.PointImpl;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.mortal.IMortalImpl;
 import arpx.impl.cross.tilemap.legacy.TileMapRenderer;

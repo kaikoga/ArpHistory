@@ -1,8 +1,8 @@
 package arpx.impl.cross.chip.decorators;
 
 import arpx.chip.decorators.TranslateChip;
-import arpx.display.DisplayContext;
-import arpx.geom.Transform;
+import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.geom.Transform;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.chip.IChipImpl;
 import arpx.structs.IArpParamsRead;

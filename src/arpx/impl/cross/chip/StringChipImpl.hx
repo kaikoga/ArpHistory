@@ -3,9 +3,9 @@ package arpx.impl.cross.chip;
 import arpx.chip.stringChip.StringChipDrawCursor;
 import arpx.chip.stringChip.StringChipStringIterator;
 import arpx.chip.StringChip;
-import arpx.display.DisplayContext;
-import arpx.geom.PointImpl;
-import arpx.geom.Transform;
+import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.geom.PointImpl;
+import arpx.impl.cross.geom.Transform;
 import arpx.impl.ArpObjectImplBase;
 import arpx.structs.IArpParamsRead;
 

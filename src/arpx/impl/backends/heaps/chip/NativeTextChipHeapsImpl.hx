@@ -2,7 +2,7 @@ package arpx.impl.backends.heaps.chip;
 
 #if arp_display_backend_heaps
 
-import arpx.geom.PointImpl;
+import arpx.impl.cross.geom.PointImpl;
 import h2d.Font;
 import h2d.Text;
 import hxd.Charset;

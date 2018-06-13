@@ -1,4 +1,4 @@
-package arpx.impl.targets.flash.socketClient;
+package arpx.impl.backends.flash.socketClient;
 
 #if (arp_socket_backend_flash || arp_socket_backend_openfl)
 
