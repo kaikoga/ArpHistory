@@ -1,17 +1,13 @@
 package arpx.socketClient;
 
-#if (arp_socket_backend_flash || arp_socket_backend_openfl)
-import arpx.impl.targets.flash.socketClient.TcpCachedSocketClientFlashImpl;
-#end
+import arpx.impl.cross.socketClient.TcpCachedSocketClientImpl;
 
 @:arpType("socketClient", "tcpCached")
 class TcpCachedSocketClient extends SocketClient {
 
 	@:arpField public var host:String;
 
-	#if (arp_socket_backend_flash || arp_socket_backend_openfl)
-	@:arpImpl private var flashImpl:TcpCachedSocketClientFlashImpl;
-	#end
+	@:arpImpl private var arpImpl:TcpCachedSocketClientImpl;
 
 	public function new() super();
 }

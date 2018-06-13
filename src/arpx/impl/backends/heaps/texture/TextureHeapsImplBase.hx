@@ -2,11 +2,11 @@ package arpx.impl.backends.heaps.texture;
 
 #if arp_display_backend_heaps
 
-import arpx.structs.IArpParamsRead;
 import arpx.impl.ArpObjectImplBase;
-import arpx.impl.cross.texture.ITextureImpl;
+import arpx.impl.cross.texture.ITextureImplBase;
+import arpx.structs.IArpParamsRead;
 
-class TextureHeapsImplBase extends ArpObjectImplBase implements ITextureImpl {
+class TextureHeapsImplBase extends ArpObjectImplBase implements ITextureImplBase {
 
 	public var width(get, never):Int;
 	private function get_width():Int return 0;

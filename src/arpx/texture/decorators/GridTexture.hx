@@ -1,12 +1,7 @@
 package arpx.texture.decorators;
 
 import arpx.faceList.FaceList;
-
-#if (arp_display_backend_flash || arp_display_backend_openfl)
-import arpx.impl.backends.flash.texture.decorators.GridTextureFlashImpl;
-#elseif arp_display_backend_heaps
-import arpx.impl.backends.heaps.texture.decorators.GridTextureHeapsImpl;
-#end
+import arpx.impl.cross.texture.decorators.GridTextureImpl;
 
 @:arpType("texture", "grid")
 class GridTexture extends MultiTexture {
@@ -18,11 +13,7 @@ class GridTexture extends MultiTexture {
 	@:arpField public var dirs:Int = 1;
 	@:arpField public var offset:Int = 0;
 
-	#if (arp_display_backend_flash || arp_display_backend_openfl)
-	@:arpImpl private var flashImpl:GridTextureFlashImpl;
-	#elseif arp_display_backend_heaps
-	@:arpImpl private var heapsImpl:GridTextureHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:GridTextureImpl;
 
 	public function new() super();
 }

@@ -1,23 +1,14 @@
 package arpx.input;
 
 import arp.ds.impl.ArrayList;
-
-#if (arp_input_backend_flash || arp_input_backend_openfl)
-import arpx.impl.backends.flash.input.KeyInputFlashImpl;
-#elseif arp_input_backend_heaps
-import arpx.impl.backends.heaps.input.KeyInputHeapsImpl;
-#end
+import arpx.impl.cross.input.KeyInputImpl;
 
 @:arpType("input", "key")
 class KeyInput extends PhysicalInput {
 
 	public var keyBindings:ArrayList<KeyInputBinding>;
 
-	#if (arp_input_backend_flash || arp_input_backend_openfl)
-	@:arpImpl private var flashImpl:KeyInputFlashImpl;
-	#elseif arp_input_backend_heaps
-	@:arpImpl private var heapsImpl:KeyInputHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:KeyInputImpl;
 
 	public function new() {
 		super();

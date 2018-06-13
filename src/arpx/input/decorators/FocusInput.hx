@@ -1,10 +1,6 @@
 package arpx.input.decorators;
 
-#if (arp_input_backend_flash || arp_input_backend_openfl)
-import arpx.impl.backends.flash.input.decorators.FocusInputFlashImpl;
-#elseif arp_input_backend_heaps
-import arpx.impl.backends.heaps.input.decorators.FocusInputHeapsImpl;
-#end
+import arpx.impl.cross.input.decorators.FocusInputImpl;
 
 @:arpType("input", "focus")
 class FocusInput extends Input {
@@ -13,11 +9,7 @@ class FocusInput extends Input {
 	@:arpField private var priority:Int;
 	@:arpField(false) private var focused:Bool = false;
 
-	#if (arp_input_backend_flash || arp_input_backend_openfl)
-	@:arpImpl private var flashImpl:FocusInputFlashImpl;
-	#elseif arp_input_backend_heaps
-	@:arpImpl private var heapsImpl:FocusInputHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:FocusInputImpl;
 
 	public function new() super();
 

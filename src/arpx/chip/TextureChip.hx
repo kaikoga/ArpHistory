@@ -1,14 +1,9 @@
 package arpx.chip;
 
+import arpx.impl.cross.chip.TextureChipImpl;
 import arpx.structs.ArpColor;
 import arpx.structs.ArpParams;
 import arpx.texture.Texture;
-
-#if (arp_display_backend_flash || arp_display_backend_openfl)
-import arpx.impl.backends.flash.chip.TextureChipFlashImpl;
-#elseif arp_display_backend_heaps
-import arpx.impl.backends.heaps.chip.TextureChipHeapsImpl;
-#end
 
 @:arpType("chip", "texture")
 class TextureChip extends Chip {
@@ -31,11 +26,7 @@ class TextureChip extends Chip {
 
 	override public function hasFace(face:String):Bool return true;
 
-	#if (arp_display_backend_flash || arp_display_backend_openfl)
-	@:arpImpl private var flashImpl:TextureChipFlashImpl;
-	#elseif arp_display_backend_heaps
-	@:arpImpl private var heapsImpl:TextureChipHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:TextureChipImpl;
 
 	public function new() super();
 }

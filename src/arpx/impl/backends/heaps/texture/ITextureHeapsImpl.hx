@@ -2,11 +2,11 @@ package arpx.impl.backends.heaps.texture;
 
 #if arp_display_backend_heaps
 
-import h2d.Tile;
+import arpx.impl.cross.texture.ITextureImplBase;
 import arpx.structs.IArpParamsRead;
-import arpx.impl.cross.texture.ITextureImpl;
+import h2d.Tile;
 
-interface ITextureHeapsImpl extends ITextureImpl {
+interface ITextureHeapsImpl extends ITextureImplBase {
 	function getTile(params:IArpParamsRead = null):Tile;
 }
 

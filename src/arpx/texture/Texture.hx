@@ -1,26 +1,13 @@
 package arpx.texture;
 
 import arp.domain.IArpObject;
-
-#if (arp_display_backend_flash || arp_display_backend_openfl)
-import arpx.impl.backends.flash.texture.ITextureFlashImpl;
-#elseif arp_display_backend_heaps
-import arpx.impl.backends.heaps.texture.ITextureHeapsImpl;
-#end
+import arpx.impl.cross.texture.ITextureImpl;
 
 @:arpType("texture", "null")
-class Texture implements IArpObject
-#if (arp_display_backend_flash || arp_display_backend_openfl) implements ITextureFlashImpl
-#elseif arp_display_backend_heaps implements ITextureHeapsImpl
-#end
-{
+class Texture implements IArpObject implements ITextureImpl {
 	@:arpField public var hasAlpha:Bool = true;
 
-	#if (arp_display_backend_flash || arp_display_backend_openfl)
-	@:arpImpl private var flashImpl:ITextureFlashImpl;
-	#elseif arp_display_backend_heaps
-	@:arpImpl private var heapsImpl:ITextureHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:ITextureImpl;
 
 	public function new() return;
 }

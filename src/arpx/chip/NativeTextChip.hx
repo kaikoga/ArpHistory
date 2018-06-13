@@ -1,13 +1,8 @@
 package arpx.chip;
 
+import arpx.impl.cross.chip.NativeTextChipImpl;
 import arpx.structs.ArpColor;
 import arpx.structs.ArpParams;
-
-#if (arp_display_backend_flash || arp_display_backend_openfl)
-import arpx.impl.backends.flash.chip.NativeTextChipFlashImpl;
-#elseif arp_display_backend_heaps
-import arpx.impl.backends.heaps.chip.NativeTextChipHeapsImpl;
-#end
 
 @:arpType("chip", "nativeText")
 class NativeTextChip extends Chip {
@@ -25,11 +20,7 @@ class NativeTextChip extends Chip {
 	override public function chipHeightOf(params:ArpParams):Int return this.chipHeight;
 	override public function hasFace(face:String):Bool return true;
 
-	#if (arp_display_backend_flash || arp_display_backend_openfl)
-	@:arpImpl private var flashImpl:NativeTextChipFlashImpl;
-	#elseif arp_display_backend_heaps
-	@:arpImpl private var heapsImpl:NativeTextChipHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:NativeTextChipImpl;
 
 	public function new() super();
 }

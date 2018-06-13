@@ -5,10 +5,10 @@ package arpx.impl.backends.flash.texture;
 import flash.display.BitmapData;
 import flash.geom.Rectangle;
 import arpx.impl.backends.flash.texture.decorators.TextureFaceInfo;
-import arpx.impl.cross.texture.ITextureImpl;
+import arpx.impl.cross.texture.ITextureImplBase;
 import arpx.structs.IArpParamsRead;
 
-interface ITextureFlashImpl extends ITextureImpl {
+interface ITextureFlashImpl extends ITextureImplBase {
 	function bitmapData():BitmapData;
 	function trim(bound:Rectangle):BitmapData;
 	function getFaceInfo(params:IArpParamsRead = null):TextureFaceInfo;

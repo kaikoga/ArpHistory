@@ -1,14 +1,9 @@
 package arpx.texture;
 
+import arpx.faceList.FaceList;
+import arpx.impl.cross.texture.NativeTextTextureImpl;
 import arpx.structs.ArpColor;
 import arpx.texture.decorators.MultiTexture;
-import arpx.faceList.FaceList;
-
-#if (arp_display_backend_flash || arp_display_backend_openfl)
-import arpx.impl.backends.flash.texture.NativeTextTextureFlashImpl;
-#elseif arp_display_backend_heaps
-import arpx.impl.backends.heaps.texture.NativeTextTextureHeapsImpl;
-#end
 
 @:arpType("texture", "nativeText")
 class NativeTextTexture extends MultiTexture
@@ -18,11 +13,7 @@ class NativeTextTexture extends MultiTexture
 	@:arpField public var color:ArpColor; // FIXME
 	@:arpBarrier @:arpField public var faceList:FaceList;
 
-	#if (arp_display_backend_flash || arp_display_backend_openfl)
-	@:arpImpl private var flashImpl:NativeTextTextureFlashImpl;
-	#elseif arp_display_backend_heaps
-	@:arpImpl private var heapsImpl:NativeTextTextureHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:NativeTextTextureImpl;
 
 	public function new() super();
 }

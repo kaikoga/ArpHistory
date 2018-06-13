@@ -1,39 +1,22 @@
 package arpx.console;
 
+import arp.domain.IArpObject;
+import arp.ds.IOmap;
+import arp.task.ITickable;
+import arpx.impl.cross.console.ConsoleImpl;
+import arpx.impl.cross.console.IConsoleImpl;
 import arpx.input.focus.IFocusNode;
 import arpx.input.Input;
-import arp.ds.IOmap;
-import arp.domain.IArpObject;
-import arp.task.ITickable;
 import arpx.screen.Screen;
 
-#if (arp_display_backend_flash || arp_display_backend_openfl)
-import arpx.impl.backends.flash.console.ConsoleFlashImpl;
-import arpx.impl.backends.flash.console.IConsoleFlashImpl;
-#end
-
-#if arp_display_backend_heaps
-import arpx.impl.backends.heaps.console.ConsoleHeapsImpl;
-import arpx.impl.backends.heaps.console.IConsoleHeapsImpl;
-#end
-
 @:arpType("console", "console")
-class Console implements IArpObject implements ITickable implements IFocusNode<Input>
-	#if (arp_display_backend_flash || arp_display_backend_openfl) implements IConsoleFlashImpl #end
-	#if arp_display_backend_heaps implements IConsoleHeapsImpl #end
-{
+class Console implements IArpObject implements ITickable implements IFocusNode<Input> implements IConsoleImpl {
 	@:arpField public var width:Int;
 	@:arpField public var height:Int;
 
 	@:arpField("screen") public var screens:IOmap<String, Screen>;
 
-	#if (arp_display_backend_flash || arp_display_backend_openfl)
-	@:arpImpl private var flashImpl:ConsoleFlashImpl;
-	#end
-
-	#if arp_display_backend_heaps
-	@:arpImpl private var heapsImpl:ConsoleHeapsImpl;
-	#end
+	@:arpImpl private var arpImpl:ConsoleImpl;
 
 	public function new() return;
 
