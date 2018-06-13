@@ -1,8 +1,8 @@
 package arpx.texture;
 
-#if (arp_backend_flash || arp_backend_openfl)
+#if (arp_display_backend_flash || arp_display_backend_openfl)
 import arpx.impl.backends.flash.texture.ResourceTextureFlashImpl;
-#elseif arp_backend_heaps
+#elseif arp_display_backend_heaps
 import arpx.impl.backends.heaps.texture.ResourceTextureHeapsImpl;
 #end
 
@@ -11,9 +11,9 @@ class ResourceTexture extends Texture
 {
 	@:arpField public var src:String;
 
-	#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_display_backend_flash || arp_display_backend_openfl)
 	@:arpImpl private var flashImpl:ResourceTextureFlashImpl;
-	#elseif arp_backend_heaps
+	#elseif arp_display_backend_heaps
 	@:arpImpl private var heapsImpl:ResourceTextureHeapsImpl;
 	#end
 

@@ -1,6 +1,6 @@
 package arpx.impl.backends.heaps.geom;
 
-#if arp_backend_heaps
+#if arp_display_backend_heaps
 
 import arpx.geom.ITransform;
 import arpx.geom.PointImpl;

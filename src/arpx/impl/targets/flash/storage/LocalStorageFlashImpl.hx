@@ -1,6 +1,6 @@
 package arpx.impl.targets.flash.storage;
 
-#if (flash || openfl)
+#if (arp_storage_backend_flash || arp_storage_backend_openfl)
 
 import flash.net.SharedObject;
 import flash.utils.ByteArray;

@@ -1,6 +1,6 @@
 package arpx.impl.backends.flash.texture.decorators;
 
-#if (arp_backend_flash || arp_backend_openfl)
+#if (arp_display_backend_flash || arp_display_backend_openfl)
 
 import flash.geom.Rectangle;
 import arpx.texture.decorators.GridTexture;

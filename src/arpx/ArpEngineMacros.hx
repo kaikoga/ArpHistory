@@ -15,11 +15,15 @@ class ArpEngineMacros {
 		return null;
 	}
 
-	private function new() { 
+	private function new() {
+		Sys.println('Initializing ArpEngine');
 		var components:Array<ArpEngineBackend> = [];
-		// components.push(new ArpEngineBackend("arp_texture_backend", ["heaps", "flash", "openfl"]));
+		components.push(new ArpEngineBackend("arp_display_backend", ["heaps", "flash", "openfl", null]));
+		components.push(new ArpEngineBackend("arp_input_backend", ["heaps", "flash", "openfl", null]));
+		components.push(new ArpEngineBackend("arp_socket_backend", ["flash", "openfl", null]));
+		components.push(new ArpEngineBackend("arp_storage_backend", ["flash", "openfl", null]));
 
-		var root:ArpEngineBackend = new ArpEngineBackend("arp_backend", ["heaps", "flash", "openfl"]);
+		var root:ArpEngineBackend = new ArpEngineBackend("arp_backend", ["heaps", "flash", "openfl", null]);
 		var rootBackend:String = root.guessBackend(null);
 		
 		for (component in components) component.guessBackend(rootBackend);
@@ -57,14 +61,17 @@ class ArpEngineBackend {
 	public function guessBackend(rootBackend:String):String {
 		if (this.target != null) return this.target;
 
-		if (rootBackend != null) this.targets.unshift(rootBackend);
-		for (target in this.targets) {
+		var targets = this.targets.copy();
+		if (rootBackend != null && targets.indexOf(rootBackend) > -1) targets.unshift(rootBackend);
+		for (target in targets) {
 			this.target = target;
-			if (Context.defined(target)) break;
+			if (this.target != null && Context.defined(target)) break;
 		}
-		if (rootBackend != null) this.targets.shift();
 
-		Compiler.define(fullName(target));
+		if (this.target != null) {
+			Compiler.define(fullName(this.target));
+			Sys.println('Using ${this.category} ${this.target}');
+		}
 		return this.target;
 	} 
 }

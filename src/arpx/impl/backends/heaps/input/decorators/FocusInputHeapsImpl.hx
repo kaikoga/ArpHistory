@@ -1,6 +1,6 @@
 package arpx.impl.backends.heaps.input.decorators;
 
-#if arp_backend_heaps
+#if arp_input_backend_heaps
 
 import arpx.impl.ArpObjectImplBase;
 import arpx.input.decorators.FocusInput;

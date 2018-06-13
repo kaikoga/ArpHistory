@@ -1,6 +1,6 @@
 package arpx.impl.backends.flash.texture;
 
-#if (arp_backend_flash || arp_backend_openfl)
+#if (arp_display_backend_flash || arp_display_backend_openfl)
 
 import flash.display.Bitmap;
 import flash.display.BitmapData;

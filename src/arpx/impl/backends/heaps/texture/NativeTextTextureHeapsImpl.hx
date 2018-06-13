@@ -1,6 +1,6 @@
 package arpx.impl.backends.heaps.texture;
 
-#if arp_backend_heaps
+#if arp_display_backend_heaps
 
 #if flash
 import flash.display.BitmapData;

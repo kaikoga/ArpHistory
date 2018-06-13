@@ -3,21 +3,21 @@ package arpx.input;
 import arp.domain.IArpObject;
 import arpx.input.focus.IFocusNode;
 
-#if (arp_backend_flash || arp_backend_openfl)
+#if (arp_input_backend_flash || arp_input_backend_openfl)
 import arpx.impl.backends.flash.input.IInputFlashImpl;
-#elseif arp_backend_heaps
+#elseif arp_input_backend_heaps
 import arpx.impl.backends.heaps.input.IInputHeapsImpl;
 #end
 
 @:arpType("input", "null")
 class Input implements IArpObject implements IFocusNode<Input>
-	#if (arp_backend_flash || arp_backend_openfl) implements IInputFlashImpl
-	#elseif arp_backend_heaps implements IInputHeapsImpl
+	#if (arp_input_backend_flash || arp_input_backend_openfl) implements IInputFlashImpl
+	#elseif arp_input_backend_heaps implements IInputHeapsImpl
 	#end
 {
-	#if (arp_backend_flash || arp_backend_openfl)
+	#if (arp_input_backend_flash || arp_input_backend_openfl)
 	@:arpImpl private var flashImpl:IInputFlashImpl;
-	#elseif arp_backend_heaps
+	#elseif arp_input_backend_heaps
 	@:arpImpl private var heapsImpl:IInputHeapsImpl;
 	#end
 

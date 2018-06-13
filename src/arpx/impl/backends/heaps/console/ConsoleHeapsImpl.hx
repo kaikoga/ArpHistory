@@ -1,6 +1,6 @@
 package arpx.impl.backends.heaps.console;
 
-#if arp_backend_heaps
+#if arp_display_backend_heaps
 
 import h2d.Sprite;
 import arpx.impl.ArpObjectImplBase;

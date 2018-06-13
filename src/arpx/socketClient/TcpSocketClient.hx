@@ -1,6 +1,6 @@
 package arpx.socketClient;
 
-#if (flash || openfl)
+#if (arp_socket_backend_flash || arp_socket_backend_openfl)
 import arpx.impl.targets.flash.socketClient.TcpSocketClientFlashImpl;
 #end
 
@@ -9,7 +9,7 @@ class TcpSocketClient extends SocketClient {
 
 	@:arpField public var host:String;
 
-	#if (flash || openfl)
+	#if (arp_socket_backend_flash || arp_socket_backend_openfl)
 	@:arpImpl private var flashImpl:TcpSocketClientFlashImpl;
 	#end
 

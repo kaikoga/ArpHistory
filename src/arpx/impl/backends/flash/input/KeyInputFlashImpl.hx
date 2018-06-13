@@ -1,6 +1,6 @@
 package arpx.impl.backends.flash.input;
 
-#if (arp_backend_flash || arp_backend_openfl)
+#if (arp_input_backend_flash || arp_input_backend_openfl)
 
 import flash.events.Event;
 import flash.events.IEventDispatcher;

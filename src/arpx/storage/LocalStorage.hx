@@ -1,6 +1,6 @@
 package arpx.storage;
 
-#if (flash || openfl)
+#if (arp_storage_backend_flash || arp_storage_backend_openfl)
 import arpx.impl.targets.flash.storage.LocalStorageFlashImpl;
 #end
 
@@ -9,9 +9,9 @@ class LocalStorage extends Storage {
 
 	@:arpField public var src:String;
 
-#if (flash || openfl)
+	#if (arp_storage_backend_flash || arp_storage_backend_openfl)
 	@:arpImpl private var flashImpl:LocalStorageFlashImpl;
-#end
+	#end
 
 	public function new() super();
 }
