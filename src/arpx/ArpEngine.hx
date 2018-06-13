@@ -14,7 +14,9 @@ import flash.events.Event;
 import hxd.App;
 #end
 
-
+#if !macro
+@:build(arpx.ArpEngineMacros.init())
+#end
 class ArpEngine
 	#if arp_backend_heaps extends App #end
 {
