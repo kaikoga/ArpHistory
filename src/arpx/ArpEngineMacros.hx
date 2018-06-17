@@ -50,7 +50,7 @@ class ArpEngineBackend {
 		var flagsDefined:Array<String> = [];
 		for (target in this.targets) {
 			var flagName:String = fullName(target);
-			if (Context.defined(flagName)) flagsDefined.push(flagName);
+			if (Context.defined(flagName)) flagsDefined.push(target);
 		}
 		switch (flagsDefined.length) {
 			case 0:
@@ -60,7 +60,10 @@ class ArpEngineBackend {
 	}
 
 	public function guessBackend(rootBackend:String):String {
-		if (this.target != null) return this.target;
+		if (this.target != null) {
+			Sys.println('Using ${this.category} ${this.target}');
+			return this.target;
+		}
 
 		var targets = this.targets.copy();
 		if (rootBackend != null && targets.indexOf(rootBackend) > -1) targets.unshift(rootBackend);
@@ -71,7 +74,7 @@ class ArpEngineBackend {
 
 		if (this.target != null) {
 			Compiler.define(fullName(this.target));
-			Sys.println('Using ${this.category} ${this.target}');
+			Sys.println('Using ${this.category} ${this.target} (auto)');
 		}
 		return this.target;
 	}
