@@ -20,12 +20,13 @@ class ArpEngineMacros {
 		var components:Array<ArpEngineBackend> = [];
 		components.push(new ArpEngineBackend("arp_display_backend", ["heaps", "flash", "openfl", null]));
 		components.push(new ArpEngineBackend("arp_input_backend", ["heaps", "flash", "openfl", null]));
+		components.push(new ArpEngineBackend("arp_audio_backend", ["heaps", "flash", "openfl", null]));
 		components.push(new ArpEngineBackend("arp_socket_backend", ["flash", "openfl", null]));
 		components.push(new ArpEngineBackend("arp_storage_backend", ["flash", "openfl", null]));
 
 		var root:ArpEngineBackend = new ArpEngineBackend("arp_backend", ["heaps", "flash", "openfl", null]);
 		var rootBackend:String = root.guessBackend(null);
-		
+
 		for (component in components) component.guessBackend(rootBackend);
 		return;
 	}
@@ -55,9 +56,9 @@ class ArpEngineBackend {
 			case 0:
 			case 1: this.target = flagsDefined[0];
 			case _: throw 'Compiler flag conflict: Backends cannot coexist: ${flagsDefined.join(",")}';
-		} 
+		}
 	}
-	
+
 	public function guessBackend(rootBackend:String):String {
 		if (this.target != null) return this.target;
 
@@ -73,6 +74,6 @@ class ArpEngineBackend {
 			Sys.println('Using ${this.category} ${this.target}');
 		}
 		return this.target;
-	} 
+	}
 }
 #end
