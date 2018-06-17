@@ -251,9 +251,19 @@ class MacroArpObjectSkeleton {
 
 	private function genDerivedImplFields(concreteTypePath:TypePath):Array<Field> {
 		var implType = ComplexType.TPath(concreteTypePath);
+		var concreteType:ComplexType = ComplexType.TPath(concreteTypePath);
+		var concreteClassDef:MacroArpImplClassDefinition = new MacroArpImplClassDefinition(concreteType);
 		return (macro class Generated {
 			@:noDoc @:noCompletion
-			override private function createImpl() return new $concreteTypePath(this);
+			override private function createImpl() return ${
+				if (concreteClassDef.isInterface) {
+					// in case of unsupported backend for target platform
+					macro null;
+				} else {
+					// can instantiate
+					macro new $concreteTypePath(this);
+				}
+			};
 		}).fields;
 	}
 
