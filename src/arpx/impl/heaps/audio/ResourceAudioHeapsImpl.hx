@@ -23,7 +23,7 @@ class ResourceAudioHeapsImpl extends ArpObjectImplBase implements IAudioHeapsImp
 	override public function arpHeatUp():Bool {
 		if (value != null) return true;
 		var bytes:Bytes = Resource.getBytes(audio.src);
-		var fileEntry:FileEntry = new BytesFileEntry("", bytes);
+		var fileEntry:FileEntry = new BytesFileEntry('__arp__/audio/resource/${audio.src}', bytes);
 
 		this.value = new Sound(fileEntry);
 		return true;
