@@ -1,7 +1,7 @@
 package arpx;
 
 #if (arp_backend_flash || arp_backend_openfl)
-import arpx.impl.backends.flash.geom.TransformCase;
+import arpx.impl.flash.geom.TransformCase;
 #end
 
 import arpx.macro.ArpStructsMacroArpObjectCase;

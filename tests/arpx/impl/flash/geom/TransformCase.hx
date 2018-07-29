@@ -1,8 +1,7 @@
-package arpx.impl.backends.flash.geom;
+package arpx.impl.flash.geom;
 
 #if (arp_backend_flash || arp_backend_openfl)
 
-import arpx.impl.flash.geom.Transform;
 import flash.geom.Matrix;
 import flash.geom.Point;
 
