@@ -65,11 +65,15 @@ class ArpEngineBackend {
 			return this.target;
 		}
 
-		var targets = this.targets.copy();
-		if (rootBackend != null && targets.indexOf(rootBackend) > -1) targets.unshift(rootBackend);
-		for (target in targets) {
-			this.target = target;
-			if (this.target != null && Context.defined(target)) break;
+		if (targets.indexOf(rootBackend) > -1) {
+			// use root backend
+			this.target = rootBackend;
+		} else {
+			// use first available backend
+			for (target in targets) {
+				this.target = target;
+				if (this.target != null && Context.defined(target)) break;
+			}
 		}
 
 		if (this.target != null) {
