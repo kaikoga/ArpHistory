@@ -4,4 +4,6 @@ package arpx.impl.cross.input;
 typedef IInputImpl = arpx.impl.flash.input.IInputImpl;
 #elseif arp_input_backend_heaps
 typedef IInputImpl = arpx.impl.heaps.input.IInputImpl;
+#elseif arp_input_backend_stub
+typedef IInputImpl = arpx.impl.stub.input.IInputImpl;
 #end

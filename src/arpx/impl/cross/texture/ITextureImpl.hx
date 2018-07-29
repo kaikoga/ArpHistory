@@ -4,4 +4,6 @@ package arpx.impl.cross.texture;
 typedef ITextureImpl = arpx.impl.flash.texture.ITextureImpl;
 #elseif arp_display_backend_heaps
 typedef ITextureImpl = arpx.impl.heaps.texture.ITextureImpl;
+#elseif arp_display_backend_stub
+typedef ITextureImpl = arpx.impl.stub.texture.ITextureImpl;
 #end

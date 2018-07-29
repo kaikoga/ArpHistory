@@ -4,4 +4,6 @@ package arpx.impl.cross.chip;
 typedef TextureChipImpl = arpx.impl.flash.chip.TextureChipImpl;
 #elseif arp_display_backend_heaps
 typedef TextureChipImpl = arpx.impl.heaps.chip.TextureChipImpl;
+#elseif arp_display_backend_stub
+typedef TextureChipImpl = arpx.impl.stub.chip.TextureChipImpl;
 #end

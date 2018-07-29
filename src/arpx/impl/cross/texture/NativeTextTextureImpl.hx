@@ -4,4 +4,6 @@ package arpx.impl.cross.texture;
 typedef NativeTextTextureImpl = arpx.impl.flash.texture.NativeTextTextureImpl;
 #elseif arp_display_backend_heaps
 typedef NativeTextTextureImpl = arpx.impl.heaps.texture.NativeTextTextureImpl;
+#elseif arp_display_backend_stub
+typedef NativeTextTextureImpl = arpx.impl.stub.texture.NativeTextTextureImpl;
 #end
