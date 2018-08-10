@@ -2,11 +2,12 @@ package arpx.impl.flash.texture;
 
 #if (arp_display_backend_flash || arp_display_backend_openfl)
 
-import arpx.impl.cross.texture.TextureFaceData;
 import flash.display.BitmapData;
 import flash.geom.Rectangle;
 import flash.text.TextFormat;
 import arpx.impl.cross.texture.decorators.MultiTextureImplBase;
+import arpx.impl.cross.texture.ITextureImpl;
+import arpx.impl.cross.texture.TextureFaceData;
 import arpx.impl.flash.display.BitmapFont;
 import arpx.impl.flash.display.BitmapFontDrawCursor;
 import arpx.structs.IArpParamsRead;

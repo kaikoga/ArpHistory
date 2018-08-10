@@ -8,6 +8,7 @@ import flash.display.Loader;
 import flash.events.Event;
 import flash.events.IOErrorEvent;
 import haxe.io.Bytes;
+import arpx.impl.cross.texture.ITextureImpl;
 import arpx.impl.cross.texture.TextureImplBase;
 import arpx.impl.flash.texture.TextureFaceData;
 import arpx.structs.IArpParamsRead;

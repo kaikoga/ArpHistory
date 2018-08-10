@@ -2,6 +2,7 @@ package arpx.impl.heaps.texture;
 
 #if arp_display_backend_heaps
 
+import arpx.impl.cross.texture.ITextureImpl;
 import arpx.impl.cross.texture.TextureFaceData;
 import h2d.Tile;
 import hxd.fs.BytesFileSystem.BytesFileEntry;

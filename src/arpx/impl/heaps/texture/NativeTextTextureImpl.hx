@@ -13,6 +13,7 @@ import arpx.impl.flash.display.BitmapFontDrawCursor;
 
 import h2d.Tile;
 import hxd.Pixels.Flags;
+import arpx.impl.cross.texture.ITextureImpl;
 import arpx.impl.cross.texture.decorators.MultiTextureImplBase;
 import arpx.texture.NativeTextTexture;
 

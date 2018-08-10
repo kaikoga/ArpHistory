@@ -2,6 +2,7 @@ package arpx.impl.stub.texture;
 
 #if arp_display_backend_stub
 
+import arpx.impl.cross.texture.ITextureImpl;
 import arpx.impl.cross.texture.decorators.MultiTextureImplBase;
 import arpx.texture.NativeTextTexture;
 
