@@ -13,7 +13,7 @@ class GridTextureImpl extends MultiTextureImplBase<GridTexture> implements IText
 		super.arpHeatUp();
 
 		if (this.faces.length > 0) return true;
-		var faceInfo:TextureFaceInfo = this.texture.texture.getFaceInfo();
+		var faceInfo:TextureFaceImpl = this.texture.texture.getFaceInfo();
 		var sourceWidth:Int = this.texture.texture.width;
 		var sourceHeight:Int = this.texture.texture.height;
 

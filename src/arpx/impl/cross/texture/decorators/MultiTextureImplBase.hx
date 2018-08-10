@@ -9,7 +9,7 @@ class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase {
 	private var texture:T;
 
 	private var indexesByFaces:Map<String, Int>;
-	private var faces:Array<TextureFaceInfo>;
+	private var faces:Array<TextureFaceImpl>;
 
 	public function new(texture:T) {
 		super();
@@ -29,7 +29,7 @@ class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase {
 		this.indexesByFaces[face] = this.faces.length;
 	}
 
-	inline private function pushFaceInfo(faceInfo:TextureFaceInfo):Void {
+	inline private function pushFaceInfo(faceInfo:TextureFaceImpl):Void {
 		this.faces.push(faceInfo);
 	}
 
@@ -63,7 +63,7 @@ class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase {
 		return index;
 	}
 
-	public function getFaceInfo(params:IArpParamsRead = null):TextureFaceInfo {
+	public function getFaceInfo(params:IArpParamsRead = null):TextureFaceImpl {
 		return this.faces[this.getFaceIndex(params)];
 	}
 }

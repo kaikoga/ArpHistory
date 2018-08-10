@@ -2,7 +2,7 @@ package arpx.impl.heaps.chip;
 
 #if arp_display_backend_heaps
 
-import arpx.impl.cross.texture.decorators.TextureFaceInfo;
+import arpx.impl.cross.texture.TextureFaceImpl;
 import arp.domain.ArpHeat;
 import arpx.structs.ArpColor;
 import arpx.structs.IArpParamsRead;
@@ -27,7 +27,7 @@ class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {
 			return;
 		}
 
-		var faceInfo:TextureFaceInfo = this.chip.texture.getFaceInfo(params);
+		var faceInfo:TextureFaceImpl = this.chip.texture.getFaceInfo(params);
 		if (faceInfo == null) return;
 
 		var transform:Transform = context.dupTransform();

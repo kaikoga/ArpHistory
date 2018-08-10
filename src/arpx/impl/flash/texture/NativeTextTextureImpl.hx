@@ -2,7 +2,7 @@ package arpx.impl.flash.texture;
 
 #if (arp_display_backend_flash || arp_display_backend_openfl)
 
-import arpx.impl.cross.texture.decorators.TextureFaceInfo;
+import arpx.impl.cross.texture.TextureFaceImpl;
 import flash.display.BitmapData;
 import flash.geom.Rectangle;
 import flash.text.TextFormat;
@@ -31,7 +31,7 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> impl
 		this._bitmapData = new BitmapData(2048, 2048, true, 0xffff00ff); // FIXME
 
 		var cursor:BitmapFontDrawCursor = new BitmapFontDrawCursor(bitmapFont, this._bitmapData.width, this._bitmapData.height);
-		var faceInfo:TextureFaceInfo = new TextureFaceInfo(this._bitmapData);
+		var faceInfo:TextureFaceImpl = new TextureFaceImpl(this._bitmapData);
 		for (char in this.texture.faceList) {
 			this.nextFaceName(char);
 			var charCode:Int = char.charCodeAt(0);

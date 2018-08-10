@@ -1,4 +1,4 @@
-package arpx.impl.flash.texture.decorators;
+package arpx.impl.flash.texture;
 
 #if (arp_display_backend_flash || arp_display_backend_openfl)
 
@@ -6,7 +6,7 @@ import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 
-class TextureFaceInfo {
+class TextureFaceImpl {
 
 	public var source(default, null):BitmapData;
 	public var bound(default, null):Rectangle;
@@ -32,8 +32,8 @@ class TextureFaceInfo {
 		}
 	}
 
-	inline public function trim(x:Float, y:Float, w:Float, h:Float):TextureFaceInfo {
-		return new TextureFaceInfo(this.source, new Rectangle(x, y, w, h));
+	inline public function trim(x:Float, y:Float, w:Float, h:Float):TextureFaceImpl {
+		return new TextureFaceImpl(this.source, new Rectangle(x, y, w, h));
 	}
 
 	public function dispose():Void this.data.dispose();
