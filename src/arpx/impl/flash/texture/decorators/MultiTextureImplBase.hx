@@ -3,7 +3,6 @@ package arpx.impl.flash.texture.decorators;
 #if (arp_display_backend_flash || arp_display_backend_openfl)
 
 import flash.display.BitmapData;
-import flash.geom.Point;
 import flash.geom.Rectangle;
 import arpx.structs.IArpParamsRead;
 import arpx.impl.cross.texture.TextureImplBase;
@@ -70,13 +69,6 @@ class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase implements IT
 	}
 
 	public function bitmapData():BitmapData return this.texture.texture.bitmapData();
-
-	private static var nullPoint:Point = new Point(0, 0);
-	public function trim(bound:Rectangle):BitmapData {
-		var result = new BitmapData(Std.int(bound.width), Std.int(bound.height), true, 0x00000000);
-		result.copyPixels(this.bitmapData(), bound, nullPoint);
-		return result;
-	}
 
 	public function getFaceInfo(params:IArpParamsRead = null):TextureFaceInfo {
 		return this.faces[this.getFaceIndex(params)];
