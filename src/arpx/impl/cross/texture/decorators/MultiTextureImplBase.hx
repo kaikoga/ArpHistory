@@ -1,18 +1,13 @@
-package arpx.impl.flash.texture.decorators;
+package arpx.impl.cross.texture.decorators;
 
-#if (arp_display_backend_flash || arp_display_backend_openfl)
-
-import flash.display.BitmapData;
-import flash.geom.Rectangle;
-import arpx.structs.IArpParamsRead;
 import arpx.impl.cross.texture.TextureImplBase;
+import arpx.structs.IArpParamsRead;
 import arpx.texture.decorators.MultiTexture;
 
-class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase implements ITextureImpl {
+class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase {
 
 	private var texture:T;
 
-	private var sourceBitmap:BitmapData = null;
 	private var indexesByFaces:Map<String, Int>;
 	private var faces:Array<TextureFaceInfo>;
 
@@ -34,8 +29,8 @@ class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase implements IT
 		this.indexesByFaces[face] = this.faces.length;
 	}
 
-	inline private function pushFaceInfo(bound:Rectangle):Void {
-		this.faces.push(new TextureFaceInfo(this.texture, bound));
+	inline private function pushFaceInfo(faceInfo:TextureFaceInfo):Void {
+		this.faces.push(faceInfo);
 	}
 
 	override public function getFaceIndex(params:IArpParamsRead = null):Int {
@@ -59,7 +54,7 @@ class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase implements IT
 			var dIndex:Null<Int> = params.getInt("index");
 			if (dIndex != null) index += dIndex;
 			if (this.faces[index] == null) {
-				this.texture.arpDomain.log("texture", 'MultiTextureImplBase.getFaceIndex(): Chip index out of range: ${this.texture.arpSlot}:$index');
+				this.texture.arpDomain.log("texture", 'MultiTextureImplBase.getFaceIndex(): Face index out of range: ${this.texture.arpSlot}:$index');
 			}
 		} catch (d:String) {
 			this.texture.arpDomain.log("texture", 'MultiTextureImplBase.getFaceIndex(): Illegal index: ${this.texture.arpSlot}:$params');
@@ -68,11 +63,7 @@ class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase implements IT
 		return index;
 	}
 
-	public function bitmapData():BitmapData return this.texture.texture.bitmapData();
-
 	public function getFaceInfo(params:IArpParamsRead = null):TextureFaceInfo {
 		return this.faces[this.getFaceIndex(params)];
 	}
 }
-
-#end

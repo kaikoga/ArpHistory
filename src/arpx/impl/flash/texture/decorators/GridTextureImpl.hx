@@ -2,10 +2,11 @@ package arpx.impl.flash.texture.decorators;
 
 #if (arp_display_backend_flash || arp_display_backend_openfl)
 
-import flash.geom.Rectangle;
+import flash.display.BitmapData;
+import arpx.impl.cross.texture.decorators.MultiTextureImplBase;
 import arpx.texture.decorators.GridTexture;
 
-class GridTextureImpl extends MultiTextureImplBase<GridTexture> {
+class GridTextureImpl extends MultiTextureImplBase<GridTexture> implements ITextureImpl {
 
 	public function new(texture:GridTexture) {
 		super(texture);
@@ -29,7 +30,7 @@ class GridTextureImpl extends MultiTextureImplBase<GridTexture> {
 		for (face in this.texture.faceList) {
 			this.nextFaceName(face);
 			for (dir in 0...this.texture.dirs) {
-				this.pushFaceInfo(new Rectangle(x, y, faceWidth, faceHeight));
+				this.pushFaceInfo(TextureFaceInfo.trimmed(this.texture, x, y, faceWidth, faceHeight));
 				if (isVertical) {
 					y += faceHeight;
 					if (y >= sourceHeight) {
@@ -47,6 +48,8 @@ class GridTextureImpl extends MultiTextureImplBase<GridTexture> {
 		}
 		return true;
 	}
+
+	public function bitmapData():BitmapData return this.texture.texture.bitmapData();
 }
 
 #end

@@ -2,16 +2,17 @@ package arpx.impl.flash.texture;
 
 #if (arp_display_backend_flash || arp_display_backend_openfl)
 
+import arpx.impl.cross.texture.decorators.TextureFaceInfo;
 import flash.display.BitmapData;
 import flash.geom.Rectangle;
 import flash.text.TextFormat;
-import arpx.impl.flash.texture.decorators.MultiTextureImplBase;
+import arpx.impl.cross.texture.decorators.MultiTextureImplBase;
 import arpx.impl.flash.display.BitmapFont;
 import arpx.impl.flash.display.BitmapFontDrawCursor;
 import arpx.structs.IArpParamsRead;
 import arpx.texture.NativeTextTexture;
 
-class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> {
+class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> implements ITextureImpl {
 
 	private var _bitmapData:BitmapData;
 
@@ -35,10 +36,8 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> {
 			var charCode:Int = char.charCodeAt(0);
 			cursor.move(charCode);
 			bitmapFont.drawChar(this._bitmapData, charCode, cursor.x, cursor.y);
-			var bounds:Rectangle = bitmapFont.getBounds(charCode).clone();
-			bounds.x = cursor.x;
-			bounds.y = cursor.y;
-			this.pushFaceInfo(bounds);
+			var bounds:Rectangle = bitmapFont.getBounds(charCode);
+			this.pushFaceInfo(TextureFaceInfo.trimmed(this.texture, cursor.x, cursor.y, bounds.width, bounds.height));
 		}
 		bitmapFont.dispose();
 		return true;
@@ -52,7 +51,7 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> {
 		return true;
 	}
 
-	override public function bitmapData():BitmapData return this._bitmapData;
+	public function bitmapData():BitmapData return this._bitmapData;
 }
 
 #end

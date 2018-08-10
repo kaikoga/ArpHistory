@@ -2,7 +2,7 @@ package arpx.impl.heaps.chip;
 
 #if arp_display_backend_heaps
 
-import h2d.Tile;
+import arpx.impl.cross.texture.decorators.TextureFaceInfo;
 import arp.domain.ArpHeat;
 import arpx.structs.ArpColor;
 import arpx.structs.IArpParamsRead;
@@ -27,15 +27,15 @@ class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {
 			return;
 		}
 
-		var tile:Tile = this.chip.texture.getTile(params);
-		if (tile == null) return;
+		var faceInfo:TextureFaceInfo = this.chip.texture.getFaceInfo(params);
+		if (faceInfo == null) return;
 
 		var transform:Transform = context.dupTransform();
 		if (this.chip.baseX | this.chip.baseY != 0) {
 			transform.appendXY(-this.chip.baseX, -this.chip.baseY);
 		}
 		var color:ArpColor = this.chip.color;
-		context.drawTile(tile, color.fred, color.fgreen, color.fblue, color.falpha);
+		context.drawTile(faceInfo.tile, color.fred, color.fgreen, color.fblue, color.falpha);
 		context.popTransform();
 	}
 }

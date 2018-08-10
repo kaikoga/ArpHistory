@@ -2,6 +2,7 @@ package arpx.impl.heaps.texture;
 
 #if arp_display_backend_heaps
 
+import arpx.impl.cross.texture.decorators.TextureFaceInfo;
 import h2d.Tile;
 import hxd.fs.BytesFileSystem.BytesFileEntry;
 import hxd.fs.FileEntry;
@@ -42,8 +43,8 @@ class FileTextureImpl extends TextureImplBase implements ITextureImpl {
 		return true;
 	}
 
-	public function getTile(params:IArpParamsRead = null):Tile {
-		return this.value.sub(0, 0, this.texture.width, this.texture.height);
+	public function getFaceInfo(params:IArpParamsRead = null):TextureFaceInfo {
+		return TextureFaceInfo.trimmed(this.value, 0, 0, this.texture.width, this.texture.height);
 	}
 }
 

@@ -3,6 +3,7 @@ package arpx.impl.heaps.texture;
 #if arp_display_backend_heaps
 
 #if flash
+import arpx.impl.heaps.texture.decorators.TextureFaceInfo;
 import flash.display.BitmapData;
 import flash.geom.Rectangle;
 import flash.text.TextFormat;
@@ -12,10 +13,10 @@ import arpx.impl.flash.display.BitmapFontDrawCursor;
 
 import h2d.Tile;
 import hxd.Pixels.Flags;
-import arpx.impl.heaps.texture.decorators.MultiTextureImplBase;
+import arpx.impl.cross.texture.decorators.MultiTextureImplBase;
 import arpx.texture.NativeTextTexture;
 
-class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> {
+class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> implements ITextureImpl {
 
 	private var tile:Tile;
 
@@ -42,14 +43,14 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> {
 			cursor.move(charCode);
 			bitmapFont.drawChar(bitmapData, charCode, cursor.x, cursor.y);
 			var bounds:Rectangle = bitmapFont.getBounds(charCode);
-			this.pushFaceInfo(this.tile, cursor.x, cursor.y, bounds.width, bounds.height);
+			this.pushFaceInfo(TextureFaceInfo.trimmed(this.tile, cursor.x, cursor.y, bounds.width, bounds.height));
 		}
 
 		bitmapFont.dispose();
 		this.tile = tileFromPremult(bitmapData);
 		this.tile.getTexture().realloc = () -> { this.tile = null; this.arpHeatUp(); }
 
-		for (face in this.faces) @:privateAccess face.setTexture(this.tile.innerTex);
+		for (face in this.faces) @:privateAccess face.tile.setTexture(this.tile.innerTex);
 
 		#end
 

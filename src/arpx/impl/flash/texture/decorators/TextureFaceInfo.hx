@@ -33,6 +33,10 @@ class TextureFaceInfo {
 		}
 	}
 
+	inline public static function trimmed(source:Texture, x:Float, y:Float, w:Float, h:Float):TextureFaceInfo {
+		return new TextureFaceInfo(source, new Rectangle(x, y, w, h));
+	}
+
 	public function dispose():Void this.data.dispose();
 }
 
