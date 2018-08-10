@@ -46,7 +46,7 @@ class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {
 			context.bitmapData.copyPixels(faceInfo.source, faceInfo.bound, pt, null, null, this.chip.texture.hasAlpha);
 		} else {
 			var colorTransform:ColorTransform = this.chip.color.toMultiplier();
-			context.bitmapData.draw(faceInfo.data, transform.raw, colorTransform, BlendMode.NORMAL);
+			context.bitmapData.draw(faceInfo.trimmed, transform.raw, colorTransform, BlendMode.NORMAL);
 		}
 		context.popTransform();
 	}
