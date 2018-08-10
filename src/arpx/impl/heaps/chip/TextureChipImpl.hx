@@ -27,19 +27,13 @@ class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {
 			return;
 		}
 
+		var tile:Tile = this.chip.texture.getTile(params);
+		if (tile == null) return;
+
 		var transform:Transform = context.dupTransform();
 		if (this.chip.baseX | this.chip.baseY != 0) {
 			transform.appendXY(-this.chip.baseX, -this.chip.baseY);
 		}
-
-		var tile:Tile = this.chip.texture.getTile(params);
-		if (tile == null) {
-			var index:Int = this.chip.texture.getFaceIndex(params);
-			this.chip.arpDomain.log("gridchip", 'GridChip.getTrimmedBitmap(): Chip index out of range: ${chip.arpSlot.sid}:$index');
-			context.popTransform();
-			return;
-		}
-
 		var color:ArpColor = this.chip.color;
 		context.drawTile(tile, color.fred, color.fgreen, color.fblue, color.falpha);
 		context.popTransform();

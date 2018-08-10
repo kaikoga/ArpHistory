@@ -58,6 +58,9 @@ class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase implements IT
 		try {
 			var dIndex:Null<Int> = params.getInt("index");
 			if (dIndex != null) index += dIndex;
+			if (this.faces[index] == null) {
+				this.texture.arpDomain.log("texture", 'MultiTextureImplBase.getFaceIndex(): Chip index out of range: ${this.texture.arpSlot}:$index');
+			}
 		} catch (d:String) {
 			this.texture.arpDomain.log("texture", 'MultiTextureImplBase.getFaceIndex(): Illegal index: ${this.texture.arpSlot}:$params');
 		}

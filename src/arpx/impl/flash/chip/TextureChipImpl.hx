@@ -34,19 +34,13 @@ class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {
 			return;
 		}
 
+		var faceInfo:TextureFaceInfo = this.chip.texture.getFaceInfo(params);
+		if (faceInfo == null) return;
+
 		var transform:Transform = context.dupTransform();
 		if (this.chip.baseX | this.chip.baseY != 0) {
 			transform.appendXY(-this.chip.baseX, -this.chip.baseY);
 		}
-
-		var faceInfo:TextureFaceInfo = this.chip.texture.getFaceInfo(params);
-		if (faceInfo == null) {
-			var index:Int = this.chip.texture.getFaceIndex(params);
-			this.chip.arpDomain.log("gridchip", 'GridChip.getTrimmedBitmap(): Chip index out of range: ${this}:$index');
-			context.popTransform();
-			return;
-		}
-
 		var pt:PointImpl = transform.asPoint(_workPt);
 		if (pt != null && this.chip.color == null) {
 			context.bitmapData.copyPixels(this.chip.texture.bitmapData(), faceInfo.bound, pt, null, null, this.chip.texture.hasAlpha);
