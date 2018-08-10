@@ -19,12 +19,8 @@ class ConsoleImpl extends ArpObjectImplBase implements IConsoleImpl {
 	public function display(bitmapData:BitmapData):Void {
 		var context:DisplayContext = new DisplayContext(bitmapData);
 		context.start();
-		this.render(context);
+		this.console.render(context);
 		context.display();
-	}
-
-	public function render(context:DisplayContext):Void {
-		for (screen in this.console.screens) screen.display(context);
 	}
 }
 
