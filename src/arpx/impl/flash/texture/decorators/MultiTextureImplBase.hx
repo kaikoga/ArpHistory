@@ -6,6 +6,7 @@ import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 import arpx.structs.IArpParamsRead;
+import arpx.impl.cross.texture.TextureImplBase;
 import arpx.texture.decorators.MultiTexture;
 
 class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase implements ITextureImpl {

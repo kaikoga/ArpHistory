@@ -2,6 +2,7 @@ package arpx.impl.stub.texture;
 
 #if arp_display_backend_stub
 
+import arpx.impl.cross.texture.TextureImplBase;
 import arpx.texture.ResourceTexture;
 
 class ResourceTextureImpl extends TextureImplBase implements ITextureImpl {

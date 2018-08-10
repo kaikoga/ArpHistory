@@ -2,6 +2,7 @@ package arpx.impl.sys.texture.decorators;
 
 #if arp_display_backend_sys
 
+import arpx.impl.cross.texture.TextureImplBase;
 import arpx.texture.decorators.MultiTexture;
 
 class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase implements ITextureImpl {

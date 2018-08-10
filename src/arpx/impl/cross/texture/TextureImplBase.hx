@@ -1,6 +1,4 @@
-package arpx.impl.stub.texture;
-
-#if arp_display_backend_stub
+package arpx.impl.cross.texture;
 
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.texture.ITextureImplBase;
@@ -17,9 +15,5 @@ class TextureImplBase extends ArpObjectImplBase implements ITextureImplBase {
 	public function heightOf(index:Int):Int return this.height;
 	public function getFaceIndex(params:IArpParamsRead = null):Int return 0;
 
-	public function new() {
-		super();
-	}
+	public function new() super();
 }
-
-#end

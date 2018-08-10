@@ -10,6 +10,7 @@ import flash.events.IOErrorEvent;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 import haxe.io.Bytes;
+import arpx.impl.cross.texture.TextureImplBase;
 import arpx.impl.flash.texture.decorators.TextureFaceInfo;
 import arpx.structs.IArpParamsRead;
 import arpx.texture.FileTexture;

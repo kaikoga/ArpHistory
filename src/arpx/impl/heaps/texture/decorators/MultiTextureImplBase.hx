@@ -3,6 +3,7 @@ package arpx.impl.heaps.texture.decorators;
 #if arp_display_backend_heaps
 
 import h2d.Tile;
+import arpx.impl.cross.texture.TextureImplBase;
 import arpx.structs.IArpParamsRead;
 import arpx.texture.decorators.MultiTexture;
 

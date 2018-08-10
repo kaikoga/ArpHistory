@@ -6,6 +6,7 @@ import h2d.Tile;
 import hxd.fs.BytesFileSystem.BytesFileEntry;
 import hxd.fs.FileEntry;
 import hxd.res.Image;
+import arpx.impl.cross.texture.TextureImplBase;
 import arpx.structs.IArpParamsRead;
 import arpx.texture.FileTexture;
 
