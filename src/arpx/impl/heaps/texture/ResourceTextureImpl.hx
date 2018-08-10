@@ -47,7 +47,7 @@ class ResourceTextureImpl extends TextureImplBase implements ITextureImpl {
 	}
 
 	public function getFaceInfo(params:IArpParamsRead = null):TextureFaceInfo {
-		return TextureFaceInfo.trimmed(this.value, 0, 0, this.texture.width, this.texture.height);
+		return new TextureFaceInfo(this.value).trim(0, 0, this.texture.width, this.texture.height);
 	}
 }
 

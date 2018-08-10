@@ -32,8 +32,8 @@ class TextureFaceInfo {
 		}
 	}
 
-	inline public static function trimmed(source:BitmapData, x:Float, y:Float, w:Float, h:Float):TextureFaceInfo {
-		return new TextureFaceInfo(source, new Rectangle(x, y, w, h));
+	inline public function trim(x:Float, y:Float, w:Float, h:Float):TextureFaceInfo {
+		return new TextureFaceInfo(this.source, new Rectangle(x, y, w, h));
 	}
 
 	public function dispose():Void this.data.dispose();

@@ -2,7 +2,6 @@ package arpx.impl.heaps.texture.decorators;
 
 #if arp_display_backend_heaps
 
-import h2d.Tile;
 import arpx.impl.cross.texture.decorators.MultiTextureImplBase;
 import arpx.texture.decorators.GridTexture;
 
@@ -27,11 +26,11 @@ class GridTextureImpl extends MultiTextureImplBase<GridTexture> implements IText
 		var isVertical:Bool = this.texture.faceList.isVertical;
 		var x:Int = 0;
 		var y:Int = 0;
-		var tile:Tile = this.texture.texture.getFaceInfo().tile;
+		var faceInfo:TextureFaceInfo = this.texture.texture.getFaceInfo();
 		for (face in this.texture.faceList) {
 			this.nextFaceName(face);
 			for (dir in 0...this.texture.dirs) {
-				this.pushFaceInfo(TextureFaceInfo.trimmed(tile, x, y, faceWidth, faceHeight));
+				this.pushFaceInfo(faceInfo.trim(x, y, faceWidth, faceHeight));
 				if (isVertical) {
 					y += faceHeight;
 					if (y >= sourceHeight) {

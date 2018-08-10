@@ -2,7 +2,6 @@ package arpx.impl.flash.texture.decorators;
 
 #if (arp_display_backend_flash || arp_display_backend_openfl)
 
-import flash.display.BitmapData;
 import arpx.impl.cross.texture.decorators.MultiTextureImplBase;
 import arpx.texture.decorators.GridTexture;
 
@@ -19,7 +18,6 @@ class GridTextureImpl extends MultiTextureImplBase<GridTexture> implements IText
 		var faceInfo:TextureFaceInfo = this.texture.texture.getFaceInfo();
 		var sourceWidth:Int = this.texture.texture.width;
 		var sourceHeight:Int = this.texture.texture.height;
-		var bitmapData:BitmapData = faceInfo.data;
 
 		var faceWidth:Int = this.texture.width;
 		if (faceWidth == 0) faceWidth = sourceWidth;
@@ -32,7 +30,7 @@ class GridTextureImpl extends MultiTextureImplBase<GridTexture> implements IText
 		for (face in this.texture.faceList) {
 			this.nextFaceName(face);
 			for (dir in 0...this.texture.dirs) {
-				this.pushFaceInfo(TextureFaceInfo.trimmed(bitmapData, x, y, faceWidth, faceHeight));
+				this.pushFaceInfo(faceInfo.trim(x, y, faceWidth, faceHeight));
 				if (isVertical) {
 					y += faceHeight;
 					if (y >= sourceHeight) {
