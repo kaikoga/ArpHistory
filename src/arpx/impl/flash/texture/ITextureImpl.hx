@@ -8,7 +8,6 @@ import arpx.impl.cross.texture.ITextureImplBase;
 import arpx.structs.IArpParamsRead;
 
 interface ITextureImpl extends ITextureImplBase {
-	function bitmapData():BitmapData;
 	function getFaceInfo(params:IArpParamsRead = null):TextureFaceInfo;
 }
 

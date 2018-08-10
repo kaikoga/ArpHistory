@@ -37,7 +37,7 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> impl
 			cursor.move(charCode);
 			bitmapFont.drawChar(this._bitmapData, charCode, cursor.x, cursor.y);
 			var bounds:Rectangle = bitmapFont.getBounds(charCode);
-			this.pushFaceInfo(TextureFaceInfo.trimmed(this.texture, cursor.x, cursor.y, bounds.width, bounds.height));
+			this.pushFaceInfo(TextureFaceInfo.trimmed(this._bitmapData, cursor.x, cursor.y, bounds.width, bounds.height));
 		}
 		bitmapFont.dispose();
 		return true;
@@ -50,8 +50,6 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> impl
 		this._bitmapData = null;
 		return true;
 	}
-
-	public function bitmapData():BitmapData return this._bitmapData;
 }
 
 #end

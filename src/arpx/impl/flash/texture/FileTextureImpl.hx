@@ -56,12 +56,8 @@ class FileTextureImpl extends TextureImplBase implements ITextureImpl {
 		return true;
 	}
 
-	public function bitmapData():BitmapData {
-		return this.value;
-	}
-
 	public function getFaceInfo(params:IArpParamsRead = null):TextureFaceInfo {
-		return new TextureFaceInfo(this.texture, null);
+		return new TextureFaceInfo(this.value);
 	}
 }
 

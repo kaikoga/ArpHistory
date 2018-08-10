@@ -16,8 +16,10 @@ class GridTextureImpl extends MultiTextureImplBase<GridTexture> implements IText
 		super.arpHeatUp();
 
 		if (this.faces.length > 0) return true;
+		var faceInfo:TextureFaceInfo = this.texture.texture.getFaceInfo();
 		var sourceWidth:Int = this.texture.texture.width;
 		var sourceHeight:Int = this.texture.texture.height;
+		var bitmapData:BitmapData = faceInfo.data;
 
 		var faceWidth:Int = this.texture.width;
 		if (faceWidth == 0) faceWidth = sourceWidth;
@@ -30,7 +32,7 @@ class GridTextureImpl extends MultiTextureImplBase<GridTexture> implements IText
 		for (face in this.texture.faceList) {
 			this.nextFaceName(face);
 			for (dir in 0...this.texture.dirs) {
-				this.pushFaceInfo(TextureFaceInfo.trimmed(this.texture, x, y, faceWidth, faceHeight));
+				this.pushFaceInfo(TextureFaceInfo.trimmed(bitmapData, x, y, faceWidth, faceHeight));
 				if (isVertical) {
 					y += faceHeight;
 					if (y >= sourceHeight) {
@@ -48,8 +50,6 @@ class GridTextureImpl extends MultiTextureImplBase<GridTexture> implements IText
 		}
 		return true;
 	}
-
-	public function bitmapData():BitmapData return this.texture.texture.bitmapData();
 }
 
 #end

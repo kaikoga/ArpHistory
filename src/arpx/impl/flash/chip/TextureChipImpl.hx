@@ -43,7 +43,7 @@ class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {
 		}
 		var pt:PointImpl = transform.asPoint(_workPt);
 		if (pt != null && this.chip.color == null) {
-			context.bitmapData.copyPixels(this.chip.texture.bitmapData(), faceInfo.bound, pt, null, null, this.chip.texture.hasAlpha);
+			context.bitmapData.copyPixels(faceInfo.source, faceInfo.bound, pt, null, null, this.chip.texture.hasAlpha);
 		} else {
 			var colorTransform:ColorTransform = this.chip.color.toMultiplier();
 			context.bitmapData.draw(faceInfo.data, transform.raw, colorTransform, BlendMode.NORMAL);

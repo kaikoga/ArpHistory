@@ -5,11 +5,10 @@ package arpx.impl.flash.texture.decorators;
 import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
-import arpx.texture.Texture;
 
 class TextureFaceInfo {
 
-	private var source:Texture;
+	public var source(default, null):BitmapData;
 	public var bound(default, null):Rectangle;
 
 	private var _data:BitmapData;
@@ -18,22 +17,22 @@ class TextureFaceInfo {
 		if (this._data != null) return this._data;
 
 		var result = new BitmapData(Std.int(bound.width), Std.int(bound.height), true, 0x00000000);
-		result.copyPixels(source.bitmapData(), bound, nullPoint);
+		result.copyPixels(source, bound, nullPoint);
 		return this._data = result;
 	}
 
 	private static var nullPoint:Point = new Point(0, 0);
 
-	public function new(source:Texture, bound:Rectangle) {
+	public function new(source:BitmapData, bound:Rectangle = null) {
 		this.source = source;
 		if (bound != null) {
 			this.bound = bound;
 		} else {
-			this._data = source.bitmapData();
+			this._data = source;
 		}
 	}
 
-	inline public static function trimmed(source:Texture, x:Float, y:Float, w:Float, h:Float):TextureFaceInfo {
+	inline public static function trimmed(source:BitmapData, x:Float, y:Float, w:Float, h:Float):TextureFaceInfo {
 		return new TextureFaceInfo(source, new Rectangle(x, y, w, h));
 	}
 
