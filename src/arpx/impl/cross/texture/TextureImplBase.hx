@@ -1,10 +1,9 @@
 package arpx.impl.cross.texture;
 
 import arpx.impl.ArpObjectImplBase;
-import arpx.impl.cross.texture.ITextureImplBase;
 import arpx.structs.IArpParamsRead;
 
-class TextureImplBase extends ArpObjectImplBase implements ITextureImplBase {
+class TextureImplBase extends ArpObjectImplBase {
 
 	public var width(get, never):Int;
 	private function get_width():Int return 0;

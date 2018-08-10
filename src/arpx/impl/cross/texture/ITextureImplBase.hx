@@ -9,4 +9,5 @@ interface ITextureImplBase extends IArpObjectImpl {
 	function widthOf(index:Int):Int;
 	function heightOf(index:Int):Int;
 	function getFaceIndex(params:IArpParamsRead = null):Int;
+	function getFaceData(params:IArpParamsRead = null):TextureFaceData;
 }

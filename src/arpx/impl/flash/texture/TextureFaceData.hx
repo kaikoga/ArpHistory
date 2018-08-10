@@ -6,7 +6,7 @@ import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 
-class TextureFaceImpl {
+class TextureFaceData {
 
 	public var source(default, null):BitmapData;
 	public var bound(default, null):Rectangle;
@@ -32,8 +32,8 @@ class TextureFaceImpl {
 		}
 	}
 
-	inline public function trim(x:Float, y:Float, w:Float, h:Float):TextureFaceImpl {
-		return new TextureFaceImpl(this.source, new Rectangle(x, y, w, h));
+	inline public function trim(x:Float, y:Float, w:Float, h:Float):TextureFaceData {
+		return new TextureFaceData(this.source, new Rectangle(x, y, w, h));
 	}
 
 	public function dispose():Void this.data.dispose();

@@ -3,7 +3,7 @@ package arpx.impl.heaps.texture;
 #if arp_display_backend_heaps
 
 #if flash
-import arpx.impl.heaps.texture.TextureFaceImpl;
+import arpx.impl.heaps.texture.TextureFaceData;
 import flash.display.BitmapData;
 import flash.geom.Rectangle;
 import flash.text.TextFormat;
@@ -37,7 +37,7 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> impl
 		var bitmapData:BitmapData = new BitmapData(2048, 2048, true, 0); // FIXME
 		this.tile = @:privateAccess new Tile(null, 0, 0, bitmapData.width, bitmapData.height);
 		var cursor:BitmapFontDrawCursor = new BitmapFontDrawCursor(bitmapFont, bitmapData.width, bitmapData.height);
-		var faceInfo:TextureFaceImpl = new TextureFaceImpl(this.tile);
+		var faceInfo:TextureFaceData = new TextureFaceData(this.tile);
 		for (char in this.texture.faceList) {
 			this.nextFaceName(char);
 			var charCode:Int = char.charCodeAt(0);

@@ -2,7 +2,7 @@ package arpx.impl.heaps.texture;
 
 #if arp_display_backend_heaps
 
-import arpx.impl.cross.texture.TextureFaceImpl;
+import arpx.impl.cross.texture.TextureFaceData;
 import h2d.Tile;
 import haxe.io.Bytes;
 import haxe.Resource;
@@ -46,8 +46,8 @@ class ResourceTextureImpl extends TextureImplBase implements ITextureImpl {
 		return true;
 	}
 
-	public function getFaceInfo(params:IArpParamsRead = null):TextureFaceImpl {
-		return new TextureFaceImpl(this.value).trim(0, 0, this.texture.width, this.texture.height);
+	public function getFaceData(params:IArpParamsRead = null):TextureFaceData {
+		return new TextureFaceData(this.value).trim(0, 0, this.texture.width, this.texture.height);
 	}
 }
 
