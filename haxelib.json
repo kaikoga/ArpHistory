@@ -1,0 +1,14 @@
+{
+  "name": "arp_hittest",
+  "url" : "https://github.com/kaikoga/ArpHitTest/",
+  "license": "MIT",
+  "tags": ["game"],
+  "description": "Supports ArpEngine with hitbox testing.",
+  "version": "0.1.0",
+  "classPath": "src/",
+  "releasenote": "Initial release.",
+  "contributors": ["kaikoga"],
+  "dependencies": {
+    "arp_support": "0.1.0"
+  }
+}
