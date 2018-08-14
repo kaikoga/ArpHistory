@@ -1,3 +1,4 @@
-samples/**/bin
-samples/**/doc
-samples/**/dump
+/*.zip
+/samples/**/bin
+/samples/**/doc
+/samples/**/dump
