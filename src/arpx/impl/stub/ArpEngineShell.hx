@@ -2,23 +2,13 @@ package arpx.impl.stub;
 
 #if arp_display_backend_stub
 
-import arp.domain.ArpDomain;
+import arpx.impl.cross.ArpEngineShellBase;
 import arpx.impl.stub.display.DisplayContext;
 import arpx.impl.stub.geom.Transform;
 
-class ArpEngineShell {
+class ArpEngineShell extends ArpEngineShellBase {
 
-	public var domain(default, null):ArpDomain;
-
-	private var width:Int;
-	private var height:Int;
-	private var clearColor:UInt;
-
-	public function new(params:ArpEngineParams) {
-		this.domain = params.domain;
-		this.width = params.width;
-		this.height = params.width;
-	}
+	public function new(params:ArpEngineParams) super(params);
 
 	private var _displayContext:DisplayContext;
 
