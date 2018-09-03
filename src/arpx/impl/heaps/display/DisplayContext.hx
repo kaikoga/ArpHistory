@@ -20,21 +20,21 @@ class DisplayContext extends DisplayContextBase implements IDisplayContext {
 	public var height(get, null):Int;
 	private function get_height():Int return _height;
 
-	private var renderContext:RenderContext;
+	private var renderer:RendererImpl;
 
 	public function new(buf:Sprite, width:Int, height:Int, transform:Transform = null, clearColor:UInt = 0) {
 		super(transform, clearColor);
 		this.buf = buf;
 		this._width = width;
 		this._height = height;
-		this.renderContext = new RenderContext(Engine.getCurrent());
+		this.renderer = new RendererImpl(Engine.getCurrent());
 	}
 
 	public function start():Void {
 		this.buf.removeChildren();
-		this.renderContext.start();
+		this.renderer.start();
 	}
-	public function display():Void this.renderContext.display();
+	public function display():Void this.renderer.display();
 
 	private var _workMatrix:Transform = new Transform();
 	public function fillRect(l:Int, t:Int, w:Int, h:Int, color:UInt):Void {
@@ -45,7 +45,7 @@ class DisplayContext extends DisplayContextBase implements IDisplayContext {
 		_workTransform.raw._42 = t;
 		var matrix:Matrix = dupTransform().appendTransform(_workTransform).raw;
 		var tile:Tile = Tile.fromColor(color);
-		this.renderContext.renderTile(matrix, tile);
+		this.renderer.renderTile(matrix, tile);
 		popTransform();
 	}
 
@@ -56,7 +56,7 @@ class DisplayContext extends DisplayContextBase implements IDisplayContext {
 		_workTransform.raw._41 = 0;
 		_workTransform.raw._42 = 0;
 		var matrix:Matrix = dupTransform().appendTransform(_workTransform).raw;
-		this.renderContext.renderTile(matrix, tile, r, g, b, a);
+		this.renderer.renderTile(matrix, tile, r, g, b, a);
 		popTransform();
 	}
 

@@ -15,7 +15,7 @@ import hxsl.Globals;
 import hxsl.RuntimeShader;
 import hxsl.ShaderList;
 
-class RenderContext {
+class RendererImpl {
 
 	var engine:Engine;
 
