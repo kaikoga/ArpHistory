@@ -1,6 +1,7 @@
 package arpx;
 
 import arp.domain.ArpDomain;
+import arpx.impl.cross.display.RenderContext;
 
 typedef ArpEngineParams = {
 	var domain:ArpDomain;
@@ -21,5 +22,5 @@ typedef ArpEngineParams = {
 	@:optional var tick:Float->Void;
 
 	//** Rendering is requested from backend. renderContext is ready, but domain may not be ready.
-	@:optional var render:Void->Void;
+	@:optional var render:RenderContext->Void;
 }

@@ -1,10 +1,19 @@
 package arpx.impl.cross;
 
+import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arp.domain.ArpDomain;
 
 class ArpEngineShellBase {
 
 	public var domain(default, null):ArpDomain;
+
+	public var displayContext(get, never):DisplayContext;
+	private var _displayContext:DisplayContext;
+	public function get_displayContext():DisplayContext {
+		if (this._displayContext != null) return this._displayContext;
+		return this._displayContext = createDisplayContext();
+	}
 
 	private var width:Int;
 	private var height:Int;
@@ -14,7 +23,7 @@ class ArpEngineShellBase {
 	private dynamic function _rawTick(timeslice:Float):Void return;
 	private dynamic function _firstTick(timeslice:Float):Void return;
 	private dynamic function _tick(timeslice:Float):Void return;
-	private dynamic function _render():Void return;
+	private dynamic function _render(context:RenderContext):Void return;
 
 	public function new(params:ArpEngineParams) {
 		this.domain = params.domain;
@@ -29,9 +38,17 @@ class ArpEngineShellBase {
 		if (params.render != null) this._render = params.render;
 	}
 
+	private function createDisplayContext():DisplayContext return null;
+
 	private function domainRawTick(timeslice:Float):Void {
 		this.domain.rawTick.dispatch(timeslice);
 		this._rawTick(timeslice);
+	}
+
+	private function doRender(displayContext:DisplayContext):Void {
+		var renderContext:RenderContext = displayContext.renderContext();
+		this._render(renderContext);
+		renderContext.display();
 	}
 
 	private function onDomainFirstTick(timeslice:Float):Void {

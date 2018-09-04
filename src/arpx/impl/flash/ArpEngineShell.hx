@@ -22,7 +22,7 @@ class ArpEngineShell extends ArpEngineShellBase {
 
 	private function onEnterFrame(event:Event):Void {
 		this.domainRawTick(60 / Lib.current.stage.frameRate);
-		this._render();
+		doRender(this.displayContext);
 	}
 
 	private function onFirstFrame(event:Event):Void {
@@ -30,15 +30,11 @@ class ArpEngineShell extends ArpEngineShellBase {
 		this._start();
 	}
 
-	public var displayContext(get, never):DisplayContext;
-	private var _displayContext:DisplayContext;
-	public function get_displayContext():DisplayContext {
-		if (this._displayContext != null) return this._displayContext;
+	override private function createDisplayContext():DisplayContext {
 		var bitmapData:BitmapData = new BitmapData(this.width, this.height, true, this.clearColor);
 		var bitmap:Bitmap = new Bitmap(bitmapData, PixelSnapping.NEVER, false);
 		Lib.current.addChild(bitmap);
-		this._displayContext = new DisplayContext(bitmapData, new Transform(), this.clearColor);
-		return this._displayContext;
+		return new DisplayContext(bitmapData, new Transform(), this.clearColor);
 	}
 }
 
