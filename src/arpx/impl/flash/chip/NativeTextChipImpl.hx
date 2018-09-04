@@ -7,8 +7,8 @@ import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
 import arpx.chip.NativeTextChip;
 import arpx.impl.ArpObjectImplBase;
-import arpx.impl.flash.display.DisplayContext;
 import arpx.impl.cross.chip.IChipImpl;
+import arpx.impl.cross.display.DisplayContext;
 import arpx.structs.IArpParamsRead;
 
 class NativeTextChipImpl extends ArpObjectImplBase implements IChipImpl {

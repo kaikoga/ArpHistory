@@ -5,7 +5,7 @@ package arpx.impl.sys.chip;
 import arpx.structs.IArpParamsRead;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.chip.IChipImpl;
-import arpx.impl.sys.display.DisplayContext;
+import arpx.impl.cross.display.DisplayContext;
 import arpx.chip.NativeTextChip;
 
 class NativeTextChipImpl extends ArpObjectImplBase implements IChipImpl {

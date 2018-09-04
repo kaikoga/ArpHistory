@@ -5,7 +5,7 @@ package arpx.impl.flash.console;
 import flash.display.BitmapData;
 import arpx.console.Console;
 import arpx.impl.ArpObjectImplBase;
-import arpx.impl.flash.display.DisplayContext;
+import arpx.impl.cross.display.DisplayContext;
 
 class ConsoleImpl extends ArpObjectImplBase implements IConsoleImpl {
 

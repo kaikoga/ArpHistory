@@ -3,8 +3,8 @@ package arpx.impl.sys;
 #if arp_display_backend_sys
 
 import arpx.impl.cross.ArpEngineShellBase;
-import arpx.impl.sys.display.DisplayContext;
-import arpx.impl.sys.geom.Transform;
+import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.geom.Transform;
 
 class ArpEngineShell extends ArpEngineShellBase {
 

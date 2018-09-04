@@ -10,7 +10,7 @@ import hxd.res.FontBuilder;
 import arpx.structs.IArpParamsRead;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.chip.IChipImpl;
-import arpx.impl.heaps.display.DisplayContext;
+import arpx.impl.cross.display.DisplayContext;
 import arpx.chip.NativeTextChip;
 
 class NativeTextChipImpl extends ArpObjectImplBase implements IChipImpl {

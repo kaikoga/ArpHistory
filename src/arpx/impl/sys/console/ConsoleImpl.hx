@@ -3,7 +3,7 @@ package arpx.impl.sys.console;
 #if arp_display_backend_sys
 
 import arpx.impl.ArpObjectImplBase;
-import arpx.impl.sys.display.DisplayContext;
+import arpx.impl.cross.display.DisplayContext;
 import arpx.console.Console;
 
 class ConsoleImpl extends ArpObjectImplBase implements IConsoleImpl {

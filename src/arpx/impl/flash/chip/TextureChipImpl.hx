@@ -8,11 +8,11 @@ import flash.geom.Matrix;
 import flash.geom.Rectangle;
 import arp.domain.ArpHeat;
 import arpx.chip.TextureChip;
+import arpx.impl.cross.chip.IChipImpl;
+import arpx.impl.cross.display.DisplayContext;
 import arpx.impl.cross.geom.PointImpl;
 import arpx.impl.cross.geom.Transform;
-import arpx.impl.flash.display.DisplayContext;
-import arpx.impl.flash.texture.TextureFaceData;
-import arpx.impl.cross.chip.IChipImpl;
+import arpx.impl.cross.texture.TextureFaceData;
 import arpx.structs.IArpParamsRead;
 
 class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {

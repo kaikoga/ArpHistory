@@ -4,7 +4,7 @@ package arpx.impl.stub.chip;
 
 import arpx.structs.IArpParamsRead;
 import arpx.chip.TextureChip;
-import arpx.impl.stub.display.DisplayContext;
+import arpx.impl.cross.display.DisplayContext;
 import arpx.impl.cross.chip.IChipImpl;
 
 class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {

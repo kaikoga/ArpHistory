@@ -6,9 +6,10 @@ import flash.display.BitmapData;
 import flash.geom.Rectangle;
 import arpx.impl.cross.display.DisplayContextBase;
 import arpx.impl.cross.display.IDisplayContext;
+import arpx.impl.cross.display.IRenderContext;
 import arpx.impl.cross.geom.Transform;
 
-class DisplayContext extends DisplayContextBase implements IDisplayContext {
+class DisplayContext extends DisplayContextBase implements IDisplayContext implements IRenderContext {
 
 	public var bitmapData:BitmapData;
 

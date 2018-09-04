@@ -7,9 +7,9 @@ import arp.domain.ArpHeat;
 import arpx.structs.ArpColor;
 import arpx.structs.IArpParamsRead;
 import arpx.chip.TextureChip;
-import arpx.impl.cross.geom.Transform;
-import arpx.impl.heaps.display.DisplayContext;
 import arpx.impl.cross.chip.IChipImpl;
+import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.geom.Transform;
 
 class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {
 

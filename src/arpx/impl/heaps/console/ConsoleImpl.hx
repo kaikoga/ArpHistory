@@ -4,7 +4,7 @@ package arpx.impl.heaps.console;
 
 import h2d.Sprite;
 import arpx.impl.ArpObjectImplBase;
-import arpx.impl.heaps.display.DisplayContext;
+import arpx.impl.cross.display.DisplayContext;
 import arpx.console.Console;
 
 class ConsoleImpl extends ArpObjectImplBase implements IConsoleImpl {
