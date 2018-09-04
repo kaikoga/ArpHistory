@@ -8,7 +8,7 @@ import arpx.structs.ArpColor;
 import arpx.structs.IArpParamsRead;
 import arpx.chip.TextureChip;
 import arpx.impl.cross.chip.IChipImpl;
-import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arpx.impl.cross.geom.Transform;
 
 class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {
@@ -20,7 +20,7 @@ class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {
 		this.chip = chip;
 	}
 
-	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
+	public function render(context:RenderContext, params:IArpParamsRead = null):Void {
 		if (this.chip.arpSlot.heat < ArpHeat.Warm) {
 			this.chip.arpDomain.log("gridchip", 'GridChip.copyChip(): Chip not warm: ${chip.arpSlot.sid}:$params');
 			this.chip.arpDomain.heatLater(this.chip.arpSlot);

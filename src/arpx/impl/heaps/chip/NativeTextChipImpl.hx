@@ -10,7 +10,7 @@ import hxd.res.FontBuilder;
 import arpx.structs.IArpParamsRead;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.chip.IChipImpl;
-import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arpx.chip.NativeTextChip;
 
 class NativeTextChipImpl extends ArpObjectImplBase implements IChipImpl {
@@ -36,7 +36,7 @@ class NativeTextChipImpl extends ArpObjectImplBase implements IChipImpl {
 	}
 
 	private var _workPt:PointImpl = new PointImpl();
-	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
+	public function render(context:RenderContext, params:IArpParamsRead = null):Void {
 		var text:String = null;
 		if (params != null) text = params.get("face");
 		if (text == null) text = "null";

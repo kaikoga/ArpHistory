@@ -1,6 +1,6 @@
 package arpx.impl.cross.mortal;
 
-import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.field.FieldImpl;
 import arpx.mortal.CompositeMortal;
@@ -15,7 +15,7 @@ class CompositeMortalImpl extends ArpObjectImplBase implements IMortalImpl {
 		this.mortal = mortal;
 	}
 
-	public function render(context:DisplayContext):Void {
+	public function render(context:RenderContext):Void {
 		if (mortal.visible) {
 			var pos:ArpPosition = mortal.position;
 			context.dupTransform().appendXY(pos.x, pos.y);

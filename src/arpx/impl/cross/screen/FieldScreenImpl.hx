@@ -1,6 +1,6 @@
 package arpx.impl.cross.screen;
 
-import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arpx.impl.ArpObjectImplBase;
 import arpx.screen.FieldScreen;
 import arpx.structs.ArpPosition;
@@ -16,7 +16,7 @@ class FieldScreenImpl extends ArpObjectImplBase implements IScreenImpl {
 
 	private static var _workPos:ArpPosition = new ArpPosition();
 
-	public function display(context:DisplayContext):Void {
+	public function display(context:RenderContext):Void {
 		if (this.screen.field == null) return;
 
 		var pos:ArpPosition = (this.screen.camera != null) ? this.screen.camera.position : _workPos;

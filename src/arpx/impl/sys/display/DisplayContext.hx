@@ -6,7 +6,7 @@ import arpx.impl.cross.geom.Transform;
 
 @:forward(
 	width, height, clearColor,
-	start, display, transform, dupTransform, popTransform, fillRect
+	renderContext
 )
 abstract DisplayContext(DisplayContextImpl) {
 	inline public function new(width:Int, height:Int, transform:Transform = null, clearColor:UInt = 0xff000000) {

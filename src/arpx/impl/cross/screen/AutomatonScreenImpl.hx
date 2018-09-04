@@ -1,6 +1,6 @@
 package arpx.impl.cross.screen;
 
-import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arpx.impl.ArpObjectImplBase;
 import arpx.screen.AutomatonScreen;
 
@@ -13,7 +13,7 @@ class AutomatonScreenImpl extends ArpObjectImplBase implements IScreenImpl {
 		this.screen = screen;
 	}
 
-	public function display(context:DisplayContext):Void {
+	public function display(context:RenderContext):Void {
 		var c:IScreenImpl = @:privateAccess screen.screen;
 		if (c != null) c.display(context);
 	}

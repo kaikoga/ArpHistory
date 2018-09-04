@@ -32,6 +32,8 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 		workRect.setTo(this.transform.raw.tx + l, this.transform.raw.ty + t, w, h);
 		this.bitmapData.fillRect(workRect, color);
 	}
+
+	inline public function renderContext():RenderContext return new RenderContext(this);
 }
 
 #end

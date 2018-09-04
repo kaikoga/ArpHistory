@@ -1,6 +1,6 @@
 package arpx.impl.cross.hud;
 
-import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arpx.impl.cross.geom.Transform;
 import arpx.hud.ChipMenuHud;
 import arpx.impl.ArpObjectImplBase;
@@ -18,7 +18,7 @@ class ChipMenuHudImpl extends ArpObjectImplBase implements IHudImpl {
 		this.hud = hud;
 	}
 
-	public function render(context:DisplayContext):Void {
+	public function render(context:RenderContext):Void {
 		if (hud.visible && hud.chip != null) {
 			var menu:Menu = hud.menu;
 			var pos:ArpPosition = hud.position;

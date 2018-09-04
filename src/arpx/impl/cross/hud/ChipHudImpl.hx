@@ -1,6 +1,6 @@
 package arpx.impl.cross.hud;
 
-import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arpx.hud.ChipHud;
 import arpx.impl.ArpObjectImplBase;
 import arpx.structs.ArpPosition;
@@ -14,7 +14,7 @@ class ChipHudImpl extends ArpObjectImplBase implements IHudImpl {
 		this.hud = hud;
 	}
 
-	public function render(context:DisplayContext):Void {
+	public function render(context:RenderContext):Void {
 		if (hud.visible && hud.chip != null) {
 			var pos:ArpPosition = hud.position;
 			context.dupTransform().appendXY(pos.x, pos.y);

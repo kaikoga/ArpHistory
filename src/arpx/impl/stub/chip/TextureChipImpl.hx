@@ -4,7 +4,7 @@ package arpx.impl.stub.chip;
 
 import arpx.structs.IArpParamsRead;
 import arpx.chip.TextureChip;
-import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arpx.impl.cross.chip.IChipImpl;
 
 class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {
@@ -16,7 +16,7 @@ class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {
 		this.chip = chip;
 	}
 
-	public function render(context:DisplayContext, params:IArpParamsRead = null):Void return;
+	public function render(context:RenderContext, params:IArpParamsRead = null):Void return;
 }
 
 #end

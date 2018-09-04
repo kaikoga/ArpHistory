@@ -1,6 +1,6 @@
 package arpx.impl.cross.fieldGizmo;
 
-import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arpx.field.Field;
 import arpx.fieldGizmo.HitMortalFieldGizmo;
 import arpx.impl.ArpObjectImplBase;
@@ -15,7 +15,7 @@ class HitMortalFieldGizmoImpl extends ArpObjectImplBase implements IFieldGizmoIm
 		this.fieldGizmo = fieldGizmo;
 	}
 
-	public function render(field:Field, context:DisplayContext):Void {
+	public function render(field:Field, context:RenderContext):Void {
 		if (this.fieldGizmo.visible) {
 			context.fillRect(0, 0, @:privateAccess field.hitField.size, 16, 0xffffffff);
 			for (mortal in field.mortals) {

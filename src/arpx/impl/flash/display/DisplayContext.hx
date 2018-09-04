@@ -9,7 +9,7 @@ import arpx.impl.cross.geom.Transform;
 @:forward(
 	bitmapData,
 	width, height, clearColor,
-	start, display, transform, dupTransform, popTransform, fillRect
+	renderContext
 )
 abstract DisplayContext(DisplayContextImpl) {
 	inline public function new(bitmapData:BitmapData, transform:Transform = null, clearColor:UInt = 0xff000000) {

@@ -1,8 +1,8 @@
 package arpx.impl.cross.mortal;
 
 import arp.impl.IArpObjectImpl;
-import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 
 interface IMortalImpl extends IArpObjectImpl {
-	function render(context:DisplayContext):Void;
+	function render(context:RenderContext):Void;
 }

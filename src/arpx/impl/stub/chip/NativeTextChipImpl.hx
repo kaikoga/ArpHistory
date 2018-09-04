@@ -5,7 +5,7 @@ package arpx.impl.stub.chip;
 import arpx.structs.IArpParamsRead;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.chip.IChipImpl;
-import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arpx.chip.NativeTextChip;
 
 class NativeTextChipImpl extends ArpObjectImplBase implements IChipImpl {
@@ -17,7 +17,7 @@ class NativeTextChipImpl extends ArpObjectImplBase implements IChipImpl {
 		this.chip = chip;
 	}
 
-	public function render(context:DisplayContext, params:IArpParamsRead = null):Void return;
+	public function render(context:RenderContext, params:IArpParamsRead = null):Void return;
 }
 
 #end

@@ -9,7 +9,7 @@ import arpx.impl.cross.geom.Transform;
 @:forward(
 	buf, drawTile,
 	width, height, clearColor,
-	start, display, transform, dupTransform, popTransform, fillRect
+	renderContext
 )
 abstract DisplayContext(DisplayContextImpl) {
 	inline public function new(buf:Sprite, width:Int, height:Int, transform:Transform = null, clearColor:UInt = 0) {

@@ -9,7 +9,7 @@ import flash.geom.Rectangle;
 import arp.domain.ArpHeat;
 import arpx.chip.TextureChip;
 import arpx.impl.cross.chip.IChipImpl;
-import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arpx.impl.cross.geom.PointImpl;
 import arpx.impl.cross.geom.Transform;
 import arpx.impl.cross.texture.TextureFaceData;
@@ -27,7 +27,7 @@ class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {
 	private var _workPt:PointImpl = new PointImpl();
 	private var _workRect:Rectangle = new Rectangle();
 	private var _workMatrix:Matrix = new Matrix();
-	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
+	public function render(context:RenderContext, params:IArpParamsRead = null):Void {
 		if (this.chip.arpSlot.heat < ArpHeat.Warm) {
 			this.chip.arpDomain.log("gridchip", 'GridChip.copyChip(): Chip not warm: ${this}:$params');
 			this.chip.arpDomain.heatLater(this.chip.arpSlot);

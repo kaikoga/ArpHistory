@@ -5,6 +5,7 @@ package arpx.impl.heaps.console;
 import h2d.Sprite;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arpx.console.Console;
 
 class ConsoleImpl extends ArpObjectImplBase implements IConsoleImpl {
@@ -17,8 +18,7 @@ class ConsoleImpl extends ArpObjectImplBase implements IConsoleImpl {
 	}
 
 	public function display(sprite:Sprite):Void {
-		var context:DisplayContext = new DisplayContext(sprite, console.width, console.height);
-		context.start();
+		var context:RenderContext = new DisplayContext(sprite, console.width, console.height).renderContext();
 		this.console.render(context);
 		context.display();
 	}

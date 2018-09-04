@@ -4,6 +4,7 @@ package arpx.impl.sys.console;
 
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arpx.console.Console;
 
 class ConsoleImpl extends ArpObjectImplBase implements IConsoleImpl {
@@ -16,8 +17,7 @@ class ConsoleImpl extends ArpObjectImplBase implements IConsoleImpl {
 	}
 
 	public function display():Void {
-		var context:DisplayContext = new DisplayContext(console.width, console.height);
-		context.start();
+		var context:RenderContext = new DisplayContext(console.width, console.height).renderContext();
 		this.console.render(context);
 		context.display();
 	}

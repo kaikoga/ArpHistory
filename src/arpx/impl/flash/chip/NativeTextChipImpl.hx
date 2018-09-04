@@ -8,7 +8,7 @@ import flash.text.TextFormat;
 import arpx.chip.NativeTextChip;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.chip.IChipImpl;
-import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arpx.structs.IArpParamsRead;
 
 class NativeTextChipImpl extends ArpObjectImplBase implements IChipImpl {
@@ -51,7 +51,7 @@ class NativeTextChipImpl extends ArpObjectImplBase implements IChipImpl {
 		return result;
 	}
 
-	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
+	public function render(context:RenderContext, params:IArpParamsRead = null):Void {
 		this.arpHeatUp();
 		context.dupTransform().appendXY(-2, -2 - this.ascent);
 		var text:String = null;

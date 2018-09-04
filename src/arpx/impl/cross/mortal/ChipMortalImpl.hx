@@ -1,6 +1,6 @@
 package arpx.impl.cross.mortal;
 
-import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arpx.impl.ArpObjectImplBase;
 import arpx.mortal.ChipMortal;
 import arpx.structs.ArpPosition;
@@ -14,7 +14,7 @@ class ChipMortalImpl extends ArpObjectImplBase implements IMortalImpl {
 		this.mortal = mortal;
 	}
 
-	public function render(context:DisplayContext):Void {
+	public function render(context:RenderContext):Void {
 		if (mortal.visible && mortal.chip != null) {
 			var pos:ArpPosition = mortal.position;
 			context.dupTransform().appendXY(pos.x, pos.y);

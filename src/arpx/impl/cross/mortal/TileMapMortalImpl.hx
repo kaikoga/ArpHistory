@@ -1,6 +1,6 @@
 package arpx.impl.cross.mortal;
 
-import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arpx.impl.cross.geom.PointImpl;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.mortal.IMortalImpl;
@@ -19,7 +19,7 @@ class TileMapMortalImpl extends ArpObjectImplBase implements IMortalImpl {
 	}
 
 	private var _workPt:PointImpl = new PointImpl();
-	public function render(context:DisplayContext):Void {
+	public function render(context:RenderContext):Void {
 		if (this.mortal.visible) {
 			var pt:PointImpl = context.transform.asPoint(_workPt);
 			if (pt == null) {

@@ -1,7 +1,7 @@
 package arpx.impl.cross.chip;
 
 import arpx.chip.TileMapChip;
-import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arpx.impl.cross.geom.PointImpl;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.chip.IChipImpl;
@@ -20,7 +20,7 @@ class TileMapChipImpl extends ArpObjectImplBase implements IChipImpl {
 	}
 
 	private var _workPt:PointImpl = new PointImpl();
-	public function render(context:DisplayContext, params:IArpParamsRead = null):Void {
+	public function render(context:RenderContext, params:IArpParamsRead = null):Void {
 		var pt:PointImpl = context.transform.asPoint(_workPt);
 		if (pt == null) {
 			//Do nothing. not supported.

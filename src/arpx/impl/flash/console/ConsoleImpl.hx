@@ -6,6 +6,7 @@ import flash.display.BitmapData;
 import arpx.console.Console;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 
 class ConsoleImpl extends ArpObjectImplBase implements IConsoleImpl {
 
@@ -17,8 +18,7 @@ class ConsoleImpl extends ArpObjectImplBase implements IConsoleImpl {
 	}
 
 	public function display(bitmapData:BitmapData):Void {
-		var context:DisplayContext = new DisplayContext(bitmapData);
-		context.start();
+		var context:RenderContext = new DisplayContext(bitmapData).renderContext();
 		this.console.render(context);
 		context.display();
 	}

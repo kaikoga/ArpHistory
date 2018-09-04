@@ -61,6 +61,7 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 		popTransform();
 	}
 
+	inline public function renderContext():RenderContext return new RenderContext(this);
 }
 
 #end

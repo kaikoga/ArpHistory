@@ -1,7 +1,7 @@
 package arpx.impl.cross.tilemap.legacy;
 
 import arpx.chip.Chip;
-import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arpx.impl.cross.geom.Transform;
 import arpx.structs.ArpParams;
 import arpx.tileMap.TileMap;
@@ -17,7 +17,7 @@ class TileMapRenderer {
 	}
 
 	private static var _workParams:ArpParams = new ArpParams();
-	public function copyArea(context:DisplayContext, gridX:Int, gridY:Int, gridWidth:Int, gridHeight:Int, offsetX:Int, offsetY:Int):Void {
+	public function copyArea(context:RenderContext, gridX:Int, gridY:Int, gridWidth:Int, gridHeight:Int, offsetX:Int, offsetY:Int):Void {
 		var chipWidth:Int = this.chip.chipWidth;
 		var chipHeight:Int = this.chip.chipHeight;
 		var params:ArpParams = _workParams;

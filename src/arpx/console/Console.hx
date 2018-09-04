@@ -5,7 +5,7 @@ import arp.ds.IOmap;
 import arp.task.ITickable;
 import arpx.impl.cross.console.ConsoleImpl;
 import arpx.impl.cross.console.IConsoleImpl;
-import arpx.impl.cross.display.DisplayContext;
+import arpx.impl.cross.display.RenderContext;
 import arpx.input.focus.IFocusNode;
 import arpx.input.Input;
 import arpx.screen.Screen;
@@ -36,7 +36,7 @@ class Console implements IArpObject implements ITickable implements IFocusNode<I
 		for (screen in this.screens) screen.updateFocus(target);
 	}
 
-	public function render(context:DisplayContext):Void {
+	public function render(context:RenderContext):Void {
 		for (screen in this.screens) screen.display(context);
 	}
 }
