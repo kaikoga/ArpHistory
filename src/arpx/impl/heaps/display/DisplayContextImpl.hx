@@ -11,7 +11,7 @@ import arpx.impl.cross.display.IDisplayContext;
 import arpx.impl.cross.display.IRenderContext;
 import arpx.impl.cross.geom.Transform;
 
-class DisplayContext extends DisplayContextBase implements IDisplayContext implements IRenderContext {
+class DisplayContextImpl extends DisplayContextBase implements IDisplayContext implements IRenderContext {
 
 	public var buf(default, null):Sprite;
 	private var _width:Int;

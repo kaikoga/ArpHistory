@@ -1,13 +1,13 @@
-package arpx.impl.stub.display;
+package arpx.impl.sys.display;
 
-#if arp_display_backend_stub
+#if arp_display_backend_sys
 
 import arpx.impl.cross.display.DisplayContextBase;
 import arpx.impl.cross.display.IDisplayContext;
 import arpx.impl.cross.display.IRenderContext;
 import arpx.impl.cross.geom.Transform;
 
-class DisplayContext extends DisplayContextBase implements IDisplayContext implements IRenderContext {
+class DisplayContextImpl extends DisplayContextBase implements IDisplayContext implements IRenderContext {
 
 	private var _width:Int;
 	public var width(get, null):Int;

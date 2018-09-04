@@ -9,9 +9,9 @@ import arpx.impl.cross.display.IDisplayContext;
 import arpx.impl.cross.display.IRenderContext;
 import arpx.impl.cross.geom.Transform;
 
-class DisplayContext extends DisplayContextBase implements IDisplayContext implements IRenderContext {
+class DisplayContextImpl extends DisplayContextBase implements IDisplayContext implements IRenderContext {
 
-	public var bitmapData:BitmapData;
+	public var bitmapData(default, null):BitmapData;
 
 	public var width(get, never):Int;
 	private function get_width():Int return bitmapData.width;
