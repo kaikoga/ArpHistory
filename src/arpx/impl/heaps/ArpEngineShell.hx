@@ -17,9 +17,9 @@ class ArpEngineShell extends ArpEngineShellBase {
 		this.app = new ArpEngineApp(this);
 	}
 
+	public var displayContext(get, never):DisplayContext;
 	private var _displayContext:DisplayContext;
-
-	public function createDisplayContext():DisplayContext {
+	public function get_displayContext():DisplayContext {
 		if (this._displayContext != null) return this._displayContext;
 		this._displayContext = new DisplayContext(this.app.s2d, this.width, this.height, new Transform());
 		return this._displayContext;

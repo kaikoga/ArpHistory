@@ -30,9 +30,9 @@ class ArpEngineShell extends ArpEngineShellBase {
 		this._start();
 	}
 
+	public var displayContext(get, never):DisplayContext;
 	private var _displayContext:DisplayContext;
-
-	public function createDisplayContext():DisplayContext {
+	public function get_displayContext():DisplayContext {
 		if (this._displayContext != null) return this._displayContext;
 		var bitmapData:BitmapData = new BitmapData(this.width, this.height, true, this.clearColor);
 		var bitmap:Bitmap = new Bitmap(bitmapData, PixelSnapping.NEVER, false);
