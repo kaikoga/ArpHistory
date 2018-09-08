@@ -1,6 +1,6 @@
 package arpx.impl.cross.audio;
 
-#if (arp_audio_backend_flash || arp_audio_backend_openfl)
+#if arp_audio_backend_flash
 typedef IAudioImpl = arpx.impl.flash.audio.IAudioImpl;
 #elseif arp_audio_backend_heaps
 typedef IAudioImpl = arpx.impl.heaps.audio.IAudioImpl;

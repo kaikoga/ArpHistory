@@ -1,6 +1,6 @@
 package arpx.impl.cross.display;
 
-#if (arp_display_backend_flash || arp_display_backend_openfl)
+#if arp_display_backend_flash
 typedef RenderContext = arpx.impl.flash.display.RenderContext;
 #elseif arp_display_backend_heaps
 typedef RenderContext = arpx.impl.heaps.display.RenderContext;

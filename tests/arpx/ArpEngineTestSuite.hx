@@ -1,6 +1,6 @@
 package arpx;
 
-#if (arp_backend_flash || arp_backend_openfl)
+#if arp_backend_flash
 import arpx.impl.flash.geom.TransformCase;
 #end
 
@@ -35,7 +35,7 @@ class ArpEngineTestSuite {
 
 		r.load(ArpStructsMacroArpObjectCase);
 
-		#if (arp_backend_flash || arp_backend_openfl)
+		#if arp_backend_flash
 		r.load(TransformCase);
 		#end
 

@@ -1,6 +1,6 @@
 package arpx.impl.cross.console;
 
-#if (arp_display_backend_flash || arp_display_backend_openfl)
+#if arp_display_backend_flash
 typedef IConsoleImpl = arpx.impl.flash.console.IConsoleImpl;
 #elseif arp_display_backend_heaps
 typedef IConsoleImpl = arpx.impl.heaps.console.IConsoleImpl;

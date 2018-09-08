@@ -1,6 +1,6 @@
 package arpx.impl.cross.texture;
 
-#if (arp_display_backend_flash || arp_display_backend_openfl)
+#if arp_display_backend_flash
 typedef ResourceTextureImpl = arpx.impl.flash.texture.ResourceTextureImpl;
 #elseif arp_display_backend_heaps
 typedef ResourceTextureImpl = arpx.impl.heaps.texture.ResourceTextureImpl;

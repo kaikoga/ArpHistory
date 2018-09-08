@@ -1,6 +1,6 @@
 package arpx.impl.cross;
 
-#if (arp_display_backend_flash || arp_display_backend_openfl)
+#if arp_display_backend_flash
 typedef ArpEngineShell = arpx.impl.flash.ArpEngineShell;
 #elseif arp_display_backend_heaps
 typedef ArpEngineShell = arpx.impl.heaps.ArpEngineShell;

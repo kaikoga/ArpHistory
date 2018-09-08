@@ -1,6 +1,6 @@
 package arpx.impl.flash.geom;
 
-#if (arp_display_backend_flash || arp_display_backend_openfl)
+#if arp_display_backend_flash
 
 import arpx.impl.cross.geom.ITransform;
 import arpx.impl.cross.geom.MatrixImpl;

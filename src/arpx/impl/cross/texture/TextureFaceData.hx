@@ -1,6 +1,6 @@
 package arpx.impl.cross.texture;
 
-#if (arp_display_backend_flash || arp_display_backend_openfl)
+#if arp_display_backend_flash
 typedef TextureFaceData = arpx.impl.flash.texture.TextureFaceData;
 #elseif arp_display_backend_heaps
 typedef TextureFaceData = arpx.impl.heaps.texture.TextureFaceData;

@@ -19,7 +19,7 @@ class KeyInputCase {
 		me = domain.obj("input", Input);
 	}
 
-#if (arp_backend_flash || arp_backend_openfl)
+#if arp_backend_flash
 
 	public function testTick():Void {
 		@:privateAccess {

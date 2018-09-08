@@ -1,6 +1,6 @@
 package arpx.impl.cross.input;
 
-#if (arp_input_backend_flash || arp_input_backend_openfl)
+#if arp_input_backend_flash
 typedef IInputImpl = arpx.impl.flash.input.IInputImpl;
 #elseif arp_input_backend_heaps
 typedef IInputImpl = arpx.impl.heaps.input.IInputImpl;

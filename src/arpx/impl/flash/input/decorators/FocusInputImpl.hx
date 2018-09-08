@@ -1,6 +1,6 @@
 package arpx.impl.flash.input.decorators;
 
-#if (arp_input_backend_flash || arp_input_backend_openfl)
+#if arp_input_backend_flash
 
 import flash.events.IEventDispatcher;
 import arpx.impl.ArpObjectImplBase;
