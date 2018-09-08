@@ -91,7 +91,7 @@ class ArpEngineBackend {
 		switch (definedTargets.length) {
 			case 0:
 			case 1: this.target = definedTargets[0];
-			case _: throw 'Compiler flag conflict: Backends cannot coexist: ${definedTargets.join(",")}';
+			case _: throw 'Compiler flag conflict: Backends cannot coexist: ${category}: ${definedTargets.map(t -> t.name).join(",")}';
 		}
 	}
 
