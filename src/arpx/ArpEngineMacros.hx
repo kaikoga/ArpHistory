@@ -18,21 +18,32 @@ class ArpEngineMacros {
 	private function new() {
 		Sys.println('Initializing ArpEngine');
 		var components:Array<ArpEngineBackend> = [];
-		components.push(new ArpEngineBackend("arp_display_backend", ["heaps", "flash", "openfl", "sys", "stub"]));
-		components.push(new ArpEngineBackend("arp_input_backend", ["heaps", "flash", "openfl", "sys", "stub"]));
-		components.push(new ArpEngineBackend("arp_audio_backend", ["heaps", "flash", "openfl", "sys", "stub"]));
-		components.push(new ArpEngineBackend("arp_socket_backend", ["flash", "openfl", "sys", "stub"]));
-		components.push(new ArpEngineBackend("arp_storage_backend", ["flash", "openfl", "sys", "stub"]));
+		components.push(ArpEngineBackend.flat("arp_display_backend", ["heaps", "flash", "openfl", "sys", "stub"]));
+		components.push(ArpEngineBackend.flat("arp_input_backend", ["heaps", "flash", "openfl", "sys", "stub"]));
+		components.push(ArpEngineBackend.flat("arp_audio_backend", ["heaps", "flash", "openfl", "sys", "stub"]));
+		components.push(ArpEngineBackend.flat("arp_socket_backend", ["flash", "openfl", "sys", "stub"]));
+		components.push(ArpEngineBackend.flat("arp_storage_backend", ["flash", "openfl", "sys", "stub"]));
 
-		var root:ArpEngineBackend = new ArpEngineBackend("arp_backend", ["heaps", "flash", "openfl", "sys", "stub"]);
-		var rootTarget:TargetDef = root.guessTarget(null);
+		var root:ArpEngineBackend = ArpEngineBackend.complex("arp_backend", [
+			{ name: "heaps" },
+			{ name: "flash" },
+			{ name: "openfl", selector: _ -> "flash" },
+			{ name: "sys" },
+			{ name: "stub" }
+		]);
+		var rootTarget:Target = root.guessTarget(null);
 
 		for (component in components) component.guessTarget(rootTarget);
 		return;
 	}
 }
 
-class TargetDef {
+typedef TargetDef = {
+	var name:String;
+	@:optional var selector:(categoryName:String)->String;
+}
+
+class Target {
 
 	private var category:String;
 	public var name(default, null):String;
@@ -43,26 +54,37 @@ class TargetDef {
 	public var defineName(get, never):String;
 	private function get_defineName():String return '${category}_${name}';
 
-	public function new(category:String, name:String) {
+	dynamic public function guessSubTargetName(categoryName:String) return name;
+
+	public function new(category:String, name:String, selector:(categoryName:String)->String = null) {
 		this.category = category;
 		this.name = name;
+		if (selector != null) this.guessSubTargetName = selector;
 	}
 }
 
 class ArpEngineBackend {
 
 	private var category:String;
-	private var target:TargetDef;
-	private var targets:Array<TargetDef>;
+	private var target:Target;
+	private var targets:Array<Target>;
 
-	public function new(category:String, targetNames:Array<String>) {
+	private function new(category:String, targets:Array<Target>) {
 		this.category = category;
-		this.targets = targetNames.map(name -> new TargetDef(category, name));
+		this.targets = targets;
 		this.consumeDefines();
 	}
 
+	public static function flat(category:String, targetNames:Array<String>) {
+		return new ArpEngineBackend(category, targetNames.map(name -> new Target(category, name)));
+	}
+
+	public static function complex(category:String, targetDefs:Array<TargetDef>) {
+		return new ArpEngineBackend(category, targetDefs.map(targetDef -> new Target(category, targetDef.name, targetDef.selector)));
+	}
+
 	private function consumeDefines() {
-		var definedTargets:Array<TargetDef> = [];
+		var definedTargets:Array<Target> = [];
 		for (target in this.targets) {
 			if (Context.defined(target.defineName)) definedTargets.push(target);
 		}
@@ -73,29 +95,27 @@ class ArpEngineBackend {
 		}
 	}
 
-	public function guessTarget(rootTarget:TargetDef):TargetDef {
+	private function trySelectTarget(filter:Target->Bool):Target {
+		for (target in targets) {
+			if (filter(target)) return this.target = target;
+		}
+		return null;
+	}
+
+	public function guessTarget(rootTarget:Target):Target {
 		if (this.target != null) {
 			Sys.println('Using ${this.target.prettyName}');
 			return this.target;
 		}
 
 		if (this.target == null && rootTarget != null) {
-			// use root target
-			for (target in targets) {
-				if (target.name == rootTarget.name) {
-					this.target = target;
-					break;
-				}
-			}
+			// use root provided target
+			var provided = rootTarget.guessSubTargetName(this.category);
+			trySelectTarget(target -> target.name == provided);
 		}
 		if (this.target == null) {
 			// use first available target, guess by native defines
-			for (target in targets) {
-				if (Context.defined(target.name)) {
-					this.target = target;
-					break;
-				}
-			}
+			trySelectTarget(target -> Context.defined(target.name));
 		}
 		if (this.target == null) {
 			// use stub
@@ -103,8 +123,8 @@ class ArpEngineBackend {
 		}
 
 		if (this.target != null) {
+			Sys.println('Using ${this.target.prettyName} (auto defined ${target.defineName})');
 			Compiler.define(target.defineName);
-			Sys.println('Using ${this.target.prettyName} (auto)');
 		}
 		return this.target;
 	}
