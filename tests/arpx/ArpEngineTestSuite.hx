@@ -1,7 +1,7 @@
 package arpx;
 
 #if arp_backend_flash
-import arpx.impl.flash.geom.TransformCase;
+import arpx.impl.flash.geom.TransformFlashCase;
 #end
 
 import arpx.macro.ArpStructsMacroArpObjectCase;
@@ -35,8 +35,8 @@ class ArpEngineTestSuite {
 
 		r.load(ArpStructsMacroArpObjectCase);
 
-		#if arp_backend_flash
-		r.load(TransformCase);
+		#if flash
+		r.load(TransformFlashCase);
 		#end
 
 		r.load(ArpEngineComponentsCase);
