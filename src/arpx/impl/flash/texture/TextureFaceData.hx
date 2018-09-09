@@ -8,6 +8,11 @@ import flash.geom.Rectangle;
 
 class TextureFaceData {
 
+	public var width(get, null):Int;
+	inline private function get_width():Int return Std.int(bound.width);
+	public var height(get, null):Int;
+	inline private function get_height():Int return Std.int(bound.height);
+
 	public var source(default, null):BitmapData;
 	public var bound(default, null):Rectangle;
 

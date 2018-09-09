@@ -6,8 +6,8 @@ import arpx.structs.IArpParamsRead;
 interface ITextureImpl extends IArpObjectImpl {
 	var width(get, never):Int;
 	var height(get, never):Int;
-	function widthOf(index:Int):Int;
-	function heightOf(index:Int):Int;
+	function widthOf(params:IArpParamsRead = null):Int;
+	function heightOf(params:IArpParamsRead = null):Int;
 	function getFaceIndex(params:IArpParamsRead = null):Int;
 	function getFaceData(params:IArpParamsRead = null):TextureFaceData;
 }

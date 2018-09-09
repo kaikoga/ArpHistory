@@ -17,11 +17,11 @@ class TextureChip extends Chip {
 	override private function get_chipHeight():Int return this.texture.height;
 
 	override public function chipWidthOf(params:ArpParams):Int {
-		return (params != null) ? this.hasFace(params.get("face")) ? this.chipWidth : 0 : this.chipWidth;
+		return if (params == null) this.chipWidth else this.texture.widthOf(params);
 	}
 
 	override public function chipHeightOf(params:ArpParams):Int {
-		return (params != null) ? this.hasFace(params.get("face")) ? this.chipHeight : 0 : this.chipHeight;
+		return if (params == null) this.chipHeight else this.texture.heightOf(params);
 	}
 
 	override public function hasFace(face:String):Bool return true;

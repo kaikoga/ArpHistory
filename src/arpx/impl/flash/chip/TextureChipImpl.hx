@@ -2,6 +2,7 @@ package arpx.impl.flash.chip;
 
 #if arp_display_backend_flash
 
+import arpx.structs.ArpParams;
 import flash.display.BlendMode;
 import flash.geom.ColorTransform;
 import flash.geom.Matrix;

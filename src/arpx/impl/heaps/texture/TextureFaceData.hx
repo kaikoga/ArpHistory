@@ -4,6 +4,7 @@ package arpx.impl.heaps.texture;
 
 import h2d.Tile;
 
+@:forward(width, height)
 abstract TextureFaceData(Tile) {
 
 	inline public function new(tile:Tile) this = tile;
