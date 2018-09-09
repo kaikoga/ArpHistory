@@ -18,7 +18,7 @@ class ArpEngineShell extends ArpEngineShellBase {
 	}
 
 	override private function createDisplayContext():DisplayContext {
-		return new DisplayContext(this.app.s2d, this.width, this.height, new Transform());
+		return new DisplayContext(this.app.s2d, this.width, this.height, new Transform().reset(this.scaleX, 0, 0, this.scaleY, 0, 0));
 	}
 }
 

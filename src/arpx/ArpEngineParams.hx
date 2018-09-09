@@ -7,6 +7,8 @@ typedef ArpEngineParams = {
 	var domain:ArpDomain;
 	var width:Int;
 	var height:Int;
+	@:optional var scaleX:Null<Float>;
+	@:optional var scaleY:Null<Float>;
 	var clearColor:UInt;
 
 	//** Called once when renderContext is available. domain may not be ready.
