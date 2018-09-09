@@ -39,6 +39,7 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> impl
 			cursor.move(charCode);
 			bitmapFont.drawChar(this._bitmapData, charCode, cursor.x, cursor.y);
 			var bounds:Rectangle = bitmapFont.getBounds(charCode);
+			// FIXME deal with bitmapFont.lineHeight
 			this.pushFaceInfo(faceInfo.trim(cursor.x, cursor.y, bounds.width, bounds.height));
 		}
 		bitmapFont.dispose();

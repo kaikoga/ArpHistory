@@ -21,6 +21,12 @@ class BitmapFont {
 	private var charWidth:Int;
 	private var charHeight:Int;
 
+	private var descent:Int;
+	public var leading(default, null):Int;
+
+	public var lineHeight(get, never):Int;
+	private function get_lineHeight():Int return charHeight + leading;
+
 	private var _workTextField:TextField;
 	private var _workPt:Point= new Point();
 	private var _workMatrix:Matrix = new Matrix();
@@ -42,6 +48,8 @@ class BitmapFont {
 		var metrics:TextLineMetrics = this._workTextField.getLineMetrics(0);
 
 		this.charHeight = (metrics.height > this.minHeight) ? Math.ceil(metrics.height) : this.minHeight;
+		this.descent = Math.ceil(metrics.descent) - 1;
+		this.leading = Math.ceil(metrics.leading);
 		this._workRect.height = this.charHeight;
 	}
 
@@ -59,7 +67,7 @@ class BitmapFont {
 		this.bitmapDataByCharCode[charcode] = bitmapData;
 		var matrix:Matrix = this._workMatrix;
 		matrix.tx = -2; //2 is Flash Player border
-		matrix.ty = -2; //2 is Flash Player border
+		matrix.ty = -2 - this.descent; //2 is Flash Player border
 		bitmapData.draw(this._workTextField, matrix);
 		this.boundsByCharCode[charcode] = new Rectangle(0, 0, width, this.charHeight);
 	}
