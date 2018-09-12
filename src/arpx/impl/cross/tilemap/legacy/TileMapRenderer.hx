@@ -36,13 +36,14 @@ class TileMapRenderer {
 		var transform:Transform = context.dupTransform();
 		transform.setXY(destLeft, destTop);
 		for (i in gridX...gridRight) {
-			transform.setXY(destLeft, destTop);
+			var transform:Transform = context.dupTransform();
 			for (j in gridY...gridBottom) {
 				params.set("index", this.tileMap.getTileIndexAtGrid(i, j));
 				this.chip.render(context, params);
 				transform.prependXY(0, chipHeight);
 			}
-			destLeft += chipWidth;
+			context.popTransform();
+			context.transform.prependXY(chipWidth, 0);
 		}
 		context.popTransform();
 	}

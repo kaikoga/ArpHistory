@@ -40,6 +40,7 @@ class ResourceTextureImpl extends TextureImplBase implements ITextureImpl {
 
 		// private function onLoadComplete(image:Image):Void {
 		this.value = new Image(fileEntry).toTile();
+		// this.value.getTexture().filter = h3d.mat.Data.Filter.Nearest;
 		// this.texture.arpDomain.notifyFor(this.texture);
 		return true;
 	}

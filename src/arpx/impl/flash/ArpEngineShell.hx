@@ -32,11 +32,21 @@ class ArpEngineShell extends ArpEngineShellBase {
 	}
 
 	override private function createDisplayContext():DisplayContext {
+#if true
+		// canvas scaling
 		var bitmapData:BitmapData = new BitmapData(this.width, this.height, true, this.clearColor);
 		var bitmap:Bitmap = new Bitmap(bitmapData, PixelSnapping.NEVER, false);
 		bitmap.transform.matrix = new Matrix(scaleX, 0, 0, scaleY, 0, 0);
 		Lib.current.addChild(bitmap);
 		return new DisplayContext(bitmapData, new Transform(), this.clearColor);
+#else
+		// logical scaling
+		var bitmapData:BitmapData = new BitmapData(Math.ceil(this.width * this.scaleX), Math.ceil(this.height * this.scaleY), true, this.clearColor);
+		var bitmap:Bitmap = new Bitmap(bitmapData, PixelSnapping.NEVER, true);
+		bitmap.transform.matrix = new Matrix();
+		Lib.current.addChild(bitmap);
+		return new DisplayContext(bitmapData, new Transform().reset(scaleX, 0, 0, scaleY, 0, 0), this.clearColor);
+#end
 	}
 }
 

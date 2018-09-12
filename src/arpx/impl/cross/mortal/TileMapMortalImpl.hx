@@ -24,7 +24,8 @@ class TileMapMortalImpl extends ArpObjectImplBase implements IMortalImpl {
 			var pt:PointImpl = context.transform.asPoint(_workPt);
 			if (pt == null) {
 				//Do nothing. not supported.
-				throw "TileMapMortalImpl.render(): scaling TileMap is currently not supported";
+				pt = context.transform.toPoint(_workPt);
+				//throw "TileMapMortalImpl.render(): scaling TileMap is currently not supported";
 			}
 			this.renderer.tileMap = this.mortal.tileMap;
 			this.renderer.chip = this.mortal.chip;

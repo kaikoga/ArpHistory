@@ -20,7 +20,7 @@ class HudScreenImpl extends ArpObjectImplBase implements IScreenImpl {
 		if (!this.screen.visible) return;
 
 		var pos:ArpPosition = (this.screen.camera != null) ? this.screen.camera.position : _workPos;
-		context.dupTransform().setXY(-pos.x, -pos.y);
+		context.dupTransform().prependXY(-pos.x, -pos.y);
 		for (hud in this.screen.huds) hud.render(context);
 		context.popTransform();
 	}
