@@ -12,9 +12,26 @@ class Transform implements ITransform {
 
 	public function new() raw = new MatrixImpl();
 
-	public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):Transform {
+	inline public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):Transform {
 		this.raw.setTo(a, b, c, d, tx, ty);
 		return this;
+	}
+
+	inline public function readData(data:Array<Float>):Transform {
+		if (data.length < 6) return this;
+		this.raw.setTo(data[0], data[1], data[2], data[3], data[4], data[5]);
+		return this;
+	}
+
+	inline public function toData(data:Array<Float> = null):Array<Float> {
+		if (data == null) data = [];
+		data[0] = this.raw.a;
+		data[1] = this.raw.b;
+		data[2] = this.raw.c;
+		data[3] = this.raw.d;
+		data[4] = this.raw.tx;
+		data[5] = this.raw.ty;
+		return data;
 	}
 
 	public function clone():Transform {

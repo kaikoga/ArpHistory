@@ -18,6 +18,21 @@ class Transform implements ITransform {
 		return this;
 	}
 
+	inline public function readData(data:Array<Float>):Transform {
+		return this;
+	}
+
+	inline public function toData(data:Array<Float> = null):Array<Float> {
+		if (data == null) data = [];
+		data[0] = 1;
+		data[1] = 0;
+		data[2] = 0;
+		data[3] = 1;
+		data[4] = 0;
+		data[5] = 0;
+		return data;
+	}
+
 	public function clone():Transform {
 		return new Transform();
 	}

@@ -36,6 +36,23 @@ class Transform implements ITransform {
 		return this;
 	}
 
+	inline public function readData(data:Array<Float>):Transform {
+		if (data.length < 6) return this;
+		this.reset(data[0], data[1], data[2], data[3], data[4], data[5]);
+		return this;
+	}
+
+	inline public function toData(data:Array<Float> = null):Array<Float> {
+		if (data == null) data = [];
+		data[0] = this.raw._11;
+		data[1] = this.raw._21;
+		data[2] = this.raw._12;
+		data[3] = this.raw._22;
+		data[4] = this.raw._41;
+		data[5] = this.raw._42;
+		return data;
+	}
+
 	public function clone():Transform {
 		return new Transform().copyFrom(this);
 	}
@@ -79,7 +96,8 @@ class Transform implements ITransform {
 	}
 
 	public function appendTransform(transform:Transform):Transform {
-		this.raw.multiply(transform.raw, this.raw);
+		// FIXME needs prependTransform
+		this.raw.multiply(this.raw, transform.raw);
 		return this;
 	}
 
