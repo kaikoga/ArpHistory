@@ -61,6 +61,14 @@ class Transform implements ITransform {
 		return this;
 	}
 
+	public function prependTransform(transform:Transform):Transform {
+		return this;
+	}
+
+	public function prependXY(x:Float, y:Float):Transform {
+		return this;
+	}
+
 	public function appendTransform(transform:Transform):Transform {
 		return this;
 	}

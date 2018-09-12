@@ -25,6 +25,8 @@ interface ITransform {
 	function setXY(x:Float, y:Float):Transform;
 
 	// modifies transform.
+	function prependTransform(transform:Transform):Transform;
+	function prependXY(x:Float, y:Float):Transform;
 	function appendTransform(transform:Transform):Transform;
 	function appendXY(x:Float, y:Float):Transform;
 }

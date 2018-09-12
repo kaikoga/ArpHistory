@@ -95,14 +95,23 @@ class Transform implements ITransform {
 		return this;
 	}
 
+	public function prependTransform(transform:Transform):Transform {
+		this.raw.multiply(transform.raw, this.raw);
+		return this;
+	}
+
+	public function prependXY(x:Float, y:Float):Transform {
+		this.raw._41 += x * this.raw._11 + y * this.raw._21;
+		this.raw._42 += x * this.raw._12 + y * this.raw._22;
+		return this;
+	}
+
 	public function appendTransform(transform:Transform):Transform {
-		// FIXME needs prependTransform
 		this.raw.multiply(this.raw, transform.raw);
 		return this;
 	}
 
 	public function appendXY(x:Float, y:Float):Transform {
-		// this.value.translate(x, y);
 		this.raw._41 += x;
 		this.raw._42 += y;
 		return this;
