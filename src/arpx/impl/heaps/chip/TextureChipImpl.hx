@@ -32,7 +32,7 @@ class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {
 
 		var transform:Transform = context.dupTransform();
 		if (this.chip.baseX | this.chip.baseY != 0) {
-			transform.appendXY(-this.chip.baseX, -this.chip.baseY);
+			transform.prependXY(-this.chip.baseX, -this.chip.baseY);
 		}
 		var color:ArpColor = this.chip.color;
 		context.drawTile(faceInfo.tile, color.fred, color.fgreen, color.fblue, color.falpha);

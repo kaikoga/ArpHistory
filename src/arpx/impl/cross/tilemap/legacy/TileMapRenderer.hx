@@ -40,7 +40,7 @@ class TileMapRenderer {
 			for (j in gridY...gridBottom) {
 				params.set("index", this.tileMap.getTileIndexAtGrid(i, j));
 				this.chip.render(context, params);
-				transform.appendXY(0, chipHeight);
+				transform.prependXY(0, chipHeight);
 			}
 			destLeft += chipWidth;
 		}

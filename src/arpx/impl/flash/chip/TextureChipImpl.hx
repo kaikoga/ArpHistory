@@ -40,7 +40,7 @@ class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {
 
 		var transform:Transform = context.dupTransform();
 		if (this.chip.baseX | this.chip.baseY != 0) {
-			transform.appendXY(-this.chip.baseX, -this.chip.baseY);
+			transform.prependXY(-this.chip.baseX, -this.chip.baseY);
 		}
 		var pt:PointImpl = transform.asPoint(_workPt);
 		if (pt != null && this.chip.color == null) {

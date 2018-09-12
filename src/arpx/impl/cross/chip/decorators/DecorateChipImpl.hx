@@ -30,7 +30,7 @@ class DecorateChipImpl extends ArpObjectImplBase implements IChipImpl {
 		if (this.chip.paramsOp != null) {
 			p = this.chip.paramsOp.filter(p);
 		}
-		context.dupTransform().appendTransform(_workTransform.reset(chip.a, chip.b, chip.c, chip.d, chip.x, chip.y));
+		context.dupTransform().prependTransform(_workTransform.reset(chip.a, chip.b, chip.c, chip.d, chip.x, chip.y));
 		this.chip.chip.render(context, p);
 		context.popTransform();
 	}

@@ -44,7 +44,7 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 		_workTransform.raw._22 = h;
 		_workTransform.raw._41 = l;
 		_workTransform.raw._42 = t;
-		var matrix:Matrix = dupTransform().appendTransform(_workTransform).raw;
+		var matrix:Matrix = dupTransform().prependTransform(_workTransform).raw;
 		var tile:Tile = Tile.fromColor(color);
 		this.renderer.renderTile(matrix, tile);
 		popTransform();
@@ -56,7 +56,7 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 		_workTransform.raw._22 = tile.height;
 		_workTransform.raw._41 = 0;
 		_workTransform.raw._42 = 0;
-		var matrix:Matrix = dupTransform().appendTransform(_workTransform).raw;
+		var matrix:Matrix = dupTransform().prependTransform(_workTransform).raw;
 		this.renderer.renderTile(matrix, tile, r, g, b, a);
 		popTransform();
 	}

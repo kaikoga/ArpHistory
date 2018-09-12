@@ -53,7 +53,7 @@ class NativeTextChipImpl extends ArpObjectImplBase implements IChipImpl {
 
 	public function render(context:RenderContext, params:IArpParamsRead = null):Void {
 		this.arpHeatUp();
-		context.dupTransform().appendXY(-2, -2 - this.ascent);
+		context.dupTransform().prependXY(-2, -2 - this.ascent);
 		var text:String = null;
 		if (params != null) text = params.get("face");
 		if (text == null) text = "null";
