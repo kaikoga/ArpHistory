@@ -2,7 +2,7 @@ package arpx.impl.cross.chip.decorators;
 
 import arpx.chip.decorators.DecorateChip;
 import arpx.impl.cross.display.RenderContext;
-import arpx.impl.cross.geom.Transform;
+import arpx.impl.cross.geom.ArpTransform;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.chip.IChipImpl;
 import arpx.structs.IArpParamsRead;
@@ -24,7 +24,7 @@ class DecorateChipImpl extends ArpObjectImplBase implements IChipImpl {
 		return true;
 	}
 
-	private static var _workTransform:Transform = new Transform();
+	private static var _workTransform:ArpTransform = new ArpTransform();
 	public function render(context:RenderContext, params:IArpParamsRead = null):Void {
 		var p:IArpParamsRead = params;
 		if (this.chip.paramsOp != null) {

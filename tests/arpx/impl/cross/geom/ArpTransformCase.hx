@@ -4,17 +4,17 @@ import arp.testParams.PersistIoProviders.IPersistIoProvider;
 import arp.seed.ArpSeed;
 import picotest.PicoAssert.*;
 
-class TransformCase {
+class ArpTransformCase {
 
 	private var provider:IPersistIoProvider;
 
-	var me:Transform;
+	var me:ArpTransform;
 
 	private var data(get, never):Array<Float>;
 	private function get_data():Array<Float> return me.toData();
 
-	private var newMe(get, never):Transform;
-	private function get_newMe():Transform return new Transform().reset(1.0, 0.0, 0.0, 2.0, 300.0, 400.0);
+	private var newMe(get, never):ArpTransform;
+	private function get_newMe():ArpTransform return new ArpTransform().reset(1.0, 0.0, 0.0, 2.0, 300.0, 400.0);
 
 	@Parameter
 	public function setup(provider:IPersistIoProvider):Void {
@@ -35,7 +35,7 @@ class TransformCase {
 
 	public function testPersist():Void {
 		me.writeSelf(provider.output);
-		var other:Transform = new Transform();
+		var other:ArpTransform = new ArpTransform();
 		other.readSelf(provider.input);
 		assertMatch(me.toData(), other.toData());
 	}
@@ -56,14 +56,14 @@ class TransformCase {
 	}
 
 	public function testClone() {
-		var other:Transform = me.clone();
+		var other:ArpTransform = me.clone();
 		var data:Array<Float> = other.toData();
 		assertNotEquals(me, other);
 		assertMatch([1.0, 0.0, 0.0, 2.0, 300.0, 400.0], data);
 	}
 
 	public function testCopyFrom() {
-		var other:Transform = new Transform();
+		var other:ArpTransform = new ArpTransform();
 		var data:Array<Float> = other.copyFrom(me).toData();
 		assertMatch([1.0, 0.0, 0.0, 2.0, 300.0, 400.0], data);
 	}
@@ -76,22 +76,22 @@ class TransformCase {
 	public function testPrependXY() {
 		me.prependXY(256.0, 512.0);
 		assertMatch([1.0, 0.0, 0.0, 2.0, 556.0, 1424.0], data);
-		assertMatch(newMe.prependTransform(new Transform().reset(1.0, 0.0, 0.0, 1.0, 256.0, 512.0)).toData(), data);
+		assertMatch(newMe.prependTransform(new ArpTransform().reset(1.0, 0.0, 0.0, 1.0, 256.0, 512.0)).toData(), data);
 	}
 
 	public function testPrependTransformSimple() {
-		me.prependTransform(new Transform().reset(3.0, 0.0, 0.0, 1.0, 10.0, 20.0));
+		me.prependTransform(new ArpTransform().reset(3.0, 0.0, 0.0, 1.0, 10.0, 20.0));
 		assertMatch([3.0, 0.0, 0.0, 2.0, 310.0, 440.0], data);
 	}
 
 	public function testAppendXY() {
 		me.appendXY(256.0, 512.0);
 		assertMatch([1.0, 0.0, 0.0, 2.0, 556.0, 912.0], data);
-		assertMatch(newMe.appendTransform(new Transform().reset(1.0, 0.0, 0.0, 1.0, 256.0, 512.0)).toData(), data);
+		assertMatch(newMe.appendTransform(new ArpTransform().reset(1.0, 0.0, 0.0, 1.0, 256.0, 512.0)).toData(), data);
 	}
 
 	public function testAppendTransformSimple() {
-		me.appendTransform(new Transform().reset(3.0, 0.0, 0.0, 1.0, 10.0, 20.0));
+		me.appendTransform(new ArpTransform().reset(3.0, 0.0, 0.0, 1.0, 10.0, 20.0));
 		assertMatch([3.0, 0.0, 0.0, 2.0, 910.0, 420.0], data);
 	}
 }

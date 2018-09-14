@@ -6,7 +6,7 @@ import hxd.App;
 
 import arpx.impl.cross.ArpEngineShellBase;
 import arpx.impl.cross.display.DisplayContext;
-import arpx.impl.cross.geom.Transform;
+import arpx.impl.cross.geom.ArpTransform;
 
 class ArpEngineShell extends ArpEngineShellBase {
 
@@ -18,7 +18,7 @@ class ArpEngineShell extends ArpEngineShellBase {
 	}
 
 	override private function createDisplayContext():DisplayContext {
-		return new DisplayContext(this.app.s2d, this.width, this.height, new Transform().reset(this.scaleX, 0, 0, this.scaleY, 0, 0));
+		return new DisplayContext(this.app.s2d, this.width, this.height, new ArpTransform().reset(this.scaleX, 0, 0, this.scaleY, 0, 0));
 	}
 }
 

@@ -6,32 +6,32 @@ import arp.domain.IArpStruct;
 import arp.persistable.IPersistOutput;
 import arp.persistable.IPersistInput;
 import arp.seed.ArpSeed;
-import arpx.impl.cross.geom.macro.TransformMacros;
-import arpx.impl.cross.geom.ITransform;
+import arpx.impl.cross.geom.macro.ArpTransformMacros;
+import arpx.impl.cross.geom.IArpTransform;
 import arpx.impl.cross.geom.MatrixImpl;
 import arpx.impl.cross.geom.PointImpl;
 
 @:arpStruct("Transform")
-class Transform implements ITransform implements IArpStruct {
+class ArpTransform implements IArpTransform implements IArpStruct {
 
 	public var raw(default, null):MatrixImpl;
 
 	public function new() raw = new MatrixImpl();
 
-	inline public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):Transform {
+	inline public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):ArpTransform {
 		this.raw.setTo(a, b, c, d, tx, ty);
 		return this;
 	}
 
-	public function initWithSeed(seed:ArpSeed):Transform TransformMacros.initWithSeed(seed);
+	public function initWithSeed(seed:ArpSeed):ArpTransform ArpTransformMacros.initWithSeed(seed);
 
-	public function initWithString(definition:String, getUnit:String->Float):Transform TransformMacros.initWithString(definition, getUnit);
+	public function initWithString(definition:String, getUnit:String->Float):ArpTransform ArpTransformMacros.initWithString(definition, getUnit);
 
-	public function readSelf(input:IPersistInput):Void TransformMacros.readSelf(input);
+	public function readSelf(input:IPersistInput):Void ArpTransformMacros.readSelf(input);
 
-	public function writeSelf(output:IPersistOutput):Void TransformMacros.writeSelf(output);
+	public function writeSelf(output:IPersistOutput):Void ArpTransformMacros.writeSelf(output);
 
-	inline public function readData(data:Array<Float>):Transform {
+	inline public function readData(data:Array<Float>):ArpTransform {
 		if (data.length < 6) return this;
 		this.raw.setTo(data[0], data[1], data[2], data[3], data[4], data[5]);
 		return this;
@@ -48,21 +48,21 @@ class Transform implements ITransform implements IArpStruct {
 		return data;
 	}
 
-	public function clone():Transform {
-		return new Transform().copyFrom(this);
+	public function clone():ArpTransform {
+		return new ArpTransform().copyFrom(this);
 	}
 
-	public function copyFrom(source:Transform):Transform {
+	public function copyFrom(source:ArpTransform):ArpTransform {
 		this.raw.copyFrom(source.raw);
 		return this;
 	}
 
-	public function readPoint(pt:PointImpl):Transform {
+	public function readPoint(pt:PointImpl):ArpTransform {
 		this.raw.setTo(1, 0, 0, 1, pt.x, pt.y);
 		return this;
 	}
 
-	public function readMatrix(matrix:MatrixImpl):Transform {
+	public function readMatrix(matrix:MatrixImpl):ArpTransform {
 		this.raw.copyFrom(matrix);
 		return this;
 	}
@@ -84,30 +84,30 @@ class Transform implements ITransform implements IArpStruct {
 		return setOrAllocPointImpl(this.raw.tx, this.raw.ty, pt);
 	}
 
-	public function setXY(x:Float, y:Float):Transform {
+	public function setXY(x:Float, y:Float):ArpTransform {
 		this.raw.tx = x;
 		this.raw.ty = y;
 		return this;
 	}
 
-	public function prependTransform(transform:Transform):Transform {
+	public function prependTransform(transform:ArpTransform):ArpTransform {
 		var matrix:MatrixImpl = transform.raw.clone();
 		matrix.concat(this.raw);
 		this.raw = matrix;
 		return this;
 	}
 
-	public function prependXY(x:Float, y:Float):Transform {
+	public function prependXY(x:Float, y:Float):ArpTransform {
 		this.raw.translate(x * this.raw.a + y * this.raw.c, x * this.raw.b + y * this.raw.d);
 		return this;
 	}
 
-	public function appendTransform(transform:Transform):Transform {
+	public function appendTransform(transform:ArpTransform):ArpTransform {
 		this.raw.concat(transform.raw);
 		return this;
 	}
 
-	public function appendXY(x:Float, y:Float):Transform {
+	public function appendXY(x:Float, y:Float):ArpTransform {
 		this.raw.translate(x, y);
 		return this;
 	}

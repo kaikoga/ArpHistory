@@ -5,7 +5,7 @@ import arpx.chip.stringChip.StringChipStringIterator;
 import arpx.chip.StringChip;
 import arpx.impl.cross.display.RenderContext;
 import arpx.impl.cross.geom.PointImpl;
-import arpx.impl.cross.geom.Transform;
+import arpx.impl.cross.geom.ArpTransform;
 import arpx.impl.ArpObjectImplBase;
 import arpx.structs.IArpParamsRead;
 
@@ -22,7 +22,7 @@ class StringChipImpl extends ArpObjectImplBase implements IChipImpl {
 	public function render(context:RenderContext, params:IArpParamsRead = null):Void {
 		var pt:PointImpl = context.transform.toPoint(_workPt);
 		var cursor:StringChipDrawCursor = new StringChipDrawCursor(pt.x, pt.y, params); // FIXME
-		var transform:Transform = context.dupTransform();
+		var transform:ArpTransform = context.dupTransform();
 		for (char in new StringChipStringIterator(params.get("face"))) {
 			params = cursor.move(char, this.chip, this.chip.chip);
 			if (params != null) {

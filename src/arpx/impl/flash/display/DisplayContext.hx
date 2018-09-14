@@ -4,7 +4,7 @@ package arpx.impl.flash.display;
 
 import flash.display.BitmapData;
 
-import arpx.impl.cross.geom.Transform;
+import arpx.impl.cross.geom.ArpTransform;
 
 @:forward(
 	bitmapData,
@@ -12,7 +12,7 @@ import arpx.impl.cross.geom.Transform;
 	renderContext
 )
 abstract DisplayContext(DisplayContextImpl) {
-	inline public function new(bitmapData:BitmapData, transform:Transform = null, clearColor:UInt = 0xff000000) {
+	inline public function new(bitmapData:BitmapData, transform:ArpTransform = null, clearColor:UInt = 0xff000000) {
 		this = new DisplayContextImpl(bitmapData, transform, clearColor);
 	}
 }

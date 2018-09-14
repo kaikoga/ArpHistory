@@ -7,12 +7,12 @@ import arp.persistable.IPersistInput;
 import arp.persistable.IPersistOutput;
 import arp.seed.ArpSeed;
 
-import arpx.impl.cross.geom.ITransform;
+import arpx.impl.cross.geom.IArpTransform;
 import arpx.impl.cross.geom.PointImpl;
 import arpx.impl.cross.geom.MatrixImpl;
 
 @:arpStruct("Transform")
-class Transform implements ITransform implements IArpStruct {
+class ArpTransform implements IArpTransform implements IArpStruct {
 
 	public var raw(default, null):MatrixImpl;
 
@@ -20,19 +20,19 @@ class Transform implements ITransform implements IArpStruct {
 		this.raw = new MatrixImpl();
 	}
 
-	public function initWithSeed(seed:ArpSeed):Transform return this;
+	public function initWithSeed(seed:ArpSeed):ArpTransform return this;
 
-	public function initWithString(definition:String, getUnit:String->Float):Transform return this;
+	public function initWithString(definition:String, getUnit:String->Float):ArpTransform return this;
 
 	public function readSelf(input:IPersistInput):Void return;
 
 	public function writeSelf(output:IPersistOutput):Void return;
 
-	inline public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):Transform {
+	inline public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):ArpTransform {
 		return this;
 	}
 
-	inline public function readData(data:Array<Float>):Transform {
+	inline public function readData(data:Array<Float>):ArpTransform {
 		return this;
 	}
 
@@ -47,19 +47,19 @@ class Transform implements ITransform implements IArpStruct {
 		return data;
 	}
 
-	public function clone():Transform {
-		return new Transform();
+	public function clone():ArpTransform {
+		return new ArpTransform();
 	}
 
-	public function copyFrom(source:Transform):Transform {
+	public function copyFrom(source:ArpTransform):ArpTransform {
 		return this;
 	}
 
-	public function readPoint(pt:PointImpl):Transform {
+	public function readPoint(pt:PointImpl):ArpTransform {
 		return this;
 	}
 
-	public function readMatrix(matrix:MatrixImpl):Transform {
+	public function readMatrix(matrix:MatrixImpl):ArpTransform {
 		return this;
 	}
 
@@ -71,23 +71,23 @@ class Transform implements ITransform implements IArpStruct {
 		return new PointImpl();
 	}
 
-	public function setXY(x:Float, y:Float):Transform {
+	public function setXY(x:Float, y:Float):ArpTransform {
 		return this;
 	}
 
-	public function prependTransform(transform:Transform):Transform {
+	public function prependTransform(transform:ArpTransform):ArpTransform {
 		return this;
 	}
 
-	public function prependXY(x:Float, y:Float):Transform {
+	public function prependXY(x:Float, y:Float):ArpTransform {
 		return this;
 	}
 
-	public function appendTransform(transform:Transform):Transform {
+	public function appendTransform(transform:ArpTransform):ArpTransform {
 		return this;
 	}
 
-	public function appendXY(x:Float, y:Float):Transform {
+	public function appendXY(x:Float, y:Float):ArpTransform {
 		return this;
 	}
 }

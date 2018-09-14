@@ -1,7 +1,7 @@
 package arpx.impl.cross.hud;
 
 import arpx.impl.cross.display.RenderContext;
-import arpx.impl.cross.geom.Transform;
+import arpx.impl.cross.geom.ArpTransform;
 import arpx.hud.ChipMenuHud;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.hud.IHudImpl;
@@ -23,7 +23,7 @@ class ChipMenuHudImpl extends ArpObjectImplBase implements IHudImpl {
 			var menu:Menu = hud.menu;
 			var pos:ArpPosition = hud.position;
 			var dPos:ArpPosition = hud.dPosition;
-			var transform:Transform = context.dupTransform().prependXY(pos.x, pos.y);
+			var transform:ArpTransform = context.dupTransform().prependXY(pos.x, pos.y);
 			var param:ArpParams = new ArpParams();
 			var index:Int = 0;
 			for (item in menu.menuItems) {

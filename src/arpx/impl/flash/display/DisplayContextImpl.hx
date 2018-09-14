@@ -7,7 +7,7 @@ import flash.geom.Rectangle;
 import arpx.impl.cross.display.DisplayContextBase;
 import arpx.impl.cross.display.IDisplayContext;
 import arpx.impl.cross.display.IRenderContext;
-import arpx.impl.cross.geom.Transform;
+import arpx.impl.cross.geom.ArpTransform;
 
 class DisplayContextImpl extends DisplayContextBase implements IDisplayContext implements IRenderContext {
 
@@ -18,7 +18,7 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 	public var height(get, never):Int;
 	private function get_height():Int return bitmapData.height;
 
-	public function new(bitmapData:BitmapData, transform:Transform = null, clearColor:UInt = 0xff000000) {
+	public function new(bitmapData:BitmapData, transform:ArpTransform = null, clearColor:UInt = 0xff000000) {
 		super(transform, clearColor);
 		this.bitmapData = bitmapData;
 	}

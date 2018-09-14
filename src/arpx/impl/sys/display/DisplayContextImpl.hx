@@ -5,7 +5,7 @@ package arpx.impl.sys.display;
 import arpx.impl.cross.display.DisplayContextBase;
 import arpx.impl.cross.display.IDisplayContext;
 import arpx.impl.cross.display.IRenderContext;
-import arpx.impl.cross.geom.Transform;
+import arpx.impl.cross.geom.ArpTransform;
 
 class DisplayContextImpl extends DisplayContextBase implements IDisplayContext implements IRenderContext {
 
@@ -16,7 +16,7 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 	public var height(get, null):Int;
 	private function get_height():Int return _height;
 
-	public function new(width:Int, height:Int, transform:Transform = null, clearColor:UInt = 0) {
+	public function new(width:Int, height:Int, transform:ArpTransform = null, clearColor:UInt = 0) {
 		super(transform, clearColor);
 		this._width = width;
 		this._height = height;

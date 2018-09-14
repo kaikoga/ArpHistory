@@ -7,9 +7,9 @@ import flash.geom.Point;
 
 import picotest.PicoAssert.*;
 
-class TransformFlashCase {
+class ArpTransformFlashCase {
 
-	var me:Transform = new Transform().reset(1.0, 0.0, 0.0, 2.0, 300.0, 400.0);
+	var me:ArpTransform = new ArpTransform().reset(1.0, 0.0, 0.0, 2.0, 300.0, 400.0);
 
 	public function setup() {
 	}

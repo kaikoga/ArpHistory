@@ -4,14 +4,14 @@ package arpx.impl.stub;
 
 import arpx.impl.cross.ArpEngineShellBase;
 import arpx.impl.cross.display.DisplayContext;
-import arpx.impl.cross.geom.Transform;
+import arpx.impl.cross.geom.ArpTransform;
 
 class ArpEngineShell extends ArpEngineShellBase {
 
 	public function new(params:ArpEngineParams) super(params);
 
 	override private function createDisplayContext():DisplayContext {
-		return new DisplayContext(this.width, this.height, new Transform(), this.clearColor);
+		return new DisplayContext(this.width, this.height, new ArpTransform(), this.clearColor);
 	}
 }
 

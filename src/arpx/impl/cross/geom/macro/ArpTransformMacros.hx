@@ -6,9 +6,9 @@ import arp.seed.ArpSeed;
 import arp.persistable.IPersistOutput;
 import arp.persistable.IPersistInput;
 
-class TransformMacros {
+class ArpTransformMacros {
 
-	macro public static function initWithSeed(seed:ExprOf<ArpSeed>):ExprOf<Transform> {
+	macro public static function initWithSeed(seed:ExprOf<ArpSeed>):ExprOf<ArpTransform> {
 		return macro @:mergeBlock {
 			if (seed == null) return this;
 			if (seed.isSimple) return this.initWithString(seed.value, seed.env.getUnit);
@@ -33,7 +33,7 @@ class TransformMacros {
 		}
 	}
 
-	macro public static function initWithString(definition:ExprOf<String>, getUnit:ExprOf<String->Float>):ExprOf<Transform> {
+	macro public static function initWithString(definition:ExprOf<String>, getUnit:ExprOf<String->Float>):ExprOf<ArpTransform> {
 		return macro @:mergeBlock {
 			if (definition == null) return this;
 			var array:Array<String> = ~/[;,]/g.split(definition);
@@ -63,12 +63,14 @@ class TransformMacros {
 
 	macro public static function writeSelf(output:ExprOf<IPersistOutput>):Expr {
 		return macro @:mergeBlock {
-			output.writeDouble("xx", this.raw.a);
-			output.writeDouble("yx", this.raw.b);
-			output.writeDouble("xy", this.raw.c);
-			output.writeDouble("yy", this.raw.d);
-			output.writeDouble("tx", this.raw.tx);
-			output.writeDouble("ty", this.raw.ty);
+			// FIXME
+			var array:Array<Float> = this.toData();
+			output.writeDouble("xx", array[0]);
+			output.writeDouble("yx", array[1]);
+			output.writeDouble("xy", array[2]);
+			output.writeDouble("yy", array[3]);
+			output.writeDouble("tx", array[4]);
+			output.writeDouble("ty", array[5]);
 		}
 	}
 }

@@ -12,7 +12,7 @@ import arpx.chip.TextureChip;
 import arpx.impl.cross.chip.IChipImpl;
 import arpx.impl.cross.display.RenderContext;
 import arpx.impl.cross.geom.PointImpl;
-import arpx.impl.cross.geom.Transform;
+import arpx.impl.cross.geom.ArpTransform;
 import arpx.impl.cross.texture.TextureFaceData;
 import arpx.structs.IArpParamsRead;
 
@@ -38,7 +38,7 @@ class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {
 		var faceInfo:TextureFaceData = this.chip.texture.getFaceData(params);
 		if (faceInfo == null) return;
 
-		var transform:Transform = context.dupTransform();
+		var transform:ArpTransform = context.dupTransform();
 		if (this.chip.baseX | this.chip.baseY != 0) {
 			transform.prependXY(-this.chip.baseX, -this.chip.baseY);
 		}

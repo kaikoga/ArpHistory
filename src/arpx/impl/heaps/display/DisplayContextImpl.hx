@@ -9,7 +9,7 @@ import h3d.Matrix;
 import arpx.impl.cross.display.DisplayContextBase;
 import arpx.impl.cross.display.IDisplayContext;
 import arpx.impl.cross.display.IRenderContext;
-import arpx.impl.cross.geom.Transform;
+import arpx.impl.cross.geom.ArpTransform;
 
 class DisplayContextImpl extends DisplayContextBase implements IDisplayContext implements IRenderContext {
 
@@ -23,7 +23,7 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 
 	private var renderer:RendererImpl;
 
-	public function new(buf:Sprite, width:Int, height:Int, transform:Transform = null, clearColor:UInt = 0) {
+	public function new(buf:Sprite, width:Int, height:Int, transform:ArpTransform = null, clearColor:UInt = 0) {
 		super(transform, clearColor);
 		this.buf = buf;
 		this._width = width;
@@ -37,9 +37,9 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 	}
 	public function display():Void this.renderer.display();
 
-	private var _workMatrix:Transform = new Transform();
+	private var _workMatrix:ArpTransform = new ArpTransform();
 	public function fillRect(l:Int, t:Int, w:Int, h:Int, color:UInt):Void {
-		var _workTransform:Transform = _workMatrix;
+		var _workTransform:ArpTransform = _workMatrix;
 		_workTransform.raw._11 = w;
 		_workTransform.raw._22 = h;
 		_workTransform.raw._41 = l;
@@ -51,7 +51,7 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 	}
 
 	public function drawTile(tile:Tile, r:Float = 1., g:Float = 1., b:Float = 1., a:Float = 1.):Void {
-		var _workTransform:Transform = _workMatrix;
+		var _workTransform:ArpTransform = _workMatrix;
 		_workTransform.raw._11 = tile.width;
 		_workTransform.raw._22 = tile.height;
 		_workTransform.raw._41 = 0;

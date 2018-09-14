@@ -2,7 +2,7 @@ package arpx.impl.cross.tilemap.legacy;
 
 import arpx.chip.Chip;
 import arpx.impl.cross.display.RenderContext;
-import arpx.impl.cross.geom.Transform;
+import arpx.impl.cross.geom.ArpTransform;
 import arpx.structs.ArpParams;
 import arpx.tileMap.TileMap;
 
@@ -33,10 +33,10 @@ class TileMapRenderer {
 		}
 		var destLeft:Int = offsetX + chipWidth * gridX;
 		var destTop:Int = offsetY + chipHeight * gridY;
-		var transform:Transform = context.dupTransform();
+		var transform:ArpTransform = context.dupTransform();
 		transform.setXY(destLeft, destTop);
 		for (i in gridX...gridRight) {
-			var transform:Transform = context.dupTransform();
+			var transform:ArpTransform = context.dupTransform();
 			for (j in gridY...gridBottom) {
 				params.set("index", this.tileMap.getTileIndexAtGrid(i, j));
 				this.chip.render(context, params);

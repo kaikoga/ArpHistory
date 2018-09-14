@@ -4,7 +4,7 @@ package arpx.impl.flash;
 
 import flash.geom.Matrix;
 import arpx.impl.cross.display.DisplayContext;
-import arpx.impl.cross.geom.Transform;
+import arpx.impl.cross.geom.ArpTransform;
 import arpx.impl.cross.ArpEngineShellBase;
 
 import flash.Lib;
@@ -38,7 +38,7 @@ class ArpEngineShell extends ArpEngineShellBase {
 		var bitmap:Bitmap = new Bitmap(bitmapData, PixelSnapping.NEVER, false);
 		bitmap.transform.matrix = new Matrix(scaleX, 0, 0, scaleY, 0, 0);
 		Lib.current.addChild(bitmap);
-		return new DisplayContext(bitmapData, new Transform(), this.clearColor);
+		return new DisplayContext(bitmapData, new ArpTransform(), this.clearColor);
 #else
 		// logical scaling
 		var bitmapData:BitmapData = new BitmapData(Math.ceil(this.width * this.scaleX), Math.ceil(this.height * this.scaleY), true, this.clearColor);

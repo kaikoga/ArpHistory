@@ -4,7 +4,7 @@ package arpx.impl.heaps.display;
 
 import h2d.Sprite;
 
-import arpx.impl.cross.geom.Transform;
+import arpx.impl.cross.geom.ArpTransform;
 
 @:forward(
 	buf, drawTile,
@@ -12,7 +12,7 @@ import arpx.impl.cross.geom.Transform;
 	renderContext
 )
 abstract DisplayContext(DisplayContextImpl) {
-	inline public function new(buf:Sprite, width:Int, height:Int, transform:Transform = null, clearColor:UInt = 0) {
+	inline public function new(buf:Sprite, width:Int, height:Int, transform:ArpTransform = null, clearColor:UInt = 0) {
 		this = new DisplayContextImpl(buf, width, height, transform, clearColor);
 	}
 }
