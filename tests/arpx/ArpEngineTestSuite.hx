@@ -36,7 +36,7 @@ class ArpEngineTestSuite {
 
 		r.load(ArpStructsMacroArpObjectCase);
 
-		r.load(TransformCase);
+		r.load(TransformCase, persistIoProvider());
 
 		#if arp_display_backend_flash
 		r.load(TransformFlashCase);

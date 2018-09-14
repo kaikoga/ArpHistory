@@ -21,12 +21,12 @@ class TransformMacros {
 			var ty:Float = 0.0;
 			for (child in seed) {
 				switch (child.typeName) {
-					case "a": xx = arp.utils.ArpStringUtil.parseFloatDefault(child.value, 1.0);
-					case "b": yx = arp.utils.ArpStringUtil.parseFloatDefault(child.value, 0.0);
-					case "c": xy = arp.utils.ArpStringUtil.parseFloatDefault(child.value, 0.0);
-					case "d": yy = arp.utils.ArpStringUtil.parseFloatDefault(child.value, 1.0);
-					case "tx": tx = arp.utils.ArpStringUtil.parseRichFloat(child.value, seed.env.getUnit);
-					case "ty": ty = arp.utils.ArpStringUtil.parseRichFloat(child.value, seed.env.getUnit);
+					case "a", "xx": xx = arp.utils.ArpStringUtil.parseFloatDefault(child.value, 1.0);
+					case "b", "yx": yx = arp.utils.ArpStringUtil.parseFloatDefault(child.value, 0.0);
+					case "c", "xy": xy = arp.utils.ArpStringUtil.parseFloatDefault(child.value, 0.0);
+					case "d", "yy": yy = arp.utils.ArpStringUtil.parseFloatDefault(child.value, 1.0);
+					case "x", "tx": tx = arp.utils.ArpStringUtil.parseRichFloat(child.value, seed.env.getUnit);
+					case "y", "ty": ty = arp.utils.ArpStringUtil.parseRichFloat(child.value, seed.env.getUnit);
 				}
 			}
 			return this.reset(xx, yx, xy, yy, tx, ty);
@@ -36,7 +36,7 @@ class TransformMacros {
 	macro public static function initWithString(definition:ExprOf<String>, getUnit:ExprOf<String->Float>):ExprOf<Transform> {
 		return macro @:mergeBlock {
 			if (definition == null) return this;
-			var array:Array<String> = ~/[;,]/.split(definition);
+			var array:Array<String> = ~/[;,]/g.split(definition);
 			if (array.length < 6) return this;
 			var xx = arp.utils.ArpStringUtil.parseFloatDefault(array[0], 1.0);
 			var yx = arp.utils.ArpStringUtil.parseFloatDefault(array[1], 0.0);

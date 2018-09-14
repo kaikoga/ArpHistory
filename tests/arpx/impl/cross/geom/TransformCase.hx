@@ -1,8 +1,12 @@
 package arpx.impl.cross.geom;
 
+import arp.testParams.PersistIoProviders.IPersistIoProvider;
+import arp.seed.ArpSeed;
 import picotest.PicoAssert.*;
 
 class TransformCase {
+
+	private var provider:IPersistIoProvider;
 
 	var me:Transform;
 
@@ -12,8 +16,28 @@ class TransformCase {
 	private var newMe(get, never):Transform;
 	private function get_newMe():Transform return new Transform().reset(1.0, 0.0, 0.0, 2.0, 300.0, 400.0);
 
-	public function setup() {
+	@Parameter
+	public function setup(provider:IPersistIoProvider):Void {
 		me = newMe;
+		this.provider = provider;
+	}
+
+	public function testInitWithSeed():Void {
+		me.initWithSeed(ArpSeed.fromXmlString('<transform value="1,2,3,4,5,6" />'));
+		assertMatch([1, 2, 3, 4, 5, 6], me.toData());
+		me.initWithSeed(ArpSeed.fromXmlString('<transform hoge="7,8;9,10;11,12" />').iterator().next());
+		assertMatch([7, 8, 9, 10, 11, 12], me.toData());
+		me.initWithSeed(ArpSeed.fromXmlString('<transform a="1" b="2" c="3" d="4" x="5" y="6" />'));
+		assertMatch([1, 2, 3, 4, 5, 6], me.toData());
+		me.initWithSeed(ArpSeed.fromXmlString('<transform xx="7" yx="8" xy="9" yy="10" tx="11" ty="12" />'));
+		assertMatch([7, 8, 9, 10, 11, 12], me.toData());
+	}
+
+	public function testPersist():Void {
+		me.writeSelf(provider.output);
+		var other:Transform = new Transform();
+		other.readSelf(provider.input);
+		assertMatch(me.toData(), other.toData());
 	}
 
 	public function testReset() {
