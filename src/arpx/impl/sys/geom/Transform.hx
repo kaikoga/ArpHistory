@@ -2,17 +2,31 @@ package arpx.impl.sys.geom;
 
 #if arp_display_backend_sys
 
+import arp.domain.IArpStruct;
+import arp.persistable.IPersistInput;
+import arp.persistable.IPersistOutput;
+import arp.seed.ArpSeed;
+
 import arpx.impl.cross.geom.ITransform;
 import arpx.impl.cross.geom.PointImpl;
 import arpx.impl.cross.geom.MatrixImpl;
 
-class Transform implements ITransform {
+@:arpStruct("Transform")
+class Transform implements ITransform implements IArpStruct {
 
 	public var raw(default, null):MatrixImpl;
 
 	public function new() {
 		this.raw = new MatrixImpl();
 	}
+
+	public function initWithSeed(seed:ArpSeed):Transform return this;
+
+	public function initWithString(definition:String, getUnit:String->Float):Transform return this;
+
+	public function readSelf(input:IPersistInput):Void return;
+
+	public function writeSelf(output:IPersistOutput):Void return;
 
 	inline public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):Transform {
 		return this;

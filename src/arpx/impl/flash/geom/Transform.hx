@@ -2,11 +2,17 @@ package arpx.impl.flash.geom;
 
 #if arp_display_backend_flash
 
+import arp.domain.IArpStruct;
+import arp.persistable.IPersistOutput;
+import arp.persistable.IPersistInput;
+import arp.seed.ArpSeed;
+import arpx.impl.cross.geom.macro.TransformMacros;
 import arpx.impl.cross.geom.ITransform;
 import arpx.impl.cross.geom.MatrixImpl;
 import arpx.impl.cross.geom.PointImpl;
 
-class Transform implements ITransform {
+@:arpStruct("Transform")
+class Transform implements ITransform implements IArpStruct {
 
 	public var raw(default, null):MatrixImpl;
 
@@ -16,6 +22,14 @@ class Transform implements ITransform {
 		this.raw.setTo(a, b, c, d, tx, ty);
 		return this;
 	}
+
+	public function initWithSeed(seed:ArpSeed):Transform TransformMacros.initWithSeed(seed);
+
+	public function initWithString(definition:String, getUnit:String->Float):Transform TransformMacros.initWithString(definition, getUnit);
+
+	public function readSelf(input:IPersistInput):Void TransformMacros.readSelf(input);
+
+	public function writeSelf(output:IPersistOutput):Void TransformMacros.writeSelf(output);
 
 	inline public function readData(data:Array<Float>):Transform {
 		if (data.length < 6) return this;

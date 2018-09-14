@@ -2,11 +2,17 @@ package arpx.impl.heaps.geom;
 
 #if arp_display_backend_heaps
 
+import arp.domain.IArpStruct;
+import arp.persistable.IPersistOutput;
+import arp.persistable.IPersistInput;
+import arp.seed.ArpSeed;
+import arpx.impl.cross.geom.macro.TransformMacros;
 import arpx.impl.cross.geom.ITransform;
 import arpx.impl.cross.geom.PointImpl;
 import arpx.impl.cross.geom.MatrixImpl;
 
-class Transform implements ITransform {
+@:arpStruct("Transform")
+class Transform implements ITransform implements IArpStruct {
 
 	public var raw(default, null):MatrixImpl;
 
@@ -14,6 +20,14 @@ class Transform implements ITransform {
 		this.raw = new MatrixImpl();
 		this.raw.identity();
 	}
+
+	public function initWithSeed(seed:ArpSeed):Transform TransformMacros.initWithSeed(seed);
+
+	public function initWithString(definition:String, getUnit:String->Float):Transform TransformMacros.initWithString(definition, getUnit);
+
+	public function readSelf(input:IPersistInput):Void TransformMacros.readSelf(input);
+
+	public function writeSelf(output:IPersistOutput):Void TransformMacros.writeSelf(output);
 
 	inline public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):Transform {
 		var v:MatrixImpl = this.raw;
