@@ -1,9 +1,9 @@
 package arpx.impl.cross.geom;
 
 #if arp_display_backend_flash
-typedef PointImpl = flash.geom.Point;
+typedef PointImpl = arpx.impl.flash.geom.PointImpl;
 #elseif arp_display_backend_heaps
-typedef PointImpl = h3d.col.Point;
+typedef PointImpl = arpx.impl.heaps.geom.PointImpl;
 #elseif arp_display_backend_sys
 typedef PointImpl = arpx.impl.sys.geom.PointImpl;
 #elseif arp_display_backend_stub

@@ -2,6 +2,7 @@ package arpx.impl.heaps.geom;
 
 #if arp_display_backend_heaps
 
+import h3d.Matrix;
 import arp.domain.IArpStruct;
 import arp.persistable.IPersistOutput;
 import arp.persistable.IPersistInput;
@@ -14,10 +15,13 @@ import arpx.impl.cross.geom.MatrixImpl;
 @:arpStruct("Transform")
 class ArpTransform implements IArpTransform implements IArpStruct {
 
-	public var raw(default, null):MatrixImpl;
+	public var impl(default, null):MatrixImpl;
+
+	public var raw(get, never):Matrix;
+	inline private function get_raw():Matrix return impl.raw;
 
 	public function new() {
-		this.raw = new MatrixImpl();
+		this.impl = new MatrixImpl(new Matrix());
 		this.raw.identity();
 	}
 
@@ -30,7 +34,7 @@ class ArpTransform implements IArpTransform implements IArpStruct {
 	public function writeSelf(output:IPersistOutput):Void ArpTransformMacros.writeSelf(output);
 
 	inline public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):ArpTransform {
-		var v:MatrixImpl = this.raw;
+		var v:Matrix = this.raw;
 		v._11 = a;
 		v._12 = c;
 		v._13 = 0;
@@ -82,12 +86,12 @@ class ArpTransform implements IArpTransform implements IArpStruct {
 	}
 
 	public function readMatrix(matrix:MatrixImpl):ArpTransform {
-		this.raw.load(matrix);
+		this.raw.load(matrix.raw);
 		return this;
 	}
 
 	inline private function setOrAllocPointImpl(x:Float, y:Float, pt:PointImpl = null) {
-		if (pt == null) return new PointImpl(x, y);
+		if (pt == null) return PointImpl.alloc(x, y);
 		pt.set(x, y, 0.);
 		return pt;
 	}

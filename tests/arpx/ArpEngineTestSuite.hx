@@ -2,6 +2,8 @@ package arpx;
 
 #if arp_display_backend_flash
 import arpx.impl.flash.geom.ArpTransformFlashCase;
+#elseif arp_display_backend_heaps
+import arpx.impl.heaps.geom.ArpTransformHeapsCase;
 #end
 
 import arpx.impl.cross.geom.ArpTransformCase;
@@ -40,6 +42,8 @@ class ArpEngineTestSuite {
 
 		#if arp_display_backend_flash
 		r.load(ArpTransformFlashCase);
+		#elseif arp_display_backend_heaps
+		r.load(ArpTransformHeapsCase);
 		#end
 
 		r.load(ArpEngineComponentsCase);

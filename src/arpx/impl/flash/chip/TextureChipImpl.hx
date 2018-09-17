@@ -25,7 +25,7 @@ class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {
 		this.chip = chip;
 	}
 
-	private var _workPt:PointImpl = new PointImpl();
+	private var _workPt:PointImpl = PointImpl.alloc();
 	private var _workRect:Rectangle = new Rectangle();
 	private var _workMatrix:Matrix = new Matrix();
 	public function render(context:RenderContext, params:IArpParamsRead = null):Void {
@@ -44,7 +44,7 @@ class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {
 		}
 		var pt:PointImpl = transform.asPoint(_workPt);
 		if (pt != null && this.chip.color == null) {
-			context.bitmapData.copyPixels(faceInfo.source, faceInfo.bound, pt, null, null, this.chip.texture.hasAlpha);
+			context.bitmapData.copyPixels(faceInfo.source, faceInfo.bound, pt.raw, null, null, this.chip.texture.hasAlpha);
 		} else {
 			var colorTransform:ColorTransform = this.chip.color.toMultiplier();
 			context.bitmapData.draw(faceInfo.trimmed, transform.raw, colorTransform, BlendMode.NORMAL);

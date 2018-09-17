@@ -18,7 +18,7 @@ class TileMapMortalImpl extends ArpObjectImplBase implements IMortalImpl {
 		this.renderer = new TileMapRenderer(null, null);
 	}
 
-	private var _workPt:PointImpl = new PointImpl();
+	private var _workPt:PointImpl = PointImpl.alloc();
 	public function render(context:RenderContext):Void {
 		if (this.mortal.visible) {
 			var pt:PointImpl = context.transform.asPoint(_workPt);

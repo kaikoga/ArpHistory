@@ -1,9 +1,9 @@
 package arpx.impl.cross.geom;
 
 #if arp_display_backend_flash
-typedef MatrixImpl = flash.geom.Matrix;
+typedef MatrixImpl = arpx.impl.flash.geom.MatrixImpl;
 #elseif arp_display_backend_heaps
-typedef MatrixImpl = h3d.Matrix;
+typedef MatrixImpl = arpx.impl.heaps.geom.MatrixImpl;
 #elseif arp_display_backend_sys
 typedef MatrixImpl = arpx.impl.sys.geom.MatrixImpl;
 #elseif arp_display_backend_stub

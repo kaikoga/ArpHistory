@@ -10,6 +10,8 @@ class PointImpl {
 	public var y:Float;
 
 	public function new() return;
+
+	inline public static function alloc(x:Float = 0, y:Float = 0) return new PointImpl();
 }
 
 #end

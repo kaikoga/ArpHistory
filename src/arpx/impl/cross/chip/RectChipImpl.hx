@@ -16,7 +16,7 @@ class RectChipImpl extends ArpObjectImplBase implements IChipImpl {
 		this.chip = chip;
 	}
 
-	private var _workPt:PointImpl = new PointImpl();
+	private var _workPt:PointImpl = PointImpl.alloc();
 	public function render(context:RenderContext, params:IArpParamsRead = null):Void {
 		var pt:PointImpl = context.transform.asPoint(_workPt);
 		if (pt != null) {

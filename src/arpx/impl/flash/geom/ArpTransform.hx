@@ -2,6 +2,7 @@ package arpx.impl.flash.geom;
 
 #if arp_display_backend_flash
 
+import flash.geom.Matrix;
 import arp.domain.IArpStruct;
 import arp.persistable.IPersistOutput;
 import arp.persistable.IPersistInput;
@@ -14,9 +15,12 @@ import arpx.impl.cross.geom.PointImpl;
 @:arpStruct("Transform")
 class ArpTransform implements IArpTransform implements IArpStruct {
 
-	public var raw(default, null):MatrixImpl;
+	public var impl(default, null):MatrixImpl;
 
-	public function new() raw = new MatrixImpl();
+	public var raw(get, never):Matrix;
+	inline private function get_raw():Matrix return impl.raw;
+
+	public function new() impl = new MatrixImpl(new Matrix());
 
 	inline public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):ArpTransform {
 		this.raw.setTo(a, b, c, d, tx, ty);
@@ -63,13 +67,13 @@ class ArpTransform implements IArpTransform implements IArpStruct {
 	}
 
 	public function readMatrix(matrix:MatrixImpl):ArpTransform {
-		this.raw.copyFrom(matrix);
+		this.raw.copyFrom(matrix.raw);
 		return this;
 	}
 
 	inline private function setOrAllocPointImpl(x:Float, y:Float, pt:PointImpl = null) {
-		if (pt == null) return new PointImpl(x, y);
-		pt.setTo(x, y);
+		if (pt == null) return PointImpl.alloc(x, y);
+		pt.raw.setTo(x, y);
 		return pt;
 	}
 
@@ -93,7 +97,7 @@ class ArpTransform implements IArpTransform implements IArpStruct {
 	public function prependTransform(transform:ArpTransform):ArpTransform {
 		var matrix:MatrixImpl = transform.raw.clone();
 		matrix.concat(this.raw);
-		this.raw = matrix;
+		this.impl = matrix;
 		return this;
 	}
 

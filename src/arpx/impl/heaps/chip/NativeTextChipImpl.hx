@@ -35,7 +35,7 @@ class NativeTextChipImpl extends ArpObjectImplBase implements IChipImpl {
 		return true;
 	}
 
-	private var _workPt:PointImpl = new PointImpl();
+	private var _workPt:PointImpl = PointImpl.alloc();
 	public function render(context:RenderContext, params:IArpParamsRead = null):Void {
 		var text:String = null;
 		if (params != null) text = params.get("face");
