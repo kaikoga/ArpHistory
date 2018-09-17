@@ -2,6 +2,8 @@ package arpx.impl.flash.geom;
 
 #if arp_display_backend_flash
 
+import arpx.impl.cross.geom.ArpTransform;
+
 import flash.geom.Matrix;
 import flash.geom.Point;
 

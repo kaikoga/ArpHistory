@@ -36,6 +36,8 @@ abstract MatrixImpl(Matrix) from Matrix {
 
 	inline public function new(raw:Matrix) this = raw;
 
+	inline public static function alloc():MatrixImpl return new MatrixImpl(new Matrix());
+
 	inline public function reset2d(a:Float, b:Float, c:Float, d:Float, tx:Float, ty:Float):Void {
 		this._11 = a;
 		this._12 = c;

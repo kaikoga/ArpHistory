@@ -5,6 +5,8 @@ package arpx.impl.heaps.geom;
 import h3d.Matrix;
 import h3d.col.Point;
 
+import arpx.impl.cross.geom.ArpTransform;
+
 import picotest.PicoAssert.*;
 
 class ArpTransformHeapsCase {
