@@ -19,6 +19,8 @@ class MatrixImpl {
 	inline public function clone():MatrixImpl return new MatrixImpl();
 	inline public function copyFrom(matrix:MatrixImpl):Void return;
 
+	inline public function invert():Void return;
+
 	inline public function prependTransform(matrix:MatrixImpl):Void return;
 	inline public function prependXY(x:Float, y:Float):Void return;
 	inline public function appendMatrix(matrix:MatrixImpl):Void return;

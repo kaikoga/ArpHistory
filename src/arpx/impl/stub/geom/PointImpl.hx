@@ -12,6 +12,8 @@ class PointImpl {
 	public function new() return;
 
 	inline public static function alloc(x:Float = 0, y:Float = 0) return new PointImpl();
+
+	inline public function transform(matrix:MatrixImpl):Void return;
 }
 
 #end

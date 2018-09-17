@@ -2,6 +2,7 @@ package arpx.impl.heaps.geom;
 
 #if arp_display_backend_heaps
 
+import h3d.col.Point;
 import h3d.Matrix;
 
 @:forward(identity)
@@ -49,7 +50,7 @@ abstract MatrixImpl(Matrix) from Matrix {
 		this._24 = 0;
 		this._31 = 0;
 		this._32 = 0;
-		this._33 = 0;
+		this._33 = 1;
 		this._34 = 0;
 		this._41 = tx;
 		this._42 = ty;
@@ -59,6 +60,10 @@ abstract MatrixImpl(Matrix) from Matrix {
 
 	inline public function copyFrom(matrix:MatrixImpl):Void {
 		this.load(matrix.raw);
+	}
+
+	inline public function invert():Void {
+		this.invert();
 	}
 
 	inline public function prependMatrix(transform:MatrixImpl):Void {

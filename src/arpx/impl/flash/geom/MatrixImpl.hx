@@ -52,6 +52,10 @@ abstract MatrixImpl(Matrix) from Matrix {
 		this.copyFrom(matrix.raw);
 	}
 
+	inline public function invert():Void {
+		this.invert();
+	}
+
 	inline public function prependMatrix(matrix:MatrixImpl):Void {
 		var result:Matrix = matrix.raw.clone();
 		result.concat(raw);

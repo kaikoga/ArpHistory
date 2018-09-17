@@ -15,6 +15,8 @@ abstract PointImpl(Point) from Point {
 	inline public static function alloc(x:Float = 0, y:Float = 0) return new PointImpl(new Point(x, y));
 
 	inline public function reset(x:Float = 0, y:Float = 0, z:Float = 0):Void this.set(x, y, z);
+
+	inline public function transform(matrix:MatrixImpl):Void this.transform(matrix.raw);
 }
 
 #end

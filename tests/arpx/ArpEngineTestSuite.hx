@@ -1,9 +1,9 @@
 package arpx;
 
-#if arp_display_backend_flash
-import arpx.structs.ArpTransformFlashCase;
-#elseif arp_display_backend_heaps
 import arpx.impl.cross.structs.ArpTransformCase;
+#if arp_display_backend_flash
+import arpx.impl.cross.structs.ArpTransformFlashCase;
+#elseif arp_display_backend_heaps
 import arpx.impl.cross.structs.ArpTransformHeapsCase;
 #end
 

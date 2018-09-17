@@ -139,6 +139,16 @@ class ArpTransform implements IArpStruct {
 		return this;
 	}
 
+	public function invert():ArpTransform {
+		this.impl.invert();
+		return this;
+	}
+
+	public function transformPoint(pt:PointImpl):PointImpl {
+		pt.transform(this.impl);
+		return pt;
+	}
+
 	public function prependTransform(transform:ArpTransform):ArpTransform {
 		this.impl.prependMatrix(transform.impl);
 		return this;
