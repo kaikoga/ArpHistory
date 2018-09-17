@@ -2,6 +2,7 @@ package arpx.impl.stub.geom;
 
 #if arp_display_backend_stub
 
+import arpx.impl.cross.geom.ArpTransformBase;
 import arp.domain.IArpStruct;
 import arp.persistable.IPersistInput;
 import arp.persistable.IPersistOutput;
@@ -12,7 +13,7 @@ import arpx.impl.cross.geom.PointImpl;
 import arpx.impl.cross.geom.MatrixImpl;
 
 @:arpStruct("Transform")
-class ArpTransform implements IArpTransform implements IArpStruct {
+class ArpTransform extends ArpTransformBase implements IArpTransform implements IArpStruct {
 
 	public var raw(default, null):MatrixImpl;
 

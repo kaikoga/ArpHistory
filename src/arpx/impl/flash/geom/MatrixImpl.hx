@@ -10,20 +10,6 @@ abstract MatrixImpl(Matrix) from Matrix {
 	public var raw(get, never):Matrix;
 	inline private function get_raw():Matrix return this;
 
-	inline public function new(raw:Matrix) this = raw;
-
-	inline public function reset2d(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):Void {
-		this.setTo(a, b, c, d, tx, ty);
-	}
-
-	inline public function clone(matrix:MatrixImpl):Void {
-		this = this.clone();
-	}
-
-	inline public function copyFrom(matrix:MatrixImpl):Void {
-		this.copyFrom(matrix.raw);
-	}
-
 	public var xx(get, set):Float;
 	inline private function get_xx():Float return this.a;
 	inline private function set_xx(value:Float):Float return this.a = value;
@@ -47,6 +33,22 @@ abstract MatrixImpl(Matrix) from Matrix {
 	public var ty(get, set):Float;
 	inline private function get_ty():Float return this.ty;
 	inline private function set_ty(value:Float):Float return this.ty = value;
+
+	inline public function new(raw:Matrix) this = raw;
+
+	inline public function identity():Void return;
+
+	inline public function reset2d(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):Void {
+		this.setTo(a, b, c, d, tx, ty);
+	}
+
+	inline public function clone():MatrixImpl {
+		return this.clone();
+	}
+
+	inline public function copyFrom(matrix:MatrixImpl):Void {
+		this.copyFrom(matrix.raw);
+	}
 }
 
 #end
