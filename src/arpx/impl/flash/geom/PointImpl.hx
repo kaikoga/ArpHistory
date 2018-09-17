@@ -4,7 +4,7 @@ package arpx.impl.flash.geom;
 
 import flash.geom.Point;
 
-@:forward
+@:forward(x, y)
 abstract PointImpl(Point) from Point {
 
 	public var raw(get, never):Point;
@@ -13,6 +13,8 @@ abstract PointImpl(Point) from Point {
 	inline public function new(raw:Point) this = raw;
 
 	inline public static function alloc(x:Float = 0, y:Float = 0) return new PointImpl(new Point(x, y));
+
+	inline public function reset(x:Float = 0, y:Float = 0):Void this.setTo(x, y);
 }
 
 #end

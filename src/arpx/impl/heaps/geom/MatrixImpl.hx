@@ -4,7 +4,7 @@ package arpx.impl.heaps.geom;
 
 import h3d.Matrix;
 
-@:forward
+@:forward(identity, load, multiply)
 abstract MatrixImpl(Matrix) from Matrix {
 
 	public var raw(get, never):Matrix;
@@ -12,6 +12,52 @@ abstract MatrixImpl(Matrix) from Matrix {
 
 	inline public function new(raw:Matrix) this = raw;
 
+	inline public function reset2d(a:Float, b:Float, c:Float, d:Float, tx:Float, ty:Float):Void {
+		this._11 = a;
+		this._12 = c;
+		this._13 = 0;
+		this._14 = 0;
+		this._21 = b;
+		this._22 = d;
+		this._23 = 0;
+		this._24 = 0;
+		this._31 = 0;
+		this._32 = 0;
+		this._33 = 0;
+		this._34 = 0;
+		this._41 = tx;
+		this._42 = ty;
+		this._43 = 0;
+		this._44 = 1;
+	}
+
+	inline public function copyFrom(matrix:MatrixImpl):Void {
+		this.load(matrix.raw);
+	}
+
+	public var xx(get, set):Float;
+	inline private function get_xx():Float return this._11;
+	inline private function set_xx(value:Float):Float return this._11 = value;
+
+	public var yx(get, set):Float;
+	inline private function get_yx():Float return this._21;
+	inline private function set_yx(value:Float):Float return this._21 = value;
+
+	public var xy(get, set):Float;
+	inline private function get_xy():Float return this._12;
+	inline private function set_xy(value:Float):Float return this._12 = value;
+
+	public var yy(get, set):Float;
+	inline private function get_yy():Float return this._22;
+	inline private function set_yy(value:Float):Float return this._22 = value;
+
+	public var tx(get, set):Float;
+	inline private function get_tx():Float return this._41;
+	inline private function set_tx(value:Float):Float return this._41 = value;
+
+	public var ty(get, set):Float;
+	inline private function get_ty():Float return this._42;
+	inline private function set_ty(value:Float):Float return this._42 = value;
 }
 
 #end

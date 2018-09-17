@@ -35,23 +35,7 @@ class ArpTransform implements IArpTransform implements IArpStruct {
 	public function writeSelf(output:IPersistOutput):Void ArpTransformMacros.writeSelf(output);
 
 	inline public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):ArpTransform {
-		var v:MatrixImpl = this.impl;
-		v._11 = a;
-		v._12 = c;
-		v._13 = 0;
-		v._14 = 0;
-		v._21 = b;
-		v._22 = d;
-		v._23 = 0;
-		v._24 = 0;
-		v._31 = 0;
-		v._32 = 0;
-		v._33 = 0;
-		v._34 = 0;
-		v._41 = tx;
-		v._42 = ty;
-		v._43 = 0;
-		v._44 = 1;
+		this.impl.reset2d(a, b, c, d, tx, ty);
 		return this;
 	}
 
@@ -63,12 +47,12 @@ class ArpTransform implements IArpTransform implements IArpStruct {
 
 	inline public function toData(data:Array<Float> = null):Array<Float> {
 		if (data == null) data = [];
-		data[0] = this.impl._11;
-		data[1] = this.impl._21;
-		data[2] = this.impl._12;
-		data[3] = this.impl._22;
-		data[4] = this.impl._41;
-		data[5] = this.impl._42;
+		data[0] = this.impl.xx;
+		data[1] = this.impl.yx;
+		data[2] = this.impl.xy;
+		data[3] = this.impl.yy;
+		data[4] = this.impl.tx;
+		data[5] = this.impl.ty;
 		return data;
 	}
 
@@ -93,24 +77,24 @@ class ArpTransform implements IArpTransform implements IArpStruct {
 
 	inline private function setOrAllocPointImpl(x:Float, y:Float, pt:PointImpl = null) {
 		if (pt == null) return PointImpl.alloc(x, y);
-		pt.set(x, y, 0.);
+		pt.reset(x, y, 0.);
 		return pt;
 	}
 
 	public function asPoint(pt:PointImpl = null):PointImpl {
-		if (this.impl._11 == 1 && this.impl._12 == 0 && this.impl._21 == 0 && this.impl._22 == 1) {
-			return setOrAllocPointImpl(this.impl._41, this.impl._42, pt);
+		if (this.impl.xx == 1 && this.impl.yx == 0 && this.impl.xy == 0 && this.impl.yy == 1) {
+			return setOrAllocPointImpl(this.impl.tx, this.impl.ty, pt);
 		}
 		return null;
 	}
 
 	public function toPoint(pt:PointImpl = null):PointImpl {
-		return setOrAllocPointImpl(this.impl._41, this.impl._42, pt);
+		return setOrAllocPointImpl(this.impl.tx, this.impl.ty, pt);
 	}
 
 	public function setXY(x:Float, y:Float):ArpTransform {
-		this.impl._41 = x;
-		this.impl._42 = y;
+		this.impl.tx = x;
+		this.impl.ty = y;
 		return this;
 	}
 
@@ -120,8 +104,8 @@ class ArpTransform implements IArpTransform implements IArpStruct {
 	}
 
 	public function prependXY(x:Float, y:Float):ArpTransform {
-		this.impl._41 += x * this.impl._11 + y * this.impl._21;
-		this.impl._42 += x * this.impl._12 + y * this.impl._22;
+		this.impl.tx += x * this.impl.xx + y * this.impl.yx;
+		this.impl.ty += x * this.impl.xy + y * this.impl.yy;
 		return this;
 	}
 
@@ -131,8 +115,8 @@ class ArpTransform implements IArpTransform implements IArpStruct {
 	}
 
 	public function appendXY(x:Float, y:Float):ArpTransform {
-		this.impl._41 += x;
-		this.impl._42 += y;
+		this.impl.tx += x;
+		this.impl.ty += y;
 		return this;
 	}
 }

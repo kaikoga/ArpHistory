@@ -24,7 +24,7 @@ class ArpTransform implements IArpTransform implements IArpStruct {
 	public function new() impl = new MatrixImpl(new Matrix());
 
 	inline public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):ArpTransform {
-		this.impl.setTo(a, b, c, d, tx, ty);
+		this.impl.reset2d(a, b, c, d, tx, ty);
 		return this;
 	}
 
@@ -38,16 +38,16 @@ class ArpTransform implements IArpTransform implements IArpStruct {
 
 	inline public function readData(data:Array<Float>):ArpTransform {
 		if (data.length < 6) return this;
-		this.impl.setTo(data[0], data[1], data[2], data[3], data[4], data[5]);
+		this.impl.reset2d(data[0], data[1], data[2], data[3], data[4], data[5]);
 		return this;
 	}
 
 	inline public function toData(data:Array<Float> = null):Array<Float> {
 		if (data == null) data = [];
-		data[0] = this.impl.a;
-		data[1] = this.impl.b;
-		data[2] = this.impl.c;
-		data[3] = this.impl.d;
+		data[0] = this.impl.xx;
+		data[1] = this.impl.yx;
+		data[2] = this.impl.xy;
+		data[3] = this.impl.yy;
 		data[4] = this.impl.tx;
 		data[5] = this.impl.ty;
 		return data;
@@ -63,7 +63,7 @@ class ArpTransform implements IArpTransform implements IArpStruct {
 	}
 
 	public function readPoint(pt:PointImpl):ArpTransform {
-		this.impl.setTo(1, 0, 0, 1, pt.x, pt.y);
+		this.impl.reset2d(1, 0, 0, 1, pt.x, pt.y);
 		return this;
 	}
 
@@ -74,12 +74,12 @@ class ArpTransform implements IArpTransform implements IArpStruct {
 
 	inline private function setOrAllocPointImpl(x:Float, y:Float, pt:PointImpl = null) {
 		if (pt == null) return PointImpl.alloc(x, y);
-		pt.raw.setTo(x, y);
+		pt.reset(x, y);
 		return pt;
 	}
 
 	public function asPoint(pt:PointImpl = null):PointImpl {
-		if (this.impl.a == 1 && this.impl.b == 0 && this.impl.c == 0 && this.impl.d == 1) {
+		if (this.impl.xx == 1 && this.impl.yx == 0 && this.impl.xy == 0 && this.impl.yy == 1) {
 			return setOrAllocPointImpl(this.impl.tx, this.impl.ty, pt);
 		}
 		return null;
@@ -96,14 +96,14 @@ class ArpTransform implements IArpTransform implements IArpStruct {
 	}
 
 	public function prependTransform(transform:ArpTransform):ArpTransform {
-		var matrix:MatrixImpl = transform.impl.raw.clone();
+		var matrix:MatrixImpl = transform.impl.clone();
 		matrix.concat(this.impl.raw);
 		this.impl = matrix;
 		return this;
 	}
 
 	public function prependXY(x:Float, y:Float):ArpTransform {
-		this.impl.translate(x * this.impl.a + y * this.impl.c, x * this.impl.b + y * this.impl.d);
+		this.impl.translate(x * this.impl.xx + y * this.impl.yx, x * this.impl.xy + y * this.impl.yy);
 		return this;
 	}
 
