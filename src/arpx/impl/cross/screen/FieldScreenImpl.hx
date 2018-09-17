@@ -3,7 +3,6 @@ package arpx.impl.cross.screen;
 import arpx.impl.cross.display.RenderContext;
 import arpx.impl.ArpObjectImplBase;
 import arpx.screen.FieldScreen;
-import arpx.structs.ArpPosition;
 
 class FieldScreenImpl extends ArpObjectImplBase implements IScreenImpl {
 
@@ -14,13 +13,13 @@ class FieldScreenImpl extends ArpObjectImplBase implements IScreenImpl {
 		this.screen = screen;
 	}
 
-	private static var _workPos:ArpPosition = new ArpPosition();
-
 	public function display(context:RenderContext):Void {
 		if (this.screen.field == null) return;
 
-		var pos:ArpPosition = (this.screen.camera != null) ? this.screen.camera.position : _workPos;
-		context.dupTransform().prependXY(-pos.x, -pos.y);
+		if (this.screen.camera != null) {
+			context.dupTransform().prependTransform(this.screen.camera.composedCameraTransform);
+		}
+
 		if (this.screen.visible) this.screen.field.render(context);
 		for (fieldGizmo in this.screen.fieldGizmos) fieldGizmo.render(this.screen.field, context);
 		context.popTransform();
