@@ -4,7 +4,7 @@ package arpx.impl.flash.geom;
 
 import flash.geom.Matrix;
 
-@:forward(tx, ty, concat, translate)
+@:forward(tx, ty)
 abstract MatrixImpl(Matrix) from Matrix {
 
 	public var raw(get, never):Matrix;
@@ -48,6 +48,24 @@ abstract MatrixImpl(Matrix) from Matrix {
 
 	inline public function copyFrom(matrix:MatrixImpl):Void {
 		this.copyFrom(matrix.raw);
+	}
+
+	inline public function prependMatrix(matrix:MatrixImpl):Void {
+		var result:Matrix = matrix.raw.clone();
+		result.concat(raw);
+		this = result;
+	}
+
+	inline public function prependXY(x:Float, y:Float):Void {
+		this.translate(x * xx + y * yx, x * xy + y * yy);
+	}
+
+	inline public function appendMatrix(matrix:MatrixImpl):Void {
+		this.concat(matrix.raw);
+	}
+
+	inline public function appendXY(x:Float, y:Float):Void {
+		this.translate(x, y);
 	}
 }
 

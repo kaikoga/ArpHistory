@@ -4,7 +4,7 @@ package arpx.impl.heaps.geom;
 
 import h3d.Matrix;
 
-@:forward(identity, load, multiply)
+@:forward(identity)
 abstract MatrixImpl(Matrix) from Matrix {
 
 	public var raw(get, never):Matrix;
@@ -57,6 +57,24 @@ abstract MatrixImpl(Matrix) from Matrix {
 
 	inline public function copyFrom(matrix:MatrixImpl):Void {
 		this.load(matrix.raw);
+	}
+
+	inline public function prependMatrix(transform:MatrixImpl):Void {
+		this.multiply(transform.raw, this);
+	}
+
+	inline public function prependXY(x:Float, y:Float):Void {
+		tx += x * xx + y * yx;
+		ty += x * xy + y * yy;
+	}
+
+	inline public function appendMatrix(transform:MatrixImpl):Void {
+		this.multiply(this, transform.raw);
+	}
+
+	inline public function appendXY(x:Float, y:Float):Void {
+		tx += x;
+		ty += y;
 	}
 }
 

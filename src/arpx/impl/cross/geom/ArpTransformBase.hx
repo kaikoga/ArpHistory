@@ -1,6 +1,7 @@
 package arpx.impl.cross.geom;
 
-import flash.geom.Matrix;
+import h3d.Matrix;
+
 import arp.persistable.IPersistOutput;
 import arp.persistable.IPersistInput;
 import arp.seed.ArpSeed;
@@ -120,7 +121,7 @@ class ArpTransformBase {
 
 	inline private function setOrAllocPointImpl(x:Float, y:Float, pt:PointImpl = null) {
 		if (pt == null) return PointImpl.alloc(x, y);
-		pt.reset(x, y);
+		pt.reset(x, y, 0);
 		return pt;
 	}
 
@@ -142,18 +143,22 @@ class ArpTransformBase {
 	}
 
 	public function prependTransform(transform:ArpTransform):ArpTransform {
-		throw "implement me";
+		this.impl.prependMatrix(transform.impl);
+		return cast this;
 	}
 
 	public function prependXY(x:Float, y:Float):ArpTransform {
-		throw "implement me";
+		this.impl.prependXY(x, y);
+		return cast this;
 	}
 
 	public function appendTransform(transform:ArpTransform):ArpTransform {
-		throw "implement me";
+		this.impl.appendMatrix(transform.impl);
+		return cast this;
 	}
 
 	public function appendXY(x:Float, y:Float):ArpTransform {
-		throw "implement me";
+		this.impl.appendXY(x, y);
+		return cast this;
 	}
 }
