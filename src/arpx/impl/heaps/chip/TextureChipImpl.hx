@@ -2,14 +2,14 @@ package arpx.impl.heaps.chip;
 
 #if arp_display_backend_heaps
 
-import arpx.impl.cross.texture.TextureFaceData;
 import arp.domain.ArpHeat;
-import arpx.structs.ArpColor;
-import arpx.structs.IArpParamsRead;
 import arpx.chip.TextureChip;
 import arpx.impl.cross.chip.IChipImpl;
 import arpx.impl.cross.display.RenderContext;
-import arpx.impl.cross.geom.ArpTransform;
+import arpx.impl.cross.structs.ArpTransform;
+import arpx.impl.cross.texture.TextureFaceData;
+import arpx.structs.ArpColor;
+import arpx.structs.IArpParamsRead;
 
 class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {
 

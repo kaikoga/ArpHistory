@@ -4,7 +4,7 @@ package arpx.impl.flash.display;
 
 import flash.display.BitmapData;
 
-import arpx.impl.cross.geom.ArpTransform;
+import arpx.impl.cross.structs.ArpTransform;
 
 @:forward(
 	bitmapData,

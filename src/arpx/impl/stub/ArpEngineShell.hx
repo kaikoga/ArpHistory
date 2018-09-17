@@ -4,7 +4,7 @@ package arpx.impl.stub;
 
 import arpx.impl.cross.ArpEngineShellBase;
 import arpx.impl.cross.display.DisplayContext;
-import arpx.impl.cross.geom.ArpTransform;
+import arpx.impl.cross.structs.ArpTransform;
 
 class ArpEngineShell extends ArpEngineShellBase {
 

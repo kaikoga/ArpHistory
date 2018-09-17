@@ -4,7 +4,7 @@ package arpx.impl.heaps.display;
 
 import h2d.Sprite;
 
-import arpx.impl.cross.geom.ArpTransform;
+import arpx.impl.cross.structs.ArpTransform;
 
 @:forward(
 	buf, drawTile,

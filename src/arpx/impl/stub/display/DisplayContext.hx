@@ -2,7 +2,7 @@ package arpx.impl.stub.display;
 
 #if arp_display_backend_stub
 
-import arpx.impl.cross.geom.ArpTransform;
+import arpx.impl.cross.structs.ArpTransform;
 
 @:forward(
 	width, height, clearColor,

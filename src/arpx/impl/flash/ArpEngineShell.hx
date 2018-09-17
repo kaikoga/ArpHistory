@@ -4,8 +4,8 @@ package arpx.impl.flash;
 
 import flash.geom.Matrix;
 import arpx.impl.cross.display.DisplayContext;
-import arpx.impl.cross.geom.ArpTransform;
 import arpx.impl.cross.ArpEngineShellBase;
+import arpx.impl.cross.structs.ArpTransform;
 
 import flash.Lib;
 import flash.display.Bitmap;

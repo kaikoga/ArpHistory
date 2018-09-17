@@ -1,6 +1,6 @@
 package arpx.impl.cross.display;
 
-import arpx.impl.cross.geom.ArpTransform;
+import arpx.impl.cross.structs.ArpTransform;
 
 class DisplayContextBase {
 

@@ -1,15 +1,13 @@
-package arpx.impl.heaps.geom;
+package arpx.impl.cross.structs;
 
-#if arp_display_backend_heaps
+#if arp_display_backend_flash
 
-import h3d.Matrix;
-import h3d.col.Point;
-
-import arpx.impl.cross.geom.ArpTransform;
+import flash.geom.Matrix;
+import flash.geom.Point;
 
 import picotest.PicoAssert.*;
 
-class ArpTransformHeapsCase {
+class ArpTransformFlashCase {
 
 	var me:ArpTransform = new ArpTransform().reset(1.0, 0.0, 0.0, 2.0, 300.0, 400.0);
 
@@ -29,12 +27,12 @@ class ArpTransformHeapsCase {
 
 	public function testRaw():Void {
 		var matrix:Matrix = me.impl.raw;
-		assertEquals(1.0, matrix._11);
-		assertEquals(0.0, matrix._21);
-		assertEquals(0.0, matrix._12);
-		assertEquals(2.0, matrix._22);
-		assertEquals(300.0, matrix._41);
-		assertEquals(400.0, matrix._42);
+		assertEquals(1.0, matrix.a);
+		assertEquals(0.0, matrix.b);
+		assertEquals(0.0, matrix.c);
+		assertEquals(2.0, matrix.d);
+		assertEquals(300.0, matrix.tx);
+		assertEquals(400.0, matrix.ty);
 	}
 }
 

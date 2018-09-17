@@ -1,4 +1,4 @@
-package arpx.impl.cross.geom;
+package arpx.impl.cross.structs;
 
 import arp.testParams.PersistIoProviders.IPersistIoProvider;
 import arp.seed.ArpSeed;

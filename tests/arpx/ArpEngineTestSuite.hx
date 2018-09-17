@@ -1,12 +1,12 @@
 package arpx;
 
 #if arp_display_backend_flash
-import arpx.impl.flash.geom.ArpTransformFlashCase;
+import arpx.structs.ArpTransformFlashCase;
 #elseif arp_display_backend_heaps
-import arpx.impl.heaps.geom.ArpTransformHeapsCase;
+import arpx.impl.cross.structs.ArpTransformCase;
+import arpx.impl.cross.structs.ArpTransformHeapsCase;
 #end
 
-import arpx.impl.cross.geom.ArpTransformCase;
 import arpx.macro.ArpStructsMacroArpObjectCase;
 import arpx.structs.ArpColorFlashCase;
 import arpx.structs.ArpRangeCase;

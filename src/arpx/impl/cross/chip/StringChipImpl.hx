@@ -5,7 +5,7 @@ import arpx.chip.stringChip.StringChipStringIterator;
 import arpx.chip.StringChip;
 import arpx.impl.cross.display.RenderContext;
 import arpx.impl.cross.geom.PointImpl;
-import arpx.impl.cross.geom.ArpTransform;
+import arpx.impl.cross.structs.ArpTransform;
 import arpx.impl.ArpObjectImplBase;
 import arpx.structs.IArpParamsRead;
 

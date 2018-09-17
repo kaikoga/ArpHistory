@@ -2,7 +2,6 @@ package arpx.impl.flash.chip;
 
 #if arp_display_backend_flash
 
-import arpx.structs.ArpParams;
 import flash.display.BlendMode;
 import flash.geom.ColorTransform;
 import flash.geom.Matrix;
@@ -12,7 +11,7 @@ import arpx.chip.TextureChip;
 import arpx.impl.cross.chip.IChipImpl;
 import arpx.impl.cross.display.RenderContext;
 import arpx.impl.cross.geom.PointImpl;
-import arpx.impl.cross.geom.ArpTransform;
+import arpx.impl.cross.structs.ArpTransform;
 import arpx.impl.cross.texture.TextureFaceData;
 import arpx.structs.IArpParamsRead;
 

@@ -1,4 +1,4 @@
-package arpx.impl.cross.geom;
+package arpx.impl.cross.structs;
 
 import arp.domain.IArpStruct;
 import arp.persistable.IPersistOutput;

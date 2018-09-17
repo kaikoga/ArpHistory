@@ -7,7 +7,7 @@ import flash.geom.Rectangle;
 import arpx.impl.cross.display.DisplayContextBase;
 import arpx.impl.cross.display.IDisplayContext;
 import arpx.impl.cross.display.IRenderContext;
-import arpx.impl.cross.geom.ArpTransform;
+import arpx.impl.cross.structs.ArpTransform;
 
 class DisplayContextImpl extends DisplayContextBase implements IDisplayContext implements IRenderContext {
 
