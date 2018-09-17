@@ -1,26 +1,26 @@
 package arpx.chip.stringChip;
 
+import arpx.impl.cross.display.RenderContext;
 import arpx.structs.ArpParams;
 import arpx.structs.IArpParamsRead;
 
 class StringChipDrawCursor {
 
-	private var initX:Float = 0;
-	private var initY:Float = 0;
-	public var x:Float = 0;
-	public var y:Float = 0;
+	private var context:RenderContext;
 	private var nextX:Float = 0;
 	private var nextY:Float = 0;
 	private var params:ArpParamsProxy;
 
-	public function new(x:Float, y:Float, params:IArpParamsRead) {
-		this.initX = x;
-		this.x = x;
-		this.nextX = x;
-		this.initY = y;
-		this.y = y;
-		this.nextY = y;
+	public function new(context:RenderContext, params:IArpParamsRead = null) {
+		context.dupTransform();
+		this.context = context;
 		this.params = new ArpParams().copyFrom(params);
+	}
+
+	inline private function moveTransform():Void {
+		this.context.popTransform();
+		this.context.dupTransform();
+		this.context.transform.prependXY(this.nextX, this.nextY);
 	}
 
 	public function move(char:String, chip:StringChip, childChip:Chip):ArpParams {
@@ -34,13 +34,12 @@ class StringChipDrawCursor {
 						this.nextY += childChip.chipHeight * 4;
 						return null;
 					case "\n":
-						this.nextY = this.initY;
+						this.nextY = 0;
 						this.nextX -= childChip.chipWidth;
 						return null;
 					default:
 						this.params["face"] = char;
-						this.x = this.nextX;
-						this.y = this.nextY;
+						this.moveTransform();
 						this.nextY += (chip.isProportional) ? childChip.chipHeightOf(this.params) : childChip.chipHeight;
 						return this.params;
 				}
@@ -54,13 +53,12 @@ class StringChipDrawCursor {
 						this.nextX -= childChip.chipWidth * 4;
 						return null;
 					case "\n":
-						this.nextX = this.initX;
+						this.nextX = 0;
 						this.nextY -= childChip.chipHeight;
 						return null;
 					default:
 						this.params["face"] = char;
-						this.x = this.nextX;
-						this.y = this.nextY;
+						this.moveTransform();
 						this.nextX -= (chip.isProportional) ? childChip.chipWidthOf(this.params) : childChip.chipWidth;
 						return this.params;
 				}
@@ -74,13 +72,12 @@ class StringChipDrawCursor {
 						this.nextY -= childChip.chipHeight * 4;
 						return null;
 					case "\n":
-						this.nextY = this.initY;
+						this.nextY = 0;
 						this.nextX += childChip.chipWidth;
 						return null;
 					default:
 						this.params["face"] = char;
-						this.x = this.nextX;
-						this.y = this.nextY;
+						this.moveTransform();
 						this.nextY -= (chip.isProportional) ? childChip.chipHeightOf(this.params) : childChip.chipHeight;
 						return this.params;
 				}
@@ -95,17 +92,20 @@ class StringChipDrawCursor {
 						this.nextX += childChip.chipWidth * 4;
 						return null;
 					case "\n":
-						this.nextX = this.initX;
+						this.nextX = 0;
 						this.nextY += childChip.chipHeight;
 						return null;
 					default:
 						this.params["face"] = char;
-						this.x = this.nextX;
-						this.y = this.nextY;
+						this.moveTransform();
 						this.nextX += (chip.isProportional) ? childChip.chipWidthOf(this.params) : childChip.chipWidth;
 						return this.params;
 				}
 		}
+	}
+
+	public function cleanup():Void {
+		context.popTransform();
 	}
 }
 
