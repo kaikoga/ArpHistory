@@ -9,8 +9,9 @@ import arpx.impl.cross.geom.MatrixImpl;
 import arpx.impl.cross.geom.PointImpl;
 
 @:arpStruct("Transform")
-class ArpTransform implements IArpTransform implements IArpStruct {
-public var impl(default, null):MatrixImpl;
+class ArpTransform implements IArpStruct {
+
+	public var impl(default, null):MatrixImpl;
 
 	public function new() {
 		this.impl = MatrixImpl.alloc();
@@ -19,11 +20,11 @@ public var impl(default, null):MatrixImpl;
 
 	inline public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):ArpTransform {
 		this.impl.reset2d(a, b, c, d, tx, ty);
-		return cast this;
+		return this;
 	}
 
 	public function initWithSeed(seed:ArpSeed):ArpTransform {
-		if (seed == null) return cast this;
+		if (seed == null) return this;
 		if (seed.isSimple) return this.initWithString(seed.value, seed.env.getUnit);
 
 		var xx:Float = 1.0;
@@ -46,9 +47,9 @@ public var impl(default, null):MatrixImpl;
 	}
 
 	public function initWithString(definition:String, getUnit:String->Float):ArpTransform {
-		if (definition == null) return cast this;
+		if (definition == null) return this;
 		var array:Array<String> = ~/[;,]/g.split(definition);
-		if (array.length < 6) return cast this;
+		if (array.length < 6) return this;
 		var xx = arp.utils.ArpStringUtil.parseFloatDefault(array[0], 1.0);
 		var yx = arp.utils.ArpStringUtil.parseFloatDefault(array[1], 0.0);
 		var xy = arp.utils.ArpStringUtil.parseFloatDefault(array[2], 0.0);
@@ -80,9 +81,9 @@ public var impl(default, null):MatrixImpl;
 	}
 
 	inline public function readData(data:Array<Float>):ArpTransform {
-		if (data.length < 6) return cast this;
+		if (data.length < 6) return this;
 		this.impl.reset2d(data[0], data[1], data[2], data[3], data[4], data[5]);
-		return cast this;
+		return this;
 	}
 
 	inline public function toData(data:Array<Float> = null):Array<Float> {
@@ -97,22 +98,22 @@ public var impl(default, null):MatrixImpl;
 	}
 
 	public function clone():ArpTransform {
-		return new ArpTransform().copyFrom(cast this);
+		return new ArpTransform().copyFrom(this);
 	}
 
 	public function copyFrom(source:ArpTransform):ArpTransform {
 		this.impl.copyFrom(source.impl.raw);
-		return cast this;
+		return this;
 	}
 
 	public function readPoint(pt:PointImpl):ArpTransform {
 		this.impl.reset2d(1, 0, 0, 1, pt.x, pt.y);
-		return cast this;
+		return this;
 	}
 
 	public function readMatrix(matrix:MatrixImpl):ArpTransform {
 		this.impl.copyFrom(matrix.raw);
-		return cast this;
+		return this;
 	}
 
 	inline private function setOrAllocPointImpl(x:Float, y:Float, pt:PointImpl = null) {
@@ -135,26 +136,26 @@ public var impl(default, null):MatrixImpl;
 	public function setXY(x:Float, y:Float):ArpTransform {
 		this.impl.tx = x;
 		this.impl.ty = y;
-		return cast this;
+		return this;
 	}
 
 	public function prependTransform(transform:ArpTransform):ArpTransform {
 		this.impl.prependMatrix(transform.impl);
-		return cast this;
+		return this;
 	}
 
 	public function prependXY(x:Float, y:Float):ArpTransform {
 		this.impl.prependXY(x, y);
-		return cast this;
+		return this;
 	}
 
 	public function appendTransform(transform:ArpTransform):ArpTransform {
 		this.impl.appendMatrix(transform.impl);
-		return cast this;
+		return this;
 	}
 
 	public function appendXY(x:Float, y:Float):ArpTransform {
 		this.impl.appendXY(x, y);
-		return cast this;
+		return this;
 	}
 }
