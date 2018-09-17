@@ -17,13 +17,14 @@ class ArpTransform implements IArpTransform implements IArpStruct {
 
 	public var impl(default, null):MatrixImpl;
 
-	public var raw(get, never):Matrix;
-	inline private function get_raw():Matrix return impl.raw;
+	// XXX
+	// public var raw(get, never):Matrix;
+	// inline private function get_raw():Matrix return impl.raw;
 
 	public function new() impl = new MatrixImpl(new Matrix());
 
 	inline public function reset(a:Float = 1, b:Float = 0, c:Float = 0, d:Float = 1, tx:Float = 0, ty:Float = 0):ArpTransform {
-		this.raw.setTo(a, b, c, d, tx, ty);
+		this.impl.setTo(a, b, c, d, tx, ty);
 		return this;
 	}
 
@@ -37,18 +38,18 @@ class ArpTransform implements IArpTransform implements IArpStruct {
 
 	inline public function readData(data:Array<Float>):ArpTransform {
 		if (data.length < 6) return this;
-		this.raw.setTo(data[0], data[1], data[2], data[3], data[4], data[5]);
+		this.impl.setTo(data[0], data[1], data[2], data[3], data[4], data[5]);
 		return this;
 	}
 
 	inline public function toData(data:Array<Float> = null):Array<Float> {
 		if (data == null) data = [];
-		data[0] = this.raw.a;
-		data[1] = this.raw.b;
-		data[2] = this.raw.c;
-		data[3] = this.raw.d;
-		data[4] = this.raw.tx;
-		data[5] = this.raw.ty;
+		data[0] = this.impl.a;
+		data[1] = this.impl.b;
+		data[2] = this.impl.c;
+		data[3] = this.impl.d;
+		data[4] = this.impl.tx;
+		data[5] = this.impl.ty;
 		return data;
 	}
 
@@ -57,17 +58,17 @@ class ArpTransform implements IArpTransform implements IArpStruct {
 	}
 
 	public function copyFrom(source:ArpTransform):ArpTransform {
-		this.raw.copyFrom(source.raw);
+		this.impl.copyFrom(source.impl.raw);
 		return this;
 	}
 
 	public function readPoint(pt:PointImpl):ArpTransform {
-		this.raw.setTo(1, 0, 0, 1, pt.x, pt.y);
+		this.impl.setTo(1, 0, 0, 1, pt.x, pt.y);
 		return this;
 	}
 
 	public function readMatrix(matrix:MatrixImpl):ArpTransform {
-		this.raw.copyFrom(matrix.raw);
+		this.impl.copyFrom(matrix.raw);
 		return this;
 	}
 
@@ -78,41 +79,41 @@ class ArpTransform implements IArpTransform implements IArpStruct {
 	}
 
 	public function asPoint(pt:PointImpl = null):PointImpl {
-		if (this.raw.a == 1 && this.raw.b == 0 && this.raw.c == 0 && this.raw.d == 1) {
-			return setOrAllocPointImpl(this.raw.tx, this.raw.ty, pt);
+		if (this.impl.a == 1 && this.impl.b == 0 && this.impl.c == 0 && this.impl.d == 1) {
+			return setOrAllocPointImpl(this.impl.tx, this.impl.ty, pt);
 		}
 		return null;
 	}
 
 	public function toPoint(pt:PointImpl = null):PointImpl {
-		return setOrAllocPointImpl(this.raw.tx, this.raw.ty, pt);
+		return setOrAllocPointImpl(this.impl.tx, this.impl.ty, pt);
 	}
 
 	public function setXY(x:Float, y:Float):ArpTransform {
-		this.raw.tx = x;
-		this.raw.ty = y;
+		this.impl.tx = x;
+		this.impl.ty = y;
 		return this;
 	}
 
 	public function prependTransform(transform:ArpTransform):ArpTransform {
-		var matrix:MatrixImpl = transform.raw.clone();
-		matrix.concat(this.raw);
+		var matrix:MatrixImpl = transform.impl.raw.clone();
+		matrix.concat(this.impl.raw);
 		this.impl = matrix;
 		return this;
 	}
 
 	public function prependXY(x:Float, y:Float):ArpTransform {
-		this.raw.translate(x * this.raw.a + y * this.raw.c, x * this.raw.b + y * this.raw.d);
+		this.impl.translate(x * this.impl.a + y * this.impl.c, x * this.impl.b + y * this.impl.d);
 		return this;
 	}
 
 	public function appendTransform(transform:ArpTransform):ArpTransform {
-		this.raw.concat(transform.raw);
+		this.impl.concat(transform.impl.raw);
 		return this;
 	}
 
 	public function appendXY(x:Float, y:Float):ArpTransform {
-		this.raw.translate(x, y);
+		this.impl.translate(x, y);
 		return this;
 	}
 }

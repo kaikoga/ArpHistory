@@ -26,7 +26,7 @@ class ArpTransformFlashCase {
 	}
 
 	public function testRaw():Void {
-		var matrix:Matrix = me.raw;
+		var matrix:Matrix = me.impl.raw;
 		assertEquals(1.0, matrix.a);
 		assertEquals(0.0, matrix.b);
 		assertEquals(0.0, matrix.c);

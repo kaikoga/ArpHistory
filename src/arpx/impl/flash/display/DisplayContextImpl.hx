@@ -29,7 +29,7 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 	private var _workRect:Rectangle = new Rectangle();
 	inline public function fillRect(l:Int, t:Int, w:Int, h:Int, color:UInt):Void {
 		var workRect:Rectangle = this._workRect;
-		workRect.setTo(this.transform.raw.tx + l, this.transform.raw.ty + t, w, h);
+		workRect.setTo(this.transform.impl.tx + l, this.transform.impl.ty + t, w, h);
 		this.bitmapData.fillRect(workRect, color);
 	}
 

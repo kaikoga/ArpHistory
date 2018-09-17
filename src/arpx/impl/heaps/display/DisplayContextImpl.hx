@@ -40,11 +40,11 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 	private var _workMatrix:ArpTransform = new ArpTransform();
 	public function fillRect(l:Int, t:Int, w:Int, h:Int, color:UInt):Void {
 		var _workTransform:ArpTransform = _workMatrix;
-		_workTransform.raw._11 = w;
-		_workTransform.raw._22 = h;
-		_workTransform.raw._41 = l;
-		_workTransform.raw._42 = t;
-		var matrix:Matrix = dupTransform().prependTransform(_workTransform).raw;
+		_workTransform.impl._11 = w;
+		_workTransform.impl._22 = h;
+		_workTransform.impl._41 = l;
+		_workTransform.impl._42 = t;
+		var matrix:Matrix = dupTransform().prependTransform(_workTransform).impl.raw;
 		var tile:Tile = Tile.fromColor(color);
 		this.renderer.renderTile(matrix, tile);
 		popTransform();
@@ -52,11 +52,11 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 
 	public function drawTile(tile:Tile, r:Float = 1., g:Float = 1., b:Float = 1., a:Float = 1.):Void {
 		var _workTransform:ArpTransform = _workMatrix;
-		_workTransform.raw._11 = tile.width;
-		_workTransform.raw._22 = tile.height;
-		_workTransform.raw._41 = 0;
-		_workTransform.raw._42 = 0;
-		var matrix:Matrix = dupTransform().prependTransform(_workTransform).raw;
+		_workTransform.impl._11 = tile.width;
+		_workTransform.impl._22 = tile.height;
+		_workTransform.impl._41 = 0;
+		_workTransform.impl._42 = 0;
+		var matrix:Matrix = dupTransform().prependTransform(_workTransform).impl.raw;
 		this.renderer.renderTile(matrix, tile, r, g, b, a);
 		popTransform();
 	}

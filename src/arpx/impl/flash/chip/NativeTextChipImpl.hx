@@ -58,7 +58,7 @@ class NativeTextChipImpl extends ArpObjectImplBase implements IChipImpl {
 		if (params != null) text = params.get("face");
 		if (text == null) text = "null";
 		this.visual.text = text;
-		context.bitmapData.draw(this.visual, context.transform.raw);
+		context.bitmapData.draw(this.visual, context.transform.impl.raw);
 		context.popTransform();
 	}
 

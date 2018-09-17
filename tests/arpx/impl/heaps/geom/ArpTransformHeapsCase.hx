@@ -26,7 +26,7 @@ class ArpTransformHeapsCase {
 	}
 
 	public function testRaw():Void {
-		var matrix:Matrix = me.raw;
+		var matrix:Matrix = me.impl.raw;
 		assertEquals(1.0, matrix._11);
 		assertEquals(0.0, matrix._21);
 		assertEquals(0.0, matrix._12);
