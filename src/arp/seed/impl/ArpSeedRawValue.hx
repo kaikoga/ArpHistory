@@ -14,7 +14,7 @@ class ArpSeedRawValue extends ArpSeed {
 	private var _env:ArpSeedEnv;
 
 	public function new(key:String, value:String, env:ArpSeedEnv) {
-		super("value", null, null, null);
+		super("value", null);
 		this._key = key;
 		this._value = value;
 		this._env = env;

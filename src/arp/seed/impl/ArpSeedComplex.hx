@@ -1,6 +1,5 @@
 package arp.seed.impl;
 
-import arp.iterators.SimpleArrayIterator;
 import arp.seed.ArpSeedValueKind;
 
 class ArpSeedComplex extends ArpSeed {
@@ -8,13 +7,10 @@ class ArpSeedComplex extends ArpSeed {
 	private var _key:String;
 	private var _env:ArpSeedEnv;
 
-	private var children:Array<ArpSeed>;
-
 	public function new(typeName:String, className:String, name:String, heat:String, key:String, children:Array<ArpSeed>, env:ArpSeedEnv) {
-		super(typeName, className, name, heat);
+		super(typeName, new ArpSeedElement(className, name, heat, children));
 		this._key = key;
 		this._env = env;
-		this.children = children;
 	}
 
 	override private function get_key():String return this._key;
@@ -23,5 +19,5 @@ class ArpSeedComplex extends ArpSeed {
 	override private function get_valueKind():ArpSeedValueKind return ArpSeedValueKind.None;
 	override private function get_isSimple():Bool return false;
 
-	override public function iterator():Iterator<ArpSeed> return new SimpleArrayIterator(this.children);
+	override public function iterator():Iterator<ArpSeed> return this.element.iterator();
 }

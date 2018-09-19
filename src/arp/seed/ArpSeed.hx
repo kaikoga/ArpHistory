@@ -17,10 +17,16 @@ class ArpSeed {
 		- ArpSeedRawValue is used when iterating simple ArpSeed (they are treated as Literal)
 	 */
 
+	private var element:ArpSeedElement;
+
 	public var typeName(default, null):String;
-	public var className(default, null):String;
-	public var name(default, null):String;
-	public var heat(default, null):String;
+
+	public var className(get, never):String;
+	inline private function get_className():String return if (element != null) element.className else null;
+	public var name(get, never):String;
+	inline private function get_name():String return if (element != null) element.name else null;
+	public var heat(get, never):String;
+	inline private function get_heat():String return if (element != null) element.heat else null;
 
 	public var key(get, never):String;
 	public var value(get, never):String;
@@ -28,11 +34,9 @@ class ArpSeed {
 	public var valueKind(get, never):ArpSeedValueKind;
 	public var isSimple(get, never):Bool;
 
-	private function new(typeName:String, className:String, name:String, heat:String) {
+	private function new(typeName:String, element:ArpSeedElement = null) {
 		this.typeName = typeName;
-		this.className = className;
-		this.name = name;
-		this.heat = heat;
+		this.element = element;
 	}
 
 	private function get_key():String throw "not implemented";

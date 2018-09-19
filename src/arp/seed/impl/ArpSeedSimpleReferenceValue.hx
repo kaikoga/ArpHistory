@@ -7,7 +7,7 @@ class ArpSeedSimpleReferenceValue extends ArpSeed {
 	private var rawValue:ArpSeedRawValue;
 
 	public function new(typeName:String, key:String, value:String, env:ArpSeedEnv) {
-		super(typeName, null, null, null);
+		super(typeName, null);
 		this.rawValue = new ArpSeedRawValue(key, value, env);
 	}
 
