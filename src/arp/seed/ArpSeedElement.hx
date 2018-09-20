@@ -9,14 +9,11 @@ class ArpSeedElement {
 	public var heat(default, null):String;
 
 	public var isSimple(default, null):Bool = true;
+	public var value(default, null):Null<String>;
+	public var valueKind(get, never):ArpSeedValueKind;
+	private function get_valueKind():ArpSeedValueKind return if (this.isSimple) ArpSeedValueKind.Literal else ArpSeedValueKind.None;
 
 	private var children:Array<ArpSeed>;
-	private var delegate:Null<ArpSeed>;
-
-	public var key(get, never):String;
-	inline private function get_key():Null<String> return if (delegate != null) delegate.key else null;
-	public var value(get, never):String;
-	inline private function get_value():Null<String> return if (delegate != null) delegate.value else null;
 
 	public function new(className:String, name:String, heat:String, children:Array<ArpSeed>) {
 		this.className = className;
@@ -25,10 +22,10 @@ class ArpSeedElement {
 		this.children = children;
 		for (child in children) {
 			if (child.typeName == "value") {
-				this.delegate = child;
+				this.value = child.value;
 			} else {
 				isSimple = false;
-				this.delegate = null;
+				this.value = null;
 				break;
 			}
 		}

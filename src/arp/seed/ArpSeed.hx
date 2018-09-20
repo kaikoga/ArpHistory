@@ -5,35 +5,30 @@ import Xml.XmlType;
 
 class ArpSeed {
 
-	private var element:ArpSeedElement;
-
 	public var typeName(default, null):String;
+	public var key(default, null):String;
+	public var env(default, null):ArpSeedEnv;
 
-	public var className(get, never):String;
-	inline private function get_className():String return if (element != null) element.className else null;
-	public var name(get, never):String;
-	inline private function get_name():String return if (element != null) element.name else null;
-	public var heat(get, never):String;
-	inline private function get_heat():String return if (element != null) element.heat else null;
-
-	public var key(get, never):String;
 	public var value(get, never):String;
-	public var env(get, never):ArpSeedEnv;
 	public var valueKind(get, never):ArpSeedValueKind;
 	public var isSimple(get, never):Bool;
 
-	private function new(typeName:String, element:ArpSeedElement = null) {
+	public var className(get, never):String;
+	public var name(get, never):String;
+	public var heat(get, never):String;
+	public function iterator():Iterator<ArpSeed> throw "not implemented";
+
+	private function new(typeName:String) {
 		this.typeName = typeName;
-		this.element = element;
 	}
 
-	private function get_key():String throw "not implemented";
 	private function get_value():String throw "not implemented";
-	private function get_env():ArpSeedEnv throw "not implemented";
 	private function get_valueKind():ArpSeedValueKind throw "not implemented";
 	private function get_isSimple():Bool throw "not implemented";
 
-	public function iterator():Iterator<ArpSeed> throw "not implemented";
+	private function get_className():String throw "not implemented";
+	private function get_name():String throw "not implemented";
+	private function get_heat():String throw "not implemented";
 
 	inline public static function fromXmlBytes(bytes:Bytes, env:ArpSeedEnv = null):ArpSeed {
 		return new ArpXmlSeedReader().parseXmlBytes(bytes, env);
