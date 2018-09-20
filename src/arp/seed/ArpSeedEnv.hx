@@ -4,51 +4,66 @@ import arp.utils.ArpStringUtil;
 
 abstract ArpSeedEnv(ArpSeedEnvNode) {
 
-	inline public static function empty():ArpSeedEnv return new ArpSeedEnv(ArpSeedEnvNode.empty());
+	inline public static function empty():ArpSeedEnv return new ArpSeedEnv(ArpSeedEnvNode.empty);
 
 	inline private function new(impl:ArpSeedEnvNode) this = impl;
 
 	inline public function get(key:String):String {
-		return this.get(key);
+		return this.get(key).value;
+	}
+
+	inline public function getDefaultSeeds(key:String):Array<ArpSeed> {
+		return this.get('default.$key').seeds;
 	}
 
 	inline public function getDefaultClass(key:String):String {
-		return this.get('default.$key');
+		return this.get('default.$key').value;
 	}
 
 	inline public function getUnit(unit:String):Float {
-		return ArpStringUtil.parseFloatDefault(this.get('unit.$unit'), 1.0);
+		return ArpStringUtil.parseFloatDefault(this.get('unit.$unit').value, 1.0);
 	}
 
 	inline public function add(key:String, value:String):Void {
-		this = new ArpSeedEnvNode(key, value, this);
+		this = new ArpSeedEnvNode(key, value, [], this);
+	}
+
+	inline public function addSeeds(key:String, value:String, seeds:Array<ArpSeed>):Void {
+		this = new ArpSeedEnvNode(key, value, seeds, this);
 	}
 }
 
 private class ArpSeedEnvNode {
 
 	private var key:String;
-	private var value:String;
+	public var value(default, null):String;
+	public var seeds(default, null):Array<ArpSeed>;
 	private var rest:ArpSeedEnvNode;
-	private var map:Map<String, String>;
+	private var map:Map<String, ArpSeedEnvNode>;
 
-	inline public static function empty():ArpSeedEnvNode return new ArpSeedEnvNode(null, null, null);
+	private static var _empty:ArpSeedEnvNode;
+	public static var empty(get, never):ArpSeedEnvNode;
+	private static function get_empty():ArpSeedEnvNode return if (_empty != null) _empty else _empty = new ArpSeedEnvNode(null, null, [], null);
 
-	public function new(key:String, value:String, rest:ArpSeedEnvNode) {
+	public function new(key:String, value:String, seeds:Array<ArpSeed>, rest:ArpSeedEnvNode) {
 		this.key = key;
 		this.value = value;
+		this.seeds = seeds;
 		this.rest = rest;
 	}
 
-	public function get(key:String):String {
-		if (this.map == null) {
-			this.map = new Map<String, String>();
-			var n:ArpSeedEnvNode = this;
-			while (n.key != null) {
-				this.map.set(n.key, n.value);
-				n = n.rest;
-			}
+	public function get(key:String):ArpSeedEnvNode {
+		if (this.map == null) this.compile();
+		var n = this.map.get(key);
+		return (n != null) ? n : empty;
+	}
+
+	inline private function compile():Void {
+		this.map = new Map<String, ArpSeedEnvNode>();
+		var n = this;
+		while (n.key != null) {
+			this.map.set(n.key, n);
+			n = n.rest;
 		}
-		return this.map.get(key);
 	}
 }

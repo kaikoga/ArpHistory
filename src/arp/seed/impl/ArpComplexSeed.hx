@@ -1,5 +1,6 @@
 package arp.seed.impl;
 
+import arp.iterators.SimpleArrayIterator;
 import arp.seed.ArpSeedValueKind;
 
 class ArpComplexSeed extends ArpSeed {
@@ -21,5 +22,5 @@ class ArpComplexSeed extends ArpSeed {
 	override private function get_name():String return element.name;
 	override private function get_heat():String return element.heat;
 
-	override public function iterator():Iterator<ArpSeed> return this.element.iterator();
+	override public function iterator():Iterator<ArpSeed> return new SimpleArrayIterator(this.env.getDefaultSeeds(this.typeName).concat(this.element.children));
 }

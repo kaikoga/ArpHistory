@@ -86,7 +86,7 @@ class ArpXmlSeedReader {
 			switch (node.nodeType) {
 				case XmlType.Element:
 					if (node.nodeName == "env") {
-						env.add(node.get("name"), node.get("value"));
+						env = parseEnv(node, env);
 					} else {
 						if (children == null) children = [];
 						children.push(parseInternal(node, idGen.next(), env));
@@ -101,5 +101,37 @@ class ArpXmlSeedReader {
 		if (children == null) children = [];
 		if (value != null) children.push(new ArpSimpleSeed("value", key, value, env, ArpSeedValueKind.Literal));
 		return new ArpComplexSeed(typeName, className, name, key, heat, children, env);
+	}
+
+	private function parseEnv(xml:Xml, env:ArpSeedEnv):ArpSeedEnv {
+		var innerEnv:ArpSeedEnv = env;
+		var idGen:ArpIdGenerator = new ArpIdGenerator();
+		var name:String = null;
+		var value:String = null;
+		var seeds:Array<ArpSeed> = [];
+		for (attrName in xml.attributes()) {
+			var attr:String = xml.get(attrName);
+			switch (attrName) {
+				case "name": name = attr;
+				case "value": value = attr;
+				case _: seeds.push(new ArpSimpleSeed(attrName, idGen.next(), attr, env, ArpSeedValueKind.Ambigious));
+			}
+		}
+		for (node in xml) {
+			switch (node.nodeType) {
+				case XmlType.Element:
+					if (node.nodeName == "env") {
+						innerEnv = parseEnv(node, innerEnv);
+					} else {
+						seeds.push(parseInternal(node, idGen.next(), innerEnv));
+					}
+				case XmlType.PCData, XmlType.CData:
+					if (value == null) value = "";
+					value += node.nodeValue;
+				case _: // ignore
+			}
+		}
+		env.addSeeds(name, value, seeds);
+		return env;
 	}
 }
