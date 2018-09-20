@@ -26,7 +26,7 @@ class ArpSeedEnvCase {
 		}
 	};
 
-	public function testAdd():Void {
+	public function testDiverge():Void {
 		var env1:ArpSeedEnv = ArpSeedEnv.empty();
 		assertMatch(null, env1.get("key"));
 		env1.add("key", "value");
@@ -39,6 +39,16 @@ class ArpSeedEnvCase {
 		assertMatch(null, env1.get("key2"));
 		assertMatch(null, env2.get("key1"));
 		assertMatch("value2", env2.get("key2"));
+	}
+
+	public function testOverride():Void {
+		var env1:ArpSeedEnv = ArpSeedEnv.empty();
+		env1.add("key", "value1");
+		assertMatch("value1", env1.get("key"));
+		var env2:ArpSeedEnv = env1;
+		env2.add("key", "value2");
+		assertMatch("value1", env1.get("key"));
+		assertMatch("value2", env2.get("key"));
 	}
 
 	public function testDefaultClass():Void {

@@ -60,10 +60,12 @@ private class ArpSeedEnvNode {
 
 	inline private function compile():Void {
 		this.map = new Map<String, ArpSeedEnvNode>();
-		var n = this;
-		while (n.key != null) {
-			this.map.set(n.key, n);
-			n = n.rest;
-		}
+		recCompile(this.map, this);
+	}
+
+	private static function recCompile(map:Map<String, ArpSeedEnvNode>, node:ArpSeedEnvNode):Void {
+		if (node.key == null) return;
+		recCompile(map, node.rest);
+		map.set(node.key, node);
 	}
 }
