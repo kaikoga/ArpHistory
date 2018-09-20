@@ -5,18 +5,6 @@ import Xml.XmlType;
 
 class ArpSeed {
 
-	/*
-		ArpSeed implementations:
-		- Plain values:
-		  - ArpSeedSimpleReferenceValue is Reference
-		  - ArpSeedSimpleAmbigiousValue is Ambigious
-		  - ArpSeedSimpleLiteralValue is Literal
-		- Complex values (all of them are Literal):
-		  - ArpSeedSimpleObject has single child
-		  - ArpSeedComplex has children
-		- ArpSeedRawValue is used when iterating simple ArpSeed (they are treated as Literal)
-	 */
-
 	private var element:ArpSeedElement;
 
 	public var typeName(default, null):String;
