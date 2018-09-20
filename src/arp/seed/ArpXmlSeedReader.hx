@@ -1,10 +1,7 @@
 package arp.seed;
 
-import arp.seed.impl.legacy.ArpSeedComplex;
-import arp.seed.impl.legacy.ArpSeedSimpleObject;
-import arp.seed.impl.legacy.ArpSeedSimpleAmbigiousValue;
-import arp.seed.impl.legacy.ArpSeedSimpleLiteralValue;
-import arp.seed.impl.legacy.ArpSeedSimpleReferenceValue;
+import arp.seed.impl.ArpComplexSeed;
+import arp.seed.impl.ArpSimpleSeed;
 import arp.utils.ArpIdGenerator;
 import haxe.io.Bytes;
 import Xml.XmlType;
@@ -45,7 +42,7 @@ class ArpXmlSeedReader {
 		switch (xml.nodeType) {
 			case XmlType.Document: xml = xml.firstElement();
 			case XmlType.Element:
-			case _: return new ArpSeedSimpleAmbigiousValue(xml.nodeName, uniqId, xml.nodeValue, env);
+			case _: return new ArpSimpleSeed(xml.nodeName, uniqId, xml.nodeValue, env, ArpSeedValueKind.Ambigious);
 		}
 
 		var idGen:ArpIdGenerator = new ArpIdGenerator();
@@ -79,11 +76,11 @@ class ArpXmlSeedReader {
 				case _:
 					// NOTE leaf seeds by xml attr are also treated as ref; text nodes are not
 					if (children == null) children = [];
-					children.push(new ArpSeedSimpleAmbigiousValue(attrName, idGen.next(), attr, env));
+					children.push(new ArpSimpleSeed(attrName, idGen.next(), attr, env, ArpSeedValueKind.Ambigious));
 			}
 		}
 
-		if (ref != null) return new ArpSeedSimpleReferenceValue(typeName, key, ref, env);
+		if (ref != null) return new ArpSimpleSeed(typeName, key, ref, env, ArpSeedValueKind.Reference);
 
 		for (node in xml) {
 			switch (node.nodeType) {
@@ -101,10 +98,8 @@ class ArpXmlSeedReader {
 			}
 		}
 
-		if (children == null) {
-			return new ArpSeedSimpleObject(typeName, className, name, heat, key, value, env);
-		}
-		if (value != null) children.push(new ArpSeedSimpleLiteralValue("value", idGen.next(), value, env));
-		return new ArpSeedComplex(typeName, className, name, heat, key, children, env);
+		if (children == null) children = [];
+		if (value != null) children.push(new ArpSimpleSeed("value", key, value, env, ArpSeedValueKind.Literal));
+		return new ArpComplexSeed(typeName, className, name, key, heat, children, env);
 	}
 }
