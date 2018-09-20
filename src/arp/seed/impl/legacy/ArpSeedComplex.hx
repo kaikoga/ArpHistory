@@ -1,4 +1,4 @@
-package arp.seed.impl;
+package arp.seed.impl.legacy;
 
 import arp.seed.ArpSeedValueKind;
 

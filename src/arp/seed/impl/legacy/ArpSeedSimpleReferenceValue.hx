@@ -1,8 +1,8 @@
-package arp.seed.impl;
+package arp.seed.impl.legacy;
 
 import arp.seed.ArpSeedValueKind;
 
-class ArpSeedSimpleAmbigiousValue extends ArpSeed {
+class ArpSeedSimpleReferenceValue extends ArpSeed {
 
 	private var rawValue:ArpSeedRawValue;
 
@@ -14,7 +14,7 @@ class ArpSeedSimpleAmbigiousValue extends ArpSeed {
 	override private function get_key():String return this.rawValue._key;
 	override private function get_value():String return this.rawValue._value;
 	override private function get_env():ArpSeedEnv return this.rawValue._env;
-	override private function get_valueKind():ArpSeedValueKind return ArpSeedValueKind.Ambigious;
+	override private function get_valueKind():ArpSeedValueKind return ArpSeedValueKind.Reference;
 	override private function get_isSimple():Bool return true;
 
 	override public function iterator():Iterator<ArpSeed> return this.rawValue.iterator();

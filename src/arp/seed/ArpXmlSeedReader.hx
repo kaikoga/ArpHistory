@@ -1,10 +1,10 @@
 package arp.seed;
 
-import arp.seed.impl.ArpSeedComplex;
-import arp.seed.impl.ArpSeedSimpleObject;
-import arp.seed.impl.ArpSeedSimpleAmbigiousValue;
-import arp.seed.impl.ArpSeedSimpleLiteralValue;
-import arp.seed.impl.ArpSeedSimpleReferenceValue;
+import arp.seed.impl.legacy.ArpSeedComplex;
+import arp.seed.impl.legacy.ArpSeedSimpleObject;
+import arp.seed.impl.legacy.ArpSeedSimpleAmbigiousValue;
+import arp.seed.impl.legacy.ArpSeedSimpleLiteralValue;
+import arp.seed.impl.legacy.ArpSeedSimpleReferenceValue;
 import arp.utils.ArpIdGenerator;
 import haxe.io.Bytes;
 import Xml.XmlType;

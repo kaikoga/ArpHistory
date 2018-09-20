@@ -1,14 +1,14 @@
-package arp.seed.impl;
+package arp.seed.impl.legacy;
 
 import arp.seed.ArpSeedValueKind;
 
-class ArpSeedSimpleObject extends ArpSeed {
+class ArpSeedSimpleLiteralValue extends ArpSeed {
 
 	private var rawValue:ArpSeedRawValue;
 
-	public function new(typeName:String, className:String, name:String, heat:String, key:String, value:String, env:ArpSeedEnv) {
-		rawValue = new ArpSeedRawValue(key, value, env);
-		super(typeName, new ArpSeedElement(className, name, heat, if (value != null) [rawValue] else []));
+	public function new(typeName:String, key:String, value:String, env:ArpSeedEnv) {
+		super(typeName, null);
+		this.rawValue = new ArpSeedRawValue(key, value, env);
 	}
 
 	override private function get_key():String return this.rawValue._key;
@@ -17,5 +17,5 @@ class ArpSeedSimpleObject extends ArpSeed {
 	override private function get_valueKind():ArpSeedValueKind return ArpSeedValueKind.Literal;
 	override private function get_isSimple():Bool return true;
 
-	override public function iterator():Iterator<ArpSeed> return this.element.iterator();
+	override public function iterator():Iterator<ArpSeed> return this.rawValue.iterator();
 }
