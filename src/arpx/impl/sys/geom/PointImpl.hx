@@ -4,14 +4,17 @@ package arpx.impl.sys.geom;
 
 class PointImpl {
 
-	// dummy
+	public var raw(get, never):PointImpl;
+	inline private function get_raw():PointImpl return this;
+
 	public var x:Float;
-	// dummy
 	public var y:Float;
 
 	public function new() return;
 
 	inline public static function alloc(x:Float = 0, y:Float = 0) return new PointImpl();
+
+	inline public function reset(x:Float = 0, y:Float = 0):Void return;
 
 	inline public function transform(matrix:MatrixImpl):Void return;
 }

@@ -4,6 +4,9 @@ package arpx.impl.sys.geom;
 
 class MatrixImpl {
 
+	public var raw(get, never):MatrixImpl;
+	inline private function get_raw():MatrixImpl return this;
+
 	public var xx:Float;
 	public var yx:Float;
 	public var xy:Float;
@@ -21,7 +24,7 @@ class MatrixImpl {
 
 	inline public function invert():Void return;
 
-	inline public function prependTransform(matrix:MatrixImpl):Void return;
+	inline public function prependMatrix(matrix:MatrixImpl):Void return;
 	inline public function prependXY(x:Float, y:Float):Void return;
 	inline public function appendMatrix(matrix:MatrixImpl):Void return;
 	inline public function appendXY(x:Float, y:Float):Void return;
