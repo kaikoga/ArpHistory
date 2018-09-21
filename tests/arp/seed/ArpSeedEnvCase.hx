@@ -72,25 +72,12 @@ class ArpSeedEnvCase {
 		assertTrue(env == ArpSeedEnv.empty());
 	}
 
-	public function testXmlEnv():Void {
-		var xml:Xml = Xml.parse('<root><env name="default.key" value="value" /></root>').firstElement();
-		var env:ArpSeedEnv = ArpSeed.fromXml(xml).env;
-		assertTrue(env != null);
-		assertTrue(env != ArpSeedEnv.empty());
-		assertMatch("value", env.get("default.key"));
-		assertMatch("value", env.getDefaultClass("key"));
-	}
-
 	public function testXmlEnvSeedsRootScope():Void {
 		var xml:Xml = Xml.parse('<key dummy="root"><env name="default.key" value="value" a="b"><c /></env></key>').firstElement();
 		var seed:ArpSeed = ArpSeed.fromXml(xml);
 		var env:ArpSeedEnv = seed.env;
 		assertTrue(env != null);
-		assertTrue(env != ArpSeedEnv.empty());
-		assertMatch("value", env.get("default.key"));
-		assertMatch(2, env.getDefaultSeeds("key").length);
-		assertMatch("a", env.getDefaultSeeds("key")[0].typeName);
-		assertMatch("c", env.getDefaultSeeds("key")[1].typeName);
+		assertTrue(env == ArpSeedEnv.empty());
 	}
 
 	public function testXmlEnvSeedsIteratorRootScope():Void {
@@ -99,10 +86,6 @@ class ArpSeedEnvCase {
 		assertMatch({typeName: "key", className: null, name: null, key: autoKey, value: null, kind: "n"}, toHash(seed));
 		var iterator = seed.iterator();
 
-		assertTrue(iterator.hasNext());
-		assertMatch({typeName: "a", className: null, name: null, key: autoKey, value: "b", kind: "a"}, toHash(iterator.next()));
-		assertTrue(iterator.hasNext());
-		assertMatch({typeName: "c", className: null, name: null, key: autoKey, value: null, kind: "l"}, toHash(iterator.next()));
 		assertTrue(iterator.hasNext());
 		assertMatch({typeName: "dummy", className: null, name: null, key: autoKey, value: "root", kind: "a"}, toHash(iterator.next()));
 
