@@ -22,5 +22,11 @@ class ArpComplexSeed extends ArpSeed {
 	override private function get_name():String return element.name;
 	override private function get_heat():String return element.heat;
 
-	override public function iterator():Iterator<ArpSeed> return new SimpleArrayIterator(this.env.getDefaultSeeds(this.typeName).concat(this.element.children));
+	override public function iterator():Iterator<ArpSeed> {
+		return new SimpleArrayIterator(
+			this.env.getDefaultSeeds(this.typeName)
+				.concat(this.env.getDefaultClassSeeds(this.typeName, this.className))
+				.concat(this.element.children)
+		);
+	}
 }

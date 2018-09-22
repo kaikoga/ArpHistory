@@ -13,7 +13,11 @@ abstract ArpSeedEnv(ArpSeedEnvNode) {
 	}
 
 	inline public function getDefaultSeeds(key:String):Array<ArpSeed> {
-		return this.get('default.$key').seeds;
+		return this.get('seed.$key').seeds;
+	}
+
+	inline public function getDefaultClassSeeds(key:String, className:String):Array<ArpSeed> {
+		return this.get('seed.$key.$className').seeds;
 	}
 
 	inline public function getDefaultClass(key:String):String {
