@@ -12,6 +12,7 @@ import arpx.impl.flash.display.BitmapFontDrawCursor;
 #end
 
 import h2d.Tile;
+import h3d.mat.Data;
 import hxd.Pixels.Flags;
 import arpx.impl.cross.texture.ITextureImpl;
 import arpx.impl.cross.texture.decorators.MultiTextureImplBase;
@@ -50,6 +51,7 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> impl
 
 		bitmapFont.dispose();
 		this.tile = tileFromPremult(bitmapData);
+		this.tile.getTexture().filter = if (texture.smoothing) Filter.Linear else Filter.Nearest;
 		this.tile.getTexture().realloc = () -> { this.tile = null; this.arpHeatUp(); }
 
 		for (face in this.faces) @:privateAccess face.tile.setTexture(this.tile.innerTex);

@@ -6,6 +6,7 @@ import haxe.io.Bytes;
 import haxe.Resource;
 
 import h2d.Tile;
+import h3d.mat.Data;
 import hxd.fs.BytesFileSystem.BytesFileEntry;
 import hxd.fs.FileEntry;
 import hxd.res.Image;
@@ -40,7 +41,7 @@ class ResourceTextureImpl extends TextureImplBase implements ITextureImpl {
 
 		// private function onLoadComplete(image:Image):Void {
 		this.value = new Image(fileEntry).toTile();
-		// this.value.getTexture().filter = h3d.mat.Data.Filter.Nearest;
+		this.value.getTexture().filter = if (texture.smoothing) Filter.Linear else Filter.Nearest;
 		// this.texture.arpDomain.notifyFor(this.texture);
 		return true;
 	}

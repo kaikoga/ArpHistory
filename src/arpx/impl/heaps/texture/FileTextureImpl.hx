@@ -2,12 +2,14 @@ package arpx.impl.heaps.texture;
 
 #if arp_display_backend_heaps
 
-import arpx.impl.cross.texture.ITextureImpl;
-import arpx.impl.cross.texture.TextureFaceData;
 import h2d.Tile;
+import h3d.mat.Data;
 import hxd.fs.BytesFileSystem.BytesFileEntry;
 import hxd.fs.FileEntry;
 import hxd.res.Image;
+
+import arpx.impl.cross.texture.ITextureImpl;
+import arpx.impl.cross.texture.TextureFaceData;
 import arpx.impl.cross.texture.TextureImplBase;
 import arpx.structs.IArpParamsRead;
 import arpx.texture.FileTexture;
@@ -35,6 +37,7 @@ class FileTextureImpl extends TextureImplBase implements ITextureImpl {
 
 		// private function onLoadComplete(image:Image):Void {
 		this.value = new Image(fileEntry).toTile();
+		this.value.getTexture().filter = if (texture.smoothing) Filter.Linear else Filter.Nearest;
 		// this.texture.arpDomain.notifyFor(this.texture);
 		return true;
 	}
