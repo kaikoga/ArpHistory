@@ -45,7 +45,7 @@ class ArpEngineShell extends ArpEngineShellBase {
 		var bitmap:Bitmap = new Bitmap(bitmapData, PixelSnapping.NEVER, true);
 		bitmap.transform.matrix = new Matrix();
 		Lib.current.addChild(bitmap);
-		return new DisplayContext(bitmapData, new Transform().reset(scaleX, 0, 0, scaleY, 0, 0), this.clearColor);
+		return new DisplayContext(bitmapData, new ArpTransform().reset(scaleX, 0, 0, scaleY, 0, 0), this.clearColor);
 #end
 	}
 }
