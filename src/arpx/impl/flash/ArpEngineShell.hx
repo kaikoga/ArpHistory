@@ -32,21 +32,20 @@ class ArpEngineShell extends ArpEngineShellBase {
 	}
 
 	override private function createDisplayContext():DisplayContext {
-#if true
-		// canvas scaling
-		var bitmapData:BitmapData = new BitmapData(this.width, this.height, true, this.clearColor);
-		var bitmap:Bitmap = new Bitmap(bitmapData, PixelSnapping.NEVER, false);
-		bitmap.transform.matrix = new Matrix(scaleX, 0, 0, scaleY, 0, 0);
-		Lib.current.addChild(bitmap);
-		return new DisplayContext(bitmapData, new ArpTransform(), this.clearColor);
-#else
-		// logical scaling
-		var bitmapData:BitmapData = new BitmapData(Math.ceil(this.width * this.scaleX), Math.ceil(this.height * this.scaleY), true, this.clearColor);
-		var bitmap:Bitmap = new Bitmap(bitmapData, PixelSnapping.NEVER, true);
-		bitmap.transform.matrix = new Matrix();
-		Lib.current.addChild(bitmap);
-		return new DisplayContext(bitmapData, new ArpTransform().reset(scaleX, 0, 0, scaleY, 0, 0), this.clearColor);
-#end
+		switch (bufferMode) {
+			case ArpEngineShellBufferMode.Automatic, ArpEngineShellBufferMode.Logical:
+				var bitmapData:BitmapData = new BitmapData(this.width, this.height, true, this.clearColor);
+				var bitmap:Bitmap = new Bitmap(bitmapData, PixelSnapping.NEVER, false);
+				bitmap.transform.matrix = new Matrix(scaleX, 0, 0, scaleY, 0, 0);
+				Lib.current.addChild(bitmap);
+				return new DisplayContext(bitmapData, new ArpTransform(), this.clearColor);
+			case ArpEngineShellBufferMode.Screen, ArpEngineShellBufferMode.Device /* Device scaling is todo */:
+				var bitmapData:BitmapData = new BitmapData(Math.ceil(this.width * this.scaleX), Math.ceil(this.height * this.scaleY), true, this.clearColor);
+				var bitmap:Bitmap = new Bitmap(bitmapData, PixelSnapping.NEVER, true);
+				bitmap.transform.matrix = new Matrix();
+				Lib.current.addChild(bitmap);
+				return new DisplayContext(bitmapData, new ArpTransform().reset(scaleX, 0, 0, scaleY, 0, 0), this.clearColor);
+		}
 	}
 }
 

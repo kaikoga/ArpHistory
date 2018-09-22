@@ -1,5 +1,6 @@
 package arpx.impl.cross;
 
+import arpx.ArpEngineShellBufferMode;
 import arpx.impl.cross.display.DisplayContext;
 import arpx.impl.cross.display.RenderContext;
 import arp.domain.ArpDomain;
@@ -19,6 +20,7 @@ class ArpEngineShellBase {
 	private var height:Int;
 	private var scaleX:Float = 1.0;
 	private var scaleY:Float = 1.0;
+	private var bufferMode:ArpEngineShellBufferMode;
 	private var clearColor:UInt;
 
 	private dynamic function _start():Void return;
@@ -33,6 +35,7 @@ class ArpEngineShellBase {
 		this.height = params.height;
 		if (params.scaleX != null) this.scaleX = params.scaleX;
 		if (params.scaleY != null) this.scaleY = params.scaleY;
+		this.bufferMode = if (params.bufferMode != null) params.bufferMode else ArpEngineShellBufferMode.Logical;
 		this.clearColor = params.clearColor | 0xff000000;
 		this.domain.tick.push(this.onDomainFirstTick);
 		if (params.start != null) this._start = params.start;
