@@ -14,11 +14,11 @@ class SelectChip extends Chip {
 
 	@:arpImpl private var arpImpl:SelectChipImpl;
 
-	override private function get_chipWidth():Int return this.select(null).chipWidth;
-	override private function get_chipHeight():Int return this.select(null).chipHeight;
+	override private function get_chipWidth():Float return this.select(null).chipWidth;
+	override private function get_chipHeight():Float return this.select(null).chipHeight;
 
-	override public function chipWidthOf(params:ArpParams):Int return this.select(params).chipWidthOf(params);
-	override public function chipHeightOf(params:ArpParams):Int return this.select(params).chipHeightOf(params);
+	override public function chipWidthOf(params:ArpParams):Float return this.select(params).chipWidthOf(params);
+	override public function chipHeightOf(params:ArpParams):Float return this.select(params).chipHeightOf(params);
 
 	public function new() super();
 

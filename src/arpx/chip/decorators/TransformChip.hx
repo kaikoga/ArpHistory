@@ -12,11 +12,11 @@ class TransformChip extends Chip {
 
 	@:arpImpl private var flashImpl:TranslateChipImpl;
 
-	override private function get_chipWidth():Int return Std.int(chip.chipWidth * transform.impl.xx);
-	override private function get_chipHeight():Int return Std.int(chip.chipHeight * transform.impl.yy);
+	override private function get_chipWidth():Float return chip.chipWidth * transform.impl.xx;
+	override private function get_chipHeight():Float return chip.chipHeight * transform.impl.yy;
 
-	override public function chipWidthOf(params:ArpParams):Int return Std.int(chip.chipWidthOf(params) * transform.impl.xx);
-	override public function chipHeightOf(params:ArpParams):Int return Std.int(chip.chipHeightOf(params) * transform.impl.yy);
+	override public function chipWidthOf(params:ArpParams):Float return chip.chipWidthOf(params) * transform.impl.xx;
+	override public function chipHeightOf(params:ArpParams):Float return chip.chipHeightOf(params) * transform.impl.yy;
 
 	public function new() super();
 }

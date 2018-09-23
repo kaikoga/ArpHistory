@@ -38,8 +38,8 @@ class TileMapBatchRenderer {
 
 	public function copyArea(context:RenderContext):Void {
 		var params:ArpParams = _workParams;
-		var chipWidth:Int = this.chip.chipWidth;
-		var chipHeight:Int = this.chip.chipHeight;
+		var chipWidth:Float = this.chip.chipWidth;
+		var chipHeight:Float = this.chip.chipHeight;
 
 		this.gridLeft = 0x7fffffff;
 		this.gridTop = 0x7fffffff;

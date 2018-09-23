@@ -13,14 +13,14 @@ class TextureChip extends Chip {
 	@:arpField public var baseX:Int;
 	@:arpField public var baseY:Int;
 
-	override private function get_chipWidth():Int return this.texture.width;
-	override private function get_chipHeight():Int return this.texture.height;
+	override private function get_chipWidth():Float return this.texture.width;
+	override private function get_chipHeight():Float return this.texture.height;
 
-	override public function chipWidthOf(params:ArpParams):Int {
+	override public function chipWidthOf(params:ArpParams):Float {
 		return if (params == null) this.chipWidth else this.texture.widthOf(params);
 	}
 
-	override public function chipHeightOf(params:ArpParams):Int {
+	override public function chipHeightOf(params:ArpParams):Float {
 		return if (params == null) this.chipHeight else this.texture.heightOf(params);
 	}
 

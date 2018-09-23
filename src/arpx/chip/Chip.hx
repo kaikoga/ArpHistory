@@ -7,16 +7,16 @@ import arpx.structs.ArpParams;
 @:arpType("chip", "null")
 class Chip implements IArpObject implements IChipImpl {
 
-	public var chipWidth(get, set):Int;
-	private function get_chipWidth():Int return 0;
-	private function set_chipWidth(value:Int):Int return 0;
-	public var chipHeight(get, set):Int;
-	private function get_chipHeight():Int return 0;
-	private function set_chipHeight(value:Int):Int return 0;
+	public var chipWidth(get, set):Float;
+	private function get_chipWidth():Float return 0;
+	private function set_chipWidth(value:Float):Float return 0;
+	public var chipHeight(get, set):Float;
+	private function get_chipHeight():Float return 0;
+	private function set_chipHeight(value:Float):Float return 0;
 
-	public function chipWidthOf(params:ArpParams):Int return 0;
+	public function chipWidthOf(params:ArpParams):Float return 0;
 
-	public function chipHeightOf(params:ArpParams):Int return 0;
+	public function chipHeightOf(params:ArpParams):Float return 0;
 
 	//TODO hasChipName must distinguish explicit and implicit existence
 	//public function hasFace(face:String):Bool return false;

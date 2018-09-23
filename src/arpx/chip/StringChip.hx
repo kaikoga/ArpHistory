@@ -9,22 +9,22 @@ class StringChip extends Chip {
 
 	private static var _workParams:ArpParams = new ArpParams();
 
-	@:arpField public var chipWidth:Int;
-	@:arpField public var chipHeight:Int;
+	@:arpField public var chipWidth:Float;
+	@:arpField public var chipHeight:Float;
 
 	@:arpField public var isProportional:Bool;
 	@:arpField public var orientation:Int;
 
 	@:arpBarrier @:arpField public var chip:Chip;
 
-	override public function chipWidthOf(params:ArpParams):Int {
+	override public function chipWidthOf(params:ArpParams):Float {
 		if (params == null) {
 			return 0;
 		}
 		var chip:Chip = this.chip;
 		params = _workParams.copyFrom(params);
-		var width:Int = 0;
-		var result:Int = 0;
+		var width:Float = 0;
+		var result:Float = 0;
 		for (char in new StringChipStringIterator(params.get("face"))) {
 			switch (char) {
 				case "\t":
@@ -41,13 +41,13 @@ class StringChip extends Chip {
 		return ((result > width)) ? result : width;
 	}
 
-	override public function chipHeightOf(params:ArpParams):Int {
+	override public function chipHeightOf(params:ArpParams):Float {
 		if (params == null) {
 			return 0;
 		}
 		var chip:Chip = this.chip;
 		params = _workParams.copyFrom(params);
-		var result:Int = this.chip.chipHeight;
+		var result:Float = this.chip.chipHeight;
 		for (char in new StringChipStringIterator(params.get("face"))) {
 			if (char == "\n") result += this.chip.chipHeight;
 		}
