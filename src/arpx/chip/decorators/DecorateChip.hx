@@ -18,8 +18,6 @@ class DecorateChip extends Chip {
 
 	@:arpImpl private var arpImpl:DecorateChipImpl;
 
-	override private function get_baseX():Int return chip.baseX + x;
-	override private function get_baseY():Int return chip.baseY + y;
 	override private function get_chipWidth():Int return Std.int(chip.chipWidth * a);
 	override private function get_chipHeight():Int return Std.int(chip.chipHeight * d);
 

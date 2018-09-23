@@ -11,8 +11,6 @@ class CompositeChip extends Chip {
 
 	@:arpImpl private var arpImpl:CompositeChipImpl;
 
-	override private function get_baseX():Int return 0;
-	override private function get_baseY():Int return 0;
 	override private function get_chipWidth():Int return chips.first().chipWidth;
 	override private function get_chipHeight():Int return chips.first().chipHeight;
 

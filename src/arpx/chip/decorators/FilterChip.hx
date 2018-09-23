@@ -12,8 +12,6 @@ class FilterChip extends Chip {
 
 	@:arpImpl private var arpImpl:FilterChipImpl;
 
-	override private function get_baseX():Int return chip.baseX;
-	override private function get_baseY():Int return chip.baseY;
 	override private function get_chipWidth():Int return chip.chipWidth;
 	override private function get_chipHeight():Int return chip.chipHeight;
 

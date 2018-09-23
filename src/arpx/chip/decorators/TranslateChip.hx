@@ -16,8 +16,6 @@ class TranslateChip extends Chip {
 
 	@:arpImpl private var flashImpl:TranslateChipImpl;
 
-	override private function get_baseX():Int return chip.baseX;
-	override private function get_baseY():Int return chip.baseY;
 	override private function get_chipWidth():Int return Std.int(chip.chipWidth * a);
 	override private function get_chipHeight():Int return Std.int(chip.chipHeight * d);
 

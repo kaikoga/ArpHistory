@@ -7,12 +7,12 @@ import arpx.structs.ArpParams;
 @:arpType("chip", "rect")
 class RectChip extends Chip {
 
-	@:arpField public var baseX(get, set):Int;
-	@:arpField public var baseY(get, set):Int;
-	@:arpField public var chipWidth(get, set):Int;
-	@:arpField public var chipHeight(get, set):Int;
-	@:arpField public var color(get, set):ArpColor;
-	@:arpField public var border(get, set):ArpColor;
+	@:arpField public var baseX:Int;
+	@:arpField public var baseY:Int;
+	@:arpField public var chipWidth:Int;
+	@:arpField public var chipHeight:Int;
+	@:arpField public var color:ArpColor;
+	@:arpField public var border:ArpColor;
 
 	override public function chipWidthOf(params:ArpParams):Int return this.chipWidth;
 	override public function chipHeightOf(params:ArpParams):Int return this.chipHeight;

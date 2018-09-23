@@ -7,12 +7,6 @@ import arpx.structs.ArpParams;
 @:arpType("chip", "null")
 class Chip implements IArpObject implements IChipImpl {
 
-	public var baseX(get, set):Int;
-	private function get_baseX():Int return 0;
-	private function set_baseX(value:Int):Int return 0;
-	public var baseY(get, set):Int;
-	private function get_baseY():Int return 0;
-	private function set_baseY(value:Int):Int return 0;
 	public var chipWidth(get, set):Int;
 	private function get_chipWidth():Int return 0;
 	private function set_chipWidth(value:Int):Int return 0;

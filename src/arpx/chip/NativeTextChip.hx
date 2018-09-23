@@ -7,8 +7,6 @@ import arpx.structs.ArpParams;
 @:arpType("chip", "nativeText")
 class NativeTextChip extends Chip {
 
-	@:arpField public var baseX:Int = 0;
-	@:arpField public var baseY:Int = 0;
 	@:arpField public var chipWidth:Int = 100;
 	@:arpField public var chipHeight:Int = 100;
 

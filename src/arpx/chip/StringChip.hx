@@ -9,8 +9,6 @@ class StringChip extends Chip {
 
 	private static var _workParams:ArpParams = new ArpParams();
 
-	@:arpField public var baseX:Int;
-	@:arpField public var baseY:Int;
 	@:arpField public var chipWidth:Int;
 	@:arpField public var chipHeight:Int;
 

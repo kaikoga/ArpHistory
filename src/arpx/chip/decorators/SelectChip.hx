@@ -14,8 +14,6 @@ class SelectChip extends Chip {
 
 	@:arpImpl private var arpImpl:SelectChipImpl;
 
-	override private function get_baseX():Int return this.select(null).baseX;
-	override private function get_baseY():Int return this.select(null).baseY;
 	override private function get_chipWidth():Int return this.select(null).chipWidth;
 	override private function get_chipHeight():Int return this.select(null).chipHeight;
 
