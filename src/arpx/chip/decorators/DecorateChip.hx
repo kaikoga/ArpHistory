@@ -2,6 +2,7 @@ package arpx.chip.decorators;
 
 import arpx.impl.cross.chip.decorators.DecorateChipImpl;
 import arpx.paramsOp.ParamsOp;
+import arpx.structs.ArpParams;
 
 @:arpType("chip", "decorate")
 class DecorateChip extends Chip {
@@ -16,6 +17,17 @@ class DecorateChip extends Chip {
 	@:arpField public var y:Float = 0;
 
 	@:arpImpl private var arpImpl:DecorateChipImpl;
+
+	override private function get_baseX():Int return chip.baseX + x;
+	override private function get_baseY():Int return chip.baseY + y;
+	override private function get_chipWidth():Int return Std.int(chip.chipWidth * a);
+	override private function get_chipHeight():Int return Std.int(chip.chipHeight * d);
+
+	override public function chipWidthOf(params:ArpParams):Int return Std.int(chip.chipWidthOf(params) * a);
+
+	override public function chipHeightOf(params:ArpParams):Int return Std.int(chip.chipHeightOf(params) * d);
+
+	override public function hasFace(face:String):Bool return chip.hasFace(face);
 
 	public function new() super();
 }

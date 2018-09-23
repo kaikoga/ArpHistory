@@ -16,7 +16,7 @@ class SelectChipImpl extends ArpObjectImplBase implements IChipImpl {
 	}
 
 	public function render(context:RenderContext, params:IArpParamsRead = null):Void {
-		var chip:Chip = this.chip.chips.get(params.getAsString(this.chip.selector, this.chip.defaultKey));
+		var chip:Chip = @:privateAccess this.chip.select(params);
 		if (chip != null) chip.render(context, params);
 	}
 }
