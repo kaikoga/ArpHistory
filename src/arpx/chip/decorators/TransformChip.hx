@@ -1,18 +1,16 @@
 package arpx.chip.decorators;
 
-import arpx.impl.cross.chip.decorators.DecorateChipImpl;
+import arpx.impl.cross.chip.decorators.TranslateChipImpl;
 import arpx.impl.cross.structs.ArpTransform;
-import arpx.paramsOp.ParamsOp;
 import arpx.structs.ArpParams;
 
-@:arpType("chip", "decorate")
-class DecorateChip extends Chip {
+@:arpType("chip", "transform")
+class TransformChip extends Chip {
 
 	@:arpField @:arpBarrier public var chip:Chip;
-	@:arpField @:arpBarrier public var paramsOp:ParamsOp;
 	@:arpField public var transform:ArpTransform;
 
-	@:arpImpl private var arpImpl:DecorateChipImpl;
+	@:arpImpl private var flashImpl:TranslateChipImpl;
 
 	override private function get_chipWidth():Int return Std.int(chip.chipWidth * transform.impl.xx);
 	override private function get_chipHeight():Int return Std.int(chip.chipHeight * transform.impl.yy);

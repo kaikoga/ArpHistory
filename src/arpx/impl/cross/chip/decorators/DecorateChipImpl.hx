@@ -4,7 +4,6 @@ import arpx.chip.decorators.DecorateChip;
 import arpx.impl.cross.display.RenderContext;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.chip.IChipImpl;
-import arpx.impl.cross.structs.ArpTransform;
 import arpx.structs.IArpParamsRead;
 
 class DecorateChipImpl extends ArpObjectImplBase implements IChipImpl {
@@ -24,13 +23,12 @@ class DecorateChipImpl extends ArpObjectImplBase implements IChipImpl {
 		return true;
 	}
 
-	private static var _workTransform:ArpTransform = new ArpTransform();
 	public function render(context:RenderContext, params:IArpParamsRead = null):Void {
 		var p:IArpParamsRead = params;
 		if (this.chip.paramsOp != null) {
 			p = this.chip.paramsOp.filter(p);
 		}
-		context.dupTransform().prependTransform(_workTransform.reset(chip.a, chip.b, chip.c, chip.d, chip.x, chip.y));
+		context.dupTransform().prependTransform(chip.transform);
 		this.chip.chip.render(context, p);
 		context.popTransform();
 	}
