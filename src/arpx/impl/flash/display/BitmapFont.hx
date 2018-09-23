@@ -45,6 +45,7 @@ class BitmapFont {
 		textFormat.color = 0xffffffff;
 		this._workTextField.setTextFormat(textFormat);
 		this._workTextField.defaultTextFormat = textFormat;
+		this._workTextField.text = "M";
 		var metrics:TextLineMetrics = this._workTextField.getLineMetrics(0);
 
 		this.charHeight = (metrics.height > this.minHeight) ? Math.ceil(metrics.height) : this.minHeight;
@@ -67,7 +68,7 @@ class BitmapFont {
 		this.bitmapDataByCharCode[charcode] = bitmapData;
 		var matrix:Matrix = this._workMatrix;
 		matrix.tx = -2; //2 is Flash Player border
-		matrix.ty = -2 - this.descent; //2 is Flash Player border
+		matrix.ty = -2; //2 is Flash Player border
 		bitmapData.draw(this._workTextField, matrix);
 		this.boundsByCharCode[charcode] = new Rectangle(0, 0, width, this.charHeight);
 	}
