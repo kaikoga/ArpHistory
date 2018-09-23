@@ -22,10 +22,7 @@ class DecorateChip extends Chip {
 	override private function get_chipHeight():Int return Std.int(chip.chipHeight * d);
 
 	override public function chipWidthOf(params:ArpParams):Int return Std.int(chip.chipWidthOf(params) * a);
-
 	override public function chipHeightOf(params:ArpParams):Int return Std.int(chip.chipHeightOf(params) * d);
-
-	override public function hasFace(face:String):Bool return chip.hasFace(face);
 
 	public function new() super();
 }

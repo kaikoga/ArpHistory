@@ -24,8 +24,6 @@ class TextureChip extends Chip {
 		return if (params == null) this.chipHeight else this.texture.heightOf(params);
 	}
 
-	override public function hasFace(face:String):Bool return true;
-
 	@:arpImpl private var arpImpl:TextureChipImpl;
 
 	public function new() super();

@@ -19,7 +19,7 @@ class Chip implements IArpObject implements IChipImpl {
 	public function chipHeightOf(params:ArpParams):Int return 0;
 
 	//TODO hasChipName must distinguish explicit and implicit existence
-	public function hasFace(face:String):Bool return false;
+	//public function hasFace(face:String):Bool return false;
 
 	@:arpImpl private var arpImpl:IChipImpl;
 

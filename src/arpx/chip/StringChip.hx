@@ -54,8 +54,6 @@ class StringChip extends Chip {
 		return result;
 	}
 
-	override public function hasFace(face:String):Bool return true;
-
 	@:arpImpl private var arpImpl:StringChipImpl;
 
 	public function new () super();

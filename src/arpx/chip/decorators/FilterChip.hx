@@ -18,8 +18,5 @@ class FilterChip extends Chip {
 	override public function chipWidthOf(params:ArpParams):Int return chip.chipWidthOf(params);
 	override public function chipHeightOf(params:ArpParams):Int return chip.chipHeightOf(params);
 
-	override public function hasFace(face:String):Bool return chip.hasFace(face);
-
-
 	public function new() super();
 }

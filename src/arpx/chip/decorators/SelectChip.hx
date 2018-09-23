@@ -20,8 +20,6 @@ class SelectChip extends Chip {
 	override public function chipWidthOf(params:ArpParams):Int return this.select(params).chipWidthOf(params);
 	override public function chipHeightOf(params:ArpParams):Int return this.select(params).chipHeightOf(params);
 
-	override public function hasFace(face:String):Bool return this.select(null).hasFace(face);
-
 	public function new() super();
 
 	private function select(params:IArpParamsRead = null):Chip {
