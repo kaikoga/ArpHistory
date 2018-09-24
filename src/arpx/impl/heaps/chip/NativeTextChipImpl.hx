@@ -2,16 +2,18 @@ package arpx.impl.heaps.chip;
 
 #if arp_display_backend_heaps
 
-import arpx.impl.cross.geom.PointImpl;
 import h2d.Font;
 import h2d.Text;
 import hxd.Charset;
 import hxd.res.FontBuilder;
-import arpx.structs.IArpParamsRead;
-import arpx.impl.ArpObjectImplBase;
+
 import arpx.impl.cross.chip.IChipImpl;
 import arpx.impl.cross.display.RenderContext;
+import arpx.impl.cross.geom.PointImpl;
+import arpx.impl.heaps.display.CharsetCjk;
+import arpx.impl.ArpObjectImplBase;
 import arpx.chip.NativeTextChip;
+import arpx.structs.IArpParamsRead;
 
 class NativeTextChipImpl extends ArpObjectImplBase implements IChipImpl {
 
@@ -72,15 +74,4 @@ class NativeTextChipImpl extends ArpObjectImplBase implements IChipImpl {
 	}
 }
 
-private class CharsetCjk extends Charset {
-	override public function isCJK(code) {
-		if (code >= 0x2E80 && code <= 0x9FFF) return true;
-		if (code >= 0xAC00 && code <= 0xFAFF) return true;
-		if (code >= 0x1F000) return true;
-		return false;
-	}
-
-	@:isVar public static var instance(get, null):Charset;
-	private static function get_instance():Charset return if (instance != null) instance else instance = new CharsetCjk();
-}
 #end
