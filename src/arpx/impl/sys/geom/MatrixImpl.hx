@@ -24,6 +24,10 @@ class MatrixImpl {
 
 	inline public function invert():Void return;
 
+	inline public function resetSkew():Void return;
+	inline public function resetScale(scale:Float = 1):Void return;
+	inline public function resetTranslation():Void return;
+
 	inline public function prependMatrix(matrix:MatrixImpl):Void return;
 	inline public function prependXY(x:Float, y:Float):Void return;
 	inline public function appendMatrix(matrix:MatrixImpl):Void return;

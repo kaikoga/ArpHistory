@@ -56,6 +56,21 @@ abstract MatrixImpl(Matrix) from Matrix {
 		this.invert();
 	}
 
+	inline public function resetSkew():Void {
+		this.xy = 0;
+		this.yx = 0;
+	}
+
+	inline public function resetScale(scale:Float = 1):Void {
+		this.xx = scale;
+		this.yy = scale;
+	}
+
+	inline public function resetTranslation():Void {
+		this.tx = 0;
+		this.ty = 0;
+	}
+
 	inline public function prependMatrix(matrix:MatrixImpl):Void {
 		var result:Matrix = matrix.raw.clone();
 		result.concat(raw);

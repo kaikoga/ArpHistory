@@ -144,6 +144,21 @@ class ArpTransform implements IArpStruct {
 		return this;
 	}
 
+	public function resetSkew():ArpTransform {
+		this.impl.resetSkew();
+		return this;
+	}
+
+	public function resetScale(scale:Float = 1):ArpTransform {
+		this.impl.resetScale(scale);
+		return this;
+	}
+
+	public function resetTranslation():ArpTransform {
+		this.impl.resetTranslation();
+		return this;
+	}
+
 	public function transformPoint(pt:PointImpl):PointImpl {
 		pt.transform(this.impl);
 		return pt;

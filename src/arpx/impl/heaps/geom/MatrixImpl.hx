@@ -2,7 +2,7 @@ package arpx.impl.heaps.geom;
 
 #if arp_display_backend_heaps
 
-import h3d.col.Point;
+import arpx.impl.cross.structs.ArpTransform;
 import h3d.Matrix;
 
 @:forward(identity)
@@ -64,6 +64,31 @@ abstract MatrixImpl(Matrix) from Matrix {
 
 	inline public function invert():Void {
 		this.invert();
+	}
+
+	public function resetSkew():Void {
+		this._12 = 0;
+		this._13 = 0;
+		this._14 = 0;
+		this._21 = 0;
+		this._23 = 0;
+		this._24 = 0;
+		this._31 = 0;
+		this._32 = 0;
+		this._34 = 0;
+	}
+
+	public function resetScale(scale:Float = 1):Void {
+		this._11 = scale;
+		this._22 = scale;
+		this._33 = scale;
+		this._44 = 1;
+	}
+
+	public function resetTranslation():Void {
+		this._41 = 0;
+		this._42 = 0;
+		this._43 = 0;
 	}
 
 	inline public function prependMatrix(transform:MatrixImpl):Void {
