@@ -1,6 +1,6 @@
 package arpx.impl.cross.chip;
 
-import arpx.chip.stringChip.StringChipDrawCursor;
+import arpx.chip.stringChip.StringChipCursor;
 import arpx.chip.stringChip.StringChipStringIterator;
 import arpx.chip.StringChip;
 import arpx.impl.cross.display.RenderContext;
@@ -19,13 +19,9 @@ class StringChipImpl extends ArpObjectImplBase implements IChipImpl {
 
 	private var _workPt:PointImpl = PointImpl.alloc();
 	public function render(context:RenderContext, params:IArpParamsRead = null):Void {
-		var cursor:StringChipDrawCursor = new StringChipDrawCursor(context, params); // FIXME
+		var cursor:StringChipCursor = new StringChipCursor(this.chip, params);
 		for (char in new StringChipStringIterator(params.get("face"))) {
-			params = cursor.move(char, this.chip, this.chip.chip);
-			if (params != null) {
-				this.chip.chip.render(context, params);
-			}
+			if (cursor.move(char)) cursor.renderChar(context);
 		}
-		cursor.cleanup();
 	}
 }

@@ -3,6 +3,7 @@ package arpx.structs;
 import arp.testParams.PersistIoProviders.IPersistIoProvider;
 import arp.seed.ArpSeed;
 import arpx.structs.ArpParams;
+import arpx.structs.params.ArpParamsProxy;
 
 import org.hamcrest.Matchers;
 import picotest.PicoAssert.*;

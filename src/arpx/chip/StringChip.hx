@@ -1,15 +1,13 @@
 package arpx.chip;
 
+import arpx.chip.stringChip.StringChipCursor;
 import arpx.chip.stringChip.StringChipStringIterator;
 import arpx.impl.cross.chip.StringChipImpl;
 import arpx.impl.cross.geom.RectImpl;
-import arpx.structs.ArpParams;
 import arpx.structs.IArpParamsRead;
 
 @:arpType("chip", "string")
 class StringChip extends Chip {
-
-	private static var _workParams:ArpParams = new ArpParams();
 
 	@:arpField public var chipWidth:Float;
 	@:arpField public var chipHeight:Float;
@@ -19,29 +17,24 @@ class StringChip extends Chip {
 
 	@:arpBarrier @:arpField public var chip:Chip;
 
-	// FIXME use StringChipDrawCursor, without RenderContext
 	override public function layoutSize(params:IArpParamsRead, rect:RectImpl):RectImpl {
-		var chip:Chip = this.chip;
-		var workParams:ArpParams = _workParams.copyFrom(params);
-		var lineWidth:Float = 0;
-		var width:Float = 0;
-		var height:Float = 0;
+		var left:Float = 0;
+		var top:Float = 0;
+		var right:Float = 0;
+		var bottom:Float = 0;
+		var cursor:StringChipCursor = new StringChipCursor(this, params);
 		for (char in new StringChipStringIterator(params.get("face"))) {
-			switch (char) {
-				case "\t":
-					lineWidth += this.chip.chipWidth * 4;
-				case "\n":
-					width = if (width > lineWidth) width else lineWidth;
-					height += this.chip.chipHeight;
-					lineWidth = 0;
-				default:
-					workParams.set("face", char);
-					lineWidth += (this.isProportional) ? this.chip.chipWidthOf(params) : this.chip.chipWidth;
-					break;
+			if (cursor.move(char)) {
+				var layoutChar:RectImpl = cursor.layoutChar(_workRect);
+				var charRight:Float = layoutChar.x + layoutChar.width;
+				var charBottom:Float = layoutChar.y + layoutChar.height;
+				if (left > layoutChar.x) left = layoutChar.x;
+				if (top > layoutChar.y) top = layoutChar.y;
+				if (right < charRight) right = charRight;
+				if (bottom < charBottom) bottom = charBottom;
 			}
 		}
-		width = if (width > lineWidth) width else lineWidth;
-		rect.reset(0, 0, width, height);
+		rect.reset(left, top, right - left, bottom - top);
 		return rect;
 	}
 

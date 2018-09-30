@@ -1,4 +1,5 @@
 package arpx.chip.stringChip;
+
 class StringChipStringIterator {
 
 	private var chipName:String = "";
