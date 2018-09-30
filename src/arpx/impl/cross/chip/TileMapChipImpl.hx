@@ -16,13 +16,12 @@ class TileMapChipImpl extends ArpObjectImplBase implements IChipImpl {
 	public function new(chip:TileMapChip) {
 		super();
 		this.chip = chip;
-		this.renderer = new TileMapBatchRenderer(null, null);
+		this.renderer = new TileMapBatchRenderer();
 	}
 
 	private var _workPt:PointImpl = PointImpl.alloc();
 	public function render(context:RenderContext, params:IArpParamsRead = null):Void {
-		this.renderer.tileMap = this.chip.tileMap;
-		this.renderer.chip = this.chip.chip;
+		this.renderer.reset(this.chip.tileMap, this.chip.chip);
 		this.renderer.copyArea(context);
 	}
 }

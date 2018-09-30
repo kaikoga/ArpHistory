@@ -15,14 +15,13 @@ class TileMapMortalImpl extends ArpObjectImplBase implements IMortalImpl {
 	public function new(mortal:TileMapMortal) {
 		super();
 		this.mortal = mortal;
-		this.renderer = new TileMapBatchRenderer(null, null);
+		this.renderer = new TileMapBatchRenderer();
 	}
 
 	private var _workPt:PointImpl = PointImpl.alloc();
 	public function render(context:RenderContext):Void {
 		if (this.mortal.visible) {
-			this.renderer.tileMap = this.mortal.tileMap;
-			this.renderer.chip = this.mortal.chip;
+			this.renderer.reset(this.mortal.tileMap, this.mortal.chip);
 			this.renderer.copyArea(context);
 		}
 	}

@@ -2,18 +2,25 @@ package arpx.impl.cross.tilemap;
 
 import arpx.chip.Chip;
 import arpx.impl.cross.geom.PointImpl;
+import arpx.impl.cross.geom.RectImpl;
 import arpx.impl.cross.display.RenderContext;
 import arpx.structs.ArpParams;
 import arpx.tileMap.TileMap;
 
 class TileMapBatchRenderer {
 
-	public var chip:Chip;
-	public var tileMap:TileMap;
+	private var chip:Chip;
+	private var chipSize:RectImpl;
+	private var tileMap:TileMap;
 
-	public function new(tileMap:TileMap, chip:Chip) {
+	public function new() {
+		this.chipSize = RectImpl.alloc();
+	}
+
+	public function reset(tileMap:TileMap, chip:Chip) {
 		this.tileMap = tileMap;
 		this.chip = chip;
+		this.chip.layoutSize(ArpParams.empty, this.chipSize);
 	}
 
 	private var gridLeft:Int;
@@ -28,8 +35,8 @@ class TileMapBatchRenderer {
 		var pt:PointImpl = _workPt;
 		pt.reset(x, y);
 		context.transform.transformPoint(pt);
-		var gridX:Int = Math.floor(pt.x / this.chip.chipWidth);
-		var gridY:Int = Math.floor(pt.y / this.chip.chipHeight);
+		var gridX:Int = Math.floor(pt.x / this.chipSize.width);
+		var gridY:Int = Math.floor(pt.y / this.chipSize.height);
 		if (gridX < gridLeft) gridLeft = gridX;
 		if (gridY < gridTop) gridTop = gridY;
 		if (gridX > gridRight) gridRight = gridX;
@@ -38,8 +45,8 @@ class TileMapBatchRenderer {
 
 	public function copyArea(context:RenderContext):Void {
 		var params:ArpParams = _workParams;
-		var chipWidth:Float = this.chip.chipWidth;
-		var chipHeight:Float = this.chip.chipHeight;
+		var chipWidth:Float = this.chipSize.width;
+		var chipHeight:Float = this.chipSize.height;
 
 		this.gridLeft = 0x7fffffff;
 		this.gridTop = 0x7fffffff;
