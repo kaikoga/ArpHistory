@@ -2,6 +2,8 @@ package arpx.impl.sys.texture;
 
 #if arp_display_backend_sys
 
+import arpx.impl.cross.geom.RectImpl;
+
 class TextureFaceData {
 
 	public var width(get, null):Int;
@@ -11,7 +13,7 @@ class TextureFaceData {
 
 	public function new() return;
 	public function dispose():Void return;
-	public function trim(x:Float, y:Float, w:Float, h:Float):TextureFaceData return new TextureFaceData();
+	public function trim(x:Float, y:Float, w:Float, h:Float, layoutSize:RectImpl = null):TextureFaceData return new TextureFaceData();
 
 }
 

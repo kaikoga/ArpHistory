@@ -4,19 +4,33 @@ package arpx.impl.heaps.texture;
 
 import h2d.Tile;
 
-@:forward(width, height)
-abstract TextureFaceData(Tile) {
+import arpx.impl.cross.geom.RectImpl;
 
-	inline public function new(tile:Tile) this = tile;
+class TextureFaceData {
 
-	public var tile(get, never):Tile;
-	inline private function get_tile():Tile return this;
+	public var tile(default, null):Tile;
 
-	inline public function trim(x:Float, y:Float, w:Float, h:Float):TextureFaceData {
-		return new TextureFaceData(this.sub(Std.int(x), Std.int(y), Std.int(w), Std.int(h)));
+	public var width(get, never):Int;
+	private function get_width():Int return this.tile.width;
+	public var height(get, never):Int;
+	private function get_height():Int return this.tile.height;
+
+	public var layoutSize(default, null):RectImpl;
+
+	inline public function new(tile:Tile, layoutSize:RectImpl = null) {
+		this.tile = tile;
+		if (layoutSize == null) {
+			this.layoutSize = RectImpl.alloc(0, 0, tile.width, tile.height);
+		} else {
+			this.layoutSize = layoutSize;
+		}
 	}
 
-	inline public function dispose():Void this.dispose();
+	inline public function trim(x:Float, y:Float, w:Float, h:Float, layoutSize:RectImpl = null):TextureFaceData {
+		return new TextureFaceData(this.tile.sub(Std.int(x), Std.int(y), Std.int(w), Std.int(h)), layoutSize);
+	}
+
+	inline public function dispose():Void this.tile.dispose();
 }
 
 #end

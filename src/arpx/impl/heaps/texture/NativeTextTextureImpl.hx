@@ -6,6 +6,7 @@ import h2d.Font;
 import h2d.Tile;
 import hxd.res.FontBuilder;
 
+import arpx.impl.cross.geom.RectImpl;
 import arpx.impl.cross.texture.decorators.MultiTextureImplBase;
 import arpx.impl.cross.texture.ITextureImpl;
 import arpx.impl.heaps.display.CharsetCjk;
@@ -44,8 +45,8 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> impl
 			this.nextFaceName(char);
 			var charCode:Int = char.charCodeAt(0);
 			var fontChar:FontChar = font.getChar(charCode);
-			// FIXME FontChar.width is lost
-			this.pushFaceInfo(new TextureFaceData(fontChar.t));
+			var t:Tile = fontChar.t;
+			this.pushFaceInfo(new TextureFaceData(t, RectImpl.alloc(t.x, t.y, fontChar.width, t.height)));
 		}
 
 		this.tile = this.font.tile;
