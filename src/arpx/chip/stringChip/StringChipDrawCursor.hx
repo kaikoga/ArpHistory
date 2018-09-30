@@ -3,6 +3,7 @@ package arpx.chip.stringChip;
 import arpx.impl.cross.display.RenderContext;
 import arpx.structs.ArpParams;
 import arpx.structs.IArpParamsRead;
+import arpx.structs.params.ArpParamsProxy;
 
 class StringChipDrawCursor {
 
