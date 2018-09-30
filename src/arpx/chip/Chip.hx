@@ -14,24 +14,6 @@ class Chip implements IArpObject implements IChipImpl {
 		return rect;
 	}
 
-	@:deprecated("use layoutSize")
-	public var chipWidth(get, set):Float;
-	/* @:final */ private function get_chipWidth():Float return layoutSize(_workParams, _workRect).width;
-	@:deprecated("we will deprecate chip size setters")
-	/* @:final */ private function set_chipWidth(value:Float):Float return value;
-
-	@:deprecated("use layoutSize")
-	public var chipHeight(get, set):Float;
-	/* @:final */ private function get_chipHeight():Float return layoutSize(_workParams, _workRect).height;
-	@:deprecated("we will deprecate chip size setters")
-	/* @:final */ private function set_chipHeight(value:Float):Float return value;
-
-	@:deprecated("use layoutSize")
-	@:final public function chipWidthOf(params:IArpParamsRead):Float return layoutSize(params, _workRect).width;
-
-	@:deprecated("use layoutSize")
-	@:final public function chipHeightOf(params:IArpParamsRead):Float return layoutSize(params, _workRect).height;
-
 	@:noDoc("deprecated")
 	private var _workRect:RectImpl = RectImpl.alloc();
 	private var _workParams:ArpParams = new ArpParams();
