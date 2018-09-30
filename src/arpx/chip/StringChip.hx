@@ -2,6 +2,7 @@ package arpx.chip;
 
 import arpx.chip.stringChip.StringChipStringIterator;
 import arpx.impl.cross.chip.StringChipImpl;
+import arpx.impl.cross.geom.RectImpl;
 import arpx.structs.ArpParams;
 
 @:arpType("chip", "string")
@@ -17,41 +18,30 @@ class StringChip extends Chip {
 
 	@:arpBarrier @:arpField public var chip:Chip;
 
-	override public function chipWidthOf(params:ArpParams):Float {
-		if (params == null) {
-			return 0;
-		}
+	// FIXME use StringChipDrawCursor, without RenderContext
+	override public function layoutSize(params:ArpParams, rect:RectImpl):RectImpl {
 		var chip:Chip = this.chip;
 		params = _workParams.copyFrom(params);
+		var lineWidth:Float = 0;
 		var width:Float = 0;
-		var result:Float = 0;
+		var height:Float = 0;
 		for (char in new StringChipStringIterator(params.get("face"))) {
 			switch (char) {
 				case "\t":
-					width += this.chip.chipWidth * 4;
+					lineWidth += this.chip.chipWidth * 4;
 				case "\n":
-					result = (result > width) ? result : width;
-					width = 0;
+					width = if (width > lineWidth) width else lineWidth;
+					height += this.chip.chipHeight;
+					lineWidth = 0;
 				default:
 					params.set("face", char);
-					width += (this.isProportional) ? this.chip.chipWidthOf(params) : this.chip.chipWidth;
+					lineWidth += (this.isProportional) ? this.chip.chipWidthOf(params) : this.chip.chipWidth;
 					break;
 			}
 		}
-		return ((result > width)) ? result : width;
-	}
-
-	override public function chipHeightOf(params:ArpParams):Float {
-		if (params == null) {
-			return 0;
-		}
-		var chip:Chip = this.chip;
-		params = _workParams.copyFrom(params);
-		var result:Float = this.chip.chipHeight;
-		for (char in new StringChipStringIterator(params.get("face"))) {
-			if (char == "\n") result += this.chip.chipHeight;
-		}
-		return result;
+		width = if (width > lineWidth) width else lineWidth;
+		rect.reset(0, 0, width, height);
+		return rect;
 	}
 
 	@:arpImpl private var arpImpl:StringChipImpl;

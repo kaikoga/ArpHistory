@@ -5,6 +5,9 @@ import arpx.texture.decorators.GridTexture;
 
 class GridTextureImpl extends MultiTextureImplBase<GridTexture> implements ITextureImpl {
 
+	override private function get_width():Int return texture.width;
+	override private function get_height():Int return texture.height;
+
 	public function new(texture:GridTexture) {
 		super(texture);
 	}

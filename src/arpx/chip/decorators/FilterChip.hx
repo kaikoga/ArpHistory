@@ -1,6 +1,7 @@
 package arpx.chip.decorators;
 
 import arpx.impl.cross.chip.decorators.FilterChipImpl;
+import arpx.impl.cross.geom.RectImpl;
 import arpx.paramsOp.ParamsOp;
 import arpx.structs.ArpParams;
 
@@ -12,11 +13,7 @@ class FilterChip extends Chip {
 
 	@:arpImpl private var arpImpl:FilterChipImpl;
 
-	override private function get_chipWidth():Float return chip.chipWidth;
-	override private function get_chipHeight():Float return chip.chipHeight;
-
-	override public function chipWidthOf(params:ArpParams):Float return chip.chipWidthOf(params);
-	override public function chipHeightOf(params:ArpParams):Float return chip.chipHeightOf(params);
+	override public function layoutSize(params:ArpParams, rect:RectImpl):RectImpl return chip.layoutSize(params, rect);
 
 	public function new() super();
 }

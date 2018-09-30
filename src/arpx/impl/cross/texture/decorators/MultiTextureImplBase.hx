@@ -1,5 +1,6 @@
 package arpx.impl.cross.texture.decorators;
 
+import arpx.impl.cross.geom.RectImpl;
 import arpx.impl.cross.texture.TextureImplBase;
 import arpx.structs.IArpParamsRead;
 import arpx.texture.decorators.MultiTexture;
@@ -65,6 +66,11 @@ class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase {
 
 	override public function widthOf(params:IArpParamsRead = null):Int return this.getFaceData(params).width;
 	override public function heightOf(params:IArpParamsRead = null):Int return this.getFaceData(params).height;
+
+	override public function layoutSize(params:IArpParamsRead, rect:RectImpl):RectImpl {
+		rect.reset(0, 0, this.widthOf(params), this.heightOf(params));
+		return rect;
+	}
 
 	public function getFaceData(params:IArpParamsRead = null):TextureFaceData {
 		return this.faces[this.getFaceIndex(params)];

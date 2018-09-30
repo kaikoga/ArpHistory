@@ -22,8 +22,8 @@ class RectChipImpl extends ArpObjectImplBase implements IChipImpl {
 		if (pt != null) {
 			var l:Int = -chip.baseX;
 			var t:Int = -chip.baseY;
-			var w:Int = chip.chipWidth;
-			var h:Int = chip.chipHeight;
+			var w:Int = Std.int(chip.chipWidth);
+			var h:Int = Std.int(chip.chipHeight);
 			var c:Int = chip.border.value32;
 			context.fillRect(l, t, w, 1, c);
 			context.fillRect(l, t + h - 1, w, 1, c);

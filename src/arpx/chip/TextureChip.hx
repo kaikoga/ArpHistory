@@ -1,5 +1,6 @@
 package arpx.chip;
 
+import arpx.impl.cross.geom.RectImpl;
 import arpx.impl.cross.chip.TextureChipImpl;
 import arpx.structs.ArpColor;
 import arpx.structs.ArpParams;
@@ -13,15 +14,9 @@ class TextureChip extends Chip {
 	@:arpField public var baseX:Int;
 	@:arpField public var baseY:Int;
 
-	override private function get_chipWidth():Float return this.texture.width;
-	override private function get_chipHeight():Float return this.texture.height;
-
-	override public function chipWidthOf(params:ArpParams):Float {
-		return if (params == null) this.chipWidth else this.texture.widthOf(params);
-	}
-
-	override public function chipHeightOf(params:ArpParams):Float {
-		return if (params == null) this.chipHeight else this.texture.heightOf(params);
+	override public function layoutSize(params:ArpParams, rect:RectImpl):RectImpl {
+		this.texture.layoutSize(params, rect).translateXY(this.baseX, this.baseY);
+		return rect;
 	}
 
 	@:arpImpl private var arpImpl:TextureChipImpl;

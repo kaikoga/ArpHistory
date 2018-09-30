@@ -1,5 +1,6 @@
 package arpx.chip.decorators;
 
+import arpx.impl.cross.geom.RectImpl;
 import arpx.impl.cross.chip.decorators.DecorateChipImpl;
 import arpx.impl.cross.structs.ArpTransform;
 import arpx.paramsOp.ParamsOp;
@@ -14,11 +15,11 @@ class DecorateChip extends Chip {
 
 	@:arpImpl private var arpImpl:DecorateChipImpl;
 
-	override private function get_chipWidth():Float return chip.chipWidth * transform.impl.xx;
-	override private function get_chipHeight():Float return chip.chipHeight * transform.impl.yy;
-
-	override public function chipWidthOf(params:ArpParams):Float return chip.chipWidthOf(params) * transform.impl.xx;
-	override public function chipHeightOf(params:ArpParams):Float return chip.chipHeightOf(params) * transform.impl.yy;
+	override public function layoutSize(params:ArpParams, rect:RectImpl):RectImpl {
+		chip.layoutSize(params, rect);
+		rect.transform(transform.impl);
+		return rect;
+	}
 
 	public function new() super();
 }
