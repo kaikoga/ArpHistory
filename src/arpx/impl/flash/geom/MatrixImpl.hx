@@ -57,18 +57,18 @@ abstract MatrixImpl(Matrix) from Matrix {
 	}
 
 	inline public function resetSkew():Void {
-		this.xy = 0;
-		this.yx = 0;
+		xy = 0;
+		yx = 0;
 	}
 
 	inline public function resetScale(scale:Float = 1):Void {
-		this.xx = scale;
-		this.yy = scale;
+		xx = scale;
+		yy = scale;
 	}
 
 	inline public function resetTranslation():Void {
-		this.tx = 0;
-		this.ty = 0;
+		tx = 0;
+		ty = 0;
 	}
 
 	inline public function prependMatrix(matrix:MatrixImpl):Void {
