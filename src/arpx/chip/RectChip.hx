@@ -3,7 +3,7 @@ package arpx.chip;
 import arpx.impl.cross.chip.RectChipImpl;
 import arpx.impl.cross.geom.RectImpl;
 import arpx.structs.ArpColor;
-import arpx.structs.ArpParams;
+import arpx.structs.IArpParamsRead;
 
 @:arpType("chip", "rect")
 class RectChip extends Chip {
@@ -15,7 +15,7 @@ class RectChip extends Chip {
 	@:arpField public var color:ArpColor;
 	@:arpField public var border:ArpColor;
 
-	override public function layoutSize(params:ArpParams, rect:RectImpl):RectImpl {
+	override public function layoutSize(params:IArpParamsRead, rect:RectImpl):RectImpl {
 		rect.reset(baseX, baseY, chipWidth, chipHeight);
 		return rect;
 	}

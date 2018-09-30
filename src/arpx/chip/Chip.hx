@@ -4,11 +4,12 @@ import arp.domain.IArpObject;
 import arpx.impl.cross.chip.IChipImpl;
 import arpx.impl.cross.geom.RectImpl;
 import arpx.structs.ArpParams;
+import arpx.structs.IArpParamsRead;
 
 @:arpType("chip", "null")
 class Chip implements IArpObject implements IChipImpl {
 
-	public function layoutSize(params:ArpParams, rect:RectImpl):RectImpl {
+	public function layoutSize(params:IArpParamsRead, rect:RectImpl):RectImpl {
 		rect.reset();
 		return rect;
 	}
@@ -26,10 +27,10 @@ class Chip implements IArpObject implements IChipImpl {
 	/* @:final */ private function set_chipHeight(value:Float):Float return value;
 
 	@:deprecated("use layoutSize")
-	@:final public function chipWidthOf(params:ArpParams):Float return layoutSize(params, _workRect).width;
+	@:final public function chipWidthOf(params:IArpParamsRead):Float return layoutSize(params, _workRect).width;
 
 	@:deprecated("use layoutSize")
-	@:final public function chipHeightOf(params:ArpParams):Float return layoutSize(params, _workRect).height;
+	@:final public function chipHeightOf(params:IArpParamsRead):Float return layoutSize(params, _workRect).height;
 
 	@:noDoc("deprecated")
 	private var _workRect:RectImpl = RectImpl.alloc();

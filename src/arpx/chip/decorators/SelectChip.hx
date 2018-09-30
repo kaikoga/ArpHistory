@@ -3,7 +3,6 @@ package arpx.chip.decorators;
 import arp.ds.IMap;
 import arpx.impl.cross.chip.decorators.SelectChipImpl;
 import arpx.impl.cross.geom.RectImpl;
-import arpx.structs.ArpParams;
 import arpx.structs.IArpParamsRead;
 
 @:arpType("chip", "select")
@@ -15,7 +14,7 @@ class SelectChip extends Chip {
 
 	@:arpImpl private var arpImpl:SelectChipImpl;
 
-	override public function layoutSize(params:ArpParams, rect:RectImpl):RectImpl return this.select(params).layoutSize(params, rect);
+	override public function layoutSize(params:IArpParamsRead, rect:RectImpl):RectImpl return this.select(params).layoutSize(params, rect);
 
 	public function new() super();
 

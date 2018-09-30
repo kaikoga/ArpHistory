@@ -3,7 +3,7 @@ package arpx.chip.decorators;
 import arpx.impl.cross.chip.decorators.FilterChipImpl;
 import arpx.impl.cross.geom.RectImpl;
 import arpx.paramsOp.ParamsOp;
-import arpx.structs.ArpParams;
+import arpx.structs.IArpParamsRead;
 
 @:arpType("chip", "filter")
 class FilterChip extends Chip {
@@ -13,7 +13,7 @@ class FilterChip extends Chip {
 
 	@:arpImpl private var arpImpl:FilterChipImpl;
 
-	override public function layoutSize(params:ArpParams, rect:RectImpl):RectImpl return chip.layoutSize(params, rect);
+	override public function layoutSize(params:IArpParamsRead, rect:RectImpl):RectImpl return chip.layoutSize(params, rect);
 
 	public function new() super();
 }

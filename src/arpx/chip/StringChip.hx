@@ -4,6 +4,7 @@ import arpx.chip.stringChip.StringChipStringIterator;
 import arpx.impl.cross.chip.StringChipImpl;
 import arpx.impl.cross.geom.RectImpl;
 import arpx.structs.ArpParams;
+import arpx.structs.IArpParamsRead;
 
 @:arpType("chip", "string")
 class StringChip extends Chip {
@@ -19,9 +20,9 @@ class StringChip extends Chip {
 	@:arpBarrier @:arpField public var chip:Chip;
 
 	// FIXME use StringChipDrawCursor, without RenderContext
-	override public function layoutSize(params:ArpParams, rect:RectImpl):RectImpl {
+	override public function layoutSize(params:IArpParamsRead, rect:RectImpl):RectImpl {
 		var chip:Chip = this.chip;
-		params = _workParams.copyFrom(params);
+		var workParams:ArpParams = _workParams.copyFrom(params);
 		var lineWidth:Float = 0;
 		var width:Float = 0;
 		var height:Float = 0;
@@ -34,7 +35,7 @@ class StringChip extends Chip {
 					height += this.chip.chipHeight;
 					lineWidth = 0;
 				default:
-					params.set("face", char);
+					workParams.set("face", char);
 					lineWidth += (this.isProportional) ? this.chip.chipWidthOf(params) : this.chip.chipWidth;
 					break;
 			}
