@@ -21,7 +21,7 @@ class ArrayList<V> implements IList<V> {
 	public function hasValue(v:V):Bool return this.value.indexOf(v) >= 0;
 	inline public function iterator():Iterator<V> return new SimpleArrayIterator(this.value);
 	public function toString():String return CollectionTools.listToStringImpl(this);
-	public var length(get, null):Int;
+	public var length(get, never):Int;
 	public function get_length():Int return this.value.length;
 	public function first():Null<V> return this.value[0];
 	public function last():Null<V> return this.value[this.value.length - 1];

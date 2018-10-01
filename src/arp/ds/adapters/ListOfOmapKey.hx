@@ -22,7 +22,7 @@ class ListOfOmapKey<K, V> implements IList<K> {
 	public function hasValue(v:K):Bool return this.omap.hasKey(v);
 	public function iterator():Iterator<K> return this.omap.keys();
 	public function toString():String return CollectionTools.listToStringImpl(this);
-	public var length(get, null):Int;
+	public var length(get, never):Int;
 	public function get_length():Int return this.omap.length;
 	public function first():Null<K> return this.omap.resolveName(this.omap.first());
 	public function last():Null<K> return this.omap.resolveName(this.omap.last());

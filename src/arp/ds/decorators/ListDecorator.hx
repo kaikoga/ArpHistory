@@ -18,7 +18,7 @@ class ListDecorator<V> implements IList<V> {
 	public function hasValue(v:V):Bool return this.list.hasValue(v);
 	public function iterator():Iterator<V> return this.list.iterator();
 	public function toString():String return this.list.toString();
-	public var length(get, null):Int;
+	public var length(get, never):Int;
 	public function get_length():Int return this.list.length;
 	public function first():Null<V> return this.list.first();
 	public function last():Null<V> return this.list.last();

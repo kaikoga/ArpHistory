@@ -39,7 +39,7 @@ class OmapProxy<K, V, X, W> implements IOmap<K, V> {
 	public function get(k:K):Null<V> return this.proxyValue(this.omap.get(this.unproxyKey(k)));
 	public function hasKey(k:K):Bool return this.omap.hasKey(this.unproxyKey(k));
 	public function keys():Iterator<K> return new ProxyIterator(this.omap.keys(), this.proxyKey);
-	public var length(get, null):Int;
+	public var length(get, never):Int;
 	public function get_length():Int return this.omap.length;
 	public function first():Null<V> return this.proxyValue(this.omap.first());
 	public function last():Null<V> return this.proxyValue(this.omap.last());

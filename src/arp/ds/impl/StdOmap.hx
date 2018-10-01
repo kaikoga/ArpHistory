@@ -30,7 +30,7 @@ class StdOmap<K, V> implements IOmap<K, V> {
 	public function get(k:K):Null<V> return this.value.get(k);
 	public function hasKey(k:K):Bool return this.value.exists(k);
 	inline public function keys():Iterator<K> return new SimpleArrayIterator(this._keys);
-	public var length(get, null):Int;
+	public var length(get, never):Int;
 	public function get_length():Int return this._keys.length;
 	public function first():Null<V> return this.get(this._keys[0]);
 	public function last():Null<V> return this.get(this._keys[this._keys.length - 1]);

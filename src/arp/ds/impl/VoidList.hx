@@ -16,7 +16,7 @@ class VoidList<V> implements IList<V> {
 	public function hasValue(v:V):Bool return false;
 	public function iterator():Iterator<V> return new EmptyIterator();
 	public function toString():String return "";
-	public var length(get, null):Int;
+	public var length(get, never):Int;
 	public function get_length():Int return 0;
 	public function first():Null<V> return null;
 	public function last():Null<V> return null;

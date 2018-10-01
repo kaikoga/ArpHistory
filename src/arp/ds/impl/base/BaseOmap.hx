@@ -21,7 +21,7 @@ class BaseOmap<K, V> implements IOmap<K, V> {
 	public function get(k:K):Null<V> return CollectionTools.getImpl(this, k);
 	public function hasKey(k:K):Bool return CollectionTools.hasKeyImpl(this, k);
 	public function keys():Iterator<K> return CollectionTools.keysImpl(this);
-	public var length(get, null):Int;
+	public var length(get, never):Int;
 	public function get_length():Int return CollectionTools.get_lengthImpl(this);
 	public function first():Null<V> return CollectionTools.firstImpl(this);
 	public function last():Null<V> return CollectionTools.lastImpl(this);
