@@ -26,6 +26,7 @@ class MacroArpObjectBuilder extends MacroArpObjectSkeleton {
 
 	public function run(classDef:MacroArpClassDefinition):Array<Field> {
 		if (classDef.metaGen) return null;
+		if (classDef.arpTemplateName == null) return null;
 
 		var fqn:String = MacroArpUtil.getFqnOfType(Context.getLocalType());
 
