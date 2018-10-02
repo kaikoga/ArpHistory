@@ -11,14 +11,11 @@ import arpx.input.KeyInput;
 class KeyInputImpl extends ArpObjectImplBase implements IInputImpl {
 
 	private var input:KeyInput;
-
 	private var target:IEventDispatcher;
-	private var keyStates:Map<Int, Bool>;
 
 	public function new(input:KeyInput) {
 		super();
 		this.input = input;
-		this.keyStates = new Map<Int, Bool>();
 	}
 
 	public function listen(target:IEventDispatcher):Void {
@@ -40,22 +37,12 @@ class KeyInputImpl extends ArpObjectImplBase implements IInputImpl {
 	}
 
 	private function onKeyDown(event:KeyboardEvent):Void {
-		keyStates.set(event.keyCode, true);
+		@:privateAccess this.input.keyStates.set(event.keyCode, true);
 	}
 
 	private function onKeyUp(event:KeyboardEvent):Void {
-		keyStates.set(event.keyCode, false);
+		@:privateAccess this.input.keyStates.set(event.keyCode, false);
 	}
-
-	public function tick(timeslice:Float):Bool {
-		for (binding in this.input.keyBindings) {
-			if (!this.keyStates.get(binding.keyCode)) continue;
-			@:privateAccess this.input.axis(binding.axis).nextValue += binding.factor;
-		}
-		for (axis in input.inputAxes) axis.tick(timeslice);
-		return true;
-	}
-
 }
 
 #end

@@ -17,11 +17,6 @@ class PassiveInputImpl extends ArpObjectImplBase implements IInputImpl {
 
 	public function listen(target:IEventDispatcher):Void return;
 	public function purge():Void return;
-
-	public function tick(timeslice:Float):Bool {
-		return true;
-	}
-
 }
 
 #end

@@ -11,12 +11,9 @@ class KeyInputImpl extends ArpObjectImplBase implements IInputImpl {
 
 	private var input:KeyInput;
 
-	private var keyStates:Map<Int, Bool>;
-
 	public function new(input:KeyInput) {
 		super();
 		this.input = input;
-		this.keyStates = new Map<Int, Bool>();
 	}
 
 	public function listen():Void {
@@ -30,22 +27,12 @@ class KeyInputImpl extends ArpObjectImplBase implements IInputImpl {
 	private function onEvent(e:Event):Void {
 		switch( e.kind ) {
 			case EKeyDown:
-				keyStates.set(e.keyCode, true);
+				@:privateAccess this.input.keyStates.set(e.keyCode, true);
 			case EKeyUp:
-				keyStates.set(e.keyCode, false);
+				@:privateAccess this.input.keyStates.set(e.keyCode, false);
 			case _:
 		}
 	}
-
-	public function tick(timeslice:Float):Bool {
-		for (binding in this.input.keyBindings) {
-			if (!this.keyStates.get(binding.keyCode)) continue;
-			@:privateAccess this.input.axis(binding.axis).nextValue += binding.factor;
-		}
-		for (axis in input.inputAxes) axis.tick(timeslice);
-		return true;
-	}
-
 }
 
 #end

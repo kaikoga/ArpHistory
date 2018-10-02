@@ -3,9 +3,8 @@ package arpx.input;
 import arp.ds.IMap;
 import arp.ds.impl.StdMap;
 
-@:arpType("input", "physical")
-class PhysicalInput extends Input
-{
+class PhysicalInput extends Input {
+
 	public var inputAxes:IMap<String, InputAxis>;
 
 	public function new () {
