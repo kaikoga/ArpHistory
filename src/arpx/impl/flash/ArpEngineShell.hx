@@ -17,7 +17,7 @@ import flash.geom.Matrix;
 class ArpEngineShell extends ArpEngineShellBase {
 
 	public function new(domain:ArpDomain, config:ArpEngineConfig) {
-		super(config);
+		super(domain, config);
 		Lib.current.stage.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
 		Lib.current.stage.addEventListener(Event.ENTER_FRAME, this.onFirstFrame);
 	}
@@ -29,7 +29,7 @@ class ArpEngineShell extends ArpEngineShellBase {
 
 	private function onFirstFrame(event:Event):Void {
 		Lib.current.stage.removeEventListener(Event.ENTER_FRAME, this.onFirstFrame);
-		this._start();
+		this.onStart();
 	}
 
 	override private function createDisplayContext():DisplayContext {
