@@ -29,21 +29,21 @@ class ArpEngineShellBase {
 	private dynamic function _tick(timeslice:Float):Void return;
 	private dynamic function _render(context:RenderContext):Void return;
 
-	public function new(domain:ArpDomain, params:ArpEngineParams) {
+	public function new(domain:ArpDomain, initParams:ArpEngineParams) {
 		this.domain = domain;
 
-		this.width = params.shellBuffer.width;
-		this.height = params.shellBuffer.height;
-		this.scaleX = params.shellBuffer.scaleX;
-		this.scaleY = params.shellBuffer.scaleY;
-		this.bufferMode = params.shellBuffer.bufferMode;
-		this.clearColor = params.shellBuffer.clearColor | 0xff000000;
+		this.width = initParams.shellBuffer.width;
+		this.height = initParams.shellBuffer.height;
+		this.scaleX = initParams.shellBuffer.scaleX;
+		this.scaleY = initParams.shellBuffer.scaleY;
+		this.bufferMode = initParams.shellBuffer.bufferMode;
+		this.clearColor = initParams.shellBuffer.clearColor24;
 		this.domain.tick.push(this.onDomainFirstTick);
-		this._start = params.events.start;
-		this._rawTick = params.events.rawTick;
-		this._firstTick = params.events.firstTick;
-		this._tick = params.events.tick;
-		this._render = params.events.render;
+		this._start = initParams.events.start;
+		this._rawTick = initParams.events.rawTick;
+		this._firstTick = initParams.events.firstTick;
+		this._tick = initParams.events.tick;
+		this._render = initParams.events.render;
 	}
 
 	private function createDisplayContext():DisplayContext return null;

@@ -9,7 +9,7 @@ import arpx.impl.cross.structs.ArpTransform;
 
 class ArpEngineShell extends ArpEngineShellBase {
 
-	public function new(domain:ArpDomain, params:ArpEngineParams) super(domain, params);
+	public function new(domain:ArpDomain, initParams:ArpEngineParams) super(domain, initParams);
 
 	override private function createDisplayContext():DisplayContext {
 		return new DisplayContext(this.width, this.height, new ArpTransform(), this.clearColor);

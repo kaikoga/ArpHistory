@@ -13,8 +13,8 @@ class ArpEngineShell extends ArpEngineShellBase {
 
 	private var app:ArpEngineApp;
 
-	public function new(domain:ArpDomain, params:ArpEngineParams) {
-		super(domain, params);
+	public function new(domain:ArpDomain, initParams:ArpEngineParams) {
+		super(domain, initParams);
 		this.app = new ArpEngineApp(this);
 	}
 
