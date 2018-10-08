@@ -32,18 +32,18 @@ class ArpEngineShellBase {
 	public function new(domain:ArpDomain, params:ArpEngineParams) {
 		this.domain = domain;
 
-		this.width = params.width;
-		this.height = params.height;
-		if (params.scaleX != null) this.scaleX = params.scaleX;
-		if (params.scaleY != null) this.scaleY = params.scaleY;
-		this.bufferMode = if (params.bufferMode != null) params.bufferMode else ArpEngineShellBufferMode.Logical;
-		this.clearColor = params.clearColor | 0xff000000;
+		this.width = params.shellBuffer.width;
+		this.height = params.shellBuffer.height;
+		if (params.shellBuffer.scaleX != null) this.scaleX = params.shellBuffer.scaleX;
+		if (params.shellBuffer.scaleY != null) this.scaleY = params.shellBuffer.scaleY;
+		this.bufferMode = if (params.shellBuffer.bufferMode != null) params.shellBuffer.bufferMode else ArpEngineShellBufferMode.Logical;
+		this.clearColor = params.shellBuffer.clearColor | 0xff000000;
 		this.domain.tick.push(this.onDomainFirstTick);
-		if (params.start != null) this._start = params.start;
-		if (params.rawTick != null) this._rawTick = params.rawTick;
-		if (params.firstTick != null) this._firstTick = params.firstTick;
-		if (params.tick != null) this._tick = params.tick;
-		if (params.render != null) this._render = params.render;
+		if (params.events.start != null) this._start = params.events.start;
+		if (params.events.rawTick != null) this._rawTick = params.events.rawTick;
+		if (params.events.firstTick != null) this._firstTick = params.events.firstTick;
+		if (params.events.tick != null) this._tick = params.events.tick;
+		if (params.events.render != null) this._render = params.events.render;
 	}
 
 	private function createDisplayContext():DisplayContext return null;
