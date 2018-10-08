@@ -1,10 +1,8 @@
 package arpx;
 
-import arp.domain.ArpDomain;
 import arpx.impl.cross.display.RenderContext;
 
 typedef ArpEngineParams = {
-	var domain:ArpDomain;
 	var width:Int;
 	var height:Int;
 	@:optional var scaleX:Null<Float>;

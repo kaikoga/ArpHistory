@@ -29,8 +29,9 @@ class ArpEngineShellBase {
 	private dynamic function _tick(timeslice:Float):Void return;
 	private dynamic function _render(context:RenderContext):Void return;
 
-	public function new(params:ArpEngineParams) {
-		this.domain = params.domain;
+	public function new(domain:ArpDomain, params:ArpEngineParams) {
+		this.domain = domain;
+
 		this.width = params.width;
 		this.height = params.height;
 		if (params.scaleX != null) this.scaleX = params.scaleX;

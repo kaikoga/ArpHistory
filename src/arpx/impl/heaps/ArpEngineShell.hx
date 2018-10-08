@@ -4,6 +4,7 @@ package arpx.impl.heaps;
 
 import hxd.App;
 
+import arp.domain.ArpDomain;
 import arpx.impl.cross.ArpEngineShellBase;
 import arpx.impl.cross.display.DisplayContext;
 import arpx.impl.cross.structs.ArpTransform;
@@ -12,8 +13,8 @@ class ArpEngineShell extends ArpEngineShellBase {
 
 	private var app:ArpEngineApp;
 
-	public function new(params:ArpEngineParams) {
-		super(params);
+	public function new(domain:ArpDomain, params:ArpEngineParams) {
+		super(domain, params);
 		this.app = new ArpEngineApp(this);
 	}
 

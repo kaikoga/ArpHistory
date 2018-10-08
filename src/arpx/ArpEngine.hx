@@ -6,15 +6,20 @@ import arpx.impl.cross.ArpEngineShell;
 
 class ArpEngine {
 
-	public var shell(default, null):ArpEngineShell;
+	public var domain(default, null):ArpDomain;
+	public var params(default, null):ArpEngineParams;
 
-	public var domain(get, never):ArpDomain;
-	inline private function get_domain():ArpDomain return shell.domain;
+	public var shell(default, null):ArpEngineShell;
 
 	public var displayContext(get, never):DisplayContext;
 	inline public function get_displayContext():DisplayContext return shell.displayContext;
 
-	public function new(params:ArpEngineParams) {
-		this.shell = new ArpEngineShell(params);
+	public function new(domain:ArpDomain, params:ArpEngineParams) {
+		this.domain = domain;
+		this.params = params;
+	}
+
+	public function start():Void {
+		this.shell = new ArpEngineShell(domain, params);
 	}
 }

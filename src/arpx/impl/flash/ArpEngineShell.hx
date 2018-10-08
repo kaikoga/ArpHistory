@@ -2,7 +2,7 @@ package arpx.impl.flash;
 
 #if arp_display_backend_flash
 
-import flash.geom.Matrix;
+import arp.domain.ArpDomain;
 import arpx.impl.cross.display.DisplayContext;
 import arpx.impl.cross.ArpEngineShellBase;
 import arpx.impl.cross.structs.ArpTransform;
@@ -12,10 +12,11 @@ import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.PixelSnapping;
 import flash.events.Event;
+import flash.geom.Matrix;
 
 class ArpEngineShell extends ArpEngineShellBase {
 
-	public function new(params:ArpEngineParams) {
+	public function new(domain:ArpDomain, params:ArpEngineParams) {
 		super(params);
 		Lib.current.stage.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
 		Lib.current.stage.addEventListener(Event.ENTER_FRAME, this.onFirstFrame);
