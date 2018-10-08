@@ -7,7 +7,7 @@ import arpx.impl.cross.ArpEngineShell;
 class ArpEngine {
 
 	public var domain(default, null):ArpDomain;
-	public var initParams(default, null):ArpEngineParams;
+	public var config(default, null):ArpEngineConfig;
 
 	public var shell(default, null):ArpEngineShell;
 
@@ -16,10 +16,10 @@ class ArpEngine {
 
 	public function new(domain:ArpDomain) {
 		this.domain = domain;
-		this.initParams = new ArpEngineParams();
+		this.config = new ArpEngineConfig();
 	}
 
 	public function start():Void {
-		this.shell = new ArpEngineShell(domain, initParams);
+		this.shell = new ArpEngineShell(domain, config);
 	}
 }
