@@ -5,12 +5,12 @@ import arpx.ArpEngineShellBufferMode;
 
 class ArpEngineConfig {
 
-	public var shellBufferParams(default, null):ArpEngineShellBufferParams;
-	public var events(default, null):ArpEngineEventParams;
+	private var shellBufferParams(default, null):ArpEngineShellBufferParams;
+	private var eventParams(default, null):ArpEngineEventParams;
 
 	public function new() {
 		this.shellBufferParams = new ArpEngineShellBufferParams();
-		this.events = new ArpEngineEventParams();
+		this.eventParams = new ArpEngineEventParams();
 	}
 
 	public function shellBuffer(width:Int, height:Int, clearColor:UInt = 0xff000000):ArpEngineConfig {
@@ -27,33 +27,37 @@ class ArpEngineConfig {
 		return this;
 	}
 
-	//** Called once when renderContext is available. domain may not be ready.
 	public function start(start:Void->Void):ArpEngineConfig {
-		this.events.start = start;
+		this.eventParams.onStart = start;
 		return this;
 	}
 
-	//** Called every frame after renderContext is available. domain may not be ready.
 	public function rawTick(rawTick:Float->Void):ArpEngineConfig {
-		this.events.rawTick = rawTick;
+		this.eventParams.onRawTick = rawTick;
 		return this;
 	}
 
-	//** Called once when renderContext and domain is ready.
 	public function firstTick(firstTick:Float->Void):ArpEngineConfig {
-		this.events.firstTick = firstTick;
+		this.eventParams.onFirstTick = firstTick;
 		return this;
 	}
 
-	//** Called every frame after renderContext and domain is ready.
 	public function tick(tick:Float->Void):ArpEngineConfig {
-		this.events.tick = tick;
+		this.eventParams.onTick = tick;
 		return this;
 	}
 
-	//** Rendering is requested from backend. renderContext is ready, but domain may not be ready.
 	public function render(render:RenderContext->Void):ArpEngineConfig {
-		this.events.render = render;
+		this.eventParams.onRender = render;
+		return this;
+	}
+
+	public function events(handler:IArpEngineEventHandler):ArpEngineConfig {
+		this.eventParams.onStart = handler.onStart;
+		this.eventParams.onRawTick = handler.onRawTick;
+		this.eventParams.onFirstTick = handler.onFirstTick;
+		this.eventParams.onTick = handler.onTick;
+		this.eventParams.onRender = handler.onRender;
 		return this;
 	}
 }
@@ -73,10 +77,10 @@ class ArpEngineShellBufferParams {
 }
 
 class ArpEngineEventParams {
-	public var start:Void->Void = () -> {};
-	public var rawTick:Float->Void = _ -> {};
-	public var firstTick:Float->Void = _ -> {};
-	public var tick:Float->Void = _ -> {};
-	public var render:RenderContext->Void = _ -> {};
+	public dynamic function onStart():Void return;
+	public dynamic function onRawTick(timeslice:Float):Void return;
+	public dynamic function onFirstTick(timeslice:Float):Void return;
+	public dynamic function onTick(timeslice:Float):Void return;
+	public dynamic function onRender(context:RenderContext):Void return;
 	public function new() return;
 }

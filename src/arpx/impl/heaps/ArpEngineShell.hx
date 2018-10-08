@@ -32,7 +32,7 @@ private class ArpEngineApp extends App {
 		super();
 	}
 
-	override function init() @:privateAccess this.shell._start();
+	override function init() @:privateAccess this.shell.onStart();
 	override function update(dt:Float):Void @:privateAccess this.shell.domainRawTick(dt * 60);
 
 	override public function render(e:h3d.Engine):Void {
