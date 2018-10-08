@@ -3,21 +3,17 @@ package arpx.console;
 import arp.domain.IArpObject;
 import arp.ds.IOmap;
 import arp.task.ITickable;
-import arpx.impl.cross.console.ConsoleImpl;
-import arpx.impl.cross.console.IConsoleImpl;
 import arpx.impl.cross.display.RenderContext;
 import arpx.input.focus.IFocusNode;
 import arpx.input.Input;
 import arpx.screen.Screen;
 
 @:arpType("console", "console")
-class Console implements IArpObject implements ITickable implements IFocusNode<Input> implements IConsoleImpl {
+class Console implements IArpObject implements ITickable implements IFocusNode<Input> {
 	@:arpField public var width:Int;
 	@:arpField public var height:Int;
 
 	@:arpField("screen") public var screens:IOmap<String, Screen>;
-
-	@:arpImpl private var arpImpl:ConsoleImpl;
 
 	public function new() return;
 
