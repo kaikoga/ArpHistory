@@ -34,16 +34,16 @@ class ArpEngineShellBase {
 
 		this.width = params.shellBuffer.width;
 		this.height = params.shellBuffer.height;
-		if (params.shellBuffer.scaleX != null) this.scaleX = params.shellBuffer.scaleX;
-		if (params.shellBuffer.scaleY != null) this.scaleY = params.shellBuffer.scaleY;
-		this.bufferMode = if (params.shellBuffer.bufferMode != null) params.shellBuffer.bufferMode else ArpEngineShellBufferMode.Logical;
+		this.scaleX = params.shellBuffer.scaleX;
+		this.scaleY = params.shellBuffer.scaleY;
+		this.bufferMode = params.shellBuffer.bufferMode;
 		this.clearColor = params.shellBuffer.clearColor | 0xff000000;
 		this.domain.tick.push(this.onDomainFirstTick);
-		if (params.events.start != null) this._start = params.events.start;
-		if (params.events.rawTick != null) this._rawTick = params.events.rawTick;
-		if (params.events.firstTick != null) this._firstTick = params.events.firstTick;
-		if (params.events.tick != null) this._tick = params.events.tick;
-		if (params.events.render != null) this._render = params.events.render;
+		this._start = params.events.start;
+		this._rawTick = params.events.rawTick;
+		this._firstTick = params.events.firstTick;
+		this._tick = params.events.tick;
+		this._render = params.events.render;
 	}
 
 	private function createDisplayContext():DisplayContext return null;
