@@ -20,6 +20,8 @@ class ArpEngine {
 	}
 
 	public function start():Void {
+		var config = this.config;
+		this.config = null;
 		this.shell = new ArpEngineShell(domain, config);
 	}
 }
