@@ -6,9 +6,9 @@ import arpx.impl.cross.ArpEngineShell;
 
 class ArpEngine {
 
-	public var shell:ArpEngineShell;
+	public var shell(default, null):ArpEngineShell;
 
-	public var domain(get, null):ArpDomain;
+	public var domain(get, never):ArpDomain;
 	inline private function get_domain():ArpDomain return shell.domain;
 
 	public var displayContext(get, never):DisplayContext;
