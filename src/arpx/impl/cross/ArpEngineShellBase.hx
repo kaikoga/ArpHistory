@@ -32,12 +32,12 @@ class ArpEngineShellBase {
 	public function new(domain:ArpDomain, initParams:ArpEngineParams) {
 		this.domain = domain;
 
-		this.width = initParams.shellBuffer.width;
-		this.height = initParams.shellBuffer.height;
-		this.scaleX = initParams.shellBuffer.scaleX;
-		this.scaleY = initParams.shellBuffer.scaleY;
-		this.bufferMode = initParams.shellBuffer.bufferMode;
-		this.clearColor = initParams.shellBuffer.clearColor24;
+		this.width = initParams.shellBufferParams.width;
+		this.height = initParams.shellBufferParams.height;
+		this.scaleX = initParams.shellBufferParams.scaleX;
+		this.scaleY = initParams.shellBufferParams.scaleY;
+		this.bufferMode = initParams.shellBufferParams.bufferMode;
+		this.clearColor = initParams.shellBufferParams.clearColor24;
 		this.domain.tick.push(this.onDomainFirstTick);
 		this._start = initParams.events.start;
 		this._rawTick = initParams.events.rawTick;
