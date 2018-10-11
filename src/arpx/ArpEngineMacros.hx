@@ -20,7 +20,7 @@ class ArpEngineMacros {
 		var components:Array<ArpEngineBackend> = [];
 		components.push(ArpEngineBackend.flat("arp_display_backend", ["heaps", "flash", "openfl", "sys", "stub"]));
 		components.push(ArpEngineBackend.flat("arp_input_backend", ["heaps", "flash", "openfl", "js", "sys", "stub"]));
-		components.push(ArpEngineBackend.flat("arp_audio_backend", ["heaps", "flash", "openfl", "sys", "stub"]));
+		components.push(ArpEngineBackend.flat("arp_audio_backend", ["heaps", "flash", "openfl", "js", "sys", "stub"]));
 		components.push(ArpEngineBackend.flat("arp_socket_backend", ["flash", "openfl", "sys", "stub"]));
 		components.push(ArpEngineBackend.flat("arp_storage_backend", ["flash", "openfl", "js", "sys", "stub"]));
 

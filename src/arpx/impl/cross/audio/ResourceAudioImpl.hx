@@ -4,6 +4,8 @@ package arpx.impl.cross.audio;
 typedef ResourceAudioImpl = arpx.impl.flash.audio.ResourceAudioImpl;
 #elseif arp_audio_backend_heaps
 typedef ResourceAudioImpl = arpx.impl.heaps.audio.ResourceAudioImpl;
+#elseif arp_audio_backend_js
+typedef ResourceAudioImpl = arpx.impl.js.audio.ResourceAudioImpl;
 #elseif arp_audio_backend_sys
 typedef ResourceAudioImpl = arpx.impl.sys.audio.ResourceAudioImpl;
 #elseif arp_audio_backend_stub
