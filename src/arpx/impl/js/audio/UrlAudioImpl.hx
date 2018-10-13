@@ -2,16 +2,19 @@ package arpx.impl.js.audio;
 
 #if arp_audio_backend_js
 
-import js.html.Audio;
 import arpx.audio.UrlAudio;
-import arpx.impl.cross.audio.IAudioImpl;
 import arpx.impl.ArpObjectImplBase;
+import arpx.impl.cross.audio.AudioContext;
+import arpx.impl.cross.audio.IAudioImpl;
+import js.html.audio.AudioBuffer;
+import js.html.audio.AudioBufferSourceNode;
+import js.html.XMLHttpRequest;
 
 class UrlAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 
 	private var audio:UrlAudio;
-	private var loadingValue:Audio;
-	private var value:Audio;
+	private var xhr:XMLHttpRequest;
+	private var buffer:AudioBuffer;
 
 	public function new(audio:UrlAudio) {
 		super();
@@ -19,30 +22,51 @@ class UrlAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 	}
 
 	override public function arpHeatUp():Bool {
-		if (loadingValue != null) return this.value != null;
+		if (xhr != null) return this.audio != null;
 
-		this.loadingValue = new Audio(this.audio.src);
-		this.loadingValue.onloadeddata = this.onLoaded;
+		this.xhr = new XMLHttpRequest();
+
+		xhr.open("GET", this.audio.src, true);
+		xhr.responseType = untyped "arraybuffer";
+		xhr.onload = this.onLoaded;
+		xhr.onerror = this.onError;
 		this.audio.arpDomain.waitFor(this.audio);
+		xhr.send();
 		return false;
+
 	}
 
 	private function onLoaded():Void {
-		this.value = this.loadingValue;
+		var nativeContext:js.html.audio.AudioContext = AudioContext.instance.impl.raw;
+		nativeContext.decodeAudioData(
+			xhr.response,
+			function(buf) {
+				if (this.xhr != null) this.buffer = buf;
+				this.audio.arpDomain.notifyFor(this.audio);
+			},
+			function() this.audio.arpDomain.notifyFor(this.audio)
+		);
+	}
+
+	private function onError():Void {
 		this.audio.arpDomain.notifyFor(this.audio);
 	}
 
 	override public function arpHeatDown():Bool {
-		if (this.loadingValue == null) return true;
-		this.loadingValue.onloadeddata = null;
-		this.loadingValue = null;
-		this.value = null;
+		if (this.buffer == null) return true;
+		this.xhr.onload = null;
+		this.xhr.onerror = null;
+		this.xhr = null;
+		this.buffer = null;
 		return true;
 	}
 
-	public function play():Void {
-		// TODO
-		this.value.play();
+	public function play(context:AudioContext):Void {
+		var nativeContext:js.html.audio.AudioContext = context.impl.raw;
+		var source:AudioBufferSourceNode = nativeContext.createBufferSource();
+		source.buffer = this.buffer;
+		source.connect(nativeContext.destination);
+		source.start();
 	}
 }
 

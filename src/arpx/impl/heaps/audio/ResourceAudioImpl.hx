@@ -8,6 +8,7 @@ import hxd.fs.BytesFileSystem.BytesFileEntry;
 import hxd.fs.FileEntry;
 import hxd.res.Sound;
 import arpx.audio.ResourceAudio;
+import arpx.impl.cross.audio.AudioContext;
 import arpx.impl.cross.audio.IAudioImpl;
 import arpx.impl.ArpObjectImplBase;
 
@@ -36,7 +37,7 @@ class ResourceAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		return true;
 	}
 
-	public function play():Void {
+	public function play(context:AudioContext):Void {
 		this.value.play();
 	}
 }

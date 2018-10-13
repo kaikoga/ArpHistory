@@ -2,6 +2,7 @@ package arpx.impl.sys.audio;
 
 #if arp_audio_backend_sys
 
+import arpx.impl.cross.audio.AudioContext;
 import arpx.impl.cross.audio.IAudioImpl;
 import arpx.audio.ResourceAudio;
 
@@ -14,7 +15,7 @@ class ResourceAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		this.audio = audio;
 	}
 
-	public function play():Void return;
+	public function play(context:AudioContext):Void return;
 }
 
 #end

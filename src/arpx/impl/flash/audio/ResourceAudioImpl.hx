@@ -8,6 +8,7 @@ import haxe.io.Bytes;
 import haxe.Resource;
 import arpx.audio.ResourceAudio;
 import arpx.impl.cross.audio.IAudioImpl;
+import arpx.impl.cross.audio.AudioContext;
 
 class ResourceAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 
@@ -35,7 +36,7 @@ class ResourceAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		return true;
 	}
 
-	public function play():Void {
+	public function play(context:AudioContext):Void {
 		this.value.play(0, 1);
 	}
 }
