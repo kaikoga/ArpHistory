@@ -13,7 +13,6 @@ class StringChip extends Chip {
 	@:arpField public var chipHeight:Float;
 
 	@:arpField public var isProportional:Bool;
-	@:arpField public var orientation:Int;
 
 	@:arpBarrier @:arpField public var chip:Chip;
 

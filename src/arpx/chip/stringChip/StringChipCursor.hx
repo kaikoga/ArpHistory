@@ -47,75 +47,20 @@ class StringChipCursor {
 
 		this.childChip.layoutSize(this.params, this.childChipSize);
 
-		switch (chip.orientation) {
-			case 90:
-				switch (char) {
-					case "/space/":
-						this.nextY += childChipSize.height;
-						return false;
-					case "\t":
-						this.nextY += childChipSize.height * 4;
-						return false;
-					case "\n":
-						this.nextY = 0;
-						this.nextX -= childChipSize.width;
-						return false;
-					default:
-						this.nextY += childChipSize.height;
-						return true;
-				}
-
-			case 180:
-				switch (char) {
-					case "/space/":
-						this.nextX -= childChipSize.width;
-						return false;
-					case "\t":
-						this.nextX -= childChipSize.width * 4;
-						return false;
-					case "\n":
-						this.nextX = 0;
-						this.nextY -= childChipSize.height;
-						return false;
-					default:
-						this.nextX -= childChipSize.width;
-						return true;
-				}
-
-			case 270:
-				switch (char) {
-					case "/space/":
-						this.nextY -= childChipSize.height;
-						return false;
-					case "\t":
-						this.nextY -= childChipSize.height * 4;
-						return false;
-					case "\n":
-						this.nextY = 0;
-						this.nextX += childChipSize.width;
-						return false;
-					default:
-						this.nextY -= childChipSize.height;
-						return true;
-				}
-
-			//case 0:
+		switch (char) {
+			case "/space/":
+				this.nextX += childChipSize.width;
+				return false;
+			case "\t":
+				this.nextX += childChipSize.width * 4;
+				return false;
+			case "\n":
+				this.nextX = 0;
+				this.nextY += childChipSize.height;
+				return false;
 			default:
-				switch (char) {
-					case "/space/":
-						this.nextX += childChipSize.width;
-						return false;
-					case "\t":
-						this.nextX += childChipSize.width * 4;
-						return false;
-					case "\n":
-						this.nextX = 0;
-						this.nextY += childChipSize.height;
-						return false;
-					default:
-						this.nextX += childChipSize.width;
-						return true;
-				}
+				this.nextX += childChipSize.width;
+				return true;
 		}
 	}
 
