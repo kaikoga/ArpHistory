@@ -18,7 +18,7 @@ class ResourceAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 
 	private static var _dummyBuffer:AudioBuffer;
 	private static var dummyBuffer(get, never):AudioBuffer;
-	private static function get_dummyBuffer():AudioBuffer return if (_dummyBuffer != null) _dummyBuffer else _dummyBuffer = AudioContext.instance.impl.raw.createBuffer(1, 1, 44100);
+	private static function get_dummyBuffer():AudioBuffer return if (_dummyBuffer != null) _dummyBuffer else _dummyBuffer = AudioContext.instance.impl.dummyBuffer;
 
 	public function new(audio:ResourceAudio) {
 		super();
