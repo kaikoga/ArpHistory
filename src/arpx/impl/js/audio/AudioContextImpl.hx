@@ -2,9 +2,10 @@ package arpx.impl.js.audio;
 
 #if arp_audio_backend_js
 
+import js.html.ArrayBuffer;
 import js.html.audio.AudioBuffer;
-import js.Browser;
 import js.html.audio.AudioContext;
+import js.Browser;
 
 class AudioContextImpl {
 
@@ -22,6 +23,10 @@ class AudioContextImpl {
 			source.connect(this.raw.destination);
 			source.start();
 		});
+	}
+
+	public function decodeAudioData(buffer:ArrayBuffer, callback:Null<AudioBuffer>->Void):Void {
+		raw.decodeAudioData(buffer, callback, () -> callback(null));
 	}
 }
 

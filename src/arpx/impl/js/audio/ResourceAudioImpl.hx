@@ -16,29 +16,24 @@ class ResourceAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 	private var audio:ResourceAudio;
 	private var buffer:AudioBuffer;
 
-	private static var _dummyBuffer:AudioBuffer;
-	private static var dummyBuffer(get, never):AudioBuffer;
-	private static function get_dummyBuffer():AudioBuffer return if (_dummyBuffer != null) _dummyBuffer else _dummyBuffer = AudioContext.instance.impl.dummyBuffer;
-
 	public function new(audio:ResourceAudio) {
 		super();
 		this.audio = audio;
 	}
 
 	override public function arpHeatUp():Bool {
-		var nativeContext:js.html.audio.AudioContext = AudioContext.instance.impl.raw;
+		var contextImpl:AudioContextImpl = AudioContext.instance.impl;
 		var bytes:Bytes = Resource.getBytes(this.audio.src);
-		this.buffer = dummyBuffer;
-		nativeContext.decodeAudioData(
-			bytes.getData(),
-			function(buf) {
-				if (this.buffer == dummyBuffer) this.buffer = buf;
-				this.audio.arpDomain.notifyFor(this.audio);
-			},
-			function() this.audio.arpDomain.notifyFor(this.audio)
-		);
+		this.buffer = contextImpl.dummyBuffer;
+		contextImpl.decodeAudioData(bytes.getData(), this.onDecoded);
 		this.audio.arpDomain.waitFor(this.audio);
 		return false;
+	}
+
+	private function onDecoded(buf:Null<AudioBuffer>):Void {
+		var contextImpl:AudioContextImpl = AudioContext.instance.impl;
+		if (this.buffer == contextImpl.dummyBuffer) this.buffer = buf;
+		this.audio.arpDomain.notifyFor(this.audio);
 	}
 
 	override public function arpHeatDown():Bool {

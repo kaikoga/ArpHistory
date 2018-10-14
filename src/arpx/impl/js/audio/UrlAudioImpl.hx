@@ -25,7 +25,6 @@ class UrlAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		if (xhr != null) return this.audio != null;
 
 		this.xhr = new XMLHttpRequest();
-
 		xhr.open("GET", this.audio.src, true);
 		xhr.responseType = untyped "arraybuffer";
 		xhr.onload = this.onLoaded;
@@ -33,19 +32,16 @@ class UrlAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		this.audio.arpDomain.waitFor(this.audio);
 		xhr.send();
 		return false;
-
 	}
 
 	private function onLoaded():Void {
-		var nativeContext:js.html.audio.AudioContext = AudioContext.instance.impl.raw;
-		nativeContext.decodeAudioData(
-			xhr.response,
-			function(buf) {
-				if (this.xhr != null) this.buffer = buf;
-				this.audio.arpDomain.notifyFor(this.audio);
-			},
-			function() this.audio.arpDomain.notifyFor(this.audio)
-		);
+		var contextImpl:AudioContextImpl = AudioContext.instance.impl;
+		contextImpl.decodeAudioData(xhr.response, this.onDecoded);
+	}
+
+	private function onDecoded(buf:Null<AudioBuffer>):Void {
+		if (this.xhr != null) this.buffer = buf;
+		this.audio.arpDomain.notifyFor(this.audio);
 	}
 
 	private function onError():Void {
