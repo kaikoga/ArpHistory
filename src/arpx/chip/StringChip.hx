@@ -1,7 +1,6 @@
 package arpx.chip;
 
-import arpx.chip.stringChip.StringChipCursor;
-import arpx.chip.stringChip.StringChipStringIterator;
+import arpx.chip.stringChip.StringChipTypeset;
 import arpx.impl.cross.chip.StringChipImpl;
 import arpx.impl.cross.geom.RectImpl;
 import arpx.structs.IArpParamsRead;
@@ -21,17 +20,14 @@ class StringChip extends Chip {
 		var top:Float = 0;
 		var right:Float = 0;
 		var bottom:Float = 0;
-		var cursor:StringChipCursor = new StringChipCursor(this, params);
-		for (char in new StringChipStringIterator(params.get("face"))) {
-			if (cursor.move(char)) {
-				var layoutChar:RectImpl = cursor.layoutChar(_workRect);
-				var charRight:Float = layoutChar.x + layoutChar.width;
-				var charBottom:Float = layoutChar.y + layoutChar.height;
-				if (left > layoutChar.x) left = layoutChar.x;
-				if (top > layoutChar.y) top = layoutChar.y;
-				if (right < charRight) right = charRight;
-				if (bottom < charBottom) bottom = charBottom;
-			}
+		for (char in new StringChipTypeset(this, params)) {
+			var layoutChar:RectImpl = char.layoutChar(_workRect);
+			var charRight:Float = layoutChar.x + layoutChar.width;
+			var charBottom:Float = layoutChar.y + layoutChar.height;
+			if (left > layoutChar.x) left = layoutChar.x;
+			if (top > layoutChar.y) top = layoutChar.y;
+			if (right < charRight) right = charRight;
+			if (bottom < charBottom) bottom = charBottom;
 		}
 		rect.reset(left, top, right - left, bottom - top);
 		return rect;

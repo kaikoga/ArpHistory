@@ -1,0 +1,37 @@
+package arpx.chip.stringChip;
+
+import arpx.impl.cross.display.RenderContext;
+import arpx.impl.cross.geom.RectImpl;
+import arpx.structs.ArpParams;
+
+class StringChipTypesetChar {
+
+	public var typeset:StringChipTypeset;
+	public var dX:Float = 0;
+	public var dY:Float = 0;
+	public var char:String;
+
+	public function new(typeset:StringChipTypeset, dX:Float, dY:Float, char:String) {
+		this.typeset = typeset;
+		this.dX = dX;
+		this.dY = dY;
+		this.char = char;
+	}
+
+	public function renderChar(context:RenderContext):Void {
+		var params:ArpParams = @:privateAccess this.typeset.params;
+
+		context.dupTransform();
+		context.transform.prependXY(this.dX, this.dY);
+		params.set("face", this.char);
+		@:privateAccess this.typeset.childChip.render(context, params);
+		context.popTransform();
+	}
+
+	public function layoutChar(rect:RectImpl):RectImpl {
+		@:privateAccess rect.copyFrom(this.typeset.childChipSize.get(this.char));
+		rect.translateXY(this.dX, this.dY);
+		return rect;
+	}
+}
+
