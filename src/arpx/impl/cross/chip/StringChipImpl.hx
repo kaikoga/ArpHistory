@@ -18,7 +18,7 @@ class StringChipImpl extends ArpObjectImplBase implements IChipImpl {
 
 	private var _workPt:PointImpl = PointImpl.alloc();
 	public function render(context:RenderContext, params:IArpParamsRead = null):Void {
-		for (char in new StringChipTypeset(this.chip, params)) {
+		for (char in StringChipTypeset.cached(this.chip, params)) {
 			char.renderChar(context);
 		}
 	}

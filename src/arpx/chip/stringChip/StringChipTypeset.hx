@@ -28,7 +28,7 @@ class StringChipTypeset {
 		}
 	}
 
-	public function new(chip:StringChip, params:IArpParamsRead = null) {
+	public function new(chip:StringChip, params:IArpParamsRead) {
 		this.chip = chip;
 		this.childChip = chip.chip;
 		this.childChipSize = new Map<String, RectImpl>();
@@ -55,5 +55,13 @@ class StringChipTypeset {
 		}
 	}
 
+	public function match(chip:StringChip, params:IArpParamsRead):Bool {
+		if (chip != this.chip) return false;
+		if (params.get("face") != this.params.get("face")) return false;
+		if (params.toString() != this.params.toString()) return false;
+		return true;
+	}
+
+	inline public static function cached(chip:StringChip, params:IArpParamsRead):StringChipTypeset return StringChipTypesetCache.instance.get(chip, params);
 }
 

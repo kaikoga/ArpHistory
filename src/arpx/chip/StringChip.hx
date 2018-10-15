@@ -20,7 +20,7 @@ class StringChip extends Chip {
 		var top:Float = 0;
 		var right:Float = 0;
 		var bottom:Float = 0;
-		for (char in new StringChipTypeset(this, params)) {
+		for (char in StringChipTypeset.cached(this, params)) {
 			var layoutChar:RectImpl = char.layoutChar(_workRect);
 			var charRight:Float = layoutChar.x + layoutChar.width;
 			var charBottom:Float = layoutChar.y + layoutChar.height;
