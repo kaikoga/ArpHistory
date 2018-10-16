@@ -49,6 +49,10 @@ class StringChipTypeset {
 					x = 0;
 					y += childFaceSize.height;
 				default:
+					if (chip.chipWidth > 0 && x + childFaceSize.width > chip.chipWidth) {
+						x = 0;
+						y += childFaceSize.height;
+					}
 					this.chars.push(new StringChipTypesetChar(this, x, y, char));
 					x += childFaceSize.width;
 			}
