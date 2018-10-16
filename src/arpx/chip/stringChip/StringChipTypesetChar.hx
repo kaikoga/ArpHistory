@@ -19,6 +19,7 @@ class StringChipTypesetChar {
 	}
 
 	public function renderChar(context:RenderContext):Void {
+		if (Math.isNaN(dX)) return;
 		var params:ArpParams = @:privateAccess this.typeset.params;
 
 		context.dupTransform();
@@ -29,6 +30,7 @@ class StringChipTypesetChar {
 	}
 
 	public function layoutChar(rect:RectImpl):RectImpl {
+		if (Math.isNaN(dX)) return rect;
 		@:privateAccess rect.copyFrom(this.typeset.childChipSize.get(this.char));
 		rect.translateXY(this.dX, this.dY);
 		return rect;

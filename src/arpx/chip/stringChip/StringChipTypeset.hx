@@ -35,27 +35,54 @@ class StringChipTypeset {
 		this.params = new ArpParams().copyFrom(params);
 		this.chars = [];
 
+		for (char in new StringChipStringIterator(params.get("face"))) {
+			this.chars.push(new StringChipTypesetChar(this, 0, 0, char));
+		}
+
 		var x:Float = 0;
 		var y:Float = 0;
-		for (char in new StringChipStringIterator(params.get("face"))) {
+		var i:Int = 0;
+		var lastSpace:Int = -1;
+		var len:Int = this.chars.length;
+
+		inline function newLine(lineHeight:Float):Void {
+			x = 0;
+			lastSpace = -1;
+			y += lineHeight;
+		}
+		while (i < len) {
+			var tChar:StringChipTypesetChar = this.chars[i];
+			var char:String = tChar.char;
 			this.params.set("face", char);
 			var childFaceSize:RectImpl = getChildFaceSize(char);
 			switch (char) {
 				case "/space/":
 					x += childFaceSize.width;
+					lastSpace = i;
+					tChar.dX = Math.NaN;
 				case "\t":
 					x += childFaceSize.width * 4;
+					lastSpace = i;
+					tChar.dX = Math.NaN;
 				case "\n":
-					x = 0;
-					y += childFaceSize.height;
+					newLine(childFaceSize.height);
+					tChar.dX = Math.NaN;
 				default:
 					if (chip.chipWidth > 0 && x + childFaceSize.width > chip.chipWidth) {
-						x = 0;
-						y += childFaceSize.height;
+						if (lastSpace != -1) {
+							// backtrack to after last space and line feed
+							i = lastSpace + 1;
+							newLine(childFaceSize.height);
+							continue;
+						}
+						// force linefeed
+						newLine(childFaceSize.height);
 					}
-					this.chars.push(new StringChipTypesetChar(this, x, y, char));
+					tChar.dX = x;
+					tChar.dY = y;
 					x += childFaceSize.width;
 			}
+			i++;
 		}
 	}
 
