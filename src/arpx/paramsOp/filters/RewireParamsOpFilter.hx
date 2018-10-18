@@ -26,9 +26,9 @@ class RewireParamsOpFilter extends ArpParamsFilter {
 
 	override public function keys():Iterator<String> {
 		return if (this.paramsOp.copy) {
-			new ArpParams().merge(this.paramsOp.fixedParams).merge(this.paramsOp.rewireParams).keys();
-		} else {
 			new ArpParams().merge(this.params).merge(this.paramsOp.fixedParams).merge(this.paramsOp.rewireParams).keys();
+		} else {
+			new ArpParams().merge(this.paramsOp.fixedParams).merge(this.paramsOp.rewireParams).keys();
 		}
 	}
 }
