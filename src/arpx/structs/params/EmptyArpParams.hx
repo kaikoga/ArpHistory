@@ -7,16 +7,16 @@ class EmptyArpParams implements IArpParamsRead {
 
 	public function new() return;
 
-	inline public function get(key:String):Dynamic return null;
-	inline public function keys():Iterator<String> return new EmptyIterator();
+	inline public function get(key:ArpParamsKey):Dynamic return null;
+	inline public function keys():Iterator<ArpParamsKey> return new EmptyIterator();
 
-	public function getInt(key:String, defaultValue = null):Null<Int> return defaultValue;
-	public function getFloat(key:String, defaultValue = null):Null<Float> return defaultValue;
-	public function getString(key:String, defaultValue = null):String return defaultValue;
-	public function getBool(key:String, defaultValue = null):Null<Bool> return defaultValue;
-	public function getArpDirection(key:String, defaultValue = null):ArpDirection return defaultValue;
+	public function getInt(key:ArpParamsKey, defaultValue = null):Null<Int> return defaultValue;
+	public function getFloat(key:ArpParamsKey, defaultValue = null):Null<Float> return defaultValue;
+	public function getString(key:ArpParamsKey, defaultValue = null):String return defaultValue;
+	public function getBool(key:ArpParamsKey, defaultValue = null):Null<Bool> return defaultValue;
+	public function getArpDirection(key:ArpParamsKey, defaultValue = null):ArpDirection return defaultValue;
 
-	public function getAsString(key:String, defaultValue = null):String return defaultValue;
+	public function getAsString(key:ArpParamsKey, defaultValue = null):String return defaultValue;
 
 	public function toString():String return [].join(",");
 }

@@ -1,5 +1,6 @@
 package arpx.paramsOp.filters;
 
+import arpx.structs.ArpParamsKey;
 import arpx.structs.ArpParams;
 import arpx.structs.IArpParamsRead;
 
@@ -11,7 +12,7 @@ class RewireParamsOpFilter extends ArpParamsFilter {
 		this.paramsOp = paramsOp;
 	}
 
-	override public function get(key:String):Dynamic {
+	override public function get(key:ArpParamsKey):Dynamic {
 		var value:Dynamic;
 		value = super.get(this.paramsOp.rewireParams.get(key));
 		if (value != null) return value;
@@ -24,7 +25,7 @@ class RewireParamsOpFilter extends ArpParamsFilter {
 		return null;
 	}
 
-	override public function keys():Iterator<String> {
+	override public function keys():Iterator<ArpParamsKey> {
 		return if (this.paramsOp.copy) {
 			new ArpParams().merge(this.params).merge(this.paramsOp.fixedParams).merge(this.paramsOp.rewireParams).keys();
 		} else {
