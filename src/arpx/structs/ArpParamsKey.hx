@@ -1,13 +1,26 @@
 package arpx.structs;
 
-abstract ArpParamsKey(String) from String to String {
+abstract ArpParamsKey(Int) {
+	private static var keyMap:Map<String, Int> = new Map<String, Int>();
+	private static var keys:Array<String> = [null];
 
-	inline public function new(key:String) this = key;
+	private static function defineKey(value:String):Int {
+		var keyIndex:Int = keys.length;
+		keyMap.set(value, keyIndex);
+		keys.push(value);
+		return keyIndex;
+	}
 
-/*
+	public var index(get, never):Int;
+	private function get_index():Int return this;
+
+	inline public function new(index:Int) this = index;
+
 	@:from
-	inline public static function fromString(value):ArpParamsKey return new ArpParamsKey(value);
+	public static function fromString(value:String):ArpParamsKey {
+		return new ArpParamsKey(if (keyMap.exists(value)) keyMap.get(value) else defineKey(value));
+	}
 
-	inline public function toString():String return this;
-*/
+	@:to
+	public function toString():String return keys[this];
 }

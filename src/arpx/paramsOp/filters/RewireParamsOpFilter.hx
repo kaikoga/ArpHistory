@@ -14,7 +14,7 @@ class RewireParamsOpFilter extends ArpParamsFilter {
 
 	override public function get(key:ArpParamsKey):Dynamic {
 		var value:Dynamic;
-		value = super.get(this.paramsOp.rewireParams.get(key));
+		value = super.get(this.paramsOp.rewireParams.getAsString(key));
 		if (value != null) return value;
 		value = this.paramsOp.fixedParams.get(key);
 		if (value != null) return value;
