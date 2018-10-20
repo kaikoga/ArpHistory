@@ -19,10 +19,19 @@ class ArpParamsMacros {
 	}
 
 	macro public static function getAsString(key:Expr, defaultValue:Expr):Expr {
-		return macro @:mergeBlock {
-			var d:Dynamic = this.get($e{ key });
-			var v = if (d == null) $e{ defaultValue } else Std.string(d);
-			return v;
+		return if (Context.defined("flash")) {
+			macro @:mergeBlock {
+				var d:String = this.get($e{ key });
+				var v = if (d == null) $e{ defaultValue } else d;
+				return v;
+			}
+		} else {
+			macro @:mergeBlock {
+				var d:Dynamic = this.get($e{ key });
+				var v = if (d == null) $e{ defaultValue } else Std.string(d);
+				return v;
+			}
+
 		}
 	}
 }
