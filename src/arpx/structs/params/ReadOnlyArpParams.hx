@@ -1,17 +1,16 @@
 package arpx.structs.params;
 
-import arp.ds.impl.StdMap;
 import arpx.structs.ArpDirection;
 import arpx.structs.macro.ArpParamsMacros;
 
 class ReadOnlyArpParams implements IArpParamsRead {
 
-	private var impl:StdMap<Int, Dynamic>;
+	private var impl:Array<Dynamic>;
 
-	public function new() this.impl = new StdMap<Int, Dynamic>();
+	public function new() this.impl = [];
 
-	inline public function get(key:ArpParamsKey):Dynamic return this.impl.get(key.index);
-	inline public function keys():Iterator<ArpParamsKey> return cast this.impl.keys();
+	inline public function get(key:ArpParamsKey):Dynamic return this.impl[key.index];
+	inline public function keys():Iterator<ArpParamsKey> return ArpParamsKey.keys();
 
 	public function getInt(key:ArpParamsKey, defaultValue = null):Null<Int> return ArpParamsMacros.getSafe(key, defaultValue, Int);
 	public function getFloat(key:ArpParamsKey, defaultValue = null):Null<Float> return ArpParamsMacros.getSafe(key, defaultValue, Float);
@@ -25,6 +24,7 @@ class ReadOnlyArpParams implements IArpParamsRead {
 		var result:Array<Dynamic> = [];
 		for (name in this.keys()) {
 			var value:Dynamic = this.get(name);
+			if (value == null) continue;
 			if (Std.is(value, ArpDirection)) {
 				value = cast(value, ArpDirection).value + ":idir";
 			}

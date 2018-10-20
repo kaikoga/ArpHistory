@@ -16,8 +16,8 @@ class ArpParams extends ReadOnlyArpParams implements IArpStruct implements IArpP
 
 	public function new() super();
 
-	inline public function set(key:ArpParamsKey, value:Dynamic):Void return this.impl.set(key.index, value);
-	inline public function clear():Void return this.impl.clear();
+	inline public function set(key:ArpParamsKey, value:Dynamic):Void this.impl[key.index] = value;
+	inline public function clear():Void this.impl = [];
 
 	public function initWithSeed(seed:ArpSeed):ArpParams {
 		if (seed == null) return this;
