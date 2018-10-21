@@ -26,8 +26,9 @@ class MacroArpImplClassDefinition {
 				MacroArpUtil.error("impl must be class or interface instance", classType.pos);
 		}
 
-		// extract fields from interfaces which fields must be explicitly typed
-		// types of class instance fields may be TLazy and therefore unable to generate delegate methods
+		// extract fields from interfaces
+		// NOTE: fields of interfaces are expected to be explicitly typed, while
+		// NOTE: while types of class instance fields may be TLazy and therefore unable to generate delegate methods
 		this.interfaces = [];
 		if (classType.isInterface) {
 			this.isInterface = true;
@@ -99,6 +100,7 @@ class MacroArpImplClassDefinition {
 			var iGet_nativeName:String = "get_" + iNativeName;
 			var getter:Field = (macro class Generated {
 				@:pos(nativeField.pos) @:noDoc @:noCompletion
+				// NOTE: simple impl delegate may be overridden in derived class body, so this cannot be inlined
 				/* inline */ private function $iGet_nativeName():$nativeType return this.arpImpl.$iNativeName;
 			}).fields[0];
 			this.fields.push(getter);
@@ -108,6 +110,7 @@ class MacroArpImplClassDefinition {
 			var iSet_nativeName:String = "set_" + iNativeName;
 			var setter:Field = (macro class Generated {
 				@:pos(nativeField.pos) @:noDoc @:noCompletion
+					// NOTE: simple impl delegate may be overridden in derived class body, so this cannot be inlined
 				/* inline */ private function $iSet_nativeName(value:$nativeType):$nativeType return this.arpImpl.$iNativeName = value;
 			}).fields[0];
 			this.fields.push(setter);
@@ -126,6 +129,7 @@ class MacroArpImplClassDefinition {
 		var delegate:Field = {
 			name: classField.name,
 			doc: classField.doc,
+			// NOTE: simple impl delegate may be overridden in derived class body, so this cannot be inlined
 			access: [Access.APublic],
 			kind: switch [cfKind, cfType] {
 				case [FieldKind.FMethod(_), Type.TFun(args, ret)]:
