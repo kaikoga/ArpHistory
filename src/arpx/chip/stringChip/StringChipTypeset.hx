@@ -87,9 +87,10 @@ class StringChipTypeset {
 	}
 
 	public function match(chip:StringChip, params:IArpParamsRead):Bool {
-		if (chip != this.chip) return false;
-		if (params.get("face") != this.params.get("face")) return false;
-		if (params.toString() != this.params.toString()) return false;
+		if (chip.chip != this.childChip) return false;
+		for (key in params.keys()) {
+			if (params.get(key) != this.params.get(key)) return false;
+		}
 		return true;
 	}
 

@@ -1,7 +1,6 @@
 package arpx.paramsOp.filters;
 
 import arpx.structs.ArpParamsKey;
-import arpx.structs.ArpParams;
 import arpx.structs.IArpParamsRead;
 
 class RewireParamsOpFilter extends ArpParamsFilter {
@@ -23,13 +22,5 @@ class RewireParamsOpFilter extends ArpParamsFilter {
 			if (value != null) return value;
 		}
 		return null;
-	}
-
-	override public function keys():Iterator<ArpParamsKey> {
-		return if (this.paramsOp.copy) {
-			new ArpParams().merge(this.params).merge(this.paramsOp.fixedParams).merge(this.paramsOp.rewireParams).keys();
-		} else {
-			new ArpParams().merge(this.paramsOp.fixedParams).merge(this.paramsOp.rewireParams).keys();
-		}
 	}
 }

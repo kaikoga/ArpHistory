@@ -1,6 +1,5 @@
 package arpx.structs.params;
 
-import arp.iterators.EmptyIterator;
 import arpx.structs.ArpDirection;
 
 class EmptyArpParams implements IArpParamsRead {
@@ -8,7 +7,7 @@ class EmptyArpParams implements IArpParamsRead {
 	public function new() return;
 
 	inline public function get(key:ArpParamsKey):Dynamic return null;
-	inline public function keys():Iterator<ArpParamsKey> return new EmptyIterator();
+	inline public function keys():Iterator<ArpParamsKey> return ArpParamsKey.keys();
 
 	public function getInt(key:ArpParamsKey, defaultValue = null):Null<Int> return defaultValue;
 	public function getFloat(key:ArpParamsKey, defaultValue = null):Null<Float> return defaultValue;
