@@ -20,18 +20,18 @@ class StringChipTypesetChar {
 
 	public function renderChar(context:RenderContext):Void {
 		if (Math.isNaN(dX)) return;
-		var params:ArpParams = @:privateAccess this.typeset.params;
+		var params:ArpParams = @:privateAccess this.typeset.font.charParams;
 
 		context.dupTransform();
 		context.transform.prependXY(this.dX, this.dY);
 		params.set("face", this.char);
-		@:privateAccess this.typeset.childChip.render(context, params);
+		@:privateAccess this.typeset.font.chip.render(context, params);
 		context.popTransform();
 	}
 
 	public function layoutChar(rect:RectImpl):RectImpl {
 		if (Math.isNaN(dX)) return rect;
-		@:privateAccess rect.copyFrom(this.typeset.childChipSize.get(this.char));
+		@:privateAccess rect.copyFrom(this.typeset.font.chipSize.get(this.char));
 		rect.translateXY(this.dX, this.dY);
 		return rect;
 	}

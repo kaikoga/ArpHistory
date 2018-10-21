@@ -9,9 +9,11 @@ class StringChipTypesetCache {
 	public function new() this.cache = [];
 
 	public function get(chip:StringChip, params:IArpParamsRead):StringChipTypeset {
-		if (this.cache.length >= 4) this.cache.splice(0, 2);
+		if (this.cache.length >= 256) this.cache.splice(0, 64);
 		for (typeset in this.cache) {
-			if (typeset.match(chip, params)) return typeset;
+			if (typeset.match(chip, params)) {
+				return typeset;
+			}
 		}
 		var typeset:StringChipTypeset = new StringChipTypeset(chip, params);
 		this.cache.push(typeset);

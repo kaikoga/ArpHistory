@@ -2,40 +2,25 @@ package arpx.chip.stringChip;
 
 import arp.iterators.SimpleArrayIterator;
 import arpx.impl.cross.geom.RectImpl;
-import arpx.structs.ArpParams;
 import arpx.structs.IArpParamsRead;
 
 class StringChipTypeset {
 
 	private var chip:StringChip;
-	private var childChip:Chip;
-	private var childChipSize:Map<String, RectImpl>;
+	private var font:StringChipFont;
 
-	private var params:ArpParams;
+	private var face:String;
 	private var chars:Array<StringChipTypesetChar>;
 
 	inline public function iterator():SimpleArrayIterator<StringChipTypesetChar> return new SimpleArrayIterator(chars);
 
-	private function getChildFaceSize(char:String):RectImpl {
-		if (childChipSize.exists(char)) {
-			return childChipSize.get(char);
-		} else {
-			var rect:RectImpl = RectImpl.alloc();
-			this.params.set("face", char);
-			childChip.layoutSize(this.params, rect);
-			childChipSize.set(char, rect);
-			return rect;
-		}
-	}
-
 	public function new(chip:StringChip, params:IArpParamsRead) {
 		this.chip = chip;
-		this.childChip = chip.chip;
-		this.childChipSize = new Map<String, RectImpl>();
-		this.params = new ArpParams().copyFrom(params);
+		this.font = StringChipFont.cached(chip.chip, params);
+		this.face = params.get("face");
 		this.chars = [];
 
-		for (char in new StringChipStringIterator(params.get("face"))) {
+		for (char in new StringChipStringIterator(this.face)) {
 			this.chars.push(new StringChipTypesetChar(this, 0, 0, char));
 		}
 
@@ -53,8 +38,7 @@ class StringChipTypeset {
 		while (i < len) {
 			var tChar:StringChipTypesetChar = this.chars[i];
 			var char:String = tChar.char;
-			this.params.set("face", char);
-			var childFaceSize:RectImpl = getChildFaceSize(char);
+			var childFaceSize:RectImpl = this.font.getCharChipSize(char);
 			switch (char) {
 				case "/space/":
 					x += childFaceSize.width;
@@ -87,10 +71,9 @@ class StringChipTypeset {
 	}
 
 	public function match(chip:StringChip, params:IArpParamsRead):Bool {
-		if (chip.chip != this.childChip) return false;
-		for (key in params.keys()) {
-			if (params.get(key) != this.params.get(key)) return false;
-		}
+		if (chip != this.chip) return false;
+		if (params.get("face") != this.face) return false;
+		if (StringChipFont.cached(chip.chip, params) != this.font) return false;
 		return true;
 	}
 
