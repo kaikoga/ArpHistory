@@ -35,12 +35,10 @@ class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase {
 	}
 
 	override public function getFaceIndex(params:IArpParamsRead = null):Int {
-		var index:Int = 0;
+		// face unset, use chip index = 0 as default
+		if (params == null) return 0;
 
-		if (params == null) {
-			// face unset, use chip index = 0 as default
-			return index;
-		}
+		var index:Int = 0;
 
 		var face:String = params.getAsString("face");
 		if (face != null) {
@@ -51,16 +49,12 @@ class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase {
 			}
 		}
 
-		try {
-			var dIndex:Null<Int> = params.getInt("index");
-			if (dIndex != null) index += dIndex;
-			if (this.faces[index] == null) {
-				this.texture.arpDomain.log("texture", 'MultiTextureImplBase.getFaceIndex(): Face index out of range: ${this.texture.arpSlot}:$index');
-			}
-		} catch (d:String) {
-			this.texture.arpDomain.log("texture", 'MultiTextureImplBase.getFaceIndex(): Illegal index: ${this.texture.arpSlot}:$params');
-		}
+		var dIndex:Null<Int> = params.getInt("index");
+		if (dIndex != null) index += dIndex;
 
+		if (this.faces[index] == null) {
+			this.texture.arpDomain.log("texture", 'MultiTextureImplBase.getFaceIndex(): Face index out of range: ${this.texture.arpSlot}:$index');
+		}
 		return index;
 	}
 
