@@ -21,15 +21,15 @@ class MacroArpPrimFloatType implements IMacroArpValueType {
 	}
 
 	public function createWithString(pos:Position, cValue:String):Expr {
-		return macro @:pos(pos) $v{Std.parseFloat(cValue)};
+		return macro @:pos(pos) $v{ arp.utils.ArpStringUtil.parseFloatDefault(cValue) };
 	}
 
 	public function createSeedElement(pos:Position):Expr {
-		return macro @:pos(pos) { Std.parseFloat(element.value); };
+		return macro @:pos(pos) { arp.utils.ArpStringUtil.parseFloatDefault(element.value); };
 	}
 
 	public function readSeedElement(pos:Position, iFieldName:String):Expr {
-		return macro @:pos(pos) { this.$iFieldName = Std.parseFloat(element.value); };
+		return macro @:pos(pos) { this.$iFieldName = arp.utils.ArpStringUtil.parseFloatDefault(element.value); };
 	}
 
 	public function createAsPersistable(pos:Position, eName:Expr):Expr {
