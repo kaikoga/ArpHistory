@@ -1,5 +1,6 @@
 package arpx.structs;
 
+import arp.utils.ArpStringUtil;
 import arp.domain.IArpStruct;
 import arp.persistable.IPersistInput;
 import arp.persistable.IPersistOutput;
@@ -62,17 +63,17 @@ class ArpHitCuboid implements IArpStruct {
 		for (element in seed) {
 			switch (element.typeName) {
 				case "dX", "x":
-					this.dX = Std.parseFloat(element.value);
+					this.dX = ArpStringUtil.parseFloatDefault(element.value);
 				case "dY", "y":
-					this.dY = Std.parseFloat(element.value);
+					this.dY = ArpStringUtil.parseFloatDefault(element.value);
 				case "dZ", "z":
-					this.dZ = Std.parseFloat(element.value);
+					this.dZ = ArpStringUtil.parseFloatDefault(element.value);
 				case "sizeX", "width":
-					this.sizeX = Std.parseFloat(element.value);
+					this.sizeX = ArpStringUtil.parseFloatDefault(element.value);
 				case "sizeY", "height":
-					this.sizeY = Std.parseFloat(element.value);
+					this.sizeY = ArpStringUtil.parseFloatDefault(element.value);
 				case "sizeZ", "depth":
-					this.sizeZ = Std.parseFloat(element.value);
+					this.sizeZ = ArpStringUtil.parseFloatDefault(element.value);
 			}
 		}
 		return this;
@@ -82,12 +83,12 @@ class ArpHitCuboid implements IArpStruct {
 		if (definition == null) return this;
 		var ereg:EReg = ~/^\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*$/;
 		if (ereg.match(definition)) {
-			this.dX = Std.parseFloat(ereg.matched(1));
-			this.dY = Std.parseFloat(ereg.matched(2));
-			this.dZ = Std.parseFloat(ereg.matched(3));
-			this.sizeX = Std.parseFloat(ereg.matched(4));
-			this.sizeY = Std.parseFloat(ereg.matched(5));
-			this.sizeZ = Std.parseFloat(ereg.matched(6));
+			this.dX = ArpStringUtil.parseFloatDefault(ereg.matched(1));
+			this.dY = ArpStringUtil.parseFloatDefault(ereg.matched(2));
+			this.dZ = ArpStringUtil.parseFloatDefault(ereg.matched(3));
+			this.sizeX = ArpStringUtil.parseFloatDefault(ereg.matched(4));
+			this.sizeY = ArpStringUtil.parseFloatDefault(ereg.matched(5));
+			this.sizeZ = ArpStringUtil.parseFloatDefault(ereg.matched(6));
 		}
 		return this;
 	}

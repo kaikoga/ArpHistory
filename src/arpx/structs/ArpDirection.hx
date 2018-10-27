@@ -136,7 +136,7 @@ class ArpDirection implements IArpStruct {
 	public function initWithString(definition:String):ArpDirection {
 		if (definition == null) return this;
 		if (ArpStringUtil.isNumeric(definition)) {
-			this.valueDegree = Std.parseInt(definition);
+			this.valueDegree = ArpStringUtil.parseIntDefault(definition);
 		} else if (VALS_BY_NAMES.exists(definition)){
 			this.value = VALS_BY_NAMES.get(definition);
 		}

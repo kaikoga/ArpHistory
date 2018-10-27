@@ -39,10 +39,10 @@ class ArpParams extends ReadOnlyArpParams implements IArpStruct implements IArpP
 				case "dir":
 					this.set(key, new ArpDirection().initWithString(value));
 				case "idir":
-					this.set(key, new ArpDirection(Std.parseInt(value)));
+					this.set(key, new ArpDirection(ArpStringUtil.parseIntDefault(value)));
 				default:
 					if (ArpStringUtil.isNumeric(value)) {
-						this.set(key, Std.parseFloat(value));
+						this.set(key, ArpStringUtil.parseFloatDefault(value));
 					} else {
 						this.set(key, value);
 					}

@@ -4,6 +4,7 @@ import arp.domain.IArpStruct;
 import arp.persistable.IPersistInput;
 import arp.persistable.IPersistOutput;
 import arp.seed.ArpSeed;
+import arp.utils.ArpStringUtil;
 
 @:arpStruct("Range")
 class ArpRange implements IArpStruct {
@@ -32,8 +33,8 @@ class ArpRange implements IArpStruct {
 		if (seed.isSimple) return this.initWithString(seed.value);
 		for (child in seed) {
 			switch (child.typeName) {
-				case "min": this.minValue = Std.parseFloat(child.value);
-				case "max": this.maxValue = Std.parseFloat(child.value);
+				case "min": this.minValue = ArpStringUtil.parseFloatDefault(child.value);
+				case "max": this.maxValue = ArpStringUtil.parseFloatDefault(child.value);
 			}
 		}
 		return this;
@@ -43,8 +44,8 @@ class ArpRange implements IArpStruct {
 		if (definition == null) return this;
 		var ereg:EReg = ~/^\s*([^\s]*)\s*\.\.\s*([^\s]*)\s*$/;
 		if (ereg.match(definition)) {
-			this.minValue = Std.parseFloat(ereg.matched(1));
-			this.maxValue = Std.parseFloat(ereg.matched(2));
+			this.minValue = ArpStringUtil.parseFloatDefault(ereg.matched(1));
+			this.maxValue = ArpStringUtil.parseFloatDefault(ereg.matched(2));
 		}
 		return this;
 	}
