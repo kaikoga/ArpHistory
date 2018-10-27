@@ -18,9 +18,14 @@ class ArpStringUtil {
 		return value;
 	}
 
-	inline public static function parseFloatDefault(string:String, defaultValue:Float):Float {
+	inline public static function parseIntDefault(string:String, defaultValue:Int = 0):Int {
+		var value:Null<Int> = Std.parseInt(string);
+		return if (value == null) defaultValue else value;
+	}
+
+	inline public static function parseFloatDefault(string:String, defaultValue:Float = 0.0):Float {
 		var value:Float = Std.parseFloat(string);
-		return Math.isNaN(value) ? defaultValue : value;
+		return if (Math.isNaN(value)) defaultValue else value;
 	}
 
 	public static function parseRichFloat(str:String, getUnit:String->Float):Float {
