@@ -21,11 +21,19 @@ class UrlAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		this.audio = audio;
 	}
 
+	private var src(get, never):String;
+	private function get_src():String {
+		var a:Array<String> = audio.src.split(".");
+		var extension:String = if (a.length == 1) null else a.pop();
+		a.push(AudioContext.instance.impl.preferredExtension);
+		return a.join(".");
+	}
+
 	override public function arpHeatUp():Bool {
 		if (xhr != null) return this.audio != null;
 
 		this.xhr = new XMLHttpRequest();
-		xhr.open("GET", this.audio.src, true);
+		xhr.open("GET", this.src, true);
 		xhr.responseType = untyped "arraybuffer";
 		xhr.onload = this.onLoaded;
 		xhr.onerror = this.onError;
