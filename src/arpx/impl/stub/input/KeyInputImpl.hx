@@ -1,6 +1,6 @@
 package arpx.impl.stub.input;
 
-#if arp_input_backend_stub
+#if (arp_input_backend_stub || arp_backend_display)
 
 import arpx.impl.ArpObjectImplBase;
 import arpx.input.KeyInput;

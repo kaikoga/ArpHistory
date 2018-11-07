@@ -1,6 +1,6 @@
 package arpx.impl.heaps.chip;
 
-#if arp_display_backend_heaps
+#if (arp_display_backend_heaps || arp_backend_display)
 
 import arp.domain.ArpHeat;
 import arpx.chip.TextureChip;

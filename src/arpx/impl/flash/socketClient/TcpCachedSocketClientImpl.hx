@@ -1,6 +1,6 @@
 package arpx.impl.flash.socketClient;
 
-#if arp_socket_backend_flash
+#if (arp_socket_backend_flash || arp_backend_display)
 
 import flash.errors.SecurityError;
 import flash.events.Event;

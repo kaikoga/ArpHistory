@@ -1,6 +1,6 @@
 package arpx.impl.flash.texture;
 
-#if arp_display_backend_flash
+#if (arp_display_backend_flash || arp_backend_display)
 
 import flash.geom.Rectangle;
 import flash.display.BitmapData;

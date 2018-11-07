@@ -1,6 +1,6 @@
 package arpx.impl.sys.audio;
 
-#if arp_audio_backend_sys
+#if (arp_audio_backend_sys || arp_backend_display)
 
 import arpx.impl.cross.audio.AudioContext;
 import arpx.impl.cross.audio.IAudioImpl;

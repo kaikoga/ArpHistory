@@ -1,6 +1,6 @@
 package arpx.impl.heaps.audio;
 
-#if arp_audio_backend_heaps
+#if (arp_audio_backend_heaps || arp_backend_display)
 
 import haxe.Resource;
 import haxe.io.Bytes;

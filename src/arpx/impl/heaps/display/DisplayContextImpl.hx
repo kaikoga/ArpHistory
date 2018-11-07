@@ -1,6 +1,6 @@
 package arpx.impl.heaps.display;
 
-#if arp_display_backend_heaps
+#if (arp_display_backend_heaps || arp_backend_display)
 
 import h2d.Sprite;
 import h2d.Tile;

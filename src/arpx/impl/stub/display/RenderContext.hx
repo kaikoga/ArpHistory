@@ -1,6 +1,6 @@
 package arpx.impl.stub.display;
 
-#if arp_display_backend_stub
+#if (arp_display_backend_stub || arp_backend_display)
 
 @:forward(
 	width, height, clearColor,

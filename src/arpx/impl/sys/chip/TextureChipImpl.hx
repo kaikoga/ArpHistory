@@ -1,6 +1,6 @@
 package arpx.impl.sys.chip;
 
-#if arp_display_backend_sys
+#if (arp_display_backend_sys || arp_backend_display)
 
 import arpx.structs.IArpParamsRead;
 import arpx.chip.TextureChip;

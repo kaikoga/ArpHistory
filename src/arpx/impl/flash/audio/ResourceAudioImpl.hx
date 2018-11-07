@@ -1,6 +1,6 @@
 package arpx.impl.flash.audio;
 
-#if arp_audio_backend_flash
+#if (arp_audio_backend_flash || arp_backend_display)
 
 import flash.utils.ByteArray;
 import flash.media.Sound;

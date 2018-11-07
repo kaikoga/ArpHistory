@@ -1,6 +1,6 @@
 package arpx.impl.stub;
 
-#if arp_display_backend_stub
+#if (arp_display_backend_stub || arp_backend_display)
 
 import arp.domain.ArpDomain;
 import arpx.impl.cross.ArpEngineShellBase;

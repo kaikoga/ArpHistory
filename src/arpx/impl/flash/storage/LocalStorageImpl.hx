@@ -1,6 +1,6 @@
 package arpx.impl.flash.storage;
 
-#if arp_storage_backend_flash
+#if (arp_storage_backend_flash || arp_backend_display)
 
 import flash.net.SharedObject;
 import flash.utils.ByteArray;

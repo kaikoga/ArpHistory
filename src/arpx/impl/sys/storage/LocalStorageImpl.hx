@@ -1,6 +1,6 @@
 package arpx.impl.sys.storage;
 
-#if arp_storage_backend_sys
+#if (arp_storage_backend_sys || arp_backend_display)
 
 import haxe.io.Bytes;
 import arpx.impl.ArpObjectImplBase;

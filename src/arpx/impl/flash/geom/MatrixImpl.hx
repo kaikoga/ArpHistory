@@ -1,6 +1,6 @@
 package arpx.impl.flash.geom;
 
-#if arp_display_backend_flash
+#if (arp_display_backend_flash || arp_backend_display)
 
 import flash.geom.Matrix;
 

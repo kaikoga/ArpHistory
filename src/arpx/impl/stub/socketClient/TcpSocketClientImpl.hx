@@ -1,6 +1,6 @@
 package arpx.impl.stub.socketClient;
 
-#if arp_socket_backend_stub
+#if (arp_socket_backend_stub || arp_backend_display)
 
 import arpx.impl.cross.socketClient.SocketClientNullImpl;
 import arpx.socketClient.TcpSocketClient;

@@ -1,6 +1,6 @@
 package arpx.impl.stub.storage;
 
-#if arp_storage_backend_stub
+#if (arp_storage_backend_stub || arp_backend_display)
 
 import haxe.io.Bytes;
 import arpx.impl.ArpObjectImplBase;

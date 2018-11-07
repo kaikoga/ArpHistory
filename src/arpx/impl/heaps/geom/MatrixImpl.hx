@@ -1,6 +1,6 @@
 package arpx.impl.heaps.geom;
 
-#if arp_display_backend_heaps
+#if (arp_display_backend_heaps || arp_backend_display)
 
 import arpx.impl.cross.structs.ArpTransform;
 import h3d.Matrix;

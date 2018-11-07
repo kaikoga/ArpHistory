@@ -1,6 +1,6 @@
 package arpx.impl.js.audio;
 
-#if arp_audio_backend_js
+#if (arp_audio_backend_js || arp_backend_display)
 
 import js.html.ArrayBuffer;
 import js.html.audio.AudioBuffer;

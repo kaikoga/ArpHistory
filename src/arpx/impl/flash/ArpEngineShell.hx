@@ -1,6 +1,6 @@
 package arpx.impl.flash;
 
-#if arp_display_backend_flash
+#if (arp_display_backend_flash || arp_backend_display)
 
 import arp.domain.ArpDomain;
 import arpx.impl.cross.display.DisplayContext;

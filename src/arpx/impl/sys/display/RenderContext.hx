@@ -1,6 +1,6 @@
 package arpx.impl.sys.display;
 
-#if arp_display_backend_sys
+#if (arp_display_backend_sys || arp_backend_display)
 
 @:forward(
 	width, height, clearColor,

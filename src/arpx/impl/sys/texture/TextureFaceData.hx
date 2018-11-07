@@ -1,6 +1,6 @@
 package arpx.impl.sys.texture;
 
-#if arp_display_backend_sys
+#if (arp_display_backend_sys || arp_backend_display)
 
 import arpx.impl.cross.geom.RectImpl;
 

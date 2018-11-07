@@ -1,6 +1,6 @@
 package arpx.impl.stub.geom;
 
-#if arp_display_backend_stub
+#if (arp_display_backend_stub || arp_backend_display)
 
 class MatrixImpl {
 

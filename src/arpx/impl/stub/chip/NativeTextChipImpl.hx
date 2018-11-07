@@ -1,6 +1,6 @@
 package arpx.impl.stub.chip;
 
-#if arp_display_backend_stub
+#if (arp_display_backend_stub || arp_backend_display)
 
 import arpx.structs.IArpParamsRead;
 import arpx.impl.ArpObjectImplBase;

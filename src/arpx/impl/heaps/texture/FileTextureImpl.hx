@@ -1,6 +1,6 @@
 package arpx.impl.heaps.texture;
 
-#if arp_display_backend_heaps
+#if (arp_display_backend_heaps || arp_backend_display)
 
 import h2d.Tile;
 import h3d.mat.Data;

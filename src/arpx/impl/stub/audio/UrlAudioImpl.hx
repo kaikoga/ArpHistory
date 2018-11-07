@@ -1,6 +1,6 @@
 package arpx.impl.stub.audio;
 
-#if arp_audio_backend_stub
+#if (arp_audio_backend_stub || arp_backend_display)
 
 import arpx.audio.UrlAudio;
 import arpx.impl.cross.audio.AudioContext;

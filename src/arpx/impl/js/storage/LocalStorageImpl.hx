@@ -1,6 +1,6 @@
 package arpx.impl.js.storage;
 
-#if arp_storage_backend_js
+#if (arp_storage_backend_js || arp_backend_display)
 
 import haxe.crypto.Base64;
 import haxe.io.Bytes;

@@ -1,6 +1,6 @@
 package arpx.impl.flash.chip;
 
-#if arp_display_backend_flash
+#if (arp_display_backend_flash || arp_backend_display)
 
 import flash.display.BlendMode;
 import flash.geom.ColorTransform;
