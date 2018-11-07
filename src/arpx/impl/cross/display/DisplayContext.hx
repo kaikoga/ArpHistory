@@ -6,6 +6,6 @@ typedef DisplayContext = arpx.impl.flash.display.DisplayContext;
 typedef DisplayContext = arpx.impl.heaps.display.DisplayContext;
 #elseif arp_display_backend_sys
 typedef DisplayContext = arpx.impl.sys.display.DisplayContext;
-#elseif arp_display_backend_stub
+#elseif (arp_display_backend_stub || arp_backend_display)
 typedef DisplayContext = arpx.impl.stub.display.DisplayContext;
 #end

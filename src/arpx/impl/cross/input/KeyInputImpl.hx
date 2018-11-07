@@ -8,6 +8,6 @@ typedef KeyInputImpl = arpx.impl.heaps.input.KeyInputImpl;
 typedef KeyInputImpl = arpx.impl.js.input.KeyInputImpl;
 #elseif arp_input_backend_sys
 typedef KeyInputImpl = arpx.impl.sys.input.KeyInputImpl;
-#elseif arp_input_backend_stub
+#elseif (arp_input_backend_stub || arp_backend_display)
 typedef KeyInputImpl = arpx.impl.stub.input.KeyInputImpl;
 #end

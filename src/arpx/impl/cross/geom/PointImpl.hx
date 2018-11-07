@@ -6,6 +6,6 @@ typedef PointImpl = arpx.impl.flash.geom.PointImpl;
 typedef PointImpl = arpx.impl.heaps.geom.PointImpl;
 #elseif arp_display_backend_sys
 typedef PointImpl = arpx.impl.sys.geom.PointImpl;
-#elseif arp_display_backend_stub
+#elseif (arp_display_backend_stub || arp_backend_display)
 typedef PointImpl = arpx.impl.stub.geom.PointImpl;
 #end

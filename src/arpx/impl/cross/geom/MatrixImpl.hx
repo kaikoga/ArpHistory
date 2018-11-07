@@ -6,6 +6,6 @@ typedef MatrixImpl = arpx.impl.flash.geom.MatrixImpl;
 typedef MatrixImpl = arpx.impl.heaps.geom.MatrixImpl;
 #elseif arp_display_backend_sys
 typedef MatrixImpl = arpx.impl.sys.geom.MatrixImpl;
-#elseif arp_display_backend_stub
+#elseif (arp_display_backend_stub || arp_backend_display)
 typedef MatrixImpl = arpx.impl.stub.geom.MatrixImpl;
 #end

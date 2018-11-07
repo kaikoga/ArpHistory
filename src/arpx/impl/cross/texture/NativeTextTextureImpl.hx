@@ -6,6 +6,6 @@ typedef NativeTextTextureImpl = arpx.impl.flash.texture.NativeTextTextureImpl;
 typedef NativeTextTextureImpl = arpx.impl.heaps.texture.NativeTextTextureImpl;
 #elseif arp_display_backend_sys
 typedef NativeTextTextureImpl = arpx.impl.sys.texture.NativeTextTextureImpl;
-#elseif arp_display_backend_stub
+#elseif (arp_display_backend_stub || arp_backend_display)
 typedef NativeTextTextureImpl = arpx.impl.stub.texture.NativeTextTextureImpl;
 #end

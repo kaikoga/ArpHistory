@@ -8,6 +8,6 @@ typedef PassiveInputImpl = arpx.impl.heaps.input.decorators.PassiveInputImpl;
 typedef PassiveInputImpl = arpx.impl.js.input.decorators.PassiveInputImpl;
 #elseif arp_input_backend_sys
 typedef PassiveInputImpl = arpx.impl.sys.input.decorators.PassiveInputImpl;
-#elseif arp_input_backend_stub
+#elseif (arp_input_backend_stub || arp_backend_display)
 typedef PassiveInputImpl = arpx.impl.stub.input.decorators.PassiveInputImpl;
 #end

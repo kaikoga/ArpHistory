@@ -8,8 +8,6 @@ typedef AudioContextImpl = arpx.impl.heaps.audio.AudioContextImpl;
 typedef AudioContextImpl = arpx.impl.js.audio.AudioContextImpl;
 #elseif arp_audio_backend_sys
 typedef AudioContextImpl = arpx.impl.sys.audio.AudioContextImpl;
-#elseif arp_audio_backend_stub
+#elseif (arp_audio_backend_stub || arp_backend_display)
 typedef AudioContextImpl = arpx.impl.stub.audio.AudioContextImpl;
-#else
-class AudioContextImpl { public function new() return; }
 #end

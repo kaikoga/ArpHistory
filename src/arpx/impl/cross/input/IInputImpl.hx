@@ -8,6 +8,6 @@ typedef IInputImpl = arpx.impl.heaps.input.IInputImpl;
 typedef IInputImpl = arpx.impl.js.input.IInputImpl;
 #elseif arp_input_backend_sys
 typedef IInputImpl = arpx.impl.sys.input.IInputImpl;
-#elseif arp_input_backend_stub
+#elseif (arp_input_backend_stub || arp_backend_display)
 typedef IInputImpl = arpx.impl.stub.input.IInputImpl;
 #end

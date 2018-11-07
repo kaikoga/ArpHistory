@@ -8,6 +8,6 @@ typedef ResourceAudioImpl = arpx.impl.heaps.audio.ResourceAudioImpl;
 typedef ResourceAudioImpl = arpx.impl.js.audio.ResourceAudioImpl;
 #elseif arp_audio_backend_sys
 typedef ResourceAudioImpl = arpx.impl.sys.audio.ResourceAudioImpl;
-#elseif arp_audio_backend_stub
+#elseif (arp_audio_backend_stub || arp_backend_display)
 typedef ResourceAudioImpl = arpx.impl.stub.audio.ResourceAudioImpl;
 #end
