@@ -1,5 +1,6 @@
 package arpx.structs;
 
+import arp.utils.ArpSeedUtil;
 import arp.domain.IArpStruct;
 import arp.persistable.IPersistInput;
 import arp.persistable.IPersistOutput;
@@ -31,9 +32,9 @@ class ArpPosition implements IArpStruct {
 
 		for (child in seed) {
 			switch (child.typeName) {
-				case "x": this.x = ArpStringUtil.parseRichFloat(child.value, seed.env.getUnit);
-				case "y": this.y = ArpStringUtil.parseRichFloat(child.value, seed.env.getUnit);
-				case "z": this.z = ArpStringUtil.parseRichFloat(child.value, seed.env.getUnit);
+				case "x": this.x = ArpSeedUtil.parseFloatDefault(child);
+				case "y": this.y = ArpSeedUtil.parseFloatDefault(child);
+				case "z": this.z = ArpSeedUtil.parseFloatDefault(child);
 				case "dir": this.dir.initWithString(child.value);
 			}
 		}

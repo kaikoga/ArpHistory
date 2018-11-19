@@ -35,12 +35,12 @@ class ArpTransform implements IArpStruct {
 		var ty:Float = 0.0;
 		for (child in seed) {
 			switch (child.typeName) {
-				case "a", "xx": xx = arp.utils.ArpStringUtil.parseFloatDefault(child.value, 1.0);
-				case "b", "yx": yx = arp.utils.ArpStringUtil.parseFloatDefault(child.value, 0.0);
-				case "c", "xy": xy = arp.utils.ArpStringUtil.parseFloatDefault(child.value, 0.0);
-				case "d", "yy": yy = arp.utils.ArpStringUtil.parseFloatDefault(child.value, 1.0);
-				case "x", "tx": tx = arp.utils.ArpStringUtil.parseRichFloat(child.value, seed.env.getUnit);
-				case "y", "ty": ty = arp.utils.ArpStringUtil.parseRichFloat(child.value, seed.env.getUnit);
+				case "a", "xx": xx = arp.utils.ArpSeedUtil.parseFloatDefault(child, 1.0);
+				case "b", "yx": yx = arp.utils.ArpSeedUtil.parseFloatDefault(child, 0.0);
+				case "c", "xy": xy = arp.utils.ArpSeedUtil.parseFloatDefault(child, 0.0);
+				case "d", "yy": yy = arp.utils.ArpSeedUtil.parseFloatDefault(child, 1.0);
+				case "x", "tx": tx = arp.utils.ArpSeedUtil.parseFloatDefault(child);
+				case "y", "ty": ty = arp.utils.ArpSeedUtil.parseFloatDefault(child);
 			}
 		}
 		return this.reset(xx, yx, xy, yy, tx, ty);
@@ -50,10 +50,10 @@ class ArpTransform implements IArpStruct {
 		if (definition == null) return this;
 		var array:Array<String> = ~/[;,]/g.split(definition);
 		if (array.length < 6) return this;
-		var xx = arp.utils.ArpStringUtil.parseFloatDefault(array[0], 1.0);
-		var yx = arp.utils.ArpStringUtil.parseFloatDefault(array[1], 0.0);
-		var xy = arp.utils.ArpStringUtil.parseFloatDefault(array[2], 0.0);
-		var yy = arp.utils.ArpStringUtil.parseFloatDefault(array[3], 1.0);
+		var xx = arp.utils.ArpStringUtil.parseRichFloat(array[0], getUnit, 1.0);
+		var yx = arp.utils.ArpStringUtil.parseRichFloat(array[1], getUnit, 0.0);
+		var xy = arp.utils.ArpStringUtil.parseRichFloat(array[2], getUnit, 0.0);
+		var yy = arp.utils.ArpStringUtil.parseRichFloat(array[3], getUnit, 1.0);
 		var tx = arp.utils.ArpStringUtil.parseRichFloat(array[4], getUnit);
 		var ty = arp.utils.ArpStringUtil.parseRichFloat(array[5], getUnit);
 		return this.reset(xx, yx, xy, yy, tx, ty);
