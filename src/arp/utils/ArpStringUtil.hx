@@ -1,8 +1,9 @@
 ﻿package arp.utils;
 
 class ArpStringUtil {
+	private static var _isNumeric:EReg = ~/^[-+.0-9]+$/;
 	inline public static function isNumeric(value:String):Bool {
-		return if (value != null) ~/^[-+.0-9]+$/.match(value) else false;
+		return if (value != null) _isNumeric.match(value) else false;
 	}
 
 	public static function parseHex(str:String):Int {
@@ -28,10 +29,15 @@ class ArpStringUtil {
 		return if (Math.isNaN(value)) defaultValue else value;
 	}
 
-	public static function parseRichFloat(str:String, getUnit:String->Float):Float {
-		if (str == null) return 0.0;
+	inline public static function parseRichInt(str:String, getUnit:String->Float, defaultValue:Int = 0):Int {
+		return Std.int(parseRichFloat(str, getUnit, defaultValue));
+	}
+
+	private static var _parseRichFloat:EReg = ~/([-+]?(?:[0-9]+\.?[0-9]*)|(?:\.[0-9]+))([a-zA-Z]*)/;
+	public static function parseRichFloat(str:String, getUnit:String->Float, defaultValue:Float = 0.0):Float {
+		if (str == null) return defaultValue;
 		var value:Float = 0.0;
-		var ereg:EReg = ~/([-+]?(?:[0-9]+\.?[0-9]*)|(?:\.[0-9]+))([a-zA-Z]*)/;
+		var ereg:EReg = _parseRichFloat;
 		var pos = 0;
 		while (ereg.matchSub(str, pos)) {
 			pos += ereg.matchedPos().len;
