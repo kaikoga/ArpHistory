@@ -2,7 +2,7 @@ package arp.domain.ds;
 
 import arp.domain.ArpSlot;
 import arp.domain.core.ArpSid;
-import arp.ds.access.IMapKnit.IMapKnitPin;
+import arp.ds.access.IMapAmend.IMapAmendCursor;
 import arp.ds.IMap;
 import arp.ds.impl.StdMap;
 import arp.ds.lambda.CollectionTools;
@@ -91,6 +91,6 @@ class ArpObjectMap<K, V:IArpObject> implements IMap<K, V> implements IPersistabl
 		values.writeExit();
 	}
 
-	// knit
-	public function knit():Iterator<IMapKnitPin<K, V>> return CollectionTools.mapKnitImpl(this);
+	// amend
+	public function amend():Iterator<IMapAmendCursor<K, V>> return CollectionTools.mapAmendImpl(this);
 }

@@ -1,7 +1,7 @@
 package arp.domain.ds;
 
 import arp.domain.core.ArpSid;
-import arp.ds.access.IListKnit.IListKnitPin;
+import arp.ds.access.IListAmend.IListAmendCursor;
 import arp.ds.IList;
 import arp.ds.impl.ArrayList;
 import arp.ds.lambda.CollectionTools;
@@ -89,6 +89,6 @@ class ArpObjectList<V:IArpObject> implements IList<V> implements IPersistable {
 		output.writeNameList("values", values);
 	}
 
-	// knit
-	public function knit():Iterator<IListKnitPin<V>> return CollectionTools.listKnitImpl(this);
+	// amend
+	public function amend():Iterator<IListAmendCursor<V>> return CollectionTools.listAmendImpl(this);
 }

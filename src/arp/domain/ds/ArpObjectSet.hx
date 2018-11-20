@@ -1,7 +1,7 @@
 package arp.domain.ds;
 
 import arp.domain.core.ArpSid;
-import arp.ds.access.ISetKnit.ISetKnitPin;
+import arp.ds.access.ISetAmend.ISetAmendCursor;
 import arp.ds.impl.ArraySet;
 import arp.ds.ISet;
 import arp.ds.lambda.CollectionTools;
@@ -67,6 +67,6 @@ class ArpObjectSet<V:IArpObject> implements ISet<V> implements IPersistable {
 		output.writeNameList("values", values);
 	}
 
-	// knit
-	public function knit():Iterator<ISetKnitPin<V>> return CollectionTools.setKnitImpl(this);
+	// amend
+	public function amend():Iterator<ISetAmendCursor<V>> return CollectionTools.setAmendImpl(this);
 }

@@ -1,7 +1,7 @@
 package arp.domain.ds;
 
 import arp.domain.core.ArpSid;
-import arp.ds.access.IOmapKnit.IOmapKnitPin;
+import arp.ds.access.IOmapAmend.IOmapAmendCursor;
 import arp.ds.impl.StdOmap;
 import arp.ds.IOmap;
 import arp.ds.lambda.CollectionTools;
@@ -108,6 +108,6 @@ class ArpObjectOmap<K, V:IArpObject> implements IOmap<K, V> implements IPersista
 		values.writeExit();
 	}
 
-	// knit
-	public function knit():Iterator<IOmapKnitPin<K, V>> return CollectionTools.omapKnitImpl(this);
+	// amend
+	public function amend():Iterator<IOmapAmendCursor<K, V>> return CollectionTools.omapAmendImpl(this);
 }
