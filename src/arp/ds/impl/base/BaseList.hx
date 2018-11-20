@@ -1,6 +1,6 @@
 package arp.ds.impl.base;
 
-import arp.ds.access.IListKnit.IListKnitPin;
+import arp.ds.access.IListAmend.IListAmendCursor;
 import arp.ds.IList;
 import arp.ds.lambda.CollectionTools;
 
@@ -38,6 +38,6 @@ class BaseList<V> implements IList<V> {
 	public function removeAt(index:Int):Bool return CollectionTools.removeAtImpl(this, index);
 	public function clear():Void CollectionTools.clearImpl(this);
 
-	// knit
-	public function knit():Iterator<IListKnitPin<V>> return CollectionTools.listKnitImpl(this);
+	// amend
+	public function amend():Iterator<IListAmendCursor<V>> return CollectionTools.listAmendImpl(this);
 }

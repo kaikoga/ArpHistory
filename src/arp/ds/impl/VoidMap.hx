@@ -1,6 +1,6 @@
 package arp.ds.impl;
 
-import arp.ds.access.IMapKnit.IMapKnitPin;
+import arp.ds.access.IMapAmend.IMapAmendCursor;
 import arp.ds.IMap;
 import arp.iterators.EmptyIterator;
 
@@ -33,6 +33,6 @@ class VoidMap<K, V> implements IMap<K, V> {
 	public function removeKey(k:K):Bool return false;
 	public function clear():Void return;
 
-	// knit
-	public function knit():Iterator<IMapKnitPin<K, V>> return new EmptyIterator();
+	// amend
+	public function amend():Iterator<IMapAmendCursor<K, V>> return new EmptyIterator();
 }

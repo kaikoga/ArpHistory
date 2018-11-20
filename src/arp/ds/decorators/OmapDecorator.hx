@@ -1,7 +1,7 @@
 package arp.ds.decorators;
 
 import arp.ds.lambda.CollectionTools;
-import arp.ds.access.IOmapKnit.IOmapKnitPin;
+import arp.ds.access.IOmapAmend.IOmapAmendCursor;
 import arp.ds.IOmap;
 
 class OmapDecorator<K, V> implements IOmap<K, V> {
@@ -47,6 +47,6 @@ class OmapDecorator<K, V> implements IOmap<K, V> {
 	public function shift():Null<V> return this.omap.shift();
 	public function clear():Void this.omap.clear();
 
-	//knit
-	public function knit():Iterator<IOmapKnitPin<K, V>> return CollectionTools.omapKnitImpl(this);
+	//amend
+	public function amend():Iterator<IOmapAmendCursor<K, V>> return CollectionTools.omapAmendImpl(this);
 }

@@ -1,9 +1,9 @@
 package arp.ds.lambda;
 
-import arp.ds.access.ISetKnit.ISetKnitPin;
-import arp.ds.access.IOmapKnit.IOmapKnitPin;
-import arp.ds.access.IMapKnit.IMapKnitPin;
-import arp.ds.access.IListKnit.IListKnitPin;
+import arp.ds.access.ISetAmend.ISetAmendCursor;
+import arp.ds.access.IOmapAmend.IOmapAmendCursor;
+import arp.ds.access.IMapAmend.IMapAmendCursor;
+import arp.ds.access.IListAmend.IListAmendCursor;
 import arp.ds.access.IOmapRead;
 import arp.ds.access.IListRead;
 import arp.ds.access.ISetRead;
@@ -173,26 +173,26 @@ class CollectionTools {
 		return '{${s.join("; ")}}';
 	}
 
-	// knit
+	// amend
 
-	public static function setKnitImpl<V>(base:ISet<V>):Iterator<ISetKnitPin<V>> {
-		return new ArraySetKnitPin(base);
+	public static function setAmendImpl<V>(base:ISet<V>):Iterator<ISetAmendCursor<V>> {
+		return new ArraySetAmendCursor(base);
 	}
 
-	public static function listKnitImpl<V>(base:IList<V>):Iterator<IListKnitPin<V>> {
-		return new ArrayListKnitPin(base);
+	public static function listAmendImpl<V>(base:IList<V>):Iterator<IListAmendCursor<V>> {
+		return new ArrayListAmendCursor(base);
 	}
 
-	public static function mapKnitImpl<K, V>(base:IMap<K, V>):Iterator<IMapKnitPin<K, V>> {
-		return new ArrayMapKnitPin(base);
+	public static function mapAmendImpl<K, V>(base:IMap<K, V>):Iterator<IMapAmendCursor<K, V>> {
+		return new ArrayMapAmendCursor(base);
 	}
 
-	public static function omapKnitImpl<K, V>(base:IOmap<K, V>):Iterator<IOmapKnitPin<K, V>> {
-		return new ArrayOmapKnitPin(base);
+	public static function omapAmendImpl<K, V>(base:IOmap<K, V>):Iterator<IOmapAmendCursor<K, V>> {
+		return new ArrayOmapAmendCursor(base);
 	}
 }
 
-class ArraySetKnitPin<V> implements ISetKnitPin<V> {
+class ArraySetAmendCursor<V> implements ISetAmendCursor<V> {
 
 	private var me:ISet<V>;
 	private var values:Array<V>;
@@ -207,7 +207,7 @@ class ArraySetKnitPin<V> implements ISetKnitPin<V> {
 	}
 
 	inline public function hasNext():Bool return readIndex + 1 < values.length;
-	inline public function next():ISetKnitPin<V> { readIndex++; return this; }
+	inline public function next():ISetAmendCursor<V> { readIndex++; return this; }
 
 	public var value(get, never):V;
 	inline private function get_value():V return values[readIndex];
@@ -220,7 +220,7 @@ class ArraySetKnitPin<V> implements ISetKnitPin<V> {
 	}
 }
 
-class ArrayListKnitPin<V> implements IListKnitPin<V> {
+class ArrayListAmendCursor<V> implements IListAmendCursor<V> {
 
 	private var me:IList<V>;
 	private var values:Array<V>;
@@ -237,7 +237,7 @@ class ArrayListKnitPin<V> implements IListKnitPin<V> {
 	}
 
 	inline public function hasNext():Bool return readIndex + 1 < values.length;
-	inline public function next():IListKnitPin<V> { readIndex++; outIndex++; return this; }
+	inline public function next():IListAmendCursor<V> { readIndex++; outIndex++; return this; }
 
 	public var value(get, never):V;
 	inline private function get_value():V return values[readIndex];
@@ -253,7 +253,7 @@ class ArrayListKnitPin<V> implements IListKnitPin<V> {
 	}
 }
 
-class ArrayMapKnitPin<K, V> implements IMapKnitPin<K, V> {
+class ArrayMapAmendCursor<K, V> implements IMapAmendCursor<K, V> {
 
 	private var me:IMap<K, V>;
 	private var keys:Array<K>;
@@ -268,7 +268,7 @@ class ArrayMapKnitPin<K, V> implements IMapKnitPin<K, V> {
 	}
 
 	inline public function hasNext():Bool return readIndex + 1 < keys.length;
-	inline public function next():IMapKnitPin<K, V> { readIndex++; return this; }
+	inline public function next():IMapAmendCursor<K, V> { readIndex++; return this; }
 
 	public var key(get, never):K;
 	inline private function get_key():K return keys[readIndex];
@@ -283,7 +283,7 @@ class ArrayMapKnitPin<K, V> implements IMapKnitPin<K, V> {
 	}
 }
 
-class ArrayOmapKnitPin<K, V> implements IOmapKnitPin<K, V> {
+class ArrayOmapAmendCursor<K, V> implements IOmapAmendCursor<K, V> {
 
 	private var me:IOmap<K, V>;
 	private var keys:Array<K>;
@@ -300,7 +300,7 @@ class ArrayOmapKnitPin<K, V> implements IOmapKnitPin<K, V> {
 	}
 
 	inline public function hasNext():Bool return readIndex + 1 < keys.length;
-	inline public function next():IOmapKnitPin<K, V> { readIndex++; outIndex++; return this; }
+	inline public function next():IOmapAmendCursor<K, V> { readIndex++; outIndex++; return this; }
 
 	public var key(get, never):K;
 	inline private function get_key():K return keys[readIndex];

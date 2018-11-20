@@ -1,6 +1,6 @@
 package arp.ds.adapters;
 
-import arp.ds.access.IListKnit.IListKnitPin;
+import arp.ds.access.IListAmend.IListAmendCursor;
 import arp.ds.lambda.CollectionTools;
 import arp.ds.IList;
 import arp.ds.IOmap;
@@ -55,6 +55,6 @@ class ListOfOmapKey<K, V> implements IList<K> {
 	public function removeAt(index:Int):Bool return this.omap.removeAt(index);
 	public function clear():Void this.omap.clear();
 
-	//knit
-	public function knit():Iterator<IListKnitPin<K>> return CollectionTools.listKnitImpl(this);
+	//amend
+	public function amend():Iterator<IListAmendCursor<K>> return CollectionTools.listAmendImpl(this);
 }

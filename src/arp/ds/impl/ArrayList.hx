@@ -1,7 +1,7 @@
 package arp.ds.impl;
 
 import arp.iterators.SimpleArrayIterator;
-import arp.ds.access.IListKnit.IListKnitPin;
+import arp.ds.access.IListAmend.IListAmendCursor;
 import arp.ds.IList;
 import arp.ds.lambda.CollectionTools;
 
@@ -43,6 +43,6 @@ class ArrayList<V> implements IList<V> {
 	public function removeAt(index:Int):Bool return this.value.splice(index, 1).length > 0;
 	public function clear():Void this.value = [];
 
-	// knit
-	public function knit():Iterator<IListKnitPin<V>> return CollectionTools.listKnitImpl(this);
+	// amend
+	public function amend():Iterator<IListAmendCursor<V>> return CollectionTools.listAmendImpl(this);
 }

@@ -199,30 +199,30 @@ class MapCase<K, V> {
 
 	public function testKnit():Void {
 		me.set(k.a1, v.a1);
-		assertMatch([k.a1], [for (p in me.knit()) p.key]);
-		assertMatch([v.a1], [for (p in me.knit()) p.value]);
-		for (p in me.knit()) p.insert(k.a2, v.a2);
-		assertMatch(containsInAnyOrder(true, false), [for (p in me.knit()) (p.value == v.a1) && p.remove()]);
-		assertMatch([k.a2], [for (p in me.knit()) p.key]);
-		assertMatch([v.a2], [for (p in me.knit()) p.value]);
+		assertMatch([k.a1], [for (p in me.amend()) p.key]);
+		assertMatch([v.a1], [for (p in me.amend()) p.value]);
+		for (p in me.amend()) p.insert(k.a2, v.a2);
+		assertMatch(containsInAnyOrder(true, false), [for (p in me.amend()) (p.value == v.a1) && p.remove()]);
+		assertMatch([k.a2], [for (p in me.amend()) p.key]);
+		assertMatch([v.a2], [for (p in me.amend()) p.value]);
 	}
 
 	public function testBulkKnit():Void {
 		me.set(k.a1, v.a1);
 		me.set(k.a5, v.a5);
-		for (p in me.knit()) {
+		for (p in me.amend()) {
 			p.insert(k.a2, v.a2);
 			p.insert(k.a3, v.a3);
 			p.insert(k.a4, v.a4);
 			break;
 		}
 		var vm:ArpSupportFixtureMatchers<V> = v; // a1 may be null
-		assertMatch(containsInAnyOrder(vm.a1, vm.a2, vm.a3, vm.a4, vm.a5), [for (p in me.knit()) p.value]);
+		assertMatch(containsInAnyOrder(vm.a1, vm.a2, vm.a3, vm.a4, vm.a5), [for (p in me.amend()) p.value]);
 		assertMatch(
 			containsInAnyOrder(true, true, false, false, false),
-			[for (p in me.knit()) (p.value == v.a1 || p.value == v.a2) && p.remove() ]
+			[for (p in me.amend()) (p.value == v.a1 || p.value == v.a2) && p.remove() ]
 		);
-		assertMatch(containsInAnyOrder(vm.a3, vm.a4, vm.a5), [for (p in me.knit()) p.value]);
+		assertMatch(containsInAnyOrder(vm.a3, vm.a4, vm.a5), [for (p in me.amend()) p.value]);
 	}
 
 	public function testEmptyToString():Void {

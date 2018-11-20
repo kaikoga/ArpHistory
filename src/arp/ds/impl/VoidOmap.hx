@@ -1,6 +1,6 @@
 package arp.ds.impl;
 
-import arp.ds.access.IOmapKnit.IOmapKnitPin;
+import arp.ds.access.IOmapAmend.IOmapAmendCursor;
 import arp.ds.IOmap;
 import arp.iterators.EmptyIterator;
 
@@ -45,6 +45,6 @@ class VoidOmap<K, V> implements IOmap<K, V> {
 	public function shift():Null<V> return null;
 	public function clear():Void return;
 
-	// knit
-	public function knit():Iterator<IOmapKnitPin<K, V>> return new EmptyIterator();
+	// amend
+	public function amend():Iterator<IOmapAmendCursor<K, V>> return new EmptyIterator();
 }

@@ -1,6 +1,6 @@
 package arp.ds.proxy;
 
-import arp.ds.access.IListKnit.IListKnitPin;
+import arp.ds.access.IListAmend.IListAmendCursor;
 import arp.ds.lambda.CollectionTools;
 import arp.ds.IList;
 
@@ -50,6 +50,6 @@ class ListProxy<V, W> implements IList<V> {
 	public function removeAt(index:Int):Bool return this.list.removeAt(index);
 	public function clear():Void this.list.clear();
 
-	// knit
-	public function knit():Iterator<IListKnitPin<V>> return CollectionTools.listKnitImpl(this);
+	// amend
+	public function amend():Iterator<IListAmendCursor<V>> return CollectionTools.listAmendImpl(this);
 }

@@ -1,6 +1,6 @@
 package arp.ds;
 
-import arp.ds.access.IOmapKnit;
+import arp.ds.access.IOmapAmend;
 import arp.ds.access.IOmapRemove;
 import arp.ds.access.IOmapResolve;
 import arp.ds.access.IOmapWrite;
@@ -11,6 +11,6 @@ extends IOmapRead<K, V>
 extends IOmapWrite<K, V>
 extends IOmapRemove<K, V>
 extends IOmapResolve<K, V>
-extends IOmapKnit<K, V>
+extends IOmapAmend<K, V>
 {
 }

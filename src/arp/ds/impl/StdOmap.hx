@@ -2,7 +2,7 @@ package arp.ds.impl;
 
 import arp.iterators.SimpleArrayIterator;
 import arp.iterators.SimpleArrayIterator;
-import arp.ds.access.IOmapKnit.IOmapKnitPin;
+import arp.ds.access.IOmapAmend.IOmapAmendCursor;
 import arp.ds.IOmap;
 import arp.ds.lambda.CollectionTools;
 
@@ -86,8 +86,8 @@ class StdOmap<K, V> implements IOmap<K, V> {
 		return v;
 	}
 
-	// knit
-	public function knit():Iterator<IOmapKnitPin<K, V>> return CollectionTools.omapKnitImpl(this);
+	// amend
+	public function amend():Iterator<IOmapAmendCursor<K, V>> return CollectionTools.omapAmendImpl(this);
 }
 
 @:generic @:remove

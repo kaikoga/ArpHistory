@@ -1,6 +1,6 @@
 package arp.ds.adapters;
 
-import arp.ds.access.IMapKnit.IMapKnitPin;
+import arp.ds.access.IMapAmend.IMapAmendCursor;
 import arp.ds.lambda.CollectionTools;
 import arp.ds.IMap;
 import arp.ds.IOmap;
@@ -38,6 +38,6 @@ class MapOfOmap<K, V> implements IMap<K, V> {
 	public function removeKey(k:K):Bool return this.omap.removeKey(k);
 	public function clear():Void this.omap.clear();
 
-	//knit
-	public function knit():Iterator<IMapKnitPin<K, V>> return CollectionTools.mapKnitImpl(this);
+	//amend
+	public function amend():Iterator<IMapAmendCursor<K, V>> return CollectionTools.mapAmendImpl(this);
 }

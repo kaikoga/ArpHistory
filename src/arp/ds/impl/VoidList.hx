@@ -1,6 +1,6 @@
 package arp.ds.impl;
 
-import arp.ds.access.IListKnit.IListKnitPin;
+import arp.ds.access.IListAmend.IListAmendCursor;
 import arp.ds.IList;
 import arp.iterators.EmptyIterator;
 
@@ -38,7 +38,7 @@ class VoidList<V> implements IList<V> {
 	public function removeAt(index:Int):Bool return false;
 	public function clear():Void return;
 
-	// knit
-	public function knit():Iterator<IListKnitPin<V>> return new EmptyIterator();
+	// amend
+	public function amend():Iterator<IListAmendCursor<V>> return new EmptyIterator();
 }
 

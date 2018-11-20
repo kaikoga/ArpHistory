@@ -1,6 +1,6 @@
 package arp.ds.impl;
 
-import arp.ds.access.IMapKnit.IMapKnitPin;
+import arp.ds.access.IMapAmend.IMapAmendCursor;
 import arp.ds.IMap;
 import arp.ds.lambda.CollectionTools;
 
@@ -42,6 +42,6 @@ class StdMap<K, V> implements IMap<K, V> {
 	public function removeKey(k:K):Bool return this.value.remove(k);
 	public function clear():Void this.value = Type.createInstance(Type.getClass(this.value), []); // new Map<K, V>();
 
-	// knit
-	public function knit():Iterator<IMapKnitPin<K, V>> return CollectionTools.mapKnitImpl(this);
+	// amend
+	public function amend():Iterator<IMapAmendCursor<K, V>> return CollectionTools.mapAmendImpl(this);
 }

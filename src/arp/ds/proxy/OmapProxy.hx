@@ -1,6 +1,6 @@
 package arp.ds.proxy;
 
-import arp.ds.access.IOmapKnit.IOmapKnitPin;
+import arp.ds.access.IOmapAmend.IOmapAmendCursor;
 import arp.ds.lambda.CollectionTools;
 import arp.ds.IOmap;
 
@@ -63,6 +63,6 @@ class OmapProxy<K, V, X, W> implements IOmap<K, V> {
 	public function shift():Null<V> return this.proxyValue(this.omap.shift());
 	public function clear():Void this.omap.clear();
 
-	// knit
-	public function knit():Iterator<IOmapKnitPin<K, V>> return CollectionTools.omapKnitImpl(this);
+	// amend
+	public function amend():Iterator<IOmapAmendCursor<K, V>> return CollectionTools.omapAmendImpl(this);
 }

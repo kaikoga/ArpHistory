@@ -1,6 +1,6 @@
 package arp.ds.impl;
 
-import arp.ds.access.ISetKnit.ISetKnitPin;
+import arp.ds.access.ISetAmend.ISetAmendCursor;
 import arp.ds.ISet;
 import arp.iterators.EmptyIterator;
 
@@ -24,6 +24,6 @@ class VoidSet<V> implements ISet<V> {
 	public function remove(v:V):Bool return false;
 	public function clear():Void return;
 
-	// knit
-	public function knit():Iterator<ISetKnitPin<V>> return new EmptyIterator();
+	// amend
+	public function amend():Iterator<ISetAmendCursor<V>> return new EmptyIterator();
 }

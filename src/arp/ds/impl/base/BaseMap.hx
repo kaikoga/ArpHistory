@@ -1,6 +1,6 @@
 package arp.ds.impl.base;
 
-import arp.ds.access.IMapKnit.IMapKnitPin;
+import arp.ds.access.IMapAmend.IMapAmendCursor;
 import arp.ds.IMap;
 import arp.ds.lambda.CollectionTools;
 
@@ -33,6 +33,6 @@ class BaseMap<K, V> implements IMap<K, V> {
 	public function removeKey(k:K):Bool return CollectionTools.removeKeyImpl(this, k);
 	public function clear():Void CollectionTools.clearImpl(this);
 
-	// knit
-	public function knit():Iterator<IMapKnitPin<K, V>> return CollectionTools.mapKnitImpl(this);
+	// amend
+	public function amend():Iterator<IMapAmendCursor<K, V>> return CollectionTools.mapAmendImpl(this);
 }

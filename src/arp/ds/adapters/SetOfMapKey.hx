@@ -1,6 +1,6 @@
 package arp.ds.adapters;
 
-import arp.ds.access.ISetKnit.ISetKnitPin;
+import arp.ds.access.ISetAmend.ISetAmendCursor;
 import arp.ds.lambda.CollectionTools;
 import arp.ds.ISet;
 import arp.ds.IMap;
@@ -28,6 +28,6 @@ class SetOfMapKey<K, V> implements ISet<K> {
 	public function remove(v:K):Bool return this.map.removeKey(v);
 	public function clear():Void this.map.clear();
 
-	//knit
-	public function knit():Iterator<ISetKnitPin<K>> return CollectionTools.setKnitImpl(this);
+	//amend
+	public function amend():Iterator<ISetAmendCursor<K>> return CollectionTools.setAmendImpl(this);
 }

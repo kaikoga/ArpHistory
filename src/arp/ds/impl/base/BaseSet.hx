@@ -1,6 +1,6 @@
 package arp.ds.impl.base;
 
-import arp.ds.access.ISetKnit.ISetKnitPin;
+import arp.ds.access.ISetAmend.ISetAmendCursor;
 import arp.ds.ISet;
 import arp.ds.lambda.CollectionTools;
 
@@ -24,6 +24,6 @@ class BaseSet<V> implements ISet<V> {
 	public function remove(v:V):Bool return CollectionTools.removeImpl(this, v);
 	public function clear():Void CollectionTools.clearImpl(this);
 
-	// knit
-	public function knit():Iterator<ISetKnitPin<V>> return CollectionTools.setKnitImpl(this);
+	// amend
+	public function amend():Iterator<ISetAmendCursor<V>> return CollectionTools.setAmendImpl(this);
 }

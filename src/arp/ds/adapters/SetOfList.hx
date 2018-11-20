@@ -1,6 +1,6 @@
 package arp.ds.adapters;
 
-import arp.ds.access.ISetKnit.ISetKnitPin;
+import arp.ds.access.ISetAmend.ISetAmendCursor;
 import arp.ds.lambda.CollectionTools;
 import arp.ds.ISet;
 import arp.ds.IList;
@@ -26,6 +26,6 @@ class SetOfList<V> implements ISet<V> {
 	public function remove(v:V):Bool return this.list.remove(v);
 	public function clear():Void this.list.clear();
 
-	//knit
-	public function knit():Iterator<ISetKnitPin<V>> return CollectionTools.setKnitImpl(this);
+	//amend
+	public function amend():Iterator<ISetAmendCursor<V>> return CollectionTools.setAmendImpl(this);
 }

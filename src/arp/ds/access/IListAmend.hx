@@ -1,10 +1,10 @@
 package arp.ds.access;
 
-interface IListKnit<V> extends IListRead<V> {
-	function knit():Iterator<IListKnitPin<V>>;
+interface IListAmend<V> extends IListRead<V> {
+	function amend():Iterator<IListAmendCursor<V>>;
 }
 
-interface IListKnitPin<V> {
+interface IListAmendCursor<V> {
 	var index(get, never):Int;
 	var value(get, never):V;
 

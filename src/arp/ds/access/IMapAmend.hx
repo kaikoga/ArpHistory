@@ -1,10 +1,10 @@
 package arp.ds.access;
 
-interface IMapKnit<K, V> extends IMapRead<K, V> {
-	function knit():Iterator<IMapKnitPin<K, V>>;
+interface IMapAmend<K, V> extends IMapRead<K, V> {
+	function amend():Iterator<IMapAmendCursor<K, V>>;
 }
 
-interface IMapKnitPin<K, V> {
+interface IMapAmendCursor<K, V> {
 	var key(get, never):K;
 	var value(get, never):V;
 

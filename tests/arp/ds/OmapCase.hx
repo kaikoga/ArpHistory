@@ -253,33 +253,33 @@ class OmapCase<K, V> {
 
 	public function testKnit():Void {
 		me.addPair(k.a1, v.a1);
-		assertMatch([k.a1], [for (p in me.knit()) p.key]);
-		assertMatch([v.a1], [for (p in me.knit()) p.value]);
-		for (p in me.knit()) p.append(k.a2, v.a2);
-		assertMatch([true, false], [for (p in me.knit()) (p.value == v.a1) && p.remove()]);
-		assertMatch([k.a2], [for (p in me.knit()) p.key]);
-		assertMatch([v.a2], [for (p in me.knit()) p.value]);
-		for (p in me.knit()) p.prepend(k.a3, v.a3);
-		assertMatch([k.a3, k.a2], [for (p in me.knit()) p.key]);
-		assertMatch([v.a3, v.a2], [for (p in me.knit()) p.value]);
-		assertMatch([0, 1], [for (p in me.knit()) { if (p.key == k.a3) p.remove(); p.index; }]);
+		assertMatch([k.a1], [for (p in me.amend()) p.key]);
+		assertMatch([v.a1], [for (p in me.amend()) p.value]);
+		for (p in me.amend()) p.append(k.a2, v.a2);
+		assertMatch([true, false], [for (p in me.amend()) (p.value == v.a1) && p.remove()]);
+		assertMatch([k.a2], [for (p in me.amend()) p.key]);
+		assertMatch([v.a2], [for (p in me.amend()) p.value]);
+		for (p in me.amend()) p.prepend(k.a3, v.a3);
+		assertMatch([k.a3, k.a2], [for (p in me.amend()) p.key]);
+		assertMatch([v.a3, v.a2], [for (p in me.amend()) p.value]);
+		assertMatch([0, 1], [for (p in me.amend()) { if (p.key == k.a3) p.remove(); p.index; }]);
 	}
 
 	public function testBulkKnit():Void {
 		me.addPair(k.a1, v.a1);
 		me.addPair(k.a5, v.a5);
-		for (p in me.knit()) {
+		for (p in me.amend()) {
 			p.append(k.a2, v.a2);
 			p.append(k.a3, v.a3);
 			p.append(k.a4, v.a4);
 			break;
 		}
-		assertMatch([v.a1, v.a2, v.a3, v.a4, v.a5], [for (p in me.knit()) p.value]);
+		assertMatch([v.a1, v.a2, v.a3, v.a4, v.a5], [for (p in me.amend()) p.value]);
 		assertMatch(
 			[0, 1, 2, 3, 4],
-			[for (p in me.knit()) { if (p.value == v.a1 || p.value == v.a2) p.remove(); p.index; } ]
+			[for (p in me.amend()) { if (p.value == v.a1 || p.value == v.a2) p.remove(); p.index; } ]
 		);
-		assertMatch([v.a3, v.a4, v.a5], [for (p in me.knit()) p.value]);
+		assertMatch([v.a3, v.a4, v.a5], [for (p in me.amend()) p.value]);
 	}
 
 	public function testEmptyToString():Void {
