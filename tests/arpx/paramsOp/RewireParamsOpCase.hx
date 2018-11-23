@@ -29,9 +29,9 @@ class RewireParamsOpCase {
 		assertMatch('a2', params.get('k2'));
 		assertMatch(null, params.get('k3'));
 
-		var keys:Array<String> = [];
-		for (k in params.keys()) keys.push(k);
-		assertMatch(containsInAnyOrder('k1', 'k2', 'k3'), keys);
+		// var keys:Array<String> = [];
+		// for (k in params.keys()) keys.push(k);
+		// assertMatch(containsInAnyOrder('k1', 'k2', 'k3'), keys);
 	}
 
 	public function testFilter():Void {
@@ -50,9 +50,9 @@ class RewireParamsOpCase {
 		assertMatch(null, params.get('k5'));
 
 
-		var keys:Array<String> = [];
-		for (k in params.keys()) keys.push(k);
-		assertMatch(containsInAnyOrder('k1', 'k2', 'k3'), keys);
+		// var keys:Array<String> = [];
+		// for (k in params.keys()) keys.push(k);
+		// assertMatch(containsInAnyOrder('k1', 'k2', 'k3'), keys);
 	}
 
 	public function testFilterWithCopy():Void {
@@ -72,8 +72,8 @@ class RewireParamsOpCase {
 		assertMatch('b5', params.get('k5'));
 
 
-		var keys:Array<String> = [];
-		for (k in params.keys()) keys.push(k);
-		assertMatch(containsInAnyOrder('k1', 'k2', 'k3', 'k4', 'k5'), keys);
+		// var keys:Array<String> = [];
+		// for (k in params.keys()) keys.push(k);
+		// assertMatch(containsInAnyOrder('k1', 'k2', 'k3', 'k4', 'k5'), keys);
 	}
 }
