@@ -2,7 +2,7 @@ package arpx.impl.heaps.display;
 
 #if (arp_display_backend_heaps || arp_backend_display)
 
-import h2d.Sprite;
+import h2d.Object;
 import h2d.Tile;
 import h3d.Engine;
 import h3d.Matrix;
@@ -14,7 +14,7 @@ import arpx.impl.cross.structs.ArpTransform;
 
 class DisplayContextImpl extends DisplayContextBase implements IDisplayContext implements IRenderContext {
 
-	public var buf(default, null):Sprite;
+	public var buf(default, null):Object;
 	private var _width:Int;
 	public var width(get, null):Int;
 	private function get_width():Int return _width;
@@ -24,7 +24,7 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 
 	private var renderer:RendererImpl;
 
-	public function new(buf:Sprite, width:Int, height:Int, transform:ArpTransform = null, clearColor:UInt = 0) {
+	public function new(buf:Object, width:Int, height:Int, transform:ArpTransform = null, clearColor:UInt = 0) {
 		super(transform, clearColor);
 		this.buf = buf;
 		this._width = width;

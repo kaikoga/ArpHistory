@@ -3,7 +3,7 @@ package arpx.impl.heaps.input;
 #if (arp_input_backend_heaps || arp_backend_display)
 
 import hxd.Event;
-import hxd.Stage;
+import hxd.Window;
 import arpx.impl.ArpObjectImplBase;
 import arpx.input.KeyInput;
 
@@ -17,11 +17,11 @@ class KeyInputImpl extends ArpObjectImplBase implements IInputImpl {
 	}
 
 	public function listen():Void {
-		Stage.getInstance().addEventTarget(onEvent);
+		Window.getInstance().addEventTarget(onEvent);
 	}
 
 	public function purge():Void {
-		Stage.getInstance().removeEventTarget(onEvent);
+		Window.getInstance().removeEventTarget(onEvent);
 	}
 
 	private function onEvent(e:Event):Void {
