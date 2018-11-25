@@ -46,6 +46,7 @@ class ArpObjectMap<K, V:IArpObject> implements IMap<K, V> implements IPersistabl
 	public function get(k:K):Null<V> return this.slotMap.hasKey(k) ? this.slotMap.get(k).value : null;
 	public function hasKey(k:K):Bool return this.slotMap.hasKey(k);
 	inline public function keys():Iterator<K> return this.slotMap.keys();
+	inline public function keyValueIterator():KeyValueIterator<K, V> return new ArpObjectKeyValueIterator(this.slotMap.keyValueIterator());
 
 	//resolve
 	public function resolveName(v:V):Null<K> return this.slotMap.resolveName(slotOf(v));

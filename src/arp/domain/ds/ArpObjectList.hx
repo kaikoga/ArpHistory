@@ -91,4 +91,5 @@ class ArpObjectList<V:IArpObject> implements IList<V> implements IPersistable {
 
 	// amend
 	public function amend():Iterator<IListAmendCursor<V>> return CollectionTools.listAmendImpl(this);
+	inline public function keyValueIterator():KeyValueIterator<Int, V> return new ArpObjectKeyValueIterator(this.slotList.keyValueIterator());
 }

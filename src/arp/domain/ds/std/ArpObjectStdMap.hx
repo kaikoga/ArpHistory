@@ -1,6 +1,6 @@
 package arp.domain.ds.std;
 
-import Map.IMap;
+import haxe.Constraints.IMap;
 import arp.domain.core.ArpSid;
 import arp.persistable.IPersistable;
 import arp.persistable.IPersistInput;
@@ -53,6 +53,10 @@ class ArpObjectStdMap<V:IArpObject> implements IMap<String, V> implements IPersi
 		return new ArpObjectStdMapIterator(this.slots);
 	}
 
+	public function keyValueIterator():KeyValueIterator<String, V> {
+		return new ArpObjectStdMapKeyValueIterator(this.slots);
+	}
+
 	public function copy():IMap<String, V> {
 		var result = new ArpObjectStdMap<V>(this.domain);
 		for (k in this.keys()) result.set(k, this.get(k));
@@ -102,6 +106,27 @@ class ArpObjectStdMapIterator<V:IArpObject> {
 	}
 
 	public function next():V {
-		return this.slots.get(this.keyIter.next()).value;
+		var key = this.keyIter.next();
+		return this.slots.get(key).value;
+	}
+}
+
+class ArpObjectStdMapKeyValueIterator<V:IArpObject> {
+
+	private var slots:Map<String, ArpSlot<V>>;
+	private var keyIter:Iterator<String>;
+
+	public function new(slots:Map<String, ArpSlot<V>>) {
+		this.slots = slots;
+		this.keyIter = slots.keys();
+	}
+
+	public function hasNext():Bool {
+		return this.keyIter.hasNext();
+	}
+
+	public function next():{key:String, value:V} {
+		var key = this.keyIter.next();
+		return { key:key, value: this.slots.get(key).value };
 	}
 }

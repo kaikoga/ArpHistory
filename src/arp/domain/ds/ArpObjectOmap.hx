@@ -53,6 +53,7 @@ class ArpObjectOmap<K, V:IArpObject> implements IOmap<K, V> implements IPersista
 		var slot:ArpSlot<V> = this.slotOmap.getAt(index);
 		return (slot == null) ? null : slot.value;
 	}
+	inline public function keyValueIterator():KeyValueIterator<K, V> return new ArpObjectKeyValueIterator(this.slotOmap.keyValueIterator());
 
 	//resolve
 	public function resolveKeyIndex(k:K):Int return this.slotOmap.resolveKeyIndex(k);
