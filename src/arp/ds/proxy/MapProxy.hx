@@ -39,6 +39,7 @@ class MapProxy<K, V, X, W> implements IMap<K, V> {
 	public function get(k:K):Null<V> return this.proxyValue(this.map.get(this.unproxyKey(k)));
 	public function hasKey(k:K):Bool return this.map.hasKey(this.unproxyKey(k));
 	public function keys():Iterator<K> return new ProxyIterator(this.map.keys(), this.proxyKey);
+	public function keyValueIterator():KeyValueIterator<K, V> return new ProxyKeyValueIterator(this.map.keyValueIterator(), this.proxyKey, this.proxyValue);
 
 	//resolve
 	public function resolveName(v:V):Null<K> return this.proxyKey(this.map.resolveName(this.unproxyValue(v)));

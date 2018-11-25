@@ -1,6 +1,7 @@
 package arp.ds.adapters;
 
 import arp.ds.access.IListAmend.IListAmendCursor;
+import arp.ds.lambda.iterators.OmapIndexKeyIterator;
 import arp.ds.lambda.CollectionTools;
 import arp.ds.IList;
 import arp.ds.IOmap;
@@ -57,4 +58,5 @@ class ListOfOmapKey<K, V> implements IList<K> {
 
 	//amend
 	public function amend():Iterator<IListAmendCursor<K>> return CollectionTools.listAmendImpl(this);
+	inline public function keyValueIterator():KeyValueIterator<Int, K> return new OmapIndexKeyIterator(this.omap);
 }

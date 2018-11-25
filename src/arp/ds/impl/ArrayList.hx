@@ -1,6 +1,7 @@
 package arp.ds.impl;
 
 import arp.iterators.SimpleArrayIterator;
+import arp.iterators.SimpleArrayKeyValueIterator;
 import arp.ds.access.IListAmend.IListAmendCursor;
 import arp.ds.IList;
 import arp.ds.lambda.CollectionTools;
@@ -45,4 +46,5 @@ class ArrayList<V> implements IList<V> {
 
 	// amend
 	public function amend():Iterator<IListAmendCursor<V>> return CollectionTools.listAmendImpl(this);
+	inline public function keyValueIterator():KeyValueIterator<Int, V> return new SimpleArrayKeyValueIterator(this.value);
 }

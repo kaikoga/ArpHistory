@@ -26,6 +26,7 @@ class BaseOmap<K, V> implements IOmap<K, V> {
 	public function first():Null<V> return CollectionTools.firstImpl(this);
 	public function last():Null<V> return CollectionTools.lastImpl(this);
 	public function getAt(index:Int):Null<V> return CollectionTools.getAtImpl(this, index);
+	public function keyValueIterator():KeyValueIterator<K, V> return CollectionTools.keyValueIteratorImpl(this);
 
 	//resolve
 	public function resolveKeyIndex(k:K):Int return -1;

@@ -42,4 +42,5 @@ class ListDecorator<V> implements IList<V> {
 
 	//amend
 	public function amend():Iterator<IListAmendCursor<V>> return CollectionTools.listAmendImpl(this);
+	public function keyValueIterator():KeyValueIterator<Int, V> return this.list.keyValueIterator();
 }

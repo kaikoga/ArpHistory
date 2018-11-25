@@ -213,6 +213,44 @@ class OmapCase<K, V> {
 		assertMatch([v.a5, v.a3], a);
 	}
 
+	public function testEmptyKeyValueIterator():Void {
+		var it:KeyValueIterator<K, V> = me.keyValueIterator();
+		assertNotEquals(null, it);
+		assertFalse(it.hasNext());
+	}
+
+	// for assertMatch()
+	private function toAnon(kv:{key:K, value:V}) return { key: kv.key, value: kv.value };
+
+	public function testOrderedKeyValueIterator():Void {
+		me.addPair(k.a1, v.a1);
+		assertMatch([{key: k.a1, value: v.a1}], [for (v in me.keyValueIterator()) toAnon(v)]);
+		me.addPair(k.a2, v.a2);
+		assertMatch([{key: k.a1, value: v.a1}, {key: k.a2, value: v.a2}], [for (v in me.keyValueIterator()) toAnon(v)]);
+		me.addPair(k.a3, v.a3);
+		assertMatch([{key: k.a1, value: v.a1}, {key: k.a2, value: v.a2}, {key: k.a3, value: v.a3}], [for (v in me.keyValueIterator()) toAnon(v)]);
+		me.addPair(k.a4, v.a4);
+		assertMatch([{key: k.a1, value: v.a1}, {key: k.a2, value: v.a2}, {key: k.a3, value: v.a3}, {key: k.a4, value: v.a4}], [for (v in me.keyValueIterator()) toAnon(v)]);
+		me.insertPairAt(0, k.a5, v.a5);
+		assertMatch([{key: k.a5, value: v.a5}, {key: k.a1, value: v.a1}, {key: k.a2, value: v.a2}, {key: k.a3, value: v.a3}, {key: k.a4, value: v.a4}], [for (v in me.keyValueIterator()) toAnon(v)]);
+		me.removeKey(k.a2);
+		assertMatch([{key: k.a5, value: v.a5}, {key: k.a1, value: v.a1}, {key: k.a3, value: v.a3}, {key: k.a4, value: v.a4}], [for (v in me.keyValueIterator()) toAnon(v)]);
+		me.remove(v.a4);
+		assertMatch([{key: k.a5, value: v.a5}, {key: k.a1, value: v.a1}, {key: k.a3, value: v.a3}], [for (v in me.keyValueIterator()) toAnon(v)]);
+		me.removeAt(1);
+		assertMatch([{key: k.a5, value: v.a5}, {key: k.a3, value: v.a3}], [for (v in me.keyValueIterator()) toAnon(v)]);
+
+		var it:KeyValueIterator<K, V> = me.keyValueIterator();
+		var a:Array<{key:K, value:V}> = [];
+		assertNotEquals(null, it);
+		assertTrue(it.hasNext());
+		a.push(toAnon(it.next()));
+		assertTrue(it.hasNext());
+		a.push(toAnon(it.next()));
+		assertFalse(it.hasNext());
+		assertMatch([{key: k.a5, value: v.a5}, {key: k.a3, value: v.a3}], a);
+	}
+
 	public function testIndexOf():Void {
 		me.addPair(k.a1, v.a1);
 		me.addPair(k.a2, v.a2);

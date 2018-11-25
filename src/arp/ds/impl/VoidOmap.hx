@@ -26,6 +26,7 @@ class VoidOmap<K, V> implements IOmap<K, V> {
 	public function first():Null<V> return null;
 	public function last():Null<V> return null;
 	public function getAt(index:Int):Null<V> return null;
+	public function keyValueIterator():KeyValueIterator<K, V> return new EmptyIterator();
 
 	//resolve
 	public function resolveKeyIndex(k:K):Int return -1;

@@ -1,24 +1,24 @@
 package arp.ds.lambda;
 
-import arp.ds.lambda.cursors.ArrayOmapAmendCursor;
-import arp.ds.lambda.cursors.ArrayMapAmendCursor;
-import arp.ds.lambda.cursors.ArrayListAmendCursor;
-import arp.ds.lambda.cursors.ArraySetAmendCursor;
-import arp.ds.access.ISetAmend.ISetAmendCursor;
-import arp.ds.access.IOmapAmend.IOmapAmendCursor;
-import arp.ds.access.IMapAmend.IMapAmendCursor;
-import arp.ds.access.IListAmend.IListAmendCursor;
-import arp.ds.access.IOmapRead;
-import arp.ds.access.IListRead;
-import arp.ds.access.ISetRead;
-import arp.ds.access.IMapRemove;
-import arp.ds.access.IListRemove;
-import arp.ds.access.ICollectionRemove;
-import arp.ds.access.IOmapWrite;
-import arp.ds.access.IMapWrite;
-import arp.ds.access.IListWrite;
 import arp.ds.access.ICollectionRead;
+import arp.ds.access.ICollectionRemove;
+import arp.ds.access.IListAmend.IListAmendCursor;
+import arp.ds.access.IListRead;
+import arp.ds.access.IListRemove;
+import arp.ds.access.IListWrite;
+import arp.ds.access.IMapAmend.IMapAmendCursor;
 import arp.ds.access.IMapRead;
+import arp.ds.access.IMapRemove;
+import arp.ds.access.IMapWrite;
+import arp.ds.access.IOmapAmend.IOmapAmendCursor;
+import arp.ds.access.IOmapRead;
+import arp.ds.access.IOmapWrite;
+import arp.ds.access.ISetAmend.ISetAmendCursor;
+import arp.ds.access.ISetRead;
+import arp.ds.lambda.cursors.ArrayListAmendCursor;
+import arp.ds.lambda.cursors.ArrayMapAmendCursor;
+import arp.ds.lambda.cursors.ArrayOmapAmendCursor;
+import arp.ds.lambda.cursors.ArraySetAmendCursor;
 
 @:remove
 class CollectionTools {
@@ -67,6 +67,10 @@ class CollectionTools {
 
 	inline public static function keysImpl<K, V>(base:IMapRead<K, V>):Iterator<K> {
 		throw "keys() is mandatory";
+	}
+
+	inline public static function keyValueIteratorImpl<K, V>(base:IMapRead<K, V>):KeyValueIterator<K, V> {
+		throw "keyValueIterator() is mandatory";
 	}
 
 	// IMapResolve
@@ -194,4 +198,9 @@ class CollectionTools {
 	public static function omapAmendImpl<K, V>(base:IOmap<K, V>):Iterator<IOmapAmendCursor<K, V>> {
 		return new ArrayOmapAmendCursor(base);
 	}
+
+	inline public static function listKeyValueIteratorImpl<Int, V>(base:IList<V>):KeyValueIterator<Int, V> {
+		throw "keyValueIterator() is mandatory";
+	}
+
 }

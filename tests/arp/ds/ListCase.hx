@@ -150,6 +150,35 @@ class ListCase<V> {
 		assertMatch([v.a3, v.a4, v.a5], [for (p in me.amend()) p.value]);
 	}
 
+	public function testEmptyKeyValueIterator():Void {
+		var it:KeyValueIterator<Int, V> = me.keyValueIterator();
+		assertNotEquals(null, it);
+		assertFalse(it.hasNext());
+	}
+
+	// for assertMatch()
+	private function toAnon(kv:{key:Int, value:V}) return { key: kv.key, value: kv.value };
+
+	public function testListKeyValueIterator():Void {
+		me.push(v.a1);
+		me.push(v.a2);
+		me.push(v.a3);
+		me.push(v.a4);
+		me.shift();
+		me.unshift(v.a5);
+		me.remove(v.a3);
+		var it:KeyValueIterator<Int, V> = me.keyValueIterator();
+		var a:Array<V> = [];
+		assertNotEquals(null, it);
+		assertTrue(it.hasNext());
+		assertMatch({ key: 0, value: v.a5 }, toAnon(it.next()));
+		assertTrue(it.hasNext());
+		assertMatch({ key: 1, value: v.a2 }, toAnon(it.next()));
+		assertTrue(it.hasNext());
+		assertMatch({ key: 2, value: v.a4 }, toAnon(it.next()));
+		assertFalse(it.hasNext());
+	}
+
 	public function testEmptyToString():Void {
 		assertEquals("[]", me.toString());
 	}

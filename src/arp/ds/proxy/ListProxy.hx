@@ -52,4 +52,5 @@ class ListProxy<V, W> implements IList<V> {
 
 	// amend
 	public function amend():Iterator<IListAmendCursor<V>> return CollectionTools.listAmendImpl(this);
+	public function keyValueIterator():KeyValueIterator<Int, V> return new ProxyKeyValueIterator(this.list.keyValueIterator(), k -> k,  this.proxyValue);
 }

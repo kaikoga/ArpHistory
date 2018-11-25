@@ -35,6 +35,7 @@ class StdOmap<K, V> implements IOmap<K, V> {
 	public function first():Null<V> return this.get(this._keys[0]);
 	public function last():Null<V> return this.get(this._keys[this._keys.length - 1]);
 	public function getAt(index:Int):Null<V> return this.get(this._keys[index]);
+	inline public function keyValueIterator():KeyValueIterator<K, V> return new StdOmapKeyValueIterator(this._keys, this.value);
 
 	//resolve
 	public function resolveKeyIndex(k:K):Int return this._keys.indexOf(k);
@@ -107,5 +108,26 @@ private class StdOmapValueIterator<K, V> {
 
 	inline public function next():Null<V> {
 		return this.value.get(this.iterator.next());
+	}
+}
+
+@:generic @:remove
+private class StdOmapKeyValueIterator<K, V> {
+
+	private var iterator:Iterator<K>;
+	private var value:Map<K, V>;
+
+	inline public function new(keys:Array<K>, value:Map<K, V>) {
+		this.iterator = new SimpleArrayIterator(keys);
+		this.value = value;
+	}
+
+	inline public function hasNext():Bool {
+		return this.iterator.hasNext();
+	}
+
+	inline public function next():{ key: K, value: Null<V> } {
+		var key:K = this.iterator.next();
+		return { key: key, value: this.value.get(key)};
 	}
 }

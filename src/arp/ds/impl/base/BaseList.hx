@@ -40,4 +40,5 @@ class BaseList<V> implements IList<V> {
 
 	// amend
 	public function amend():Iterator<IListAmendCursor<V>> return CollectionTools.listAmendImpl(this);
+	public function keyValueIterator():KeyValueIterator<Int, V> return CollectionTools.listKeyValueIteratorImpl(this);
 }

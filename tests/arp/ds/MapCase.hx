@@ -197,6 +197,44 @@ class MapCase<K, V> {
 		assertMatch(containsInAnyOrder(vm.a1, vm.a3, vm.a5), a);
 	}
 
+	public function testEmptyKeyValueIterator():Void {
+		var it:KeyValueIterator<K, V> = me.keyValueIterator();
+		assertNotEquals(null, it);
+		assertFalse(it.hasNext());
+	}
+
+	public function testUnorderedKeyValueIterator():Void {
+		me.set(k.a1, v.a1);
+		me.set(k.a2, v.a2);
+		me.set(k.a3, v.a3);
+		me.set(k.a4, v.a4);
+		me.set(k.a5, v.a5);
+		me.removeKey(k.a2);
+		me.remove(v.a4);
+		var it:KeyValueIterator<K, V> = me.keyValueIterator();
+		var a:Array<K> = [];
+		var b:Array<V> = [];
+		var next:{key:K, value:V};
+		assertNotEquals(null, it);
+		assertTrue(it.hasNext());
+		next = it.next();
+		a.push(next.key);
+		b.push(next.value);
+		assertTrue(it.hasNext());
+		next = it.next();
+		a.push(next.key);
+		b.push(next.value);
+		assertTrue(it.hasNext());
+		next = it.next();
+		a.push(next.key);
+		b.push(next.value);
+		assertFalse(it.hasNext());
+		var vm:ArpSupportFixtureMatchers<V> = v; // a1 may be null
+		var km:ArpSupportFixtureMatchers<K> = k; // a1 may be null
+		assertMatch(containsInAnyOrder(km.a1, km.a3, km.a5), a);
+		assertMatch(containsInAnyOrder(vm.a1, vm.a3, vm.a5), b);
+	}
+
 	public function testKnit():Void {
 		me.set(k.a1, v.a1);
 		assertMatch([k.a1], [for (p in me.amend()) p.key]);

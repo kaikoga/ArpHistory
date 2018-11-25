@@ -24,6 +24,7 @@ class StdMap<K, V> implements IMap<K, V> {
 	public function get(k:K):Null<V> return this.value.get(k);
 	public function hasKey(k:K):Bool return this.value.exists(k);
 	inline public function keys():Iterator<K> return this.value.keys();
+	inline public function keyValueIterator():KeyValueIterator<K, V> return this.value.keyValueIterator();
 
 	//resolve
 	public function resolveName(v:V):Null<K> {

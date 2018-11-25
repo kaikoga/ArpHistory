@@ -40,5 +40,6 @@ class VoidList<V> implements IList<V> {
 
 	// amend
 	public function amend():Iterator<IListAmendCursor<V>> return new EmptyIterator();
+	public function keyValueIterator():KeyValueIterator<Int, V> return new EmptyIterator();
 }
 

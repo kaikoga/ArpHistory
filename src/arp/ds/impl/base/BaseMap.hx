@@ -21,6 +21,7 @@ class BaseMap<K, V> implements IMap<K, V> {
 	public function get(k:K):Null<V> return CollectionTools.getImpl(this, k);
 	public function hasKey(k:K):Bool return CollectionTools.hasKeyImpl(this, k);
 	public function keys():Iterator<K> return CollectionTools.keysImpl(this);
+	public function keyValueIterator():KeyValueIterator<K, V> return CollectionTools.keyValueIteratorImpl(this);
 
 	//resolve
 	public function resolveName(v:V):Null<K> return CollectionTools.resolveNameImpl(this, v);

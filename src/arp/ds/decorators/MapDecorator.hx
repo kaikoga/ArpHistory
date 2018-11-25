@@ -22,6 +22,7 @@ class MapDecorator<K, V> implements IMap<K, V> {
 	public function get(k:K):Null<V> return this.map.get(k);
 	public function hasKey(k:K):Bool return this.map.hasKey(k);
 	public function keys():Iterator<K> return this.map.keys();
+	public function keyValueIterator():KeyValueIterator<K, V> return this.map.keyValueIterator();
 
 	//resolve
 	public function resolveName(v:V):Null<K> return this.map.resolveName(v);

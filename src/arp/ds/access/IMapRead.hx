@@ -7,4 +7,5 @@ interface IMapRead<K, V> extends ICollectionRead<V> {
 	function get(k:K):Null<V>;
 	function hasKey(k:K):Bool;
 	function keys():Iterator<K>;
+	function keyValueIterator():KeyValueIterator<K, V>;
 }
