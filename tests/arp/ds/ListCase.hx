@@ -123,7 +123,7 @@ class ListCase<V> {
 		assertEquals(me.last(), v.a2);
 	}
 
-	public function testKnit():Void {
+	public function testAmend():Void {
 		me.push(v.a1);
 		assertMatch([v.a1], [for (p in me.amend()) p.value]);
 		for (p in me.amend()) p.append(v.a2);
@@ -133,7 +133,7 @@ class ListCase<V> {
 		assertMatch([v.a3, v.a2], [for (p in me.amend()) p.value]);
 	}
 
-	public function testBulkKnit():Void {
+	public function testBulkAmend():Void {
 		me.push(v.a1);
 		me.push(v.a5);
 		for (p in me.amend()) {

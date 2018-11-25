@@ -104,7 +104,7 @@ class SetCase<V> {
 		assertMatch(containsInAnyOrder(vm.a1, vm.a2, vm.a4, vm.a5), a);
 	}
 
-	public function testKnit():Void {
+	public function testAmend():Void {
 		me.add(v.a1);
 		assertMatch([v.a1], [for (p in me.amend()) p.value]);
 		for (p in me.amend()) p.insert(v.a2);
@@ -112,7 +112,7 @@ class SetCase<V> {
 		assertMatch([v.a2], [for (p in me.amend()) p.value]);
 	}
 
-	public function testBulkKnit():Void {
+	public function testBulkAmend():Void {
 		me.add(v.a1);
 		me.add(v.a5);
 		for (p in me.amend()) {

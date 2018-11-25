@@ -289,7 +289,7 @@ class OmapCase<K, V> {
 		assertMatch(null, me.resolveName(v.a3));
 	}
 
-	public function testKnit():Void {
+	public function testAmend():Void {
 		me.addPair(k.a1, v.a1);
 		assertMatch([k.a1], [for (p in me.amend()) p.key]);
 		assertMatch([v.a1], [for (p in me.amend()) p.value]);
@@ -303,7 +303,7 @@ class OmapCase<K, V> {
 		assertMatch([0, 1], [for (p in me.amend()) { if (p.key == k.a3) p.remove(); p.index; }]);
 	}
 
-	public function testBulkKnit():Void {
+	public function testBulkAmend():Void {
 		me.addPair(k.a1, v.a1);
 		me.addPair(k.a5, v.a5);
 		for (p in me.amend()) {

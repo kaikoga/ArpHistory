@@ -235,7 +235,7 @@ class MapCase<K, V> {
 		assertMatch(containsInAnyOrder(vm.a1, vm.a3, vm.a5), b);
 	}
 
-	public function testKnit():Void {
+	public function testAmend():Void {
 		me.set(k.a1, v.a1);
 		assertMatch([k.a1], [for (p in me.amend()) p.key]);
 		assertMatch([v.a1], [for (p in me.amend()) p.value]);
@@ -245,7 +245,7 @@ class MapCase<K, V> {
 		assertMatch([v.a2], [for (p in me.amend()) p.value]);
 	}
 
-	public function testBulkKnit():Void {
+	public function testBulkAmend():Void {
 		me.set(k.a1, v.a1);
 		me.set(k.a5, v.a5);
 		for (p in me.amend()) {
