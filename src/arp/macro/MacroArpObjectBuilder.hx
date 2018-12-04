@@ -2,12 +2,13 @@ package arp.macro;
 
 #if macro
 
+import arp.domain.core.ArpType;
+import arp.domain.reflect.ArpClassInfo;
+import arp.macro.defs.MacroArpClassDefinition;
+import arp.macro.MacroArpFieldBuilder;
 import haxe.macro.Compiler;
 import haxe.macro.Context;
 import haxe.macro.Expr;
-import arp.domain.core.ArpType;
-import arp.domain.reflect.ArpClassInfo;
-import arp.macro.MacroArpFieldBuilder;
 
 class MacroArpObjectBuilder extends MacroArpObjectSkeleton {
 

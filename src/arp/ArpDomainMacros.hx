@@ -2,7 +2,7 @@ package arp;
 
 #if macro
 
-import arp.macro.MacroArpClassDefinition;
+import arp.macro.defs.MacroArpClassDefinition;
 import arp.macro.MacroArpObjectBuilder;
 import arp.macro.MacroArpObjectRegistry;
 import arp.macro.MacroArpUtil;

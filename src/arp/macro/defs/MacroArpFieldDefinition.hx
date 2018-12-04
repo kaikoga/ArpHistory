@@ -1,4 +1,4 @@
-package arp.macro;
+package arp.macro.defs;
 
 #if macro
 
@@ -176,30 +176,4 @@ class MacroArpFieldDefinition {
 	}
 }
 
-enum MacroArpFieldDefinitionFamily {
-	ImplicitUnmanaged;
-	Unmanaged;
-	ArpField;
-	Impl(typePath:TypePath);
-	Impl2(implTypePath:TypePath, concreteTypePath:TypePath);
-	Constructor(func:Function);
-}
-
-enum MacroArpMetaArpField {
-	Unmanaged;
-	Default;
-	Name(s:String);
-	Runtime;
-}
-
-enum MacroArpMetaArpBarrier {
-	None;
-	Optional;
-	Required;
-}
-
-enum MacroArpMetaArpDefault {
-	Zero;
-	Simple(s:String);
-}
 #end

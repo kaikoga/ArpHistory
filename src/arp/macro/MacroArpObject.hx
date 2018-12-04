@@ -3,6 +3,8 @@ package arp.macro;
 #if macro
 
 import arp.domain.reflect.ArpClassInfo;
+import arp.macro.defs.MacroArpClassDefinition;
+
 class MacroArpObject {
 
 	public var classDef(default, null):MacroArpClassDefinition;

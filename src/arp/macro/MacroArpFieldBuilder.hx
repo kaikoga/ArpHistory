@@ -2,13 +2,10 @@ package arp.macro;
 
 #if macro
 
-import haxe.macro.Context;
-import haxe.macro.Expr;
-import haxe.macro.Printer;
-import haxe.macro.Type;
-import haxe.macro.TypeTools;
 import arp.domain.reflect.ArpClassInfo;
 import arp.domain.reflect.ArpFieldKind;
+import arp.macro.defs.MacroArpFieldDefinition;
+import arp.macro.defs.MacroArpFieldDefinitionFamily;
 import arp.macro.fields.ds.MacroArpObjectListField;
 import arp.macro.fields.ds.MacroArpObjectMapField;
 import arp.macro.fields.ds.MacroArpObjectOmapField;
@@ -23,12 +20,16 @@ import arp.macro.fields.std.MacroArpObjectStdMapField;
 import arp.macro.fields.std.MacroArpValueStdArrayField;
 import arp.macro.fields.std.MacroArpValueStdListField;
 import arp.macro.fields.std.MacroArpValueStdMapField;
-import arp.macro.MacroArpFieldDefinition.MacroArpFieldDefinitionFamily;
 import arp.macro.valueTypes.MacroArpPrimBoolType;
 import arp.macro.valueTypes.MacroArpPrimFloatType;
 import arp.macro.valueTypes.MacroArpPrimIntType;
 import arp.macro.valueTypes.MacroArpPrimStringType;
 import arp.macro.valueTypes.MacroArpStructType;
+import haxe.macro.Context;
+import haxe.macro.Expr;
+import haxe.macro.Printer;
+import haxe.macro.Type;
+import haxe.macro.TypeTools;
 
 using haxe.macro.ComplexTypeTools;
 

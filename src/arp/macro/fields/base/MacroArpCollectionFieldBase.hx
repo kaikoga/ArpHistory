@@ -2,6 +2,7 @@ package arp.macro.fields.base;
 
 #if macro
 
+import arp.macro.defs.MacroArpFieldDefinition;
 import haxe.macro.Expr;
 import haxe.macro.Printer;
 

@@ -1,4 +1,4 @@
-package arp.macro;
+package arp.macro.defs;
 
 #if macro
 

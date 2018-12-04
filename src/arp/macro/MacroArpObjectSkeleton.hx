@@ -2,6 +2,8 @@ package arp.macro;
 
 #if macro
 
+import arp.macro.defs.MacroArpClassDefinition;
+import arp.macro.defs.MacroArpImplClassDefinition;
 import haxe.macro.Expr;
 
 class MacroArpObjectSkeleton {

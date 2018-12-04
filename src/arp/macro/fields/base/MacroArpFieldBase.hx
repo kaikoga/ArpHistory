@@ -3,11 +3,13 @@ package arp.macro.fields.base;
 #if macro
 
 import arp.domain.core.ArpType;
-import haxe.macro.Expr;
 import arp.domain.reflect.ArpFieldDs;
 import arp.domain.reflect.ArpFieldInfo;
 import arp.domain.reflect.ArpFieldKind;
-import arp.macro.MacroArpFieldDefinition;
+import arp.macro.defs.MacroArpFieldDefinition;
+import arp.macro.defs.MacroArpMetaArpBarrier;
+import arp.macro.defs.MacroArpMetaArpField;
+import haxe.macro.Expr;
 
 class MacroArpFieldBase {
 

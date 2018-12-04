@@ -2,9 +2,10 @@ package arp.macro.fields.ds;
 
 #if macro
 
-import haxe.macro.Expr;
 import arp.domain.reflect.ArpFieldDs;
+import arp.macro.defs.MacroArpFieldDefinition;
 import arp.macro.fields.base.MacroArpObjectCollectionFieldBase;
+import haxe.macro.Expr;
 
 class MacroArpObjectSetField extends MacroArpObjectCollectionFieldBase implements IMacroArpField {
 
