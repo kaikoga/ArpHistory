@@ -5,6 +5,7 @@ package arp.macro.fields.std;
 import arp.domain.reflect.ArpFieldDs;
 import arp.macro.defs.MacroArpFieldDefinition;
 import arp.macro.fields.base.MacroArpObjectCollectionFieldBase;
+import arp.macro.stubs.ds.MacroArpSwitchBlock;
 import haxe.macro.Expr;
 
 class MacroArpObjectStdMapField extends MacroArpObjectCollectionFieldBase implements IMacroArpField {
@@ -59,7 +60,7 @@ class MacroArpObjectStdMapField extends MacroArpObjectCollectionFieldBase implem
 		disposeBlock.push(macro @:pos(this.nativePos) { for (slot in this.$i_nativeName.slots) slot.delReference(); });
 	}
 
-	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
+	public function buildConsumeSeedElementBlock(cases:MacroArpSwitchBlock):Void {
 		var caseBlock:Array<Expr> = [];
 		cases.push({
 			values: [this.eFieldName],

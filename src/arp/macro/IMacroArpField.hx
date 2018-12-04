@@ -4,6 +4,7 @@ package arp.macro;
 
 import haxe.macro.Expr;
 import arp.domain.reflect.ArpFieldInfo;
+import arp.macro.stubs.ds.MacroArpSwitchBlock;
 
 interface IMacroArpField {
 	public var isSeedable(get, never):Bool;
@@ -15,7 +16,7 @@ interface IMacroArpField {
 	public function buildHeatUpBlock(heatUpBlock:Array<Expr>):Void;
 	public function buildHeatDownBlock(heatDownBlock:Array<Expr>):Void;
 	public function buildDisposeBlock(initBlock:Array<Expr>):Void;
-	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void;
+	public function buildConsumeSeedElementBlock(cases:MacroArpSwitchBlock):Void;
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void;
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void;
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void;

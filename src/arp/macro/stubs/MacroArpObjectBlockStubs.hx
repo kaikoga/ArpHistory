@@ -1,5 +1,6 @@
 package arp.macro.stubs;
 
+import arp.macro.stubs.ds.MacroArpSwitchBlock;
 import arp.macro.MacroArpObjectRegistry;
 import haxe.macro.Context;
 import haxe.macro.Expr;
@@ -29,20 +30,18 @@ class MacroArpObjectBlockStubs {
 	}
 
 	macro public static function arpConsumeSeedElementBlock():Expr {
-		var cases:Array<Case> = [];
+		var cases:MacroArpSwitchBlock = new MacroArpSwitchBlock(macro element.typeName);
 
-		var eDefault:Expr;
 		if (getTemplate().classDef.isDerived) {
-			eDefault = macro { super.arpConsumeSeedElement(element); }
+			cases.eDefault = macro { super.arpConsumeSeedElement(element); }
 		} else {
-			eDefault = macro if (element.typeName != "value") throw new arp.errors.ArpLoadError(arpTypeInfo + " could not accept <" + element.typeName + ">");
+			cases.eDefault = macro if (element.typeName != "value") throw new arp.errors.ArpLoadError(arpTypeInfo + " could not accept <" + element.typeName + ">");
 		}
-		var expr:Expr = { pos: Context.currentPos(), expr: ExprDef.ESwitch(macro element.typeName, cases, eDefault) }
 
 		for (arpField in getTemplate().arpFields) {
 			if (arpField.isSeedable) arpField.buildConsumeSeedElementBlock(cases);
 		}
 
-		return expr;
+		return cases.toExpr(Context.currentPos());
 	}
 }

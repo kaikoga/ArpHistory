@@ -5,6 +5,7 @@ package arp.macro.fields;
 import arp.macro.defs.MacroArpFieldDefinition;
 import arp.macro.defs.MacroArpMetaArpDefault;
 import arp.macro.fields.base.MacroArpFieldBase;
+import arp.macro.stubs.ds.MacroArpSwitchBlock;
 import haxe.macro.Expr;
 
 class MacroArpObjectField extends MacroArpFieldBase implements IMacroArpField {
@@ -72,7 +73,7 @@ class MacroArpObjectField extends MacroArpFieldBase implements IMacroArpField {
 		disposeBlock.push(macro @:pos(this.nativePos) { this.$iNativeSlot.delReference(); this.$iNativeSlot = null; });
 	}
 
-	public function buildConsumeSeedElementBlock(cases:Array<Case>):Void {
+	public function buildConsumeSeedElementBlock(cases:MacroArpSwitchBlock):Void {
 		var caseBlock:Array<Expr> = [];
 		cases.push({
 			values: [this.eFieldName],
