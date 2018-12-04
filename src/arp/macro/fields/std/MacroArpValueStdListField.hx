@@ -40,8 +40,9 @@ class MacroArpValueStdListField extends MacroArpValueCollectionFieldBase impleme
 	public function buildConsumeSeedElementBlock(cases:MacroArpSwitchBlock):Void {
 		var caseBlock:Array<Expr> = [];
 		cases.pushCase(this.eFieldName, this.nativePos, caseBlock);
-
-		caseBlock.push(macro @:pos(this.nativePos) { this.$i_nativeName.add(${this.type.createSeedElement(this.nativePos)}); });
+		caseBlock.push(macro @:pos(this.nativePos) {
+			this.$i_nativeName.add(${this.type.createSeedElement(this.nativePos)});
+		});
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {

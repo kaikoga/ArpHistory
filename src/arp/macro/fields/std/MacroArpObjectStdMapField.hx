@@ -63,8 +63,9 @@ class MacroArpObjectStdMapField extends MacroArpObjectCollectionFieldBase implem
 	public function buildConsumeSeedElementBlock(cases:MacroArpSwitchBlock):Void {
 		var caseBlock:Array<Expr> = [];
 		cases.pushCase(this.eFieldName, this.nativePos, caseBlock);
-
-		caseBlock.push(macro @:pos(this.nativePos) { this.$i_nativeName.slots.set(element.key, this._arpDomain.loadSeed(element, ${this.eArpType}).addReference()); });
+		caseBlock.push(macro @:pos(this.nativePos) {
+			this.$i_nativeName.slots.set(element.key, this._arpDomain.loadSeed(element, ${this.eArpType}).addReference());
+		});
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {

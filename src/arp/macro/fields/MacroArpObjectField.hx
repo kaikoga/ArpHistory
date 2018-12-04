@@ -76,8 +76,9 @@ class MacroArpObjectField extends MacroArpFieldBase implements IMacroArpField {
 	public function buildConsumeSeedElementBlock(cases:MacroArpSwitchBlock):Void {
 		var caseBlock:Array<Expr> = [];
 		cases.pushCase(this.eFieldName, this.nativePos, caseBlock);
-
-		caseBlock.push(macro @:pos(this.nativePos) { this.$iNativeSlot = this._arpDomain.loadSeed(element, ${this.eArpType}).takeReference(this.$iNativeSlot); });
+		caseBlock.push(macro @:pos(this.nativePos) {
+			this.$iNativeSlot = this._arpDomain.loadSeed(element, ${this.eArpType}).takeReference(this.$iNativeSlot);
+		});
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {

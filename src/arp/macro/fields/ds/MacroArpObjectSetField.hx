@@ -60,8 +60,9 @@ class MacroArpObjectSetField extends MacroArpObjectCollectionFieldBase implement
 	public function buildConsumeSeedElementBlock(cases:MacroArpSwitchBlock):Void {
 		var caseBlock:Array<Expr> = [];
 		cases.pushCase(this.eFieldName, this.nativePos, caseBlock);
-
-		caseBlock.push(macro @:pos(this.nativePos) { this.$i_nativeName.slotSet.add(this._arpDomain.loadSeed(element, ${this.eArpType}).addReference()); });
+		caseBlock.push(macro @:pos(this.nativePos) {
+			this.$i_nativeName.slotSet.add(this._arpDomain.loadSeed(element, ${this.eArpType}).addReference());
+		});
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
