@@ -13,8 +13,11 @@ class MacroArpSwitchBlock {
 		this.cases = [];
 	}
 
-	public function push(c:Case):Void {
-		this.cases.push(c);
+	public function pushCase(value:ExprOf<String>, pos:Position, caseBlock:Array<Expr>):Void {
+		this.cases.push({
+			values: [value],
+			expr: { pos: pos, expr: ExprDef.EBlock(caseBlock)}
+		});
 	}
 
 	public function toExpr(pos:Position):Expr {
