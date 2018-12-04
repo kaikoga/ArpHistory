@@ -1,4 +1,4 @@
-package arp.macro;
+package arp.macro.stubs;
 
 #if macro
 
@@ -26,7 +26,7 @@ class MacroArpObjectSkeleton {
 	private function new() return;
 
 	private function buildBlock(iFieldName:String, forPersist:Bool = false):Expr {
-		return macro arp.macro.stubs.MacroArpObjectStub.block($v{iFieldName}, $v{forPersist});
+		return macro arp.macro.stubs.MacroArpObjectBlockStubs.block($v{iFieldName}, $v{forPersist});
 	}
 
 	private function buildInitBlock():Expr return buildBlock("buildInitBlock");
@@ -39,7 +39,7 @@ class MacroArpObjectSkeleton {
 	private function buildCopyFromBlock():Expr return buildBlock("buildCopyFromBlock");
 
 	private function buildArpConsumeSeedElementBlock():Expr {
-		return macro arp.macro.stubs.MacroArpObjectStub.arpConsumeSeedElementBlock();
+		return macro arp.macro.stubs.MacroArpObjectBlockStubs.arpConsumeSeedElementBlock();
 	}
 
 	private function genTypeFields():Array<Field> {
@@ -61,34 +61,34 @@ class MacroArpObjectSkeleton {
 			@:noDoc @:noCompletion private function get_arpSlot():arp.domain.ArpUntypedSlot return this._arpSlot;
 
 			public function arpInit(slot:arp.domain.ArpUntypedSlot, seed:arp.seed.ArpSeed = null):arp.domain.IArpObject {
-				arp.macro.stubs.MacroArpObjectStub.arpInit(
+				arp.macro.stubs.MacroArpObjectStubs.arpInit(
 					$e{ this.buildInitBlock() },
 					$v{ this.classDef.hasImpl }
 				);
 			}
 
 			public function arpHeatLater():Void {
-				arp.macro.stubs.MacroArpObjectStub.arpHeatLater(
+				arp.macro.stubs.MacroArpObjectStubs.arpHeatLater(
 					$e{ this.buildHeatLaterBlock() }
 				);
 			}
 
 			public function arpHeatUp():Bool {
-				arp.macro.stubs.MacroArpObjectStub.arpHeatUp(
+				arp.macro.stubs.MacroArpObjectStubs.arpHeatUp(
 					$e{ this.buildHeatUpBlock() },
 					$v{ this.classDef.hasImpl }
 				);
 			}
 
 			public function arpHeatDown():Bool {
-				arp.macro.stubs.MacroArpObjectStub.arpHeatDown(
+				arp.macro.stubs.MacroArpObjectStubs.arpHeatDown(
 					$e{ this.buildHeatDownBlock() },
 					$v{ this.classDef.hasImpl }
 				);
 			}
 
 			public function arpDispose():Void {
-				arp.macro.stubs.MacroArpObjectStub.arpDispose(
+				arp.macro.stubs.MacroArpObjectStubs.arpDispose(
 					$e{ this.buildDisposeBlock() },
 					$v{ this.classDef.hasImpl }
 				);
@@ -96,30 +96,30 @@ class MacroArpObjectSkeleton {
 
 			@:noDoc @:noCompletion
 			private function arpConsumeSeedElement(element:arp.seed.ArpSeed):Void {
-				arp.macro.stubs.MacroArpObjectStub.arpConsumeSeedElement(
+				arp.macro.stubs.MacroArpObjectStubs.arpConsumeSeedElement(
 					$e{ this.buildArpConsumeSeedElementBlock() }
 				);
 			}
 
 			public function readSelf(input:arp.persistable.IPersistInput):Void {
-				arp.macro.stubs.MacroArpObjectStub.readSelf(
+				arp.macro.stubs.MacroArpObjectStubs.readSelf(
 					$e{ this.buildReadSelfBlock() }
 				);
 			}
 
 			public function writeSelf(output:arp.persistable.IPersistOutput):Void {
-				arp.macro.stubs.MacroArpObjectStub.writeSelf(
+				arp.macro.stubs.MacroArpObjectStubs.writeSelf(
 					$e{ this.buildWriteSelfBlock() }
 				);
 			}
 
 			@:access(arp.domain.ArpDomain)
 			public function arpClone():arp.domain.IArpObject {
-				arp.macro.stubs.MacroArpObjectStub.arpClone();
+				arp.macro.stubs.MacroArpObjectStubs.arpClone();
 			}
 
 			public function arpCopyFrom(source:arp.domain.IArpObject):arp.domain.IArpObject {
-				arp.macro.stubs.MacroArpObjectStub.arpCopyFrom(
+				arp.macro.stubs.MacroArpObjectStubs.arpCopyFrom(
 					$e{ this.buildCopyFromBlock() }
 				);
 			}
@@ -135,61 +135,61 @@ class MacroArpObjectSkeleton {
 			@:noDoc @:noCompletion override private function get_arpType():arp.domain.core.ArpType return _arpTypeInfo.arpType;
 
 			override public function arpInit(slot:arp.domain.ArpUntypedSlot, seed:arp.seed.ArpSeed = null):arp.domain.IArpObject {
-				arp.macro.stubs.MacroArpDerivedObjectStub.arpInit(
+				arp.macro.stubs.MacroArpDerivedObjectStubs.arpInit(
 					$e{ this.buildInitBlock() }
 				);
 			}
 
 			override public function arpHeatLater():Void {
-				arp.macro.stubs.MacroArpDerivedObjectStub.arpHeatLater(
+				arp.macro.stubs.MacroArpDerivedObjectStubs.arpHeatLater(
 					$e{ this.buildHeatLaterBlock() }
 				);
 			}
 
 			override public function arpHeatUp():Bool {
-				arp.macro.stubs.MacroArpDerivedObjectStub.arpHeatUp(
+				arp.macro.stubs.MacroArpDerivedObjectStubs.arpHeatUp(
 					$e{ this.buildHeatUpBlock() }
 				);
 			}
 
 			override public function arpHeatDown():Bool {
-				arp.macro.stubs.MacroArpDerivedObjectStub.arpHeatDown(
+				arp.macro.stubs.MacroArpDerivedObjectStubs.arpHeatDown(
 					$e{ this.buildHeatDownBlock() }
 				);
 			}
 
 			override public function arpDispose():Void {
-				arp.macro.stubs.MacroArpDerivedObjectStub.arpDispose(
+				arp.macro.stubs.MacroArpDerivedObjectStubs.arpDispose(
 					$e{ this.buildDisposeBlock() }
 				);
 			}
 
 			@:noDoc @:noCompletion
 			override private function arpConsumeSeedElement(element:arp.seed.ArpSeed):Void {
-				arp.macro.stubs.MacroArpDerivedObjectStub.arpConsumeSeedElement(
+				arp.macro.stubs.MacroArpDerivedObjectStubs.arpConsumeSeedElement(
 					$e{ this.buildArpConsumeSeedElementBlock() }
 				);
 			}
 
 			override public function readSelf(input:arp.persistable.IPersistInput):Void {
-				arp.macro.stubs.MacroArpDerivedObjectStub.readSelf(
+				arp.macro.stubs.MacroArpDerivedObjectStubs.readSelf(
 					$e{ this.buildReadSelfBlock() }
 				);
 			}
 
 			override public function writeSelf(output:arp.persistable.IPersistOutput):Void {
-				arp.macro.stubs.MacroArpDerivedObjectStub.writeSelf(
+				arp.macro.stubs.MacroArpDerivedObjectStubs.writeSelf(
 					$e{ this.buildWriteSelfBlock() }
 				);
 			}
 
 			@:access(arp.domain.ArpDomain)
 			override public function arpClone():arp.domain.IArpObject {
-				arp.macro.stubs.MacroArpDerivedObjectStub.arpClone();
+				arp.macro.stubs.MacroArpDerivedObjectStubs.arpClone();
 			}
 
 			override public function arpCopyFrom(source:arp.domain.IArpObject):arp.domain.IArpObject {
-				arp.macro.stubs.MacroArpDerivedObjectStub.arpCopyFrom(
+				arp.macro.stubs.MacroArpDerivedObjectStubs.arpCopyFrom(
 					$e{ this.buildCopyFromBlock() }
 				);
 			}

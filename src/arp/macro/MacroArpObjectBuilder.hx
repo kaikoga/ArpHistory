@@ -5,6 +5,7 @@ package arp.macro;
 import arp.domain.core.ArpType;
 import arp.domain.reflect.ArpClassInfo;
 import arp.macro.defs.MacroArpClassDefinition;
+import arp.macro.stubs.MacroArpObjectSkeleton;
 import arp.macro.MacroArpFieldBuilder;
 import haxe.macro.Compiler;
 import haxe.macro.Context;

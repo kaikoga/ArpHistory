@@ -4,7 +4,7 @@ import haxe.macro.Context;
 import haxe.macro.Expr;
 import haxe.macro.Type;
 
-class MacroArpDerivedObjectStub {
+class MacroArpDerivedObjectStubs {
 
 #if macro
 	private static function genSelfTypePath():TypePath {
