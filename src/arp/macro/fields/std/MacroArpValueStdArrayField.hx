@@ -38,9 +38,17 @@ class MacroArpValueStdArrayField extends MacroArpValueCollectionFieldBase implem
 
 	public function buildConsumeSeedElementBlock(cases:MacroArpSwitchBlock):Void {
 		var caseBlock:Array<Expr> = [];
-		cases.pushCase(this.eFieldName, this.nativePos, caseBlock);
+		cases.pushCase(this.eGroupName, this.nativePos, caseBlock);
 		caseBlock.push(macro @:pos(this.nativePos) {
-			this.$i_nativeName.push(${this.type.createSeedElement(this.nativePos)});
+			for (e in element) this.$i_nativeName.push(${this.type.createSeedElement(this.nativePos, macro e)});
+		});
+
+		if (!this.isSeedableAsElement) return;
+
+		var caseBlock:Array<Expr> = [];
+		cases.pushCase(this.eElementName, this.nativePos, caseBlock, -1);
+		caseBlock.push(macro @:pos(this.nativePos) {
+			this.$i_nativeName.push(${this.type.createSeedElement(this.nativePos, macro element)});
 		});
 	}
 

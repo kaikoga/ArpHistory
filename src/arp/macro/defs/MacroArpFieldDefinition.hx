@@ -19,7 +19,7 @@ class MacroArpFieldDefinition {
 	inline private function get_nativePos():Position return this.nativeField.pos;
 
 	// ArpField family
-	public var metaArpField(default, null):MacroArpMetaArpField = MacroArpMetaArpField.Unmanaged;
+	public var metaArpField(default, null):MacroArpMetaArpField = null;
 	public var metaArpVolatile(default, null):Bool = false;
 	public var metaArpReadOnly(default, null):Bool = false;
 	public var metaArpBarrier(default, null):MacroArpMetaArpBarrier = MacroArpMetaArpBarrier.None;
@@ -145,16 +145,25 @@ class MacroArpFieldDefinition {
 	}
 
 	private function parseMetaArpField(params:Array<Expr>):Void {
-		this.metaArpField = MacroArpMetaArpField.Default;
-		if (params.length == 0) return;
+		this.metaArpField = new MacroArpMetaArpField();
+		var index:Int = 0;
 		for (param in params) {
 			switch (param.expr) {
 				case ExprDef.EConst(Constant.CString(v)):
-					this.metaArpField = MacroArpMetaArpField.Name(v);
+					switch (index++) {
+						case 0:
+							this.metaArpField.groupName = MacroArpMetaArpField.MacroArpMetaArpFieldName.Explicit(v);
+						case _:
+							this.metaArpField.elementName = MacroArpMetaArpField.MacroArpMetaArpFieldName.Explicit(v);
+					}
+				case ExprDef.EConst(Constant.CIdent("true")):
+					this.metaArpField.elementName = MacroArpMetaArpField.MacroArpMetaArpFieldName.Default;
 				case ExprDef.EConst(Constant.CIdent("false")):
-					this.metaArpField = MacroArpMetaArpField.Runtime;
+					this.metaArpField.groupName = MacroArpMetaArpField.MacroArpMetaArpFieldName.None;
+					this.metaArpField.elementName = MacroArpMetaArpField.MacroArpMetaArpFieldName.None;
 				case ExprDef.EConst(Constant.CIdent("null")):
-					this.metaArpField = MacroArpMetaArpField.Default;
+					this.metaArpField.groupName = MacroArpMetaArpField.MacroArpMetaArpFieldName.Default;
+					this.metaArpField.elementName = MacroArpMetaArpField.MacroArpMetaArpFieldName.None;
 				case ExprDef.EConst(Constant.CIdent("volatile")):
 					this.metaArpVolatile = true;
 				case ExprDef.EConst(Constant.CIdent("readonly")):

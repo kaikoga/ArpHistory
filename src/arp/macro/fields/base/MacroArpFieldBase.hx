@@ -62,25 +62,45 @@ class MacroArpFieldBase {
 	private function get_eArpType():Expr {
 		return macro new arp.domain.core.ArpType($v{arpType});
 	}
-	private var fieldName(get, never):String;
-	private function get_fieldName():String {
-		return switch (fieldDef.metaArpField) {
-			case MacroArpMetaArpField.Name(v): v;
+	private var groupName(get, never):String;
+	private function get_groupName():String {
+		return switch (fieldDef.metaArpField.groupName) {
+			case MacroArpMetaArpFieldName.Explicit(v): v;
 			case _: iNativeName;
 		}
 	}
-	private var eFieldName(get, never):ExprOf<String>;
-	private function get_eFieldName():ExprOf<String> {
-		return macro @:pos(nativePos) $v{this.fieldName};
+	private var eGroupName(get, never):ExprOf<String>;
+	private function get_eGroupName():ExprOf<String> {
+		return macro @:pos(nativePos) $v{this.groupName};
 	}
-	public var isSeedable(get, never):Bool;
-	private function get_isSeedable():Bool {
-		return switch (fieldDef.metaArpField) {
-			case MacroArpMetaArpField.Unmanaged: false;
-			case MacroArpMetaArpField.Runtime: false;
+	private var elementName(get, never):String;
+	private function get_elementName():String {
+		return switch (fieldDef.metaArpField.elementName) {
+			case MacroArpMetaArpFieldName.Explicit(v): v;
+			case _: arpType;
+		}
+	}
+	private var eElementName(get, never):ExprOf<String>;
+	private function get_eElementName():ExprOf<String> {
+		return macro @:pos(nativePos) $v{this.elementName};
+	}
+	public var isSeedableAsElement(get, never):Bool;
+	private function get_isSeedableAsElement():Bool {
+		if (fieldDef.metaArpField == null) return false;
+		return switch (fieldDef.metaArpField.elementName) {
+			case MacroArpMetaArpFieldName.None: false;
 			case _: true;
 		}
 	}
+	public var isSeedable(get, never):Bool;
+	private function get_isSeedable():Bool {
+		if (fieldDef.metaArpField == null) return false;
+		return switch [fieldDef.metaArpField.groupName, fieldDef.metaArpField.elementName] {
+			case [MacroArpMetaArpFieldName.None, MacroArpMetaArpFieldName.None]: false;
+			case _: true;
+		}
+	}
+
 	public var isPersistable(get, never):Bool;
 	private function get_isPersistable():Bool {
 		return !fieldDef.metaArpVolatile;
@@ -97,7 +117,7 @@ class MacroArpFieldBase {
 
 	@:final public function toFieldInfo():ArpFieldInfo {
 		return new ArpFieldInfo(
-			this.fieldName,
+			this.groupName,
 			new ArpType(this.arpType),
 			this.arpFieldKind,
 			this.arpFieldDs,

@@ -75,18 +75,26 @@ class MacroArpObjectField extends MacroArpFieldBase implements IMacroArpField {
 
 	public function buildConsumeSeedElementBlock(cases:MacroArpSwitchBlock):Void {
 		var caseBlock:Array<Expr> = [];
-		cases.pushCase(this.eFieldName, this.nativePos, caseBlock);
+		cases.pushCase(this.eGroupName, this.nativePos, caseBlock);
+		caseBlock.push(macro @:pos(this.nativePos) {
+			this.$iNativeSlot = this._arpDomain.loadSeed(element, ${this.eArpType}).takeReference(this.$iNativeSlot);
+		});
+
+		if (!this.isSeedableAsElement) return;
+
+		var caseBlock:Array<Expr> = [];
+		cases.pushCase(this.eElementName, this.nativePos, caseBlock, -2);
 		caseBlock.push(macro @:pos(this.nativePos) {
 			this.$iNativeSlot = this._arpDomain.loadSeed(element, ${this.eArpType}).takeReference(this.$iNativeSlot);
 		});
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
-		fieldBlock.push(macro @:pos(this.nativePos) { this.$iNativeSlot = this._arpDomain.getOrCreateSlot(new arp.domain.core.ArpSid(input.readUtf(${this.eFieldName}))).takeReference(this.$iNativeSlot); });
+		fieldBlock.push(macro @:pos(this.nativePos) { this.$iNativeSlot = this._arpDomain.getOrCreateSlot(new arp.domain.core.ArpSid(input.readUtf(${this.eGroupName}))).takeReference(this.$iNativeSlot); });
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
-		fieldBlock.push(macro @:pos(this.nativePos) { output.writeUtf(${this.eFieldName}, this.$iNativeSlot.sid.toString()); });
+		fieldBlock.push(macro @:pos(this.nativePos) { output.writeUtf(${this.eGroupName}, this.$iNativeSlot.sid.toString()); });
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {

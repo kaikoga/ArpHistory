@@ -65,19 +65,27 @@ class MacroArpValueField extends MacroArpFieldBase implements IMacroArpField {
 
 	public function buildConsumeSeedElementBlock(cases:MacroArpSwitchBlock):Void {
 		var caseBlock:Array<Expr> = [];
-		cases.pushCase(this.eFieldName, this.nativePos, caseBlock);
+		cases.pushCase(this.eGroupName, this.nativePos, caseBlock);
 		caseBlock.push(macro @:pos(this.nativePos) {
-			${this.type.readSeedElement(this.nativePos, this.i_nativeName)};
+			${this.type.readSeedElement(this.nativePos, macro element, this.i_nativeName)};
+		});
+
+		if (!this.isSeedableAsElement) return;
+
+		var caseBlock:Array<Expr> = [];
+		cases.pushCase(this.eElementName, this.nativePos, caseBlock, -2);
+		caseBlock.push(macro @:pos(this.nativePos) {
+			${this.type.readSeedElement(this.nativePos, macro element, this.i_nativeName)};
 		});
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
-		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.readAsPersistable(this.nativePos, this.eFieldName, this.i_nativeName)}; });
+		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.readAsPersistable(this.nativePos, this.eGroupName, this.i_nativeName)}; });
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
 		var eField:Expr = macro @:pos(this.nativePos) this.$i_nativeName;
-		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.writeAsPersistable(this.nativePos, this.eFieldName, eField)}; });
+		fieldBlock.push(macro @:pos(this.nativePos) { ${this.type.writeAsPersistable(this.nativePos, this.eGroupName, eField)}; });
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {

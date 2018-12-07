@@ -62,18 +62,26 @@ class MacroArpObjectStdMapField extends MacroArpObjectCollectionFieldBase implem
 
 	public function buildConsumeSeedElementBlock(cases:MacroArpSwitchBlock):Void {
 		var caseBlock:Array<Expr> = [];
-		cases.pushCase(this.eFieldName, this.nativePos, caseBlock);
+		cases.pushCase(this.eGroupName, this.nativePos, caseBlock);
+		caseBlock.push(macro @:pos(this.nativePos) {
+			for (e in element) this.$i_nativeName.slots.set(element.key, this._arpDomain.loadSeed(e, ${this.eArpType}).addReference());
+		});
+
+		if (!this.isSeedableAsElement) return;
+
+		var caseBlock:Array<Expr> = [];
+		cases.pushCase(this.eElementName, this.nativePos, caseBlock, -1);
 		caseBlock.push(macro @:pos(this.nativePos) {
 			this.$i_nativeName.slots.set(element.key, this._arpDomain.loadSeed(element, ${this.eArpType}).addReference());
 		});
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
-		fieldBlock.push(macro @:pos(this.nativePos) { input.readPersistable(${this.eFieldName}, this.$i_nativeName); });
+		fieldBlock.push(macro @:pos(this.nativePos) { input.readPersistable(${this.eGroupName}, this.$i_nativeName); });
 	}
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
-		fieldBlock.push(macro @:pos(this.nativePos) { output.writePersistable(${this.eFieldName}, this.$i_nativeName); });
+		fieldBlock.push(macro @:pos(this.nativePos) { output.writePersistable(${this.eGroupName}, this.$i_nativeName); });
 	}
 
 	public function buildCopyFromBlock(copyFromBlock:Array<Expr>):Void {

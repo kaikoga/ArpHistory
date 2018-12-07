@@ -39,15 +39,23 @@ class MacroArpValueOmapField extends MacroArpValueCollectionFieldBase implements
 
 	public function buildConsumeSeedElementBlock(cases:MacroArpSwitchBlock):Void {
 		var caseBlock:Array<Expr> = [];
-		cases.pushCase(this.eFieldName, this.nativePos, caseBlock);
+		cases.pushCase(this.eGroupName, this.nativePos, caseBlock);
 		caseBlock.push(macro @:pos(this.nativePos) {
-			this.$i_nativeName.addPair(element.key, ${this.type.createSeedElement(this.nativePos)});
+			for (e in element) this.$i_nativeName.addPair(element.key, ${this.type.createSeedElement(this.nativePos, macro e)});
+		});
+
+		if (!this.isSeedableAsElement) return;
+
+		var caseBlock:Array<Expr> = [];
+		cases.pushCase(this.eElementName, this.nativePos, caseBlock, -1);
+		caseBlock.push(macro @:pos(this.nativePos) {
+			this.$i_nativeName.addPair(element.key, ${this.type.createSeedElement(this.nativePos, macro element)});
 		});
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
 		fieldBlock.push(macro @:pos(this.nativePos) {
-			collection = input.readEnter(${eFieldName});
+			collection = input.readEnter(${eGroupName});
 			nameList = collection.readNameList("keys");
 			values = input.readEnter("values");
 			for (name in nameList) {
@@ -60,7 +68,7 @@ class MacroArpValueOmapField extends MacroArpValueCollectionFieldBase implements
 
 	public function buildWriteSelfBlock(fieldBlock:Array<Expr>):Void {
 		fieldBlock.push(macro @:pos(this.nativePos) {
-			collection = output.writeEnter(${eFieldName});
+			collection = output.writeEnter(${eGroupName});
 			collection.writeNameList("keys", [for (key in this.$i_nativeName.keys()) key]);
 			values = output.writeEnter("values");
 			for (key in this.$i_nativeName.keys()) {

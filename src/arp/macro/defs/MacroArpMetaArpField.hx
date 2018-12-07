@@ -2,11 +2,16 @@ package arp.macro.defs;
 
 #if macro
 
-enum MacroArpMetaArpField {
-	Unmanaged;
-	Default;
-	Name(s:String);
-	Runtime;
+class MacroArpMetaArpField {
+	public var groupName:MacroArpMetaArpFieldName = MacroArpMetaArpFieldName.Default;
+	public var elementName:MacroArpMetaArpFieldName = MacroArpMetaArpFieldName.None;
+
+	public function new() return;
 }
 
+enum MacroArpMetaArpFieldName {
+	None;
+	Default;
+	Explicit(name:String);
+}
 #end
