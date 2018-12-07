@@ -23,7 +23,7 @@ class Mortal implements IArpObject implements ITickable implements IMortalImpl {
 	@:arpField public var position:ArpPosition;
 	@:arpField public var visible:Bool = true;
 	@:arpField public var params:ArpParams;
-	@:arpBarrier @:arpField("hitFrame") public var hitFrames:ISet<HitFrame>;
+	@:arpBarrier @:arpField(true) public var hitFrames:ISet<HitFrame>;
 
 	@:arpField private var field:Field;
 

@@ -7,7 +7,7 @@ import arpx.screen.Screen;
 class AutomatonStaticState extends AutomatonState {
 
 	@:arpField public var automaton:Automaton;
-	@:arpField("screen") public var screen:Screen;
+	@:arpField public var screen:Screen;
 
 	public function new() super();
 

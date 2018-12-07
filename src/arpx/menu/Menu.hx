@@ -7,7 +7,7 @@ import arpx.menuItem.MenuItem;
 @:arpType("menu")
 class Menu implements IArpObject {
 	@:arpField public var visible:Bool = true;
-	@:arpField("menuItem") public var menuItems:IOmap<String, MenuItem>;
+	@:arpField(true) public var menuItems:IOmap<String, MenuItem>;
 
 	@:arpField public var value:Int;
 

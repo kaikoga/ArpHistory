@@ -12,7 +12,7 @@ import arpx.state.AutomatonState;
 @:arpType("automaton", "automaton")
 class Automaton implements IArpObject {
 
-	@:arpField("state") public var stateStack:IList<AutomatonState>;
+	@:arpField(true) public var stateStack:IList<AutomatonState>;
 
 	public var state(get, never):AutomatonState;
 	inline private function get_state():AutomatonState return stateStack.last();

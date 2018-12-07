@@ -11,7 +11,7 @@ import arpx.file.File;
 @:arpType("external", "file")
 class FileExternal extends External {
 
-	@:arpField("file") @:arpBarrier public var file:File;
+	@:arpField @:arpBarrier public var file:File;
 
 	private var data:DataGroup;
 	private var env:ArpSeedEnv;

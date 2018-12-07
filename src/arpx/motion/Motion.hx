@@ -10,12 +10,12 @@ import arpx.reactFrame.ReactFrame;
 @:arpType("motion", "motion")
 class Motion implements IArpObject {
 
-	@:arpBarrier @:arpField("motion") public var motions:IMap<String, Motion>;
+	@:arpBarrier @:arpField(true) public var motions:IMap<String, Motion>;
 	@:arpField public var time:Float;
-	@:arpBarrier @:arpField("nextMotion") public var nextMotions:IList<NextMotion>;
+	@:arpBarrier @:arpField(true) public var nextMotions:IList<NextMotion>;
 	@:arpField public var loopAction:String;
-	@:arpBarrier @:arpField("motionFrame") public var motionFrames:IList<MotionFrame>;
-	@:arpBarrier @:arpField("reactFrame") public var reactFrames:IList<ReactFrame>;
+	@:arpBarrier @:arpField(true) public var motionFrames:IList<MotionFrame>;
+	@:arpBarrier @:arpField(true) public var reactFrames:IList<ReactFrame>;
 
 	public function new() {
 	}

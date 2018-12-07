@@ -13,7 +13,7 @@ class Console implements IArpObject implements ITickable implements IFocusNode<I
 	@:arpField public var width:Int;
 	@:arpField public var height:Int;
 
-	@:arpField("screen") public var screens:IOmap<String, Screen>;
+	@:arpField(true) public var screens:IOmap<String, Screen>;
 
 	public function new() return;
 

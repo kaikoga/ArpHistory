@@ -7,7 +7,7 @@ import arpx.impl.cross.hud.CompositeHudImpl;
 class CompositeHud extends Hud {
 
 	@:arpField public var sort:String;
-	@:arpField("hud") @:arpBarrier public var huds:IList<Hud>;
+	@:arpField(true) @:arpBarrier public var huds:IList<Hud>;
 
 	@:arpImpl private var arpImpl:CompositeHudImpl;
 

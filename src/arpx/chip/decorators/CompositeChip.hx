@@ -8,7 +8,7 @@ import arpx.structs.IArpParamsRead;
 @:arpType("chip", "composite")
 class CompositeChip extends Chip {
 
-	@:arpField("chip") @:arpBarrier public var chips:IList<Chip>;
+	@:arpField(true) @:arpBarrier public var chips:IList<Chip>;
 
 	@:arpImpl private var arpImpl:CompositeChipImpl;
 

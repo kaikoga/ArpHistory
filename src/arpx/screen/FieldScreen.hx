@@ -11,7 +11,7 @@ import arpx.input.Input;
 @:arpType("screen", "screen")
 class FieldScreen extends Screen {
 	@:arpField public var field:Field;
-	@:arpBarrier @:arpField("fieldGizmo") public var fieldGizmos:IList<FieldGizmo>;
+	@:arpBarrier @:arpField(true) public var fieldGizmos:IList<FieldGizmo>;
 	@:arpField public var camera:Camera;
 	@:arpField public var input:Input;
 

@@ -10,7 +10,7 @@ class AutomatonState implements IArpObject {
 
 	@:arpField public var label:String;
 	@:arpField("state") public var childState:AutomatonState;
-	@:arpField("transition") public var transitions:IMap<String, AutomatonState>;
+	@:arpField("transitions", "transition") public var transitions:IMap<String, AutomatonState>;
 
 	public function new() return;
 

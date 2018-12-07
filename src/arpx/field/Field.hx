@@ -18,9 +18,9 @@ import arpx.reactFrame.ReactFrame;
 @:arpType("field")
 class Field implements IArpObject implements ITickable implements IFieldImpl {
 
-	@:arpBarrier @:arpField("mortal") public var initMortals:IOmap<String, Mortal>;
+	@:arpBarrier @:arpField(true) public var initMortals:IOmap<String, Mortal>;
 	@:arpBarrier @:arpField(false) private var _mortals:IOmap<String, Mortal>;
-	@:arpBarrier @:arpField("anchor") public var anchors:IOmap<String, Anchor>;
+	@:arpBarrier @:arpField public var anchors:IOmap<String, Anchor>;
 
 	public var mortals(default, null):IOmap<String, Mortal>;
 	public var gridSize(get, never):Int;

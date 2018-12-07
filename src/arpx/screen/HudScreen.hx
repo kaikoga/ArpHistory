@@ -8,7 +8,7 @@ import arpx.input.Input;
 
 @:arpType("screen", "hud")
 class HudScreen extends Screen {
-	@:arpBarrier @:arpField("hud") public var huds:IList<Hud>;
+	@:arpBarrier @:arpField(true) public var huds:IList<Hud>;
 	@:arpField public var camera:Camera;
 	@:arpField public var input:Input;
 	@:arpField public var focus:Hud;

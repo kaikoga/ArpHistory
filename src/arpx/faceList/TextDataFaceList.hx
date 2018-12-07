@@ -8,13 +8,13 @@ import arpx.text.TextData;
 class TextDataFaceList extends ArrayFaceList {
 
 	@:arpField public var format:String;
-	@:arpField public var text:ISet<TextData>;
+	@:arpField(true) public var texts:ISet<TextData>;
 
 	public function new() super();
 
 	override private function heatUp():Bool {
 		if (!super.heatUp()) return false;
-		for (v in text) {
+		for (v in texts) {
 			var text:String = v.publish();
 			switch (format) {
 				case "csv":

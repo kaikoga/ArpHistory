@@ -6,7 +6,7 @@ import arpx.structs.IArpParamsRead;
 @:arpType("paramsOp", "select")
 class SelectParamsOp extends ParamsOp {
 
-	@:arpField("paramsOp") public var paramsOps:IOmap<String, ParamsOp>;
+	@:arpField(true) public var paramsOps:IOmap<String, ParamsOp>;
 	@:arpField public var selector:String;
 	@:arpField public var defaultKey:String = "0";
 

@@ -6,7 +6,7 @@ import arp.domain.IArpObject;
 @:arpType("logger", "null")
 class Logger implements IArpObject {
 
-	@:arpField("category") public var categories:Array<String>;
+	@:arpField("categories", "category") public var categories:Array<String>;
 
 	public function new() {
 	}

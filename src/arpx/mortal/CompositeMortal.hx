@@ -11,7 +11,7 @@ import arpx.structs.ArpParams;
 class CompositeMortal extends Mortal {
 
 	@:arpField public var sort:String;
-	@:arpField("mortal") @:arpBarrier public var mortals:IList<Mortal>;
+	@:arpField(true) @:arpBarrier public var mortals:IList<Mortal>;
 
 	@:arpImpl private var arpImpl:CompositeMortalImpl;
 

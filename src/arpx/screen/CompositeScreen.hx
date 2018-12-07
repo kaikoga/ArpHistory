@@ -6,7 +6,7 @@ import arpx.input.Input;
 
 @:arpType("screen", "composite")
 class CompositeScreen extends Screen {
-	@:arpBarrier @:arpField("screen") public var screens:IOmap<String, Screen>;
+	@:arpBarrier @:arpField(true) public var screens:IOmap<String, Screen>;
 
 	@:arpImpl private var arpImpl:CompositeScreenImpl;
 
