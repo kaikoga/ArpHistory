@@ -2,6 +2,7 @@ package arp.macro;
 
 #if macro
 
+import haxe.macro.MacroStringTools;
 import arp.domain.reflect.ArpClassInfo;
 import arp.domain.reflect.ArpFieldKind;
 import arp.macro.defs.MacroArpFieldDefinition;
@@ -177,12 +178,7 @@ class MacroArpFieldBuilder {
 		// https://github.com/HaxeFoundation/haxe/issues/5918
 		switch (complexType) {
 			case ComplexType.TPath(typePath):
-				var fqnStr:String;
-				if (typePath.pack.length == 0) {
-					fqnStr = typePath.name;
-				} else {
-					fqnStr = typePath.pack.join(".") + typePath.name;
-				}
+				var fqnStr:String = MacroArpUtil.getFqnOfTypePath(typePath);
 				switch (fqnStr) {
 					case "Array":
 						return MacroArpNativeFieldType.NativeStdArray(complexTypeToNativeFieldType(typePathParam(typePath)));

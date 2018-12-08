@@ -2,6 +2,7 @@
 
 #if macro
 
+import haxe.macro.MacroStringTools;
 import haxe.macro.Context;
 import haxe.macro.Expr;
 import haxe.macro.Type;
@@ -46,6 +47,10 @@ class MacroArpUtil {
 		var p = baseType.module.split(".");
 		if (p[p.length - 1] != baseType.name) p.push(baseType.name);
 		return p.join(".");
+	}
+
+	public static function getFqnOfTypePath(typePath:TypePath):String {
+		return MacroStringTools.toDotPath(typePath.pack, typePath.name);
 	}
 }
 
