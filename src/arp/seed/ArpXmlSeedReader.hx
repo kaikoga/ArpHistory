@@ -54,6 +54,8 @@ class ArpXmlSeedReader {
 		var heat:String = null;
 		var key:String = uniqId;
 		var value:String = null;
+		var textNodeValue:String = null;
+		var acceptsTextNodeValue:Bool = true;
 		var children:Array<ArpSeed> = null;
 		var innerEnv:ArpSeedEnv = env;
 
@@ -74,6 +76,7 @@ class ArpXmlSeedReader {
 					key = attr;
 				case "value":
 					value = attr;
+					acceptsTextNodeValue = false;
 				case _:
 					// NOTE leaf seeds by xml attr are also treated as ref; text nodes are not
 					if (children == null) children = [];
@@ -86,6 +89,7 @@ class ArpXmlSeedReader {
 		for (node in xml) {
 			switch (node.nodeType) {
 				case XmlType.Element:
+					acceptsTextNodeValue = false;
 					if (node.nodeName == "env") {
 						innerEnv = parseEnv(node, innerEnv);
 					} else {
@@ -93,12 +97,13 @@ class ArpXmlSeedReader {
 						children.push(parseInternal(node, idGen.next(), innerEnv));
 					}
 				case XmlType.PCData, XmlType.CData:
-					if (value == null) value = "";
-					value += node.nodeValue;
+					if (textNodeValue == null) textNodeValue = "";
+					textNodeValue += node.nodeValue;
 				case _: // ignore
 			}
 		}
 
+		if (value == null && acceptsTextNodeValue) value = textNodeValue;
 		if (children == null) children = [];
 		if (value != null) children.push(new ArpSimpleSeed("value", key, value, innerEnv, ArpSeedValueKind.Literal));
 		return new ArpComplexSeed(typeName, className, name, key, heat, children, env);

@@ -76,8 +76,6 @@ class ArpSeedCase {
 		assertMatch({typeName: "a", className: null, name: null, key: autoKey, value: null, kind: "l"}, toHash(iterator.next()));
 		assertTrue(iterator.hasNext());
 		assertMatch({typeName: "b", className: null, name: null, key: autoKey, value: "valueb", kind: "l"}, toHash(iterator.next()));
-		assertTrue(iterator.hasNext());
-		assertMatch({typeName: "value", className: null, name: null, key: autoKey, value: "value16value32value64", kind: "l"}, toHash(iterator.next()));
 		assertFalse(iterator.hasNext());
 	}
 
