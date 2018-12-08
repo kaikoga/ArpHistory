@@ -146,24 +146,15 @@ class MacroArpFieldDefinition {
 
 	private function parseMetaArpField(params:Array<Expr>):Void {
 		this.metaArpField = new MacroArpMetaArpField();
-		var index:Int = 0;
+		var names:Array<MacroArpMetaArpField.MacroArpMetaArpFieldName> = [];
 		for (param in params) {
 			switch (param.expr) {
 				case ExprDef.EConst(Constant.CString(v)):
-					switch (index++) {
-						case 0:
-							this.metaArpField.groupName = MacroArpMetaArpField.MacroArpMetaArpFieldName.Explicit(v);
-						case _:
-							this.metaArpField.elementName = MacroArpMetaArpField.MacroArpMetaArpFieldName.Explicit(v);
-					}
+					names.push(MacroArpMetaArpField.MacroArpMetaArpFieldName.Explicit(v));
 				case ExprDef.EConst(Constant.CIdent("true")):
-					this.metaArpField.elementName = MacroArpMetaArpField.MacroArpMetaArpFieldName.Default;
+					names.push(MacroArpMetaArpField.MacroArpMetaArpFieldName.Default);
 				case ExprDef.EConst(Constant.CIdent("false")):
-					this.metaArpField.groupName = MacroArpMetaArpField.MacroArpMetaArpFieldName.None;
-					this.metaArpField.elementName = MacroArpMetaArpField.MacroArpMetaArpFieldName.None;
-				case ExprDef.EConst(Constant.CIdent("null")):
-					this.metaArpField.groupName = MacroArpMetaArpField.MacroArpMetaArpFieldName.Default;
-					this.metaArpField.elementName = MacroArpMetaArpField.MacroArpMetaArpFieldName.None;
+					names.push(MacroArpMetaArpField.MacroArpMetaArpFieldName.Anonymous);
 				case ExprDef.EConst(Constant.CIdent("volatile")):
 					this.metaArpVolatile = true;
 				case ExprDef.EConst(Constant.CIdent("readonly")):
@@ -172,6 +163,13 @@ class MacroArpFieldDefinition {
 					Context.error("invalid expr", this.nativePos);
 			}
 		}
+
+		switch (names.length) {
+			case 0: return;
+			case 1: names.push(names[0]);
+		}
+		this.metaArpField.groupName = names[0];
+		this.metaArpField.elementName = names[1];
 	}
 
 	private function parseMetaArpBarrier(params:Array<Expr>):Void {

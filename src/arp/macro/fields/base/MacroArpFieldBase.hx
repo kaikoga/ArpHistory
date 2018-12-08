@@ -88,7 +88,7 @@ class MacroArpFieldBase {
 	private function get_isSeedableAsElement():Bool {
 		if (fieldDef.metaArpField == null) return false;
 		return switch (fieldDef.metaArpField.elementName) {
-			case MacroArpMetaArpFieldName.None: false;
+			case MacroArpMetaArpFieldName.Anonymous: false;
 			case _: true;
 		}
 	}
@@ -96,7 +96,7 @@ class MacroArpFieldBase {
 	private function get_isSeedable():Bool {
 		if (fieldDef.metaArpField == null) return false;
 		return switch [fieldDef.metaArpField.groupName, fieldDef.metaArpField.elementName] {
-			case [MacroArpMetaArpFieldName.None, MacroArpMetaArpFieldName.None]: false;
+			case [MacroArpMetaArpFieldName.Anonymous, MacroArpMetaArpFieldName.Anonymous]: false;
 			case _: true;
 		}
 	}

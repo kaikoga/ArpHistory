@@ -4,13 +4,13 @@ package arp.macro.defs;
 
 class MacroArpMetaArpField {
 	public var groupName:MacroArpMetaArpFieldName = MacroArpMetaArpFieldName.Default;
-	public var elementName:MacroArpMetaArpFieldName = MacroArpMetaArpFieldName.None;
+	public var elementName:MacroArpMetaArpFieldName = MacroArpMetaArpFieldName.Anonymous;
 
 	public function new() return;
 }
 
 enum MacroArpMetaArpFieldName {
-	None;
+	Anonymous;
 	Default;
 	Explicit(name:String);
 }
