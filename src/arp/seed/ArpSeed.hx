@@ -1,11 +1,10 @@
 package arp.seed;
 
 import haxe.io.Bytes;
-import Xml.XmlType;
 
 class ArpSeed {
 
-	public var typeName(default, null):String;
+	public var seedName(default, null):String;
 	public var key(default, null):String;
 	public var env(default, null):ArpSeedEnv;
 
@@ -18,8 +17,8 @@ class ArpSeed {
 	public var heat(get, never):String;
 	public function iterator():Iterator<ArpSeed> throw "not implemented";
 
-	private function new(typeName:String) {
-		this.typeName = typeName;
+	private function new(seedName:String) {
+		this.seedName = seedName;
 	}
 
 	private function get_value():String throw "not implemented";

@@ -11,7 +11,7 @@ class ArpSeedCase {
 	public function get_autoKey():Matcher<Dynamic> return Matchers.startsWith(ArpIdGenerator.AUTO_HEADER);
 
 	private function toHash(seed:ArpSeed) return {
-		typeName: Std.string(seed.typeName),
+		typeName: Std.string(seed.seedName),
 		className: seed.className,
 		name: seed.name,
 		key: seed.key,

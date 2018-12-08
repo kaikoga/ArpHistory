@@ -13,7 +13,7 @@ class ArpSeedEnvCase {
 	public function get_autoKey():Matcher<Dynamic> return Matchers.startsWith(ArpIdGenerator.AUTO_HEADER);
 
 	private function toHash(seed:ArpSeed) return {
-		typeName: Std.string(seed.typeName),
+		typeName: Std.string(seed.seedName),
 		className: seed.className,
 		name: seed.name,
 		key: seed.key,
@@ -99,13 +99,13 @@ class ArpSeedEnvCase {
 
 		assertTrue(iterator.hasNext());
 		var before:ArpSeed = iterator.next();
-		assertMatch("key", before.typeName);
+		assertMatch("key", before.seedName);
 		assertMatch(null, before.env.get("seed.key"));
 		assertMatch(0, before.env.getDefaultSeeds("key").length);
 
 		assertTrue(iterator.hasNext());
 		var after:ArpSeed = iterator.next();
-		assertMatch("key", after.typeName);
+		assertMatch("key", after.seedName);
 		assertMatch("value", after.env.get("seed.key"));
 		assertMatch(2, after.env.getDefaultSeeds("key").length);
 

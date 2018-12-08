@@ -12,10 +12,10 @@ class ArpComplexSeed extends ArpSeed {
 		var value:Array<ArpSeed> = childrenWithEnv;
 		if (value != null) return value;
 		value = [];
-		for (x in this.env.getDefaultSeeds(this.typeName)) {
+		for (x in this.env.getDefaultSeeds(this.seedName)) {
 			value.push(x);
 		}
-		for (x in this.env.getDefaultClassSeeds(this.typeName, this.className)) {
+		for (x in this.env.getDefaultClassSeeds(this.seedName, this.className)) {
 			value.push(x);
 		}
 		for (x in this.element.children) {
@@ -62,7 +62,7 @@ class ArpComplexSeedElement {
 		this.heat = heat;
 		this.children = children;
 		for (child in children) {
-			if (child.typeName == "value") {
+			if (child.seedName == "value") {
 				this.value = child.value;
 			} else {
 				isSimple = false;
