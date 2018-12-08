@@ -30,12 +30,12 @@ class MacroArpObjectBlockStubs {
 	}
 
 	macro public static function arpConsumeSeedElementBlock():Expr {
-		var cases:MacroArpSwitchBlock = new MacroArpSwitchBlock(macro element.typeName);
+		var cases:MacroArpSwitchBlock = new MacroArpSwitchBlock(macro element.seedName);
 
 		if (getTemplate().classDef.isDerived) {
 			cases.eDefault = macro { super.arpConsumeSeedElement(element); }
 		} else {
-			cases.eDefault = macro if (element.typeName != "value") throw new arp.errors.ArpLoadError(arpTypeInfo + " could not accept <" + element.typeName + ">");
+			cases.eDefault = macro if (element.seedName != "value") throw new arp.errors.ArpLoadError(arpTypeInfo + " could not accept <" + element.seedName + ">");
 		}
 
 		for (arpField in getTemplate().arpFields) {

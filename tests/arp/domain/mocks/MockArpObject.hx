@@ -82,7 +82,7 @@ class MockArpObject implements IArpObject {
 	}
 
 	private function arpConsumeSeedElement(element:ArpSeed):Void {
-		switch (element.typeName) {
+		switch (element.seedName) {
 			case "intField":
 				this.intField = Std.parseInt(element.value);
 			case "floatField":
@@ -129,6 +129,6 @@ class MockArpObject implements IArpObject {
 		this.refField = src.refField;
 		return this;
 	}
-	
+
 	public function toString() return '[mock ${this.arpSlot.sid}]';
 }

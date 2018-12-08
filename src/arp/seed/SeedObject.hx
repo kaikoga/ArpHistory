@@ -64,7 +64,7 @@ class SeedObject implements IArpObject {
 
 	private function arpConsumeSeedElement(element:ArpSeed):Void {
 		// NOTE seed iterates through value, which we must ignore
-		if (element.typeName == "value") return;
+		if (element.seedName == "value") return;
 
 		this.seeds.push(element);
 	}

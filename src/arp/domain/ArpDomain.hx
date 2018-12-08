@@ -141,7 +141,7 @@ class ArpDomain {
 	}
 
 	public function loadSeed<T:IArpObject>(seed:ArpSeed, lexicalType:ArpType = null):Null<ArpSlot<T>> {
-		var type:ArpType = (lexicalType != null) ? lexicalType : new ArpType(seed.typeName);
+		var type:ArpType = (lexicalType != null) ? lexicalType : new ArpType(seed.seedName);
 		var slot:ArpSlot<T>;
 		var name:String;
 		switch (seed.valueKind) {

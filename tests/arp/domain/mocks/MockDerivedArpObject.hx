@@ -40,7 +40,7 @@ class MockDerivedArpObject extends MockArpObject {
 	}
 
 	override private function arpConsumeSeedElement(element:ArpSeed):Void {
-		switch (element.typeName) {
+		switch (element.seedName) {
 			case "intField2":
 				this.intField2 = Std.parseInt(element.value);
 			case "refField2":
