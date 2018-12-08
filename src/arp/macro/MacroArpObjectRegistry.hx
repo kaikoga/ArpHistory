@@ -72,11 +72,20 @@ class MacroArpObjectRegistry {
 	}
 
 	private function onAfterGenerate():Void {
-		var writer:ArpHelpWriter = new ArpHelpWriter();
-		var prefix:String = Context.definedValue("arp_doc");
-		if (prefix == "1") prefix = "doc/";
-		if (prefix.indexOf("/") < 0) prefix = prefix + "/";
-		writer.write(domainInfo, prefix);
+		function linkDerivedClasses():Void {
+			for (macroArpObject in this.macroArpObjects) macroArpObject.populateBaseFields();
+		}
+
+		function writeDocs():Void {
+			var writer:ArpHelpWriter = new ArpHelpWriter();
+			var prefix:String = Context.definedValue("arp_doc");
+			if (prefix == "1") prefix = "doc/";
+			if (prefix.indexOf("/") < 0) prefix = prefix + "/";
+			writer.write(domainInfo, prefix);
+		}
+
+		linkDerivedClasses();
+		writeDocs();
 	}
 
 	private function onMacroContextReused():Bool {

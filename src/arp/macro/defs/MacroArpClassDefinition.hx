@@ -22,10 +22,12 @@ class MacroArpClassDefinition {
 
 	public var fieldDefs(default, null):Array<MacroArpFieldDefinition>;
 	public var mergedBaseFields:Map<String, ClassField>;
+	public var baseClasses:Array<ClassType>;
 
 	public function new(classType:ClassType) {
 		this.nativePos = classType.pos;
 		this.fieldDefs = [];
+		this.baseClasses = [];
 		this.mergedBaseFields = new Map<String, ClassField>();
 
 		this.loadMeta(classType);
@@ -82,7 +84,7 @@ class MacroArpClassDefinition {
 				}
 			}
 
-
+			this.baseClasses.push(classType);
 			for (field in classType.fields.get()) {
 				if (!this.mergedBaseFields.exists(field.name)) {
 					this.mergedBaseFields.set(field.name, field);
