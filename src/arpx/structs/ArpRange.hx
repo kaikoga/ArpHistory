@@ -32,7 +32,7 @@ class ArpRange implements IArpStruct {
 		if (seed == null) return this;
 		if (seed.isSimple) return this.initWithString(seed.value);
 		for (child in seed) {
-			switch (child.typeName) {
+			switch (child.seedName) {
 				case "min": this.minValue = ArpStringUtil.parseFloatDefault(child.value);
 				case "max": this.maxValue = ArpStringUtil.parseFloatDefault(child.value);
 			}

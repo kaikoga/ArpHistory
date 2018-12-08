@@ -34,7 +34,7 @@ class ArpTransform implements IArpStruct {
 		var tx:Float = 0.0;
 		var ty:Float = 0.0;
 		for (child in seed) {
-			switch (child.typeName) {
+			switch (child.seedName) {
 				case "a", "xx": xx = arp.utils.ArpSeedUtil.parseFloatDefault(child, 1.0);
 				case "b", "yx": yx = arp.utils.ArpSeedUtil.parseFloatDefault(child, 0.0);
 				case "c", "xy": xy = arp.utils.ArpSeedUtil.parseFloatDefault(child, 0.0);

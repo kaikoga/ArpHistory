@@ -31,7 +31,7 @@ class ArpPosition implements IArpStruct {
 		if (seed.isSimple) return this.initWithString(seed.value, seed.env.getUnit);
 
 		for (child in seed) {
-			switch (child.typeName) {
+			switch (child.seedName) {
 				case "x": this.x = ArpSeedUtil.parseFloatDefault(child);
 				case "y": this.y = ArpSeedUtil.parseFloatDefault(child);
 				case "z": this.z = ArpSeedUtil.parseFloatDefault(child);

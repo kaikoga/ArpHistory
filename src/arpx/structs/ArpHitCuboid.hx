@@ -61,7 +61,7 @@ class ArpHitCuboid implements IArpStruct {
 		if (seed == null) return this;
 		if (seed.isSimple) return this.initWithString(seed.value);
 		for (element in seed) {
-			switch (element.typeName) {
+			switch (element.seedName) {
 				case "dX", "x":
 					this.dX = ArpStringUtil.parseFloatDefault(element.value);
 				case "dY", "y":
