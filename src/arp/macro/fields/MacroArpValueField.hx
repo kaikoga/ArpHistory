@@ -64,19 +64,20 @@ class MacroArpValueField extends MacroArpFieldBase implements IMacroArpField {
 	}
 
 	public function buildConsumeSeedElementBlock(cases:MacroArpSwitchBlock):Void {
-		var caseBlock:Array<Expr> = [];
-		cases.pushCase(this.eGroupName, this.nativePos, caseBlock);
-		caseBlock.push(macro @:pos(this.nativePos) {
-			${this.type.readSeedElement(this.nativePos, macro element, this.i_nativeName)};
-		});
-
-		if (!this.isSeedableAsElement) return;
-
-		var caseBlock:Array<Expr> = [];
-		cases.pushCase(this.eElementName, this.nativePos, caseBlock, -2);
-		caseBlock.push(macro @:pos(this.nativePos) {
-			${this.type.readSeedElement(this.nativePos, macro element, this.i_nativeName)};
-		});
+		if (this.isSeedableAsGroup) {
+			var caseBlock:Array<Expr> = [];
+			cases.pushCase(this.eGroupName, this.nativePos, caseBlock);
+			caseBlock.push(macro @:pos(this.nativePos) {
+				${this.type.readSeedElement(this.nativePos, macro element, this.i_nativeName)};
+			});
+		}
+		if (this.isSeedableAsElement) {
+			var caseBlock:Array<Expr> = [];
+			cases.pushCase(this.eElementName, this.nativePos, caseBlock, -2);
+			caseBlock.push(macro @:pos(this.nativePos) {
+				${this.type.readSeedElement(this.nativePos, macro element, this.i_nativeName)};
+			});
+		}
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {

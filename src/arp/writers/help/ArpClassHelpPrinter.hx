@@ -40,29 +40,29 @@ class ArpClassHelpPrinter {
 
 		switch (field.fieldKind) {
 			case ArpFieldKind.PrimBool, ArpFieldKind.PrimInt, ArpFieldKind.PrimFloat, ArpFieldKind.PrimString:
-				node = Xml.parse('<${field.name}>${placeholder}</${field.name}>').firstElement();
+				node = Xml.parse('<${field.groupName}>${placeholder}</${field.groupName}>').firstElement();
 			case ArpFieldKind.StructKind:
 				switch (field.arpType.toString()) {
 					case "Range":
-						node = Xml.parse('<${field.name} min="minValue" max="maxValue" />').firstElement();
+						node = Xml.parse('<${field.groupName} min="minValue" max="maxValue" />').firstElement();
 					case "Color":
-						node = Xml.parse('<${field.name}>${placeholder}</${field.name}>').firstElement();
+						node = Xml.parse('<${field.groupName}>${placeholder}</${field.groupName}>').firstElement();
 					case "Position":
-						node = Xml.parse('<${field.name} x="x" y="y" z="z" dir="dir" />').firstElement();
+						node = Xml.parse('<${field.groupName} x="x" y="y" z="z" dir="dir" />').firstElement();
 					case "HitArea":
-						node = Xml.parse('<${field.name} left="0" right="1" top="0" bottom="1" hind="0" fore="1" />').firstElement();
+						node = Xml.parse('<${field.groupName} left="0" right="1" top="0" bottom="1" hind="0" fore="1" />').firstElement();
 					case "Params":
-						node = Xml.parse('<${field.name}>${placeholder}</${field.name}>').firstElement();
+						node = Xml.parse('<${field.groupName}>${placeholder}</${field.groupName}>').firstElement();
 					case some:
-						node = Xml.parse('<${field.name} ${some}="${placeholder}">${placeholder}</${field.name}>').firstElement();
+						node = Xml.parse('<${field.groupName} ${some}="${placeholder}">${placeholder}</${field.groupName}>').firstElement();
 				}
 			case ArpFieldKind.ReferenceKind:
-				node = Xml.parse('<${field.name} ref="${placeholder}" />').firstElement();
+				node = Xml.parse('<${field.groupName} ref="${placeholder}" />').firstElement();
 		}
 
 		switch (field.fieldDs) {
 			case ArpFieldDs.Scalar:
-				xml.set('${field.name}', placeholder);
+				xml.set('${field.groupName}', placeholder);
 			case ArpFieldDs.StdArray, ArpFieldDs.StdList, ArpFieldDs.DsISet, ArpFieldDs.DsIList:
 			case ArpFieldDs.StdMap, ArpFieldDs.DsIMap, ArpFieldDs.DsIOmap:
 				node.set("key", "key");
@@ -70,7 +70,7 @@ class ArpClassHelpPrinter {
 		}
 
 		xml.addChild(node);
-		if (field.name == "value") xml.addChild(Xml.createPCData(placeholder));
+		if (field.groupName == "value") xml.addChild(Xml.createPCData(placeholder));
 	}
 
 }

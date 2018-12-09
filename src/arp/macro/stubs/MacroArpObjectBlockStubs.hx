@@ -39,7 +39,7 @@ class MacroArpObjectBlockStubs {
 		}
 
 		for (arpField in getTemplate().arpFields) {
-			if (arpField.isSeedable) arpField.buildConsumeSeedElementBlock(cases);
+			arpField.buildConsumeSeedElementBlock(cases);
 		}
 
 		return cases.toExpr(Context.currentPos());

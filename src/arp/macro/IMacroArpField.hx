@@ -7,7 +7,8 @@ import arp.domain.reflect.ArpFieldInfo;
 import arp.macro.stubs.ds.MacroArpSwitchBlock;
 
 interface IMacroArpField {
-	public var isSeedable(get, never):Bool;
+	public var isSeedableAsGroup(get, never):Bool;
+	public var isSeedableAsElement(get, never):Bool;
 	public var isPersistable(get, never):Bool;
 
 	public function buildField(outFields:Array<Field>):Void;

@@ -38,19 +38,20 @@ class MacroArpValueSetField extends MacroArpValueCollectionFieldBase implements 
 	}
 
 	public function buildConsumeSeedElementBlock(cases:MacroArpSwitchBlock):Void {
-		var caseBlock:Array<Expr> = [];
-		cases.pushCase(this.eGroupName, this.nativePos, caseBlock);
-		caseBlock.push(macro @:pos(this.nativePos) {
-			for (e in element) this.$i_nativeName.add(${this.type.createSeedElement(this.nativePos, macro e)});
-		});
-
-		if (!this.isSeedableAsElement) return;
-
-		var caseBlock:Array<Expr> = [];
-		cases.pushCase(this.eElementName, this.nativePos, caseBlock, -1);
-		caseBlock.push(macro @:pos(this.nativePos) {
-			this.$i_nativeName.add(${this.type.createSeedElement(this.nativePos, macro element)});
-		});
+		if (this.isSeedableAsGroup) {
+			var caseBlock:Array<Expr> = [];
+			cases.pushCase(this.eGroupName, this.nativePos, caseBlock);
+			caseBlock.push(macro @:pos(this.nativePos) {
+				for (e in element) this.$i_nativeName.add(${this.type.createSeedElement(this.nativePos, macro e)});
+			});
+		}
+		if (this.isSeedableAsElement) {
+			var caseBlock:Array<Expr> = [];
+			cases.pushCase(this.eElementName, this.nativePos, caseBlock, -1);
+			caseBlock.push(macro @:pos(this.nativePos) {
+				this.$i_nativeName.add(${this.type.createSeedElement(this.nativePos, macro element)});
+			});
+		}
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {

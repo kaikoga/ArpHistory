@@ -58,19 +58,20 @@ class MacroArpObjectOmapField extends MacroArpObjectCollectionFieldBase implemen
 	}
 
 	public function buildConsumeSeedElementBlock(cases:MacroArpSwitchBlock):Void {
-		var caseBlock:Array<Expr> = [];
-		cases.pushCase(this.eGroupName, this.nativePos, caseBlock);
-		caseBlock.push(macro @:pos(this.nativePos) {
-			for (e in element) this.$i_nativeName.slotOmap.addPair(element.key, this._arpDomain.loadSeed(e, ${this.eArpType}).addReference());
-		});
-
-		if (!this.isSeedableAsElement) return;
-
-		var caseBlock:Array<Expr> = [];
-		cases.pushCase(this.eElementName, this.nativePos, caseBlock, -1);
-		caseBlock.push(macro @:pos(this.nativePos) {
-			this.$i_nativeName.slotOmap.addPair(element.key, this._arpDomain.loadSeed(element, ${this.eArpType}).addReference());
-		});
+		if (this.isSeedableAsGroup) {
+			var caseBlock:Array<Expr> = [];
+			cases.pushCase(this.eGroupName, this.nativePos, caseBlock);
+			caseBlock.push(macro @:pos(this.nativePos) {
+				for (e in element) this.$i_nativeName.slotOmap.addPair(element.key, this._arpDomain.loadSeed(e, ${this.eArpType}).addReference());
+			});
+		}
+		if (this.isSeedableAsElement) {
+			var caseBlock:Array<Expr> = [];
+			cases.pushCase(this.eElementName, this.nativePos, caseBlock, -1);
+			caseBlock.push(macro @:pos(this.nativePos) {
+				this.$i_nativeName.slotOmap.addPair(element.key, this._arpDomain.loadSeed(element, ${this.eArpType}).addReference());
+			});
+		}
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {

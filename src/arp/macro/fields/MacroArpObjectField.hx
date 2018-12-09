@@ -74,19 +74,20 @@ class MacroArpObjectField extends MacroArpFieldBase implements IMacroArpField {
 	}
 
 	public function buildConsumeSeedElementBlock(cases:MacroArpSwitchBlock):Void {
-		var caseBlock:Array<Expr> = [];
-		cases.pushCase(this.eGroupName, this.nativePos, caseBlock);
-		caseBlock.push(macro @:pos(this.nativePos) {
-			this.$iNativeSlot = this._arpDomain.loadSeed(element, ${this.eArpType}).takeReference(this.$iNativeSlot);
-		});
-
-		if (!this.isSeedableAsElement) return;
-
-		var caseBlock:Array<Expr> = [];
-		cases.pushCase(this.eElementName, this.nativePos, caseBlock, -2);
-		caseBlock.push(macro @:pos(this.nativePos) {
-			this.$iNativeSlot = this._arpDomain.loadSeed(element, ${this.eArpType}).takeReference(this.$iNativeSlot);
-		});
+		if (this.isSeedableAsGroup) {
+			var caseBlock:Array<Expr> = [];
+			cases.pushCase(this.eGroupName, this.nativePos, caseBlock);
+			caseBlock.push(macro @:pos(this.nativePos) {
+				this.$iNativeSlot = this._arpDomain.loadSeed(element, ${this.eArpType}).takeReference(this.$iNativeSlot);
+			});
+		}
+		if (this.isSeedableAsElement) {
+			var caseBlock:Array<Expr> = [];
+			cases.pushCase(this.eElementName, this.nativePos, caseBlock, -2);
+			caseBlock.push(macro @:pos(this.nativePos) {
+				this.$iNativeSlot = this._arpDomain.loadSeed(element, ${this.eArpType}).takeReference(this.$iNativeSlot);
+			});
+		}
 	}
 
 	public function buildReadSelfBlock(fieldBlock:Array<Expr>):Void {
