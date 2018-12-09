@@ -12,6 +12,14 @@ class ArpFieldInfo {
 	public var nativeName(default, null):String;
 	public var barrier(default, null):Bool;
 
+	public var isCollection(get, never):Bool;
+	private function get_isCollection() {
+		return switch (this.fieldDs) {
+			case ArpFieldDs.Scalar: false;
+			case _: true;
+		}
+	}
+
 	public function new(groupName:String, elementName:String, arpType:ArpType, fieldType:ArpFieldKind, fieldDs:ArpFieldDs, nativeName:String, barrier:Bool) {
 		this.groupName = groupName;
 		this.elementName = elementName;

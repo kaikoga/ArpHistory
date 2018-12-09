@@ -25,44 +25,75 @@ class ArpClassHelpPrinter {
 	private function printXml():String {
 		var xml:Xml = Xml.parse('<${classInfo.arpType} name="name" class="${classInfo.className}" />').firstElement();
 		xml.addChild(Xml.parse('<tag value="tagName=tagValue" />').firstElement());
-		for (field in classInfo.fields) this.addField(xml, field);
+		this.addFields(xml);
 		return StringTools.htmlEscape(haxe.xml.Printer.print(xml, true));
 	}
 
-	private function addField(xml:Xml, field:ArpFieldInfo):Void {
-		var placeholder:String = field.nativeName;
+	private function addFields(xml:Xml):Void {
+		for (field in classInfo.fields) {
+			var placeholder:String = getPlaceholder(field);
+			if (field.groupName != null) {
+				populateAttribute(xml, field.groupName, field, placeholder);
+				populateElement(xml, true, field.groupName, field, placeholder);
+			}
+			if (field.elementName != null) {
+				populateAttribute(xml, field.elementName, field, placeholder);
+				populateElement(xml, false, field.elementName, field, placeholder);
+			}
+		}
+		for (field in classInfo.fields) {
+			var placeholder:String = getPlaceholder(field);
+			populateTextNode(xml, field, placeholder);
+		}
+	}
+
+	private function getPlaceholder(field:ArpFieldInfo):String {
+		var placeholder:String = field.arpType.toString() + " " + field.nativeName;
 		/*
 		if (field.defaultValue) {
 			placeholder += "=" + field.defaultValue;
 		}
 		*/
-		var node:Xml;
+		return placeholder;
+	}
 
+	private function populateAttribute(xml:Xml, name:String, field:ArpFieldInfo, placeholder:String) {
+		if (!field.isCollection) xml.set('${name}', placeholder);
+	}
+
+	private function populateElement(xml:Xml, mayGroup:Bool, name:String, field:ArpFieldInfo, placeholder:String) {
+		if (mayGroup && field.isCollection) {
+			var group:Xml = Xml.createElement(field.groupName);
+			xml.addChild(group);
+			xml = group;
+			name = field.arpType;
+		}
+
+		var node:Xml;
 		switch (field.fieldKind) {
 			case ArpFieldKind.PrimBool, ArpFieldKind.PrimInt, ArpFieldKind.PrimFloat, ArpFieldKind.PrimString:
-				node = Xml.parse('<${field.groupName}>${placeholder}</${field.groupName}>').firstElement();
+				node = Xml.parse('<${name} value="${placeholder}" />').firstElement();
 			case ArpFieldKind.StructKind:
 				switch (field.arpType.toString()) {
 					case "Range":
-						node = Xml.parse('<${field.groupName} min="minValue" max="maxValue" />').firstElement();
+						node = Xml.parse('<${name} min="minValue" max="maxValue" />').firstElement();
 					case "Color":
-						node = Xml.parse('<${field.groupName}>${placeholder}</${field.groupName}>').firstElement();
+						node = Xml.parse('<${name} value="${placeholder}" />').firstElement();
 					case "Position":
-						node = Xml.parse('<${field.groupName} x="x" y="y" z="z" dir="dir" />').firstElement();
+						node = Xml.parse('<${name} x="x" y="y" z="z" dir="dir" />').firstElement();
 					case "HitArea":
-						node = Xml.parse('<${field.groupName} left="0" right="1" top="0" bottom="1" hind="0" fore="1" />').firstElement();
+						node = Xml.parse('<${name} left="0" right="1" top="0" bottom="1" hind="0" fore="1" />').firstElement();
 					case "Params":
-						node = Xml.parse('<${field.groupName}>${placeholder}</${field.groupName}>').firstElement();
+						node = Xml.parse('<${name} value="${placeholder}" />').firstElement();
 					case some:
-						node = Xml.parse('<${field.groupName} ${some}="${placeholder}">${placeholder}</${field.groupName}>').firstElement();
+						node = Xml.parse('<${name} ${some}="${placeholder}">${placeholder}</${name}>').firstElement();
 				}
 			case ArpFieldKind.ReferenceKind:
-				node = Xml.parse('<${field.groupName} ref="${placeholder}" />').firstElement();
+				node = Xml.parse('<${name} ref="${placeholder}" />').firstElement();
 		}
 
 		switch (field.fieldDs) {
 			case ArpFieldDs.Scalar:
-				xml.set('${field.groupName}', placeholder);
 			case ArpFieldDs.StdArray, ArpFieldDs.StdList, ArpFieldDs.DsISet, ArpFieldDs.DsIList:
 			case ArpFieldDs.StdMap, ArpFieldDs.DsIMap, ArpFieldDs.DsIOmap:
 				node.set("key", "key");
@@ -70,7 +101,9 @@ class ArpClassHelpPrinter {
 		}
 
 		xml.addChild(node);
-		if (field.groupName == "value") xml.addChild(Xml.createPCData(placeholder));
 	}
 
+	private function populateTextNode(parent:Xml, field:ArpFieldInfo, placeholder:String) {
+		if (field.groupName == "value") parent.addChild(Xml.createPCData(placeholder));
+	}
 }

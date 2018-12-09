@@ -117,8 +117,8 @@ class MacroArpFieldBase {
 
 	@:final public function toFieldInfo():ArpFieldInfo {
 		return new ArpFieldInfo(
-			this.groupName,
-			this.elementName,
+			if (this.isSeedableAsGroup) this.groupName else null,
+			if (this.isSeedableAsElement) this.elementName else null,
 			new ArpType(this.arpType),
 			this.arpFieldKind,
 			this.arpFieldDs,
