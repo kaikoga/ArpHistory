@@ -94,9 +94,9 @@ class MacroArpObjectRegistry {
 		macroArpObjects = new Map();
 		templateInfos = new Map();
 
-		registerPrimitive(ArpFieldKind.PrimInt, "StdTypes.Int");
-		registerPrimitive(ArpFieldKind.PrimFloat, "StdTypes.Float");
-		registerPrimitive(ArpFieldKind.PrimBool, "StdTypes.Bool");
+		registerPrimitive(ArpFieldKind.PrimInt, "Int", "StdTypes.Int");
+		registerPrimitive(ArpFieldKind.PrimFloat, "Float", "StdTypes.Float");
+		registerPrimitive(ArpFieldKind.PrimBool, "Bool", "StdTypes.Bool");
 		registerPrimitive(ArpFieldKind.PrimString, "String");
 		return true;
 	}
