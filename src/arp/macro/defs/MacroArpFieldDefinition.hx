@@ -12,6 +12,7 @@ class MacroArpFieldDefinition {
 	public var nativeField(default, null):Field;
 	public var nativeType(default, null):ComplexType;
 	public var nativeDefault(default, null):Expr;
+	public var nativeDoc(default, null):String;
 
 	public var nativeName(get, never):String;
 	inline private function get_nativeName():String return this.nativeField.name;
@@ -47,6 +48,8 @@ class MacroArpFieldDefinition {
 
 	public function new(nativeField:Field) {
 		this.nativeField = nativeField;
+		this.nativeDoc = nativeField.doc;
+		if (this.nativeDoc == null) this.nativeDoc = "no document";
 
 		switch (nativeField.kind) {
 			case FieldType.FProp(_, _, n, d), FieldType.FVar(n, d):

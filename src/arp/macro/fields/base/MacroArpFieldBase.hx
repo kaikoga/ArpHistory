@@ -123,7 +123,8 @@ class MacroArpFieldBase {
 			this.arpFieldKind,
 			this.arpFieldDs,
 			this.nativeField.name,
-			this.arpHasBarrier
+			this.arpHasBarrier,
+			this.fieldDef.nativeDoc
 		);
 	}
 }

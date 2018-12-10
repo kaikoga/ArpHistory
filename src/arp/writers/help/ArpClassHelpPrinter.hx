@@ -18,7 +18,10 @@ class ArpClassHelpPrinter {
 		var result:String = "";
 		result += '<h2>${classInfo.arpType}:${classInfo.className}</h2>\n';
 		result += '<p>${classInfo.fqn}</p>\n';
+		result += '<p>${classInfo.doc}</p>\n';
 		result += '<div><pre>${this.printXml()}</pre></div>\n\n';
+		result += '<h2>Fields</h2>\n';
+		result += '${this.printDocs()}\n\n';
 		return result;
 	}
 
@@ -106,4 +109,15 @@ class ArpClassHelpPrinter {
 	private function populateTextNode(parent:Xml, field:ArpFieldInfo, placeholder:String) {
 		if (field.groupName == "value") parent.addChild(Xml.createPCData(placeholder));
 	}
+
+	private function printDocs():String {
+		var xml:Xml = Xml.createElement('section');
+		for (field in classInfo.fields) {
+			xml.addChild(Xml.parse('<h3>${field.nativeName}</h3>').firstElement());
+			xml.addChild(Xml.parse('<section>${field.doc}</section>').firstElement());
+			xml.addChild(Xml.createElement('hr'));
+		}
+		return haxe.xml.Printer.print(xml, true);
+	}
+
 }

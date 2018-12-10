@@ -11,6 +11,7 @@ class ArpFieldInfo {
 	public var fieldDs(default, null):ArpFieldDs;
 	public var nativeName(default, null):String;
 	public var barrier(default, null):Bool;
+	public var doc(default, null):String;
 
 	public var isCollection(get, never):Bool;
 	private function get_isCollection() {
@@ -20,7 +21,7 @@ class ArpFieldInfo {
 		}
 	}
 
-	public function new(groupName:String, elementName:String, arpType:ArpType, fieldType:ArpFieldKind, fieldDs:ArpFieldDs, nativeName:String, barrier:Bool) {
+	public function new(groupName:String, elementName:String, arpType:ArpType, fieldType:ArpFieldKind, fieldDs:ArpFieldDs, nativeName:String, barrier:Bool, doc:String) {
 		this.groupName = groupName;
 		this.elementName = elementName;
 		this.arpType = arpType;
@@ -28,6 +29,7 @@ class ArpFieldInfo {
 		this.fieldDs = fieldDs;
 		this.nativeName = nativeName;
 		this.barrier = barrier;
+		this.doc = doc;
 	}
 
 }

@@ -16,6 +16,7 @@ class MacroArpClassDefinition {
 	public var metaHasImpl(default, null):Bool = false;
 	public var arpTypeName(default, null):String;
 	public var arpTemplateName(default, null):String;
+	public var nativeDoc(default, null):String;
 
 	public var isDerived(default, null):Bool = false;
 	public var hasImpl(default, null):Bool = false;
@@ -30,6 +31,8 @@ class MacroArpClassDefinition {
 		this.baseClasses = [];
 		this.mergedBaseFields = new Map<String, ClassField>();
 
+		this.nativeDoc = classType.doc;
+		if (this.nativeDoc == null) this.nativeDoc = "no document";
 		this.loadMeta(classType);
 		if (!this.metaNoGen) {
 			this.loadClassFields();

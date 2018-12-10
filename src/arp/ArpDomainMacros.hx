@@ -45,7 +45,7 @@ class ArpDomainMacros {
 		}
 
 		var fqn:String = MacroArpUtil.getFqnOfBaseType(localClass);
-		MacroArpObjectRegistry.registerStructInfo(arpTypeName, fqn);
+		MacroArpObjectRegistry.registerStructInfo(arpTypeName, fqn, localClass.doc);
 		return null;
 	}
 }

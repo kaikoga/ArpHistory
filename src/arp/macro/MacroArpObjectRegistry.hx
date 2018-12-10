@@ -21,13 +21,13 @@ class MacroArpObjectRegistry {
 		this.onMacroContextReused();
 	}
 
-	private function registerPrimitive(fieldKind:ArpFieldKind, name:String, fqn:String = null):Void {
+	private function registerPrimitive(fieldKind:ArpFieldKind, name:String, fqn:String = null, doc:String = null):Void {
 		if (fqn == null) fqn = name;
-		templateInfos.set(fqn, ArpClassInfo.primitive(fieldKind, new ArpType(name), fqn));
+		templateInfos.set(fqn, ArpClassInfo.primitive(fieldKind, new ArpType(name), fqn, doc));
 	}
 
-	public static function registerStructInfo(name:String, fqn:String):Void {
-		instance.templateInfos.set(fqn, ArpClassInfo.struct(new ArpType(name), fqn));
+	public static function registerStructInfo(name:String, fqn:String, doc:String):Void {
+		instance.templateInfos.set(fqn, ArpClassInfo.struct(new ArpType(name), fqn, doc));
 	}
 
 	public static function registerTemplateInfo(fqn:String, macroArpObject:MacroArpObject):Void {
@@ -94,10 +94,10 @@ class MacroArpObjectRegistry {
 		macroArpObjects = new Map();
 		templateInfos = new Map();
 
-		registerPrimitive(ArpFieldKind.PrimInt, "Int", "StdTypes.Int");
-		registerPrimitive(ArpFieldKind.PrimFloat, "Float", "StdTypes.Float");
-		registerPrimitive(ArpFieldKind.PrimBool, "Bool", "StdTypes.Bool");
-		registerPrimitive(ArpFieldKind.PrimString, "String");
+		registerPrimitive(ArpFieldKind.PrimInt, "Int", "StdTypes.Int", "Primitive integer.");
+		registerPrimitive(ArpFieldKind.PrimFloat, "Float", "StdTypes.Float", "Primitive float.");
+		registerPrimitive(ArpFieldKind.PrimBool, "Bool", "StdTypes.Bool", "Primitive boolean.");
+		registerPrimitive(ArpFieldKind.PrimString, "String", "String", "Primitive string.");
 		return true;
 	}
 
