@@ -20,12 +20,20 @@ class ArpHelpWriter {
 	}
 
 	public function write():Void {
-		this.writeIndex();
-		this.writeIndexTypes();
-		this.writeIndexClasses();
-		this.writeTocTypes();
-		this.writeTocClasses();
-		this.writeClasses();
+		context.get("index.html").addString(this.printIndex());
+		context.get("index_types.html").addString(this.printIndexTypes());
+		context.get("index_classes.html").addString(this.printIndexClasses());
+		context.get("toc_types.html").addString(this.printTocTypes());
+		context.get("toc_classes.html").addString(this.printTocClasses());
+
+		context.dir("classes");
+		for (arpType in this.classInfos.keys()) {
+			for (classInfo in this.classInfos.get(arpType)) {
+				context.dir('classes/${arpType}');
+				var classFileName:String = classFileNameFor(classInfo);
+				context.get(classFileName).addString(this.printClass(classInfo));
+			}
+		}
 
 		context.writeAll(this.prefix);
 	}
@@ -40,77 +48,71 @@ class ArpHelpWriter {
 		return 'classes/${classInfo.arpType}/${classNameFor(classInfo)}.html';
 	}
 
-	private function writeIndex():Void {
-		context.get("index.html").addString(HTML_FRAMES);
+	private function printIndex():String {
+		return HTML_FRAMES;
 	}
 
-	private function writeIndexTypes():Void {
-		context.get("index_types.html").addString(HTML_HEAD);
-		context.get("index_types.html").addString('<h1>ArpDomain Reference</h1>');
-		context.get("index_types.html").addString('<hr />');
-
+	private function printIndexTypes():String {
+		var result:String = "";
+		result += HTML_HEAD;
+		result += '<h1>ArpDomain Reference</h1>';
+		result += '<hr />';
 		for (arpType in this.classInfos.keys()) {
-			context.get("index_types.html").addString('<div><a href="index_classes.html#${arpType}">${arpType}</a></div>');
+			result += '<div><a href="index_classes.html#${arpType}">${arpType}</a></div>';
 		}
-
-		context.get("index_types.html").addString(HTML_FOOT);
+		result += HTML_FOOT;
+		return result;
 	}
 
-	private function writeIndexClasses():Void {
-		context.get("index_classes.html").addString(HTML_HEAD);
-		context.get("index_classes.html").addString('<h1>ArpDomain Reference</h1>');
-		context.get("index_classes.html").addString('<hr />');
-
+	private function printIndexClasses():String {
+		var result:String = "";
+		result += HTML_HEAD;
+		result += '<h1>ArpDomain Reference</h1>';
+		result += '<hr />';
 		for (arpType in this.classInfos.keys()) {
-			context.get("index_classes.html").addString('<a id=${arpType} name=${arpType}></a><h2>${arpType}</h2>');
+			result += '<a id=${arpType} name=${arpType}></a><h2>${arpType}</h2>';
 			for (classInfo in this.classInfos.get(arpType)) {
-				context.get("index_classes.html").addString('<div><a href=${classFileNameFor(classInfo)}>${classNameFor(classInfo)}</a></div>');
+				result += '<div><a href=${classFileNameFor(classInfo)}>${classNameFor(classInfo)}</a></div>';
 			}
 		}
-
-		context.get("index_classes.html").addString(HTML_FOOT);
+		result += HTML_FOOT;
+		return result;
 	}
 
-	private function writeTocTypes():Void {
-		context.get("toc_types.html").addString(HTML_HEAD);
-
-		context.get("toc_types.html").addString('<div><a href="index_types.html" target="body">All Types</a></div>');
-		context.get("toc_types.html").addString('<hr />');
-
+	private function printTocTypes():String {
+		var result:String = "";
+		result += HTML_HEAD;
+		result += '<div><a href="index_types.html" target="body">All Types</a></div>';
+		result += '<hr />';
 		for (arpType in this.classInfos.keys()) {
-			context.get("toc_types.html").addString('<div><a href="toc_classes.html#${arpType}" target="classes">${arpType}</a></div>');
+			result += '<div><a href="toc_classes.html#${arpType}" target="classes">${arpType}</a></div>';
 		}
-
-		context.get("toc_types.html").addString(HTML_FOOT);
+		result += HTML_FOOT;
+		return result;
 	}
 
-	private function writeTocClasses():Void {
-		context.get("toc_classes.html").addString(HTML_HEAD);
-
-		context.get("toc_classes.html").addString('<div><a href="index_classes.html" target="body">All Classes</a></div>');
-		context.get("toc_classes.html").addString('<hr />');
+	private function printTocClasses():String {
+		var result:String = "";
+		result += HTML_HEAD;
+		result += '<div><a href="index_classes.html" target="body">All Classes</a></div>';
+		result += '<hr />';
 
 		for (arpType in this.classInfos.keys()) {
-			context.get("toc_classes.html").addString('<a id=${arpType} name=${arpType}></a><h2>${arpType}</h2>');
+			result += '<a id=${arpType} name=${arpType}></a><h2>${arpType}</h2>';
 			for (classInfo in this.classInfos.get(arpType)) {
-				context.get("toc_classes.html").addString('<div><a href=${classFileNameFor(classInfo)} target="body">${classNameFor(classInfo)}</a></div>');
+				result += '<div><a href=${classFileNameFor(classInfo)} target="body">${classNameFor(classInfo)}</a></div>';
 			}
 		}
-
-		context.get("toc_classes.html").addString(HTML_FOOT);
+		result += HTML_FOOT;
+		return result;
 	}
 
-	private function writeClasses():Void {
-		context.dir("classes");
-		for (arpType in this.classInfos.keys()) {
-			for (classInfo in this.classInfos.get(arpType)) {
-				context.dir('classes/${arpType}');
-				var classFileName:String = classFileNameFor(classInfo);
-				context.get(classFileName).addString(HTML_HEAD);
-				context.get(classFileName).addString(new ArpClassHelpPrinter(classInfo).print());
-				context.get(classFileName).addString(HTML_FOOT);
-			}
-		}
+	private function printClass(classInfo:ArpClassInfo):String {
+		var result:String = "";
+		result += HTML_HEAD;
+		result += new ArpClassHelpPrinter(classInfo).print();
+		result += HTML_FOOT;
+		return result;
 	}
 
 	public static inline var HTML_HEAD:String = '<html>\n<head><title>ArpDomain Reference</title></head>\n<body>\n';
