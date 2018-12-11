@@ -15,6 +15,8 @@ class ArpClassHelpPrinter {
 
 	public function print():String {
 		var result:String = "";
+		result += '<h1>ArpDomain Reference</h1>';
+		result += '<hr />';
 		result += '<h2>${classInfo.arpType}:${classInfo.className}</h2>\n';
 		result += '<p>${classInfo.fqn}</p>\n';
 		result += '<p>${classInfo.doc}</p>\n';
