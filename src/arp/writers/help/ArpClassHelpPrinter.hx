@@ -9,12 +9,11 @@ class ArpClassHelpPrinter {
 
 	private var classInfo:ArpClassInfo;
 
-	public function new() {
+	public function new(classInfo:ArpClassInfo) {
+		this.classInfo = classInfo;
 	}
 
-	public function print(classInfo:ArpClassInfo):String {
-		this.classInfo = classInfo;
-
+	public function print():String {
 		var result:String = "";
 		result += '<h2>${classInfo.arpType}:${classInfo.className}</h2>\n';
 		result += '<p>${classInfo.fqn}</p>\n';

@@ -5,10 +5,15 @@ import arp.domain.reflect.ArpDomainInfo;
 
 class ArpHelpWriter {
 
-	public function new() {
+	private var domainInfo:ArpDomainInfo;
+	private var prefix:String;
+
+	public function new(domainInfo:ArpDomainInfo, prefix:String = "doc/") {
+		this.domainInfo = domainInfo;
+		this.prefix = prefix;
 	}
 
-	public function write(domainInfo:ArpDomainInfo, prefix:String = "doc/"):Void {
+	public function write():Void {
 		var context:ArpWriterContext = new ArpWriterContext();
 
 		context.get("index_types.html").addString(HTML_HEAD);
@@ -44,7 +49,7 @@ class ArpHelpWriter {
 				context.get("toc_classes.html").addString('<div><a href=${classFileName} target="body">${className}</a></div>');
 				context.get(classFileName).addString('<h1>ArpDomain Reference</h1>');
 				context.get(classFileName).addString('<hr />');
-				context.get(classFileName).addString(new ArpClassHelpPrinter().print(classInfo));
+				context.get(classFileName).addString(new ArpClassHelpPrinter(classInfo).print());
 			}
 		}
 

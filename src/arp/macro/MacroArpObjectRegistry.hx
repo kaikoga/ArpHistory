@@ -77,11 +77,10 @@ class MacroArpObjectRegistry {
 		}
 
 		function writeDocs():Void {
-			var writer:ArpHelpWriter = new ArpHelpWriter();
 			var prefix:String = Context.definedValue("arp_doc");
 			if (prefix == "1") prefix = "doc/";
 			if (prefix.indexOf("/") < 0) prefix = prefix + "/";
-			writer.write(domainInfo, prefix);
+			new ArpHelpWriter(domainInfo, prefix).write();
 		}
 
 		linkDerivedClasses();
