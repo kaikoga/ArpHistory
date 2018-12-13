@@ -2,6 +2,7 @@ package arp.writers.help;
 
 import arp.domain.reflect.ArpClassInfo;
 import arp.domain.reflect.ArpDomainInfo;
+import arp.utils.StringBuffer;
 
 class ArpHelpWriter {
 
@@ -59,70 +60,70 @@ class ArpHelpWriter {
 	}
 
 	private function printIndexTypes():String {
-		var result:String = "";
-		result += HTML_HEAD;
-		result += '<h1>ArpDomain Reference</h1>';
-		result += '<hr />';
+		var result:StringBuffer = 0;
+		result <<= HTML_HEAD;
+		result <<= '<h1>ArpDomain Reference</h1>';
+		result <<= '<hr />';
 		for (arpType in this.sortedArpTypes) {
-			result += '<div><a href="index_classes.html#${arpType}">${arpType}</a></div>';
+			result <<= '<div><a href="index_classes.html#${arpType}">${arpType}</a></div>';
 		}
-		result += HTML_FOOT;
+		result <<= HTML_FOOT;
 		return result;
 	}
 
 	private function printIndexClasses():String {
-		var result:String = "";
-		result += HTML_HEAD;
-		result += '<h1>ArpDomain Reference</h1>';
-		result += '<hr />';
+		var result:StringBuffer = 0;
+		result <<= HTML_HEAD;
+		result <<= '<h1>ArpDomain Reference</h1>';
+		result <<= '<hr />';
 		for (arpType in this.sortedArpTypes) {
-			result += '<a id=${arpType} name=${arpType}></a><h2>${arpType}</h2>';
+			result <<= '<a id=${arpType} name=${arpType}></a><h2>${arpType}</h2>';
 			for (classInfo in this.classInfos.get(arpType)) {
-				result += '<div><a href=${classFileNameFor(classInfo)}>${classNameFor(classInfo)}</a></div>';
+				result <<= '<div><a href=${classFileNameFor(classInfo)}>${classNameFor(classInfo)}</a></div>';
 			}
 		}
-		result += HTML_FOOT;
+		result <<= HTML_FOOT;
 		return result;
 	}
 
 	private function printTocTypes():String {
-		var result:String = "";
-		result += HTML_HEAD;
-		result += '<div><a href="index_types.html" target="body">All Types</a></div>';
-		result += '<hr />';
+		var result:StringBuffer = 0;
+		result <<= HTML_HEAD;
+		result <<= '<div><a href="index_types.html" target="body">All Types</a></div>';
+		result <<= '<hr />';
 		for (arpType in this.sortedArpTypes) {
-			result += '<div><a href="toc_classes.html#${arpType}" target="classes">${arpType}</a></div>';
+			result <<= '<div><a href="toc_classes.html#${arpType}" target="classes">${arpType}</a></div>';
 		}
-		result += HTML_FOOT;
+		result <<= HTML_FOOT;
 		return result;
 	}
 
 	private function printTocClasses():String {
-		var result:String = "";
-		result += HTML_HEAD;
-		result += '<div><a href="index_classes.html" target="body">All Classes</a></div>';
-		result += '<hr />';
+		var result:StringBuffer = 0;
+		result <<= HTML_HEAD;
+		result <<= '<div><a href="index_classes.html" target="body">All Classes</a></div>';
+		result <<= '<hr />';
 
 		for (arpType in this.sortedArpTypes) {
-			result += '<a id=${arpType} name=${arpType}></a><h2>${arpType}</h2>';
+			result <<= '<a id=${arpType} name=${arpType}></a><h2>${arpType}</h2>';
 			for (classInfo in this.classInfos.get(arpType)) {
-				result += '<div><a href=${classFileNameFor(classInfo)} target="body">${classNameFor(classInfo)}</a></div>';
+				result <<= '<div><a href=${classFileNameFor(classInfo)} target="body">${classNameFor(classInfo)}</a></div>';
 			}
 		}
-		result += HTML_FOOT;
+		result <<= HTML_FOOT;
 		return result;
 	}
 
 	private function printClass(classInfo:ArpClassInfo):String {
-		var result:String = "";
-		result += HTML_HEAD;
-		result += new ArpClassHelpPrinter(classInfo).print();
-		result += HTML_FOOT;
+		var result:StringBuffer = 0;
+		result <<= HTML_HEAD;
+		result <<= new ArpClassHelpPrinter(classInfo).print();
+		result <<= HTML_FOOT;
 		return result;
 	}
 
-	public static inline var HTML_HEAD:String = '<html>\n<head><title>ArpDomain Reference</title></head>\n<body>\n';
-	public static inline var HTML_FOOT:String = '</body>\n</html>\n';
+	public static inline var HTML_HEAD:String = '<html>\n<head><title>ArpDomain Reference</title></head>\n<body>';
+	public static inline var HTML_FOOT:String = '</body>\n</html>';
 
 	public static inline var HTML_FRAMES:String = '<html>\n<head><title>ArpDomain Reference</title></head>
 <frameset cols="150,*" border="2" bordercolor="#AAAAAA" framespacing="0">

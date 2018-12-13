@@ -4,6 +4,7 @@ import arp.domain.reflect.ArpClassInfo;
 import arp.domain.reflect.ArpFieldDs;
 import arp.domain.reflect.ArpFieldInfo;
 import arp.domain.reflect.ArpFieldKind;
+import arp.utils.StringBuffer;
 
 class ArpClassHelpPrinter {
 
@@ -14,20 +15,20 @@ class ArpClassHelpPrinter {
 	}
 
 	public function print():String {
-		var result:String = "";
-		result += '<h1>ArpDomain Reference</h1>\n';
-		result += '<hr />\n';
-		result += '<h2>${classInfo.arpType}:${classInfo.className}</h2>\n';
-		result += '<p>${classInfo.fqn}</p>\n';
-		result += '<p>${classInfo.doc}</p>\n';
-		result += '<div><pre>\n${this.printXml()}\n</pre></div>\n\n';
-		result += '<h2>Fields</h2>\n';
-		result += '${this.printDocs()}\n\n';
+		var result:StringBuffer = 0;
+		result <<= '<h1>ArpDomain Reference</h1>';
+		result <<= '<hr />';
+		result <<= '<h2>${classInfo.arpType}:${classInfo.className}</h2>';
+		result <<= '<p>${classInfo.fqn}</p>';
+		result <<= '<p>${classInfo.doc}</p>';
+		result <<= '<div><pre>\n${this.printXml()}\n</pre></div>\n';
+		result <<= '<h2>Fields</h2>';
+		result <<= this.printDocs();
 		return result;
 	}
 
 	private function printXml():String {
-		var result:String = "";
+		var result:StringBuffer = 0;
 		result += '<${classInfo.arpType} name="name" class="${classInfo.className}"';
 		for (field in classInfo.fields) {
 			var placeholder:String = getPlaceholder(field);
@@ -52,7 +53,7 @@ class ArpClassHelpPrinter {
 			var placeholder:String = getPlaceholder(field);
 			result += populateTextNode(field, placeholder);
 		}
-		result += '</${classInfo.arpType}>\n';
+		result <<= '</${classInfo.arpType}>';
 
 		return StringTools.htmlEscape(result);
 	}
@@ -119,14 +120,14 @@ class ArpClassHelpPrinter {
 	}
 
 	private function printDocs():String {
-		var result:String = "";
-		result += '<section>\n';
+		var result:StringBuffer = 0;
+		result <<= '<section>';
 		for (field in classInfo.fields) {
-			result += '<h3>${field.nativeName}</h3>\n';
-			result += '<section>${field.doc}</section>\n';
-			result += '<hr />\n';
+			result <<= '<h3>${field.nativeName}</h3>';
+			result <<= '<section>${field.doc}</section>';
+			result <<= '<hr />';
 		}
-		result += '</section>\n';
+		result <<= '</section>';
 		return result;
 	}
 
