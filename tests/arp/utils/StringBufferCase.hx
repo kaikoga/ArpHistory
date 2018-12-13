@@ -27,4 +27,22 @@ class StringBufferCase {
 		s <<= "c";
 		assertEquals("ab\nc\n", s);
 	}
+
+	public function testSquiggle():Void {
+		var s:StringBuffer = "a";
+		s *= "
+			b
+			c
+		";
+		assertEquals("ab\nc", s);
+	}
+
+	public function testPushSquiggle():Void {
+		var s:StringBuffer = "a";
+		s >>= "
+			b
+			c
+		";
+		assertEquals("ab\nc\n", s);
+	}
 }

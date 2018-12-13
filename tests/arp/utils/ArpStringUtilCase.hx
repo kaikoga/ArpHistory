@@ -58,4 +58,15 @@ class ArpStringUtilCase {
 		assertEquals(-42.0, ArpStringUtil.parseRichFloat("-4.2e+1.0n", getUnit));
 		assertEquals(16.0, ArpStringUtil.parseRichFloat("10.0e-1.0g", getUnit));
 	}
+
+
+	public function testSquiggle():Void {
+		assertEquals("", ArpStringUtil.squiggle(""));
+		assertEquals("", ArpStringUtil.squiggle("\n\n"));
+		assertEquals("a", ArpStringUtil.squiggle("a"));
+		assertEquals("a", ArpStringUtil.squiggle("\n\na\n\n"));
+		assertEquals("a\n\nb", ArpStringUtil.squiggle(" \n a\n \n b\n "));
+		assertEquals("a\n\n b", ArpStringUtil.squiggle(" \n a\n\n  b\n "));
+		assertEquals("a\n b", ArpStringUtil.squiggle(" \n a\n  b\n "));
+	}
 }

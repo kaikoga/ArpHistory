@@ -19,6 +19,19 @@ abstract StringBuffer(BytesBuffer) {
 		return new StringBuffer(this);
 	}
 
+	@:op(a*b)
+	public function opSquiggle(value:String):StringBuffer {
+		this.addString(ArpStringUtil.squiggle(value));
+		return new StringBuffer(this);
+	}
+
+	@:op(a>>b)
+	public function opPushSquiggle(value:String):StringBuffer {
+		this.addString(ArpStringUtil.squiggle(value));
+		this.addString("\n");
+		return new StringBuffer(this);
+	}
+
 	@:from
 	public static function fromString(string:String):StringBuffer {
 		var bytesBuffer:BytesBuffer = new BytesBuffer();

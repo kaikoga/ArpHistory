@@ -54,4 +54,20 @@ class ArpStringUtil {
 		}
 		return value;
 	}
+
+	private static var _squiggle = ~/^\s*/;
+	public static function squiggle(str:String):String {
+		var lines:Array<String> = str.split("\n");
+		var indentCounts:Array<Int> = lines.filter(line -> ~/\S/.match(line)).map(line -> {
+			_squiggle.match(line);
+			return _squiggle.matched(0).length;
+		});
+
+		var indentCount:Int = Lambda.fold(indentCounts, (a, b) -> if (a < b) a else b, str.length);
+
+		while (lines.length > 0 && lines[0].length <= indentCount) lines.shift();
+		while (lines.length > 0 && lines[lines.length - 1].length <= indentCount) lines.pop();
+
+		return lines.map(line -> line.substr(indentCount)).join("\n");
+	}
 }
