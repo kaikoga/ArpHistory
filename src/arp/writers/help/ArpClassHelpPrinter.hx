@@ -16,14 +16,16 @@ class ArpClassHelpPrinter {
 
 	public function print():String {
 		var result:StringBuffer = 0;
-		result <<= '<h1>ArpDomain Reference</h1>';
-		result <<= '<hr />';
-		result <<= '<h2>${classInfo.arpType}:${classInfo.className}</h2>';
-		result <<= '<p>${classInfo.fqn}</p>';
-		result <<= '<p>${classInfo.doc}</p>';
-		result <<= '<div><pre>\n${this.printXml()}\n</pre></div>\n';
-		result <<= '<h2>Fields</h2>';
-		result <<= this.printDocs();
+		result >>= '
+			<h1>ArpDomain Reference</h1>
+			<hr />
+			<h2>${classInfo.arpType}:${classInfo.className}</h2>
+			<p>${classInfo.fqn}</p>
+			<p>${classInfo.doc}</p>
+			<div><pre>\n${this.printXml()}\n</pre></div>
+			<h2>Fields</h2>
+			${this.printDocs()}
+		';
 		return result;
 	}
 
@@ -123,9 +125,11 @@ class ArpClassHelpPrinter {
 		var result:StringBuffer = 0;
 		result <<= '<section>';
 		for (field in classInfo.fields) {
-			result <<= '<h3>${field.nativeName}</h3>';
-			result <<= '<section>${field.doc}</section>';
-			result <<= '<hr />';
+			result >>= '
+				<h3>${field.nativeName}</h3>
+				<section>${field.doc}</section>
+				<hr />
+			';
 		}
 		result <<= '</section>';
 		return result;
