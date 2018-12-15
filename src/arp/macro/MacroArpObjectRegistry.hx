@@ -26,8 +26,10 @@ class MacroArpObjectRegistry {
 		templateInfos.set(fqn, ArpClassInfo.primitive(fieldKind, new ArpType(name), fqn, doc));
 	}
 
-	public static function registerStructInfo(name:String, fqn:String, doc:String):Void {
-		instance.templateInfos.set(fqn, ArpClassInfo.struct(new ArpType(name), fqn, doc));
+	public static function registerStructInfo(name:String, fqn:String, doc:String, stringPlaceholder:String, seedPlaceholder:String):Void {
+		var structInfo:ArpClassInfo = ArpClassInfo.struct(new ArpType(name), fqn, doc, stringPlaceholder, seedPlaceholder);
+		instance.templateInfos.set(fqn, structInfo);
+		instance.domainInfo.structInfos.push(structInfo);
 	}
 
 	public static function registerTemplateInfo(fqn:String, macroArpObject:MacroArpObject):Void {

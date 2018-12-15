@@ -10,6 +10,8 @@ class ArpClassInfo {
 	public var className(default, null):String;
 	public var fields(default, null):Array<ArpFieldInfo>;
 	public var doc(default, null):String;
+	public var stringPlaceholder(default, null):String;
+	public var seedPlaceholder(default, null):Dynamic;
 
 	private function new(fieldKind:ArpFieldKind, arpType:ArpType, className:String, fqn:String, fields:Array<ArpFieldInfo>, doc:String) {
 		this.fieldKind = fieldKind;
@@ -24,8 +26,11 @@ class ArpClassInfo {
 		return new ArpClassInfo(ArpFieldKind.ReferenceKind, arpType, className, fqn, fields, doc);
 	}
 
-	public static function struct(arpType:ArpType, fqn:String, doc:String) {
-		return new ArpClassInfo(ArpFieldKind.StructKind, arpType, null, fqn, null, doc);
+	public static function struct(arpType:ArpType, fqn:String, doc:String, stringPlaceholder:String, seedPlaceholder:Dynamic) {
+		var result:ArpClassInfo =  new ArpClassInfo(ArpFieldKind.StructKind, arpType, null, fqn, null, doc);
+		result.stringPlaceholder = stringPlaceholder;
+		result.seedPlaceholder = seedPlaceholder;
+		return result;
 	}
 
 	public static function primitive(fieldKind:ArpFieldKind, arpType:ArpType, fqn:String, doc:String) {

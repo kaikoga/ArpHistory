@@ -37,15 +37,23 @@ class ArpDomainMacros {
 		var localClass:ClassType = MacroArpUtil.getLocalClass();
 		if (localClass == null) return null;
 
-		var metaArpStruct:MetadataEntry = localClass.meta.extract(":arpStruct")[0];
-
 		var arpTypeName:String = null;
-		if (metaArpStruct != null) {
+		var stringPlaceholder:String = null;
+		var seedPlaceholder:Dynamic = null;
+
+		var metaArpStruct:MetadataEntry = localClass.meta.extract(":arpStruct")[0];
+		if (metaArpStruct != null && metaArpStruct.params.length >= 1) {
 			arpTypeName = ExprTools.getValue(metaArpStruct.params[0]);
 		}
 
+		var metaArpStructPlaceholder:MetadataEntry = localClass.meta.extract(":arpStructPlaceholder")[0];
+		if (metaArpStructPlaceholder != null && metaArpStructPlaceholder.params.length >= 2) {
+			stringPlaceholder = ExprTools.getValue(metaArpStructPlaceholder.params[0]);
+			seedPlaceholder = ExprTools.getValue(metaArpStructPlaceholder.params[1]);
+		}
+
 		var fqn:String = MacroArpUtil.getFqnOfBaseType(localClass);
-		MacroArpObjectRegistry.registerStructInfo(arpTypeName, fqn, localClass.doc);
+		MacroArpObjectRegistry.registerStructInfo(arpTypeName, fqn, localClass.doc, stringPlaceholder, seedPlaceholder);
 		return null;
 	}
 }

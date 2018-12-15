@@ -117,7 +117,7 @@ class ArpHelpWriter {
 	private function printClass(classInfo:ArpClassInfo):String {
 		var result:StringBuffer = 0;
 		result <<= HTML_HEAD;
-		result <<= new ArpClassHelpPrinter(classInfo).print();
+		result <<= new ArpClassHelpPrinter(this.domainInfo, classInfo).print();
 		result <<= HTML_FOOT;
 		return result;
 	}

@@ -1,11 +1,22 @@
 package arp.domain.reflect;
 
+import arp.domain.core.ArpType;
+
 class ArpDomainInfo {
 
 	public var classInfos(default, null):Array<ArpClassInfo>;
+	public var structInfos(default, null):Array<ArpClassInfo>;
 
 	public function new() {
 		this.classInfos = [];
+		this.structInfos = [];
+	}
+
+	public function findStructInfo(arpType:ArpType):Null<ArpClassInfo> {
+		for (structInfo in this.structInfos) {
+			if (structInfo.arpType == arpType) return structInfo;
+		}
+		return null;
 	}
 
 	// FIXME @:followAbstracts

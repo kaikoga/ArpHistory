@@ -1,6 +1,7 @@
 ﻿package arp.writers.help;
 
 import arp.domain.reflect.ArpClassInfo;
+import arp.domain.reflect.ArpDomainInfo;
 import arp.domain.reflect.ArpFieldDs;
 import arp.domain.reflect.ArpFieldInfo;
 import arp.domain.reflect.ArpFieldKind;
@@ -8,9 +9,11 @@ import arp.utils.StringBuffer;
 
 class ArpClassHelpPrinter {
 
+	private var domainInfo:ArpDomainInfo;
 	private var classInfo:ArpClassInfo;
 
-	public function new(classInfo:ArpClassInfo) {
+	public function new(domainInfo:ArpDomainInfo, classInfo:ArpClassInfo) {
+		this.domainInfo = domainInfo;
 		this.classInfo = classInfo;
 	}
 
@@ -31,7 +34,7 @@ class ArpClassHelpPrinter {
 
 	private function printXml():String {
 		var result:StringBuffer = 0;
-		result += '<${classInfo.arpType} name="name" class="${classInfo.className}"';
+		result += '<${classInfo.arpType} name="name" class="${classInfo.className}" ';
 		for (field in classInfo.fields) {
 			var placeholder:String = getPlaceholder(field);
 			if (field.groupName != null) {
@@ -72,7 +75,20 @@ class ArpClassHelpPrinter {
 
 	private function populateAttribute(name:String, field:ArpFieldInfo, placeholder:String):String {
 		if (field.isCollection) return "";
-		return '$name = "$placeholder"';
+		switch (field.fieldKind) {
+			case ArpFieldKind.PrimBool, ArpFieldKind.PrimInt, ArpFieldKind.PrimFloat, ArpFieldKind.PrimString:
+				return '$name="$placeholder" ';
+			case ArpFieldKind.StructKind:
+				var structInfo:ArpClassInfo = this.domainInfo.findStructInfo(field.arpType);
+				if (structInfo != null) {
+					if (structInfo.stringPlaceholder != null) {
+						return '$name="${structInfo.stringPlaceholder}" ';
+					}
+				}
+				return '$name="$placeholder" ';
+			case ArpFieldKind.ReferenceKind:
+				return '$name="$placeholder" ';
+		}
 	}
 
 	private function populateElement(mayGroup:Bool, name:String, field:ArpFieldInfo, placeholder:String):String {
@@ -88,26 +104,23 @@ class ArpClassHelpPrinter {
 			default:
 		}
 
-		var value:String = switch (field.fieldKind) {
+		var value:String;
+		switch (field.fieldKind) {
 			case ArpFieldKind.PrimBool, ArpFieldKind.PrimInt, ArpFieldKind.PrimFloat, ArpFieldKind.PrimString:
-				'value="${placeholder}" ';
+				value = 'value="$placeholder" ';
 			case ArpFieldKind.StructKind:
-				switch (field.arpType.toString()) {
-					case "Range":
-						'min="minValue" max="maxValue" ';
-					case "Color":
-						'value="#000000@00 $placeholder" ';
-					case "Position":
-						'x="x" y="y" z="z" dir="dir" ';
-					case "HitArea":
-						'left="0" right="1" top="0" bottom="1" hind="0" fore="1" ';
-					case "Params":
-						'value="params $placeholder" ';
-					case some:
-						'value="$placeholder" ';
+				value = 'value="$placeholder" ';
+				var structInfo:ArpClassInfo = this.domainInfo.findStructInfo(field.arpType);
+				if (structInfo != null) {
+					if (structInfo.seedPlaceholder != null) {
+						value = "";
+						for (k in Reflect.fields(structInfo.seedPlaceholder)) {
+							value += '$k="${Reflect.field(structInfo.seedPlaceholder, k)}" ';
+						}
+					}
 				}
 			case ArpFieldKind.ReferenceKind:
-				'ref="$placeholder" ';
+				value = 'ref="$placeholder" ';
 		}
 
 		var result:String = '<$name $key$value/>';
