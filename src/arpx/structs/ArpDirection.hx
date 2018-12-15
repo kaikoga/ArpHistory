@@ -12,6 +12,7 @@ typedef ArpDirectionValue = #if flash UInt #else Int #end ;
 	handled as mutable
 */
 @:arpStruct("Direction")
+@:arpStructPlaceholder("dir", { value: "dir" })
 class ArpDirection implements IArpStruct {
 
 	public static var RIGHT(get, never):ArpDirection;

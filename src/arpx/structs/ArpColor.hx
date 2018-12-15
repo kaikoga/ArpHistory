@@ -18,6 +18,7 @@ import openfl.geom.ColorTransform;
 	handled as mutable
 */
 @:arpStruct("Color")
+@:arpStructPlaceholder("#ffffff@ff", { value: "#ffffff@ff" })
 class ArpColor implements IArpStruct {
 
 	public var value32:Int;

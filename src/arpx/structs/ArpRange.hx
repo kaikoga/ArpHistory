@@ -7,6 +7,7 @@ import arp.seed.ArpSeed;
 import arp.utils.ArpStringUtil;
 
 @:arpStruct("Range")
+@:arpStructPlaceholder("min..max", { min: "min" , max: "max" })
 class ArpRange implements IArpStruct {
 
 	//TODO assure min < max

@@ -11,6 +11,7 @@ import arp.seed.ArpSeed;
 	* @author kaikoga
 */
 @:arpStruct("HitCuboid")
+@:arpStructPlaceholder("dX,dY,dZ,sizeX,sizeY,sizeZ", { x: "dX", y: "dY", z: "dZ", width: "sizeX", height: "sizeY", depth: "sizeZ" })
 class ArpHitCuboid implements IArpStruct {
 
 	public var dX:Float = 0;

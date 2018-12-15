@@ -12,6 +12,7 @@ import arpx.structs.ArpDirection;
 	handled as mutable
 */
 @:arpStruct("Position")
+@:arpStructPlaceholder("pos", { x: "x" , y: "y" , z: "z" , dir: "dir" })
 class ArpPosition implements IArpStruct {
 
 	public var x:Float = 0;

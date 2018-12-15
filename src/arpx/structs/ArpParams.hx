@@ -10,6 +10,7 @@ import arpx.structs.params.EmptyArpParams;
 import arpx.structs.params.ReadOnlyArpParams;
 
 @:arpStruct("Params")
+@:arpStructPlaceholder("params", { value: "params" })
 class ArpParams extends ReadOnlyArpParams implements IArpStruct implements IArpParamsRead {
 
 	public static var empty(default, null) = new EmptyArpParams();
