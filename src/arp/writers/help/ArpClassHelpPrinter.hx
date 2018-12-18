@@ -123,7 +123,9 @@ class ArpClassHelpPrinter {
 				if (structInfo != null) {
 					if (structInfo.seedPlaceholder != null) {
 						value = "";
-						for (k in Reflect.fields(structInfo.seedPlaceholder)) {
+						var structElements:Array<String> = Reflect.fields(structInfo.seedPlaceholder);
+						structElements.sort(Reflect.compare);
+						for (k in structElements) {
 							value += '$k="${Reflect.field(structInfo.seedPlaceholder, k)}" ';
 						}
 					}
