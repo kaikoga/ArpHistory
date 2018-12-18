@@ -7,6 +7,8 @@ import arp.domain.reflect.ArpFieldInfo;
 import arp.domain.reflect.ArpFieldKind;
 import arp.utils.StringBuffer;
 
+using StringTools;
+
 class ArpClassHelpPrinter {
 
 	private var domainInfo:ArpDomainInfo;
@@ -22,17 +24,19 @@ class ArpClassHelpPrinter {
 		result >>= '
 			<h1>ArpDomain Reference</h1>
 			<hr />
-			<h2>${classInfo.arpType}:${classInfo.className}</h2>
-			<p>${classInfo.fqn}</p>
-			<p>${classInfo.doc}</p>
-			<div><pre>\n${this.printXml()}\n</pre></div>
+			<h2 class="class__name">${classInfo.arpType}:${classInfo.className}</h2>
+			<span class="class__fqn">${classInfo.fqn}</span>
+			<section>
+			<p class="class__doc">${classInfo.doc}</p>
+			<div><pre class="class__seed--xml">\n${this.printClassXml()}\n</pre></div>
+			</section>
 			<h2>Fields</h2>
 			${this.printDocs()}
 		';
 		return result;
 	}
 
-	private function printXml():String {
+	private function printClassXml():String {
 		var result:StringBuffer = 0;
 		result += '<${classInfo.arpType} name="name" class="${classInfo.className}" ';
 		for (field in classInfo.fields) {
@@ -46,10 +50,10 @@ class ArpClassHelpPrinter {
 		result += '/>\n';
 		for (field in classInfo.fields) {
 			if (field.groupName != null) {
-				result += populateElement(true, field.groupName, field);
+				result <<= populateElement(true, field.groupName, field);
 			}
 			if (field.elementName != null) {
-				result += populateElement(false, field.elementName, field);
+				result <<= populateElement(false, field.elementName, field);
 			}
 		}
 		for (field in classInfo.fields) {
@@ -60,8 +64,26 @@ class ArpClassHelpPrinter {
 		return StringTools.htmlEscape(result);
 	}
 
-	private function populateAttribute(name:String, field:ArpFieldInfo):String {
-		if (field.isCollection) return "";
+	private function printFieldXml(field:ArpFieldInfo):String {
+		var result:StringBuffer = 0;
+		if (field.groupName != null) {
+			result >>= populateAttribute(field.groupName, field, true);
+		}
+		if (field.elementName != null) {
+			result >>= populateAttribute(field.elementName, field, true);
+		}
+		if (field.groupName != null) {
+			result >>= populateElement(true, field.groupName, field);
+		}
+		if (field.elementName != null) {
+			result >>= populateElement(false, field.elementName, field);
+		}
+		result >>= populateTextNode(field);
+		return StringTools.htmlEscape((result:String).trim());
+	}
+
+	private function populateAttribute(name:String, field:ArpFieldInfo, force:Bool = false):String {
+		if (field.isCollection && !force) return "";
 		switch (field.fieldKind) {
 			case ArpFieldKind.PrimBool, ArpFieldKind.PrimInt, ArpFieldKind.PrimFloat, ArpFieldKind.PrimString:
 				return '$name="${field.arpType}" ';
@@ -110,10 +132,10 @@ class ArpClassHelpPrinter {
 				value = 'ref="${field.arpType}" ';
 		}
 
-		var result:String = '<$name $key$value/>';
+		var result:String = '\t<$name $key$value/>';
 
-		if (willGroup) return '<${field.groupName}>\n\t$result\n</${field.groupName}>\n';
-		return result + "\n";
+		if (willGroup) return '\t<${field.groupName}>\n\t$result\n\t</${field.groupName}>';
+		return result;
 	}
 
 	private function populateTextNode(field:ArpFieldInfo):String {
@@ -126,8 +148,12 @@ class ArpClassHelpPrinter {
 		result <<= '<section>';
 		for (field in classInfo.fields) {
 			result >>= '
-				<h3>${field.nativeName}</h3>
-				<section>${field.doc}</section>
+				<h3 class="field__name">${field.groupName}</h3>
+				<span class="field__native">${field.nativeName}</span>
+				<section>
+				<p class="field__doc">${field.doc}</p>
+				<div><pre class="field__seed--xml">\n${this.printFieldXml(field)}\n</pre></div>
+				</section>
 				<hr />
 			';
 		}

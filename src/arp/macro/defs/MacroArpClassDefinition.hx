@@ -32,7 +32,7 @@ class MacroArpClassDefinition {
 		this.mergedBaseFields = new Map<String, ClassField>();
 
 		this.nativeDoc = classType.doc;
-		if (this.nativeDoc == null) this.nativeDoc = "no document";
+		if (this.nativeDoc == null) this.nativeDoc = "";
 		this.loadMeta(classType);
 		if (!this.metaNoGen) {
 			this.loadClassFields();

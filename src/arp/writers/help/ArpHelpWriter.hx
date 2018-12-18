@@ -4,6 +4,8 @@ import arp.domain.reflect.ArpClassInfo;
 import arp.domain.reflect.ArpDomainInfo;
 import arp.utils.StringBuffer;
 
+using StringTools;
+
 class ArpHelpWriter {
 
 	private var context:ArpWriterContext;
@@ -27,6 +29,9 @@ class ArpHelpWriter {
 	}
 
 	public function write():Void {
+		context.dir("css");
+		context.get("css/style.css").addString(this.printCss());
+
 		context.get("index.html").addString(this.printIndex());
 		context.get("index_types.html").addString(this.printIndexTypes());
 		context.get("index_classes.html").addString(this.printIndexClasses());
@@ -57,6 +62,10 @@ class ArpHelpWriter {
 
 	private function printIndex():String {
 		return HTML_FRAMES;
+	}
+
+	private function printCss():String {
+		return CSS;
 	}
 
 	private function printIndexTypes():String {
@@ -116,16 +125,26 @@ class ArpHelpWriter {
 
 	private function printClass(classInfo:ArpClassInfo):String {
 		var result:StringBuffer = 0;
-		result <<= HTML_HEAD;
+		result <<= HTML_HEAD.replace("css/style.css", "../../css/style.css");
 		result <<= new ArpClassHelpPrinter(this.domainInfo, classInfo).print();
 		result <<= HTML_FOOT;
 		return result;
 	}
 
-	public static inline var HTML_HEAD:String = '<html>\n<head><title>ArpDomain Reference</title></head>\n<body>';
+	public static inline var HTML_HEAD:String = '<!DOCTYPE html>
+<html>
+<head>
+<title>ArpDomain Reference</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>';
 	public static inline var HTML_FOOT:String = '</body>\n</html>';
 
-	public static inline var HTML_FRAMES:String = '<html>\n<head><title>ArpDomain Reference</title></head>
+	public static inline var HTML_FRAMES:String = '<!DOCTYPE html>
+<html>
+<head>
+<title>ArpDomain Reference</title>
+</head>
 <frameset cols="150,*" border="2" bordercolor="#AAAAAA" framespacing="0">
 <frameset rows="40%,60%" border="2" bordercolor="#AAAAAA" framespacing="0">
 <frame src="toc_types.html" name="banks" frameborder="0" />
@@ -134,5 +153,43 @@ class ArpHelpWriter {
 <frame src="index_types.html" name="body" frameborder="0" />
 </frameset>
 <noframes><body><p>Frames required.</p></body></noframes></html>';
+
+
+	public static inline var CSS:String = '
+.class__name,
+.field__name
+{
+	display: inline;
+}
+
+.class__fqn,
+.field__native
+{
+	color: #333;
+	font-family: monospace;
+	font-size: 0.85em;
+	font-style: oblique;
+}
+.class__fqn:before,
+.field__native:before
+{
+	display: inline;
+	content: " --> ";
+}
+.class__doc,
+.field__doc
+{
+}
+.class__seed--xml,
+.field__seed--xml
+{
+	background-color: #eeeeee;
+	border: 1px solid #cccccc;
+	padding: 0.75em;
+	white-space: pre-wrap;
+	font-family: monospace;
+	font-size: 0.75em;
+}
+';
 
 }

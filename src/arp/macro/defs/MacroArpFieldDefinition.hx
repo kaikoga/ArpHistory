@@ -49,7 +49,7 @@ class MacroArpFieldDefinition {
 	public function new(nativeField:Field) {
 		this.nativeField = nativeField;
 		this.nativeDoc = nativeField.doc;
-		if (this.nativeDoc == null) this.nativeDoc = "no document";
+		if (this.nativeDoc == null) this.nativeDoc = "";
 
 		switch (nativeField.kind) {
 			case FieldType.FProp(_, _, n, d), FieldType.FVar(n, d):
