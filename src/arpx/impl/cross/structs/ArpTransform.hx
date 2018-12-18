@@ -9,6 +9,7 @@ import arpx.impl.cross.geom.MatrixImpl;
 import arpx.impl.cross.geom.PointImpl;
 
 @:arpStruct("Transform")
+@:arpStructPlaceholder("xx,yx,xy,yy;tx,ty", { a: "xx", b: "yx", c: "xy", d: "yy", x: "tx", y: "ty" })
 class ArpTransform implements IArpStruct {
 
 	public var impl(default, null):MatrixImpl;
