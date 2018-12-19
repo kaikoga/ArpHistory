@@ -2,13 +2,12 @@ package arp;
 
 #if macro
 
+import arp.macro.defs.MacroArpStructDefinition;
 import arp.macro.defs.MacroArpClassDefinition;
 import arp.macro.MacroArpObjectBuilder;
 import arp.macro.MacroArpObjectRegistry;
 import arp.macro.MacroArpUtil;
 import haxe.macro.Expr.Field;
-import haxe.macro.Expr.MetadataEntry;
-import haxe.macro.ExprTools;
 import haxe.macro.Type.ClassType;
 
 class ArpDomainMacros {
@@ -37,23 +36,15 @@ class ArpDomainMacros {
 		var localClass:ClassType = MacroArpUtil.getLocalClass();
 		if (localClass == null) return null;
 
-		var arpTypeName:String = null;
-		var stringPlaceholder:String = null;
-		var seedPlaceholder:Dynamic = null;
+		var structDef:MacroArpStructDefinition = new MacroArpStructDefinition(localClass);
 
-		var metaArpStruct:MetadataEntry = localClass.meta.extract(":arpStruct")[0];
-		if (metaArpStruct != null && metaArpStruct.params.length >= 1) {
-			arpTypeName = ExprTools.getValue(metaArpStruct.params[0]);
-		}
-
-		var metaArpStructPlaceholder:MetadataEntry = localClass.meta.extract(":arpStructPlaceholder")[0];
-		if (metaArpStructPlaceholder != null && metaArpStructPlaceholder.params.length >= 2) {
-			stringPlaceholder = ExprTools.getValue(metaArpStructPlaceholder.params[0]);
-			seedPlaceholder = ExprTools.getValue(metaArpStructPlaceholder.params[1]);
-		}
-
-		var fqn:String = MacroArpUtil.getFqnOfBaseType(localClass);
-		MacroArpObjectRegistry.registerStructInfo(arpTypeName, fqn, localClass.doc, stringPlaceholder, seedPlaceholder);
+		MacroArpObjectRegistry.registerStructInfo(
+			structDef.arpTypeName,
+			MacroArpUtil.getFqnOfBaseType(localClass),
+			structDef.nativeDoc,
+			structDef.metaArpStructStringPlaceholder,
+			structDef.metaArpStructSeedPlaceholder
+		);
 		return null;
 	}
 }
